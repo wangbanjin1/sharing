@@ -152,6 +152,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       height: 100%;
+      min-height: 0;
       align-items: stretch;
     }
 
@@ -160,6 +161,7 @@
       flex-direction: column;
       gap: 14px;
       min-width: 0;
+      min-height: 0;
     }
 
     /* Cover Slide */
@@ -1300,28 +1302,68 @@ export DUMP_GE_GRAPH=2</pre>
     window.addEventListener('resize', resizeDeck);
     resizeDeck();
 
-    // Interactive Click-to-Upload Image Slots
+    // Interactive Click-to-Upload & Ctrl+V Paste Image Slots
     const uploader = document.getElementById('img-uploader');
     let activeSlot = null;
+    let hoveredSlot = null;
 
     document.querySelectorAll('.img-slot').forEach(slot => {
+      const img = slot.querySelector('img');
+      const placeholder = slot.querySelector('.slot-placeholder');
+      if (img && img.getAttribute('src') && placeholder) {
+        const openLink = document.createElement('a');
+        openLink.href = img.getAttribute('src');
+        openLink.target = '_blank';
+        openLink.textContent = '🔗 打开原图链接 (右键复制图片后直接按 Ctrl+V 即可粘贴)';
+        openLink.style.cssText = 'font-size:11px; color:#d97706; text-decoration:underline; margin-top:4px;';
+        openLink.addEventListener('click', (e) => {
+          e.stopPropagation();
+          hoveredSlot = slot;
+        });
+        placeholder.appendChild(openLink);
+      }
+
+      slot.addEventListener('mouseenter', () => { hoveredSlot = slot; });
       slot.addEventListener('click', () => {
         activeSlot = slot;
+        hoveredSlot = slot;
         uploader.value = '';
         uploader.click();
       });
     });
 
-    uploader.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file || !activeSlot) return;
+    function applyImageFileToSlot(file, slot) {
+      if (!file || !slot) return;
       const reader = new FileReader();
       reader.onload = (ev) => {
-        const img = activeSlot.querySelector('img');
+        const img = slot.querySelector('img');
         img.src = ev.target.result;
-        activeSlot.classList.add('has-img');
+        slot.classList.add('has-img');
       };
       reader.readAsDataURL(file);
+    }
+
+    uploader.addEventListener('change', (e) => {
+      applyImageFileToSlot(e.target.files[0], activeSlot);
+    });
+
+    // Support direct Ctrl+V clipboard image paste!
+    window.addEventListener('paste', (e) => {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (const item of items) {
+        if (item.type.indexOf('image') === 0) {
+          const file = item.getAsFile();
+          const currentSlide = slides[current];
+          // Use hovered slot on current slide, or first empty slot on current slide
+          let targetSlot = (hoveredSlot && currentSlide.contains(hoveredSlot))
+            ? hoveredSlot
+            : currentSlide.querySelector('.img-slot:not(.has-img)') || currentSlide.querySelector('.img-slot');
+          if (targetSlot) {
+            applyImageFileToSlot(file, targetSlot);
+          }
+          break;
+        }
+      }
     });
   </script>
 </body>
