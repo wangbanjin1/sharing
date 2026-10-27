@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>松鼠分享会 | Ascend 310P 融合算子开发与入图全流程</title>
+  <style>
+    :root {
+      --bg-page: #f4f4f6;
+      --bg-slide: #ffffff;
+      --text-primary: #18181b;
+      --text-secondary: #52525b;
+      --text-muted: #71717a;
+      --accent: #d97706;       /* 松鼠暖棕橙 */
+      --accent-soft: #fef3c7;
+      --accent-dark: #92400e;
+      --border: #e4e4e7;
+      --code-bg: #18181b;
+      --code-text: #f4f4f5;
+      --success: #059669;
+      --danger: #dc2626;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --font-mono: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    /* Slide Viewport (16:9 Scaled) */
+    .deck-wrapper {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+      background: var(--bg-slide);
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transform-origin: center center;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 52px 68px 48px 68px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg-slide);
+      user-select: text;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeIn 0.22s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header & Squirrel Sharing Logo */
+    .slide-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .slide-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .squirrel-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .squirrel-logo svg {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+    }
+
+    .squirrel-logo span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+
+    /* Slide Body Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      overflow: hidden;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .grid-2-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    /* Cover Slide */
+    .cover-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+    .cover-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid #fde68a;
+      width: fit-content;
+      margin-bottom: 28px;
+    }
+
+    .cover-logo svg {
+      width: 24px;
+      height: 24px;
+      color: var(--accent-dark);
+    }
+
+    .cover-logo span {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      letter-spacing: 0.04em;
+    }
+
+    .cover-title {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .cover-subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 880px;
+      margin-bottom: 36px;
+    }
+
+    .pipeline-pills {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: #f4f4f5;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .pill-arrow {
+      color: var(--text-muted);
+      font-weight: bold;
+    }
+
+    /* Cards & Lists */
+    .card {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    ul.clean-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    ul.clean-list li {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    ul.clean-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    ul.clean-list li strong {
+      color: var(--text-primary);
+    }
+
+    /* Code Blocks */
+    pre.code-block {
+      background: var(--code-bg);
+      color: var(--code-text);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.5;
+      padding: 12px 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    code.inline {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: #b45309;
+    }
+
+    .comment { color: #a1a1aa; }
+    .del-line { color: #f87171; text-decoration: line-through; }
+    .ok-line { color: #34d399; }
+
+    /* Tables */
+    table.minimal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    table.minimal-table th,
+    table.minimal-table td {
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      text-align: left;
+    }
+
+    table.minimal-table th {
+      background: #f4f4f5;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    table.minimal-table td {
+      color: var(--text-secondary);
+    }
+
+    /* Image Placeholders */
+    .img-slot {
+      flex: 1;
+      min-height: 120px;
+      border: 2px dashed #d4d4d8;
+      border-radius: 10px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.15s ease;
+    }
+
+    .img-slot:hover {
+      border-color: var(--accent);
+      background: #fffbeb;
+    }
+
+    .img-slot img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .img-slot.has-img {
+      border-style: solid;
+      border-color: var(--border);
+      padding: 6px;
+      background: #ffffff;
+    }
+
+    .img-slot.has-img img {
+      display: block;
+    }
+
+    .img-slot.has-img .slot-placeholder {
+      display: none;
+    }
+
+    .slot-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      max-width: 90%;
+    }
+
+    .slot-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      background: var(--accent-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .slot-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .slot-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Flow steps */
+    .flow-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: 10px;
+    }
+
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 3px;
+      flex: 1;
+    }
+
+    .flow-step-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .flow-step-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .flow-step-api {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .flow-arrow {
+      color: #a1a1aa;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* Footer */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid #f4f4f5;
+      font-size: 12px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* Floating Controls */
+    .controls {
+      position: fixed;
+      bottom: 16px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(24, 24, 27, 0.85);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      backdrop-filter: blur(6px);
+      z-index: 100;
+    }
+
+    .controls button {
+      background: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 2px 6px;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .controls button:hover {
+      opacity: 1;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        overflow: visible;
+        height: auto;
+        display: block;
+      }
+      .deck-wrapper {
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        transform: none !important;
+      }
+      .slide {
+        position: relative;
+        display: flex !important;
+        page-break-after: always;
+        height: 720px;
+        width: 1280px;
+      }
+      .controls {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reusable Squirrel SVG Template -->
+  <svg style="display:none">
+    <symbol id="icon-squirrel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6a4 4 0 0 0-4 4 7 7 0 0 0-7 7c0-5 4-5 4-10.5a4.5 4.5 0 1 0-9 0 2.5 2.5 0 0 0 5 0C7 10 3 11 3 17c0 2.8 2.2 5 5 5h10" />
+      <path d="M16 20c0-1.7 1.3-3 3-3h1a2 2 0 0 0 2-2v-2a4 4 0 0 0-4-4" />
+      <circle cx="18" cy="10" r="1" fill="currentColor" />
+    </symbol>
+  </svg>
+
+  <input type="file" id="img-uploader" accept="image/*" style="display:none" />
+
+  <div class="deck-wrapper" id="deck">
+
+    <!-- ==================== SLIDE 1: 封面 ==================== -->
+    <section class="slide active">
+      <div class="cover-container">
+        <div class="cover-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会 · 技术实践分享</span>
+        </div>
+        <h1 class="cover-title">Ascend 310P 融合算子开发与入图全流程</h1>
+        <p class="cover-subtitle">
+          基于 CANN 最新开放框架在昇腾 310P 上开发融合 Ascend C 算子，打通从源码编译、三级单测到 ONNX 自定义算子导入与芯片下沉推理的完整闭环。
+        </p>
+        <div class="pipeline-pills">
+          <span class="pill">01 算子仓与环境准备</span>
+          <span class="pill-arrow">→</span>
+          <span class="pill">02 算子编译出包与单测</span>
+          <span class="pill-arrow">→</span>
+          <span class="pill">03 ONNX 自定义算子入图 (OM / MindIR)</span>
+          <span class="pill-arrow">→</span>
+          <span class="pill">04 AI 辅助融合算子实战</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>CANN ≥ 8.5.1 · ops-transformer v9.0.0 · Ascend 310P</span>
+        <span>1 / 8</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: 全链路总览 & 环境准备 ==================== -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="header-titles">
+          <span class="section-tag">Step 01 · Environment & Repository</span>
+          <h2 class="slide-title">算子仓与基础环境准备</h2>
+        </div>
+        <div class="squirrel-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>镜像与 CANN 版本选择（少折腾原则）</div>
+              <ul class="clean-list">
+                <li><strong>官方镜像源</strong>：直接使用 Ascend Hub 官方镜像，推荐 <strong>CANN 8.5.1</strong> 及以上环境（本地容器示例：<code class="inline">141.51.64.244</code> / <code class="inline">ms_ops_cann8_5_1</code>）。</li>
+                <li><strong>算子仓拉取</strong>：使用 <code class="inline">v9.0.0</code> 分支（在 CANN 8.5.1 与 9.0.0 下均稳定可用）：</li>
+              </ul>
+              <pre class="code-block" style="margin-top:8px;">git clone --depth 1 -b v9.0.0 https://gitcode.com/cann/ops-transformer.git</pre>
+              <ul class="clean-list" style="margin-top:8px;">
+                <li><strong>避坑提示</strong>：<code class="inline">v8.5.1</code> 分支代码不支持 Ascend 310P，切勿使用。</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>小网环境离线依赖下载与部署</div>
+              <ul class="clean-list">
+                <li>服务器为小网环境，需提前通过仓库内 <code class="inline">scripts/tools/third_lib_download.py</code> 一键拉取三方依赖：</li>
+              </ul>
+              <pre class="code-block" style="margin-top:8px;">python third_lib_download.py
+# 将生成的压缩包和依赖代码上传至服务器项目根目录下的 third_party/ 目录</pre>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="img-slot" data-slot="1">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/089d0945e74da8dfd9dd4271a220f819_1861x923.png@900-0-90-f.png" alt="容器环境截图" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #1（点击可上传替换）</span>
+                <span class="slot-title">容器环境 ms_ops_cann8_5_1 截图</span>
+                <span class="slot-desc">对应原文档：141.51.64.244 容器环境终端截图</span>
+              </div>
+            </div>
+            <div class="img-slot" data-slot="2">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/3ce50e506c9d8ab62211cdf6fe13c7e5_1027x498.png@900-0-90-f.png" alt="third_party目录截图" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #2（点击可上传替换）</span>
+                <span class="slot-title">third_party 离线依赖目录结构截图</span>
+                <span class="slot-desc">展示 third_lib_download.py 下载产物上传至 third_party 后的文件列表</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>核心要点：CANN 8.5.1+ 镜像 + ops-transformer v9.0.0 分支 + third_party 离线依赖包</span>
+        <span>2 / 8</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: 算子编译与出包排障 ==================== -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="header-titles">
+          <span class="section-tag">Step 02.1 · Operator Build & Packaging</span>
+          <h2 class="slide-title">算子编译、Ascend 950 报错根因排障与安装</h2>
+        </div>
+        <div class="squirrel-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>算子编译命令（以 prompt_flash_attention 为例）</div>
+              <ul class="clean-list" style="margin-bottom:8px;">
+                <li><code class="inline">--ops</code> 锚定的是<strong>存放算子的文件夹名称</strong>，而非算子 Class 名：</li>
+              </ul>
+              <pre class="code-block">bash build.sh --pkg --soc=ascend310p --ops=prompt_flash_attention \
+  --cann_3rd_lib_path=/dataset/.../ops-transformer/third_party</pre>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>典型编译报错与根因分析</div>
+              <ul class="clean-list" style="margin-bottom:8px;">
+                <li><strong>报错现象</strong>：<code class="inline" style="color:#dc2626;">Invalid socVersion ascend950 of op ..., check whether AddConfig are correctly configured in Opdef.</code></li>
+                <li><strong>调用链</strong>：<code class="inline">build.sh</code> → <code class="inline">cmake/scripts/prepare.sh</code> → <code class="inline">opbuild_gen_default</code></li>
+                <li><strong>根因与修复</strong>：<code class="inline">opbuild</code> 会遍历 <code class="inline">*_def.cpp</code> 中所有已注册的 SoC，而 310P 环境缺少 <code class="inline">ascend950</code> 完整配置，删除该行即可：</li>
+              </ul>
+              <pre class="code-block">this->AICore().AddConfig("ascend910b", aicoreConfig);
+this->AICore().AddConfig("ascend910_93", aicoreConfig);
+<span class="del-line">this->AICore().AddConfig("ascend950", aicoreConfig); // 310p环境不支持，删除</span></pre>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>安装算子包与配置环境变量</div>
+              <pre class="code-block">./build_out/cann-ops-transformer-custom_linux-aarch64.run
+export LD_LIBRARY_PATH=/usr/local/Ascend/cann-9.0.0/opp/vendors/custom_transformer/op_api/lib/:${LD_LIBRARY_PATH}</pre>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="img-slot" data-slot="3">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/fd9fc9445fd6b1319513c16b00189b7c_1514x1060.png@900-0-90-f.png" alt="删除ascend950配置" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #3（点击可上传替换）</span>
+                <span class="slot-title">prompt_flash_attention_def.cpp 删除 ascend950 截图</span>
+                <span class="slot-desc">展示红框标记的 AddConfig("ascend950", ...) 代码位置</span>
+              </div>
+            </div>
+            <div class="img-slot" data-slot="4">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/e90fdfb40556b2cd1cd5ec7d73e66ffd_2530x603.png@900-0-90-f.png" alt="build_out生成算子包" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #4（点击可上传替换）</span>
+                <span class="slot-title">build_out 目录生成的 .run 算子安装包截图</span>
+                <span class="slot-desc">展示 cann-ops-transformer-custom_linux-aarch64.run 编译成功产物</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>排障关键：opbuild 会扫描 OpDef 中全部 AddConfig，在 310P 环境编译需移除 ascend950 配置</span>
+        <span>3 / 8</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: 算子生命周期与三级单测 ==================== -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="header-titles">
+          <span class="section-tag">Step 02.2 · Lifecycle & Three-Tier Testing</span>
+          <h2 class="slide-title">昇腾算子执行生命周期与三级单测体系</h2>
+        </div>
+        <div class="squirrel-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <!-- 8-Step Lifecycle Bar -->
+        <div class="flow-steps">
+          <div class="flow-step">
+            <span class="flow-step-num">01</span>
+            <span class="flow-step-name">设备初始化</span>
+            <span class="flow-step-api">aclInit / SetDevice</span>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <span class="flow-step-num">02</span>
+            <span class="flow-step-name">内存与数据拷贝</span>
+            <span class="flow-step-api">Malloc / CreateTensor</span>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <span class="flow-step-num">03</span>
+            <span class="flow-step-name">获取 Workspace</span>
+            <span class="flow-step-api">GetWorkspaceSize</span>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <span class="flow-step-num">04</span>
+            <span class="flow-step-name">分配 Workspace</span>
+            <span class="flow-step-api">aclrtMalloc</span>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <span class="flow-step-num">05</span>
+            <span class="flow-step-name">启动 Kernel</span>
+            <span class="flow-step-api">aclnn*V3</span>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <span class="flow-step-num">06</span>
+            <span class="flow-step-name">流同步等待</span>
+            <span class="flow-step-api">SynchronizeStream</span>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <span class="flow-step-num">07</span>
+            <span class="flow-step-name">结果回拷打印</span>
+            <span class="flow-step-api">Memcpy D2H</span>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <span class="flow-step-num">08</span>
+            <span class="flow-step-name">清理资源</span>
+            <span class="flow-step-api">Destroy / Free</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="col">
+            <table class="minimal-table">
+              <thead>
+                <tr>
+                  <th>维度</th>
+                  <th>op_host 测试</th>
+                  <th>op_api 测试</th>
+                  <th>examples 测试</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>测试范围</strong></td>
+                  <td>主机端 InferShape + Tiling</td>
+                  <td>ACLNN API 包装层</td>
+                  <td>完整端到端运行时</td>
+                </tr>
+                <tr>
+                  <td><strong>硬件依赖</strong></td>
+                  <td>否（纯 CPU）</td>
+                  <td>是（需昇腾 NPU）</td>
+                  <td>是（需昇腾 NPU）</td>
+                </tr>
+                <tr>
+                  <td><strong>测试框架</strong></td>
+                  <td>gtest</td>
+                  <td>gtest</td>
+                  <td>独立可执行文件</td>
+                </tr>
+                <tr>
+                  <td><strong>验证方式</strong></td>
+                  <td>形状 / tilingKey 对比</td>
+                  <td>返回码检查</td>
+                  <td>结果打印 / 人工审查</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <pre class="code-block"><span class="comment"># 1. op_host 单测（纯 CPU 校验 InferShape & Tiling）</span>
+bash build.sh -u --ophost_test --ops=prompt_flash_attention --cann_3rd_lib_path=...
+
+<span class="comment"># 2. op_api 单测（NPU 校验 ACLNN 接口调用）</span>
+bash build.sh -u --opapi_test --ops=prompt_flash_attention --cann_3rd_lib_path=...
+
+<span class="comment"># 3. examples 端到端测试</span>
+bash build.sh --run_example prompt_flash_attention eager --soc=ascend310p -j8 --cann_3rd_lib_path=...</pre>
+          </div>
+
+          <div class="col">
+            <div class="img-slot" data-slot="5">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/0ec3d1bec9f162504f40ed430e571b18_1385x1103.png@900-0-90-f.png" alt="op_host与op_api测试通过" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #5（点击可上传替换）</span>
+                <span class="slot-title">op_host / op_api / examples 测试通过截图</span>
+                <span class="slot-desc">展示 gtest [  PASSED  ] 输出及 examples 端到端运行结果</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>递进验证：先跑纯 CPU 的 op_host 验证形状推断与 Tiling，再上板跑 op_api 与 examples</span>
+        <span>4 / 8</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: 算子入图 - ONNX Plugin 与导出 OM ==================== -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="header-titles">
+          <span class="section-tag">Step 03.1 & 03.2 · Graph Lowering (ONNX → OM)</span>
+          <h2 class="slide-title">算子入图（一）：ONNX Plugin 编译与 OM 模型导出</h2>
+        </div>
+        <div class="squirrel-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>1. 编译并部署 ONNX Plugin（让 GE 识别自定义算子）</div>
+              <pre class="code-block">bash build.sh --onnxplugin --soc=ascend310p --ops=prompt_flash_attention --cann_3rd_lib_path=...
+cp build/libop_transformer_onnx_plugin.so \
+   /usr/local/Ascend/cann-9.0.0/opp/vendors/custom_transformer/built-in/framework/onnx/</pre>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>2. 对齐 OriginOpType 构造 ONNX 节点并执行 ATC 转换</div>
+              <ul class="clean-list" style="margin-bottom:6px;">
+                <li>Plugin 中注册了 <code class="inline">ai.onnx::12::NPUPromptFlashAttention</code>，构建 ONNX 时需将节点 <code class="inline">op_type</code> 设为 <code class="inline">"NPUPromptFlashAttention"</code>，<code class="inline">opset=12</code>：</li>
+              </ul>
+              <pre class="code-block">node_attention = make_node(
+    "NPUPromptFlashAttention",
+    inputs=["query_enhanced", "key_id", "value_id"],
+    outputs=["attention_raw"],
+    name="PromptFlashAttention", domain=""
+)
+# 挂载 type="PromptFlashAttention", num_heads=8, input_layout="BSH" 等属性...
+# ATC 导出 OM 模型：
+# atc --model=prompt_flash_attention2.onnx --framework=5 --output=./test_om2 --soc_version=Ascend310P3</pre>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="img-slot" data-slot="6">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/9b7c631e633d813a31a6298a99f93938_823x692.png@900-0-90-f.png" alt="示例ONNX结构" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #6（点击可上传替换）</span>
+                <span class="slot-title">原始测试网络结构图</span>
+                <span class="slot-desc">Query → Linear → ReLU → Linear → NPUPromptFlashAttention → +残差 → Output</span>
+              </div>
+            </div>
+            <div class="img-slot" data-slot="7">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/98b2aa9d1dbd15221680eaffb716eacc_964x680.png@900-0-90-f.png" alt="转换后OM模型图" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #7（点击可上传替换）</span>
+                <span class="slot-title">ATC 转换后 OM 模型 Netron 可视化截图</span>
+                <span class="slot-desc">展示自定义算子已成功入图并生成 OM 节点</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>OM 入图核心：libop_transformer_onnx_plugin.so 放入 framework/onnx/ + ONNX 节点名对齐 OriginOpType</span>
+        <span>5 / 8</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 6: 算子入图 - 导出 MindIR ==================== -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="header-titles">
+          <span class="section-tag">Step 03.3 · Graph Lowering (ONNX → MindIR)</span>
+          <h2 class="slide-title">算子入图（二）：导出 MindIR 模型与 GE Dump 图验证</h2>
+        </div>
+        <div class="squirrel-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>OM vs MindIR：ONNX 自定义算子定义差异对比</div>
+              <table class="minimal-table" style="margin-bottom:10px;">
+                <thead>
+                  <tr>
+                    <th>字段</th>
+                    <th>导出 OM (CANN ATC)</th>
+                    <th>导出 MindIR (MindSpore Lite)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Node op_type</strong></td>
+                    <td><code class="inline">"NPUPromptFlashAttention"</code></td>
+                    <td>统一写为 <code class="inline">"Custom"</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Node domain</strong></td>
+                    <td><code class="inline">""</code> (对应 <code class="inline">ai.onnx::12</code>)</td>
+                    <td><code class="inline">"npu"</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Attr["type"]</strong></td>
+                    <td><code class="inline">"PromptFlashAttention"</code></td>
+                    <td><code class="inline">"PromptFlashAttention"</code>（被调算子名）</td>
+                  </tr>
+                </tbody>
+              </table>
+              <pre class="code-block">node_attention = make_node(
+    "Custom", inputs=["query_enhanced", "key_id", "value_id"],
+    outputs=["attention_raw"], name="PromptFlashAttention", domain="npu"
+)
+# Attribute 中指定 make_attribute("type", "PromptFlashAttention")</pre>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>MindIR 转换与 GE Dump 图可视化技巧</div>
+              <ul class="clean-list" style="margin-bottom:6px;">
+                <li>MindIR 无法直接用 Netron 观察下沉算子，需开启 <code class="inline">export DUMP_GE_GRAPH=2</code> 后执行转换，取最后阶段 Dump 图用 Netron 查看：</li>
+              </ul>
+              <pre class="code-block">export DUMP_GE_GRAPH=2
+converter_lite --fmk=ONNX --modelFile=/path/your.onnx \
+  --outputFile=model --saveType=MINDIR --optimize=ascend_oriented</pre>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="img-slot" data-slot="8">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/3b75d1f71e14e53bb2c4aa8c5fa75b2d_722x597.png@900-0-90-f.png" alt="GE Dump图Netron可视化" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #8（点击可上传替换）</span>
+                <span class="slot-title">DUMP_GE_GRAPH=2 最终阶段 Netron 可视化图</span>
+                <span class="slot-desc">展示 MindIR 转换后 GE 图中的 PromptFlashAttention 节点</span>
+              </div>
+            </div>
+            <div class="img-slot" data-slot="9">
+              <img src="http://image.huawei.com/tiny-lts/v1/images/hi3ms/b0e1dd02f74f2ecdfc16436926699dd2_2235x606.png@900-0-90-f.png" alt="MindIR推理测试结果" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #9（点击可上传替换）</span>
+                <span class="slot-title">MindIR 模型推理运行成功截图</span>
+                <span class="slot-desc">验证转换后的 MindIR 在昇腾 310P 上推理功能正常</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>MindIR 关键：MindSpore 在 CANN 之上做了封装，ONNX 节点需声明为 Custom + domain="npu"</span>
+        <span>6 / 8</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 7: 实战案例 - 需求与 Chrys 开发过程 ==================== -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="header-titles">
+          <span class="section-tag">Step 04.1 · Case Study: Fused Operator Development</span>
+          <h2 class="slide-title">需求实战：借助 Chrys 开发 MatMul+Add+Softmax+ReLU 融合算子</h2>
+        </div>
+        <div class="squirrel-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>需求定义：FP16 四算子融合</div>
+              <ul class="clean-list">
+                <li><strong>目标算子结构</strong>：<code class="inline">MatMul → Add → Softmax → ReLU</code>（数据类型：<code class="inline">float16</code>）。</li>
+                <li><strong>融合收益</strong>：减少中间激活值多次读写 HBM/GM 的带宽开销，在 AI Core 内部流水线完成矩阵乘、偏置加、归一化与非线性激活。</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>AI 辅助实现过程（Chrys Bypass 模式 + 人工定向引导）</div>
+              <ul class="clean-list">
+                <li><strong>自动化闭环</strong>：开启 <strong>Chrys bypass 模式</strong>，自动驱动算子 Kernel/Host 代码编写、编译检查、单测生成与报错迭代修改。</li>
+                <li><strong>人机协同排障</strong>：遇到昇腾特定 API 或硬件约束报错时，从 CANN 官方文档检索解决方向喂给 Agent，快速突破卡点。</li>
+                <li><strong>参考工作流</strong>：
+                  <br/>• Ascend C 算子开发：<code class="inline">WIKI2026062711632135</code>
+                  <br/>• 服务器安装 Chrys：<code class="inline">WIKI2026070711750885</code>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="img-slot" data-slot="10">
+              <img src="https://wiki.huawei.com/vision-file-storage/api/file/download/upload-v2/WIKI2026071311839967/47004659/8408f27b740143d4b49d346a0088d134.png" alt="融合算子结构图" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #10（点击可上传替换）</span>
+                <span class="slot-title">MatMul + Add + Softmax + ReLU 融合算子结构图</span>
+                <span class="slot-desc">展示输入 Tensor、权重、Bias 到最终输出的计算拓扑</span>
+              </div>
+            </div>
+            <div class="img-slot" data-slot="11">
+              <img src="https://wiki.huawei.com/vision-file-storage/api/file/download/upload-v2/WIKI2026071311839967/47004963/bd95355ca4d248c6a5ccaf1fbb8339f8.png" alt="Chrys开发过程截图" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #11（点击可上传替换）</span>
+                <span class="slot-title">Chrys Bypass 模式自动开发与编译迭代截图</span>
+                <span class="slot-desc">展示 Agent 自动编写算子、执行编译与修复单测的过程</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>人机协同：Chrys 负责高频编码与编译验证闭环，开发者提供 CANN 官方文档先验方向</span>
+        <span>7 / 8</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: 实战效果验证与沉淀 Skills ==================== -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="header-titles">
+          <span class="section-tag">Step 04.2 · Verification & Reusable Skills</span>
+          <h2 class="slide-title">融合算子验证效果与工程经验沉淀 (Skills)</h2>
+        </div>
+        <div class="squirrel-logo">
+          <svg><use href="#icon-squirrel"/></svg>
+          <span>松鼠分享会</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>1. 单测与模型转换全面通过</div>
+              <ul class="clean-list">
+                <li><strong><code class="inline">op_host</code> 单测通过</strong>：验证融合算子在 Host 端能够正确完成形状推断（InferShape）与 Tiling 切分计算。</li>
+                <li><strong><code class="inline">op_api</code> 单测通过</strong>：验证算子在 Ascend 310P NPU 上通过 ACLNN 接口调用的计算精度与功能正确性。</li>
+                <li><strong>算子入图转换通过</strong>：ONNX 自定义算子成功被识别并下沉转换至目标推理模型。</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="dot"></span>2. 经验沉淀为可复用 Agent Skills</div>
+              <ul class="clean-list">
+                <li>将本次 310P 算子开发、SoC 配置裁剪、三级单测命令及 ONNX→OM/MindIR 双路径入图规范沉淀为团队共享 <strong>Skills</strong>，赋能后续算子一键开发：</li>
+              </ul>
+              <pre class="code-block" style="margin-top:8px;">https://codehub-y.huawei.com/nrm4/model/operator/files?ref=skills%2Fw00939968</pre>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="grid-2-equal" style="height: 50%;">
+              <div class="img-slot" data-slot="12">
+                <img src="https://wiki.huawei.com/vision-file-storage/api/file/download/upload-v2/WIKI2026071311839967/47005133/71bd93fa53b448dd9da44ca3ee5373d7.png" alt="op_host单测通过" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+                <div class="slot-placeholder">
+                  <span class="slot-badge">图片预留位 #12</span>
+                  <span class="slot-title">op_host 单测通过截图</span>
+                  <span class="slot-desc">形状推断验证通过</span>
+                </div>
+              </div>
+              <div class="img-slot" data-slot="13">
+                <img src="https://wiki.huawei.com/vision-file-storage/api/file/download/upload-v2/WIKI2026071311839967/47005155/55946fcb874c45bb9b35892ca36c370a.png" alt="op_api单测通过" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+                <div class="slot-placeholder">
+                  <span class="slot-badge">图片预留位 #13</span>
+                  <span class="slot-title">op_api 单测通过截图</span>
+                  <span class="slot-desc">算子调用正确性验证通过</span>
+                </div>
+              </div>
+            </div>
+            <div class="img-slot" data-slot="14" style="height: 50%;">
+              <img src="https://wiki.huawei.com/vision-file-storage/api/file/download/upload-v2/WIKI2026071311839967/47005201/6ce4fe7c24e2493a9e0a5fa60ab5bb56.png" alt="算子转换测试结果" onerror="this.parentElement.classList.remove('has-img')" onload="this.parentElement.classList.add('has-img')" />
+              <div class="slot-placeholder">
+                <span class="slot-badge">图片预留位 #14（点击可上传替换）</span>
+                <span class="slot-title">融合算子入图转换成功识别截图</span>
+                <span class="slot-desc">展示融合算子被正常识别并转换到目标推理图中</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Thanks · 松鼠分享会 | Skills 仓库：codehub-y.huawei.com/nrm4/model/operator (ref=skills/w00939968)</span>
+        <span>8 / 8</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="controls">
+    <button id="btn-prev" title="上一页 (←)">◀</button>
+    <span id="page-indicator">1 / 8</span>
+    <button id="btn-next" title="下一页 (→)">▶</button>
+    <span style="opacity:0.4;">|</span>
+    <button id="btn-save" title="将已上传的图片打包保存为独立 HTML 文件">💾 保存配图版</button>
+    <span style="opacity:0.4;">|</span>
+    <button id="btn-print" title="导出 / 打印 PDF (Ctrl+P)">PDF</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const indicator = document.getElementById('page-indicator');
+    const deck = document.getElementById('deck');
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      indicator.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    document.getElementById('btn-prev').addEventListener('click', () => showSlide(current - 1));
+    document.getElementById('btn-next').addEventListener('click', () => showSlide(current + 1));
+    document.getElementById('btn-print').addEventListener('click', () => window.print());
+
+    // Save self-contained HTML with embedded images
+    document.getElementById('btn-save').addEventListener('click', () => {
+      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ascend310p_slides_with_images.html';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        showSlide(current + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        showSlide(current - 1);
+      }
+    });
+
+    // Responsive 16:9 Scaling
+    function resizeDeck() {
+      const scaleX = (window.innerWidth - 48) / 1280;
+      const scaleY = (window.innerHeight - 48) / 720;
+      const scale = Math.min(scaleX, scaleY, 1.25);
+      deck.style.transform = `scale(${scale})`;
+    }
+    window.addEventListener('resize', resizeDeck);
+    resizeDeck();
+
+    // Interactive Click-to-Upload Image Slots
+    const uploader = document.getElementById('img-uploader');
+    let activeSlot = null;
+
+    document.querySelectorAll('.img-slot').forEach(slot => {
+      slot.addEventListener('click', () => {
+        activeSlot = slot;
+        uploader.value = '';
+        uploader.click();
+      });
+    });
+
+    uploader.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file || !activeSlot) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = activeSlot.querySelector('img');
+        img.src = ev.target.result;
+        activeSlot.classList.add('has-img');
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
