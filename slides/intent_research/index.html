@@ -568,6 +568,15 @@ ol.refs li {
   }
 }
 @media print {
+  html, body, body[data-theme="parchment"], body[data-theme="github"] {
+    --bg-page: #FFFFFF !important;
+    --bg-box: #F6F8FA !important;
+    --bg-code: #F6F8FA !important;
+    background: #FFFFFF !important;
+  }
+  body[data-theme="parchment"] .sym-explain {
+    background: #FAFBFD !important;
+  }
   .web-topbar, .web-sidebar {
     display: none !important;
   }
@@ -576,6 +585,7 @@ ol.refs li {
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: #FFFFFF !important;
   }
 }
 
