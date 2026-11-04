@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>专题 ②：模糊消歧、主动澄清与槽位修正评测（Clarification & State Revision） · 论文深度拆解专题页</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+  <script defer src="../app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span>📊 Agent 评测现状、对标与论文按需展开库</span>
+  </div>
+  <nav class="nav-links">
+    <a class="nav-pill" href="../index.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill active" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+  </nav>
+  <div>
+    <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="kicker">TOPIC 02 · AMBIGUITY RESOLUTION & EARLY POSTERIOR COLLAPSE</div>
+    <h1>专题 ②：模糊消歧、主动澄清与槽位修正评测（Clarification & State Revision）</h1>
+    <p class="lead">涵盖 ClarifyMT-Bench、Clarification Is Not Correction、CICC、ProductAgent、CLAM 等 5 篇代表作。深度剖析多轮交互中的『欠澄清 vs. 过澄清』权衡，以及为什么模型在用户中途改口时极易发生『早期承诺坍缩（旧槽位残留污染）』。</p>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:10px; border-top:1px solid var(--border);">
+      <div style="font-size:13px; color:#334155;"><strong>💡 本专题对我们联接 Agent 的核心启示：</strong>直接支撑我们对 python_state.py 中 # candidate:（防早坍缩）与 # cancel:（Δ^drop 槽位修正动作）的专项评测设计。</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" onclick="toggleAllDetails(true)">➕ 全部展开</button>
+        <button class="btn" onclick="toggleAllDetails(false)">➖ 全部收起</button>
+        <a class="btn primary" href="../index.html">← 返回总览主站</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-block">
+    
+<details class="paper-card paper-item" open id="clarifymt-bench" data-cat="clarify" data-search="ClarifyMT-Bench: Benchmarking and Improving Multi-Turn Clarification for Conversational Agents ClarifyMT Research Team 2512.21120 构建五维模糊源分类学（欠指定/多义/指代不明/隐含假设/分布偏移）与「问对时机 + 问准槽位」双阶评测指标。 ② 澄清消歧与槽位修正">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2025</span>
+      <span class="badge inspire">② 澄清消歧与槽位修正</span>
+      <span>ClarifyMT-Bench: Benchmarking and Improving Multi-Turn Clarification for Conversational Agents</span>
+      <code style="font-size:11.5px;">arXiv:2512.21120</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>构建五维模糊源分类学（欠指定/多义/指代不明/隐含假设/分布偏移）与「问对时机 + 问准槽位」双阶评测指标。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>ClarifyMT Research Team</p>
+        <p><strong>发表年份与出处：</strong>2025 · <a href="https://arxiv.org/abs/2512.21120" target="_blank" rel="noopener">https://arxiv.org/abs/2512.21120 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>系统剖析了对话 Agent 在面对模糊请求时的两大顽疾：**欠澄清（Under-clarification，盲目脑补抢跑）**与**过澄清（Over-clarification，明明可从上下文或记忆唯一推导却反复追问骚扰用户）**。构建了 5 类模糊源分类体系与 6 类真实用户回应模拟器（含答非所问、中途改口、部分回答），通过 `When-to-Ask F1` 与 `Question Slot Coverage` 联合打分。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】首次把『该不该问』与『问得准不准』解耦量化，直击快/慢路径路由痛点。<br/>【局限与边界】未结合结构化外部个人记忆库来动态改变“是否模糊”的边界。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>在我们的联接 Agent 中，『一句模糊话该不该反问』完全取决于**检索标准记忆状态快照后的唯一性**（例如“老规矩开会”若在 `periodic_preference` 中唯一命中周三腾讯会议，则属于可闭环快路径，追问即判为**过澄清惩罚**；若命中两个冲突候选，则必须转入慢路径反问，直接下发即判为**欠澄清抢跑**）。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="clarification-not-correction" data-cat="clarify" data-search="Clarification Is Not Correction: Order Sensitivity and Early Posterior Collapse in Multi-Turn LLM Interactions Lin et al. 2609.25337 从信息论角度证明多轮模型存在「早期承诺坍缩（Early Posterior Collapse）」：把后续改口当成增量追加而非旧状态推翻。 ② 澄清消歧与槽位修正">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2026</span>
+      <span class="badge inspire">② 澄清消歧与槽位修正</span>
+      <span>Clarification Is Not Correction: Order Sensitivity and Early Posterior Collapse in Multi-Turn LLM Interactions</span>
+      <code style="font-size:11.5px;">arXiv:2609.25337</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>从信息论角度证明多轮模型存在「早期承诺坍缩（Early Posterior Collapse）」：把后续改口当成增量追加而非旧状态推翻。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Lin et al.</p>
+        <p><strong>发表年份与出处：</strong>2026 · <a href="https://arxiv.org/abs/2609.25337" target="_blank" rel="noopener">https://arxiv.org/abs/2609.25337 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>设计了严格的**受控语序置换实验（Order-Sensitivity Controlled Experiment）**：保持最终完整意图所需的全部信息量完全不变，对比『首轮一次说清』、『先模糊后补充澄清』与『先说错后改口修正』三种轨迹。实证发现所有主流大模型在后两种多轮场景下准确率暴跌 15%~35%。根因在于模型在第 1 轮生成回复时过早将隐式状态分布坍缩到某个具体假设（Early Posterior Collapse），当第 2 轮用户改口时，模型将其视为在旧状态上的局部追加，导致**旧意图残留与新旧槽位拼接污染**。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】极其深刻地揭示了多轮对话『越聊越错、旧槽位阴魂不散』的底层机制，并给出了无需标注额外数据的语序置换对偶测试法。<br/>【局限与边界】论文侧重现象诊断与概率建模，工程上需配合显式状态机才能根治。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>直接验证并指导了我们 `D:\coding\qwen_intent_rag\python_state.py` 的核心设计：<br/>1. **预防坍缩**：第 1 轮模糊候选只允许输出 `# candidate: app/service`（第 341 行解析器特意不将 `candidate` 写入 `prev_states`），防止不确定猜测固化为下一轮先验；<br/>2. **显式槽位修正动作审计**：在 `session_eval.py` 中新增对 **槽位修正动作（Slot Revision Rule / Adjustment Action）** 的专项评测——校验改口轮次是否正确触发 `# cancel: old_app/old_service`（`$\Delta^{\text{drop}}$` 整棵擦除）与同名属性覆写（`$\Delta^{\text{update}}$`）。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="cicc" data-cat="clarify" data-search="Constrained Interaction Testing for Evaluating Compound Intent Recognition and Clarification CICC Research Group 2403.18973 针对单句包含多个子意图且部分槽位缺失的复合请求，提出受约束交互测试法。 ② 澄清消歧与槽位修正">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024</span>
+      <span class="badge inspire">② 澄清消歧与槽位修正</span>
+      <span>Constrained Interaction Testing for Evaluating Compound Intent Recognition and Clarification</span>
+      <code style="font-size:11.5px;">arXiv:2403.18973</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>针对单句包含多个子意图且部分槽位缺失的复合请求，提出受约束交互测试法。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>CICC Research Group</p>
+        <p><strong>发表年份与出处：</strong>2024 · <a href="https://arxiv.org/abs/2403.18973" target="_blank" rel="noopener">https://arxiv.org/abs/2403.18973 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>考察当用户一句话同时提出两个业务诉求（其中子意图 A 槽位完备、子意图 B 缺失关键槽位）时，Agent 能否在保留子意图 A 状态的同时，仅针对子意图 B 缺失的槽位发起最小化精准追问。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】贴合真实生产中『多意图并发 + 局部模糊』的高频复杂形态。<br/>【局限与边界】对状态追踪数据结构要求高，纯扁平 JSON 极易发生跨子意图槽位串扰。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>验证了我们 `python_state.py` 采用二级命名空间（`<app>.<service> = State(...)`）的优越性：不同子意图的 7 槽位物理隔离在各自的命名空间实例中，评测时需按 `(application_name, service_name)` 主键分别对齐真值。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="productagent" data-cat="clarify" data-search="ProductAgent: Benchmarking Conversational Product Search Agent with Asking Clarification Questions ProductAgent Team 2407.00942 以候选集信息增益（Information Gain / Entropy Reduction）量化每一轮澄清反问的质量与对话效率。 ② 澄清消歧与槽位修正">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024</span>
+      <span class="badge inspire">② 澄清消歧与槽位修正</span>
+      <span>ProductAgent: Benchmarking Conversational Product Search Agent with Asking Clarification Questions</span>
+      <code style="font-size:11.5px;">arXiv:2407.00942</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>以候选集信息增益（Information Gain / Entropy Reduction）量化每一轮澄清反问的质量与对话效率。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>ProductAgent Team</p>
+        <p><strong>发表年份与出处：</strong>2024 · <a href="https://arxiv.org/abs/2407.00942" target="_blank" rel="noopener">https://arxiv.org/abs/2407.00942 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>在检索驱动的多轮导购场景中，评估 Agent 提出的澄清问题是否切中区分度最高的属性槽位，使数据库候选集最快收敛到唯一目标商品（衡量平均澄清轮数 ATN 与最终命中率）。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】用客观的『候选集收敛速度』替代主观的『反问句写得好不好看』。<br/>【局限与边界】需要后端检索候选集可枚举、属性分布可计算。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>指导我们慢路径澄清问题评估：当混合检索返回多条冲突记忆记录时，最优反问必须指向区分这两条记录的**差异槽位列**（如 `application_name` 或 `resolution`），仅需 1 轮反问即可消除歧义。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="clam" data-cat="clarify" data-search="CLAM: Selective Clarification for Ambiguous Questions with Large Language Models Lorenz Kuhn, Yarin Gal, Sebastian Farquhar (Oxford) 2212.07769 奠定「歧义分类器 + 选择性澄清」两阶段评测范式，对比盲目作答与主动澄清的端到端收益。 ② 澄清消歧与槽位修正">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2022 / ACL 2023</span>
+      <span class="badge inspire">② 澄清消歧与槽位修正</span>
+      <span>CLAM: Selective Clarification for Ambiguous Questions with Large Language Models</span>
+      <code style="font-size:11.5px;">arXiv:2212.07769</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>奠定「歧义分类器 + 选择性澄清」两阶段评测范式，对比盲目作答与主动澄清的端到端收益。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Lorenz Kuhn, Yarin Gal, Sebastian Farquhar (Oxford)</p>
+        <p><strong>发表年份与出处：</strong>2022 / ACL 2023 · <a href="https://arxiv.org/abs/2212.07769" target="_blank" rel="noopener">https://arxiv.org/abs/2212.07769 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构造了成对的『明确问题 vs. 最小修改产生的歧义问题』对照集，评测模型能否先识别出问题存在多种合法解释，再主动向用户发起澄清并依据回答修正最终输出。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】对照集设计干净，能精确测量模型的『未知自知力（Epistemic Uncertainty Awareness）』。<br/>【局限与边界】聚焦单跳事实问答，未涉及多轮槽位状态机。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>我们可在回归集中构造同构对照样本对（同一句用户指令搭配『完整记忆快照』vs.『缺失关键关联的残缺记忆快照』），检验 Agent 能否随记忆完备度自适应切换快/慢路径。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+  </section>
+</main>
+</body>
+</html>

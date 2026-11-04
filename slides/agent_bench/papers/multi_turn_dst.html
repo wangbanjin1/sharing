@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>专题 ⑤：多意图并发与多轮对话状态追踪基石（Multi-Intent & Multi-Turn DST） · 论文深度拆解专题页</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+  <script defer src="../app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span>📊 Agent 评测现状、对标与论文按需展开库</span>
+  </div>
+  <nav class="nav-links">
+    <a class="nav-pill" href="../index.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill active" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+  </nav>
+  <div>
+    <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="kicker">TOPIC 05 · JOINT GOAL ACCURACY & MULTI-INTENT ISOLATION</div>
+    <h1>专题 ⑤：多意图并发与多轮对话状态追踪基石（Multi-Intent & Multi-Turn DST）</h1>
+    <p class="lead">涵盖 MultiWOZ 2.4、Schema-Guided Dialogue (SGD)、AGIF / MixATIS、GL-GIN、CLINC150 & LDST 等经典基石工作。梳理联合目标准确率（JGA）、多意图捆绑评测与域外拒识（OOS Recall）的演进。</p>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:10px; border-top:1px solid var(--border);">
+      <div style="font-size:13px; color:#334155;"><strong>💡 本专题对我们联接 Agent 的核心启示：</strong>夯实我们 7 大核心槽位严格联合匹配（Turn Strict Acc）与二级命名空间（app.service）多意图防串扰评测底座。</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" onclick="toggleAllDetails(true)">➕ 全部展开</button>
+        <button class="btn" onclick="toggleAllDetails(false)">➖ 全部收起</button>
+        <a class="btn primary" href="../index.html">← 返回总览主站</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-block">
+    
+<details class="paper-card paper-item" open id="multiwoz-sgd" data-cat="dst" data-search="MultiWOZ 2.4 (2104.00773) & Schema-Guided Dialogue / SGD (1909.05855): Classic Multi-Turn DST Foundations Fanghua Ye et al. (UCL) & Abhinav Rastogi et al. (Google Research) 2104.00773 / 1909.05855 确立多轮对话状态追踪核心指标「联合目标准确率（JGA）」与零样本 Schema 驱动槽位迁移范式，并揭示标签噪声的巨大影响。 ⑤ 多意图与多轮 DST">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2020–2021 (AAAI / ACL)</span>
+      <span class="badge inspire">⑤ 多意图与多轮 DST</span>
+      <span>MultiWOZ 2.4 (2104.00773) & Schema-Guided Dialogue / SGD (1909.05855): Classic Multi-Turn DST Foundations</span>
+      <code style="font-size:11.5px;">arXiv:2104.00773 / 1909.05855</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>确立多轮对话状态追踪核心指标「联合目标准确率（JGA）」与零样本 Schema 驱动槽位迁移范式，并揭示标签噪声的巨大影响。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Fanghua Ye et al. (UCL) & Abhinav Rastogi et al. (Google Research)</p>
+        <p><strong>发表年份与出处：</strong>2020–2021 (AAAI / ACL) · <a href="https://arxiv.org/abs/2104.00773" target="_blank" rel="noopener">https://arxiv.org/abs/2104.00773 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MultiWOZ 2.4` 清洗了早期 MultiWOZ 2.1 中超过 40% 对话轮次存在的标注不一致与漏标噪声，证明高质量干净 GT 测试集比单纯堆砌模型规模更关键，并以 **Joint Goal Accuracy（JGA，当前轮所有域-槽-值三元组全部精确匹配才得 1 分）** 作为黄金标准。<br/>`SGD`（Google）提出用自然语言描述服务与槽位 Schema，评测模型在未见过的新服务 API 上的零样本槽位填充能力。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】JGA 指标极其严苛、无水分，能一眼看出多槽位联合预测的短板。<br/>【局限与边界】依赖静态历史回放（Teacher-Forcing），一旦模型在某轮主动发起不同于剧本的澄清反问，后续静态录音便无法对齐。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>我们 `D:\coding\qwen_intent_rag\session_eval.py` 中的 `Turn Strict Acc` 与 `Session Complete` 正是继承了 MultiWOZ 2.4 的 **JGA 全槽位严格联合匹配** 思想（7 大槽位任一错漏则整轮判 0），同时我们在慢路径上需结合动态模拟来克服静态回放局限。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="agif-glgin" data-cat="dst" data-search="AGIF / MixATIS / MixSNIPS (2004.10087) & GL-GIN (2106.01925): Multi-Intent & Slot Filling Joint Evaluation Libo Qin et al. (HIT / SCIR) 2004.10087 / 2106.01925 首创单句多意图（Multi-Intent）与槽位填充联合评测基准，以「整句意图集+全槽位捆绑精确匹配（Overall Acc）」防串扰。 ⑤ 多意图与多轮 DST">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2020 (EMNLP) & 2021 (ACL)</span>
+      <span class="badge inspire">⑤ 多意图与多轮 DST</span>
+      <span>AGIF / MixATIS / MixSNIPS (2004.10087) & GL-GIN (2106.01925): Multi-Intent & Slot Filling Joint Evaluation</span>
+      <code style="font-size:11.5px;">arXiv:2004.10087 / 2106.01925</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>首创单句多意图（Multi-Intent）与槽位填充联合评测基准，以「整句意图集+全槽位捆绑精确匹配（Overall Acc）」防串扰。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Libo Qin et al. (HIT / SCIR)</p>
+        <p><strong>发表年份与出处：</strong>2020 (EMNLP) & 2021 (ACL) · <a href="https://arxiv.org/abs/2004.10087" target="_blank" rel="noopener">https://arxiv.org/abs/2004.10087 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了通过连词组合 2~3 个子意图的 MixATIS 与 MixSNIPS 数据集，要求模型不仅识别出所有并发意图集合 $\hat{\mathcal{I}} = \mathcal{I}^*$，还必须把每个槽位精准挂载到对应的子意图下，任何跨意图槽位张冠李戴均判整句失败。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】精准暴露单句多业务并发时的『槽位跨业务串扰』问题。<br/>【局限与边界】单轮静态评测，未包含多轮取消某个子意图的动态操作。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>直接支撑我们多意图并发场景的评测设计：在 `session_eval.py` 中按 `(application_name, service_name)` 复合键逐个比对 7 槽位元组，严防用户说『一边开腾讯会议一边挂原神更新』时将分辨率与时延参数填串。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="clinc150-ldst" data-cat="dst" data-search="CLINC150 (1909.02027) / ADB (2012.10209) & LDST (2310.14970): Out-of-Scope Reject & LLM-Driven DST Stefan Larson et al. (UMich) & Huaixiao Feng et al. (UCL) 1909.02027 / 2310.14970 建立域外意图拒识（OOS Recall）评测标准，以及大模型时代基于指令微调的无代码泄漏状态追踪基线。 ⑤ 多意图与多轮 DST">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2019–2023 (EMNLP / ACL)</span>
+      <span class="badge inspire">⑤ 多意图与多轮 DST</span>
+      <span>CLINC150 (1909.02027) / ADB (2012.10209) & LDST (2310.14970): Out-of-Scope Reject & LLM-Driven DST</span>
+      <code style="font-size:11.5px;">arXiv:1909.02027 / 2310.14970</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>建立域外意图拒识（OOS Recall）评测标准，以及大模型时代基于指令微调的无代码泄漏状态追踪基线。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Stefan Larson et al. (UMich) & Huaixiao Feng et al. (UCL)</p>
+        <p><strong>发表年份与出处：</strong>2019–2023 (EMNLP / ACL) · <a href="https://arxiv.org/abs/1909.02027" target="_blank" rel="noopener">https://arxiv.org/abs/1909.02027 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`CLINC150` 引入专门的 Out-of-Scope（域外闲聊/不支持业务）测试集，同时考核域内准确率与域外拒识召回率；<br/>`LDST` 系统评测了开源大模型在零样本/少样本下执行多轮状态追踪的鲁棒性与常见值偏置。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】防止 Agent 对闲聊或越界指令强行脑补下发业务配置。<br/>【局限与边界】基础分类粒度，需嵌入多轮框架中使用。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>提醒我们在联接 Agent 评测集中保留 **10% 域外闲聊与负向取消样本**（例如用户仅闲聊“今天游戏真卡啊，算了先不玩了”），验证系统能否保持空意图状态而不误触下发。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+  </section>
+</main>
+</body>
+</html>

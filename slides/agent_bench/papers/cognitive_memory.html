@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>专题 ③：跨会话长周期认知记忆评测（Long-Term Cognitive Memory） · 论文深度拆解专题页</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+  <script defer src="../app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span>📊 Agent 评测现状、对标与论文按需展开库</span>
+  </div>
+  <nav class="nav-links">
+    <a class="nav-pill" href="../index.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill active" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+  </nav>
+  <div>
+    <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="kicker">TOPIC 03 · IMPLICIT MEMORY CONSTRAINT & EVOLUTION</div>
+    <h1>专题 ③：跨会话长周期认知记忆评测（Long-Term Cognitive Memory）</h1>
+    <p class="lead">涵盖 LoCoMo / LoCoMo-Plus、LongMemEval、EvolMem、MemUse、PersistBench & AgentMemGate 等代表作。聚焦当最新指令与历史记忆无字面重合时，如何评测隐式个人偏好的自动触发、动态更新覆写与抗噪门控写入。</p>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:10px; border-top:1px solid var(--border);">
+      <div style="font-size:13px; color:#334155;"><strong>💡 本专题对我们联接 Agent 的核心启示：</strong>全面对应我们五层正交事实记忆的『向量相似度检索与同行槽位提取 → 二阶段关联表补全 → 慢路径交互归纳与经验规则沉淀』闭环。</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" onclick="toggleAllDetails(true)">➕ 全部展开</button>
+        <button class="btn" onclick="toggleAllDetails(false)">➖ 全部收起</button>
+        <a class="btn primary" href="../index.html">← 返回总览主站</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-block">
+    
+<details class="paper-card paper-item" open id="locomo-plus" data-cat="memory" data-search="LoCoMo & LoCoMo-Plus: Beyond-Factoid Cognitive Memory Evaluation in Long-Term Dialogues Adyasha Maharana et al. (UNC / SNAP) & LoCoMo-Plus Team 2402.17753 / 2602.10715 从表层事实问答升级为「隐式认知约束满足评测」：当最新指令与历史记忆无字面重合时，检验 Agent 能否主动触发偏好约束。 ③ 跨会话长周期记忆">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024 (ACL) & 2026</span>
+      <span class="badge inspire">③ 跨会话长周期记忆</span>
+      <span>LoCoMo & LoCoMo-Plus: Beyond-Factoid Cognitive Memory Evaluation in Long-Term Dialogues</span>
+      <code style="font-size:11.5px;">arXiv:2402.17753 / 2602.10715</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>从表层事实问答升级为「隐式认知约束满足评测」：当最新指令与历史记忆无字面重合时，检验 Agent 能否主动触发偏好约束。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Adyasha Maharana et al. (UNC / SNAP) & LoCoMo-Plus Team</p>
+        <p><strong>发表年份与出处：</strong>2024 (ACL) & 2026 · <a href="https://arxiv.org/abs/2402.17753" target="_blank" rel="noopener">https://arxiv.org/abs/2402.17753 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`LoCoMo`（ACL 2024）构建了跨数十个会话的超长多模态对话基准，考察单跳、多跳与时序推理问答。<br/>`LoCoMo-Plus`（2026，arXiv:2602.10715）指出传统记忆评测沦为『带时间戳的阅读理解考试（直接问用户喜欢什么）』，而在真实 Agent 场景中，用户只会下达简短任务指令（如“帮我排一下今晚的联接保障”），**最新指令与历史偏好记录之间没有任何词汇重叠（Trigger-Cue Semantic Disconnect）**。提出了以『最终生成方案是否隐式满足历史认知约束』为核心的端到端评测。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】精准击中生产级记忆系统的核心难点——『不提历史词，也要用对历史习惯』。<br/>【局限与边界】需要精心设计触发指令与隐式约束之间的逻辑映射关系。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>完美契合我们五层正交事实记忆的检索机制！当用户仅说『帮我弄下推流』（仅含服务词，未提具体应用与参数）时，评测我们能否通过 **向量相似度检索与同行槽位提取** $\rightarrow$ **二阶段关联表补全（通过 `service_to_app` / `periodic_preference` 双向关联）** $\rightarrow$ **读取同行结构化槽位列（Row-Level Column Projection）** 自动补齐 `OBS`、`4K`、`20ms`。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="longmemeval" data-cat="memory" data-search="LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory Di Wu, Haichuan Wang et al. (UCLA & Tencent AI Lab) 2410.10813 定义长周期交互记忆五大核心能力（信息抽取、多会话推理、时间推理、知识更新覆写、未知拒答），统一拆解记忆系统架构。 ③ 跨会话长周期记忆">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024 / ICLR 2025</span>
+      <span class="badge inspire">③ 跨会话长周期记忆</span>
+      <span>LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</span>
+      <code style="font-size:11.5px;">arXiv:2410.10813</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>定义长周期交互记忆五大核心能力（信息抽取、多会话推理、时间推理、知识更新覆写、未知拒答），统一拆解记忆系统架构。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Di Wu, Haichuan Wang et al. (UCLA & Tencent AI Lab)</p>
+        <p><strong>发表年份与出处：</strong>2024 / ICLR 2025 · <a href="https://arxiv.org/abs/2410.10813" target="_blank" rel="noopener">https://arxiv.org/abs/2410.10813 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了可扩展长跨度历史会话基准（从数万到百万词元），将长程记忆能力正交拆解为 5 大原子任务，特别是系统评测了**知识更新（Knowledge Update，用户后期更改了习惯，模型能否返回最新值而非早期过时值）**与**弃权拒答（Abstention，历史中从未提过的偏好能否诚实反问而非胡编）**。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】五大维度划分极其清晰，是检验记忆覆写与防幻觉的行业标杆。<br/>【局限与边界】主要评测文本问答输出，未直接绑定结构化工具槽位合成。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>在评测 `D:\coding\memory_system` 时，专门设立 **偏好演进覆写测试集（Preference Evolution Suite）**：验证当用户在近期会话中通过慢路径修改了常用分辨率或周期时间窗后，检索层与 `experience_handler.py` 能否优先命中高权重/最新时间戳记录，彻底屏蔽旧记录干扰。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="evolmem" data-cat="memory" data-search="EvolMem: A Cognitive-Driven Benchmark for Multi-Session Evolving Narrative Memory EvolMem Research Team 2601.03543 专注评测跨会话「状态渐进演化、旧事实失效与冲突消解」，检验记忆库在动态更新下的时序一致性。 ③ 跨会话长周期记忆">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2026</span>
+      <span class="badge inspire">③ 跨会话长周期记忆</span>
+      <span>EvolMem: A Cognitive-Driven Benchmark for Multi-Session Evolving Narrative Memory</span>
+      <code style="font-size:11.5px;">arXiv:2601.03543</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>专注评测跨会话「状态渐进演化、旧事实失效与冲突消解」，检验记忆库在动态更新下的时序一致性。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>EvolMem Research Team</p>
+        <p><strong>发表年份与出处：</strong>2026 · <a href="https://arxiv.org/abs/2601.03543" target="_blank" rel="noopener">https://arxiv.org/abs/2601.03543 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对用户在长期使用过程中偏好发生渐进转移、临时破例（一次性例外 vs. 永久改变习惯）以及跨表关联变更的场景，设计了演化轨迹追踪评测指标。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】区分了『临时单次破例（Working Memory 作用域）』与『长期习惯变更（Fact/Experience Memory 作用域）』。<br/>【局限与边界】构造长程演化链路的合成数据校验成本较高。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>直接对应我们的三层记忆边界评测：验证单次会话内的临时参数调整仅停留在 `working_memory_handler.py`，而只有经过明确确认或多次重复的规律才通过 **慢路径交互归纳与经验规则沉淀（`induction.py`）** 写入持久层。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="memuse" data-cat="memory" data-search="MemUse: Benchmarking When and How Agents Use External Memory in Dynamic Tasks MemUse Authors 2608.24189 评测 Agent「何时该查记忆、何时该忽略无关记忆噪声」，量化检索噪声下的抗干扰能力。 ③ 跨会话长周期记忆">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2026</span>
+      <span class="badge inspire">③ 跨会话长周期记忆</span>
+      <span>MemUse: Benchmarking When and How Agents Use External Memory in Dynamic Tasks</span>
+      <code style="font-size:11.5px;">arXiv:2608.24189</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>评测 Agent「何时该查记忆、何时该忽略无关记忆噪声」，量化检索噪声下的抗干扰能力。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>MemUse Authors</p>
+        <p><strong>发表年份与出处：</strong>2026 · <a href="https://arxiv.org/abs/2608.24189" target="_blank" rel="noopener">https://arxiv.org/abs/2608.24189 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>指出在实际混合检索（Top-K 召回）中，检索器不可避免会带回语义相近但业务不匹配的干扰记录（Distractor Memories）。MemUse 专门评测 Agent 在面对『包含 1 条真值记录 + 多条高相似干扰记录（含否定句或近似业务）』时的筛选与择优能力。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】将评测视角从单纯的 Recall@K 推向端到端的『抗噪槽位提取准确率』。<br/>【局限与边界】强依赖各业务域特异的难负例（Hard Negatives）构造。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>为我们的 **否定子句分离与权重衰减过滤** 及 `pipeline_slot_fusion.py` 提供专项测试集：在候选池中混入包含否定表述（如“平时打王者荣耀，不要加速原神”）的难负例记录，评测融合层是否能实现 0 否定污染。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="persistbench" data-cat="memory" data-search="PersistBench & AgentMemGate: Evaluating Memory Misuse, Sycophancy and Gated Admission Control PersistBench Team & AgentMemGate Team 2602.01146 / 2610.07707 揭示长期记忆的副作用（跨领域过度泛化、错误假设固化入库），并提出记忆准入控制（Gated Write）评测标准。 ③ 跨会话长周期记忆">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2026</span>
+      <span class="badge inspire">③ 跨会话长周期记忆</span>
+      <span>PersistBench & AgentMemGate: Evaluating Memory Misuse, Sycophancy and Gated Admission Control</span>
+      <code style="font-size:11.5px;">arXiv:2602.01146 / 2610.07707</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>揭示长期记忆的副作用（跨领域过度泛化、错误假设固化入库），并提出记忆准入控制（Gated Write）评测标准。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>PersistBench Team & AgentMemGate Team</p>
+        <p><strong>发表年份与出处：</strong>2026 · <a href="https://arxiv.org/abs/2602.01146" target="_blank" rel="noopener">https://arxiv.org/abs/2602.01146 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`PersistBench`（2602.01146）评测当记忆库中存在过时或强偏置记录时，Agent 是否会盲目顺从旧记忆而忽略用户当前轮的新指令；<br/>`AgentMemGate`（2610.07707）专门评测**记忆写入门控（Memory Write Gate）**——检验系统能否拦截未验证的猜测、噪声闲聊或失败的中间尝试，防止垃圾数据写入长期记忆造成雪崩污染。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】填补了『只测记忆读取、不测记忆写入质量与门控安全性』的空白。<br/>【局限与边界】需要多会话闭环测试（先测写入，再开启新会话测读取影响）。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>直接赋能我们 `D:\coding\memory_system\experience\induction.py` 的门控评测：必须确保只有当会话以合法终态确认闭环时，才触发 **慢路径交互归纳与经验规则沉淀**，中途取消或未确认的 `# candidate:` 严禁入库。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+  </section>
+</main>
+</body>
+</html>

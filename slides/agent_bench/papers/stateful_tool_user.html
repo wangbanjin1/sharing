@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>专题 ①：状态化工具与多轮用户交互评测（Stateful Tool & User Simulation） · 论文深度拆解专题页</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+  <script defer src="../app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span>📊 Agent 评测现状、对标与论文按需展开库</span>
+  </div>
+  <nav class="nav-links">
+    <a class="nav-pill" href="../index.html">🏠 总览与选型主站</a><a class="nav-pill active" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+  </nav>
+  <div>
+    <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="kicker">TOPIC 01 · STATEFUL SANDBOX & DATABASE ASSERTION</div>
+    <h1>专题 ①：状态化工具与多轮用户交互评测（Stateful Tool & User Simulation）</h1>
+    <p class="lead">涵盖 τ-bench、ToolSandbox、AppWorld / AppWorld-UL、MINT、StableToolBench、Gorilla 等 6 篇代表作。重点剖析如何用『关系型数据库终态断言』、『里程碑有向无环图（Milestone DAG）』与『受控知识边界模拟器』替代脆弱的表面文本比对。</p>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:10px; border-top:1px solid var(--border);">
+      <div style="font-size:13px; color:#334155;"><strong>💡 本专题对我们联接 Agent 的核心启示：</strong>直接指导我们在 session_eval.py 中落地 Pass^k 多轮稳定性指标、快/慢路径 Milestone DAG 门控与记忆库零附带损害断言。</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" onclick="toggleAllDetails(true)">➕ 全部展开</button>
+        <button class="btn" onclick="toggleAllDetails(false)">➖ 全部收起</button>
+        <a class="btn primary" href="../index.html">← 返回总览主站</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-block">
+    
+<details class="paper-card paper-item" open id="tau-bench" data-cat="stateful" data-search="τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains Shunyu Yao, Noah Shinn, Pedram Razavi, Karthik Narasimhan (Sierra & Princeton) 2406.12045 提出「动态用户模拟 + 领域规则约束 + 数据库终态断言」与 Pass^k 多轮稳定性指标，揭示 Agent 多轮一致性极脆弱。 ① 状态化工具与交互">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024 / ICLR 2025</span>
+      <span class="badge inspire">① 状态化工具与交互</span>
+      <span>τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains</span>
+      <code style="font-size:11.5px;">arXiv:2406.12045</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>提出「动态用户模拟 + 领域规则约束 + 数据库终态断言」与 Pass^k 多轮稳定性指标，揭示 Agent 多轮一致性极脆弱。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Shunyu Yao, Noah Shinn, Pedram Razavi, Karthik Narasimhan (Sierra & Princeton)</p>
+        <p><strong>发表年份与出处：</strong>2024 / ICLR 2025 · <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">https://arxiv.org/abs/2406.12045 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对传统基准仅测单轮静态工具调用的缺陷，构建了航空公司（Airline）与零售（Retail）两大强业务规则环境。评测由三部分组成：① LLM 驱动的用户模拟器（给定隐藏诉求与性格，分多轮渐进释放信息）；② 领域业务手册（Policy Document，规定退改签、会员等级等硬性约束）；③ 关系型数据库沙箱。评判时不看对话表面措辞，而是在对话结束后将沙箱数据库的最终记录与标准真值状态做严格相等断言（Final DB State Assertion），并提出 $\text{Pass}\text{\textasciicircum}k = \mathbb{E}[\binom{c}{k}/\binom{n}{k}]$ 衡量连续 $k$ 次独立运行全部成功的概率。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】彻底消除表层文本比对误差，不论 Agent 走哪条追问或调用路径，只要数据库最终状态正确即判通过；Pass^k 精准暴露生产环境可靠性短板。<br/>【局限与边界】仅看终态无法区分「哪一步中间推理出错」，当任务失败时缺乏细粒度过程诊断；动态用户模拟器本身消耗较多 Token。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>1. 在 `D:\coding\qwen_intent_rag\session_eval.py` 中，除现有的 `Turn Strict Acc` 与 `Session Complete` 外，新增 **`Pass^3`（连续 3 次采样全通过率）**，重点监控快/慢路径边界意图的多轮稳定性；<br/>2. 借鉴「终态断言」思想，对 `_merge_turn_finals` 产出的最终 7 槽位字典执行确定性集合相等断言与算术一致性校验（`validator.py` 中 `end_timestamp - start_timestamp == duration`）。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="toolsandbox" data-cat="stateful" data-search="ToolSandbox: A Stateful, Conversational, Interactive Evaluation Benchmark for LLM Tool Use Capabilities Jiarui Lu, Thomas Holleis, Yizhe Zhang et al. (Apple) 2408.04682 引入有向无环图里程碑（Milestone DAG）与破坏性动作雷区（Minefields），统一评判隐式状态依赖与信息不足澄清。 ① 状态化工具与交互">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024 / NAACL 2025</span>
+      <span class="badge inspire">① 状态化工具与交互</span>
+      <span>ToolSandbox: A Stateful, Conversational, Interactive Evaluation Benchmark for LLM Tool Use Capabilities</span>
+      <code style="font-size:11.5px;">arXiv:2408.04682</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>引入有向无环图里程碑（Milestone DAG）与破坏性动作雷区（Minefields），统一评判隐式状态依赖与信息不足澄清。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Jiarui Lu, Thomas Holleis, Yizhe Zhang et al. (Apple)</p>
+        <p><strong>发表年份与出处：</strong>2024 / NAACL 2025 · <a href="https://arxiv.org/abs/2408.04682" target="_blank" rel="noopener">https://arxiv.org/abs/2408.04682 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对『只看终态不知过程』与『工具间隐式状态耦合（如未开启定位权限则无法查询周边服务）』问题，将每个评测任务建模为一个带有先决依赖关系的 **里程碑有向无环图（Milestone DAG）** 与 **雷区集合（Minefields）**。每轮工具执行或对话交互后，状态评估器计算当前环境快照与各里程碑节点的相似度（取均值），一旦触发 Minefield（如未获确认直接删除或下发错误高危指令）立即将整局得分归零。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】兼具终态准确性与过程可观测性，能精准定位 Agent 卡在『未反问补槽』还是『工具依赖顺序颠倒』；Minefield 机制对合规红线极为有效。<br/>【局限与边界】需要为每类任务编写显式的 Milestone DAG 拓扑与状态匹配函数，任务模板设计成本高于纯文本数据集。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>直接对标我们联接 Agent 的**快速闭环路径 vs. 慢路径澄清路径**：在 `session_eval.py` 中引入轻量级 Milestone DAG 审计——节点 $M_1$（命中记忆候选记录）$\rightarrow M_2$（二阶段关联表补全 `service_to_app`/`periodic_preference`）$\rightarrow M_3$（高置信直接闭环 或 槽位冲突触发澄清反问）；将『槽位不完整或存在多候选冲突时未经用户确认直接输出 `# intent:` 终态下发』定义为 **Minefield（违规抢跑）**。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="appworld-ul" data-cat="stateful" data-search="AppWorld & AppWorld-UL: Execution-Grounded Multi-App Agent Benchmark & User-in-the-Loop Extension Harsh Trivedi et al. (Stony Brook & Allen AI) / AppWorld-UL Team 2407.18901 / 2607.20536 构建 9 大 App、457 个 API 的高保真执行环境，通过「数据库正反双向单元测试」与「受控知识边界用户模拟器」防止信息泄露。 ① 状态化工具与交互">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024 (ACL) & 2026</span>
+      <span class="badge inspire">① 状态化工具与交互</span>
+      <span>AppWorld & AppWorld-UL: Execution-Grounded Multi-App Agent Benchmark & User-in-the-Loop Extension</span>
+      <code style="font-size:11.5px;">arXiv:2407.18901 / 2607.20536</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>构建 9 大 App、457 个 API 的高保真执行环境，通过「数据库正反双向单元测试」与「受控知识边界用户模拟器」防止信息泄露。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Harsh Trivedi et al. (Stony Brook & Allen AI) / AppWorld-UL Team</p>
+        <p><strong>发表年份与出处：</strong>2024 (ACL) & 2026 · <a href="https://arxiv.org/abs/2407.18901" target="_blank" rel="noopener">https://arxiv.org/abs/2407.18901 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`AppWorld`（ACL 2024 最佳资源论文）构建了涵盖邮件、日历、支付、购物等 9 个日常 App 的本地可编程沙箱，使用**状态基单元测试（State-Based Unit Tests）**同时检验：① 目标记录已被正确修改（正向断言）；② **无关数据库表与记录零误伤（Zero Collateral Damage 反向断言）**。<br/>`AppWorld-UL`（2026，arXiv:2607.20536）进一步将静态完整指令拆解为模糊初始指令，提出**受控知识边界用户模拟器（Controlled Knowledge-Boundary Simulator）**——严格限制模拟器只能访问任务所需的最小私有槽位子集，彻底杜绝传统模拟器因看到全局真值而替 Agent 把活干完的作弊现象。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】正向+反向双重单元测试彻底堵死『靠批量修改碰运气』的漏洞；受控知识边界解决了用户模拟器泄漏答案的核心顽疾。<br/>【局限与边界】沙箱环境较重，需要维护完整的本地数据库快照与回滚机制。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>1. **零附带损害断言（Zero Collateral Damage）**：在评测 `D:\coding\memory_system` 的工作记忆（`working_memory_handler.py`）与经验记忆沉淀（`induction.py`）时，不仅校验目标业务偏好是否写入，还必须断言**其他无关业务行与既有事实记忆未被覆盖或污染**；<br/>2. **受控知识边界模拟器**：改造 `D:\coding\cross_memory_data` 的多轮对话生成器，确保模拟用户在被反问时仅掌握当前用户画像片段，不可直接吐出底层标准枚举名（如 `UDP_Gaming_LowLatency`）。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="mint" data-cat="stateful" data-search="MINT: Evaluating LLMs in Multi-turn Interaction with Tools and Language Feedback Xingyao Wang, Zihan Wang, Jiateng Liu et al. (UIUC) 2309.10691 量化评测模型在多轮工具执行报错与自然语言反馈下的自我纠错增益，揭示 SFT/RLHF 有时反而损害多轮交互恢复能力。 ① 状态化工具与交互">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2023 / ICLR 2024</span>
+      <span class="badge inspire">① 状态化工具与交互</span>
+      <span>MINT: Evaluating LLMs in Multi-turn Interaction with Tools and Language Feedback</span>
+      <code style="font-size:11.5px;">arXiv:2309.10691</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>量化评测模型在多轮工具执行报错与自然语言反馈下的自我纠错增益，揭示 SFT/RLHF 有时反而损害多轮交互恢复能力。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Xingyao Wang, Zihan Wang, Jiateng Liu et al. (UIUC)</p>
+        <p><strong>发表年份与出处：</strong>2023 / ICLR 2024 · <a href="https://arxiv.org/abs/2309.10691" target="_blank" rel="noopener">https://arxiv.org/abs/2309.10691 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>专门考察 LLM 在面对工具执行异常（Python 报错栈）与用户自然语言纠偏反馈时的多轮恢复能力。通过限制最大交互预算 $k \in [1, 5]$，统计成功率随交互轮次 $k$ 的增长斜率 $\Delta S_{\text{feedback}}$。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】清晰剥离了『单轮一次做对』与『利用环境/用户反馈多轮修对』两种独立能力。<br/>【局限与边界】主要面向代码与推理型工具，未深入覆盖个人私有记忆检索场景。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>为 `qwen_intent_rag` 的 `validator.py` 自愈闭环提供量化指标：统计当首轮生成违反时间算术约束（`end - start != duration`）或槽位枚举越界时，经校验器反馈后在第 2 轮修复成功的比率（Self-Correction Recovery Rate）。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="stabletoolbench" data-cat="stateful" data-search="StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models Zhicheng Guo, Sijie Cheng et al. (THU) 2403.07714 针对在线 API 频繁失效导致评测不可复现的痛点，设计「持久缓存 + LLM 虚拟 API 兜底模拟器」双层稳态架构。 ① 状态化工具与交互">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2024 / ACL 2024</span>
+      <span class="badge inspire">① 状态化工具与交互</span>
+      <span>StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models</span>
+      <code style="font-size:11.5px;">arXiv:2403.07714</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>针对在线 API 频繁失效导致评测不可复现的痛点，设计「持久缓存 + LLM 虚拟 API 兜底模拟器」双层稳态架构。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Zhicheng Guo, Sijie Cheng et al. (THU)</p>
+        <p><strong>发表年份与出处：</strong>2024 / ACL 2024 · <a href="https://arxiv.org/abs/2403.07714" target="_blank" rel="noopener">https://arxiv.org/abs/2403.07714 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>实证发现 ToolBench 中超过 50% 的真实 REST API 在半年内发生接口变更、限流或下线，导致不同时间跑出的分数完全无法对比。提出双层虚拟 API 服务器：优先读取真实历史请求确定性缓存（Cache Hit），未命中时由搭载接口文档与 Few-Shot 样本的模拟器生成结构化响应。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】兼顾大规模 API 覆盖度与跨批次 100% 回归可复现性。<br/>【局限与边界】对长尾异常参数的模拟逼真度仍受限于兜底模型。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>在我们的评测流水线中固定**标准记忆状态快照（Ground-Truth Memory Snapshot）**与向量索引快照，确保不同模型版本（如 `qwen3.7-plus` vs `deepseek-v4.1-flash`）在完全一致的混合检索底座上公平对标。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+<details class="paper-card paper-item" open id="gorilla" data-cat="stateful" data-search="Gorilla: Large Language Model Connected with Massive APIs (& Berkeley Function-Calling Leaderboard) Shishir G. Patil et al. (UC Berkeley) 2305.15334 首创基于抽象语法树（AST Sub-tree Matching）的工具调用结构化评测与文档检索感知（Retriever-Aware）幻觉检测。 ① 状态化工具与交互">
+  <summary>
+    <div class="sum-left">
+      <span class="badge year">2023 / NeurIPS 2024</span>
+      <span class="badge inspire">① 状态化工具与交互</span>
+      <span>Gorilla: Large Language Model Connected with Massive APIs (& Berkeley Function-Calling Leaderboard)</span>
+      <code style="font-size:11.5px;">arXiv:2305.15334</code>
+    </div>
+    <div class="sum-right">▼ 点击展开 / 收起详情</div>
+  </summary>
+  <div class="paper-body">
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>首创基于抽象语法树（AST Sub-tree Matching）的工具调用结构化评测与文档检索感知（Retriever-Aware）幻觉检测。</p>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="card t-blue" style="padding:11px 14px;">
+        <div class="tag">① 论文基本信息与真实链接</div>
+        <p><strong>作者/机构：</strong>Shishir G. Patil et al. (UC Berkeley)</p>
+        <p><strong>发表年份与出处：</strong>2023 / NeurIPS 2024 · <a href="https://arxiv.org/abs/2305.15334" target="_blank" rel="noopener">https://arxiv.org/abs/2305.15334 ↗</a></p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>摒弃脆弱的字符串正则比对，将模型生成的函数调用解析为抽象语法树（AST），逐节点比对函数名、必填参数键名与参数值类型，并衍生出行业广泛使用的 BFCL（Berkeley Function-Calling Leaderboard）。</p>
+      </div>
+      <div class="card t-teal" style="padding:11px 14px;">
+        <div class="tag">③ 优劣势与适用边界</div>
+        <p>【核心优势】毫秒级确定性打分、零裁判成本、对参数顺序无关。<br/>【局限与边界】仅适用于形式化 API/DSL 语法层校验，无法衡量多轮策略合理性。</p>
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+          <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
+          <p>我们 `D:\coding\qwen_intent_rag\python_state.py` 将槽位状态建模为受控 Python DSL（`tencent_meeting.video_conference = State(...)` + `# intent:` / `# cancel:` 注释指令）并通过 AST / `exec()` 沙箱解析，正是 AST 结构化评测思想在意图状态追踪上的直接工程落地。</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      
+    </div>
+  </div>
+</details>
+
+  </section>
+</main>
+</body>
+</html>
