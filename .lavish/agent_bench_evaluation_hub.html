@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$<code>', right: '</code>$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '<code>', right: '</code>', display: false}]});"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
     <span>📊 Agent 评测现状、对标与论文按需展开库</span>
   </div>
   <nav class="nav-links">
-    <a class="nav-pill active" href="index.html">🏠 总览与选型主站</a><a class="nav-pill" href="papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+    <a class="nav-pill active" href="agent_bench_evaluation_hub.html">🏠 总览与选型主站</a><a class="nav-pill" href="papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
   </nav>
   <div>
     <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
@@ -75,7 +75,7 @@
           <p><strong>代表工作：</strong><code>τ-bench</code> (2406.12045)、<code>ToolSandbox</code> (2408.04682)、<code>AppWorld-UL</code> (2607.20536)、<code>MINT</code>、<code>Gorilla</code></p>
           <ul>
             <li><strong>核心做法：</strong>用受控用户模拟器渐进释放需求，对话结束后直接对<strong>关系型数据库终态</strong>做正/反向断言，并用里程碑图（Milestone DAG）监控中间依赖。</li>
-            <li><strong>解决痛点：</strong>克服“静态剧本无法响应主动反问”与“不同正确调用路径文本不一致”问题。</li>
+            <li><strong>解决问题：</strong>克服“静态剧本无法响应主动反问”与“不同正确调用路径文本不一致”问题。</li>
           </ul>
         </div>
         <div class="card-footer">
@@ -90,8 +90,8 @@
           <h4>模糊消歧、主动澄清与改口修正评测</h4>
           <p><strong>代表工作：</strong><code>ClarifyMT-Bench</code> (2512.21120)、<code>Clarification ≠ Correction</code> (2609.25337)、<code>CICC</code>、<code>ProductAgent</code></p>
           <ul>
-            <li><strong>核心做法：</strong>评测 Agent 面对欠指定/冲突指令时能否“该问才问、问准槽位”，并通过<strong>语序置换实验</strong>检验用户中途改口时能否彻底清除旧假设。</li>
-            <li><strong>解决痛点：</strong>暴露多轮对话中<strong>早期承诺坍缩（Early Posterior Collapse，旧槽位残留污染）</strong>与盲目抢跑。</li>
+            <li><strong>核心做法：</strong>评测 Agent 面对欠指定/冲突指令时能否“该问才问、问准槽位”，并通过<strong>语序置换实验</strong>检验用户中途改口时能否清除旧假设。</li>
+            <li><strong>解决问题：</strong>暴露多轮对话中<strong>早期承诺坍缩（Early Posterior Collapse，旧槽位残留污染）</strong>与盲目抢跑。</li>
           </ul>
         </div>
         <div class="card-footer">
@@ -107,7 +107,7 @@
           <p><strong>代表工作：</strong><code>LoCoMo-Plus</code> (2602.10715)、<code>LongMemEval</code> (2410.10813)、<code>EvolMem</code> (2601.03543)、<code>MemUse</code>、<code>PersistBench</code></p>
           <ul>
             <li><strong>核心做法：</strong>摒弃“直接问历史事实”的阅读理解考法，测试当<strong>当前简短指令与历史记录无字面重合</strong>时，Agent 能否自动检索并满足隐式个人偏好约束，以及偏好更新后的覆写准确性。</li>
-            <li><strong>解决痛点：</strong>解决“查得到但用不上”、“旧偏好阴魂不散”与“噪声记忆写入污染”。</li>
+            <li><strong>解决问题：</strong>解决“查得到但用不上”、“旧偏好阴魂不散”与“噪声记忆写入污染”。</li>
           </ul>
         </div>
         <div class="card-footer">
@@ -123,7 +123,7 @@
           <p><strong>代表工作：</strong><code>GroundEval</code> (2606.22737)、<code>RuVerBench</code> (2606.29920)、<code>Agent-as-a-Judge</code> (2410.10934)、<code>Prometheus</code>、<code>LiveBench</code></p>
           <ul>
             <li><strong>核心做法：</strong>用<strong>可执行规则验证器（Executable Verifiers）</strong>校验业务与算术约束，用<strong>确定性证据溯源（Trace Grounding）</strong>逐槽位核查数值来源，仅对自然语言话术使用带 Rubric 的轻量裁判。</li>
-            <li><strong>解决痛点：</strong>根除纯 LLM 裁判的冗长偏置、数字计算盲区与“蒙对答案但过程幻觉”。</li>
+            <li><strong>解决问题：</strong>根除纯 LLM 裁判的冗长偏置、数字计算盲区与“碰巧答对答案但过程幻觉”。</li>
           </ul>
         </div>
         <div class="card-footer">
@@ -139,7 +139,7 @@
           <p><strong>代表工作：</strong><code>MultiWOZ 2.4</code> (2104.00773)、<code>SGD</code> (1909.05855)、<code>AGIF / MixATIS</code> (2004.10087)、<code>GL-GIN</code>、<code>CLINC150</code></p>
           <ul>
             <li><strong>核心做法：</strong>以<strong>联合目标准确率（JGA，全槽位全对才得分）</strong>与<strong>多意图捆绑准确率（Overall Acc）</strong>衡量结构化槽位累积与域外拒识（OOS Recall）。</li>
-            <li><strong>解决痛点：</strong>严防多业务并发时的跨意图槽位张冠李戴与闲聊误触发。</li>
+            <li><strong>解决问题：</strong>严防多业务并发时的跨意图槽位张冠李戴与闲聊误触发。</li>
           </ul>
         </div>
         <div class="card-footer">
@@ -155,7 +155,7 @@
           <ul>
             <li><strong>AST / 状态终态断言：</strong>毫秒级、零方差，适合评 7 槽位字典与取消动作（主力占比 ≥75%）。</li>
             <li><strong>确定性算术/规则校验：</strong>适合评时间窗自洽（<code>end - start == duration</code>）与必填项完备。</li>
-            <li><strong>确定性证据溯源审计：</strong>适合揪出“未命中记忆却靠默认值蒙对”的隐蔽幻觉。</li>
+            <li><strong>确定性证据溯源审计：</strong>适合揪出“未命中记忆却靠默认值碰巧答对”的隐蔽幻觉。</li>
             <li><strong>Rubric 受控 LLM 裁判：</strong>仅限评估慢路径澄清反问句的自然度与靶向性（占比 ≤15%）。</li>
           </ul>
         </div>
@@ -181,7 +181,7 @@
           <li><strong>1. Python 状态机 DSL 与确定性解析（<code>D:\coding\qwen_intent_rag\python_state.py</code>）：</strong>
             已将多轮意图建模为 <code>&lt;app&gt;.&lt;service&gt; = State(resolution=..., rtt=..., start_timestamp=..., end_timestamp=..., duration=...)</code>，原生支持：
             <br/>· <code># intent: app/service</code>（确认闭环终态）
-            <br/>· <code># cancel: app/service</code>（<code>parse_cancels</code> 实现 <strong>槽位修正动作 $\Delta^{\text{drop}}$</strong> 整棵擦除）
+            <br/>· <code># cancel: app/service</code>（<code>parse_cancels</code> 实现 <strong>槽位修正动作 <code>Δ<sup>drop</sup></code></strong> 整棵擦除）
             <br/>· <code># candidate: app/service</code>（第 341 行特意不写入 <code>prev_states</code>，从机制上抑制<strong>早期承诺坍缩</strong>）
           </li>
           <li><strong>2. 七槽位完备性与算术自洽校验器（<code>D:\coding\qwen_intent_rag\validator.py</code>）：</strong>
@@ -203,15 +203,15 @@
             <br/>当前 <code>session_eval.py</code> 按固定轮次剧本喂入历史。若模型在第 1 轮主动发起了不同于剧本的澄清反问，或本该在快路径 1 轮闭环却多问了一句，静态脚本无法动态交互与量化<strong>快速闭环 vs. 多轮澄清路径分流准确率</strong>。
           </li>
           <li><strong>短板 2：只看最终 7 槽位结果，缺乏“中间检索证据溯源审计（Grounding Audit）”</strong>
-            <br/>当模型输出 <code>resolution="1080p", rtt="50ms"</code> 恰好与 GT 相同，当前评测直接判对；无法识别该数值到底是真实来自<strong>读取同行结构化槽位列（Row-Level Column Projection）</strong>，还是检索失败后模型靠高频默认值瞎蒙碰巧答对。
+            <br/>当模型输出 <code>resolution="1080p", rtt="50ms"</code> 恰好与 GT 相同，当前评测直接判对；无法识别该数值到底是真实来自<strong>读取同行结构化槽位列（Row-Level Column Projection）</strong>，还是检索失败后模型靠高频默认值无依据猜对碰巧答对。
           </li>
-          <li><strong>短板 3：缺乏对“槽位修正动作（$\Delta^{\text{drop}} / \Delta^{\text{update}}$）”与语序敏感性的专项拆解指标</strong>
+          <li><strong>短板 3：缺乏对“槽位修正动作（<code>Δ<sup>drop</sup> / Δ<sup>update</sup></code>）”与语序敏感性的专项拆解指标</strong>
             <br/>虽底层有 <code># cancel:</code> 语法，但评测集未单独统计“改口/取消轮次”的旧状态擦除成功率，也未引入 <code>Clarification ≠ Correction</code> 的同构语序置换对照测试。
           </li>
           <li><strong>短板 4：缺乏跨会话记忆演化与“零附带损害（Zero Collateral Damage）”反向断言</strong>
             <br/>评测慢路径经验沉淀（<code>induction.py</code>）时，尚未自动化断言“写入新规则时是否误覆盖或污染了其他无关业务的既有记忆行”。
           </li>
-          <li><strong>短板 5：单次采样（Pass@1）掩盖生产波动，缺乏 <code>Pass^k</code> 多轮一致性看护</strong>
+          <li><strong>短板 5：单次采样（Pass@1）掩盖生产波动，缺乏 <code>Pass<sup>k</sup></code> 多轮一致性看护</strong>
             <br/>线上联接保障要求极高确定性，单次跑通不代表连续 3 次采样均不发生抢跑或槽位抖动。
           </li>
         </ul>
@@ -232,7 +232,7 @@
         <tr>
           <th style="width:18%;">借鉴来源（论文/基准）</th>
           <th style="width:24%;">核心可复用机制</th>
-          <th style="width:28%;">解决我们的哪个痛点</th>
+          <th style="width:28%;">解决我们的哪个问题</th>
           <th style="width:30%;">落地到我们代码仓的具体位置</th>
         </tr>
       </thead>
@@ -240,14 +240,14 @@
         <tr>
           <td><strong>GroundEval</strong><br/><code>arXiv:2606.22737</code></td>
           <td><strong>确定性轨迹证据溯源审计（Trace Grounding Audit）</strong></td>
-          <td>杜绝检索未命中时模型靠常见默认值（如 <code>1080p</code>）蒙对答案的虚假高分</td>
+          <td>避免检索未命中时模型靠常见默认值（如 <code>1080p</code>）碰巧答对答案的虚假高分</td>
           <td><code>D:\coding\qwen_intent_rag\session_eval.py</code>：新增 <code>audit_slot_grounding()</code>，核验每个非空槽位是否源自用户原话或 <code>memory_bridge.py</code> 命中记录同行槽位列</td>
         </tr>
         <tr>
           <td><strong>Clarification ≠ Correction</strong><br/><code>arXiv:2609.25337</code></td>
-          <td><strong>语序置换对照测试 + 槽位修正动作（$\Delta^{\text{drop}}/\Delta^{\text{update}}$）审计</strong></td>
+          <td><strong>语序置换对照测试 + 槽位修正动作（<code>Δ<sup>drop</sup> / Δ<sup>update</sup></code>）审计</strong></td>
           <td>精准检测多轮改口时的“早期承诺坍缩”与旧意图残留污染</td>
-          <td><code>D:\coding\qwen_intent_rag\python_state.py</code> & <code>session_eval.py</code>：专项统计改口轮次 <code>parse_cancels</code>（$\Delta^{\text{drop}}$）与同名槽位覆写（$\Delta^{\text{update}}$）精确率</td>
+          <td><code>D:\coding\qwen_intent_rag\python_state.py</code> & <code>session_eval.py</code>：专项统计改口轮次 <code>parse_cancels</code>（<code>Δ<sup>drop</sup></code>）与同名槽位覆写（<code>Δ<sup>update</sup></code>）精确率</td>
         </tr>
         <tr>
           <td><strong>ToolSandbox & ClarifyMT</strong><br/><code>2408.04682 / 2512.21120</code></td>
@@ -263,8 +263,8 @@
         </tr>
         <tr>
           <td><strong>τ-bench & LiveBench</strong><br/><code>2406.12045 / 2406.19314</code></td>
-          <td><strong><code>Pass^k</code> 多轮一致性指标 + 动态参数化防污染生成</strong></td>
-          <td>暴露高温度采样下的边界意图抖动，杜绝固定 <code>120min</code> 等字面量硬编码</td>
+          <td><strong><code>Pass<sup>k</sup></code> 多轮一致性指标 + 动态参数化防污染生成</strong></td>
+          <td>暴露高温度采样下的边界意图抖动，避免固定 <code>120min</code> 等字面量硬编码</td>
           <td><code>D:\coding\qwen_intent_rag\session_eval.py</code>：增加 <code>--pass-k 3</code> 模式；<code>cross_memory_data</code> 动态随机采样时间窗并校验算术自洽</td>
         </tr>
       </tbody>
@@ -274,35 +274,35 @@
     <div class="card t-navy" style="margin:14px 0;">
       <div class="tag">核心指标体系公式与符号释义（KaTeX 标准渲染）</div>
       <p style="margin:4px 0;">
-        我们将单会话端到端评测得分定义为<strong>「里程碑雷区门控 ×（终态槽位集合精度 + 槽位修正动作精度 + 证据溯源审计率）」</strong>，并结合跨采样稳定性 $\text{Pass}\text{\textasciicircum}k$：
+        我们将单会话端到端评测得分定义为<strong>「里程碑雷区门控 ×（终态槽位集合精度 + 槽位修正动作精度 + 证据溯源审计率）」</strong>，并结合跨采样稳定性 <code>Pass<sup>k</sup></code>：
       </p>
       <div style="background:var(--bg-box); padding:10px 16px; border-radius:6px; border:1px solid var(--border); margin:8px 0;">
-        $$\text{Score}_{\text{session}} = \mathbb{I}(\text{Minefield}=0) \cdot \mathbb{I}(\text{ArithValid}=1) \cdot \Big( \alpha \cdot \text{JGA}_{\text{final}} + \beta \cdot \text{Acc}_{\Delta(\text{drop, update})} + \gamma \cdot \text{GroundingAudit} \Big), \quad \text{Pass}\text{\textasciicircum}k = \frac{\binom{c}{k}}{\binom{n}{k}}$$
+        $<code>Score<sub>session</sub> = I(Minefield=0) · I(ArithValid=1) · (α · JGA<sub>final</sub> + β · Acc<sub>Δ</sub> + γ · GroundingAudit)</code>，且 <code>Pass<sup>k</sup> = C(c, k) / C(n, k)</code>$
       </div>
       <ul style="font-size:12.5px; margin:4px 0 0 18px; color:#334155;">
-        <li>$\mathbb{I}(\text{Minefield}=0) \in \{0, 1\}$：<strong>安全雷区门控指示函数</strong>——当记忆候选存在冲突或槽位不完备而 Agent 未走慢路径澄清直接下发 <code># intent:</code> 时，触发雷区判为 $0$（一票否决）；</li>
-        <li>$\mathbb{I}(\text{ArithValid}=1) \in \{0, 1\}$：<strong>时间窗算术自洽门控</strong>——由 <code>validator.py</code> 校验所有输出意图是否满足 $\text{end\_timestamp} - \text{start\_timestamp} == \text{duration}$（默认容差 $0\text{s}$）；</li>
-        <li>$\text{JGA}_{\text{final}} \in [0, 1]$：<strong>终态联合目标准确率</strong>——会话结束时经 <code>_merge_turn_finals</code> 合并后的 `(application_name, service_name)` 集合及对应 7 槽位与真值完全相等的比例（默认权重 $\alpha = 0.5$）；</li>
-        <li>$\text{Acc}_{\Delta(\text{drop, update})} \in [0, 1]$：<strong>参数调整规则 / 槽位修正动作准确率</strong>——在用户改口或取消轮次中，正确执行 <code># cancel:</code>（$\Delta^{\text{drop}}$）与槽位覆写（$\Delta^{\text{update}}$）且无旧值残留的比例（默认权重 $\beta = 0.25$）；</li>
-        <li>$\text{GroundingAudit} \in [0, 1]$：<strong>槽位证据溯源率</strong>——最终 7 槽位中每一个非空值能在「用户显式原话 $\cup$ 向量命中记录同行槽位列 $\cup$ 二阶段关联表补全结果」中找到确定性出处证据的比例（默认权重 $\gamma = 0.25$）；</li>
-        <li>$\text{Pass}\text{\textasciicircum}k$：<strong>多轮执行稳定性指标</strong>——对同一测试会话独立采样运行 $n$ 次（默认 $n=3$）其中成功 $c$ 次时，任意连续 $k$ 次（默认 $k=3$）全部通过的无偏估计。</li>
+        <li><code>I(Minefield=0) ∈ {0, 1}</code>：<strong>安全雷区门控指示函数</strong>——当记忆候选存在冲突或槽位不完备而 Agent 未走慢路径澄清直接下发 <code># intent:</code> 时，触发雷区判为 <code>0</code>（一票否决）；</li>
+        <li><code>I(ArithValid=1) ∈ {0, 1}</code>：<strong>时间窗算术自洽门控</strong>——由 <code>validator.py</code> 校验所有输出意图是否满足 <code>end_timestamp - start_timestamp == duration</code>（默认容差 <code>0s</code>）；</li>
+        <li><code>JGA<sub>final</sub> ∈ [0, 1]</code>：<strong>终态联合目标准确率</strong>——会话结束时经 <code>_merge_turn_finals</code> 合并后的 `(application_name, service_name)` 集合及对应 7 槽位与真值完全相等的比例（默认权重 <code>α = 0.5</code>）；</li>
+        <li><code>Acc<sub>Δ(drop, update)</sub> ∈ [0, 1]</code>：<strong>参数调整规则 / 槽位修正动作准确率</strong>——在用户改口或取消轮次中，正确执行 <code># cancel:</code>（<code>Δ<sup>drop</sup></code>）与槽位覆写（<code>Δ<sup>update</sup></code>）且无旧值残留的比例（默认权重 <code>β = 0.25</code>）；</li>
+        <li><code>GroundingAudit ∈ [0, 1]</code>：<strong>槽位证据溯源率</strong>——最终 7 槽位中每一个非空值能在「用户显式原话 <code>∪</code> 向量命中记录同行槽位列 <code>∪</code> 二阶段关联表补全结果」中找到确定性出处证据的比例（默认权重 <code>γ = 0.25</code>）；</li>
+        <li><code>Pass<sup>k</sup></code>：<strong>多轮执行稳定性指标</strong>——对同一测试会话独立采样运行 <code>n</code> 次（默认 <code>n=3</code>）其中成功 <code>c</code> 次时，任意连续 <code>k</code> 次（默认 <code>k=3</code>）全部通过的无偏估计。</li>
       </ul>
     </div>
 
     <!-- 3.3 真实样本举例（流程图 + 逐轮真实数据对照） -->
-    <h3>🔍 真实样本举例：从混合检索、慢路径澄清到槽位修正动作（$\Delta^{\text{drop}} / \Delta^{\text{update}}$）的全链路评测</h3>
+    <h3>🔍 真实样本举例：从混合检索、慢路径澄清到槽位修正动作（<code>Δ<sup>drop</sup> / Δ<sup>update</sup></code>）的全链路评测</h3>
     <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:12px;">
       <div class="card t-navy" style="padding:10px 12px;">
         <div class="tag">STEP 1 · 混合检索与候选定位</div>
-        <p style="font-size:12.5px;">输入含个性化表述“打把农药” $\rightarrow$ 经 <code>expression</code> 层映射与<strong>向量相似度检索与同行槽位提取</strong>，召回候选记录但发现<strong>否定子句分离与权重衰减过滤</strong>拦截了干扰项。</p>
+        <p style="font-size:12.5px;">输入含个性化表述“打把农药” → 经 <code>expression</code> 层映射与<strong>向量相似度检索与同行槽位提取</strong>，召回候选记录但发现<strong>否定子句分离与权重衰减过滤</strong>拦截了干扰项。</p>
       </div>
       <div class="card t-gold" style="padding:10px 12px;">
         <div class="tag">STEP 2 · 快/慢路径分流判定</div>
-        <p style="font-size:12.5px;">Turn 1 仅说“开个会”，<strong>二阶段关联表补全（通过 <code>service_to_app</code> / <code>periodic_preference</code> 双向关联）</strong>发现存在『腾讯会议』与『Zoom』两条冲突记录 $\rightarrow$ 必须输出 <code># candidate:</code> 并反问。</p>
+        <p style="font-size:12.5px;">Turn 1 仅说“开个会”，<strong>二阶段关联表补全（通过 <code>service_to_app</code> / <code>periodic_preference</code> 双向关联）</strong>发现存在『腾讯会议』与『Zoom』两条冲突记录 → 必须输出 <code># candidate:</code> 并反问。</p>
       </div>
       <div class="card t-teal" style="padding:10px 12px;">
         <div class="tag">STEP 3 · 槽位修正动作审计</div>
-        <p style="font-size:12.5px;">Turn 2 用户先定腾讯会议，Turn 3 突然改口“不开会了，改打王者荣耀 90 分钟” $\rightarrow$ 审计是否正确生成 <code># cancel: 腾讯会议/视频会议</code>（$\Delta^{\text{drop}}$）并新建游戏状态。</p>
+        <p style="font-size:12.5px;">Turn 2 用户先定腾讯会议，Turn 3 突然改口“不开会了，改打王者荣耀 90 分钟” → 审计是否正确生成 <code># cancel: 腾讯会议/视频会议</code>（<code>Δ<sup>drop</sup></code>）并新建游戏状态。</p>
       </div>
       <div class="card t-green" style="padding:10px 12px;">
         <div class="tag">STEP 4 · 终态断言与证据溯源</div>
@@ -356,7 +356,7 @@
             <tr>
               <td><strong>Turn 3（中途改口取消 + 新意图）</strong><br/>“算了会议取消！改打把农药，玩 90 分钟”</td>
               <td><code># cancel: 腾讯会议/视频会议</code><br/><code>王者荣耀.游戏加速 = State(resolution="2K", rtt="20ms", start="20:00:00", end="21:30:00", duration="90min")</code><br/><code># intent: 王者荣耀/游戏加速</code></td>
-              <td><span class="badge done">$\Delta^{\text{drop}}$ & $\Delta^{\text{update}}$ 通过</span><br/>1. <code># cancel</code> 彻底擦除旧会议状态；<br/>2. “农药”经 <code>exp_01</code> 映射为王者荣耀；<br/>3. 用户显式 <code>90min</code> 覆写记忆默认 <code>120min</code>，且 <code>21:30 - 20:00 == 90min</code></td>
+              <td><span class="badge done"><code>Δ<sup>drop</sup></code> & <code>Δ<sup>update</sup></code> 通过</span><br/>1. <code># cancel</code> 擦除旧会议状态；<br/>2. “农药”经 <code>exp_01</code> 映射为王者荣耀；<br/>3. 用户显式 <code>90min</code> 覆写记忆默认 <code>120min</code>，且 <code>21:30 - 20:00 == 90min</code></td>
             </tr>
           </tbody>
         </table>
@@ -385,7 +385,7 @@
 
     <div id="paper-list">
       
-<details class="paper-card paper-item" open id="tau-bench" data-cat="stateful" data-search="τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains Shunyu Yao, Noah Shinn, Pedram Razavi, Karthik Narasimhan (Sierra & Princeton) 2406.12045 提出「动态用户模拟 + 领域规则约束 + 数据库终态断言」与 Pass^k 多轮稳定性指标，揭示 Agent 多轮一致性极脆弱。 ① 状态化工具与交互">
+<details class="paper-card paper-item" open id="tau-bench" data-cat="stateful" data-search="τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains Shunyu Yao, Noah Shinn, Pedram Razavi, Karthik Narasimhan (Sierra & Princeton) 2406.12045 提出「动态用户模拟 + 领域规则约束 + 数据库终态断言」与 Pass<sup>k</sup> 多轮稳定性指标，揭示 Agent 多轮一致性极脆弱。 ① 状态化工具与交互">
   <summary>
     <div class="sum-left">
       <span class="badge year">2024 / ICLR 2025</span>
@@ -396,20 +396,20 @@
     <div class="sum-right">▼ 点击展开 / 收起详情</div>
   </summary>
   <div class="paper-body">
-    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>提出「动态用户模拟 + 领域规则约束 + 数据库终态断言」与 Pass^k 多轮稳定性指标，揭示 Agent 多轮一致性极脆弱。</p>
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>提出「动态用户模拟 + 领域规则约束 + 数据库终态断言」与 Pass<sup>k</sup> 多轮稳定性指标，揭示 Agent 多轮一致性极脆弱。</p>
     <div class="grid-2" style="margin-bottom:10px;">
       <div class="card t-blue" style="padding:11px 14px;">
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Shunyu Yao, Noah Shinn, Pedram Razavi, Karthik Narasimhan (Sierra & Princeton)</p>
         <p><strong>发表年份与出处：</strong>2024 / ICLR 2025 · <a href="https://arxiv.org/abs/2406.12045" target="_blank" rel="noopener">https://arxiv.org/abs/2406.12045 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对传统基准仅测单轮静态工具调用的缺陷，构建了航空公司（Airline）与零售（Retail）两大强业务规则环境。评测由三部分组成：① LLM 驱动的用户模拟器（给定隐藏诉求与性格，分多轮渐进释放信息）；② 领域业务手册（Policy Document，规定退改签、会员等级等硬性约束）；③ 关系型数据库沙箱。评判时不看对话表面措辞，而是在对话结束后将沙箱数据库的最终记录与标准真值状态做严格相等断言（Final DB State Assertion），并提出 $\text{Pass}\text{\textasciicircum}k = \mathbb{E}[\binom{c}{k}/\binom{n}{k}]$ 衡量连续 $k$ 次独立运行全部成功的概率。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对传统基准仅测单轮静态工具调用的缺陷，构建了航空公司（Airline）与零售（Retail）两大强业务规则环境。评测由三部分组成：① LLM 驱动的用户模拟器（给定隐藏诉求与性格，分多轮渐进释放信息）；② 领域业务手册（Policy Document，规定退改签、会员等级等硬性约束）；③ 关系型数据库沙箱。评判时不看对话表面措辞，而是在对话结束后将沙箱数据库的最终记录与标准真值状态做严格相等断言（Final DB State Assertion），并提出 <code>Pass<sup>k</sup> = C(c, k) / C(n, k)</code> 衡量连续 <code>k</code> 次独立运行全部成功的概率。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】彻底消除表层文本比对误差，不论 Agent 走哪条追问或调用路径，只要数据库最终状态正确即判通过；Pass^k 精准暴露生产环境可靠性短板。<br/>【局限与边界】仅看终态无法区分「哪一步中间推理出错」，当任务失败时缺乏细粒度过程诊断；动态用户模拟器本身消耗较多 Token。</p>
+        <p>【核心优势】消除表层文本比对误差，不论 Agent 走哪条追问或调用路径，只要数据库最终状态正确即判通过；Pass<sup>k</sup> 精准暴露生产环境可靠性短板。<br/>【局限与边界】仅看终态无法区分「哪一步中间推理出错」，当任务失败时缺乏细粒度过程诊断；动态用户模拟器本身消耗较多 Token。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>1. 在 `D:\coding\qwen_intent_rag\session_eval.py` 中，除现有的 `Turn Strict Acc` 与 `Session Complete` 外，新增 **`Pass^3`（连续 3 次采样全通过率）**，重点监控快/慢路径边界意图的多轮稳定性；<br/>2. 借鉴「终态断言」思想，对 `_merge_turn_finals` 产出的最终 7 槽位字典执行确定性集合相等断言与算术一致性校验（`validator.py` 中 `end_timestamp - start_timestamp == duration`）。</p>
+          <p>1. 在 `D:\coding\qwen_intent_rag\session_eval.py` 中，除现有的 `Turn Strict Acc` 与 `Session Complete` 外，新增 **`Pass<sup>3</sup>`（连续 3 次采样全通过率）**，重点监控快/慢路径边界意图的多轮稳定性；<br/>2. 借鉴「终态断言」思想，对 `_merge_turn_finals` 产出的最终 7 槽位字典执行确定性集合相等断言与算术一致性校验（`validator.py` 中 `end_timestamp - start_timestamp == duration`）。</p>
         </div>
       </div>
     </div>
@@ -443,7 +443,7 @@
         <p>【核心优势】兼具终态准确性与过程可观测性，能精准定位 Agent 卡在『未反问补槽』还是『工具依赖顺序颠倒』；Minefield 机制对合规红线极为有效。<br/>【局限与边界】需要为每类任务编写显式的 Milestone DAG 拓扑与状态匹配函数，任务模板设计成本高于纯文本数据集。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>直接对标我们联接 Agent 的**快速闭环路径 vs. 慢路径澄清路径**：在 `session_eval.py` 中引入轻量级 Milestone DAG 审计——节点 $M_1$（命中记忆候选记录）$\rightarrow M_2$（二阶段关联表补全 `service_to_app`/`periodic_preference`）$\rightarrow M_3$（高置信直接闭环 或 槽位冲突触发澄清反问）；将『槽位不完整或存在多候选冲突时未经用户确认直接输出 `# intent:` 终态下发』定义为 **Minefield（违规抢跑）**。</p>
+          <p>直接对标我们联接 Agent 的**快速闭环路径 vs. 慢路径澄清路径**：在 `session_eval.py` 中引入轻量级 Milestone DAG 审计——节点 <code>M<sub>1</sub></code>（命中记忆候选记录）<code>→ M<sub>2</sub></code>（二阶段关联表补全 `service_to_app`/`periodic_preference`）<code>→ M<sub>3</sub></code>（高置信直接闭环 或 槽位冲突触发澄清反问）；将『槽位不完整或存在多候选冲突时未经用户确认直接输出 `# intent:` 终态下发』定义为 **Minefield（违规抢跑）**。</p>
         </div>
       </div>
     </div>
@@ -470,11 +470,11 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Harsh Trivedi et al. (Stony Brook & Allen AI) / AppWorld-UL Team</p>
         <p><strong>发表年份与出处：</strong>2024 (ACL) & 2026 · <a href="https://arxiv.org/abs/2407.18901" target="_blank" rel="noopener">https://arxiv.org/abs/2407.18901 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`AppWorld`（ACL 2024 最佳资源论文）构建了涵盖邮件、日历、支付、购物等 9 个日常 App 的本地可编程沙箱，使用**状态基单元测试（State-Based Unit Tests）**同时检验：① 目标记录已被正确修改（正向断言）；② **无关数据库表与记录零误伤（Zero Collateral Damage 反向断言）**。<br/>`AppWorld-UL`（2026，arXiv:2607.20536）进一步将静态完整指令拆解为模糊初始指令，提出**受控知识边界用户模拟器（Controlled Knowledge-Boundary Simulator）**——严格限制模拟器只能访问任务所需的最小私有槽位子集，彻底杜绝传统模拟器因看到全局真值而替 Agent 把活干完的作弊现象。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`AppWorld`（ACL 2024 最佳资源论文）构建了涵盖邮件、日历、支付、购物等 9 个日常 App 的本地可编程沙箱，使用**状态基单元测试（State-Based Unit Tests）**同时检验：① 目标记录已被正确修改（正向断言）；② **无关数据库表与记录零误伤（Zero Collateral Damage 反向断言）**。<br/>`AppWorld-UL`（2026，arXiv:2607.20536）进一步将静态完整指令拆解为模糊初始指令，提出**受控知识边界用户模拟器（Controlled Knowledge-Boundary Simulator）**——严格限制模拟器只能访问任务所需的最小私有槽位子集，有效避免传统模拟器因看到全局真值而替 Agent 把活干完的捷径依赖现象。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】正向+反向双重单元测试彻底堵死『靠批量修改碰运气』的漏洞；受控知识边界解决了用户模拟器泄漏答案的核心顽疾。<br/>【局限与边界】沙箱环境较重，需要维护完整的本地数据库快照与回滚机制。</p>
+        <p>【核心优势】正向+反向双重单元测试堵死『靠批量修改碰运气』的漏洞；受控知识边界解决了用户模拟器泄漏答案的核心顽疾。<br/>【局限与边界】沙箱环境较重，需要维护完整的本地数据库快照与回滚机制。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>1. **零附带损害断言（Zero Collateral Damage）**：在评测 `D:\coding\memory_system` 的工作记忆（`working_memory_handler.py`）与经验记忆沉淀（`induction.py`）时，不仅校验目标业务偏好是否写入，还必须断言**其他无关业务行与既有事实记忆未被覆盖或污染**；<br/>2. **受控知识边界模拟器**：改造 `D:\coding\cross_memory_data` 的多轮对话生成器，确保模拟用户在被反问时仅掌握当前用户画像片段，不可直接吐出底层标准枚举名（如 `UDP_Gaming_LowLatency`）。</p>
@@ -504,7 +504,7 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Xingyao Wang, Zihan Wang, Jiateng Liu et al. (UIUC)</p>
         <p><strong>发表年份与出处：</strong>2023 / ICLR 2024 · <a href="https://arxiv.org/abs/2309.10691" target="_blank" rel="noopener">https://arxiv.org/abs/2309.10691 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>专门考察 LLM 在面对工具执行异常（Python 报错栈）与用户自然语言纠偏反馈时的多轮恢复能力。通过限制最大交互预算 $k \in [1, 5]$，统计成功率随交互轮次 $k$ 的增长斜率 $\Delta S_{\text{feedback}}$。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>专门考察 LLM 在面对工具执行异常（Python 报错栈）与用户自然语言纠偏反馈时的多轮恢复能力。通过限制最大交互预算 <code>k ∈ [1, 5]</code>，统计成功率随交互轮次 <code>k</code> 的增长斜率 <code>ΔS<sub>feedback</sub></code>。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
@@ -521,7 +521,7 @@
   </div>
 </details>
 
-<details class="paper-card paper-item" id="stabletoolbench" data-cat="stateful" data-search="StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models Zhicheng Guo, Sijie Cheng et al. (THU) 2403.07714 针对在线 API 频繁失效导致评测不可复现的痛点，设计「持久缓存 + LLM 虚拟 API 兜底模拟器」双层稳态架构。 ① 状态化工具与交互">
+<details class="paper-card paper-item" id="stabletoolbench" data-cat="stateful" data-search="StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models Zhicheng Guo, Sijie Cheng et al. (THU) 2403.07714 针对在线 API 频繁失效导致评测不可复现的问题，设计「持久缓存 + LLM 虚拟 API 兜底模拟器」双层稳态架构。 ① 状态化工具与交互">
   <summary>
     <div class="sum-left">
       <span class="badge year">2024 / ACL 2024</span>
@@ -532,7 +532,7 @@
     <div class="sum-right">▼ 点击展开 / 收起详情</div>
   </summary>
   <div class="paper-body">
-    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>针对在线 API 频繁失效导致评测不可复现的痛点，设计「持久缓存 + LLM 虚拟 API 兜底模拟器」双层稳态架构。</p>
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>针对在线 API 频繁失效导致评测不可复现的问题，设计「持久缓存 + LLM 虚拟 API 兜底模拟器」双层稳态架构。</p>
     <div class="grid-2" style="margin-bottom:10px;">
       <div class="card t-blue" style="padding:11px 14px;">
         <div class="tag">① 论文基本信息与真实链接</div>
@@ -610,7 +610,7 @@
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】首次把『该不该问』与『问得准不准』解耦量化，直击快/慢路径路由痛点。<br/>【局限与边界】未结合结构化外部个人记忆库来动态改变“是否模糊”的边界。</p>
+        <p>【核心优势】首次把『该不该问』与『问得准不准』解耦量化，直击快/慢路径路由问题。<br/>【局限与边界】未结合结构化外部个人记忆库来动态改变“是否模糊”的边界。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>在我们的联接 Agent 中，『一句模糊话该不该反问』完全取决于**检索标准记忆状态快照后的唯一性**（例如“老规矩开会”若在 `periodic_preference` 中唯一命中周三腾讯会议，则属于可闭环快路径，追问即判为**过澄清惩罚**；若命中两个冲突候选，则必须转入慢路径反问，直接下发即判为**欠澄清抢跑**）。</p>
@@ -647,7 +647,7 @@
         <p>【核心优势】极其深刻地揭示了多轮对话『越聊越错、旧槽位阴魂不散』的底层机制，并给出了无需标注额外数据的语序置换对偶测试法。<br/>【局限与边界】论文侧重现象诊断与概率建模，工程上需配合显式状态机才能根治。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>直接验证并指导了我们 `D:\coding\qwen_intent_rag\python_state.py` 的核心设计：<br/>1. **预防坍缩**：第 1 轮模糊候选只允许输出 `# candidate: app/service`（第 341 行解析器特意不将 `candidate` 写入 `prev_states`），防止不确定猜测固化为下一轮先验；<br/>2. **显式槽位修正动作审计**：在 `session_eval.py` 中新增对 **槽位修正动作（Slot Revision Rule / Adjustment Action）** 的专项评测——校验改口轮次是否正确触发 `# cancel: old_app/old_service`（`$\Delta^{\text{drop}}$` 整棵擦除）与同名属性覆写（`$\Delta^{\text{update}}$`）。</p>
+          <p>直接验证并指导了我们 `D:\coding\qwen_intent_rag\python_state.py` 的核心设计：<br/>1. **预防坍缩**：第 1 轮模糊候选只允许输出 `# candidate: app/service`（第 341 行解析器特意不将 `candidate` 写入 `prev_states`），防止不确定猜测固化为下一轮先验；<br/>2. **显式槽位修正动作审计**：在 `session_eval.py` 中新增对 **槽位修正动作（Slot Revision Rule / Adjustment Action）** 的专项评测——校验改口轮次是否正确触发 `# cancel: old_app/old_service`（`<code>Δ<sup>drop</sup></code>` 整棵擦除）与同名属性覆写（`<code>Δ<sup>update</sup></code>`）。</p>
         </div>
       </div>
     </div>
@@ -783,7 +783,7 @@
         <p>【核心优势】精准击中生产级记忆系统的核心难点——『不提历史词，也要用对历史习惯』。<br/>【局限与边界】需要精心设计触发指令与隐式约束之间的逻辑映射关系。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>完美契合我们五层正交事实记忆的检索机制！当用户仅说『帮我弄下推流』（仅含服务词，未提具体应用与参数）时，评测我们能否通过 **向量相似度检索与同行槽位提取** $\rightarrow$ **二阶段关联表补全（通过 `service_to_app` / `periodic_preference` 双向关联）** $\rightarrow$ **读取同行结构化槽位列（Row-Level Column Projection）** 自动补齐 `OBS`、`4K`、`20ms`。</p>
+          <p>完整契合我们五层正交事实记忆的检索机制！当用户仅说『帮我弄下推流』（仅含服务词，未提具体应用与参数）时，评测我们能否通过 **向量相似度检索与同行槽位提取** → **二阶段关联表补全（通过 `service_to_app` / `periodic_preference` 双向关联）** → **读取同行结构化槽位列（Row-Level Column Projection）** 自动补齐 `OBS`、`4K`、`20ms`。</p>
         </div>
       </div>
     </div>
@@ -810,14 +810,14 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Di Wu, Haichuan Wang et al. (UCLA & Tencent AI Lab)</p>
         <p><strong>发表年份与出处：</strong>2024 / ICLR 2025 · <a href="https://arxiv.org/abs/2410.10813" target="_blank" rel="noopener">https://arxiv.org/abs/2410.10813 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了可扩展长跨度历史会话基准（从数万到百万词元），将长程记忆能力正交拆解为 5 大原子任务，特别是系统评测了**知识更新（Knowledge Update，用户后期更改了习惯，模型能否返回最新值而非早期过时值）**与**弃权拒答（Abstention，历史中从未提过的偏好能否诚实反问而非胡编）**。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了可扩展长跨度历史会话基准（从数万到百万词元），将长程记忆能力正交拆解为 5 大原子任务，特别是系统评测了**知识更新（Knowledge Update，用户后期更改了习惯，模型能否返回最新值而非早期过时值）**与**弃权拒答（Abstention，历史中从未提过的偏好能否诚实反问而非凭空生成）**。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
         <p>【核心优势】五大维度划分极其清晰，是检验记忆覆写与防幻觉的行业标杆。<br/>【局限与边界】主要评测文本问答输出，未直接绑定结构化工具槽位合成。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>在评测 `D:\coding\memory_system` 时，专门设立 **偏好演进覆写测试集（Preference Evolution Suite）**：验证当用户在近期会话中通过慢路径修改了常用分辨率或周期时间窗后，检索层与 `experience_handler.py` 能否优先命中高权重/最新时间戳记录，彻底屏蔽旧记录干扰。</p>
+          <p>在评测 `D:\coding\memory_system` 时，专门设立 **偏好演进覆写测试集（Preference Evolution Suite）**：验证当用户在近期会话中通过慢路径修改了常用分辨率或周期时间窗后，检索层与 `experience_handler.py` 能否优先命中高权重/最新时间戳记录，屏蔽旧记录干扰。</p>
         </div>
       </div>
     </div>
@@ -946,14 +946,14 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>GroundEval Research Group</p>
         <p><strong>发表年份与出处：</strong>2026 · <a href="https://arxiv.org/abs/2606.22737" target="_blank" rel="noopener">https://arxiv.org/abs/2606.22737 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对端到端黑盒打分常被『蒙对答案但过程纯属幻觉（Right Answer for Wrong Reasons）』欺骗的问题，将 Agent 的完整执行轨迹拆解为（用户输入集 $U$、检索/工具返回证据集 $E$、最终结构化输出 $Y$），对 $Y$ 中的每一个非空键值执行确定性溯源校验：每个槽位值必须在 $U \cup E$ 中存在合法的来源映射或确定性算术推导，否则立即标记为 **无据脑补幻觉（Ungrounded Hallucination）**。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对端到端黑盒打分常被『碰巧答对答案但过程纯属幻觉（Right Answer for Wrong Reasons）』欺骗的问题，将 Agent 的完整执行轨迹拆解为（用户输入集 <code>U</code>、检索/工具返回证据集 <code>E</code>、最终结构化输出 <code>Y</code>），对 <code>Y</code> 中的每一个非空键值执行确定性溯源校验：每个槽位值必须在 <code>U ∪ E</code> 中存在合法的来源映射或确定性算术推导，否则立即标记为 **无据脑补幻觉（Ungrounded Hallucination）**。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】100% 确定性、零大模型裁判偏置，能精准揪出『模型靠先验常见值蒙对 `1080p` 但实际未命中记忆』的隐蔽缺陷。<br/>【局限与边界】需要记录完整的中间检索日志（Hit Record IDs 与投影列）。</p>
+        <p>【核心优势】100% 确定性、零大模型裁判偏置，能精准揪出『模型靠先验常见值碰巧答对 `1080p` 但实际未命中记忆』的隐蔽缺陷。<br/>【局限与边界】需要记录完整的中间检索日志（Hit Record IDs 与投影列）。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>这是我们升级 `D:\coding\qwen_intent_rag\session_eval.py` 最具性价比的武器！在评测每个最终槽位时，增加 **`GroundingAuditScore`（槽位证据溯源率）**——核对模型输出的 `resolution` / `rtt` / `duration` 是否严格来自当前轮用户显式指定，或来自 `memory_bridge.py` 召回的候选记录同行结构化槽位列，彻底杜绝无据默认脑补。</p>
+          <p>这是我们升级 `D:\coding\qwen_intent_rag\session_eval.py` 最具性价比的武器！在评测每个最终槽位时，增加 **`GroundingAuditScore`（槽位证据溯源率）**——核对模型输出的 `resolution` / `rtt` / `duration` 是否严格来自当前轮用户显式指定，或来自 `memory_bridge.py` 召回的候选记录同行结构化槽位列，有效避免无据默认脑补。</p>
         </div>
       </div>
     </div>
@@ -1018,7 +1018,7 @@
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】解决了长链路复杂任务中纯文本裁判『看不清真实状态』的痛点。<br/>【局限与边界】若全部用重型大模型驱动裁判 Agent，耗时较高；最佳实践是『确定性脚本取证 + 局部轻量 Rubric 评判』混合。</p>
+        <p>【核心优势】解决了长链路复杂任务中纯文本裁判『看不清真实状态』的问题。<br/>【局限与边界】若全部用重型大模型驱动裁判 Agent，耗时较高；最佳实践是『确定性脚本取证 + 局部轻量 Rubric 评判』混合。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>启发我们将评测架构设计为**“确定性规则验证器为主（90% 指标）+ 轻量级受控 Rubric 裁判为辅（仅评慢路径反问句的自然度与靶向性）”**，既保留取证式精度，又将单会话评测耗时控制在毫秒级。</p>
@@ -1048,11 +1048,11 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Lianmin Zheng et al. (UC Berkeley) / Yang Liu et al. (Microsoft) / Seungone Kim et al. (KAIST)</p>
         <p><strong>发表年份与出处：</strong>2023–2024 · <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">https://arxiv.org/abs/2306.05685 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MT-Bench` 系统量化了大模型裁判的三大固有偏置（Position Bias、Verbosity Bias、Self-Enhancement Bias）；<br/>`G-Eval` 引入思维链与 token 概率加权期望得分；<br/>`Prometheus` 证明：只有向裁判显式提供**参考答案（Reference Answer）+ 逐档位具体扣分标准（Customized 1-5 Score Rubric）**，才能使裁判与人类相关系数达到 $r > 0.89$。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MT-Bench` 系统量化了大模型裁判的三大固有偏置（Position Bias、Verbosity Bias、Self-Enhancement Bias）；<br/>`G-Eval` 引入思维链与 token 概率加权期望得分；<br/>`Prometheus` 证明：只有向裁判显式提供**参考答案（Reference Answer）+ 逐档位具体扣分标准（Customized 1-5 Score Rubric）**，才能使裁判与人类相关系数达到 <code>r &gt; 0.89</code>。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】适合评估开放式自然语言回复（如反问澄清话术是否礼貌、精准、不啰嗦）。<br/>【局限与边界】绝不能用于结构化槽位精度或时间算术校验（大模型裁判对数字加减与严格字段对齐极易漏判）。</p>
+        <p>【核心优势】适合评估开放式自然语言回复（如反问澄清话术是否礼貌、精准、不冗余）。<br/>【局限与边界】绝不能用于结构化槽位精度或时间算术校验（大模型裁判对数字加减与严格字段对齐极易漏判）。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>明确划定我们评测体系中 LLM Judge 的使用禁区与专职区：**严禁用 LLM 裁判去评 7 槽位准确率**（统一交由确定性 Python 脚本断言）；LLM Judge 仅挂接固定 Rubric 用于评估慢路径澄清问题的表达质量。</p>
@@ -1065,7 +1065,7 @@
   </div>
 </details>
 
-<details class="paper-card paper-item" id="livebench" data-cat="judge" data-search="LiveBench: A Challenging, Contamination-Free LLM Benchmark Colin White, Samuel Dooley et al. (Abacus.AI & NYU & UMD) 2406.19314 通过「动态参数化生成 + 100% 确定性真值验证脚本」彻底根除测试集泄露（Data Contamination）与裁判主观误差。 ④ 裁判与轨迹证据审计">
+<details class="paper-card paper-item" id="livebench" data-cat="judge" data-search="LiveBench: A Challenging, Contamination-Free LLM Benchmark Colin White, Samuel Dooley et al. (Abacus.AI & NYU & UMD) 2406.19314 通过「动态参数化生成 + 100% 确定性真值验证脚本」根除测试集泄露（Data Contamination）与裁判主观误差。 ④ 裁判与轨迹证据审计">
   <summary>
     <div class="sum-left">
       <span class="badge year">2024 / ICLR 2025</span>
@@ -1076,7 +1076,7 @@
     <div class="sum-right">▼ 点击展开 / 收起详情</div>
   </summary>
   <div class="paper-body">
-    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>通过「动态参数化生成 + 100% 确定性真值验证脚本」彻底根除测试集泄露（Data Contamination）与裁判主观误差。</p>
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>通过「动态参数化生成 + 100% 确定性真值验证脚本」根除测试集泄露（Data Contamination）与裁判主观误差。</p>
     <div class="grid-2" style="margin-bottom:10px;">
       <div class="card t-blue" style="padding:11px 14px;">
         <div class="tag">① 论文基本信息与真实链接</div>
@@ -1086,7 +1086,7 @@
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】防刷榜、防过拟合、打分零方差。<br/>【局限与边界】需要维护高质量的参数化合成数据生成器。</p>
+        <p>【核心优势】防针对固定题目过拟合、防过拟合、打分零方差。<br/>【局限与边界】需要维护高质量的参数化合成数据生成器。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>与我们 `GEMINI.md` 的 **严禁硬编码（Zero Hardcoding）** 红线高度一致：`D:\coding\cross_memory_data` 的合成数据生成器在构造评测集时，时间窗（`start_timestamp`/`end_timestamp`/`duration`）、个性化表述与业务组合必须动态随机采样并校验算术自洽，防止算法侧靠写死字面量分支刷高通过率。</p>
@@ -1116,7 +1116,7 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Fanghua Ye et al. (UCL) & Abhinav Rastogi et al. (Google Research)</p>
         <p><strong>发表年份与出处：</strong>2020–2021 (AAAI / ACL) · <a href="https://arxiv.org/abs/2104.00773" target="_blank" rel="noopener">https://arxiv.org/abs/2104.00773 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MultiWOZ 2.4` 清洗了早期 MultiWOZ 2.1 中超过 40% 对话轮次存在的标注不一致与漏标噪声，证明高质量干净 GT 测试集比单纯堆砌模型规模更关键，并以 **Joint Goal Accuracy（JGA，当前轮所有域-槽-值三元组全部精确匹配才得 1 分）** 作为黄金标准。<br/>`SGD`（Google）提出用自然语言描述服务与槽位 Schema，评测模型在未见过的新服务 API 上的零样本槽位填充能力。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MultiWOZ 2.4` 清洗了早期 MultiWOZ 2.1 中超过 40% 对话轮次存在的标注不一致与漏标噪声，证明高质量干净 GT 测试集比单纯堆砌模型规模更关键，并以 **Joint Goal Accuracy（JGA，当前轮所有域-槽-值三元组全部精确匹配才得 1 分）** 作为黄客观判据。<br/>`SGD`（Google）提出用自然语言描述服务与槽位 Schema，评测模型在未见过的新服务 API 上的零样本槽位填充能力。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
@@ -1150,7 +1150,7 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Libo Qin et al. (HIT / SCIR)</p>
         <p><strong>发表年份与出处：</strong>2020 (EMNLP) & 2021 (ACL) · <a href="https://arxiv.org/abs/2004.10087" target="_blank" rel="noopener">https://arxiv.org/abs/2004.10087 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了通过连词组合 2~3 个子意图的 MixATIS 与 MixSNIPS 数据集，要求模型不仅识别出所有并发意图集合 $\hat{\mathcal{I}} = \mathcal{I}^*$，还必须把每个槽位精准挂载到对应的子意图下，任何跨意图槽位张冠李戴均判整句失败。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了通过连词组合 2~3 个子意图的 MixATIS 与 MixSNIPS 数据集，要求模型不仅识别出所有并发意图集合 <code>I<sub>pred</sub> = I<sub>GT</sub></code>，还必须把每个槽位精准挂载到对应的子意图下，任何跨意图槽位张冠李戴均判整句失败。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>专题 ⑤：多意图并发与多轮对话状态追踪基石（Multi-Intent & Multi-Turn DST） · 论文深度拆解专题页</title>
+  <title>专题 ⑤：多意图并发与多轮对话状态追踪基石（Multi-Intent & Multi-Turn DST） · 论文总结专题页</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$<code>', right: '</code>$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '<code>', right: '</code>', display: false}]});"></script>
   <script defer src="../app.js"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
     <span>📊 Agent 评测现状、对标与论文按需展开库</span>
   </div>
   <nav class="nav-links">
-    <a class="nav-pill" href="../index.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill active" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+    <a class="nav-pill" href="../agent_bench_evaluation_hub.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill active" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
   </nav>
   <div>
     <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
@@ -34,7 +34,7 @@
       <div style="display:flex; gap:8px;">
         <button class="btn" onclick="toggleAllDetails(true)">➕ 全部展开</button>
         <button class="btn" onclick="toggleAllDetails(false)">➖ 全部收起</button>
-        <a class="btn primary" href="../index.html">← 返回总览主站</a>
+        <a class="btn primary" href="../agent_bench_evaluation_hub.html">← 返回总览主站</a>
       </div>
     </div>
   </section>
@@ -58,7 +58,7 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Fanghua Ye et al. (UCL) & Abhinav Rastogi et al. (Google Research)</p>
         <p><strong>发表年份与出处：</strong>2020–2021 (AAAI / ACL) · <a href="https://arxiv.org/abs/2104.00773" target="_blank" rel="noopener">https://arxiv.org/abs/2104.00773 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MultiWOZ 2.4` 清洗了早期 MultiWOZ 2.1 中超过 40% 对话轮次存在的标注不一致与漏标噪声，证明高质量干净 GT 测试集比单纯堆砌模型规模更关键，并以 **Joint Goal Accuracy（JGA，当前轮所有域-槽-值三元组全部精确匹配才得 1 分）** 作为黄金标准。<br/>`SGD`（Google）提出用自然语言描述服务与槽位 Schema，评测模型在未见过的新服务 API 上的零样本槽位填充能力。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MultiWOZ 2.4` 清洗了早期 MultiWOZ 2.1 中超过 40% 对话轮次存在的标注不一致与漏标噪声，证明高质量干净 GT 测试集比单纯堆砌模型规模更关键，并以 **Joint Goal Accuracy（JGA，当前轮所有域-槽-值三元组全部精确匹配才得 1 分）** 作为黄客观判据。<br/>`SGD`（Google）提出用自然语言描述服务与槽位 Schema，评测模型在未见过的新服务 API 上的零样本槽位填充能力。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
@@ -92,7 +92,7 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Libo Qin et al. (HIT / SCIR)</p>
         <p><strong>发表年份与出处：</strong>2020 (EMNLP) & 2021 (ACL) · <a href="https://arxiv.org/abs/2004.10087" target="_blank" rel="noopener">https://arxiv.org/abs/2004.10087 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了通过连词组合 2~3 个子意图的 MixATIS 与 MixSNIPS 数据集，要求模型不仅识别出所有并发意图集合 $\hat{\mathcal{I}} = \mathcal{I}^*$，还必须把每个槽位精准挂载到对应的子意图下，任何跨意图槽位张冠李戴均判整句失败。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了通过连词组合 2~3 个子意图的 MixATIS 与 MixSNIPS 数据集，要求模型不仅识别出所有并发意图集合 <code>I<sub>pred</sub> = I<sub>GT</sub></code>，还必须把每个槽位精准挂载到对应的子意图下，任何跨意图槽位张冠李戴均判整句失败。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>

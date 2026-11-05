@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>专题 ③：跨会话长周期认知记忆评测（Long-Term Cognitive Memory） · 论文深度拆解专题页</title>
+  <title>专题 ③：跨会话长周期认知记忆评测（Long-Term Cognitive Memory） · 论文总结专题页</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$<code>', right: '</code>$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '<code>', right: '</code>', display: false}]});"></script>
   <script defer src="../app.js"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
     <span>📊 Agent 评测现状、对标与论文按需展开库</span>
   </div>
   <nav class="nav-links">
-    <a class="nav-pill" href="../index.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill active" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+    <a class="nav-pill" href="../agent_bench_evaluation_hub.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill active" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
   </nav>
   <div>
     <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
@@ -34,7 +34,7 @@
       <div style="display:flex; gap:8px;">
         <button class="btn" onclick="toggleAllDetails(true)">➕ 全部展开</button>
         <button class="btn" onclick="toggleAllDetails(false)">➖ 全部收起</button>
-        <a class="btn primary" href="../index.html">← 返回总览主站</a>
+        <a class="btn primary" href="../agent_bench_evaluation_hub.html">← 返回总览主站</a>
       </div>
     </div>
   </section>
@@ -65,7 +65,7 @@
         <p>【核心优势】精准击中生产级记忆系统的核心难点——『不提历史词，也要用对历史习惯』。<br/>【局限与边界】需要精心设计触发指令与隐式约束之间的逻辑映射关系。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>完美契合我们五层正交事实记忆的检索机制！当用户仅说『帮我弄下推流』（仅含服务词，未提具体应用与参数）时，评测我们能否通过 **向量相似度检索与同行槽位提取** $\rightarrow$ **二阶段关联表补全（通过 `service_to_app` / `periodic_preference` 双向关联）** $\rightarrow$ **读取同行结构化槽位列（Row-Level Column Projection）** 自动补齐 `OBS`、`4K`、`20ms`。</p>
+          <p>完整契合我们五层正交事实记忆的检索机制！当用户仅说『帮我弄下推流』（仅含服务词，未提具体应用与参数）时，评测我们能否通过 **向量相似度检索与同行槽位提取** → **二阶段关联表补全（通过 `service_to_app` / `periodic_preference` 双向关联）** → **读取同行结构化槽位列（Row-Level Column Projection）** 自动补齐 `OBS`、`4K`、`20ms`。</p>
         </div>
       </div>
     </div>
@@ -92,14 +92,14 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Di Wu, Haichuan Wang et al. (UCLA & Tencent AI Lab)</p>
         <p><strong>发表年份与出处：</strong>2024 / ICLR 2025 · <a href="https://arxiv.org/abs/2410.10813" target="_blank" rel="noopener">https://arxiv.org/abs/2410.10813 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了可扩展长跨度历史会话基准（从数万到百万词元），将长程记忆能力正交拆解为 5 大原子任务，特别是系统评测了**知识更新（Knowledge Update，用户后期更改了习惯，模型能否返回最新值而非早期过时值）**与**弃权拒答（Abstention，历史中从未提过的偏好能否诚实反问而非胡编）**。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>构建了可扩展长跨度历史会话基准（从数万到百万词元），将长程记忆能力正交拆解为 5 大原子任务，特别是系统评测了**知识更新（Knowledge Update，用户后期更改了习惯，模型能否返回最新值而非早期过时值）**与**弃权拒答（Abstention，历史中从未提过的偏好能否诚实反问而非凭空生成）**。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
         <p>【核心优势】五大维度划分极其清晰，是检验记忆覆写与防幻觉的行业标杆。<br/>【局限与边界】主要评测文本问答输出，未直接绑定结构化工具槽位合成。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>在评测 `D:\coding\memory_system` 时，专门设立 **偏好演进覆写测试集（Preference Evolution Suite）**：验证当用户在近期会话中通过慢路径修改了常用分辨率或周期时间窗后，检索层与 `experience_handler.py` 能否优先命中高权重/最新时间戳记录，彻底屏蔽旧记录干扰。</p>
+          <p>在评测 `D:\coding\memory_system` 时，专门设立 **偏好演进覆写测试集（Preference Evolution Suite）**：验证当用户在近期会话中通过慢路径修改了常用分辨率或周期时间窗后，检索层与 `experience_handler.py` 能否优先命中高权重/最新时间戳记录，屏蔽旧记录干扰。</p>
         </div>
       </div>
     </div>

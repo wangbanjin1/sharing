@@ -11,7 +11,7 @@
   2. **AI Infra 与底层算子**：大模型推理系统（vLLM / 1Cat-vLLM 源码剖析）、GPU (CUDA) 内存与调度优化、昇腾芯片（Ascend 310P / CANN / Ascend C）融合算子开发与部署。
 - **常用模型与基础设施**：
   - 阿里云百炼（DashScope OpenAI 兼容接口）：主力文本模型（`qwen3.7-plus` / `qwen-plus` / `qwen3.8-flash` / `deepseek-v4.1-flash`）、主力向量模型（`text-embedding-v4` / `qwen3.7-text-embedding`，`1024` 维）。
-  - GitHub 常用归档组织：`wangbanjin1`（含 `mem_system`、`intent_rag`、`sharing` 等仓库）。
+  - GitHub 常用归档组织：`wangbanjin1`（含 `mem_system`、`intent_rag`、`sharing`、`cross_data_gen`、`memory_data_gen` 等仓库）。
 
 ---
 
@@ -39,8 +39,11 @@
 2. **拒绝抽象空谈（流程图 + 真实样本举例）**：
    - 讲解检索逻辑、萃取机制或算子数据流时，**必须配合清晰的流程图 + 1 个完整的真实样本举例（展示从输入、中间向量/字段匹配、SQL/槽位条件到最终输出的每一步真实数据）**。
 3. **可视化、HTML Artifact 与 Lavish 协同规范（HTML Artifact & Lavish Standard）**：
-   - **双轨交付与 Lavish 协同**：架构总结、方法论对齐、演进看板与评测报告优先交付 **HTML Artifact**（通过 `write_file` 写入会话 Artifact 目录供 IDE 直接预览与评论），同时同步至项目 `.lavish/` 目录；当需要交互式精修时，调用 `lavish-axi.cmd <file.html>` 启动本地审查服务器并后台执行 `lavish-axi.cmd poll <file.html>` 实时监听与响应行级批注。
-   - **主从式多页 HTML 拆分与上下文原位跳转（主页精炼 + 子页原位内联跳转）**：主页面必须保持精炼扼要、一屏直达核心设计维度与架构逻辑；**单篇核心论文的深度拆解**或**长篇逐轮样本全景推演**独立拆分为**子 HTML 页面（Sub-HTML）**，并在主页面**提及对应论文名称或样本的上下文原位（In-Context）直接挂接内联超链接点击跳转**，不在顶栏或底部堆砌突兀的独立跳转按钮横幅。
+   - **双轨交付与 `.lavish/` 统一归档管理**：所有分享文稿（`sharing`）、架构总结、方法论对齐、演进看板与评测报告优先交付 **HTML Artifact**（通过 `write_file` 写入会话 Artifact 目录供 IDE 直接预览与评论），同时**统一归档至 `.lavish/` 目录**以便集中管理与修改；当需要交互式精修时，调用 `lavish-axi.cmd <file.html>` 启动本地审查服务器并后台执行 `lavish-axi.cmd poll <file.html>` 实时监听与响应行级批注。
+   - **主从式多页 HTML 拆分、子文件夹收纳与上下文原位跳转**：
+     - **主 HTML 置于 `.lavish/` 根目录**：保持精炼扼要、一屏直达核心设计维度与架构逻辑，使用有辨识度的主题文件名（如 `agent_bench_evaluation_hub.html`、`hybrid_ticket_dialogue_storyline_methodology.html`，避免平铺同名 `index.html`）；
+     - **子 HTML 必须统一放入子文件夹**：单篇核心论文的深度拆解或长篇逐轮样本全景推演独立拆分为**子 HTML 页面（Sub-HTML）**，并**统一收纳至 `.lavish/<topic>_sub/` 或 `.lavish/papers/` 等专属子文件夹中**，严禁将子 HTML 直接平铺在 `.lavish/` 根目录下与主页面混放；
+     - **上下文原位内联跳转**：在主页面提及对应论文名称或样本的上下文原位（In-Context）直接挂接指向子文件夹的内联超链接（如 `href="storyline_sub/personamem_v3_deep_dive.html"`），子页面返回链接指向 `../<main>.html`，不在顶栏或底部堆砌突兀的独立跳转按钮横幅。
    - **视觉、主题与打印规范**：
      - **双浅色主题切换**：内置 `暖阳米纸 (parchment: #FBF7F0)`（默认）与 `GitHub 简洁 (github: #F6F8FA)` 一键切换；长篇技术规范额外提供 `长卷通览` / `分章聚焦` 视图切换。
      - **代码块浅底色铁律**：所有 `pre / code` 与 JSON 示例块必须采用柔和浅色背景（米纸主题 `#F2ECE1`、GitHub 主题 `#F6F8FA` 搭配细边框），**严禁使用大面积纯黑/深灰底色代码块**。
@@ -91,7 +94,7 @@
    - 推送前严格确认目标仓库地址与目标分支（区分 `main` 与 `feature/*` 分支），切勿误推分支。
 5. **实证文献检索与学术调研铁律（Empirical Literature Research Only）**：
    - 当用户要求调研论文、对比相关工作、寻找算法灵感或梳理学术前沿时，**严禁依赖模型预训练知识库直接罗列或凭记忆作答**。
-   - **必须调用真实学术检索工具**：优先使用全局技能 `literature-search-arxiv`（`C:\Users\Administrator\.gemini\config\skills\literature_search_arxiv\scripts\search_arxiv.py` 及 `download_paper.py`）与 `literature-search-openalex`（`C:\Users\Administrator\.gemini\config\skills\literature_search_openalex\scripts\openalex_cli.py`）实时拉取真实论文标题、发表日期、作者、URL 与摘要；需深入剖析某篇论文时，直接下载其 PDF 或 LaTeX 源码包阅读原文。
+   - **必须调用真实学术检索工具**：优先使用全局技能 `literature-search-arxiv`（`~/.gemini/config/skills/literature_search_arxiv/scripts/search_arxiv.py` 及 `download_paper.py`）与 `literature-search-openalex`（`~/.gemini/config/skills/literature_search_openalex/scripts/openalex_cli.py`）实时拉取真实论文标题、发表日期、作者、URL 与摘要；需深入剖析某篇论文时，直接下载其 PDF 或 LaTeX 源码包阅读原文。
    - 汇报格式必须聚焦于客观事实：**① 论文基本信息与真实链接 $\rightarrow$ ② 他们的核心工作具体在做什么 $\rightarrow$ ③ 对我们当前项目的可落地启发**。
 
 ---
@@ -106,5 +109,5 @@
 3. **全局持久记忆索引 (`~/.gemini/config/memory/MEMORY.md`)**：
    - [Zero Hardcoding Policy](memory/feedback_zero_hardcoding.md) — 严禁检索/生成侧字面量硬编码，发现异常必须修复底层生成器或引擎源码
    - [Logging & Code Modularity](memory/feedback_logging_and_code_modularity.md) — 严禁使用 `print`（统一用 `logger.info` 日志系统）、函数控制在 100 行内、Prompt 常量与算法代码物理解耦
-   - [HTML Report & Visual Style](memory/feedback_html_artifact_style.md) — 双浅色主题、CSS Grid 防溢出卡片、标准工程术语与四段式方案卡片规范
+   - [HTML Report & Visual Style](memory/feedback_html_artifact_style.md) — `.lavish/` 统一归档、主 HTML 置顶与子 HTML 收纳进子文件夹、双浅色主题、防溢出卡片与平实学术语态规范
    - [Repos & DashScope Infra](memory/reference_repos_and_infra.md) — `wangbanjin1` 仓库本地路径映射、Python 3.12 环境、百炼模型与学术检索工具路径

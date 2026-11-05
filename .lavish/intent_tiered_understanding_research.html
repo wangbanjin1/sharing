@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+  onload="renderMathInElement(document.body, {delimiters: [{left: '$<code>', right: '</code>$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '<code>', right: '</code>', display: false}]});"></script>
 <style>
 
 @page {
@@ -629,7 +629,7 @@ ol.refs li {
 <a href="#ch5" class="nav-item nav-l1" data-title="第 5 章 基于预训练小模型的意图处理算法：系统认识、联合建模演绎与开放边界">第 5 章 基于预训练小模型的意图处理算法：系统认识、联合建模演绎与开放边界</a>
 <a href="#s5-1" class="nav-item nav-l2" data-title="5.1 对小模型意图处理范式的系统性认识：核心定位与技术矛盾">5.1 对小模型意图处理范式的系统性认识：核心定位与技术矛盾</a>
 <a href="#s5-2" class="nav-item nav-l2" data-title="5.2 单意图与槽位联合建模的演绎过程：从隐式共享到显式概率堆叠">5.2 单意图与槽位联合建模的演绎过程：从隐式共享到显式概率堆叠</a>
-<a href="#s5-3" class="nav-item nav-l2" data-title="5.3 单句多意图图交互网络的演绎过程：agif \(\rightarrow\) gl-gin \(\rightarrow\) rela-net">5.3 单句多意图图交互网络的演绎过程：AGIF \(\rightarrow\) GL-GIN \(\rightarrow\) ReLa-Net</a>
+<a href="#s5-3" class="nav-item nav-l2" data-title="5.3 单句多意图图交互网络的演绎过程：agif → gl-gin → rela-net">5.3 单句多意图图交互网络的演绎过程：AGIF → GL-GIN → ReLa-Net</a>
 <a href="#s5-4" class="nav-item nav-l2" data-title="5.4 双塔句向量检索与混合记忆引擎：向量相似度检索与同行槽位提取">5.4 双塔句向量检索与混合记忆引擎：向量相似度检索与同行槽位提取</a>
 <a href="#s5-5" class="nav-item nav-l2" data-title="5.5 开放世界域外拒识（ood）的演绎过程与小模型蒸馏加速">5.5 开放世界域外拒识（OOD）的演绎过程与小模型蒸馏加速</a>
 <a href="#s5-6" class="nav-item nav-l2" data-title="5.6 预训练小模型各算法流派的系统性优缺点对比矩阵">5.6 预训练小模型各算法流派的系统性优缺点对比矩阵</a>
@@ -645,7 +645,7 @@ ol.refs li {
 <a href="#s7-4" class="nav-item nav-l2" data-title="7.4 基于分裂共形预测的多轮受控主动澄清（conformal clarification）">7.4 基于分裂共形预测的多轮受控主动澄清（Conformal Clarification）</a>
 <a href="#ch8" class="nav-item nav-l1" data-title="第 8 章 时延与精度双约束下的四级理解框架：架构演绎、边界判定与真实样本对账">第 8 章 时延与精度双约束下的四级理解框架：架构演绎、边界判定与真实样本对账</a>
 <a href="#s8-1" class="nav-item nav-l2" data-title="8.1 分级级联架构的演绎过程与四大路由代表作精读">8.1 分级级联架构的演绎过程与四大路由代表作精读</a>
-<a href="#s8-2" class="nav-item nav-l2" data-title="8.2 四级协同架构职责矩阵（l0 \(\rightarrow\) l1 \(\rightarrow\) l1.5 \(\rightarrow\) l2）与优缺点互补设计">8.2 四级协同架构职责矩阵（L0 \(\rightarrow\) L1 \(\rightarrow\) L1.5 \(\rightarrow\) L2）与优缺点互补设计</a>
+<a href="#s8-2" class="nav-item nav-l2" data-title="8.2 四级协同架构职责矩阵（l0 → l1 → l1.5 → l2）与优缺点互补设计">8.2 四级协同架构职责矩阵（L0 → L1 → L1.5 → L2）与优缺点互补设计</a>
 <a href="#s8-3" class="nav-item nav-l2" data-title="8.3 分裂共形预测边界、最小期望风险路由与多轮状态更新核心方程">8.3 分裂共形预测边界、最小期望风险路由与多轮状态更新核心方程</a>
 <a href="#s8-4" class="nav-item nav-l2" data-title="8.4 端到端全链路真实样本举例（end-to-end real sample walkthrough）">8.4 端到端全链路真实样本举例（End-to-End Real Sample Walkthrough）</a>
 <a href="#ch9" class="nav-item nav-l1" data-title="第 9 章 核心结论、分阶段工程落地路线图与前沿开放问题">第 9 章 核心结论、分阶段工程落地路线图与前沿开放问题</a>
@@ -683,7 +683,7 @@ ol.refs li {
   <div class="qbox">
     <div class="qh">本专著系统性论证与推演的六大核心研究命题</div>
     <div class="qrow"><span class="qi">命题 1</span>如何建立对意图理解课题的系统性认知？十类子课题是如何从真实业务矛盾中一步步推演分化出来的？</div>
-    <div class="qrow"><span class="qi">命题 2</span>1966—2026 六个技术代际之间存在怎样的内在演绎逻辑？每一代技术解决了什么痛点、又因何种致命缺陷催生了下一代？</div>
+    <div class="qrow"><span class="qi">命题 2</span>1966—2026 六个技术代际之间存在怎样的内在演绎逻辑？每一代技术解决了什么问题、又因何种致命缺陷催生了下一代？</div>
     <div class="qrow"><span class="qi">命题 3</span>基于规则的意图处理算法有哪些核心流派？它们各自的优缺点、适用边界以及与神经模型的融合方式是什么？</div>
     <div class="qrow"><span class="qi">命题 4</span>基于预训练小模型的联合建模、多意图图网络、双塔向量检索与域外拒识（OOD）是如何演进的？各自优劣如何权衡？</div>
     <div class="qrow"><span class="qi">命题 5</span>大语言模型在意图任务上的真实增益与核心短板是什么？多轮多意图场景下如何解决否定污染、状态修正与模糊澄清？</div>
@@ -692,7 +692,7 @@ ol.refs li {
 
   <div class="meta">
     <b>研究方法</b>　实证文献检索（<code>literature-search-arxiv</code> / <code>literature-search-openalex</code>）+ 代际演绎推演 + 优缺点全维对比 + 工业级架构设计<br>
-    <b>图表规范</b>　全书嵌入原论文 PDF 无损提取的 57 幅原始算法架构图与原始实验对比表（Original Benchmark Tables），杜绝主观臆造重绘<br>
+    <b>图表规范</b>　全书嵌入原论文 PDF 无损提取的 57 幅原始算法架构图与原始实验对比表（Original Benchmark Tables），避免主观臆造重绘<br>
     <b>归档仓库</b>　<code>wangbanjin1/sharing</code>（<code>slides/intent_research/</code>）· 2026 年 11 月系统性深度精修版
   </div>
 </div>
@@ -707,7 +707,7 @@ ol.refs li {
 
 <div class="judge">
 <div class="jt">认知一：课题的本质矛盾决定了单一技术路线不可能同时满足“准、快、省、可控”四角约束</div>
-<p>人类语言具有长尾同义改写、隐式因果推理与跨轮次省略三大特征，而工程系统则要求亚百毫秒级响应（P99 $\le 250\,\text{ms}$）、零合规越界风险与极低单次调用成本。<strong>规则引擎</strong>用符号穷举换取确定性与微秒级速度，代价是泛化召回率随表达发散断崖式下跌；<strong>预训练判别式小模型</strong>用封闭集统计学习换取分布内高吞吐判别，代价是零样本冷启动困难且对域外未知意图（OOD）高度过度自信；<strong>大语言模型</strong>用百亿参数世界知识换取开放语义理解与零样本泛化，代价是推理延迟放大 $56$ 倍（$1697\,\text{ms}$ vs $30\,\text{ms}$）、百类长列表位置偏置及输出分布难以直接标定。三者的优缺点在误差空间上严格正交互补，这是构建分级理解框架的根本理论依据。</p>
+<p>人类语言具有长尾同义改写、隐式因果推理与跨轮次省略三大特征，而工程系统则要求亚百毫秒级响应（P99 <code>≤ 250ms</code>）、零合规越界风险与极低单次调用成本。<strong>规则引擎</strong>用符号穷举换取确定性与微秒级速度，代价是泛化召回率随表达发散断崖式下跌；<strong>预训练判别式小模型</strong>用封闭集统计学习换取分布内高吞吐判别，代价是零样本冷启动困难且对域外未知意图（OOD）高度过度自信；<strong>大语言模型</strong>用百亿参数世界知识换取开放语义理解与零样本泛化，代价是推理延迟放大 <code>56</code> 倍（<code>1697ms</code> vs <code>30ms</code>）、百类长列表位置偏置及输出分布难以直接标定。三者的优缺点在误差空间上严格正交互补，这是构建分级理解框架的根本理论依据。</p>
 </div>
 
 <div class="judge">
@@ -717,7 +717,7 @@ ol.refs li {
 
 <div class="judge">
 <div class="jt">认知三：封闭集单意图分类早已饱和，真实工业系统的误差集中在“多意图合取惩罚、开放集拒识与多轮状态漂移”三大深水区</div>
-<p>在 ATIS 与 SNIPS 等标准单意图封闭基准上，微调小模型的意图准确率在 2019 年便已触顶（$97.8\% \sim 99.0\%$）。然而一旦放宽理想假设，性能立即出现三道断崖：① <strong>多意图合取惩罚</strong>：当一句话包含 2–3 个意图时（MixATIS），即便单意图分类准确率达 $77\%$，要求意图集合与所有槽位归属同时全对的句子级 Overall Accuracy 仅能达到 $43.0\% \sim 52.2\%$；② <strong>开放集拒识（OOD）困境</strong>：在 CLINC150 基准上，直接用 Softmax 阈值拒识未知意图的 F1 仅 $51.2\%$，必须引入自适应球面边界（ADB）或对比判别训练（SCL）才能提升至 $77.2\% \sim 89.4\%$；③ <strong>多轮状态追踪（DST）跨轮衰减</strong>：在 MultiWOZ 多轮对话中，单槽准确率达 $98\%$，但联合目标准确率（JGA）因跨轮累积误差与用户中途改主意（Intent Drift）跌至 $60\% \sim 75\%$。</p>
+<p>在 ATIS 与 SNIPS 等标准单意图封闭基准上，微调小模型的意图准确率在 2019 年便已触顶（<code>97.8% ~ 99.0%</code>）。然而一旦放宽理想假设，性能立即出现三道断崖：① <strong>多意图合取惩罚</strong>：当一句话包含 2–3 个意图时（MixATIS），即便单意图分类准确率达 <code>77%</code>，要求意图集合与所有槽位归属同时全对的句子级 Overall Accuracy 仅能达到 <code>43.0% ~ 52.2%</code>；② <strong>开放集拒识（OOD）困境</strong>：在 CLINC150 基准上，直接用 Softmax 阈值拒识未知意图的 F1 仅 <code>51.2%</code>，必须引入自适应球面边界（ADB）或对比判别训练（SCL）才能提升至 <code>77.2% ~ 89.4%</code>；③ <strong>多轮状态追踪（DST）跨轮衰减</strong>：在 MultiWOZ 多轮对话中，单槽准确率达 <code>98%</code>，但联合目标准确率（JGA）因跨轮累积误差与用户中途改主意（Intent Drift）跌至 <code>60% ~ 75%</code>。</p>
 </div>
 
 <div class="judge">
@@ -727,7 +727,7 @@ ol.refs li {
 
 <div class="judge">
 <div class="jt">认知五：分级架构的上限取决于“边界验真器质量”与“快慢路径经验飞轮”，而非单点模型的大小</div>
-<p>级联系统的数学推导表明：只有当前级截留率高于成本比，且边界验真器将前级已答对样本误判升级的概率（误升级率 $\alpha$）控制在约 $3\%$ 以内时，级联才能同时实现降本与提准；同时，受 P99 尾延迟刚性约束，在线同步串行升级至完整大模型的流量不能超过 $1\%$。因此，最佳工程形态是<strong>“L0 规则与个性化表述映射（<code>expression</code>）$\rightarrow$ L1 向量检索同行槽位提取与联合小模型 $\rightarrow$ L1.5 裁剪候选受限消歧与共形主动澄清 $\rightarrow$ L2 大模型极小比例兜底与异步慢路径交互归纳沉淀”</strong>的四级闭环。</p>
+<p>级联系统的数学推导表明：只有当前级截留率高于成本比，且边界验真器将前级已答对样本误判升级的概率（误升级率 <code>α</code>）控制在约 <code>3%</code> 以内时，级联才能同时实现降本与提准；同时，受 P99 尾延迟刚性约束，在线同步串行升级至完整大模型的流量不能超过 <code>1%</code>。因此，最佳工程形态是<strong>“L0 规则与个性化表述映射（<code>expression</code>）→ L1 向量检索同行槽位提取与联合小模型 → L1.5 裁剪候选受限消歧与共形主动澄清 → L2 大模型极小比例兜底与异步慢路径交互归纳沉淀”</strong>的四级闭环。</p>
 </div>
 
 <h2 id="s0-2"><span class="num">0.2</span>核心实证量化基准锚点</h2>
@@ -742,7 +742,7 @@ ol.refs li {
 <tr><td><strong>开放世界域外拒识（OOD）边界</strong></td><td>CLINC150（25% 已知类）MSP 基线 OOS-F1 仅 <code>51.2%</code>，ADB 自适应球面边界提升至 <code>77.2%</code>（All-F1 <code>87.6%</code>）</td><td>Zhang 等，<em>ADB</em>，AAAI 2021，arXiv:2012.10209；Zhan 等，<em>SCL</em>，NAACL 2021，arXiv:2106.08616</td></tr>
 <tr><td><strong>小模型与大模型在线延迟与精度实测</strong></td><td>SetFit 小模型平均耗时 <code>30 ms</code> vs LLM <code>1697 ms</code>（相差 <code>56×</code>）；混合路由以 40% LLM 调用取得最高宏平均 F1</td><td>Arora 等（Amazon），<em>Intent Detection in the Age of LLMs</em>，EMNLP 2024 Industry，arXiv:2410.01627</td></tr>
 <tr><td><strong>多轮对话状态追踪（DST）跨轮表现</strong></td><td>MultiWOZ 2.2/2.4 上指令微调 LDST 达 JGA <code>60.65% / 75.52%</code>（追平或超越 GPT-4，参数量缩小两个数量级）</td><td>Feng 等，<em>LDST</em>，EMNLP 2023，arXiv:2310.14970；Heck 等，<em>TripPy</em>，SIGDIAL 2020</td></tr>
-<tr><td><strong>共形预测意图分类与受控主动澄清</strong></td><td>在预设覆盖率 <code>95%</code> 下，仅对候选集基数 $\ge 2$ 的模糊样本发起澄清，减少 <code>60%+</code> 冗余追问且准确率达 <code>96%+</code></td><td>den Hengst 等，<em>Conformal Intent Classification and Clarification</em>，NAACL 2024 Findings，arXiv:2403.18973</td></tr>
+<tr><td><strong>共形预测意图分类与受控主动澄清</strong></td><td>在预设覆盖率 <code>95%</code> 下，仅对候选集基数 <code>≥ 2</code> 的模糊样本发起澄清，减少 <code>60%+</code> 冗余追问且准确率达 <code>96%+</code></td><td>den Hengst 等，<em>Conformal Intent Classification and Clarification</em>，NAACL 2024 Findings，arXiv:2403.18973</td></tr>
 <tr><td><strong>多级大模型级联与偏好路由降本幅度</strong></td><td>FrugalGPT 在同精度下降低成本 <code>98.3%</code>；RouteLLM 在 MT-Bench 上节省 <code>3.66×</code> 成本且路由自身开销 <code>&lt;0.4%</code></td><td>Chen 等，<em>FrugalGPT</em>，arXiv:2305.05176；Ong 等，<em>RouteLLM</em>，arXiv:2406.18665</td></tr>
 </tbody>
 </table>
@@ -769,7 +769,7 @@ ol.refs li {
 <li class="l1"><div class="row"><a href="#ch5" style="color:inherit;text-decoration:none;"><span class="t">第 5 章　基于预训练小模型的意图处理算法：系统认识、联合建模演绎与开放边界</span></a><span class="dots"></span><span class="pg">10</span></div></li>
 <li class="l2"><div class="row"><a href="#s5-1" style="color:inherit;text-decoration:none;"><span class="t">5.1　对小模型意图处理范式的系统性认识：核心定位与技术矛盾</span></a><span class="dots"></span><span class="pg">10</span></div></li>
 <li class="l2"><div class="row"><a href="#s5-2" style="color:inherit;text-decoration:none;"><span class="t">5.2　单意图与槽位联合建模的演绎过程：从隐式共享到显式概率堆叠</span></a><span class="dots"></span><span class="pg">11</span></div></li>
-<li class="l2"><div class="row"><a href="#s5-3" style="color:inherit;text-decoration:none;"><span class="t">5.3　单句多意图图交互网络的演绎过程：AGIF \(\rightarrow\) GL-GIN \(\rightarrow\) ReLa-Net</span></a><span class="dots"></span><span class="pg">11</span></div></li>
+<li class="l2"><div class="row"><a href="#s5-3" style="color:inherit;text-decoration:none;"><span class="t">5.3　单句多意图图交互网络的演绎过程：AGIF → GL-GIN → ReLa-Net</span></a><span class="dots"></span><span class="pg">11</span></div></li>
 <li class="l2"><div class="row"><a href="#s5-4" style="color:inherit;text-decoration:none;"><span class="t">5.4　双塔句向量检索与混合记忆引擎：向量相似度检索与同行槽位提取</span></a><span class="dots"></span><span class="pg">12</span></div></li>
 <li class="l2"><div class="row"><a href="#s5-5" style="color:inherit;text-decoration:none;"><span class="t">5.5　开放世界域外拒识（OOD）的演绎过程与小模型蒸馏加速</span></a><span class="dots"></span><span class="pg">12</span></div></li>
 <li class="l2"><div class="row"><a href="#s5-6" style="color:inherit;text-decoration:none;"><span class="t">5.6　预训练小模型各算法流派的系统性优缺点对比矩阵</span></a><span class="dots"></span><span class="pg">13</span></div></li>
@@ -785,7 +785,7 @@ ol.refs li {
 <li class="l2"><div class="row"><a href="#s7-4" style="color:inherit;text-decoration:none;"><span class="t">7.4　基于分裂共形预测的多轮受控主动澄清（Conformal Clarification）</span></a><span class="dots"></span><span class="pg">18</span></div></li>
 <li class="l1"><div class="row"><a href="#ch8" style="color:inherit;text-decoration:none;"><span class="t">第 8 章　时延与精度双约束下的四级理解框架：架构演绎、边界判定与真实样本对账</span></a><span class="dots"></span><span class="pg">18</span></div></li>
 <li class="l2"><div class="row"><a href="#s8-1" style="color:inherit;text-decoration:none;"><span class="t">8.1　分级级联架构的演绎过程与四大路由代表作精读</span></a><span class="dots"></span><span class="pg">18</span></div></li>
-<li class="l2"><div class="row"><a href="#s8-2" style="color:inherit;text-decoration:none;"><span class="t">8.2　四级协同架构职责矩阵（L0 \(\rightarrow\) L1 \(\rightarrow\) L1.5 \(\rightarrow\) L2）与优缺点互补设计</span></a><span class="dots"></span><span class="pg">19</span></div></li>
+<li class="l2"><div class="row"><a href="#s8-2" style="color:inherit;text-decoration:none;"><span class="t">8.2　四级协同架构职责矩阵（L0 → L1 → L1.5 → L2）与优缺点互补设计</span></a><span class="dots"></span><span class="pg">19</span></div></li>
 <li class="l2"><div class="row"><a href="#s8-3" style="color:inherit;text-decoration:none;"><span class="t">8.3　分裂共形预测边界、最小期望风险路由与多轮状态更新核心方程</span></a><span class="dots"></span><span class="pg">20</span></div></li>
 <li class="l2"><div class="row"><a href="#s8-4" style="color:inherit;text-decoration:none;"><span class="t">8.4　端到端全链路真实样本举例（End-to-End Real Sample Walkthrough）</span></a><span class="dots"></span><span class="pg">20</span></div></li>
 <li class="l1"><div class="row"><a href="#ch9" style="color:inherit;text-decoration:none;"><span class="t">第 9 章　核心结论、分阶段工程落地路线图与前沿开放问题</span></a><span class="dots"></span><span class="pg">21</span></div></li>
@@ -802,7 +802,7 @@ ol.refs li {
 
 <h1 id="ch1"><span class="cn">第 1 章</span>对意图理解课题的系统性认识：本质矛盾、概念边界与评测口径</h1>
 
-<p class="ni">要构建一套工业级高可用的意图理解系统，首先必须建立对“意图理解”这一课题的全局系统性认识：<strong>为什么自然语言交互非要有“意图层”不可？“意图”在不同代际的系统中究竟指代什么？为什么很多在学术数据集上高达 $98\%$ 准确率的模型一上线就频繁翻车？</strong>本章从人机通信的本质矛盾出发，建立意图的三层认知模型，厘清十组易混淆概念边界，并剖析主流评测基准背后的指标陷阱。</p>
+<p class="ni">要构建一套工业级高可用的意图理解系统，首先必须建立对“意图理解”这一课题的全局系统性认识：<strong>为什么自然语言交互非要有“意图层”不可？“意图”在不同代际的系统中究竟指代什么？为什么很多在学术数据集上高达 <code>98%</code> 准确率的模型一上线就频繁翻车？</strong>本章从人机通信的本质矛盾出发，建立意图的三层认知模型，厘清十组易混淆概念边界，并剖析主流评测基准背后的指标陷阱。</p>
 
 <h2 id="s1-1"><span class="num">1.1</span>课题的本质矛盾与意图的三层系统性定义</h2>
 
@@ -838,7 +838,7 @@ ol.refs li {
 </tbody>
 </table>
 
-<p class="ni"><strong>系统性认知结论</strong>：这三层定义并非互相淘汰的替代关系，而在现代分级架构中各司其职——<strong>第一层（语用行为）</strong>在 L0/L1 前置识别否定、撤回与确认信号；<strong>第二层（领域框架与槽位）</strong>在 L1/L1.5 承担 $90\%+$ 核心高频业务的毫秒级判别与填表；<strong>第三层（工具与工作流路由）</strong>在 L1.5/L2 承接长尾复杂组合请求与跨系统外部 API 编排。</p>
+<p class="ni"><strong>系统性认知结论</strong>：这三层定义并非互相淘汰的替代关系，而在现代分级架构中各司其职——<strong>第一层（语用行为）</strong>在 L0/L1 前置识别否定、撤回与确认信号；<strong>第二层（领域框架与槽位）</strong>在 L1/L1.5 承担 <code>90%+</code> 核心高频业务的毫秒级判别与填表；<strong>第三层（工具与工作流路由）</strong>在 L1.5/L2 承接长尾复杂组合请求与跨系统外部 API 编排。</p>
 
 <h2 id="s1-2"><span class="num">1.2</span>十组核心术语与易混淆概念边界辨析</h2>
 
@@ -848,22 +848,22 @@ ol.refs li {
 <caption><b>表 1-2</b>　意图理解领域的十组核心概念边界与工程联动机制</caption>
 <thead><tr><th style="width:22%">易混淆概念对</th><th style="width:40%">本质区别与核心矛盾</th><th>工程实践中的协同关系</th></tr></thead>
 <tbody>
-<tr><td><strong>1. 意图分类（Intent Classification）</strong> vs.<br><strong>通用文本分类（Text Classification）</strong></td><td>通用文本分类多针对长文章主题或情感，容忍局部词噪声；意图分类针对极短口语查询（$5 \sim 15$ 词），同域内类别语义高度相近（如 <code>BANKING77</code> 中“查卡何时寄到”与“查快递追踪号”），一两个动词或介词之差即改变类别。</td><td>意图分类器不能仅靠宏观主题词袋，必须引入对比表示学习（Contrastive Fine-tuning）与局部实体类型先验。</td></tr>
+<tr><td><strong>1. 意图分类（Intent Classification）</strong> vs.<br><strong>通用文本分类（Text Classification）</strong></td><td>通用文本分类多针对长文章主题或情感，容忍局部词噪声；意图分类针对极短口语查询（<code>5 ~ 15</code> 词），同域内类别语义高度相近（如 <code>BANKING77</code> 中“查卡何时寄到”与“查快递追踪号”），一两个动词或介词之差即改变类别。</td><td>意图分类器不能仅靠宏观主题词袋，必须引入对比表示学习（Contrastive Fine-tuning）与局部实体类型先验。</td></tr>
 <tr><td><strong>2. 意图检测（Intent Detection）</strong> vs.<br><strong>槽位填充（Slot Filling）</strong></td><td>意图检测是句子/子句级判别，回答“用户想执行什么操作”；槽位填充是词元级（Token-level BIO）抽取，回答“该操作的具体参数值是什么”。</td><td>二者互为强约束：意图限定合法槽位子集（防止订机票抽出酒店房型），槽位实体反向消解动词歧义（共享底座联合建模的根本动机）。</td></tr>
 <tr><td><strong>3. 命名实体识别（NER）</strong> vs.<br><strong>槽位填充（Slot Filling）</strong></td><td>NER 识别客观实体类别（如“北京”和“上海”都是地名 <code>LOC</code>）；槽位填充识别实体在当前意图中的<strong>语义角色</strong>（“从北京飞上海”中，北京是出发地 <code>B-depart_city</code>，上海是目的地 <code>B-arrive_city</code>）。</td><td>工程上常采用“两段式协同”：L0 先用正则/Duckling 抽取客观时间、金额、城市候选，L1 联合模型结合介词上下文赋予槽位角色。</td></tr>
-<tr><td><strong>4. 扁平意图（Flat Intent）</strong> vs.<br><strong>层次化语义解析（Hierarchical Parsing）</strong></td><td>扁平模型假设一句话只有一个顶层意图和若干叶节点槽位；层次化解析（如 Facebook <code>TOP</code>）支持槽位值内部嵌套子意图（如“打车去[查询今晚演唱会举办的体育馆]”）。</td><td>$95\%$ 的日常请求符合扁平假设，用非自回归小模型即可高速解析；仅当检测到从句嵌套结构时才升级至生成式解析器。</td></tr>
-<tr><td><strong>5. 封闭集分类（Closed-set）</strong> vs.<br><strong>开放集域外拒识（OOD / OOS Detection）</strong></td><td>封闭集假设测试输入 $100\%$ 属于训练见过的 $K$ 个意图；开放集拒识要求模型在未见过的闲聊、竞品业务或超纲指令上主动拒绝回答（输出 <code>OOS</code>）。</td><td>封闭集准确率高的模型未必擅长 OOD 拒识（交叉熵鼓励特征向无穷远半空间发散）；上线系统必须叠加球面边界（ADB）或能量门控。</td></tr>
-<tr><td><strong>6. 域外拒识（OOD Detection）</strong> vs.<br><strong>新意图发现（Intent Discovery）</strong></td><td>OOD 拒识是在线实时防御机制（耗时需 $<5\,\text{ms}$，目标是“不乱答”）；新意图发现是离线数据挖掘机制（在积累的数万条被拒识日志中聚类归纳出高价值新业务簇）。</td><td>二者构成数据闭环：在线 OOD 门控拦截未知流量 $\rightarrow$ 离线聚类与大模型命名发现新意图 $\rightarrow$ 审核入库扩充 L1 已知类。</td></tr>
+<tr><td><strong>4. 扁平意图（Flat Intent）</strong> vs.<br><strong>层次化语义解析（Hierarchical Parsing）</strong></td><td>扁平模型假设一句话只有一个顶层意图和若干叶节点槽位；层次化解析（如 Facebook <code>TOP</code>）支持槽位值内部嵌套子意图（如“打车去[查询今晚演唱会举办的体育馆]”）。</td><td><code>95%</code> 的日常请求符合扁平假设，用非自回归小模型即可高速解析；仅当检测到从句嵌套结构时才升级至生成式解析器。</td></tr>
+<tr><td><strong>5. 封闭集分类（Closed-set）</strong> vs.<br><strong>开放集域外拒识（OOD / OOS Detection）</strong></td><td>封闭集假设测试输入 <code>100%</code> 属于训练见过的 <code>K</code> 个意图；开放集拒识要求模型在未见过的闲聊、竞品业务或超纲指令上主动拒绝回答（输出 <code>OOS</code>）。</td><td>封闭集准确率高的模型未必擅长 OOD 拒识（交叉熵鼓励特征向无穷远半空间发散）；上线系统必须叠加球面边界（ADB）或能量门控。</td></tr>
+<tr><td><strong>6. 域外拒识（OOD Detection）</strong> vs.<br><strong>新意图发现（Intent Discovery）</strong></td><td>OOD 拒识是在线实时防御机制（耗时需 $<5 \text{ms}$，目标是“不乱答”）；新意图发现是离线数据挖掘机制（在积累的数万条被拒识日志中聚类归纳出高价值新业务簇）。</td><td>二者构成数据闭环：在线 OOD 门控拦截未知流量 → 离线聚类与大模型命名发现新意图 → 审核入库扩充 L1 已知类。</td></tr>
 <tr><td><strong>7. 单轮多意图（Multi-Intent SLU）</strong> vs.<br><strong>多轮意图切换（Multi-Turn Shift）</strong></td><td>单轮多意图指单次发言内包含多个并列或递进诉求（需在单句内完成槽位归属拆分）；多轮切换指跨轮次转移话题或推翻上一轮决定。</td><td>单轮多意图依靠子句切分与词元级异构图（GL-GIN）；多轮切换依靠对话状态追踪（DST）与槽位撤回修正动作。</td></tr>
-<tr><td><strong>8. 单轮意图识别</strong> vs.<br><strong>对话状态追踪（DST）</strong></td><td>单轮意图识别仅输出当轮话语的字面解析；DST 维护整场对话从第 1 轮累积至第 $t$ 轮的全局权威状态快照（Belief State Snapshot）。</td><td>当轮意图与槽位解析结果只是增量输入，必须经过跨轮指代消解与槽位修正规则才能合并入全局状态快照。</td></tr>
+<tr><td><strong>8. 单轮意图识别</strong> vs.<br><strong>对话状态追踪（DST）</strong></td><td>单轮意图识别仅输出当轮话语的字面解析；DST 维护整场对话从第 1 轮累积至第 <code>t</code> 轮的全局权威状态快照（Belief State Snapshot）。</td><td>当轮意图与槽位解析结果只是增量输入，必须经过跨轮指代消解与槽位修正规则才能合并入全局状态快照。</td></tr>
 <tr><td><strong>9. 前置模型路由（Routing）</strong> vs.<br><strong>后验模型级联（Cascade）</strong></td><td>前置路由在模型推理前根据查询难度特征一次性派单给强或弱模型；后验级联先跑快而便宜的前级模型，仅当后验置信度或验真器不通过时才升级后级。</td><td>工业界最优架构是“路由 + 级联混合”：L0 做确定性前置路由，L1 执行后基于共形预测集大小做后验级联升级。</td></tr>
-<tr><td><strong>10. 单一置信度阈值（Thresholding）</strong> vs.<br><strong>共形预测集（Conformal Prediction Set）</strong></td><td>单一阈值仅看 Top-1 分数是否大于常数 $\tau$，无法区分“所有类别分都低（域外）”与“前两名分都高且咬得很紧（二义性冲突）”；共形预测输出满足统计覆盖保证的动态候选集合。</td><td>共形预测集的大小直接映射为三路决策：集合含 1 个元素直接执行，含 2–5 个元素发起受控澄清或裁剪升级，空集判定为域外拒识。</td></tr>
+<tr><td><strong>10. 单一置信度阈值（Thresholding）</strong> vs.<br><strong>共形预测集（Conformal Prediction Set）</strong></td><td>单一阈值仅看 Top-1 分数是否大于常数 <code>τ</code>，无法区分“所有类别分都低（域外）”与“前两名分都高且咬得很紧（二义性冲突）”；共形预测输出满足统计覆盖保证的动态候选集合。</td><td>共形预测集的大小直接映射为三路决策：集合含 1 个元素直接执行，含 2–5 个元素发起受控澄清或裁剪升级，空集判定为域外拒识。</td></tr>
 </tbody>
 </table>
 
 <h2 id="s1-3"><span class="num">1.3</span>九大主流评测基准数据集与四类核心指标陷阱</h2>
 
-<p class="ni">学术界围绕上述不同任务象限构建了九个广泛使用的公开基准数据集（表 1-3）。理解每个数据集的构造方式与评测指标定义，是客观解读论文实验结果、避免被“刷榜数字”误导的前提。</p>
+<p class="ni">学术界围绕上述不同任务象限构建了九个广泛使用的公开基准数据集（表 1-3）。理解每个数据集的构造方式与评测指标定义，是客观解读论文实验结果、避免被“针对固定题目过拟合数字”误导的前提。</p>
 
 <table class="long">
 <caption><b>表 1-3</b>　意图理解与对话状态追踪领域的九大标准评测基准数据集全景对比</caption>
@@ -875,7 +875,7 @@ ol.refs li {
 <tr><td><strong>HWU64</strong><br>（Liu 等, 2019）</td><td>多领域细粒度意图分类</td><td>8,954 / 1,076 / 1,076</td><td>64 意图 / 54 槽位 / 21 域</td><td>全量 <code>92.9%</code>，10-shot <code>82.9%</code>。覆盖日程、音乐、智能家居等 21 个日常域，贴近个人助理真实分布。</td></tr>
 <tr><td><strong>CLINC150 (OOS)</strong><br>（Larson 等, 2019）</td><td>百类多域意图分类 + 域外拒识（OOD）</td><td>15,000 / 3,000 / 4,500<br>（另含 1,200 条 OOS）</td><td>150 意图 + 1 OOS / 10 域</td><td>域内准确率 <code>96.5%</code>，OOS-F1 <code>80.7%–89.4%</code>。检验分类器在百类规模下的概率校准与未知意图拒识能力。</td></tr>
 <tr><td><strong>MixATIS / MixSNIPS</strong><br>（Qin 等, 2020）</td><td>单句多意图与槽位联合建模</td><td>MixATIS: 13,162/756/828<br>MixSNIPS: 39,776/2,198/2,199</td><td>每句含 1–3 个意图（按 3:5:2 比例合成）</td><td>MixATIS Overall <code>43.0%–54.8%</code>；MixSNIPS Overall <code>75.4%–81.0%</code>。暴露了多意图与槽位归属联合匹配的巨大难度。</td></tr>
-<tr><td><strong>TOP / TOPv2</strong><br>（Gupta 等, 2018/2020）</td><td>层次化嵌套意图与槽位树解析</td><td>31,279 / 4,462 / 9,042</td><td>25 意图 / 36 槽位（树深 $\le 4$）</td><td>整树精确匹配（Exact Match）<code>86.0%–87.1%</code>。专门评测含跨领域嵌套子句的组合语义树生成。</td></tr>
+<tr><td><strong>TOP / TOPv2</strong><br>（Gupta 等, 2018/2020）</td><td>层次化嵌套意图与槽位树解析</td><td>31,279 / 4,462 / 9,042</td><td>25 意图 / 36 槽位（树深 <code>≤ 4</code>）</td><td>整树精确匹配（Exact Match）<code>86.0%–87.1%</code>。专门评测含跨领域嵌套子句的组合语义树生成。</td></tr>
 <tr><td><strong>MultiWOZ 2.1–2.4</strong><br>（Budzianowski 等, 2018+）</td><td>多轮跨领域任务型对话状态追踪（DST）</td><td>8,438 / 1,000 / 1,000 段对话（约 11 万轮）</td><td>7 域 / 30+ 槽位 / 平均 13.7 轮</td><td>MultiWOZ 2.2 JGA <code>60.7%</code>，2.4（清洗测试集）JGA <code>75.5%</code>。检验跨轮指代、省略补全与状态覆写。</td></tr>
 <tr><td><strong>MIntRec 2.0</strong><br>（Zhang 等, 2024）</td><td>多轮多模态含域外意图识别</td><td>1,245 段多轮对话（15,040 轮话语）</td><td>30 已知意图 + OOS（占 38%）</td><td>文本单模态 F1 约 <code>56%</code>，多模态融合约 <code>62%</code>。目前最接近真实开放世界多轮对话的高难度基准。</td></tr>
 </tbody>
@@ -883,8 +883,8 @@ ol.refs li {
 
 <div class="box warn">
 <div class="h">评测口径深度剖析：为什么论文的高分不等于线上高可用？（四大指标陷阱）</div>
-<p>1. <strong>单指标高分掩盖“句子级合取崩塌（Conjunctive Penalty）”</strong>：在业务执行中，只有当“意图判对”<strong>且</strong>“句中所有必填槽位的边界与角色全部抽对”时，后端 API 调用才算成功（即 Sentence-level Overall Accuracy）。在 MixATIS 上，哪怕单意图 F1 高达 $77\%$、槽位 F1 高达 $88\%$，两者合取后的句子级 Overall 准确率依然跌至 $43\% \sim 52\%$。</p>
-<p>2. <strong>CLINC150 的两种完全不可比的实验设置</strong>：在阅读 OOD 论文时必须核对其实验设置——<em>设置 A（原版 OOS-Test）</em>使用全部 150 类训练，测试集含 4,500 条已知类与 1,000 条 OOS；<em>设置 B（ADB/SCL 开放比例切分）</em>仅抽 $25\% / 50\% / 75\%$ 的类训练，将其余高达 $75\%$ 的已知类全部混入测试集充当未知类。设置 B 中域外样本占比极高，两套设置下的 OOS-F1 绝对值严禁直接跨文比较。</p>
+<p>1. <strong>单指标高分掩盖“句子级合取崩塌（Conjunctive Penalty）”</strong>：在业务执行中，只有当“意图判对”<strong>且</strong>“句中所有必填槽位的边界与角色全部抽对”时，后端 API 调用才算成功（即 Sentence-level Overall Accuracy）。在 MixATIS 上，哪怕单意图 F1 高达 <code>77%</code>、槽位 F1 高达 <code>88%</code>，两者合取后的句子级 Overall 准确率依然跌至 <code>43% ~ 52%</code>。</p>
+<p>2. <strong>CLINC150 的两种完全不可比的实验设置</strong>：在阅读 OOD 论文时必须核对其实验设置——<em>设置 A（原版 OOS-Test）</em>使用全部 150 类训练，测试集含 4,500 条已知类与 1,000 条 OOS；<em>设置 B（ADB/SCL 开放比例切分）</em>仅抽 <code>25% / 50% / 75%</code> 的类训练，将其余高达 <code>75%</code> 的已知类全部混入测试集充当未知类。设置 B 中域外样本占比极高，两套设置下的 OOS-F1 绝对值严禁直接跨文比较。</p>
 <p>3. <strong>合成多意图数据集的“连词捷径（Conjunction Shortcut）”</strong>：MixATIS 与 MixSNIPS 是用 <code>and</code> 等显式连词拼接单句生成的。许多模型实际上学到的是“数句中有几个 <code>and</code> 来决定输出几个意图”，一旦遇到真实口语中无连词的隐式复合诉求（“明早八点叫我起床，顺便看下穿什么衣服合适”），召回率立即断崖下跌。</p>
 <p>4. <strong>平均延迟（Mean Latency）掩盖 P99 尾延迟灾难</strong>：学术论文通常只报告单请求平均耗时或吞吐量，但在高并发微服务链路中，决定用户体验与超时熔断的是 P99 尾延迟。大模型自回归生成的长尾波动极易击穿网关 SLA。</p>
 </div>
@@ -897,26 +897,26 @@ ol.refs li {
 
 <h2 id="s2-1"><span class="num">2.1</span>从理想假设到真实世界：十类子课题的演绎推演过程</h2>
 
-<p class="ni">让我们以最基础的<strong>子课题 1（封闭集单意图分类）</strong>作为逻辑起点。它依赖四个极强的理想化假设：① 用户意图不需要参数；② 用户一句话只表达一个意图；③ 用户的每一句话都属于系统预定义的 $K$ 个已知意图；④ 用户在一轮话语内就能把诉求完整、无歧义地表达清楚。当我们将这四个假设依次放到真实业务流量下检验时，它们被逐一打破，从而演绎出其余九个核心子课题：</p>
+<p class="ni">让我们以最基础的<strong>子课题 1（封闭集单意图分类）</strong>作为逻辑起点。它依赖四个极强的理想化假设：① 用户意图不需要参数；② 用户一句话只表达一个意图；③ 用户的每一句话都属于系统预定义的 <code>K</code> 个已知意图；④ 用户在一轮话语内就能把诉求完整、无歧义地表达清楚。当我们将这四个假设依次放到真实业务流量下检验时，它们被逐一打破，从而演绎出其余九个核心子课题：</p>
 
 <div class="box key">
 <div class="h">意图理解十类子课题的四步演绎推演链条（Deductive Chain of Sub-tasks）</div>
-<p><strong>第一步：打破“无参数”与“单句单一扁平意图”假设 $\Longrightarrow$ 推演出结构化语义提取子课题群（子课题 2、3、4）</strong><br>
-• <em>放宽“无参数”假设</em>：知道用户想“订机票”还不够，必须抽出出发地、目的地与日期，且意图与参数相互约束 $\rightarrow$ 推演出 <strong>子课题 2：单意图与槽位联合填充（Joint Intent &amp; Slot Filling）</strong>。<br>
-• <em>放宽“一句一意图”假设</em>：真实用户常将连贯诉求并列说出（“查下余额再把信用卡账单还了”），需要预测意图集合并解决“哪个槽位归属哪个意图”的配对难题 $\rightarrow$ 推演出 <strong>子课题 3：单句多意图与槽位联合检测（Multi-Intent SLU）</strong>。<br>
-• <em>放宽“意图与槽位扁平两层”假设</em>：当槽位的值本身需要另一个子意图动态计算（“导航去[今晚周杰伦演唱会所在的体育场]”）时，线性 BIO 标注彻底失效 $\rightarrow$ 推演出 <strong>子课题 4：层次化组合语义树解析（Hierarchical Semantic Parsing）</strong>。</p>
+<p><strong>第一步：打破“无参数”与“单句单一扁平意图”假设 <code>\Longrightarrow</code> 推演出结构化语义提取子课题群（子课题 2、3、4）</strong><br>
+• <em>放宽“无参数”假设</em>：知道用户想“订机票”还不够，必须抽出出发地、目的地与日期，且意图与参数相互约束 → 推演出 <strong>子课题 2：单意图与槽位联合填充（Joint Intent &amp; Slot Filling）</strong>。<br>
+• <em>放宽“一句一意图”假设</em>：真实用户常将连贯诉求并列说出（“查下余额再把信用卡账单还了”），需要预测意图集合并解决“哪个槽位归属哪个意图”的配对难题 → 推演出 <strong>子课题 3：单句多意图与槽位联合检测（Multi-Intent SLU）</strong>。<br>
+• <em>放宽“意图与槽位扁平两层”假设</em>：当槽位的值本身需要另一个子意图动态计算（“导航去[今晚周杰伦演唱会所在的体育场]”）时，线性 BIO 标注失效 → 推演出 <strong>子课题 4：层次化组合语义树解析（Hierarchical Semantic Parsing）</strong>。</p>
 
-<p><strong>第二步：打破“测试样本 100% 属于已知意图集”假设 $\Longrightarrow$ 推演出开放世界演化子课题群（子课题 5、6、9）</strong><br>
-• <em>放宽“全集已知”的在线防御需求</em>：面对用户闲聊、竞品功能询问或越界指令，分类器必须拒绝强行归类 $\rightarrow$ 推演出 <strong>子课题 5：开放世界域外意图拒识（OOD / OOS Detection）</strong>。<br>
-• <em>放宽“全集已知”的离线演进需求</em>：被 OOD 拦截的海量未知日志中蕴藏着用户的新增高频需求，需自动聚类并归纳出新业务类别 $\rightarrow$ 推演出 <strong>子课题 6：开放世界新意图发现（Open-World Intent Discovery）</strong>。<br>
-• <em>放宽“意图标签静态固定”的生态扩展需求</em>：在智能体生态中，后端能力以成千上万个动态插拔的外部 API/插件形式存在，意图理解转化为面向文档签名的检索与参数生成 $\rightarrow$ 推演出 <strong>子课题 9：大规模工具与 API 意图路由（Massive Tool &amp; API Routing）</strong>。</p>
+<p><strong>第二步：打破“测试样本 100% 属于已知意图集”假设 <code>\Longrightarrow</code> 推演出开放世界演化子课题群（子课题 5、6、9）</strong><br>
+• <em>放宽“全集已知”的在线防御需求</em>：面对用户闲聊、竞品功能询问或越界指令，分类器必须拒绝强行归类 → 推演出 <strong>子课题 5：开放世界域外意图拒识（OOD / OOS Detection）</strong>。<br>
+• <em>放宽“全集已知”的离线演进需求</em>：被 OOD 拦截的海量未知日志中蕴藏着用户的新增高频需求，需自动聚类并归纳出新业务类别 → 推演出 <strong>子课题 6：开放世界新意图发现（Open-World Intent Discovery）</strong>。<br>
+• <em>放宽“意图标签静态固定”的生态扩展需求</em>：在智能体生态中，后端能力以成千上万个动态插拔的外部 API/插件形式存在，意图理解转化为面向文档签名的检索与参数生成 → 推演出 <strong>子课题 9：大规模工具与 API 意图路由（Massive Tool &amp; API Routing）</strong>。</p>
 
-<p><strong>第三步：打破“单轮话语信息完备且无歧义”假设 $\Longrightarrow$ 推演出多轮认知交互子课题群（子课题 7、8）</strong><br>
-• <em>放宽“单轮独立”假设</em>：用户在多轮对话中大量使用代词指代、省略主语，且经常中途推翻修改前序条件 $\rightarrow$ 推演出 <strong>子课题 7：多轮对话状态追踪与意图漂移修复（Multi-Turn DST &amp; Drift Repair）</strong>。<br>
-• <em>放宽“输入信息充分”假设</em>：当用户话语过于简短同时命中多个相近意图（或缺失关键必填槽位）时，盲目猜测代价高昂，系统必须主动发起最小打扰的追问 $\rightarrow$ 推演出 <strong>子课题 8：模糊意图受控主动澄清（Ambiguity Detection &amp; Clarification）</strong>。</p>
+<p><strong>第三步：打破“单轮话语信息完备且无歧义”假设 <code>\Longrightarrow</code> 推演出多轮认知交互子课题群（子课题 7、8）</strong><br>
+• <em>放宽“单轮独立”假设</em>：用户在多轮对话中大量使用代词指代、省略主语，且经常中途推翻修改前序条件 → 推演出 <strong>子课题 7：多轮对话状态追踪与意图漂移修复（Multi-Turn DST &amp; Drift Repair）</strong>。<br>
+• <em>放宽“输入信息充分”假设</em>：当用户话语过于简短同时命中多个相近意图（或缺失关键必填槽位）时，盲目猜测代价高昂，系统必须主动发起最小打扰的追问 → 推演出 <strong>子课题 8：模糊意图受控主动澄清（Ambiguity Detection &amp; Clarification）</strong>。</p>
 
-<p><strong>第四步：引入工业界“低时延 + 高精度 + 低成本”全局系统约束 $\Longrightarrow$ 推演出顶层架构子课题（子课题 10）</strong><br>
-• 面对前九个子课题在不同算法范式（规则、小模型、大模型）上的性能与成本差异，如何在统一的在线/离线架构中动态判定边界并逐级分解任务 $\rightarrow$ 最终推演出 <strong>子课题 10：多级模型级联与成本感知路由（Cascaded &amp; Cost-Aware Routing）</strong>。</p>
+<p><strong>第四步：引入工业界“低时延 + 高精度 + 低成本”全局系统约束 <code>\Longrightarrow</code> 推演出顶层架构子课题（子课题 10）</strong><br>
+• 面对前九个子课题在不同算法范式（规则、小模型、大模型）上的性能与成本差异，如何在统一的在线/离线架构中动态判定边界并逐级分解任务 → 最终推演出 <strong>子课题 10：多级模型级联与成本感知路由（Cascaded &amp; Cost-Aware Routing）</strong>。</p>
 </div>
 
 <h2 id="s2-2"><span class="num">2.2</span>十类核心子课题的技术演进、优缺点与当前水位全景表</h2>
@@ -935,28 +935,28 @@ ol.refs li {
 <tr>
 <td><strong>2. 单意图与槽位联合填充</strong></td>
 <td>消除意图分类与槽位抽取分训导致的语义冲突与误差传播</td>
-<td>① 管线式 SVM+CRF $\rightarrow$ Attention BiRNN<br>② 显式门控交互（Slot-Gated / SF-ID / Stack-Prop）<br>③ 单预训练底座双头微调（JointBERT）</td>
+<td>① 管线式 SVM+CRF → Attention BiRNN<br>② 显式门控交互（Slot-Gated / SF-ID / Stack-Prop）<br>③ 单预训练底座双头微调（JointBERT）</td>
 <td><strong>JointBERT 双头</strong>：优点是单次前向极简高效、表征充分交互；缺点是槽位解码层缺少显式标签转移硬约束（需配 CRF 或后处理掩码）。</td>
 <td>ATIS Overall：<code>88.6%–90.2%</code>；SNIPS Overall：<code>91.6%–93.4%</code></td>
 </tr>
 <tr>
 <td><strong>3. 单句多意图与槽位联合检测</strong></td>
 <td>单句激活多个意图时的“槽位归属对齐”与多意图噪声隔离</td>
-<td>① 多标签 Sigmoid + 意图均值向量注入<br>② 自适应异构图（AGIF）$\rightarrow$ 非自回归全局-局部图（GL-GIN）$\rightarrow$ 标签拓扑图（ReLa-Net）<br>③ 双向注意力大模型（MIDLM）</td>
-<td><strong>GL-GIN 图网络</strong>：优点是非自回归并行解码（比 AGIF 快 $11.88\times$）、细粒度词-意图对齐；缺点是对无连词隐式多意图泛化受限。</td>
-<td>MixATIS Overall：<code>43.0%</code> (GL-GIN) $\rightarrow$ <code>52.2%</code> (ReLa-Net) $\rightarrow$ <code>54.8%</code> (MIDLM)</td>
+<td>① 多标签 Sigmoid + 意图均值向量注入<br>② 自适应异构图（AGIF）→ 非自回归全局-局部图（GL-GIN）→ 标签拓扑图（ReLa-Net）<br>③ 双向注意力大模型（MIDLM）</td>
+<td><strong>GL-GIN 图网络</strong>：优点是非自回归并行解码（比 AGIF 快 <code>11.88×</code>）、细粒度词-意图对齐；缺点是对无连词隐式多意图泛化受限。</td>
+<td>MixATIS Overall：<code>43.0%</code> (GL-GIN) → <code>52.2%</code> (ReLa-Net) → <code>54.8%</code> (MIDLM)</td>
 </tr>
 <tr>
 <td><strong>4. 层次化组合语义解析</strong></td>
 <td>处理槽位值内部嵌套子意图的递归树结构表达</td>
 <td>① 移进-归约栈解析器（RNNG）<br>② 序列到序列指针生成网络（Seq2Seq-Ptr）<br>③ 语法约束大模型解码（Grammar-Constrained LLM）</td>
 <td><strong>Seq2Seq-Ptr</strong>：优点是能生成任意深度合法树且支持拷贝原文实体；缺点是自回归逐词生成延迟高于序列标注。</td>
-<td>Facebook TOP Exact Match：<code>80.9%</code> $\rightarrow$ <code>87.1%</code></td>
+<td>Facebook TOP Exact Match：<code>80.9%</code> → <code>87.1%</code></td>
 </tr>
 <tr>
 <td><strong>5. 开放世界域外意图拒识（OOD）</strong></td>
 <td>克服交叉熵分类器对未知分布样本的过度自信（高分误判）</td>
-<td>① 后处理打分：MSP / ODIN / 能量函数 / 马氏距离<br>② 紧凑边界学习：自适应球面边界（ADB）/ 自监督对比（SCL）<br>③ 大模型中间层（$L/2$ 层）隐状态探针</td>
+<td>① 后处理打分：MSP / ODIN / 能量函数 / 马氏距离<br>② 紧凑边界学习：自适应球面边界（ADB）/ 自监督对比（SCL）<br>③ 大模型中间层（<code>L/2</code> 层）隐状态探针</td>
 <td><strong>ADB 球面边界</strong>：优点是无需收集真实域外负例即可学出紧凑包裹球；缺点是当已知类分布呈非凸长条流形时球面假设有近似误差。</td>
 <td>CLINC150（75% 已知类）：All-F1 <code>88.1%</code>，OOS-F1 <code>89.4%</code></td>
 </tr>
@@ -965,12 +965,12 @@ ol.refs li {
 <td>从无标注拦截日志中自动聚类发现未知新业务类别并命名</td>
 <td>① 无监督 K-Means / 深度嵌入聚类（DEC）<br>② 半监督对比对齐聚类（DeepAligned / MTP-CLNN）<br>③ 免训练大模型闭环反馈生成（IntentGPT）</td>
 <td><strong>DeepAligned</strong>：优点是聚类边界紧致稳定；缺点是无法自动给簇起业务名。<br><strong>IntentGPT</strong>：优点是直接产出可读意图名；缺点是无反馈约束时易发生“意图粒度爆炸”。</td>
-<td>CLINC 聚类 NMI：<code>93.9%</code> (DeepAligned) $\rightarrow$ <code>96.1%</code> (IntentGPT)</td>
+<td>CLINC 聚类 NMI：<code>93.9%</code> (DeepAligned) → <code>96.1%</code> (IntentGPT)</td>
 </tr>
 <tr>
 <td><strong>7. 多轮对话状态追踪与漂移修复</strong></td>
 <td>跨轮次指代消解、省略补全及用户中途改主意时的旧槽位撤回</td>
-<td>① 预定义词表分类（NBT）$\rightarrow$ 跨领域拷贝生成（TRADE）<br>② 三路拷贝机制（TripPy）与端到端生成（SimpleTOD / SOLOIST）<br>③ 指令微调大模型（LDST）+ 显式槽位修正动作</td>
+<td>① 预定义词表分类（NBT）→ 跨领域拷贝生成（TRADE）<br>② 三路拷贝机制（TripPy）与端到端生成（SimpleTOD / SOLOIST）<br>③ 指令微调大模型（LDST）+ 显式槽位修正动作</td>
 <td><strong>TripPy 小模型</strong>：优点是延迟低、拷贝来源可控；缺点是跨新域迁移需重训。<br><strong>LDST / LLM</strong>：优点是零样本跨域强；缺点是长对话历史易发生废弃槽位残留污染。</td>
 <td>MultiWOZ 2.2 JGA：<code>60.7%</code>；MultiWOZ 2.4 JGA：<code>75.5%</code></td>
 </tr>
@@ -983,7 +983,7 @@ ol.refs li {
 </tr>
 <tr>
 <td><strong>9. 大规模工具与 API 意图路由</strong></td>
-<td>在成千上万个外部 API 中准确检索并生成零幻觉的结构化调用参数</td>
+<td>在成千上万个外部 API 中准确检索并生成避免参数生成错误的结构化调用参数</td>
 <td>① 静态意图-接口硬编码绑定<br>② 双塔文档检索 + Few-shot 生成<br>③ 检索感知微调（Gorilla）+ 决策树回溯搜索（ToolLLM DFSDT）</td>
 <td><strong>检索 + Gorilla/DFSDT</strong>：优点是支持万级工具热插拔与错误回溯；缺点是多次树搜索调用大模型耗时达数秒，仅适合作慢路径执行。</td>
 <td>TorchHub AST 准确率 <code>59.1%</code>，API 幻觉率从 <code>36.6%</code> 压降至 <code>7.0%</code></td>
@@ -1008,18 +1008,18 @@ ol.refs li {
 
 <table class="long">
 <caption><b>表 3-1</b>　意图理解六个技术代际（1966—2026）的演进动因、核心机制、优缺点与代际推演触发点</caption>
-<thead><tr><th style="width:14%">历史代际</th><th style="width:19%">解决了上一代的什么痛点</th><th style="width:21%">核心技术范式与代表作</th><th style="width:23%">本代技术的核心优势</th><th>致命缺陷（催生下一代的推演触发点）</th></tr></thead>
+<thead><tr><th style="width:14%">历史代际</th><th style="width:19%">解决了上一代的什么问题</th><th style="width:21%">核心技术范式与代表作</th><th style="width:23%">本代技术的核心优势</th><th>致命缺陷（催生下一代的推演触发点）</th></tr></thead>
 <tbody>
 <tr>
 <td><strong>第一代：符号规则与框架期</strong><br>（1966—1989）</td>
 <td>从零建立人机自然语言接口，解决“用户分多轮乱序提供参数”的交互组织问题</td>
 <td>关键词分解（ELIZA）、程序性语义（SHRDLU）、<strong>框架与槽位驱动（GUS, 1977）</strong></td>
-<td>逻辑 $100\%$ 透明可控；确立了“意图 Frame + 槽位 Slot + 追问 Loop”这一延续至今的领域抽象骨架。</td>
+<td>逻辑 <code>100%</code> 透明可控；确立了“意图 Frame + 槽位 Slot + 追问 Loop”这一延续至今的领域抽象骨架。</td>
 <td><strong>世界知识与句式硬编码在语法中</strong>：换一个领域就要重写全套文法，同义改写即失配，且跨系统无法客观评测好坏。</td>
 </tr>
 <tr>
 <td><strong>第二代：统计学习与序列标注期</strong><br>（1990—2009）</td>
-<td>解决手工文法“无法泛化同义词、无法跨系统量化评测”的痛点</td>
+<td>解决手工文法“无法泛化同义词、无法跨系统量化评测”的问题</td>
 <td><strong>DARPA ATIS 基准（1990）</strong>、n-gram + SVM 意图分类、<strong>线性链 CRF 槽位 BIO 标注（2001）</strong>、W3C SRGS/VoiceXML</td>
 <td>将意图与槽位转化为可度量的机器学习任务；CRF 全局归一化有效约束了相邻槽位标签的转移合法性。</td>
 <td><strong>管线割裂与特征工程瓶颈</strong>：意图分类器与槽位标注器分开训练，经常出现“意图判为订机票、槽位抽出火车车次”的自相矛盾。</td>
@@ -1035,7 +1035,7 @@ ol.refs li {
 <td><strong>第四代：预训练微调与显式图交互期</strong><br>（2018—2022）</td>
 <td>利用大规模预训练解决罕见词泛化，解决单句多意图下“意图噪声污染槽位”与开放集拒识难题</td>
 <td><strong>JointBERT（2019）</strong>、Stack-Propagation（2019）、<strong>AGIF / GL-GIN 多意图图网络（2020–2021）</strong>、BANKING77 双塔、<strong>ADB / SCL 域外拒识（2021）</strong></td>
-<td>封闭集单意图精度触顶（$98\%+$）；非自回归图网络实现毫秒级多意图对齐；球面边界大幅提升开放集拒识能力。</td>
+<td>封闭集单意图精度触顶（<code>98%+</code>）；非自回归图网络实现毫秒级多意图对齐；球面边界大幅提升开放集拒识能力。</td>
 <td><strong>封闭标签空间刚性约束</strong>：每新增一个意图仍需收集数十条标注样本重训分类头，无法零样本冷启动或直接阅读动态 API 文档。</td>
 </tr>
 <tr>
@@ -1043,13 +1043,13 @@ ol.refs li {
 <td>打破封闭分类头限制，实现零样本/少样本冷启动、嵌套语义树生成与万级工具动态调用</td>
 <td>GPT-3 ICL（2020）、Seq2Seq-Ptr（2020）、<strong>Adaptive ICL + CoT（2024）</strong>、IntentGPT（2024）、<strong>Gorilla / ToolLLM（2023–2024）</strong></td>
 <td>新业务零样本分钟级上线；具备强大的常识推理与跨领域组合拆解能力；可直接根据 API 文档生成结构化调用。</td>
-<td><strong>延迟暴增 $56\times$、百类提示词退化与校准失真</strong>：单次推理超 1 秒，百类候选下准确率反输小模型 20 个点，且自报置信度不可信。</td>
+<td><strong>延迟暴增 <code>56×</code>、百类提示词退化与校准失真</strong>：单次推理超 1 秒，百类候选下准确率反输小模型 20 个点，且自报置信度不可信。</td>
 </tr>
 <tr>
 <td><strong>第六代：智能体路由与多级级联期</strong><br>（2023—2026）</td>
 <td>解决大模型在线高延迟、高算力成本与不可控幻觉，实现时延与精度的帕累托最优</td>
 <td>ReAct（2023）、<strong>FrugalGPT（2023）</strong>、<strong>HybridLLM / RouteLLM（2024）</strong>、AutoMix、<strong>共形意图澄清 CIC（2024）</strong>、Rasa CALM</td>
-<td>以数学标定边界将规则、小模型与大模型串联为有机整体，在保持 $96\%+$ 精度的同时将 90% 流量控制在 20ms 内。</td>
+<td>以数学标定边界将规则、小模型与大模型串联为有机整体，在保持 <code>96%+</code> 精度的同时将 90% 流量控制在 20ms 内。</td>
 <td>当前主流研究的前沿阵地：核心挑战转向多轮用户改主意（Intent Drift）状态回滚与慢路径沉淀规则的生命周期治理。</td>
 </tr>
 </tbody>
@@ -1057,9 +1057,9 @@ ol.refs li {
 
 <h2 id="s3-2"><span class="num">3.2</span>从符号框架（GUS）到深度联合模型（Attention BiRNN / HCN）的演绎过程</h2>
 
-<p class="ni"><strong>第一阶段向第二、三阶段的演绎</strong>：1977 年 Xerox PARC 研发的 <strong>GUS（Genial Understander System，Bobrow 等，1977）</strong>是对话系统史上的神来之笔。它首次指出：人类在任务型对话（如订机票）中的意图不是一个孤立标签，而是一个<strong>包含多个待填槽位（出发城市、目的城市、出行日期）的框架（Frame）</strong>；系统通过检查哪些必填槽位为空来驱动主动追问，同时允许用户在回答一个槽位时顺带提供其他槽位信息（Mixed-Initiative）。然而，GUS 与随后的商用 IVR 语音门户将“如何从句子中识别 Frame 和 Slot”完全寄托在手工编写的语法规则上。当同一句“我想明天早上飞上海”衍生出数百种口语变体时，规则维护彻底崩溃。</p>
+<p class="ni"><strong>第一阶段向第二、三阶段的演绎</strong>：1977 年 Xerox PARC 研发的 <strong>GUS（Genial Understander System，Bobrow 等，1977）</strong>是对话系统史上的神来之笔。它首次指出：人类在任务型对话（如订机票）中的意图不是一个孤立标签，而是一个<strong>包含多个待填槽位（出发城市、目的城市、出行日期）的框架（Frame）</strong>；系统通过检查哪些必填槽位为空来驱动主动追问，同时允许用户在回答一个槽位时顺带提供其他槽位信息（Mixed-Initiative）。然而，GUS 与随后的商用 IVR 语音门户将“如何从句子中识别 Frame 和 Slot”完全寄托在手工编写的语法规则上。当同一句“我想明天早上飞上海”衍生出数百种口语变体时，规则维护崩溃。</p>
 
-<p>1990 年 <strong>DARPA ATIS 评测</strong>與 2001 年 <strong>条件随机场（CRF）</strong>的出现，将 Frame 识别拆解为“SVM/MaxEnt 句子分类”与“CRF 序列 BIO 标注”两个统计任务。但很快研究者发现，将两个任务拆成独立管线（Pipeline）存在严重的<strong>信息阻断</strong>：分类器不知道句中抽出了什么槽位，槽位器也不知道整句属于什么意图。于是，2014—2017 年深度学习浪潮中，<strong>TextCNN（Kim, 2014，图 3-1a）</strong>与 <strong>fastText（Joulin 等, 2016，图 3-1b）</strong>先解决了句子级快速表征问题；紧接着，<strong>Liu &amp; Lane（Interspeech 2016，arXiv:1609.01454，图 3-2a、图 3-2b）</strong>提出了里程碑式的 <strong>Attention-Based BiRNN 联合模型</strong>——让意图分类与槽位标注共享同一个双向循环编码器，并利用注意力机制显式对齐全局意图上下文与局部槽位状态，一举将 ATIS 槽位 F1 推升至 $95.98\%$、意图准确率推升至 $98.11\%$。</p>
+<p>1990 年 <strong>DARPA ATIS 评测</strong>與 2001 年 <strong>条件随机场（CRF）</strong>的出现，将 Frame 识别拆解为“SVM/MaxEnt 句子分类”与“CRF 序列 BIO 标注”两个统计任务。但很快研究者发现，将两个任务拆成独立管线（Pipeline）存在严重的<strong>信息阻断</strong>：分类器不知道句中抽出了什么槽位，槽位器也不知道整句属于什么意图。于是，2014—2017 年深度学习浪潮中，<strong>TextCNN（Kim, 2014，图 3-1a）</strong>与 <strong>fastText（Joulin 等, 2016，图 3-1b）</strong>先解决了句子级快速表征问题；紧接着，<strong>Liu &amp; Lane（Interspeech 2016，arXiv:1609.01454，图 3-2a、图 3-2b）</strong>提出了里程碑式的 <strong>Attention-Based BiRNN 联合模型</strong>——让意图分类与槽位标注共享同一个双向循环编码器，并利用注意力机制显式对齐全局意图上下文与局部槽位状态，同时将 ATIS 槽位 F1 推升至 <code>95.98%</code>、意图准确率推升至 <code>98.11%</code>。</p>
 
 <div class="fig-grid-2">
 <figure>
@@ -1075,7 +1075,7 @@ ol.refs li {
 <div class="fig-grid-2">
 <figure>
 <img src="assets/attnslu_f3.png" alt="Attention BiRNN 联合架构原图">
-<figcaption><b>图 3-2a</b>　Attention-Based BiRNN 联合模型架构原图（Figure 3）：共享双向 RNN 编码器，解码端同时融合对齐隐状态 $h_i$ 与注意力上下文向量 $c_i$，同步输出槽位序列与全局意图。<span class="src">原图出处：Liu &amp; Lane，Interspeech 2016，arXiv:1609.01454，Figure 3。</span></figcaption>
+<figcaption><b>图 3-2a</b>　Attention-Based BiRNN 联合模型架构原图（Figure 3）：共享双向 RNN 编码器，解码端同时融合对齐隐状态 <code>h_i</code> 与注意力上下文向量 <code>c_i</code>，同步输出槽位序列与全局意图。<span class="src">原图出处：Liu &amp; Lane，Interspeech 2016，arXiv:1609.01454，Figure 3。</span></figcaption>
 </figure>
 <figure>
 <img src="assets/fig02_attn_rnn_table4_2016.png" alt="Attention BiRNN ATIS 原始实验表 Table 4">
@@ -1092,7 +1092,7 @@ ol.refs li {
 
 <h2 id="s3-3"><span class="num">3.3</span>从预训练双头模型（JointBERT）到大模型提示与路由级联的演绎过程</h2>
 
-<p class="ni"><strong>第三阶段向第四、五、六阶段的演绎</strong>：2018 年以前，所有深度 SLU 模型都只能从几千句标注语料中从头学习词向量，一旦测试集出现未见过的专有名词（如新上映的电影名或冷门城市名），槽位抽取立即失效。BERT 的出现彻底终结了这一痛点。如图 3-4a（Qin 等，2021）所示，口语理解模型完成了从独立单任务、隐式共享、显式门控到预训练双头底座（<strong>JointBERT</strong>，2019）的四代跃迁；同时，为了解决开放世界中未知请求被高置信度误判的问题，<strong>ADB（Zhang 等，AAAI 2021，图 3-4b）</strong>将封闭超平面改造为紧凑球面决策边界。</p>
+<p class="ni"><strong>第三阶段向第四、五、六阶段的演绎</strong>：2018 年以前，所有深度 SLU 模型都只能从几千句标注语料中从头学习词向量，一旦测试集出现未见过的专有名词（如新上映的电影名或冷门城市名），槽位抽取立即失效。BERT 的出现终结了这一问题。如图 3-4a（Qin 等，2021）所示，口语理解模型完成了从独立单任务、隐式共享、显式门控到预训练双头底座（<strong>JointBERT</strong>，2019）的四代跃迁；同时，为了解决开放世界中未知请求被高置信度误判的问题，<strong>ADB（Zhang 等，AAAI 2021，图 3-4b）</strong>将封闭超平面改造为紧凑球面决策边界。</p>
 
 <div class="fig-grid-2">
 <figure>
@@ -1134,14 +1134,14 @@ ol.refs li {
 <p class="ni">如果把意图理解仅仅看作“刷高测试集平均 F1”，规则算法似乎毫无优势；但在真实生产工程中，规则层解决的是概率统计模型在原理上无法根治的四大刚性需求：</p>
 <ol>
 <li><strong>零延迟线上热修复（Sub-second Hotfix SLA）</strong>：当线上突发业务变更、新增大促活动口令或发现某条高频指令被模型误判时，重训模型并走完量化验证发版流程至少需要数小时至数天；而向规则引擎或<strong>个性化表述映射层（<code>expression</code>）</strong>插入一条确定性规则可在毫秒级全网生效，且绝不会引发模型其他类别决策边界的“灾难性漂移（Catastrophic Interference）”。</li>
-<li><strong>$100\%$ 确定性与司法合规审计（Deterministic Auditability）</strong>：在银行挂失、医疗急救、政治红线拦截以及用户明确要求“转人工客服”等场景下，业务要求命中规则时精确率必须严格为 $100\%$，且每一次拦截都必须能精确追溯到具体哪一条规则 ID 和哪一个触发词。</li>
+<li><strong><code>100%</code> 确定性与司法合规审计（Deterministic Auditability）</strong>：在银行挂失、医疗急救、政治红线拦截以及用户明确要求“转人工客服”等场景下，业务要求命中规则时精确率必须严格为 <code>100%</code>，且每一次拦截都必须能精确追溯到具体哪一条规则 ID 和哪一个触发词。</li>
 <li><strong>百万级动态专名实体词表的零重训注入</strong>：音乐曲库每日新增数万首歌曲、电商平台每小时上架海量 SKU、企业通讯录实时变动。通过双数组 Aho-Corasick 自动机挂载外部实体词典（Lookup Table），可在不改动模型权重的前提下实时完成百万级槽位候选识别。</li>
-<li><strong>极致的算力削峰（Cost Shaving）</strong>：真实线上流量遵循极度陡峭的齐夫定律（Zipf's Law）——前 $5\%$ 的高频固定表达（如“查话费”“播放每日推荐”“打开空调”）往往占据了 $25\% \sim 35\%$ 的总请求量。用单核 CPU 耗时 $< 0.2\,\text{ms}$ 的自动机在入口层直接终结这部分流量，可为下游 GPU 集群节省三分之一以上的算力预算。</li>
+<li><strong>极致的算力削峰（Cost Shaving）</strong>：真实线上流量遵循极度陡峭的齐夫定律（Zipf's Law）——前 <code>5%</code> 的高频固定表达（如“查话费”“播放每日推荐”“打开空调”）往往占据了 <code>25% ~ 35%</code> 的总请求量。用单核 CPU 耗时 $< 0.2 \text{ms}$ 的自动机在入口层直接终结这部分流量，可为下游 GPU 集群节省三分之一以上的算力预算。</li>
 </ol>
 
 <h2 id="s4-2"><span class="num">4.2</span>六大规则算法族的演绎过程与优缺点深度对比</h2>
 
-<p class="ni">规则算法内部同样经历了一条清晰的演绎进化链：最早是简单的<strong>关键词包含匹配</strong>，但因多词表逐一扫描太慢，推演出基于前缀树与失配指针的<strong>Aho-Corasick 多模式自动机</strong>；为了抽取带固定上下文结构的参数槽位，推演出<strong>带命名捕获组的编译型正则表达式（DFA Regex）</strong>；为了解决正则在面对否定词（“不要退票”）时误触发的痛点，推演出<strong>依存句法与否定作用域树规则</strong>；为了在语音识别解码阶段同时完成槽位约束，推演出<strong>加权有限状态转换器（SRGS/WFST）</strong>；为了适应每个用户的个体化简称习惯，推演出按用户隔离的<strong>个性化表述映射层（<code>expression</code>）</strong>；最后，为了克服纯规则一旦失配就彻底丢弃词典线索的缺陷，推演出将规则输出作为稀疏特征喂给神经网络的<strong>混合特征注入与动作掩码（DIET / HCN）</strong>。</p>
+<p class="ni">规则算法内部同样经历了一条清晰的演绎进化链：最早是简单的<strong>关键词包含匹配</strong>，但因多词表逐一扫描太慢，推演出基于前缀树与失配指针的<strong>Aho-Corasick 多模式自动机</strong>；为了抽取带固定上下文结构的参数槽位，推演出<strong>带命名捕获组的编译型正则表达式（DFA Regex）</strong>；为了解决正则在面对否定词（“不要退票”）时误触发的问题，推演出<strong>依存句法与否定作用域树规则</strong>；为了在语音识别解码阶段同时完成槽位约束，推演出<strong>加权有限状态转换器（SRGS/WFST）</strong>；为了适应每个用户的个体化简称习惯，推演出按用户隔离的<strong>个性化表述映射层（<code>expression</code>）</strong>；最后，为了克服纯规则一旦失配就丢弃词典线索的缺陷，推演出将规则输出作为稀疏特征喂给神经网络的<strong>混合特征注入与动作掩码（DIET / HCN）</strong>。</p>
 
 <table class="long">
 <caption><b>表 4-1</b>　基于规则的六大意图处理算法族：机制原理、核心优点、致命缺点与工程适用边界全维对比</caption>
@@ -1149,22 +1149,22 @@ ol.refs li {
 <tbody>
 <tr>
 <td><strong>1. 多模式字典树自动机</strong><br>（Aho-Corasick / Double-Array Trie）</td>
-<td>将百万级词表构建为前缀 Trie 树并预计算最长真后缀失配跳转指针（Failure Link），双数组压缩存储，单次线性扫描 $O(n+z)$ 抽出全部命中词。</td>
-<td>• <strong>扫描速度与词表规模无关</strong>：无论词典是 1 千词还是 100 万词，单句扫描耗时稳定在 $0.1 \sim 0.2\,\text{ms}$；<br>• 内存紧凑、支持双缓冲无锁热更新。</td>
+<td>将百万级词表构建为前缀 Trie 树并预计算最长真后缀失配跳转指针（Failure Link），双数组压缩存储，单次线性扫描 <code>O(n+z)</code> 抽出全部命中词。</td>
+<td>• <strong>扫描速度与词表规模无关</strong>：无论词典是 1 千词还是 100 万词，单句扫描耗时稳定在 <code>0.1 ~ 0.2 \text{ms}</code>；<br>• 内存紧凑、支持双缓冲无锁热更新。</td>
 <td>• <strong>仅限连续字面精确匹配</strong>：中间多插一个助词（如词表是“退押金”，用户说“退一下押金”）即完全失配；<br>• 无上下文语境感知，易在否定句中产生假阳性。</td>
 <td>L0 安全黑名单拦截、百万级商品/歌曲/城市专名槽位预抽取。</td>
 </tr>
 <tr>
 <td><strong>2. 命名捕获组确定性正则</strong><br>（Named-Group DFA Regex, RE2/Hyperscan）</td>
 <td>利用有限状态自动机匹配句式骨架，通过命名捕获组（如 <code>(?P<amount>\d+元)</code>）同步完成意图判定与结构化槽位截取。</td>
-<td>• <strong>意图与槽位一次正则匹配同步产出</strong>；<br>• 对高度格式化的实体（身份证号、订单号、手机号、日期、金额）抽取精度接近 $100\%$。</td>
+<td>• <strong>意图与槽位一次正则匹配同步产出</strong>；<br>• 对高度格式化的实体（身份证号、订单号、手机号、日期、金额）抽取精度接近 <code>100%</code>。</td>
 <td>• <strong>组合爆炸与规则抢占冲突</strong>：当规则超 500 条时，不同意图正则之间极易发生包含与抢占冲突，调试维护成本呈指数级上升；<br>• 语序倒装需写多套分支。</td>
 <td>格式化实体归一化（Duckling）、高频强固定句式指令解析。</td>
 </tr>
 <tr>
 <td><strong>3. 依存句法与否定作用域规则</strong><br>（Dependency &amp; Negation Scope Tree）</td>
 <td>在依存句法树（Universal Dependencies）上沿支配边查找否定词（不、别、没、取消）与转折连词的作用域子树，将子树内命中的意图/槽位标记为“撤回/否定”。</td>
-<td>• <strong>精准区分“正向诉求”与“反向撤回”</strong>：有效解决关键词规则把“我不要退款，我要换货”误判为退款的经典痛点；<br>• 跨领域通用性强。</td>
+<td>• <strong>精准区分“正向诉求”与“反向撤回”</strong>：有效解决关键词规则把“我不要退款，我要换货”误判为退款的经典问题；<br>• 跨领域通用性强。</td>
 <td>• <strong>对口语断句与 ASR 错字敏感</strong>：当用户输入无标点长难句或存在同音错别字时，依存句法树解析易发生结构性挂错边。</td>
 <td>L0/L1 交界处的<strong>否定子句分离与权重衰减过滤</strong>前置模块。</td>
 </tr>
@@ -1178,14 +1178,14 @@ ol.refs li {
 <tr>
 <td><strong>5. 个性化表述映射层</strong><br>（Personalized Expression Layer <code>expression</code>）</td>
 <td>维护按 <code>user_id</code> 隔离的个体化短语映射表，将用户自定义指令或经慢路径确认过的口头禅直接映射为标准意图 ID 与预设槽位字典。</td>
-<td>• <strong>千人千面零歧义</strong>：完美解决通用模型听不懂个体代称（如“发给老张”“启动晨会模式”）的难题；<br>• 查找复杂度 $O(1)$，完全不消耗 GPU 算力。</td>
+<td>• <strong>千人千面零歧义</strong>：完整解决通用模型听不懂个体代称（如“发给老张”“启动晨会模式”）的难题；<br>• 查找复杂度 <code>O(1)</code>，完全不消耗 GPU 算力。</td>
 <td>• <strong>存在冷启动空白</strong>：仅对已沉淀过历史交互习惯的老用户生效，首次出现的个体化新表述仍需交由下层澄清归纳。</td>
 <td>个人助理与企业 Agent 的 L0 个性化快路径核心组件。</td>
 </tr>
 <tr>
 <td><strong>6. 混合特征注入与动作掩码</strong><br>（Sparse Feature Fusion &amp; Action Mask）</td>
 <td>不直接用规则下最终结论，而是将正则/词典命中转为 0/1 稀疏特征拼接进 Transformer（DIET），或用状态机生成 0/1 掩码屏蔽非法意图（HCN）。</td>
-<td>• <strong>兼得规则的即时热更新与神经网络的上下文泛化</strong>：往 Lookup 表加新词无需重训即可提升模型实体识别率，且状态掩码杜绝非法动作。</td>
+<td>• <strong>兼得规则的即时热更新与神经网络的上下文泛化</strong>：往 Lookup 表加新词无需重训即可提升模型实体识别率，且状态掩码避免非法动作。</td>
 <td>• <strong>特征饥饿风险（Feature Starvation）</strong>：若训练集上规则特征覆盖过满，神经网络会偷懒只看规则位，必须对稀疏特征施加高比例 Dropout（如 0.8）。</td>
 <td>L1 小模型特征增强层与多轮状态机顶层合法动作约束。</td>
 </tr>
@@ -1198,7 +1198,7 @@ ol.refs li {
 
 <h3 id="s4-3-1"><span class="num">4.3.1</span>Snips NLU：确定性正则解析器与概率 CRF 解析器的双轨级联</h3>
 
-<p class="ni">在 Snips NLU 引擎（图 4-1a）中，所有输入话语首先经过 <code>DeterministicIntentParser</code>——该模块在训练阶段自动将标注语料中的句式与槽位占位符编译为无歧义正则表达式。如果在线查询完全匹配某条正则模式，系统立即以 $100\%$ 确定性返回意图与槽位，耗时不足 $0.5\,\text{ms}$；只有当确定性解析器未命中时，请求才会进入 <code>ProbabilisticIntentParser</code>（采用逻辑斯蒂回归做意图分类、线性链 CRF 做槽位抽取，并配合 Duckling 确定性规则引擎将抽出的时间、数字、温度字符串归一化为标准结构化值）。图 4-1b 的原论文评测表证实，这种轻量级双轨架构在准确率上全面追平甚至超越了 Google Dialogflow、Microsoft LUIS 与 Amazon Lex 等重型云服务，同时可在树莓派等边缘设备上离线实时运行。</p>
+<p class="ni">在 Snips NLU 引擎（图 4-1a）中，所有输入话语首先经过 <code>DeterministicIntentParser</code>——该模块在训练阶段自动将标注语料中的句式与槽位占位符编译为无歧义正则表达式。如果在线查询完全匹配某条正则模式，系统立即以 <code>100%</code> 确定性返回意图与槽位，耗时不足 <code>0.5 \text{ms}</code>；只有当确定性解析器未命中时，请求才会进入 <code>ProbabilisticIntentParser</code>（采用逻辑斯蒂回归做意图分类、线性链 CRF 做槽位抽取，并配合 Duckling 确定性规则引擎将抽出的时间、数字、温度字符串归一化为标准结构化值）。图 4-1b 的原论文评测表证实，这种轻量级双轨架构在准确率上全面追平甚至超越了 Google Dialogflow、Microsoft LUIS 与 Amazon Lex 等重型云服务，同时可在树莓派等边缘设备上离线实时运行。</p>
 
 <div class="fig-grid-2">
 <figure>
@@ -1213,7 +1213,7 @@ ol.refs li {
 
 <h3 id="s4-3-2"><span class="num">4.3.2</span>Rasa DIET：稀疏规则/词典特征与稠密预训练表征的端到端融合</h3>
 
-<p class="ni">Snips 串行级联的短板在于：当用户话语只有前半句命中词典、后半句存在口语改写导致整句正则失配时，规则层发现的局部实体线索无法传递给下一级统计模型。<strong>Rasa DIET（Dual Intent and Entity Transformer，arXiv:2004.09936）</strong>（图 4-1c、图 4-1d）通过特征层面的并行融合解决了这一问题：在每个词元（Token）位置，DIET 同时提取两路特征——一路是<strong>稀疏规则与字形特征</strong>（包括字符级 n-gram、正则表达式 <code>RegexFeaturizer</code> 命中位、领域词典 <code>Lookup Table</code> 命中位），经过高强度随机失活（Dropout $= 0.8$，防止模型过度依赖规则而丧失泛化力）与前馈投影后，与另一路<strong>冻结的预训练稠密语义向量</strong>（如 ConveRT 或 BERT）直接相加，送入仅 2 层的轻量级共享 Transformer 编码器。原论文消融实验（图 4-1d）表明，在涵盖 64 个意图与 54 个槽位的 NLU-Benchmark 上，“稀疏规则特征 + ConveRT 稠密表征”取得了 $90.18\%$ 的最高微平均意图 F1，不仅显著优于单独使用稀疏特征或单独使用 BERT，而且训练与推理速度比全参数微调 BERT 快数倍。</p>
+<p class="ni">Snips 串行级联的短板在于：当用户话语只有前半句命中词典、后半句存在口语改写导致整句正则失配时，规则层发现的局部实体线索无法传递给下一级统计模型。<strong>Rasa DIET（Dual Intent and Entity Transformer，arXiv:2004.09936）</strong>（图 4-1c、图 4-1d）通过特征层面的并行融合解决了这一问题：在每个词元（Token）位置，DIET 同时提取两路特征——一路是<strong>稀疏规则与字形特征</strong>（包括字符级 n-gram、正则表达式 <code>RegexFeaturizer</code> 命中位、领域词典 <code>Lookup Table</code> 命中位），经过高强度随机失活（Dropout <code>= 0.8</code>，防止模型过度依赖规则而丧失泛化力）与前馈投影后，与另一路<strong>冻结的预训练稠密语义向量</strong>（如 ConveRT 或 BERT）直接相加，送入仅 2 层的轻量级共享 Transformer 编码器。原论文消融实验（图 4-1d）表明，在涵盖 64 个意图与 54 个槽位的 NLU-Benchmark 上，“稀疏规则特征 + ConveRT 稠密表征”取得了 <code>90.18%</code> 的最高微平均意图 F1，不仅显著优于单独使用稀疏特征或单独使用 BERT，而且训练与推理速度比全参数微调 BERT 快数倍。</p>
 
 <div class="fig-grid-2">
 <figure>
@@ -1235,14 +1235,14 @@ ol.refs li {
 
 <h1 id="ch5"><span class="cn">第 5 章</span>基于预训练小模型的意图处理算法：系统认识、联合建模演绎与开放边界</h1>
 
-<p class="ni">在“规则 + 小模型 + 大模型”分级理解架构中，参数量介于 \(10\,\text{M} \sim 350\,\text{M}\) 的预训练判别式小模型（如 BERT-base、RoBERTa、DeBERTa、TinyBERT 及 ConveRT/BGE/百炼双塔编码器）构成了在线流量的<strong>主力中坚层（L1 Workhorse）</strong>，在 \(5 \sim 25\,\text{ms}\) 的极低延迟预算内消化约 \(60\% \sim 75\%\) 的常规业务请求。本章首先建立对小模型范式的系统性认识，随后沿着<strong>“单意图联合建模 \(\rightarrow\) 单句多意图异构图 \(\rightarrow\) 双塔向量检索与同行槽位提取 \(\rightarrow\) 开放世界球面拒识”</strong>的四条演绎主线剖析核心算法，并给出全维度的优缺点对比矩阵。</p>
+<p class="ni">在“规则 + 小模型 + 大模型”分级理解架构中，参数量介于 \(10 \text{M} ~ 350 \text{M}\) 的预训练判别式小模型（如 BERT-base、RoBERTa、DeBERTa、TinyBERT 及 ConveRT/BGE/百炼双塔编码器）构成了在线流量的<strong>主力中坚层（L1 Workhorse）</strong>，在 \(5 ~ 25 \text{ms}\) 的极低延迟预算内消化约 \(60% ~ 75%\) 的常规业务请求。本章首先建立对小模型范式的系统性认识，随后沿着<strong>“单意图联合建模 → 单句多意图异构图 → 双塔向量检索与同行槽位提取 → 开放世界球面拒识”</strong>的四条演绎主线剖析核心算法，并给出全维度的优缺点对比矩阵。</p>
 
 <h2 id="s5-1"><span class="num">5.1</span>对小模型意图处理范式的系统性认识：核心定位与技术矛盾</h2>
 
 <p class="ni">为什么在大语言模型已经普及的今天，工业界仍然不能撤掉预训练判别式小模型？从系统工程与统计学习的本质来看，小模型在意图理解中占据着不可替代的<strong>“高吞吐判别甜点区（High-Throughput Discriminative Sweet Spot）”</strong>：</p>
 
 <ul>
-<li><strong>双向全注意力编码器的判别效率优势</strong>：以 BERT/DeBERTa 为代表的 Encoder-only 架构采用双向自注意力机制，句中每个词元在每一层都能同时聚合前文与后文线索；配合单次前向传播（Single Forward Pass）即可同时输出句级意图分布与词元级 BIO 槽位序列，无需像自回归生成模型那样逐词串行解码，因此在 \(60 \sim 500\) 类的封闭/半开放分布内，其分类精度反超零样本/少样本大模型 \(3 \sim 20\) 个百分点，而算力开销仅为大模型的 \(1/50 \sim 1/100\)。</li>
+<li><strong>双向全注意力编码器的判别效率优势</strong>：以 BERT/DeBERTa 为代表的 Encoder-only 架构采用双向自注意力机制，句中每个词元在每一层都能同时聚合前文与后文线索；配合单次前向传播（Single Forward Pass）即可同时输出句级意图分布与词元级 BIO 槽位序列，无需像自回归生成模型那样逐词串行解码，因此在 \(60 ~ 500\) 类的封闭/半开放分布内，其分类精度反超零样本/少样本大模型 \(3 ~ 20\) 个百分点，而算力开销仅为大模型的 \(1/50 ~ 1/100\)。</li>
 <li><strong>小模型面临的三大核心技术矛盾（驱动其内部架构演进的根本动力）</strong>：
   <ol>
     <li><strong>矛盾一（任务耦合性与硬级联错误传播的矛盾）</strong>：意图决定合法槽位schema，槽位实体反向消解动词模糊性。如何从“隐式共享底层参数”演进为“显式、可微的双向信息流动”，并在单句多意图场景下避免不同意图的信号相互污染？</li>
@@ -1257,13 +1257,13 @@ ol.refs li {
 <p class="ni">围绕“意图识别（ID）与槽位填充（SF）如何协同”这一问题，学术界经历了一条清晰的四步演绎链条：</p>
 
 <ol>
-<li><strong>第一阶段（隐式参数共享，JointBERT，ICASSP 2019，arXiv:1902.10909）</strong>：针对早期流水线先判意图再抽槽位导致 \(8\% \sim 15\%\) 下游槽位级联报错的痛点，Chen 等提出共享同一个预训练 BERT 编码器，仅用顶部 <code>[CLS]</code> 向量预测意图、用其余 WordPiece 首子词隐状态预测 BIO 槽位（图 5-2a、图 5-2b）。<br>
+<li><strong>第一阶段（隐式参数共享，JointBERT，ICASSP 2019，arXiv:1902.10909）</strong>：针对早期流水线先判意图再抽槽位导致 \(8% ~ 15%\) 下游槽位级联报错的问题，Chen 等提出共享同一个预训练 BERT 编码器，仅用顶部 <code>[CLS]</code> 向量预测意图、用其余 WordPiece 首子词隐状态预测 BIO 槽位（图 5-2a、图 5-2b）。<br>
 <strong>局限暴露</strong>：两个分类头在顶层完全独立（条件独立假设），槽位解码器在预测每个词的标签时，并不显式知道当前句子的意图预测结果。</li>
 <li><strong>第二阶段（单向显式意图门控，Slot-Gated，NAACL 2018）</strong>：为了打破顶层独立性，Goo 等引入<strong>槽位门控机制（Slot-Gated Mechanism）</strong>（图 5-1a），利用全局意图上下文向量与局部槽位注意力向量构造门控权重，对槽位解码状态进行显式加权。<br>
 <strong>局限暴露</strong>：信息流动是单向的（仅从意图流向槽位），当句首动词模糊（如“帮我订一张去上海的……”）而关键实体在句尾（“高铁二等座”）时，局部槽位无法反向修正全局意图。</li>
 <li><strong>第三阶段（双向迭代互强化，SF-ID Network，EMNLP 2019，arXiv:1907.00390）</strong>：E 等设计了<strong>双向互相关联网络（SF-ID Network）</strong>（图 5-1b），在槽位子网（SF-Subnet）与意图子网（ID-Subnet）之间建立多轮迭代交互闭环，允许已识别的高置信度槽位特征反向更新意图上下文向量。<br>
 <strong>局限暴露</strong>：句级单一意图向量容易受口语局部噪声词干扰，且硬标签传递无法端到端微分。</li>
-<li><strong>第四阶段（词元级可微概率堆叠投票，Stack-Propagation，EMNLP 2019，arXiv:1909.02188）</strong>：Qin 等提出两项决定性改进（图 5-2c、图 5-2d）：① <strong>软概率直接拼接（Differentiable Probability Stacking）</strong>：不再传递离散 argmax 意图索引，而是将意图分类器输出的 Softmax 概率分布向量直接拼接到槽位解码器的输入端，保持全链路梯度畅通；② <strong>词元级意图多数投票（Token-level Intent Voting）</strong>：令句中每个词元都预测一次局部意图，推理期通过全句投票平滑局部噪声，将 SNIPS Overall 准确率推升至 \(89.9\%\)（结合 BERT）。</li>
+<li><strong>第四阶段（词元级可微概率堆叠投票，Stack-Propagation，EMNLP 2019，arXiv:1909.02188）</strong>：Qin 等提出两项决定性改进（图 5-2c、图 5-2d）：① <strong>软概率直接拼接（Differentiable Probability Stacking）</strong>：不再传递离散 argmax 意图索引，而是将意图分类器输出的 Softmax 概率分布向量直接拼接到槽位解码器的输入端，保持全链路梯度畅通；② <strong>词元级意图多数投票（Token-level Intent Voting）</strong>：令句中每个词元都预测一次局部意图，推理期通过全句投票平滑局部噪声，将 SNIPS Overall 准确率推升至 \(89.9%\)（结合 BERT）。</li>
 </ol>
 
 <div class="fig-grid-2">
@@ -1299,15 +1299,15 @@ ol.refs li {
 </figure>
 </div>
 
-<h2 id="s5-3"><span class="num">5.3</span>单句多意图图交互网络的演绎过程：AGIF \(\rightarrow\) GL-GIN \(\rightarrow\) ReLa-Net</h2>
+<h2 id="s5-3"><span class="num">5.3</span>单句多意图图交互网络的演绎过程：AGIF → GL-GIN → ReLa-Net</h2>
 
 <p class="ni">当用户在一句话中同时表达多个意图（如“帮我查明天去北京的机票，再订一间首都机场附近的酒店”）时，单意图联合模型遭遇了致命的<strong>“全局意图向量污染（Global Intent Pollution）”</strong>——若将检测出的两个意图向量简单求和或拼接后广播给全句所有 token，前半句的机票槽位就会被“酒店”意图污染，后半句的酒店槽位也会被“机票”意图干扰。围绕这一矛盾，多意图小模型经历了三代演绎：</p>
 
 <ol>
 <li><strong>第一代（自回归词元级自适应图交互，AGIF，EMNLP 2020 Findings，arXiv:2004.10087）</strong>：Qin 等将多意图检测建模为多标签 Sigmoid 二元分类，并将当前句激活的每个预测意图作为独立图节点，在每个词元的槽位解码步构建局部异构图（图 5-3a），利用图注意力网络（GAT）让每个词元动态计算对不同激活意图的注意力权重，从而自动只吸附与当前子句相关的那个意图信号。<br>
-<strong>局限暴露</strong>：AGIF 采用自回归逐词串行解码，第 \(t\) 个词元的图计算必须等待第 \(t-1\) 个词元完成，导致单句推理延迟高达 \(40 \sim 80\,\text{ms}\)，无法满足高并发实时要求。</li>
-<li><strong>第二代（全并行非自回归全局-局部图交互，GL-GIN，ACL 2021，arXiv:2106.01925）</strong>：为消除自回归瓶颈，Qin 等提出 <strong>GL-GIN</strong>（图 5-3b、图 5-3c），用<strong>非自回归并行图解码器</strong>替代串行 LSTM：一方面通过全局意图-槽位图（Global Intent-Slot GAT）实现细粒度意图路由，另一方面通过局部槽位感知图（Local Slot-aware GAT）捕获相邻词元间的 BIO 转移连贯性。实验证明 GL-GIN 不仅将 MixATIS Overall 从 \(40.8\%\) 提升至 \(43.0\%\)、MixSNIPS 提升至 \(75.4\%\)，更实现了 <strong>\(11.88\times\) 的推理加速</strong>。</li>
-<li><strong>第三代（统计共现拓扑与语义关系双图，ReLa-Net，EMNLP 2022）</strong>：Xing 与 Tsang 进一步指出，AGIF 与 GL-GIN 仅在“已预测出的激活意图子集”上建图，一旦前级多意图分类器漏检某个意图，后续槽位图便彻底丢失该引导信号。<strong>ReLa-Net</strong>（图 5-3d）引入全标签空间的统计共现拓扑图与语义关系交互图，支持槽位特征与全量候选意图双向校准，将 MixATIS Overall 大幅推进至 \(52.2\%\)。</li>
+<strong>局限暴露</strong>：AGIF 采用自回归逐词串行解码，第 \(t\) 个词元的图计算必须等待第 \(t-1\) 个词元完成，导致单句推理延迟高达 \(40 ~ 80 \text{ms}\)，无法满足高并发实时要求。</li>
+<li><strong>第二代（全并行非自回归全局-局部图交互，GL-GIN，ACL 2021，arXiv:2106.01925）</strong>：为消除自回归瓶颈，Qin 等提出 <strong>GL-GIN</strong>（图 5-3b、图 5-3c），用<strong>非自回归并行图解码器</strong>替代串行 LSTM：一方面通过全局意图-槽位图（Global Intent-Slot GAT）实现细粒度意图路由，另一方面通过局部槽位感知图（Local Slot-aware GAT）捕获相邻词元间的 BIO 转移连贯性。实验证明 GL-GIN 不仅将 MixATIS Overall 从 \(40.8%\) 提升至 \(43.0%\)、MixSNIPS 提升至 \(75.4%\)，更实现了 <strong>\(11.88×\) 的推理加速</strong>。</li>
+<li><strong>第三代（统计共现拓扑与语义关系双图，ReLa-Net，EMNLP 2022）</strong>：Xing 与 Tsang 进一步指出，AGIF 与 GL-GIN 仅在“已预测出的激活意图子集”上建图，一旦前级多意图分类器漏检某个意图，后续槽位图便丢失该引导信号。<strong>ReLa-Net</strong>（图 5-3d）引入全标签空间的统计共现拓扑图与语义关系交互图，支持槽位特征与全量候选意图双向校准，将 MixATIS Overall 大幅推进至 \(52.2%\)。</li>
 </ol>
 
 <div class="fig-grid-2">
@@ -1334,7 +1334,7 @@ ol.refs li {
 
 <h2 id="s5-4"><span class="num">5.4</span>双塔句向量检索与混合记忆引擎：向量相似度检索与同行槽位提取</h2>
 
-<p class="ni">全参数微调 BERT 分类头存在两个工程痛点：一是每次新增业务意图或少样本冷启动时需重新训练分类层；二是无法直接利用用户长期积累的结构化事实记忆表。<strong>Casanueva 等（ACL 2020 Workshop，arXiv:2003.04807）</strong>在细粒度银行基准 <code>BANKING77</code> 上系统对比了预训练双塔句向量编码器（ConveRT、USE）与全参数微调 BERT（图 5-4a、图 5-4b），证实双塔编码器在 10-shot 少样本场景下超越冻结 BERT 逾 \(15\) 个百分点，且支持单核 CPU 亚毫秒至数毫秒级高并发检索。</p>
+<p class="ni">全参数微调 BERT 分类头存在两个工程问题：一是每次新增业务意图或少样本冷启动时需重新训练分类层；二是无法直接利用用户长期积累的结构化事实记忆表。<strong>Casanueva 等（ACL 2020 Workshop，arXiv:2003.04807）</strong>在细粒度银行基准 <code>BANKING77</code> 上系统对比了预训练双塔句向量编码器（ConveRT、USE）与全参数微调 BERT（图 5-4a、图 5-4b），证实双塔编码器在 10-shot 少样本场景下超越冻结 BERT 逾 \(15\) 个百分点，且支持单核 CPU 亚毫秒至数毫秒级高并发检索。</p>
 
 <div class="fig-grid-2">
 <figure>
@@ -1350,19 +1350,19 @@ ol.refs li {
 <p>在生产级认知记忆与混合检索引擎（<code>intent_rag</code> / <code>mem_system</code>）中，我们进一步将双塔句向量（如百炼 <code>text-embedding-v4</code> \(1024\) 维向量）从单纯的“文本相似度匹配”升级为<strong>三步结构化槽位闭环提取机制</strong>：</p>
 
 <ol>
-<li><strong>第一步：向量命中记录（候选记录定位）</strong>：将用户当前话语编码为 \(1024\) 维查询向量，在当前用户的事实记忆表（<code>user_fact_memory</code>）与标准意图示例库中执行余弦相似度检索，定位满足阈值（\(\ge 0.78\)）的最高分候选记录。</li>
+<li><strong>第一步：向量命中记录（候选记录定位）</strong>：将用户当前话语编码为 \(1024\) 维查询向量，在当前用户的事实记忆表（<code>user_fact_memory</code>）与标准意图示例库中执行余弦相似度检索，定位满足阈值（\(≥ 0.78\)）的最高分候选记录。</li>
 <li><strong>第二步：读取同行结构化槽位列（Row-Level Column Projection）</strong>：一旦通过向量相似度定位到候选记录，<strong>严禁使用脆弱的关键词切词或硬编码正则去猜测隐式参数</strong>，而是直接执行关系型投影（<code>SELECT domain, service_category, venue_name, activity_type FROM user_fact_memory WHERE record_id = ...</code>），直接读取与该向量同行存储的结构化槽位列，实现“向量语义召回 + 结构化精准取参”的统一。</li>
 <li><strong>第三步：二阶段关联表补全（通过 <code>service_to_app</code> / <code>periodic_preference</code> 双向关联）</strong>：以第二步同行提取出的 <code>service_category</code> 与 <code>activity_type</code> 为关联键，自动联表查询该用户的服务应用偏好表（<code>service_to_app</code>）与周期时间偏好表（<code>periodic_preference</code>），一次性补全隐式目标应用 <code>preferred_app</code>、开始时间 <code>start_time</code>、结束时间 <code>end_time</code> 与持续时长 <code>duration</code>（并强制校验 <code>end - start == duration</code> 业务逻辑自洽性）。</li>
 </ol>
 
 <h2 id="s5-5"><span class="num">5.5</span>开放世界域外拒识（OOD）的演绎过程与小模型蒸馏加速</h2>
 
-<p class="ni">针对封闭集分类器对域外请求过度自信的痛点，开放世界意图检测经历了从<strong>“事后输出层校准”</strong>向<strong>“特征空间有界几何约束”</strong>的深刻演进：</p>
+<p class="ni">针对封闭集分类器对域外请求过度自信的问题，开放世界意图检测经历了从<strong>“事后输出层校准”</strong>向<strong>“特征空间有界几何约束”</strong>的深刻演进：</p>
 
 <ol>
-<li><strong>事后输出打分阶段（MSP \(\rightarrow\) Energy \(\rightarrow\) Mahalanobis）</strong>：早期基线直接用最大 Softmax 概率（MSP）卡阈值，但由于 Softmax 分子分母同乘常数不变，远离决策超平面的域外点依然输出接近 \(1.0\) 的概率；Liu 等（NeurIPS 2020）改用未归一化 Logit 的<strong>自由能得分（Energy Score）</strong>消除了归一化扭曲；Lee 等（NeurIPS 2018）进一步在倒数第二层特征空间拟合高斯分布并计算<strong>协方差校正马氏距离（Mahalanobis Distance）</strong>，使域外检出率提升 \(8 \sim 12\) 个百分点。</li>
+<li><strong>事后输出打分阶段（MSP → Energy → Mahalanobis）</strong>：早期基线直接用最大 Softmax 概率（MSP）卡阈值，但由于 Softmax 分子分母同乘常数不变，远离决策超平面的域外点依然输出接近 \(1.0\) 的概率；Liu 等（NeurIPS 2020）改用未归一化 Logit 的<strong>自由能得分（Energy Score）</strong>消除了归一化扭曲；Lee 等（NeurIPS 2018）进一步在倒数第二层特征空间拟合高斯分布并计算<strong>协方差校正马氏距离（Mahalanobis Distance）</strong>，使域外检出率提升 \(8 ~ 12\) 个百分点。</li>
 <li><strong>紧凑球面边界学习阶段（ADB，AAAI 2021，arXiv:2012.10909）</strong>：Zhang 等指出，马氏距离假设各类特征服从同协方差椭球分布，而在交叉熵训练下同类特征往往呈放射状长条分布。为此，<strong>ADB（Adaptive Decision Boundary）</strong>（图 5-5a、图 5-5b）在无需任何真实 OOD 负样本的前提下，围绕每个已知意图类别的归一化均值球心 \(e_k\)，联合学习一个自适应球面半径 \(\Delta_k\)，利用内外双向铰链损失将已知类特征强行收紧在有界超球面内部——球面之外的广阔空间自然成为确定性的域外拒识区，在 25% 已知类比例下较 MSP 提升逾 25 个百分点。</li>
-<li><strong>自监督边界负例合成阶段（SCL，NAACL 2021；DeepAligned，AAAI 2021）</strong>：Zhan 等（<strong>SCL</strong>，图 5-5c）通过在特征空间对两个不同已知意图的样本做随机凸组合（Mixup），人工合成位于类间夹缝处的困难伪域外样本；而对于线上被 ADB/SCL 拦截沉淀下来的海量未知语料，Zhang 等（<strong>DeepAligned</strong>，图 5-6b）利用跨 Epoch 匈牙利算法对齐 K-Means 簇质心，实现未知新意图的自动聚类发现。结合 <strong>TinyBERT 两阶段蒸馏</strong>（Jiao 等，EMNLP 2020，图 5-6a），4 层学生模型在实现 \(9.4\times\) 推理加速的同时可保留教师模型 \(96.8\%\) 的精度。</li>
+<li><strong>自监督边界负例合成阶段（SCL，NAACL 2021；DeepAligned，AAAI 2021）</strong>：Zhan 等（<strong>SCL</strong>，图 5-5c）通过在特征空间对两个不同已知意图的样本做随机凸组合（Mixup），人工合成位于类间夹缝处的困难伪域外样本；而对于线上被 ADB/SCL 拦截沉淀下来的海量未知语料，Zhang 等（<strong>DeepAligned</strong>，图 5-6b）利用跨 Epoch 匈牙利算法对齐 K-Means 簇质心，实现未知新意图的自动聚类发现。结合 <strong>TinyBERT 两阶段蒸馏</strong>（Jiao 等，EMNLP 2020，图 5-6a），4 层学生模型在实现 \(9.4×\) 推理加速的同时可保留教师模型 \(96.8%\) 的精度。</li>
 </ol>
 
 <div class="fig-grid-2">
@@ -1401,7 +1401,7 @@ ol.refs li {
 <tr>
 <td><strong>1. 隐式共享编码双头模型</strong><br>（<code>JointBERT</code> + CRF）</td>
 <td>共享双向 Transformer 编码器，顶层独立线性头分别预测 <code>[CLS]</code> 意图与首子词 BIO 槽位。</td>
-<td>• 结构极简，单次前向推理仅需 \(8 \sim 15\,\text{ms}\)；<br>• 封闭集单意图准确率高达 \(97.8\%\)（ATIS），工程部署与 TensorRT/ONNX 量化极其成熟。</td>
+<td>• 结构极简，单次前向推理仅需 \(8 ~ 15 \text{ms}\)；<br>• 封闭集单意图准确率高达 \(97.8%\)（ATIS），工程部署与 TensorRT/ONNX 量化极其成熟。</td>
 <td>• 顶层意图头与槽位头条件独立，当动词模糊或句式倒装时易出现“意图对、槽位错”的不一致；<br>• 完全不支持单句多意图。</td>
 <td>单意图固定业务域的 <strong>L1 基础分类底座</strong>。</td>
 </tr>
@@ -1413,15 +1413,15 @@ ol.refs li {
 <td>口语噪声较重但以单意图为主的 <strong>L1 增强联合模型</strong>。</td>
 </tr>
 <tr>
-<td><strong>3. 非自回归多意图异构图网络</strong><br>（<code>AGIF</code> \(\rightarrow\) <code>GL-GIN</code> \(\rightarrow\) <code>ReLa-Net</code>）</td>
+<td><strong>3. 非自回归多意图异构图网络</strong><br>（<code>AGIF</code> → <code>GL-GIN</code> → <code>ReLa-Net</code>）</td>
 <td>以多标签 Sigmoid 激活意图子集为图节点，通过非自回归全局-局部图注意力（GAT）对齐词元槽位。</td>
-<td>• 彻底解决单句多意图下的“跨子句槽位污染”难题；<br>• <code>GL-GIN</code> 全并行非自回归解码较 <code>AGIF</code> 提速 <strong>\(11.88\times\)</strong>，MixSNIPS Overall 达 \(75.4\%\)。</td>
+<td>• 解决单句多意图下的“跨子句槽位污染”难题；<br>• <code>GL-GIN</code> 全并行非自回归解码较 <code>AGIF</code> 提速 <strong>\(11.88×\)</strong>，MixSNIPS Overall 达 \(75.4%\)。</td>
 <td>• 对隐式无连词复合句或跨子句共享槽位（Ellipsis across intents）仍易漏检；<br>• 图注意力层依赖足够的多意图组合训练样本。</td>
 <td>支持复合指令的 <strong>L1 主力多意图-槽位联合引擎</strong>。</td>
 </tr>
 <tr>
 <td><strong>4. 双塔句向量检索 + 同行槽位列读取</strong><br>（<code>ConveRT</code> / <code>text-embedding-v4</code> + 二阶段关联）</td>
-<td>双塔编码余弦检索定位候选记录 \(\rightarrow\) <strong>读取同行结构化槽位列</strong> \(\rightarrow\) <code>service_to_app</code> / <code>periodic_preference</code> 二阶段补全。</td>
+<td>双塔编码余弦检索定位候选记录 → <strong>读取同行结构化槽位列</strong> → <code>service_to_app</code> / <code>periodic_preference</code> 二阶段补全。</td>
 <td>• 新增意图或更新用户个人事实记忆无需重训模型，毫秒级热生效；<br>• 10-shot 少样本准确率超微调模型 \(15\text{pt}\)；<br>• 直接投影同行结构化列，零正则硬编码即可补全隐式槽位。</td>
 <td>• 双塔独立编码缺乏 Query 与候选间的早期词元级交叉注意力，对细微反义词与否定词（“别订湘菜馆”）不敏感，必须前置<strong>否定子句分离与权重衰减过滤</strong>。</td>
 <td>个人事实记忆召回、少样本热扩展与隐式槽位补全的 <strong>L1 核心检索通道</strong>。</td>
@@ -1440,11 +1440,11 @@ ol.refs li {
 
 <h1 id="ch6"><span class="cn">第 6 章</span>基于大语言模型的意图处理算法：一体两面、范式演绎与不确定性探针</h1>
 
-<p class="ni">大语言模型（LLMs，参数量 \(7\,\text{B} \sim 671\,\text{B}\)，如 Qwen3.7-Plus、DeepSeek-V4.1、GPT-4o、Claude 3.5 及 Llama-3）的登场彻底重塑了意图理解的能力上限。然而，工程实践中盲目推行“大模型全量替代小模型”的团队往往在上线首周即遭遇延迟雪崩与百类路由准确率倒退。本章首先建立对大模型意图理解<strong>“一体两面（Dual Nature）”</strong>的系统性认识，随后剖析从<strong>“全量零样本提示 \(\rightarrow\) 检索增强自适应 ICL \(\rightarrow\) 中间层隐状态 OOD 探针 \(\rightarrow\) 双向注意力改造与万级工具树路由”</strong>的完整演绎过程，并给出优缺点对比矩阵。</p>
+<p class="ni">大语言模型（LLMs，参数量 \(7 \text{B} ~ 671 \text{B}\)，如 Qwen3.7-Plus、DeepSeek-V4.1、GPT-4o、Claude 3.5 及 Llama-3）的登场重塑了意图理解的能力上限。然而，工程实践中盲目推行“大模型全量替代小模型”的团队往往在上线首周即遭遇延迟雪崩与百类路由准确率倒退。本章首先建立对大模型意图理解<strong>“一体两面（Dual Nature）”</strong>的系统性认识，随后剖析从<strong>“全量零样本提示 → 检索增强自适应 ICL → 中间层隐状态 OOD 探针 → 双向注意力改造与万级工具树路由”</strong>的完整演绎过程，并给出优缺点对比矩阵。</p>
 
 <h2 id="s6-1"><span class="num">6.1</span>对大模型意图处理范式的系统性认识：“一体两面”与四大工程壁垒</h2>
 
-<p class="ni">为什么大模型在零样本冷启动和复杂推理上惊艳四座，却在标准工业意图基准（如 <code>BANKING77</code>、<code>CLINC150</code>）上屡屡败给仅 \(110\,\text{M}\) 参数的微调小模型？系统性剖析表明，生成式大模型的<strong>核心优势与致命短板同源而生</strong>：</p>
+<p class="ni">为什么大模型在零样本冷启动和复杂推理上惊艳四座，却在标准工业意图基准（如 <code>BANKING77</code>、<code>CLINC150</code>）上屡屡败给仅 \(110 \text{M}\) 参数的微调小模型？系统性剖析表明，生成式大模型的<strong>核心优势与致命短板同源而生</strong>：</p>
 
 <ul>
 <li><strong>正面赋能（三大不可替代优势）</strong>：
@@ -1456,10 +1456,10 @@ ol.refs li {
 </li>
 <li><strong>反面掣肘（直接全量落地的四大工程壁垒）</strong>：
   <ol>
-    <li><strong>壁垒一：百类长列表位置偏置与精度倒退（Lost-in-the-Middle）</strong>：当业务意图超过 \(50 \sim 150\) 类时，将全部意图定义塞入 Prompt 会导致输入长达 \(2,000 \sim 4,000\) tokens，大模型对位于提示词中段的类别注意力显著衰减，零样本准确率较微调 RoBERTa 低 \(15 \sim 23\) 个百分点（LREC-COLING 2024，arXiv:2402.17256）；</li>
-    <li><strong>壁垒二：自回归解码带来的 \(56\times\) 时延鸿沟</strong>：Amazon 实测表明（图 6-1c），小模型 SetFit 单次推理仅需 \(0.030\,\text{s}\)，而 \(7\,\text{B} \sim 13\,\text{B}\) 大模型平均耗时达 \(1.697\,\text{s}\)（慢 \(56.6\) 倍），单卡吞吐量下降两个数量级；</li>
+    <li><strong>壁垒一：百类长列表位置偏置与精度倒退（Lost-in-the-Middle）</strong>：当业务意图超过 \(50 ~ 150\) 类时，将全部意图定义塞入 Prompt 会导致输入长达 \(2,000 ~ 4,000\) tokens，大模型对位于提示词中段的类别注意力显著衰减，零样本准确率较微调 RoBERTa 低 \(15 ~ 23\) 个百分点（LREC-COLING 2024，arXiv:2402.17256）；</li>
+    <li><strong>壁垒二：自回归解码带来的 \(56×\) 时延鸿沟</strong>：Amazon 实测表明（图 6-1c），小模型 SetFit 单次推理仅需 \(0.030 \text{s}\)，而 \(7 \text{B} ~ 13 \text{B}\) 大模型平均耗时达 \(1.697 \text{s}\)（慢 \(56.6\) 倍），单卡吞吐量下降两个数量级；</li>
     <li><strong>壁垒三：单向因果掩码（Causal Attention Mask）对多意图槽位对齐的结构性限制</strong>：Decoder-only 大模型采用下三角因果掩码，前半句词元在编码时无法看到后半句才出现的意图线索；</li>
-    <li><strong>壁垒四：文字自评置信度严重失准与生成式拒识失效</strong>：让大模型在输出中自报置信度（如 <code>"confidence": 0.95</code>）或直接生成 <code>"Out-of-Scope"</code> 极易受提示词措辞诱导，发生“高置信度胡编乱造（Hallucination）”。</li>
+    <li><strong>壁垒四：文字自评置信度严重失准与生成式拒识失效</strong>：让大模型在输出中自报置信度（如 <code>"confidence": 0.95</code>）或直接生成 <code>"Out-of-Scope"</code> 极易受提示词措辞诱导，发生“高置信度凭空生成乱造（Hallucination）”。</li>
   </ol>
 </li>
 </ul>
@@ -1469,9 +1469,9 @@ ol.refs li {
 <p class="ni">为了克服上述壁垒一与壁垒四，工业界与学术界围绕大模型意图识别展开了三步关键演进（<strong>Arora 等，Amazon，EMNLP 2024 Industry Track，arXiv:2410.01627</strong>，图 6-1a 至图 6-1d）：</p>
 
 <ol>
-<li><strong>第一步（从全量静态 Prompt 到检索增强自适应上下文学习 Adaptive ICL + CoT）</strong>：既然大模型看不了 \(150\) 个意图的全量列表，那就<strong>绝不把全量列表直接喂给大模型</strong>。Amazon 团队在 LLM 前端部署了一个毫秒级句向量检索器：针对当前查询 \(x\)，动态从历史标注库中检索余弦最相似的 Top-\(K\) 条样本及其对应的候选意图子集（通常仅涵括 \(5 \sim 10\) 个高混淆候选意图），动态拼装紧凑 Prompt 并引导大模型输出简短思维链（CoT）。这一改造使提示词长度缩短 \(80\%\)，并在少样本场景下反超静态 ICL 逾 \(12\) 个百分点（图 6-1a）。</li>
+<li><strong>第一步（从全量静态 Prompt 到检索增强自适应上下文学习 Adaptive ICL + CoT）</strong>：既然大模型看不了 \(150\) 个意图的全量列表，那就<strong>绝不把全量列表直接喂给大模型</strong>。Amazon 团队在 LLM 前端部署了一个毫秒级句向量检索器：针对当前查询 \(x\)，动态从历史标注库中检索余弦最相似的 Top-\(K\) 条样本及其对应的候选意图子集（通常仅涵括 \(5 ~ 10\) 个高混淆候选意图），动态拼装紧凑 Prompt 并引导大模型输出简短思维链（CoT）。这一改造使提示词长度缩短 \(80%\)，并在少样本场景下反超静态 ICL 逾 \(12\) 个百分点（图 6-1a）。</li>
 <li><strong>第二步（从生成式文字拒识到中间层 \(L/2\) 隐状态线性探针二阶段 OOD 检测）</strong>：为什么大模型不擅长通过文本生成来拒识域外请求？因为自回归解码头（LM Head）被训练为“在词表上寻找下一个最通顺的词”，天然倾向于将陌生请求强行映射到字面最接近的已知意图。Amazon 团队发现了一个极具洞察力的规律（图 6-1b）：<strong>大模型在 Prefill 阶段第 \(L/2\) 层（中间层）最后一个输入 token 的隐藏状态向量，包含了最纯净的语义分布内/外几何判别信息</strong>（而临近顶层的隐状态已过度向下一个输出 token 坍缩）。直接在该中间层隐状态上训练一个单层逻辑斯蒂回归探针，无需生成任何 token 即可在 Prefill 结束瞬间以极高 AUROC 拦截 OOD 请求！</li>
-<li><strong>第三步（从单一模型到语义熵 Semantic Entropy 与大小模型混合级联）</strong>：针对必须进入生成阶段的高风险复杂请求，Farquhar 等（<strong><em>Nature</em> 630:625–630，2024，arXiv:2406.15927</strong>，图 6-2d）提出<strong>语义熵（Semantic Entropy）</strong>：对同一输入多次采样后，先用双向自然语言推理（NLI）将表面措辞不同但语义等价的回复归并为一个语义簇，再在语义簇概率分布上计算香农熵，从而精准剥离“表述多样性”与“真实认知不确定性”。而在在线生产链路中，Amazon 实证表明（图 6-1d），采用<strong>“小模型优先截留 + 低置信度样本升级大模型 Adaptive ICL”的混合级联</strong>，仅需将约 \(40\%\) 的困难样本交由 LLM，即可取得超越任意单一模型的最高 F1。</li>
+<li><strong>第三步（从单一模型到语义熵 Semantic Entropy 与大小模型混合级联）</strong>：针对必须进入生成阶段的高风险复杂请求，Farquhar 等（<strong><em>Nature</em> 630:625–630，2024，arXiv:2406.15927</strong>，图 6-2d）提出<strong>语义熵（Semantic Entropy）</strong>：对同一输入多次采样后，先用双向自然语言推理（NLI）将表面措辞不同但语义等价的回复归并为一个语义簇，再在语义簇概率分布上计算香农熵，从而精准剥离“表述多样性”与“真实认知不确定性”。而在在线生产链路中，Amazon 实证表明（图 6-1d），采用<strong>“小模型优先截留 + 低置信度样本升级大模型 Adaptive ICL”的混合级联</strong>，仅需将约 \(40%\) 的困难样本交由 LLM，即可取得超越任意单一模型的最高 F1。</li>
 </ol>
 
 <div class="fig-grid-2">
@@ -1501,8 +1501,8 @@ ol.refs li {
 <p class="ni">在单句多意图理解与万级外部工具调用两个进阶方向上，大模型进一步演化出专用架构：</p>
 
 <ul>
-<li><strong>针对壁垒三（单向因果掩码限制）：从自回归生成到双向注意力微调（MIDLM，COLING 2025）</strong>。Yin 等（图 6-2a）系统验证了为什么原生 ChatGPT/Llama 在 MixATIS/MixSNIPS 多意图基准上表现不佳：在 Decoder-only 架构中，第 \(i\) 个词元只能看到 \(1 \dots i\) 的前文，无法感知句尾出现的第二个意图触发词。<strong>MIDLM</strong> 在微调阶段解除下三角因果掩码限制，将其转化为双向全注意力编码器并挂载多标签分类头，使多意图准确率跃升至 \(88.5\%\)。</li>
-<li><strong>针对万级 API 动态路由：从闭卷记忆到检索感知微调（Gorilla，NeurIPS 2024）与深度优先决策树搜索（ToolLLM，ICLR 2024）</strong>。当意图理解的目标是驱动 \(1,600 \sim 16,000\) 个外部 REST API 时，让 GPT-4 闭卷生成调用代码会产生高达 \(36.55\%\) 的参数与接口名幻觉。Patil 等提出的 <strong>Gorilla</strong>（arXiv:2305.15334，图 6-2b）通过<strong>检索感知训练（Retriever-Aware Training）</strong>，强迫大模型在训练期就学会严格遵从即时检索到的 API 文档签名并拒绝带噪声的无关文档，将幻觉率压降至 \(6.98\%\)；Qin 等提出的 <strong>ToolLLM</strong>（arXiv:2307.16789，图 6-2c）则进一步引入<strong>深度优先决策树搜索（DFSDT）</strong>，允许智能体在发现当前选择的工具无法满足用户复合意图或返回报错时，主动沿着搜索树回溯（Backtrack）并尝试替代 API 路径。</li>
+<li><strong>针对壁垒三（单向因果掩码限制）：从自回归生成到双向注意力微调（MIDLM，COLING 2025）</strong>。Yin 等（图 6-2a）系统验证了为什么原生 ChatGPT/Llama 在 MixATIS/MixSNIPS 多意图基准上表现不佳：在 Decoder-only 架构中，第 \(i\) 个词元只能看到 \(1 \dots i\) 的前文，无法感知句尾出现的第二个意图触发词。<strong>MIDLM</strong> 在微调阶段解除下三角因果掩码限制，将其转化为双向全注意力编码器并挂载多标签分类头，使多意图准确率跃升至 \(88.5%\)。</li>
+<li><strong>针对万级 API 动态路由：从闭卷记忆到检索感知微调（Gorilla，NeurIPS 2024）与深度优先决策树搜索（ToolLLM，ICLR 2024）</strong>。当意图理解的目标是驱动 \(1,600 ~ 16,000\) 个外部 REST API 时，让 GPT-4 闭卷生成调用代码会产生高达 \(36.55%\) 的参数与接口名幻觉。Patil 等提出的 <strong>Gorilla</strong>（arXiv:2305.15334，图 6-2b）通过<strong>检索感知训练（Retriever-Aware Training）</strong>，强迫大模型在训练期就学会严格遵从即时检索到的 API 文档签名并拒绝带噪声的无关文档，将幻觉率压降至 \(6.98%\)；Qin 等提出的 <strong>ToolLLM</strong>（arXiv:2307.16789，图 6-2c）则进一步引入<strong>深度优先决策树搜索（DFSDT）</strong>，允许智能体在发现当前选择的工具无法满足用户复合意图或返回报错时，主动沿着搜索树回溯（Backtrack）并尝试替代 API 路径。</li>
 </ul>
 
 <div class="fig-grid-2">
@@ -1536,21 +1536,21 @@ ol.refs li {
 <tr>
 <td><strong>1. 全量 Schema 零样本/静态少样本提示</strong><br>（Vanilla Zero/Few-Shot Prompting）</td>
 <td>将全部业务意图名称、定义与固定示例直接拼接进 System Prompt，自回归生成 JSON。</td>
-<td>• 零训练成本，半小时内即可完成新业务原型冷启动；<br>• 适合类别极少（\(\le 15\) 类）的粗粒度分流。</td>
-<td>• 当类别达 \(60 \sim 150\) 类时出现严重“中间迷失”，准确率比微调小模型低 \(15 \sim 23\text{pt}\)；<br>• Prompt 冗长导致单次延迟 \(>1.5\,\text{s}\)，Token 成本极高。</td>
+<td>• 零训练成本，半小时内即可完成新业务原型冷启动；<br>• 适合类别极少（\(≤ 15\) 类）的粗粒度分流。</td>
+<td>• 当类别达 \(60 ~ 150\) 类时出现严重“中间迷失”，准确率比微调小模型低 \(15 ~ 23\text{pt}\)；<br>• Prompt 冗长导致单次延迟 \(>1.5 \text{s}\)，Token 成本极高。</td>
 <td>仅限<strong>项目冷启动初期</strong>或离线合成数据标注，<strong>严禁直接用于百类在线全量主链路</strong>。</td>
 </tr>
 <tr>
 <td><strong>2. 检索增强自适应上下文学习</strong><br>（<code>Adaptive ICL + CoT</code>，Amazon 2024）</td>
 <td>前置句向量检索器动态筛选与当前查询最相似的 Top-\(K\) 候选意图与示例，配合短 CoT 推理。</td>
-<td>• 将大模型每次需审视的候选空间压缩至 \(K \le 10\)，彻底消除长上下文位置偏置；<br>• 兼顾新意图动态热插拔与细粒度判别精度。</td>
-<td>• 端到端受限于前置向量召回率（若 Top-\(K\) 漏召回真实意图则无法挽回）；<br>• 仍需自回归生成 CoT，在线延迟约 \(400 \sim 1,200\,\text{ms}\)。</td>
+<td>• 将大模型每次需审视的候选空间压缩至 \(K ≤ 10\)，消除长上下文位置偏置；<br>• 兼顾新意图动态热插拔与细粒度判别精度。</td>
+<td>• 端到端受限于前置向量召回率（若 Top-\(K\) 漏召回真实意图则无法挽回）；<br>• 仍需自回归生成 CoT，在线延迟约 \(400 ~ 1,200 \text{ms}\)。</td>
 <td><strong>L1.5 / L2 在线灰区消歧与复杂长尾兜底</strong>的标准范式。</td>
 </tr>
 <tr>
 <td><strong>3. 中间层隐状态线性探针二阶段 OOD</strong><br>（<code>LLM Mid-Layer L/2 Probe</code>，Amazon 2024）</td>
 <td>提取大模型 Prefill 阶段第 \(L/2\) 层末尾 token 隐状态，接轻量线性分类器直接判定是否越界。</td>
-<td>• 彻底绕开大模型文字生成“死不认错”的顽疾，OOD 检出率显著超越生成式拒识与末层表征；<br>• 在 Prefill 结束瞬间即可短路拒识，节省全部 Decode 算力。</td>
+<td>• 绕开大模型文字生成“死不认错”的顽疾，OOD 检出率显著超越生成式拒识与末层表征；<br>• 在 Prefill 结束瞬间即可短路拒识，节省全部 Decode 算力。</td>
 <td>• 需要访问模型内部隐状态张量（仅适用于自部署开源模型如 Qwen/DeepSeek/Llama，黑盒商业 API 无法直接获取中间层）。</td>
 <td>自建大模型推理节点上的 <strong>L1.5 / L2 高精度内生拒识门控</strong>。</td>
 </tr>
@@ -1558,14 +1558,14 @@ ol.refs li {
 <td><strong>4. 双向注意力改造与 LoRA 判别微调</strong><br>（<code>MIDLM</code> / <code>LDST</code>）</td>
 <td>移除 Decoder-only 下三角因果掩码，改用双向全注意力 + 多标签分类头进行参数高效微调。</td>
 <td>• 兼具大模型的世界常识先验与双向编码器的全局槽位-意图对齐能力；<br>• 单次前向直出分类 Logit，无自回归解码延迟。</td>
-<td>• 破坏了原模型通用的自回归生成能力，需维护独立的 LoRA/分类头权重；<br>• 显存占用与算力仍为 BERT-base 的 \(15 \sim 40\) 倍。</td>
+<td>• 破坏了原模型通用的自回归生成能力，需维护独立的 LoRA/分类头权重；<br>• 显存占用与算力仍为 BERT-base 的 \(15 ~ 40\) 倍。</td>
 <td>高价值垂直领域（如车载/金融复杂多意图）的 <strong>L1.5 重型判别器</strong>。</td>
 </tr>
 <tr>
 <td><strong>5. 检索感知工具路由与决策树搜索</strong><br>（<code>Gorilla</code> / <code>ToolLLM DFSDT</code>）</td>
 <td>稠密检索候选 API 文档 + Retriever-Aware 代码生成 + 失败自动回溯树搜索。</td>
-<td>• 支持万级动态 API/MCP 工具库的开放连接，将参数幻觉率从 \(36.5\%\) 降至 \(6.98\%\)；<br>• <code>DFSDT</code> 支持多步复合任务的试错与自我修正。</td>
-<td>• 多步树搜索与回溯需发起 \(3 \sim 8\) 次大模型调用，端到端耗时达 \(3 \sim 15\,\text{s}\)，绝对无法承受高频同步流量。</td>
+<td>• 支持万级动态 API/MCP 工具库的开放连接，将参数幻觉率从 \(36.5%\) 降至 \(6.98%\)；<br>• <code>DFSDT</code> 支持多步复合任务的试错与自我修正。</td>
+<td>• 多步树搜索与回溯需发起 \(3 ~ 8\) 次大模型调用，端到端耗时达 \(3 ~ 15 \text{s}\)，绝对无法承受高频同步流量。</td>
 <td><strong>L2 异步复杂 Agent 规划</strong>与<strong>慢路径交互归纳引擎</strong>。</td>
 </tr>
 </tbody>
@@ -1579,7 +1579,7 @@ ol.refs li {
 
 <h2 id="s7-1"><span class="num">7.1</span>对多轮多意图交互场景的系统性认识：三大结构性矛盾</h2>
 
-<p class="ni">为什么单轮准确率高达 \(95\%\) 的系统，一旦放到 \(3 \sim 5\) 轮连续对话中，任务完成率（Success Rate）往往跌破 \(60\%\)？因为多轮多意图交互引入了三个单轮模型完全未曾建模的结构性矛盾：</p>
+<p class="ni">为什么单轮准确率高达 \(95%\) 的系统，一旦放到 \(3 ~ 5\) 轮连续对话中，任务完成率（Success Rate）往往跌破 \(60%\)？因为多轮多意图交互引入了三个单轮模型完全未曾建模的结构性矛盾：</p>
 
 <ol>
 <li><strong>矛盾一：人类言语的“经济性省略（Ellipsis &amp; Coreference）”与后端接口“完备参数契约”的矛盾</strong>。用户在第 \(2\) 轮说“那周六下午呢？”或“帮我叫辆车过去”，句中既无动词也无完整地点名词，必须依赖截至上一轮的<strong>标准记忆状态快照（Ground-Truth Memory Snapshot）</strong> \(B_{t-1}\) 才能还原出隐含的业务域与目标地点槽位。</li>
@@ -1592,13 +1592,13 @@ ol.refs li {
 <p class="ni">围绕如何维护跨轮次的<strong>标准记忆状态快照</strong> \(B_t = \{(d_k, s_k, v_k)\}\)，对话状态追踪（DST）经历了四步严谨的技术演绎：</p>
 
 <ol>
-<li><strong>第一代：基于规则与有限状态机（FSM / Frame-based Dialog Management，GUS 1977 \(\rightarrow\) RASA Stories）</strong>。通过人工编写状态转移图或槽位填空表单（Form），规定每个状态下允许接收的意图与槽位转移。<br>
+<li><strong>第一代：基于规则与有限状态机（FSM / Frame-based Dialog Management，GUS 1977 → RASA Stories）</strong>。通过人工编写状态转移图或槽位填空表单（Form），规定每个状态下允许接收的意图与槽位转移。<br>
 <strong>演绎动因</strong>：当用户在填表过程中突然跨业务域切换话题（“先别填机票了，帮我查下目的地天气”）或一次说出多个槽位修正时，手工状态图的转移边数呈指数级爆炸。</li>
-<li><strong>第二代：基于跨轮拷贝机制的判别式小模型（TRADE，ACL 2019 \(\rightarrow\) TripPy，SIGDIAL 2020）</strong>。为摆脱固定词表限制，<strong>TripPy</strong>（Heck 等，arXiv:2005.02877，图 7-1a）设计了<strong>三路拷贝机制（Triple Copy Strategy）</strong>：对于每个槽位，先由门控分类器判断其状态（未提及、不在乎、需更新），再决定是从①当前轮用户话语做 Span 抽取、从②系统上一轮确认提示中拷贝，还是从③历史信念状态 \(B_{t-1}\) 的其他槽位做跨槽位共指拷贝（如将餐厅地址直接拷贝为打车目的地）。<br>
-<strong>演绎动因</strong>：需要对预定义 Schema 中的全部 \(30 \sim 50\) 个槽位逐个运行分类头，跨新领域零样本迁移能力较弱。</li>
-<li><strong>第三代：端到端自回归序列生成小模型（SimpleTOD，NeurIPS 2020 \(\rightarrow\) SOLOIST，TACL 2021）</strong>。Peng 等（<strong>SOLOIST</strong>，arXiv:2005.05298，图 7-1b）将对话历史、信念状态 \(B_t\)、数据库查询结果与系统动作统一展平为单条文本序列，利用预训练 GPT-2 端到端生成。<br>
+<li><strong>第二代：基于跨轮拷贝机制的判别式小模型（TRADE，ACL 2019 → TripPy，SIGDIAL 2020）</strong>。为摆脱固定词表限制，<strong>TripPy</strong>（Heck 等，arXiv:2005.02877，图 7-1a）设计了<strong>三路拷贝机制（Triple Copy Strategy）</strong>：对于每个槽位，先由门控分类器判断其状态（未提及、不在乎、需更新），再决定是从①当前轮用户话语做 Span 抽取、从②系统上一轮确认提示中拷贝，还是从③历史信念状态 \(B_{t-1}\) 的其他槽位做跨槽位共指拷贝（如将餐厅地址直接拷贝为打车目的地）。<br>
+<strong>演绎动因</strong>：需要对预定义 Schema 中的全部 \(30 ~ 50\) 个槽位逐个运行分类头，跨新领域零样本迁移能力较弱。</li>
+<li><strong>第三代：端到端自回归序列生成小模型（SimpleTOD，NeurIPS 2020 → SOLOIST，TACL 2021）</strong>。Peng 等（<strong>SOLOIST</strong>，arXiv:2005.05298，图 7-1b）将对话历史、信念状态 \(B_t\)、数据库查询结果与系统动作统一展平为单条文本序列，利用预训练 GPT-2 端到端生成。<br>
 <strong>演绎动因</strong>：每轮都全量拼接从第 1 轮至今的原始对话文本，随着轮次加深，早期废弃槽位极易对当前轮造成注意力干扰。</li>
-<li><strong>第四代：基于状态快照增量的指令微调大模型（LDST，Feng 等，2023，arXiv:2310.14970；MIntRec 2.0，ICLR 2024）</strong>。<strong>LDST</strong>（图 7-2a 至图 7-2c）证明，与其拼接冗长的多轮原始历史对话，不如<strong>以前一轮结构化状态快照 \(B_{t-1}\) 加上当前轮对话 \((sys_t, usr_t)\) 作为紧凑输入</strong>，通过 LoRA 指令微调 7B 大模型直接预测状态更新，在 MultiWOZ 2.4 上取得 \(75.35\%\) 的 JGA（超越 ChatGPT 近 20 个点）。而 <strong>MIntRec 2.0</strong>（Zhang 等，ICLR 2024，图 7-2d）则进一步揭示了真实多轮多意图对话中高达 \(39\%\) 的话语属于域外（OOS）穿插，要求多轮追踪必须与逐轮 OOD 门控深度耦合。</li>
+<li><strong>第四代：基于状态快照增量的指令微调大模型（LDST，Feng 等，2023，arXiv:2310.14970；MIntRec 2.0，ICLR 2024）</strong>。<strong>LDST</strong>（图 7-2a 至图 7-2c）证明，与其拼接冗长的多轮原始历史对话，不如<strong>以前一轮结构化状态快照 \(B_{t-1}\) 加上当前轮对话 \((sys_t, usr_t)\) 作为紧凑输入</strong>，通过 LoRA 指令微调 7B 大模型直接预测状态更新，在 MultiWOZ 2.4 上取得 \(75.35%\) 的 JGA（超越 ChatGPT 近 20 个点）。而 <strong>MIntRec 2.0</strong>（Zhang 等，ICLR 2024，图 7-2d）则进一步揭示了真实多轮多意图对话中高达 \(39%\) 的话语属于域外（OOS）穿插，要求多轮追踪必须与逐轮 OOD 门控深度耦合。</li>
 </ol>
 
 <div class="fig-grid-2">
@@ -1641,22 +1641,22 @@ ol.refs li {
 <tr>
 <td><strong>1. 规则有限状态机与槽位修正算符</strong><br>（FSM / Form / <strong>槽位修正动作</strong>）</td>
 <td>显式维护结构化内存字典 \(B_{t-1}\)，按确定性事务规则执行 <code>add / update / drop</code> 状态转移與必填槽位完整性校验。</td>
-<td>• 状态转移 \(100\%\) 可控、幂等且可审计，绝不会因模型幻觉凭空丢弃已确认订单号；<br>• 耗时 \(< 0.5\,\text{ms}\)，支持确定性事务回滚。</td>
+<td>• 状态转移 \(100%\) 可控、幂等且可审计，绝不会因模型幻觉凭空丢弃已确认订单号；<br>• 耗时 \(< 0.5 \text{ms}\)，支持确定性事务回滚。</td>
 <td>• 自身无法理解开放口语中的隐式指代（如“改成常去的那家”）与无固定句式的跨领域打断。</td>
 <td>负责<strong>多轮标准记忆状态快照 \(B_t\) 的底层物理存储、事务覆写与必填槽位门禁</strong>。</td>
 </tr>
 <tr>
 <td><strong>2. 跨轮拷贝与多意图图小模型</strong><br>（<code>TripPy</code> / <code>GL-GIN</code> + <strong>否定子句分离过滤</strong>）</td>
 <td>在前置剥离否定子句向量分量的基础上，利用三路拷贝门控抽取当前轮增量槽位变化 \(\Delta_t\)。</td>
-<td>• 推理延迟仅 \(10 \sim 25\,\text{ms}\)，在已知领域内跨槽位共指拷贝（如将景点名拷为打车终点）极准；<br>• 结合同行的结构化槽位投影可直接补全用户周期偏好。</td>
+<td>• 推理延迟仅 \(10 ~ 25 \text{ms}\)，在已知领域内跨槽位共指拷贝（如将景点名拷为打车终点）极准；<br>• 结合同行的结构化槽位投影可直接补全用户周期偏好。</td>
 <td>• 当对话超过 \(6\) 轮且包含复杂的跨句逻辑推理或开放域新槽位时，固定分类门控泛化受限。</td>
-<td>负责在线 <strong>\(85\%+\) 常规多轮对话的增量槽位变化 \(\Delta_t\) 解析与跨槽位共指消解</strong>。</td>
+<td>负责在线 <strong>\(85%+\) 常规多轮对话的增量槽位变化 \(\Delta_t\) 解析与跨槽位共指消解</strong>。</td>
 </tr>
 <tr>
 <td><strong>3. 状态快照驱动的指令大模型</strong><br>（<code>LDST</code> / <code>Adaptive ICL</code>）</td>
 <td>输入压缩后的前序快照 \(B_{t-1}\) 与当前轮复杂话语，利用大模型常识推理产出结构化修正指令与慢路径规则。</td>
 <td>• 零样本跨新业务域迁移能力极强（Unseen Domain JGA 超小模型 \(20\text{pt}+\)）；<br>• 能准确解析长难句中的隐含条件、反悔与多步复合规划。</td>
-<td>• 若直接输入全量原始多轮历史文本，不仅延迟高达 \(1.5\,\text{s}+\)，且极易被前序已废弃轮次污染（轮次深度衰减）。</td>
+<td>• 若直接输入全量原始多轮历史文本，不仅延迟高达 \(1.5 \text{s}+\)，且极易被前序已废弃轮次污染（轮次深度衰减）。</td>
 <td>负责<strong>长尾复杂反悔句消歧（仅接收压缩快照 \(B_{t-1}\)）</strong>及后台<strong>慢路径交互归纳与经验规则沉淀</strong>。</td>
 </tr>
 </tbody>
@@ -1664,10 +1664,10 @@ ol.refs li {
 
 <h2 id="s7-3"><span class="num">7.3</span>否定子句分离与权重衰减过滤及槽位修正动作（Slot Revision Rule）</h2>
 
-<p class="ni">为彻底解决 §7.1 揭示的“否定词引发向量假阳性检索”与“历史废弃槽位残留”两大顽疾，我们在分级架构中建立了严格的两阶段治理机制：</p>
+<p class="ni">为解决 §7.1 揭示的“否定词引发向量假阳性检索”与“历史废弃槽位残留”两大顽疾，我们在分级架构中建立了严格的两阶段治理机制：</p>
 
 <ul>
-<li><strong>机制一：否定子句分离与权重衰减过滤（Negation Clause Separation &amp; Orthogonal Weight Attenuation）</strong>。当用户话语进入 L0/L1 交界处时，依存句法与转折/否定触发词切分器（识别“别、不要、取消、算了、改成、换成”等算符词）首先将原句切分为<strong>肯定目标子句 \(u_t^+\)</strong>（如“改成周六下午去常去的球馆打羽毛球”）与<strong>被否定/撤回子句 \(u_{t,m}^-\)</strong>（如“周五晚上的湘菜馆别订了”）。在编码查询向量时，系统<strong>严禁直接对整句做均值池化</strong>，而是从肯定子句向量 \(\phi(u_t^+)\) 中减去其在被否定子句向量 \(\phi(u_{t,m}^-)\) 方向上的正交投影分量（默认衰减系数 \(\gamma_{\text{neg}} = 0.85\)）。这一几何正交剥离操作使查询向量在“湘菜馆”方向上的余弦分量从 \(0.64\) 骤降至 \(0.07\)，彻底杜绝了被否定实体的假阳性召回。</li>
+<li><strong>机制一：否定子句分离与权重衰减过滤（Negation Clause Separation &amp; Orthogonal Weight Attenuation）</strong>。当用户话语进入 L0/L1 交界处时，依存句法与转折/否定触发词切分器（识别“别、不要、取消、算了、改成、换成”等算符词）首先将原句切分为<strong>肯定目标子句 \(u_t^+\)</strong>（如“改成周六下午去常去的球馆打羽毛球”）与<strong>被否定/撤回子句 \(u_{t,m}^-\)</strong>（如“周五晚上的湘菜馆别订了”）。在编码查询向量时，系统<strong>严禁直接对整句做均值池化</strong>，而是从肯定子句向量 \(\phi(u_t^+)\) 中减去其在被否定子句向量 \(\phi(u_{t,m}^-)\) 方向上的正交投影分量（默认衰减系数 \(γ_{\text{neg}} = 0.85\)）。这一几何正交剥离操作使查询向量在“湘菜馆”方向上的余弦分量从 \(0.64\) 骤降至 \(0.07\)，有效避免了被否定实体的假阳性召回。</li>
 <li><strong>机制二：参数调整规则 / 槽位修正动作（Slot Revision Rule / Adjustment Action）</strong>。我们将每一轮意图理解对多轮记忆状态快照 \(B_{t-1}\) 的修改形式化定义为三元事务动作 \(\Delta_t = (\Delta_t^{\text{add}}, \Delta_t^{\text{update}}, \Delta_t^{\text{drop}})\)：
   <ol>
     <li><strong>显式撤回动作（\(\Delta_t^{\text{drop}}\)）</strong>：由否定子句触发，直接从 \(B_{t-1}\) 中原子性移除对应的激活意图或指定槽位（如清除 <code>restaurant_booking</code> 及其关联槽位）；</li>
@@ -1679,12 +1679,12 @@ ol.refs li {
 
 <h2 id="s7-4"><span class="num">7.4</span>基于分裂共形预测的多轮受控主动澄清（Conformal Clarification）</h2>
 
-<p class="ni">当用户话语存在客观信息缺失或语义歧义（如仅说“帮我查下账单”，而系统同时存在信用卡账单、花呗账单与水电费账单三个子意图）时，强行猜 Top-1 会导致高达 \(40\%+\) 的执行错误；而盲目追问又会增加交互轮次。<strong>den Hengst 等（NAACL 2024 Findings，arXiv:2403.18973）</strong>提出了<strong>共形意图分类与澄清（CIC）</strong>（图 7-3a、图 7-3b）：利用分裂共形预测在独立标定集上求出分位数阈值，为每个输入 \(x\) 动态生成保证包含真实意图（概率 \(\ge 1 - \alpha\)，如 \(95\%\)）的最小预测集 \(C_\alpha(x)\)。当集合基数 \(|C_\alpha(x)| = 1\) 时直接执行；当 \(2 \le |C_\alpha(x)| \le K\) 时，仅针对集合内这 \(2 \sim 3\) 个竞争意图生成紧凑单选追问，将平均澄清选项数压缩至 \(1.3 \sim 1.8\) 个，实现了“最小打扰下的零幻觉消歧”。</p>
+<p class="ni">当用户话语存在客观信息缺失或语义歧义（如仅说“帮我查下账单”，而系统同时存在信用卡账单、花呗账单与水电费账单三个子意图）时，强行猜 Top-1 会导致高达 \(40%+\) 的执行错误；而盲目追问又会增加交互轮次。<strong>den Hengst 等（NAACL 2024 Findings，arXiv:2403.18973）</strong>提出了<strong>共形意图分类与澄清（CIC）</strong>（图 7-3a、图 7-3b）：利用分裂共形预测在独立标定集上求出分位数阈值，为每个输入 \(x\) 动态生成保证包含真实意图（概率 \(≥ 1 - α\)，如 \(95%\)）的最小预测集 \(C_α(x)\)。当集合基数 \(|C_α(x)| = 1\) 时直接执行；当 \(2 ≤ |C_α(x)| ≤ K\) 时，仅针对集合内这 \(2 ~ 3\) 个竞争意图生成紧凑单选追问，将平均澄清选项数压缩至 \(1.3 ~ 1.8\) 个，实现了“最小打扰下的避免参数生成错误消歧”。</p>
 
 <div class="fig-grid-2">
 <figure>
 <img src="assets/fig18a_conformal_loop_2024.png" alt="Conformal Intent Clarification 交互流程原图">
-<figcaption><b>图 7-3a</b>　共形意图分类与澄清（CIC）交互闭环原图（Figure 1）：当 \(|C_\alpha(x)| = 1\) 时直接执行；当 \(2 \le |C_\alpha(x)| \le K\) 时基于集合内仅有的几个竞争意图生成紧凑单选追问。<span class="src">原图出处：den Hengst 等，Findings of NAACL 2024，arXiv:2403.18973，Figure 1。</span></figcaption>
+<figcaption><b>图 7-3a</b>　共形意图分类与澄清（CIC）交互闭环原图（Figure 1）：当 \(|C_α(x)| = 1\) 时直接执行；当 \(2 ≤ |C_α(x)| ≤ K\) 时基于集合内仅有的几个竞争意图生成紧凑单选追问。<span class="src">原图出处：den Hengst 等，Findings of NAACL 2024，arXiv:2403.18973，Figure 1。</span></figcaption>
 </figure>
 <figure>
 <img src="assets/fig18b_conformal_results_2024.png" alt="Conformal Intent Clarification 原始实验评测表">
@@ -1700,12 +1700,12 @@ ol.refs li {
 
 <h2 id="s8-1"><span class="num">8.1</span>分级级联架构的演绎过程与四大路由代表作精读</h2>
 
-<p class="ni">为什么工业级意图系统必然演进为<strong>“L0 规则 \(\rightarrow\) L1 小模型与混合检索 \(\rightarrow\) L1.5 裁剪候选受限判别与共形澄清 \(\rightarrow\) L2 大模型慢路径经验沉淀”的四级结构</strong>？我们可以通过以下三步演绎推导出来：</p>
+<p class="ni">为什么工业级意图系统必然演进为<strong>“L0 规则 → L1 小模型与混合检索 → L1.5 裁剪候选受限判别与共形澄清 → L2 大模型慢路径经验沉淀”的四级结构</strong>？我们可以通过以下三步演绎推导出来：</p>
 
 <ol>
-<li><strong>演绎第一步（为什么不能只用大模型？—— 成本与尾延迟双杀）</strong>：假设线上 QPS 为 \(1,000\)，若 \(100\%\) 流量直接调用大模型（平均耗时 \(1.69\,\text{s}\)），不仅算力成本高昂，且 P99 尾延迟必然突破 \(3,000\,\text{ms}\)。<strong>FrugalGPT（Chen 等，2023，arXiv:2305.05176，图 8-1a、图 8-1b）</strong>证明，通过串行级联由廉价模型拦截高置信请求，可在同等精度下节省高达 <strong>\(98.3\%\)</strong> 的算力成本。</li>
-<li><strong>演绎第二步（为什么不能只在 L1 小模型和 L2 全量大模型之间做简单二级跳转？—— P99 卷积尾延迟死锁与全量 Schema 迷失）</strong>：<strong>HybridLLM（Ding 等，ICLR 2024，图 8-2a、图 8-2b）</strong>与 <strong>RouteLLM（Ong 等，ICLR 2025，图 8-3a、图 8-3b）</strong>证明了基于难度/胜率预测器的路由开销低于生成成本的 \(0.4\%\)；<strong>AutoMix（Aggarwal 等，NeurIPS 2024，图 8-4a、图 8-4b）</strong>则引入 POMDP 消解小模型自验证噪声。然而，在严格的实时对话 SLA（如 \(\text{P99} \le 250\,\text{ms}\)）下，如果让 \(15\% \sim 30\%\) 的灰区样本直接串行升级到携带 \(150\) 个意图定义的完整大模型，由于大模型延迟超标率极高，全链路 P99 尾延迟依然会违约！</li>
-<li><strong>演绎第三步（引入 L1.5“裁剪候选受限判别与共形澄清层”与 L2“异步慢路径沉淀飞轮”）</strong>：为了解开 P99 尾延迟死锁，当 L1 小模型遇到灰区样本时，<strong>绝不把全量 \(150\) 个意图原封不动丢给下一级</strong>，而是利用分裂共形预测集 \(C_\alpha(x)\) 将候选空间从 \(150\) 类<strong>裁剪至仅剩 Top-\(K\)（\(K \le 6\)）个竞争意图</strong>，交由 <strong>L1.5 轻量交叉重排序器或投机解码（Speculative Decoding，图 8-5a）小模型</strong>在 \(35 \sim 120\,\text{ms}\) 内完成二选一/三选一消歧或发起受控澄清；而耗时秒级的完整大模型（L2）仅在在线承接 \(\\lt 1\%\) 的极端长尾请求，将其核心算力投入<strong>后台异步慢路径交互归纳与经验规则沉淀</strong>——把今天慢路径解决的难题沉淀为明天的 L0 <code>expression</code> 映射或 L1 向量记忆，形成越用越快的自进化飞轮。</li>
+<li><strong>演绎第一步（为什么不能只用大模型？—— 成本与尾延迟双杀）</strong>：假设线上 QPS 为 \(1,000\)，若 \(100%\) 流量直接调用大模型（平均耗时 \(1.69 \text{s}\)），不仅算力成本高昂，且 P99 尾延迟必然突破 \(3,000 \text{ms}\)。<strong>FrugalGPT（Chen 等，2023，arXiv:2305.05176，图 8-1a、图 8-1b）</strong>证明，通过串行级联由廉价模型拦截高置信请求，可在同等精度下节省高达 <strong>\(98.3%\)</strong> 的算力成本。</li>
+<li><strong>演绎第二步（为什么不能只在 L1 小模型和 L2 全量大模型之间做简单二级跳转？—— P99 卷积尾延迟死锁与全量 Schema 迷失）</strong>：<strong>HybridLLM（Ding 等，ICLR 2024，图 8-2a、图 8-2b）</strong>与 <strong>RouteLLM（Ong 等，ICLR 2025，图 8-3a、图 8-3b）</strong>证明了基于难度/胜率预测器的路由开销低于生成成本的 \(0.4%\)；<strong>AutoMix（Aggarwal 等，NeurIPS 2024，图 8-4a、图 8-4b）</strong>则引入 POMDP 消解小模型自验证噪声。然而，在严格的实时对话 SLA（如 \(\text{P99} ≤ 250 \text{ms}\)）下，如果让 \(15% ~ 30%\) 的灰区样本直接串行升级到携带 \(150\) 个意图定义的完整大模型，由于大模型延迟超标率极高，全链路 P99 尾延迟依然会违约！</li>
+<li><strong>演绎第三步（引入 L1.5“裁剪候选受限判别与共形澄清层”与 L2“异步慢路径沉淀飞轮”）</strong>：为了解开 P99 尾延迟死锁，当 L1 小模型遇到灰区样本时，<strong>绝不把全量 \(150\) 个意图原封不动丢给下一级</strong>，而是利用分裂共形预测集 \(C_α(x)\) 将候选空间从 \(150\) 类<strong>裁剪至仅剩 Top-\(K\)（\(K ≤ 6\)）个竞争意图</strong>，交由 <strong>L1.5 轻量交叉重排序器或投机解码（Speculative Decoding，图 8-5a）小模型</strong>在 \(35 ~ 120 \text{ms}\) 内完成二选一/三选一消歧或发起受控澄清；而耗时秒级的完整大模型（L2）仅在在线承接 \(\&lt; 1%\) 的极端长尾请求，将其核心算力投入<strong>后台异步慢路径交互归纳与经验规则沉淀</strong>——把今天慢路径解决的难题沉淀为明天的 L0 <code>expression</code> 映射或 L1 向量记忆，形成越用越快的自进化飞轮。</li>
 </ol>
 
 <div class="fig-grid-2">
@@ -1754,19 +1754,19 @@ ol.refs li {
 
 <div class="math-block">
 <div class="math-title">核心方程一（定理 8-1）：多级级联系统的成本下降充要条件、精度增益条件与 P99 尾延迟升级率上界</div>
-$$\text{(1) 成本下降条件：}\; a_1 \gt \frac{c_1 + v}{c_2}, \qquad \text{(2) 精度超越条件：}\; \alpha + \frac{1 - p}{p}\beta q_2 \le 1 - q_2, \qquad \text{(3) P99 升级率上界：}\; r \le \frac{F_1(L_{\max}) - 0.99}{F_1(L_{\max}) - (F_1 * F_2)(L_{\max})}$$
+$$\text{(1) 成本下降条件：}\; a_1 &gt; \frac{c_1 + v}{c_2}, \qquad \text{(2) 精度超越条件：}\; α + \frac{1 - p}{p}β q_2 ≤ 1 - q_2, \qquad \text{(3) P99 升级率上界：}\; r ≤ \frac{F_1(L_{\max}) - 0.99}{F_1(L_{\max}) - (F_1 * F_2)(L_{\max})}$$
 </div>
 <div class="sym-explain">
 <div class="sym-header">符号解释如下：</div>
 <ul>
 <li>\(c_1, c_2, v\)：前级小模型 \(L_1\) 单次调用成本、后级大模型 \(L_2\) 单次调用成本与边界验真器（OOD &amp; Calibration Gate）开销；\(a_1 = 1 - r\) 为前级直接截留终结比例；</li>
 <li>\(p, q_2 \in (0, 1)\)：前级与后级在全量分布上的独立准确率（典型值 \(p=0.85, q_2=0.92\)）；</li>
-<li>\(\alpha, \beta\)：分别为边界验真器的<strong>误升级率</strong>（前级已做对却被误判升级）与<strong>漏拦截率</strong>（前级做错却被误判放行）；代入 \(p=0.85, q_2=0.92, \beta=0.30\) 可得误升级率必须满足 \(\alpha \le 3.1\%\)；</li>
-<li>\(F_1(L_{\max}), (F_1 * F_2)(L_{\max}), r\)：前级延迟与两级串行卷积延迟在 SLA 门限 \(L_{\max}=300\,\text{ms}\) 处的累积达标率及同步升级比例 \(r\)；当 \(F_1(300) \approx 0.999\) 而大模型 \((F_1 * F_2)(300) \approx 0.10\) 时，在线同步串行调用完整大模型的比例上限为 \(r \le 1.0\%\)。</li>
+<li>\(α, β\)：分别为边界验真器的<strong>误升级率</strong>（前级已做对却被误判升级）与<strong>漏拦截率</strong>（前级做错却被误判放行）；代入 \(p=0.85, q_2=0.92, β=0.30\) 可得误升级率必须满足 \(α ≤ 3.1%\)；</li>
+<li>\(F_1(L_{\max}), (F_1 * F_2)(L_{\max}), r\)：前级延迟与两级串行卷积延迟在 SLA 门限 \(L_{\max}=300 \text{ms}\) 处的累积达标率及同步升级比例 \(r\)；当 \(F_1(300) \approx 0.999\) 而大模型 \((F_1 * F_2)(300) \approx 0.10\) 时，在线同步串行调用完整大模型的比例上限为 \(r ≤ 1.0%\)。</li>
 </ul>
 </div>
 
-<h2 id="s8-2"><span class="num">8.2</span>四级协同架构职责矩阵（L0 \(\rightarrow\) L1 \(\rightarrow\) L1.5 \(\rightarrow\) L2）与优缺点互补设计</h2>
+<h2 id="s8-2"><span class="num">8.2</span>四级协同架构职责矩阵（L0 → L1 → L1.5 → L2）与优缺点互补设计</h2>
 
 <table class="long">
 <caption><b>表 8-1</b>　“L0 规则 → L1 混合检索与小模型 → L1.5 受限判别与共形澄清 → L2 大模型慢路径沉淀”四级职责、互补机制与向下分解协议</caption>
@@ -1775,22 +1775,22 @@ $$\text{(1) 成本下降条件：}\; a_1 \gt \frac{c_1 + v}{c_2}, \qquad \text{(
 <tr>
 <td><strong>L0：确定性规则与个性化映射层</strong><br><code>0.2–1.0 ms</code><br>截留 <code>25%–35%</code></td>
 <td>• 双数组 Aho-Corasick 自动机<br>• 命名捕获组 DFA 正则<br>• <strong>个性化表述映射层（<code>expression</code>）</strong><br>• 依存否定与并列子句切分器</td>
-<td>1. 安全合规黑名单与转人工 \(100\%\) 强拦截；<br>2. 用户自定义习惯短语（<code>expression</code>）零延迟精准映射；<br>3. 标准单意图固定指令与 Duckling 时间/金额归一。</td>
+<td>1. 安全合规黑名单与转人工 \(100%\) 强拦截；<br>2. 用户自定义习惯短语（<code>expression</code>）零延迟精准映射；<br>3. 标准单意图固定指令与 Duckling 时间/金额归一。</td>
 <td><strong>放行（终结）</strong>：命中唯一无冲突确定性规则，且句中无否定转折词与并列连词；<br><strong>下传 L1</strong>：未命中或检测到多子句/否定修饰。</td>
 <td><code>L0_Handoff_Packet</code>：<br>• 切分后的肯定主句 \(u_t^+\) 与被否定子句列表 \(\{u_{t,m}^-\}\)；<br>• 预抽取的基础时间/金额实体；<br>• 状态机合法意图掩码向量 \(m(B_{t-1})\)。</td>
 </tr>
 <tr>
 <td><strong>L1：混合检索与多任务小模型层</strong><br><code>8–20 ms</code><br>截留 <code>50%–60%</code></td>
-<td>• <strong>否定子句分离与权重衰减过滤</strong>（\(\gamma_{\text{neg}}=0.85\)）<br>• 双塔句向量检索（<code>text-embedding-v4</code>）+ <strong>读取同行结构化槽位列</strong><br>• <strong>二阶段关联表补全</strong>（<code>service_to_app</code> / <code>periodic_preference</code>）<br>• TinyBERT / GL-GIN 联合模型 + ADB 球面边界</td>
+<td>• <strong>否定子句分离与权重衰减过滤</strong>（\(γ_{\text{neg}}=0.85\)）<br>• 双塔句向量检索（<code>text-embedding-v4</code>）+ <strong>读取同行结构化槽位列</strong><br>• <strong>二阶段关联表补全</strong>（<code>service_to_app</code> / <code>periodic_preference</code>）<br>• TinyBERT / GL-GIN 联合模型 + ADB 球面边界</td>
 <td>1. 封闭集单/多意图高吞吐判别与 BIO 槽位抽取；<br>2. 结合用户事实记忆库完成隐式参数同行投影与跨表周期偏好补全；<br>3. 明确域外闲聊/越界请求的快速拒识（OOD）。</td>
-<td><strong>放行（终结）</strong>：ADB 球面距离 \(d_{\text{ADB}} \le \Delta_{\hat{y}_1}\) 且共形集基数 \(|C_\alpha(x)| = 1\) 且概率间隔 \(\hat{p}_1 - \hat{p}_2 \ge \tau_{\text{margin}}\) 且必填槽位齐备；<br><strong>拒识</strong>：\(d_{\text{ADB}} \gt \Delta_c, \forall c\)；<br><strong>下传 L1.5</strong>：\(2 \le |C_\alpha(x)| \le K\)。</td>
-<td><code>L1_Handoff_Packet</code>：<br>• <strong>候选空间从 \(|\mathcal{Y}|=150\) 裁剪至 Top-\(K\)（\(K = |C_\alpha(x)| \le 6\)）</strong>；<br>• 每个候选意图的温度校准概率 \(\hat{p}_k\) 与已抽出的局部槽位字典；<br>• 同行槽位投影与二阶段 SQL 关联补全结果。</td>
+<td><strong>放行（终结）</strong>：ADB 球面距离 \(d_{\text{ADB}} ≤ \Delta_{\hat{y}_1}\) 且共形集基数 \(|C_α(x)| = 1\) 且概率间隔 \(\hat{p}_1 - \hat{p}_2 ≥ τ_{\text{margin}}\) 且必填槽位齐备；<br><strong>拒识</strong>：\(d_{\text{ADB}} &gt; \Delta_c, \forall c\)；<br><strong>下传 L1.5</strong>：\(2 ≤ |C_α(x)| ≤ K\)。</td>
+<td><code>L1_Handoff_Packet</code>：<br>• <strong>候选空间从 \(|\mathcal{Y}|=150\) 裁剪至 Top-\(K\)（\(K = |C_α(x)| ≤ 6\)）</strong>；<br>• 每个候选意图的温度校准概率 \(\hat{p}_k\) 与已抽出的局部槽位字典；<br>• 同行槽位投影与二阶段 SQL 关联补全结果。</td>
 </tr>
 <tr>
 <td><strong>L1.5：裁剪候选受限判别与共形澄清层</strong><br><code>35–120 ms</code><br>消化 <code>10%–15%</code></td>
 <td>• 交叉编码器重排序（Cross-Encoder）或 1.5B/3B 投机解码小 LLM（仅看 Top-\(K\) Schema）<br>• <strong>参数调整规则 / 槽位修正动作（Slot Revision Rule）</strong><br>• 共形澄清最小期望风险路由器</td>
-<td>1. 在仅含 \(K \le 6\) 个竞争意图的极小上下文内消解细粒度语义歧义；<br>2. 执行多轮状态快照 \(B_t = \operatorname{Revise}(B_{t-1}, \Delta_t)\) 的覆写与撤回；<br>3. 对客观信息缺失请求生成单选受控澄清追问。</td>
-<td><strong>放行（终结或追问）</strong>：重判别后唯一胜出（\(\hat{p}_1' \ge 0.88\)）或判定触发受控澄清追问（\(\mathcal{R}(\text{Ask}) \\lt \mathcal{R}(\text{Esc})\)）；<br><strong>下传 L2</strong>：嵌套组合语义树（TOP 类）或跨多步工具规划。</td>
+<td>1. 在仅含 \(K ≤ 6\) 个竞争意图的极小上下文内消解细粒度语义歧义；<br>2. 执行多轮状态快照 \(B_t = \operatorname{Revise}(B_{t-1}, \Delta_t)\) 的覆写与撤回；<br>3. 对客观信息缺失请求生成单选受控澄清追问。</td>
+<td><strong>放行（终结或追问）</strong>：重判别后唯一胜出（\(\hat{p}_1' ≥ 0.88\)）或判定触发受控澄清追问（\(\mathcal{R}(\text{Ask}) \&lt; \mathcal{R}(\text{Esc})\)）；<br><strong>下传 L2</strong>：嵌套组合语义树（TOP 类）或跨多步工具规划。</td>
 <td><code>L1_5_Handoff_Packet</code>：<br>• 压缩后的历史信念状态快照 \(B_{t-1}\)；<br>• 冲突未决的子句片段与候选工具 API 签名子集；<br>• 异步慢路径日志回流标记。</td>
 </tr>
 <tr>
@@ -1805,20 +1805,20 @@ $$\text{(1) 成本下降条件：}\; a_1 \gt \frac{c_1 + v}{c_2}, \qquad \text{(
 
 <h2 id="s8-3"><span class="num">8.3</span>分裂共形预测边界、最小期望风险路由与多轮状态更新核心方程</h2>
 
-<p class="ni">在 L1 向 L1.5/L2 过渡的边界上，我们摒弃脆弱的单一 Softmax 阈值，采用<strong>“分裂共形预测集 \(C_\alpha(x)\) + 最小期望业务风险路由 + 多轮槽位修正状态转移”</strong>统一决策方程：</p>
+<p class="ni">在 L1 向 L1.5/L2 过渡的边界上，我们摒弃脆弱的单一 Softmax 阈值，采用<strong>“分裂共形预测集 \(C_α(x)\) + 最小期望业务风险路由 + 多轮槽位修正状态转移”</strong>统一决策方程：</p>
 
 <div class="math-block">
 <div class="math-title">核心方程二（式 8-2）：分裂共形预测集构造、灰区最小期望风险路由与多轮状态修正转移方程</div>
-$$C_{\alpha}(x) = \left\{ c \in \mathcal{Y}^{\text{I}} \;\middle|\; 1 - \hat{p}_c(x) \le \hat{q}_{1-\alpha}(\mathcal{D}_{\text{cal}}) \right\}, \qquad B_t = \left( B_{t-1} \setminus \Delta_t^{\text{drop}} \right) \oplus \Delta_t^{\text{update}} \oplus \Delta_t^{\text{add}}$$
-$$a^*(x) = \arg\min_{a \in \{\text{Exec}, \text{Ask}, \text{Esc}\}} \begin{cases} \big(1 - \hat{p}_{(1)}(x)\big) \cdot C_{\text{err}}(\hat{y}_{(1)}), & a = \text{Exec（直接执行 Top-1）} \\ C_{\text{ask}} + (1 - p_{\text{clar}}) \cdot C_{\text{err}}(\hat{y}_{(1)}), & a = \text{Ask（基于 } C_\alpha(x) \text{ 发起受控澄清追问）} \\ C_{\text{esc}}(|C_\alpha(x)|) + \big(1 - \hat{q}_{\text{next}}(x)\big) \cdot C_{\text{err}}(\hat{y}_{(1)}), & a = \text{Esc（仅携带 } C_\alpha(x) \text{ 裁剪候选升级至下一级）} \end{cases}$$
+$$C_{α}(x) = ≤ft\{ c \in \mathcal{Y}^{\text{I}} \;\middle|\; 1 - \hat{p}_c(x) ≤ \hat{q}_{1-α}(\mathcal{D}_{\text{cal}}) \right\}, \qquad B_t = ≤ft( B_{t-1} \setminus \Delta_t^{\text{drop}} \right) \oplus \Delta_t^{\text{update}} \oplus \Delta_t^{\text{add}}$$
+$$a^*(x) = \arg\min_{a \in \{\text{Exec}, \text{Ask}, \text{Esc}\}} \begin{cases} \big(1 - \hat{p}_{(1)}(x)\big) \cdot C_{\text{err}}(\hat{y}_{(1)}), & a = \text{Exec（直接执行 Top-1）} \\ C_{\text{ask}} + (1 - p_{\text{clar}}) \cdot C_{\text{err}}(\hat{y}_{(1)}), & a = \text{Ask（基于 } C_α(x) \text{ 发起受控澄清追问）} \\ C_{\text{esc}}(|C_α(x)|) + \big(1 - \hat{q}_{\text{next}}(x)\big) \cdot C_{\text{err}}(\hat{y}_{(1)}), & a = \text{Esc（仅携带 } C_α(x) \text{ 裁剪候选升级至下一级）} \end{cases}$$
 </div>
 <div class="sym-explain">
 <div class="sym-header">符号解释如下：</div>
 <ul>
-<li>\(\hat{p}_c(x),\, \hat{q}_{1-\alpha}(\mathcal{D}_{\text{cal}})\)：经温度缩放校准后的第 \(c\) 类意图概率，以及在独立标定集 \(\mathcal{D}_{\text{cal}}\) 上标定出的 \(1-\alpha\)（默认 \(95\%\)）非一致性分位数阈值；</li>
-<li>\(C_\alpha(x)\)：保证以不低于 \(1-\alpha\) 概率包含真实意图的<strong>分裂共形预测集</strong>；当 \(|C_\alpha(x)| = 1\) 时直接放行，当 \(|C_\alpha(x)| \ge 2\) 时仅将该集合内的候选意图向下传递（实现候选空间裁剪）；</li>
+<li>\(\hat{p}_c(x),  \hat{q}_{1-α}(\mathcal{D}_{\text{cal}})\)：经温度缩放校准后的第 \(c\) 类意图概率，以及在独立标定集 \(\mathcal{D}_{\text{cal}}\) 上标定出的 \(1-α\)（默认 \(95%\)）非一致性分位数阈值；</li>
+<li>\(C_α(x)\)：保证以不低于 \(1-α\) 概率包含真实意图的<strong>分裂共形预测集</strong>；当 \(|C_α(x)| = 1\) 时直接放行，当 \(|C_α(x)| ≥ 2\) 时仅将该集合内的候选意图向下传递（实现候选空间裁剪）；</li>
 <li>\(B_{t-1}, B_t, \Delta_t\)：第 \(t-1\) 轮与第 \(t\) 轮的<strong>标准记忆状态快照（Ground-Truth Memory Snapshot）</strong>，通过<strong>槽位修正动作</strong> \(\Delta_t = (\Delta_t^{\text{add}}, \Delta_t^{\text{update}}, \Delta_t^{\text{drop}})\) 原子性移除被否定意图并覆写新增槽位；</li>
-<li>\(C_{\text{err}}(\hat{y}_{(1)}),\, C_{\text{ask}},\, C_{\text{esc}}(|C_\alpha(x)|)\)：当前意图误判业务代价（只读查询取 \(1.0\)，外部下单/资金写操作取 \(10.0\)）、追问打扰代价（默认 \(1.0\)）与携带 \(|C_\alpha(x)|\) 个裁剪候选升级至下一级的延迟折算代价（默认 \(0.25\)）。</li>
+<li>\(C_{\text{err}}(\hat{y}_{(1)}),  C_{\text{ask}},  C_{\text{esc}}(|C_α(x)|)\)：当前意图误判业务代价（只读查询取 \(1.0\)，外部下单/资金写操作取 \(10.0\)）、追问打扰代价（默认 \(1.0\)）与携带 \(|C_α(x)|\) 个裁剪候选升级至下一级的延迟折算代价（默认 \(0.25\)）。</li>
 </ul>
 </div>
 
@@ -1872,14 +1872,14 @@ $$a^*(x) = \arg\min_{a \in \{\text{Exec}, \text{Ask}, \text{Esc}\}} \begin{cases
 </tr>
 <tr>
 <td><strong>Step 2：L1 混合检索与联合小模型层</strong><br><code>耗时：11.4 ms</code></td>
-<td>1. 执行<strong>否定子句分离与权重衰减过滤</strong>（\(\gamma_{\text{neg}}=0.85\)）计算净化句向量 \(\tilde{\phi}(u_2)\)；<br>2. <strong>向量相似度检索与同行槽位提取</strong>；<br>3. <strong>二阶段关联表补全（通过 <code>service_to_app</code> / <code>periodic_preference</code> 双向关联）</strong>；<br>4. GL-GIN 多意图小模型前向推理。</td>
-<td>• 净化向量 \(\tilde{\phi}(u_{2,1}^+)\) 在“湘菜馆”方向上的余弦分量从 \(0.64\) 衰减至 \(0.07\)，精准命中用户事实记忆表记录 <code>fact_venue_12</code>（\(\cos = 0.892 \ge \tau_{\text{vec}}(0.78)\)）；<br>• <strong>读取同行结构化槽位列（Row-Level Column Projection）</strong>：<br><code>SELECT venue_name, geo_poi, activity_type, service_category FROM user_fact_memory WHERE user_id='u_90215' AND record_id='fact_venue_12'</code><br>\(\rightarrow\) <code>{"venue_name": "奥体中心羽毛球馆", "activity_type": "badminton", "service_category": "ride_hailing"}</code>；<br>• <strong>二阶段关联表补全 SQL</strong>：<br><code>SELECT a.preferred_app, p.start_time, p.end_time, p.duration_min FROM service_to_app a JOIN periodic_preference p ON a.user_id = p.user_id WHERE a.user_id='u_90215' AND a.service_category='ride_hailing' AND p.activity_type='badminton' AND p.weekday='Sat'</code><br>\(\rightarrow\) <code>{"preferred_app": "didi_premier", "start_time": "14:00", "end_time": "16:00", "duration_min": 120}</code>（通过 <code>16:00 - 14:00 == 120min</code> 业务逻辑自洽校验）。</td>
-<td>• GL-GIN 多意图激活输出：<br>\(\hat{\mathcal{I}} = \{\texttt{cancel\_booking}(0.97),\; \texttt{create\_schedule}(0.93),\; \texttt{book\_ride}(0.75),\; \texttt{map\_navigation}(0.69)\}\)；<br>• <strong>L1 边界判定</strong>：前两个子意图满足高置信度，但第 3 个子句在 <code>book_ride</code> (\(0.75\)) 与 <code>map_navigation</code> (\(0.69\)) 之间概率间隔 \(\text{margin} = 0.06 \\lt \tau_{\text{margin}}(0.15)\)，共形集 \(C_{0.05}(u_{2,2}^+) = \{\texttt{book\_ride}, \texttt{map\_navigation}\}\)（基数 \(|C|=2\)），打包 Top-\(K=4\) 候选升级至 L1.5。</td>
+<td>1. 执行<strong>否定子句分离与权重衰减过滤</strong>（\(γ_{\text{neg}}=0.85\)）计算净化句向量 \(\tilde{\phi}(u_2)\)；<br>2. <strong>向量相似度检索与同行槽位提取</strong>；<br>3. <strong>二阶段关联表补全（通过 <code>service_to_app</code> / <code>periodic_preference</code> 双向关联）</strong>；<br>4. GL-GIN 多意图小模型前向推理。</td>
+<td>• 净化向量 \(\tilde{\phi}(u_{2,1}^+)\) 在“湘菜馆”方向上的余弦分量从 \(0.64\) 衰减至 \(0.07\)，精准命中用户事实记忆表记录 <code>fact_venue_12</code>（\(\cos = 0.892 ≥ τ_{\text{vec}}(0.78)\)）；<br>• <strong>读取同行结构化槽位列（Row-Level Column Projection）</strong>：<br><code>SELECT venue_name, geo_poi, activity_type, service_category FROM user_fact_memory WHERE user_id='u_90215' AND record_id='fact_venue_12'</code><br>→ <code>{"venue_name": "奥体中心羽毛球馆", "activity_type": "badminton", "service_category": "ride_hailing"}</code>；<br>• <strong>二阶段关联表补全 SQL</strong>：<br><code>SELECT a.preferred_app, p.start_time, p.end_time, p.duration_min FROM service_to_app a JOIN periodic_preference p ON a.user_id = p.user_id WHERE a.user_id='u_90215' AND a.service_category='ride_hailing' AND p.activity_type='badminton' AND p.weekday='Sat'</code><br>→ <code>{"preferred_app": "didi_premier", "start_time": "14:00", "end_time": "16:00", "duration_min": 120}</code>（通过 <code>16:00 - 14:00 == 120min</code> 业务逻辑自洽校验）。</td>
+<td>• GL-GIN 多意图激活输出：<br>\(\hat{\mathcal{I}} = \{\texttt{cancel\_booking}(0.97),\; \texttt{create\_schedule}(0.93),\; \texttt{book\_ride}(0.75),\; \texttt{map\_navigation}(0.69)\}\)；<br>• <strong>L1 边界判定</strong>：前两个子意图满足高置信度，但第 3 个子句在 <code>book_ride</code> (\(0.75\)) 与 <code>map_navigation</code> (\(0.69\)) 之间概率间隔 \(\text{margin} = 0.06 \&lt; τ_{\text{margin}}(0.15)\)，共形集 \(C_{0.05}(u_{2,2}^+) = \{\texttt{book\_ride}, \texttt{map\_navigation}\}\)（基数 \(|C|=2\)），打包 Top-\(K=4\) 候选升级至 L1.5。</td>
 </tr>
 <tr>
 <td><strong>Step 3：L1.5 受限判别、槽位修正与共形澄清层</strong><br><code>耗时：42.0 ms</code><br>（总在线耗时 <code>53.8 ms</code>）</td>
 <td>1. 结合二阶段关联补全槽位 <code>preferred_app="didi_premier"</code> 对 \(C_{0.05}\) 候选集做交叉重打分；<br>2. 执行<strong>参数调整规则 / 槽位修正动作（Slot Revision Rule）</strong>更新 \(B_2\)；<br>3. 最小期望风险比较决定追问槽位。</td>
-<td>• 重打分后 <code>book_ride</code> 概率升至 \(\hat{p}_1' = 0.94\)，消除了意图级歧义；<br>• 执行槽位修正动作 \(\Delta_2\)：<br>　\(\Delta_2^{\text{drop}} = \{(\texttt{restaurant\_booking}, \text{ALL})\}\)，<br>　\(\Delta_2^{\text{add}} = \{(\texttt{create\_schedule}, \texttt{venue}=\text{奥体中心羽毛球馆}, \texttt{time}=\text{周六 14:00-16:00}), (\texttt{book\_ride}, \texttt{dest}=\text{奥体中心羽毛球馆}, \texttt{app}=\text{滴滴专车})\}\)；<br>• 风险评估：打车属于外部付费写操作（\(C_{\text{err}}=10.0\)），且上车出发时间 <code>pickup_time</code> 未显式指定（按球馆 14:00 开场倒推建议 13:30 出发），计算得 \(\mathcal{R}(\text{Ask}) = 1.0 \\lt \mathcal{R}(\text{Exec}) = 3.2\)。</td>
+<td>• 重打分后 <code>book_ride</code> 概率升至 \(\hat{p}_1' = 0.94\)，消除了意图级歧义；<br>• 执行槽位修正动作 \(\Delta_2\)：<br>　\(\Delta_2^{\text{drop}} = \{(\texttt{restaurant\_booking}, \text{ALL})\}\)，<br>　\(\Delta_2^{\text{add}} = \{(\texttt{create\_schedule}, \texttt{venue}=\text{奥体中心羽毛球馆}, \texttt{time}=\text{周六 14:00-16:00}), (\texttt{book\_ride}, \texttt{dest}=\text{奥体中心羽毛球馆}, \texttt{app}=\text{滴滴专车})\}\)；<br>• 风险评估：打车属于外部付费写操作（\(C_{\text{err}}=10.0\)），且上车出发时间 <code>pickup_time</code> 未显式指定（按球馆 14:00 开场倒推建议 13:30 出发），计算得 \(\mathcal{R}(\text{Ask}) = 1.0 \&lt; \mathcal{R}(\text{Exec}) = 3.2\)。</td>
 <td><strong>L1.5 最终在线响应（53.8 ms 内返回）</strong>：<br>1. 已更新标准记忆状态快照 \(B_2\)（移除湘菜馆订单，写入周六 14:00–16:00 奥体中心羽毛球馆日程）；<br>2. 向用户生成受控确认追问：“<em>已为您取消周五晚望湘园的预订，并将周六 14:00–16:00 奥体中心羽毛球馆打球加入日程。前往球馆的滴滴专车需要为您预约在周六 13:30 出发吗？</em>”</td>
 </tr>
 <tr>
@@ -1900,15 +1900,15 @@ $$a^*(x) = \arg\min_{a \in \{\text{Exec}, \text{Ask}, \text{Esc}\}} \begin{cases
 <h2 id="s9-1"><span class="num">9.1</span>十条核心研究与工程结论</h2>
 
 <ol>
-<li><strong>意图理解的第一性原理是弥合“无限口语变异”与“离散确定性执行契约”的鸿沟</strong>：单意图封闭集指标（如 ATIS/SNIPS 上 \(98\%+\) 的准确率）绝不能作为架构选型依据，真实生产流量在“单句多意图合取匹配（Overall \(43\% \sim 55\%\)）”、“开放集域外拒识（OOS-F1 \(80\% \sim 89\%\)）”与“多轮状态追踪（JGA \(60\% \sim 75\%\)）”上存在三道真实断层。</li>
-<li><strong>六十年演进的本质是语义契约驻留点的四次迁移与矛盾演绎</strong>：从符号文法（GUS/SRGS）\(\rightarrow\) BIO 标注语料（ATIS/CRF）\(\rightarrow\) 预训练双头编码器（JointBERT/GL-GIN）\(\rightarrow\) 提示词 Schema 与工具路由（Gorilla/MCP），每一代技术都是为了克服上一代的核心矛盾而生，但同时在新的契约驻留点引入了对应的失配误差。</li>
+<li><strong>意图理解的第一性原理是弥合“无限口语变异”与“离散确定性执行契约”的鸿沟</strong>：单意图封闭集指标（如 ATIS/SNIPS 上 \(98%+\) 的准确率）绝不能作为架构选型依据，真实生产流量在“单句多意图合取匹配（Overall \(43% ~ 55%\)）”、“开放集域外拒识（OOS-F1 \(80% ~ 89%\)）”与“多轮状态追踪（JGA \(60% ~ 75%\)）”上存在三道真实断层。</li>
+<li><strong>六十年演进的本质是语义契约驻留点的四次迁移与矛盾演绎</strong>：从符号文法（GUS/SRGS）→ BIO 标注语料（ATIS/CRF）→ 预训练双头编码器（JointBERT/GL-GIN）→ 提示词 Schema 与工具路由（Gorilla/MCP），每一代技术都是为了克服上一代的核心矛盾而生，但同时在新的契约驻留点引入了对应的失配误差。</li>
 <li><strong>规则、小模型与大模型不是替代关系，而是正交判据的互补组合</strong>：L0 规则提供“符号精确性、零延迟与合规底线”，L1 小模型与双塔向量提供“封闭分布内的高吞吐统计判别与结构化同行槽位读取”，L2 大模型提供“开放长尾常识推理与慢路径规则归纳”。</li>
-<li><strong>级联架构成立受制于两条硬性不等式</strong>：前级截留率必须大于成本比 \(a_1 \gt (c_1+v)/c_2\)，且边界验真器的误升级率必须满足 \(\alpha + \frac{1-p}{p}\beta q_2 \le 1 - q_2\)（通常要求 \(\alpha \le 3.1\%\)）。边界验真器的校准质量比单级模型多刷 \(1\%\) 准确率更决定级联成败。</li>
-<li><strong>P99 尾延迟刚性约束决定了“快路径在线闭环 + 慢路径离线沉淀”是唯一可规模化形态</strong>：由于大模型与小模型存在约 \(56\times\) 的延迟差距（\(1697\,\text{ms}\) vs \(30\,\text{ms}\)），在 \(\text{P99} \le 300\,\text{ms}\) 约束下，在线同步串行升级至完整大模型的流量比例不得超过 \(1\%\)，必须引入 L1.5 受限判别层消化绝大多数灰区流量。</li>
+<li><strong>级联架构成立受制于两条硬性不等式</strong>：前级截留率必须大于成本比 \(a_1 &gt; (c_1+v)/c_2\)，且边界验真器的误升级率必须满足 \(α + \frac{1-p}{p}β q_2 ≤ 1 - q_2\)（通常要求 \(α ≤ 3.1%\)）。边界验真器的校准质量比单级模型多刷 \(1%\) 准确率更决定级联成败。</li>
+<li><strong>P99 尾延迟刚性约束决定了“快路径在线闭环 + 慢路径离线沉淀”是唯一可规模化形态</strong>：由于大模型与小模型存在约 \(56×\) 的延迟差距（\(1697 \text{ms}\) vs \(30 \text{ms}\)），在 \(\text{P99} ≤ 300 \text{ms}\) 约束下，在线同步串行升级至完整大模型的流量比例不得超过 \(1%\)，必须引入 L1.5 受限判别层消化绝大多数灰区流量。</li>
 <li><strong>混合检索必须实行“向量命中记录同行槽位读取 + 二阶段关联表补全”</strong>：严禁在检索后再用硬编码关键词切词提取隐式参数；应在向量定位候选记录后直接投影同行结构化列（Row-Level Column Projection），并通过 <code>service_to_app</code> 与 <code>periodic_preference</code> 双向关联补全偏好槽位。</li>
-<li><strong>多轮状态追踪必须显式建模“否定子句分离衰减”与“槽位修正动作”</strong>：在检索前剥离被否定子句向量投影分量（\(\gamma_{\text{neg}}=0.85\)），在状态更新时显式执行 \(\Delta_t = (\Delta_t^{\text{add}}, \Delta_t^{\text{update}}, \Delta_t^{\text{drop}})\)，彻底消除历史废弃槽位残留引发的意图漂移。</li>
-<li><strong>边界判定的黄金标准是“温度校准 + 分裂共形预测集 \(C_\alpha(x)\) + 最小期望风险”</strong>：利用 \(|C_\alpha(x)|=1\) 直接执行、\(2 \le |C_\alpha(x)| \le K\) 比较追问与升级期望风险、\(d_{\text{ADB}} \gt \Delta_c\) 拒识，取代脆弱的单一 Softmax 阈值。</li>
-<li><strong>向下传递任务必须执行“候选空间裁剪（Schema Pruning）”</strong>：L1 向 L1.5/L2 升级时，必须将百类意图裁剪为共形预测集内的 Top-\(K\)（\(K \le 6\)）候选及已抽取的局部槽位，将后级模型提示词长度压缩 \(80\%+\) 并消除“中间迷失”。</li>
+<li><strong>多轮状态追踪必须显式建模“否定子句分离衰减”与“槽位修正动作”</strong>：在检索前剥离被否定子句向量投影分量（\(γ_{\text{neg}}=0.85\)），在状态更新时显式执行 \(\Delta_t = (\Delta_t^{\text{add}}, \Delta_t^{\text{update}}, \Delta_t^{\text{drop}})\)，消除历史废弃槽位残留引发的意图漂移。</li>
+<li><strong>边界判定的黄客观判据是“温度校准 + 分裂共形预测集 \(C_α(x)\) + 最小期望风险”</strong>：利用 \(|C_α(x)|=1\) 直接执行、\(2 ≤ |C_α(x)| ≤ K\) 比较追问与升级期望风险、\(d_{\text{ADB}} &gt; \Delta_c\) 拒识，取代脆弱的单一 Softmax 阈值。</li>
+<li><strong>向下传递任务必须执行“候选空间裁剪（Schema Pruning）”</strong>：L1 向 L1.5/L2 升级时，必须将百类意图裁剪为共形预测集内的 Top-\(K\)（\(K ≤ 6\)）候选及已抽取的局部槽位，将后级模型提示词长度压缩 \(80%+\) 并消除“中间迷失”。</li>
 <li><strong>慢路径交互归纳与经验规则沉淀是实现系统越用越快的自进化飞轮</strong>：每一次慢路径澄清或大模型兜底确认后，均应异步归纳为用户级 <code>expression</code> 个性化映射或周期偏好规则回写至 L0/L1，实现长尾分布向快路径的持续转化。</li>
 </ol>
 
@@ -1922,19 +1922,19 @@ $$a^*(x) = \arg\min_{a \in \{\text{Exec}, \text{Ask}, \text{Esc}\}} \begin{cases
 <td><strong>第一阶段（1–3 月）</strong><br>基准治理与 L0+L1 快路径底座</td>
 <td>1. 梳理意图本体树与槽位互斥契约，构建六桶标准评测集（封闭/改写/否定/多意图/跨轮/OOD）；<br>2. 上线 L0 双数组 AC 自动机与按 <code>user_id</code> 隔离的<strong>个性化表述映射表（<code>expression</code>）</strong>；<br>3. 训练 L1 双塔向量检索 + TinyBERT/GL-GIN 联合模型，落实同行槽位列读取与二阶段关联补全。</td>
 <td>• 六桶黄金评测集与自动化回归管线<br>• L0 规则与 <code>expression</code> 服务<br>• L1 混合检索引擎与 ADB 球面拒识门控</td>
-<td>• L0 截留率 \(\ge 25\%\)，误触发率 \(\\lt 0.5\%\)；<br>• L1 封闭集 Overall \(\ge 90\%\)，OOS-F1 \(\ge 82\%\)；<br>• L0+L1 端到端 \(\text{P99} \le 25\,\text{ms}\)。</td>
+<td>• L0 截留率 \(≥ 25%\)，误触发率 \(\&lt; 0.5%\)；<br>• L1 封闭集 Overall \(≥ 90%\)，OOS-F1 \(≥ 82%\)；<br>• L0+L1 端到端 \(\text{P99} ≤ 25 \text{ms}\)。</td>
 </tr>
 <tr>
 <td><strong>第二阶段（4–6 月）</strong><br>共形边界标定与 L1.5 受限消歧层</td>
-<td>1. 构建独立时间切片标定集 \(\mathcal{D}_{\text{cal}}\)，完成温度缩放与分裂共形预测分位数 \(\hat{q}_{1-\alpha}\) 标定；<br>2. 实现<strong>否定子句分离与权重衰减过滤</strong>及多轮<strong>槽位修正动作（Slot Revision Rule）</strong>状态机；<br>3. 上线 L1.5 Top-\(K\) 裁剪候选重判别与最小期望风险受控澄清器。</td>
+<td>1. 构建独立时间切片标定集 \(\mathcal{D}_{\text{cal}}\)，完成温度缩放与分裂共形预测分位数 \(\hat{q}_{1-α}\) 标定；<br>2. 实现<strong>否定子句分离与权重衰减过滤</strong>及多轮<strong>槽位修正动作（Slot Revision Rule）</strong>状态机；<br>3. 上线 L1.5 Top-\(K\) 裁剪候选重判别与最小期望风险受控澄清器。</td>
 <td>• 分裂共形预测与风险路由中间件<br>• 多轮信念状态快照 \(B_t\) 管理服务<br>• L1.5 裁剪候选受限推理节点</td>
-<td>• 验真器误升级率 \(\alpha \le 3.0\%\)；<br>• 灰区意图消歧准确率提升 \(+12\text{pt}\)；<br>• 平均澄清轮次 \(\le 1.3\) 轮，全链路 \(\text{P99} \le 180\,\text{ms}\)。</td>
+<td>• 验真器误升级率 \(α ≤ 3.0%\)；<br>• 灰区意图消歧准确率提升 \(+12\text{pt}\)；<br>• 平均澄清轮次 \(≤ 1.3\) 轮，全链路 \(\text{P99} ≤ 180 \text{ms}\)。</td>
 </tr>
 <tr>
 <td><strong>第三阶段（7–12 月）</strong><br>L2 工具树路由与慢路径沉淀飞轮</td>
-<td>1. 接入 L2 Adaptive ICL + Gorilla/DFSDT 处理 \(\\lt 1\%\) 复杂嵌套与多步工具规划；<br>2. 建设异步<strong>慢路径交互归纳与经验规则沉淀管线</strong>，自动从澄清日志提炼 <code>expression</code> 与周期偏好规则；<br>3. 引入前缀缓存（Prefix Caching）与投机解码压缩 L1.5/L2 延迟。</td>
+<td>1. 接入 L2 Adaptive ICL + Gorilla/DFSDT 处理 \(\&lt; 1%\) 复杂嵌套与多步工具规划；<br>2. 建设异步<strong>慢路径交互归纳与经验规则沉淀管线</strong>，自动从澄清日志提炼 <code>expression</code> 与周期偏好规则；<br>3. 引入前缀缓存（Prefix Caching）与投机解码压缩 L1.5/L2 延迟。</td>
 <td>• 慢路径经验归纳与沙箱回放校验平台<br>• 成本-精度与延迟-精度帕累托实时监控看板</td>
-<td>• 相比全量大模型调用节省算力成本 \(\ge 85\%\)；<br>• 每月自动沉淀高置信度规则 \(\ge 200\) 条，重复长尾请求二轮命中 L0/L1 比例 \(\ge 90\%\)。</td>
+<td>• 相比全量大模型调用节省算力成本 \(≥ 85%\)；<br>• 每月自动沉淀高置信度规则 \(≥ 200\) 条，重复长尾请求二轮命中 L0/L1 比例 \(≥ 90%\)。</td>
 </tr>
 </tbody>
 </table>
@@ -1949,10 +1949,10 @@ $$a^*(x) = \arg\min_{a \in \{\text{Exec}, \text{Ask}, \text{Esc}\}} \begin{cases
 <tr><td>2</td><td><strong>长尾少样本类别下的条件共形预测标定</strong></td><td>分裂共形预测默认提供边际覆盖率保证（Marginal Coverage），但在样本极少的尾部意图上条件覆盖率（Class-conditional Coverage）显著退化。</td><td>引入层次化经验贝叶斯收缩（Hierarchical Empirical Bayes Shrinkage）在同父域意图间共享非一致性分位数。</td></tr>
 <tr><td>3</td><td><strong>多轮用户中途改主意（Intent Drift）的形式化回滚</strong></td><td>当用户在第 \(t\) 轮撤回前序意图时，该意图已触发的下游只读缓存或草稿槽位容易在长上下文中造成注意力残留污染。</td><td>设计支持事务级回滚（Transactional State Rollback）的结构化工作记忆架构与注意力硬屏蔽掩码（Hard Attention Masking over Deprecated Turns）。</td></tr>
 <tr><td>4</td><td><strong>慢路径沉淀规则的冲突检测与生命周期淘汰</strong></td><td>随着异步慢路径持续向 L0/L1 写入个体化 <code>expression</code> 与偏好规则，规则集可能出现相互覆盖、过期失效或循环触发。</td><td>基于形式化验证（SAT/SMT Solver）构建规则蕴含与冲突静态检查器，并引入带时间衰减因子的置信度淘汰机制。</td></tr>
-<tr><td>5</td><td><strong>端到端语音流式（Streaming ASR-SLU）早退级联</strong></td><td>用户在说话过程中意图往往在前半句已浮现，等待整句 ASR 结束再启动分级路由浪费了宝贵的 \(300 \sim 500\,\text{ms}\) 交互窗口。</td><td>研究基于流式语音编码器（Conformer/Whisper-Streaming）前缀表征的边听边路由（Incremental Prefix Conformal Routing）与提前槽位预热。</td></tr>
+<tr><td>5</td><td><strong>端到端语音流式（Streaming ASR-SLU）早退级联</strong></td><td>用户在说话过程中意图往往在前半句已浮现，等待整句 ASR 结束再启动分级路由浪费了宝贵的 \(300 ~ 500 \text{ms}\) 交互窗口。</td><td>研究基于流式语音编码器（Conformer/Whisper-Streaming）前缀表征的边听边路由（Incremental Prefix Conformal Routing）与提前槽位预热。</td></tr>
 <tr><td>6</td><td><strong>万级动态 MCP 工具集下的零样本权限与安全边界</strong></td><td>当意图路由直接驱动外部 MCP 工具执行写操作时，提示词注入或语义近邻误检可能触发越权 API 调用。</td><td>在 L1.5/L2 路由层嵌入基于能力安全模型（Capability-Based Security）的形式化前置条件校验器。</td></tr>
 <tr><td>7</td><td><strong>跨模态（视觉屏幕上下文 + 语音指代）多意图联合理解</strong></td><td>在手机/车载端，用户常说“把这个地址发给老王再导航过去”，其中“这个地址”指向当前屏幕 UI 元素。</td><td>将 UI 树（DOM/View Hierarchy）节点与文本词元共同纳入异构图注意力网络，实现跨模态指代消解与多意图对齐。</td></tr>
-<tr><td>8</td><td><strong>非平稳分布漂移（Distribution Shift）下的在线自适应阈值追踪</strong></td><td>大促活动或季节性业务变化会导致线上意图先验分布剧烈偏移，使离线标定的温度与共形分位数失效。</td><td>引入自适应共形推理（Adaptive Conformal Inference, ACI），利用在线小批量慢路径反馈实时更新显著性参数 \(\alpha_t\)。</td></tr>
+<tr><td>8</td><td><strong>非平稳分布漂移（Distribution Shift）下的在线自适应阈值追踪</strong></td><td>大促活动或季节性业务变化会导致线上意图先验分布剧烈偏移，使离线标定的温度与共形分位数失效。</td><td>引入自适应共形推理（Adaptive Conformal Inference, ACI），利用在线小批量慢路径反馈实时更新显著性参数 \(α_t\)。</td></tr>
 </tbody>
 </table>
 
@@ -1979,12 +1979,12 @@ $$a^*(x) = \arg\min_{a \in \{\text{Exec}, \text{Ask}, \text{Esc}\}} \begin{cases
 <thead><tr><th style="width:24%">标准工程与学术术语</th><th style="width:26%">英文对照 / 数学符号</th><th>工程定义与实现机制</th></tr></thead>
 <tbody>
 <tr><td><strong>个性化表述映射 / 用户自定义表述映射层</strong></td><td>Personalized Expression Mapping Layer (<code>expression</code>)</td><td>在 L0 层按 <code>user_id</code> 维护的个体化简称、代称与自定义快捷短语索引，直接映射至标准意图与预设槽位字典。</td></tr>
-<tr><td><strong>向量相似度检索与同行槽位提取</strong></td><td>Vector Similarity Retrieval &amp; Row-Level Slot Extraction</td><td>通过双塔句向量定位候选记录后，直接读取同一数据行预绑定的结构化槽位字段，杜绝脆弱的后置关键词切词。</td></tr>
+<tr><td><strong>向量相似度检索与同行槽位提取</strong></td><td>Vector Similarity Retrieval &amp; Row-Level Slot Extraction</td><td>通过双塔句向量定位候选记录后，直接读取同一数据行预绑定的结构化槽位字段，避免脆弱的后置关键词切词。</td></tr>
 <tr><td><strong>读取同行结构化槽位列</strong></td><td>Row-Level Column Projection (\(\Pi_{\text{slot\_cols}}(r_{k^*})\))</td><td>针对向量命中记录 \(r_{k^*}\) 执行的关系型列投影操作，提取同行存储的领域、场所、服务类型等参数。</td></tr>
 <tr><td><strong>二阶段关联表补全</strong></td><td>Two-Stage Relational Table Completion (\(\bowtie\))</td><td>以第一阶段同行提取出的服务类型或活动标识为外键，通过 <code>service_to_app</code> 与 <code>periodic_preference</code> 双向关联补全目标应用与时间偏好。</td></tr>
-<tr><td><strong>否定子句分离与权重衰减过滤</strong></td><td>Negation Clause Separation &amp; Weight Decay Filtering</td><td>切分被否定/撤回子句并在向量空间减去其正交投影分量（\(\gamma_{\text{neg}}=0.85\)），消除被否定实体词造成的余弦检索假阳性。</td></tr>
+<tr><td><strong>否定子句分离与权重衰减过滤</strong></td><td>Negation Clause Separation &amp; Weight Decay Filtering</td><td>切分被否定/撤回子句并在向量空间减去其正交投影分量（\(γ_{\text{neg}}=0.85\)），消除被否定实体词造成的余弦检索假阳性。</td></tr>
 <tr><td><strong>参数调整规则 / 槽位修正动作</strong></td><td>Slot Revision Rule / Adjustment Action (\(\Delta_t\))</td><td>多轮对话中针对历史标准记忆状态快照执行显式新增（add）、覆写（update）与撤回（drop）的结构化状态转移算子。</td></tr>
-<tr><td><strong>标准记忆状态快照</strong></td><td>Ground-Truth Memory Snapshot (\(B_t\))</td><td>截至第 $t$ 轮对话所有有效激活意图与已确认槽位键值对的权威状态集合。</td></tr>
+<tr><td><strong>标准记忆状态快照</strong></td><td>Ground-Truth Memory Snapshot (\(B_t\))</td><td>截至第 <code>t</code> 轮对话所有有效激活意图与已确认槽位键值对的权威状态集合。</td></tr>
 <tr><td><strong>慢路径交互归纳与经验规则沉淀</strong></td><td>Slow-Path Interaction Induction &amp; Rule Sedimentation</td><td>将慢路径受控澄清或大模型推理确认后的多轮交互轨迹异步提炼为结构化规则，回写至 L0/L1 快路径。</td></tr>
 </tbody>
 </table>

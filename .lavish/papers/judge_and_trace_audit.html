@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>专题 ④：评测裁判机制与确定性轨迹证据审计（Judge & Trace Grounding Audit） · 论文深度拆解专题页</title>
+  <title>专题 ④：评测裁判机制与确定性轨迹证据审计（Judge & Trace Grounding Audit） · 论文总结专题页</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false}]});"></script>
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$<code>', right: '</code>$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '<code>', right: '</code>', display: false}]});"></script>
   <script defer src="../app.js"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
     <span>📊 Agent 评测现状、对标与论文按需展开库</span>
   </div>
   <nav class="nav-links">
-    <a class="nav-pill" href="../index.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill active" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
+    <a class="nav-pill" href="../agent_bench_evaluation_hub.html">🏠 总览与选型主站</a><a class="nav-pill" href="../papers/stateful_tool_user.html">① 状态化工具与交互</a><a class="nav-pill" href="../papers/clarification_revision.html">② 澄清消歧与槽位修正</a><a class="nav-pill" href="../papers/cognitive_memory.html">③ 跨会话长周期记忆</a><a class="nav-pill active" href="../papers/judge_and_trace_audit.html">④ 裁判与轨迹证据审计</a><a class="nav-pill" href="../papers/multi_turn_dst.html">⑤ 多意图与多轮 DST</a>
   </nav>
   <div>
     <button class="btn" onclick="toggleTheme()">🌓 切换主题 (米纸 / GitHub)</button>
@@ -34,7 +34,7 @@
       <div style="display:flex; gap:8px;">
         <button class="btn" onclick="toggleAllDetails(true)">➕ 全部展开</button>
         <button class="btn" onclick="toggleAllDetails(false)">➖ 全部收起</button>
-        <a class="btn primary" href="../index.html">← 返回总览主站</a>
+        <a class="btn primary" href="../agent_bench_evaluation_hub.html">← 返回总览主站</a>
       </div>
     </div>
   </section>
@@ -58,14 +58,14 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>GroundEval Research Group</p>
         <p><strong>发表年份与出处：</strong>2026 · <a href="https://arxiv.org/abs/2606.22737" target="_blank" rel="noopener">https://arxiv.org/abs/2606.22737 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对端到端黑盒打分常被『蒙对答案但过程纯属幻觉（Right Answer for Wrong Reasons）』欺骗的问题，将 Agent 的完整执行轨迹拆解为（用户输入集 $U$、检索/工具返回证据集 $E$、最终结构化输出 $Y$），对 $Y$ 中的每一个非空键值执行确定性溯源校验：每个槽位值必须在 $U \cup E$ 中存在合法的来源映射或确定性算术推导，否则立即标记为 **无据脑补幻觉（Ungrounded Hallucination）**。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>针对端到端黑盒打分常被『碰巧答对答案但过程纯属幻觉（Right Answer for Wrong Reasons）』欺骗的问题，将 Agent 的完整执行轨迹拆解为（用户输入集 <code>U</code>、检索/工具返回证据集 <code>E</code>、最终结构化输出 <code>Y</code>），对 <code>Y</code> 中的每一个非空键值执行确定性溯源校验：每个槽位值必须在 <code>U ∪ E</code> 中存在合法的来源映射或确定性算术推导，否则立即标记为 **无据脑补幻觉（Ungrounded Hallucination）**。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】100% 确定性、零大模型裁判偏置，能精准揪出『模型靠先验常见值蒙对 `1080p` 但实际未命中记忆』的隐蔽缺陷。<br/>【局限与边界】需要记录完整的中间检索日志（Hit Record IDs 与投影列）。</p>
+        <p>【核心优势】100% 确定性、零大模型裁判偏置，能精准揪出『模型靠先验常见值碰巧答对 `1080p` 但实际未命中记忆』的隐蔽缺陷。<br/>【局限与边界】需要记录完整的中间检索日志（Hit Record IDs 与投影列）。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
-          <p>这是我们升级 `D:\coding\qwen_intent_rag\session_eval.py` 最具性价比的武器！在评测每个最终槽位时，增加 **`GroundingAuditScore`（槽位证据溯源率）**——核对模型输出的 `resolution` / `rtt` / `duration` 是否严格来自当前轮用户显式指定，或来自 `memory_bridge.py` 召回的候选记录同行结构化槽位列，彻底杜绝无据默认脑补。</p>
+          <p>这是我们升级 `D:\coding\qwen_intent_rag\session_eval.py` 最具性价比的武器！在评测每个最终槽位时，增加 **`GroundingAuditScore`（槽位证据溯源率）**——核对模型输出的 `resolution` / `rtt` / `duration` 是否严格来自当前轮用户显式指定，或来自 `memory_bridge.py` 召回的候选记录同行结构化槽位列，有效避免无据默认脑补。</p>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】解决了长链路复杂任务中纯文本裁判『看不清真实状态』的痛点。<br/>【局限与边界】若全部用重型大模型驱动裁判 Agent，耗时较高；最佳实践是『确定性脚本取证 + 局部轻量 Rubric 评判』混合。</p>
+        <p>【核心优势】解决了长链路复杂任务中纯文本裁判『看不清真实状态』的问题。<br/>【局限与边界】若全部用重型大模型驱动裁判 Agent，耗时较高；最佳实践是『确定性脚本取证 + 局部轻量 Rubric 评判』混合。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>启发我们将评测架构设计为**“确定性规则验证器为主（90% 指标）+ 轻量级受控 Rubric 裁判为辅（仅评慢路径反问句的自然度与靶向性）”**，既保留取证式精度，又将单会话评测耗时控制在毫秒级。</p>
@@ -160,11 +160,11 @@
         <div class="tag">① 论文基本信息与真实链接</div>
         <p><strong>作者/机构：</strong>Lianmin Zheng et al. (UC Berkeley) / Yang Liu et al. (Microsoft) / Seungone Kim et al. (KAIST)</p>
         <p><strong>发表年份与出处：</strong>2023–2024 · <a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">https://arxiv.org/abs/2306.05685 ↗</a></p>
-        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MT-Bench` 系统量化了大模型裁判的三大固有偏置（Position Bias、Verbosity Bias、Self-Enhancement Bias）；<br/>`G-Eval` 引入思维链与 token 概率加权期望得分；<br/>`Prometheus` 证明：只有向裁判显式提供**参考答案（Reference Answer）+ 逐档位具体扣分标准（Customized 1-5 Score Rubric）**，才能使裁判与人类相关系数达到 $r > 0.89$。</p>
+        <p style="margin-top:6px;"><strong>② 他们具体在做什么：</strong><br/>`MT-Bench` 系统量化了大模型裁判的三大固有偏置（Position Bias、Verbosity Bias、Self-Enhancement Bias）；<br/>`G-Eval` 引入思维链与 token 概率加权期望得分；<br/>`Prometheus` 证明：只有向裁判显式提供**参考答案（Reference Answer）+ 逐档位具体扣分标准（Customized 1-5 Score Rubric）**，才能使裁判与人类相关系数达到 <code>r &gt; 0.89</code>。</p>
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】适合评估开放式自然语言回复（如反问澄清话术是否礼貌、精准、不啰嗦）。<br/>【局限与边界】绝不能用于结构化槽位精度或时间算术校验（大模型裁判对数字加减与严格字段对齐极易漏判）。</p>
+        <p>【核心优势】适合评估开放式自然语言回复（如反问澄清话术是否礼貌、精准、不冗余）。<br/>【局限与边界】绝不能用于结构化槽位精度或时间算术校验（大模型裁判对数字加减与严格字段对齐极易漏判）。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>明确划定我们评测体系中 LLM Judge 的使用禁区与专职区：**严禁用 LLM 裁判去评 7 槽位准确率**（统一交由确定性 Python 脚本断言）；LLM Judge 仅挂接固定 Rubric 用于评估慢路径澄清问题的表达质量。</p>
@@ -177,7 +177,7 @@
   </div>
 </details>
 
-<details class="paper-card paper-item" open id="livebench" data-cat="judge" data-search="LiveBench: A Challenging, Contamination-Free LLM Benchmark Colin White, Samuel Dooley et al. (Abacus.AI & NYU & UMD) 2406.19314 通过「动态参数化生成 + 100% 确定性真值验证脚本」彻底根除测试集泄露（Data Contamination）与裁判主观误差。 ④ 裁判与轨迹证据审计">
+<details class="paper-card paper-item" open id="livebench" data-cat="judge" data-search="LiveBench: A Challenging, Contamination-Free LLM Benchmark Colin White, Samuel Dooley et al. (Abacus.AI & NYU & UMD) 2406.19314 通过「动态参数化生成 + 100% 确定性真值验证脚本」根除测试集泄露（Data Contamination）与裁判主观误差。 ④ 裁判与轨迹证据审计">
   <summary>
     <div class="sum-left">
       <span class="badge year">2024 / ICLR 2025</span>
@@ -188,7 +188,7 @@
     <div class="sum-right">▼ 点击展开 / 收起详情</div>
   </summary>
   <div class="paper-body">
-    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>通过「动态参数化生成 + 100% 确定性真值验证脚本」彻底根除测试集泄露（Data Contamination）与裁判主观误差。</p>
+    <p style="margin:0 0 10px 0;"><strong>🎯 一句话核心结论：</strong>通过「动态参数化生成 + 100% 确定性真值验证脚本」根除测试集泄露（Data Contamination）与裁判主观误差。</p>
     <div class="grid-2" style="margin-bottom:10px;">
       <div class="card t-blue" style="padding:11px 14px;">
         <div class="tag">① 论文基本信息与真实链接</div>
@@ -198,7 +198,7 @@
       </div>
       <div class="card t-teal" style="padding:11px 14px;">
         <div class="tag">③ 优劣势与适用边界</div>
-        <p>【核心优势】防刷榜、防过拟合、打分零方差。<br/>【局限与边界】需要维护高质量的参数化合成数据生成器。</p>
+        <p>【核心优势】防针对固定题目过拟合、防过拟合、打分零方差。<br/>【局限与边界】需要维护高质量的参数化合成数据生成器。</p>
         <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
           <div class="tag" style="color:#065F46;">④ 对我们“联接”Agent 的可落地启发</div>
           <p>与我们 `GEMINI.md` 的 **严禁硬编码（Zero Hardcoding）** 红线高度一致：`D:\coding\cross_memory_data` 的合成数据生成器在构造评测集时，时间窗（`start_timestamp`/`end_timestamp`/`duration`）、个性化表述与业务组合必须动态随机采样并校验算术自洽，防止算法侧靠写死字面量分支刷高通过率。</p>
