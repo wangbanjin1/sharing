@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="parchment">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联接 Agent 故事线搭建、融合画像、经验记忆、评测数据集与指标</title>
+  <style>
+    :root, [data-theme="parchment"] {
+      --bg-page: #FBF7F0;
+      --bg-card: #FFFDF9;
+      --bg-elevated: #F5EFE4;
+      --bg-code: #F2ECE1;
+      --text-main: #2C2520;
+      --text-secondary: #5C5248;
+      --text-muted: #8A7E72;
+      --border-color: #E2D9C8;
+      --border-strong: #C9BBA6;
+      --accent-primary: #8C4A27;
+      --accent-secondary: #2B5B6C;
+      --semantic-red-bg: #FDF2F2;
+      --semantic-red-border: #E5A9A9;
+      --semantic-red-text: #8B2626;
+      --semantic-green-bg: #F1F8F4;
+      --semantic-green-border: #9BC9AE;
+      --semantic-green-text: #1E5E3A;
+      --semantic-blue-bg: #F0F6FA;
+      --semantic-blue-border: #A3C4DC;
+      --semantic-blue-text: #1F4E70;
+      --semantic-amber-bg: #FEF8EC;
+      --semantic-amber-border: #E6C88A;
+      --semantic-amber-text: #7D5211;
+      --shadow-sm: 0 2px 6px rgba(44, 37, 32, 0.05);
+    }
+
+    [data-theme="github"] {
+      --bg-page: #F6F8FA;
+      --bg-card: #FFFFFF;
+      --bg-elevated: #EEF2F6;
+      --bg-code: #F6F8FA;
+      --text-main: #1F2328;
+      --text-secondary: #4D5562;
+      --text-muted: #6E7781;
+      --border-color: #D0D7DE;
+      --border-strong: #AFB8C1;
+      --accent-primary: #0969DA;
+      --accent-secondary: #1A7F37;
+      --semantic-red-bg: #FFEBE9;
+      --semantic-red-border: #FF818266;
+      --semantic-red-text: #CF222E;
+      --semantic-green-bg: #DAFBE1;
+      --semantic-green-border: #4AC26B66;
+      --semantic-green-text: #1A7F37;
+      --semantic-blue-bg: #DDF4FF;
+      --semantic-blue-border: #54AEFF66;
+      --semantic-blue-text: #0969DA;
+      --semantic-amber-bg: #FFF8C5;
+      --semantic-amber-border: #D4A72C66;
+      --semantic-amber-text: #9A6700;
+      --shadow-sm: 0 1px 3px rgba(31, 35, 40, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+      font-size: 14.5px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .topbar-title { font-size: 15.5px; font-weight: 700; }
+    .topbar-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .btn-group {
+      display: inline-flex;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .btn-toggle {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 5px 11px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-toggle.active { background: var(--accent-primary); color: #fff; }
+
+    .step-bar {
+      max-width: 1360px;
+      margin: 14px auto 0;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+    }
+    .step-tab {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .step-tab:hover { border-color: var(--accent-primary); }
+    .step-tab.active {
+      border-color: var(--accent-primary);
+      background: var(--bg-elevated);
+    }
+    .step-name { display: block; font-size: 14px; font-weight: 700; color: var(--text-main); }
+    .step-desc { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    .container { max-width: 1360px; margin: 0 auto; padding: 16px 24px 56px; }
+
+    .step-panel { display: block; }
+    body[data-view="step"] .step-panel { display: none; }
+    body[data-view="step"] .step-panel.active { display: block; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card.hero { border-left: 5px solid var(--accent-primary); }
+
+    h1 { font-size: 19px; font-weight: 800; margin: 0 0 12px; }
+    h2 {
+      font-size: 16.5px;
+      font-weight: 800;
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    h3 { font-size: 14.8px; font-weight: 700; margin: 16px 0 8px; color: var(--text-main); }
+
+    .pipeline-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 10px 0;
+    }
+    .pipe-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-top: 4px solid var(--accent-primary);
+      border-radius: 8px;
+      padding: 11px 13px;
+      font-size: 13px;
+    }
+    .pipe-node.blue { border-top-color: var(--accent-secondary); }
+    .pipe-node.green { border-top-color: var(--semantic-green-text); }
+    .pipe-node.amber { border-top-color: var(--semantic-amber-text); }
+    .pipe-title { font-weight: 700; font-size: 13.8px; margin-bottom: 5px; color: var(--text-main); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 14px;
+      margin: 10px 0;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+      margin: 10px 0;
+    }
+
+    .box {
+      border-radius: 8px;
+      padding: 12px 15px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-elevated);
+      font-size: 13.5px;
+    }
+    .box.green { background: var(--semantic-green-bg); border-color: var(--semantic-green-border); }
+    .box.blue { background: var(--semantic-blue-bg); border-color: var(--semantic-blue-border); }
+    .box.amber { background: var(--semantic-amber-bg); border-color: var(--semantic-amber-border); }
+    .box strong.title { display: block; font-size: 14px; margin-bottom: 5px; color: var(--text-main); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--bg-card); }
+    th {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      font-weight: 700;
+      text-align: left;
+      padding: 9px 12px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+      color: var(--text-secondary);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-elevated); }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .pill-csv { background: var(--semantic-blue-bg); color: var(--semantic-blue-text); border: 1px solid var(--semantic-blue-border); }
+    .pill-dlg { background: var(--semantic-amber-bg); color: var(--semantic-amber-text); border: 1px solid var(--semantic-amber-border); }
+    .pill-both { background: var(--semantic-green-bg); color: var(--semantic-green-text); border: 1px solid var(--semantic-green-border); }
+
+    pre, code { font-family: "JetBrains Mono", Consolas, monospace; }
+    code {
+      background: var(--bg-code);
+      border: 1px solid var(--border-color);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12.3px;
+      color: var(--accent-primary);
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      font-size: 12.3px;
+      line-height: 1.55;
+      color: var(--text-main);
+      margin: 8px 0 0;
+    }
+    pre code { border: none; padding: 0; background: transparent; color: inherit; }
+
+    ul.tight { margin: 4px 0 0; padding-left: 18px; color: var(--text-secondary); }
+    ul.tight li { margin-bottom: 4px; }
+
+    a { color: var(--accent-primary); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    @media print {
+      @page { margin: 12mm; }
+      html, body { background: #FFFFFF !important; }
+      body[data-view="step"] .step-panel { display: block !important; }
+      .topbar, .step-bar { display: none !important; }
+      .card { box-shadow: none; break-inside: avoid; }
+    }
+      .note { font-size: 13px; color: var(--text-muted); margin: 6px 0 0; }
+  </style>
+</head>
+<body data-view="step">
+
+  <header class="topbar">
+    <div class="topbar-brand">
+      <span class="topbar-title">联接 Agent 故事线搭建 · 融合画像 · 经验记忆 · 评测数据集与指标</span>
+    </div>
+    <div class="topbar-controls">
+      <div class="btn-group">
+        <button class="btn-toggle active" id="btn-view-step" onclick="setViewMode('step')">分步查看</button>
+        <button class="btn-toggle" id="btn-view-all" onclick="setViewMode('all')">长卷通览</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn-toggle active" id="btn-theme-parchment" onclick="setTheme('parchment')">暖阳米纸</button>
+        <button class="btn-toggle" id="btn-theme-github" onclick="setTheme('github')">GitHub 简洁</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="step-bar">
+    <button class="step-tab active" id="tab-step-1" onclick="selectStep(1)">
+      <span class="step-name">一、故事线正交因子</span>
+      <span class="step-desc">排布 12 个因子 + 内容 30 个因子</span>
+    </button>
+    <button class="step-tab" id="tab-step-2" onclick="selectStep(2)">
+      <span class="step-name">二、评测数据集</span>
+      <span class="step-desc">构建思路、记忆设计、量化阈值与评测指标</span>
+    </button>
+    <button class="step-tab" id="tab-step-3" onclick="selectStep(3)">
+      <span class="step-name">三、全流程指标</span>
+      <span class="step-desc">萃取 → 召回 → 决策执行</span>
+    </button>
+    <button class="step-tab" id="tab-step-4" onclick="selectStep(4)">
+      <span class="step-name">四、记忆要记什么</span>
+      <span class="step-desc">三类记忆分工与按决策环节倒推</span>
+    </button>
+    <button class="step-tab" id="tab-step-5" onclick="selectStep(5)">
+      <span class="step-name">五、短期 → 长期演变</span>
+      <span class="step-desc">北邮 MemoryOS、业界方案对比与四步晋升</span>
+    </button>
+    <button class="step-tab" id="tab-step-6" onclick="selectStep(6)">
+      <span class="step-name">六、经验记忆学什么</span>
+      <span class="step-desc">因果规则：条件 → 原因 → 动作 → 结果</span>
+    </button>
+    <button class="step-tab" id="tab-step-7" onclick="selectStep(7)">
+      <span class="step-name">七、融合画像总表</span>
+      <span class="step-desc">A–F 六大维度 36 字段、四类融合策略</span>
+    </button>
+  </nav>
+
+  <main class="container">
+    <div class="step-panel active" id="panel-step-1">
+      <section class="card hero">
+        <h1>一、故事线的正交因子（两层）</h1>
+        <p style="margin:0;color:var(--text-secondary);">故事线分两层生成：<strong>第一层定排布</strong>，决定整条时间线的骨架；<strong>第二层定内容</strong>，给骨架上的每条线、每个节点填入具体属性。每个因子都是配置表中的一列（可取值 + 采样权重），同层因子相互独立，组合后交给大模型 API 批量出素材。</p>
+
+        <div class="pipeline-flow" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="pipe-node">
+            <div class="pipe-title">第一层：故事线排布（12 个因子）</div>
+            分三组：时间轴骨架、事件结构、测试编排。
+          </div>
+          <div class="pipe-node blue">
+            <div class="pipe-title">第二层：故事线内容（30 个因子）</div>
+            分七组：用户、业务、时空、网络、记忆演化、交互、单据质量。
+          </div>
+          <div class="pipe-node green">
+            <div class="pipe-title">大模型 API 生成素材</div>
+            按“骨架 + 节点因子”生成用户档案、CSV 单据序列和对话，再由状态机推演出标准标签。
+          </div>
+        </div>
+
+        <h3>1. 第一层：故事线排布因子</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:10%;">分组</th>
+                <th style="width:13%;">因子</th>
+                <th style="width:32%;">可取值</th>
+                <th style="width:25%;">决定什么</th>
+                <th style="width:20%;">参考</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="4"><strong>时间轴骨架</strong></td>
+                <td><strong>时间跨度</strong></td>
+                <td>2 周 / 1 个月 / 3 个月 / 半年</td>
+                <td>能容纳哪些周期规律，记忆要保持多久</td>
+                <td>PersonaMem-v3：30 天；LoCoMo：跨数月</td>
+              </tr>
+              <tr>
+                <td><strong>事件规模</strong></td>
+                <td>少（10~15 个节点）/ 中（16~22）/ 多（30 以上）</td>
+                <td>时间线总长度与上下文压力</td>
+                <td>当前管线 16~22 个会话</td>
+              </tr>
+              <tr>
+                <td><strong>事件密度</strong></td>
+                <td>均匀 / 忙闲交替 / 前密后疏 / 前疏后密</td>
+                <td>事件在时间轴上的整体疏密走势</td>
+                <td>LAMP、EasyTPP</td>
+              </tr>
+              <tr>
+                <td><strong>外部日历事件</strong></td>
+                <td>无 / 法定节假日 / 大型赛事或展会 / 恶劣天气 / 月初月末结算</td>
+                <td>时间线上有哪些外部触发点</td>
+                <td>当前管线 <code>@HOLIDAY_DATE</code></td>
+              </tr>
+
+              <tr>
+                <td rowspan="5"><strong>事件结构</strong></td>
+                <td><strong>起始状态</strong></td>
+                <td>冷启动（无任何历史）/ 热启动（已有前一周期的历史记忆）</td>
+                <td>第一个测试点之前系统已知多少</td>
+                <td>当前管线 <code>cold_start / hot_start</code></td>
+              </tr>
+              <tr>
+                <td><strong>事件线结构</strong></td>
+                <td>单主线 / 主线 + 1 条支线 / 主线 + 多条支线交织 / 主线中断后恢复</td>
+                <td>同时有几条事件线，彼此如何穿插</td>
+                <td>RHELM：日常主线穿插阶段事件</td>
+              </tr>
+              <tr>
+                <td><strong>支线归宿</strong></td>
+                <td>结束后回到原主线 / 转为新主线 / 周期性复现</td>
+                <td>支线对长期习惯有没有影响</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td><strong>阶段节奏</strong></td>
+                <td>平稳型 / 单次扰动型 / 迁移型 / 多次波动型</td>
+                <td>分几个阶段、偏好在哪个阶段变</td>
+                <td>当前架构文档的四个阶段</td>
+              </tr>
+              <tr>
+                <td><strong>因果链</strong></td>
+                <td>无 / 1 条短链（首次缺参或理解失败 → 多轮澄清/纠正 → 沉淀经验）/ 1 条完整闭环（首次多轮澄清或理解失败纠正 → 沉淀经验规则 → 后续同类请求直接快速闭环）/ 多条交叉</td>
+                <td>前因后果有几条，经验记忆从哪里产生</td>
+                <td>LoCoMo 事件图；RHELM 状态演进</td>
+              </tr>
+
+              <tr>
+                <td rowspan="3"><strong>测试编排</strong></td>
+                <td><strong>单据与对话比例</strong></td>
+                <td>单据为主（75 : 25）/ 均衡（50 : 50）/ 对话为主（25 : 75）</td>
+                <td>信息主要从单据还是从对话获得</td>
+                <td>PersonaMem-v3：95% 行为日志</td>
+              </tr>
+              <tr>
+                <td><strong>测试点与干扰</strong></td>
+                <td>证据到测试的间隔：短（&lt; 5 步）/ 中（5~15）/ 长（15~35）；干扰占比：低 / 中 / 高</td>
+                <td>测试题离证据多远、中间混入多少无关内容</td>
+                <td>LongMemEval：历史长度与干扰可调</td>
+              </tr>
+              <tr>
+                <td><strong>测试题型配比</strong></td>
+                <td>事实记忆 / 工作记忆（历史单指代）/ 经验记忆 / 边界（克制与拒答）四类题的占比</td>
+                <td>这条故事线主要考哪类记忆</td>
+                <td>LongMemEval 五类能力；RHELM 七类提问</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">当前管线中会话数、学习轮与测试轮位置、支线时间预设（<code>SUB1_TIME_PRESETS</code> 等）基本写死在 <code>blueprint_specs.py</code> 里；第一层因子可以把这些改成配置项。</p>
+
+        <h3>2. 第二层：故事线内容因子</h3>
+        <p class="note" style="margin-bottom:6px;">“取值粒度”一列说明因子按整个用户取一次、按每条线取、还是按每个节点取。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:9%;">分组</th>
+                <th style="width:13%;">因子</th>
+                <th style="width:34%;">可取值</th>
+                <th style="width:8%;">取值粒度</th>
+                <th style="width:24%;">决定什么</th>
+                <th style="width:12%;">对应画像字段</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 用户 -->
+              <tr>
+                <td rowspan="5"><strong>用户</strong></td>
+                <td><strong>用户角色</strong></td>
+                <td>内容创作者 / 移动办公与外勤 / 学生与游戏玩家 / 商务差旅 / 公共服务与应急 / 居家普通用户</td>
+                <td>用户</td>
+                <td>主力应用、作息、常去地点的大致范围</td>
+                <td><code>A.identity</code></td>
+              </tr>
+              <tr>
+                <td><strong>设备与套餐</strong></td>
+                <td>旧机 4G / 5G 手机 / 多设备（手机 + 平板 + CPE）；基础套餐 / 大流量套餐 / 加速包</td>
+                <td>用户（可随阶段变）</td>
+                <td>能用什么制式和档位，升级时触发偏好迁移</td>
+                <td><code>A.devices</code>、<code>A.subscription</code></td>
+              </tr>
+              <tr>
+                <td><strong>表达习惯</strong></td>
+                <td>标准说法 / 口语简称多（“小破站”）/ 体感描述（“别卡”“别跳 ping”）/ 专业术语（“上行 50M、时延 30ms”）</td>
+                <td>用户</td>
+                <td>口语与单据标准名的差距大小</td>
+                <td><code>E.expression_mappings</code></td>
+              </tr>
+              <tr>
+                <td><strong>沟通风格</strong></td>
+                <td>简短直接 / 信息冗长夹杂闲聊 / 情绪化 / 反复改主意</td>
+                <td>用户</td>
+                <td>对话中有效信息的密度与噪声</td>
+                <td><code>F.feedback_signal</code></td>
+              </tr>
+              <tr>
+                <td><strong>配合与纠正度</strong></td>
+                <td>高（理解偏差立即明确纠正）/ 中（追问时逐步补充）/ 低（尽量少说、靠系统补全）</td>
+                <td>用户</td>
+                <td>慢路径澄清或系统理解偏差时，用户如何给出纠正信息</td>
+                <td><code>F.feedback_signal</code></td>
+              </tr>
+
+              <!-- 业务 -->
+              <tr>
+                <td rowspan="4"><strong>业务</strong></td>
+                <td><strong>主力业务类型</strong></td>
+                <td>上行推流 / 低时延交互（游戏、远控）/ 实时会议 / 下行大流量点播 / 后台大文件传输</td>
+                <td>线</td>
+                <td>CSV 中关键看哪类指标，保障参数怎么定</td>
+                <td><code>B.business_mix</code></td>
+              </tr>
+              <tr>
+                <td><strong>业务并发</strong></td>
+                <td>单业务 / 同类双业务 / 主辅业务并发（前台实时 + 后台传输）</td>
+                <td>节点</td>
+                <td>是否需要分流与优先级处理</td>
+                <td><code>C.up_down_ratio</code></td>
+              </tr>
+              <tr>
+                <td><strong>业务时长</strong></td>
+                <td>短（15~45min）/ 中（60~120min）/ 长（150~240min）</td>
+                <td>线（节点内随机浮动）</td>
+                <td>单据时长分布，避免固定时长</td>
+                <td><code>B.app_session_stats</code></td>
+              </tr>
+              <tr>
+                <td><strong>体验档位要求</strong></td>
+                <td>只要偏好档 / 偏好档 + 可接受降级档 / 三档齐全（偏好、降级、拒绝）</td>
+                <td>线</td>
+                <td>弱网时能否降级、底线在哪</td>
+                <td><code>E.experience_param_preferences</code></td>
+              </tr>
+
+              <!-- 时空 -->
+              <tr>
+                <td rowspan="5"><strong>时空</strong></td>
+                <td><strong>活动空间</strong></td>
+                <td>固定常驻 / 通勤移动 / 人流聚集场馆 / 偏远弱覆盖 / 异地差旅</td>
+                <td>线</td>
+                <td>小区分布、易出哪类网络问题</td>
+                <td><code>C.geography</code></td>
+              </tr>
+              <tr>
+                <td><strong>移动状态</strong></td>
+                <td>静止 / 步行 / 城市车载 / 高速或高铁</td>
+                <td>节点</td>
+                <td>是否伴随小区切换与断流</td>
+                <td><code>C.commute_pattern</code></td>
+              </tr>
+              <tr>
+                <td><strong>时间规律</strong></td>
+                <td>按日 / 按周 / 按月或节假日 / 无规律突发</td>
+                <td>线</td>
+                <td>单据在时间轴上的分布与间隔</td>
+                <td><code>C.active_hours</code>、<code>C.workday_vs_weekend</code></td>
+              </tr>
+              <tr>
+                <td><strong>所在时段</strong></td>
+                <td>清晨 / 白天工作时段 / 晚高峰 / 深夜</td>
+                <td>线</td>
+                <td>同小区负载高低（晚高峰更易拥塞）</td>
+                <td><code>C.active_hours</code></td>
+              </tr>
+              <tr>
+                <td><strong>时间浮动</strong></td>
+                <td>准点（±2min）/ 小幅浮动（±10min）/ 大幅浮动（±30min）</td>
+                <td>线</td>
+                <td>周期习惯的识别难度</td>
+                <td><code>C.time_preference</code></td>
+              </tr>
+
+              <!-- 网络 -->
+              <tr>
+                <td rowspan="5"><strong>网络</strong></td>
+                <td><strong>覆盖档位</strong></td>
+                <td>稳定覆盖 / 晚高峰拥堵 / 边缘弱覆盖</td>
+                <td>线</td>
+                <td>基础网络条件</td>
+                <td><code>D.signal_edge</code>、<code>D.bandwidth_env</code></td>
+              </tr>
+              <tr>
+                <td><strong>网络制式</strong></td>
+                <td>5G 独立组网 / 5G 非独立组网 / 4G / 5G 与 4G 来回切换</td>
+                <td>节点</td>
+                <td>能否使用切片与高优先级通道</td>
+                <td><code>D.rat_preference</code>、<code>D.s_nssai_profile</code></td>
+              </tr>
+              <tr>
+                <td><strong>网络事件</strong></td>
+                <td>无异常 / 拥塞劣化 / 切换断流 / 多单冲突（时间重叠、同地多单）</td>
+                <td>节点</td>
+                <td>单据中是否出现异常劣化或同地多单冲突，触发消歧澄清与经验沉淀</td>
+                <td><code>D.stall_proxy</code></td>
+              </tr>
+              <tr>
+                <td><strong>异常程度</strong></td>
+                <td>轻微（时延略升）/ 明显（卡顿掉帧）/ 中断（掉线重连）</td>
+                <td>节点</td>
+                <td>CSV 指标偏离幅度，以及用户是否察觉</td>
+                <td><code>D.latency_profile</code>、<code>D.loss_profile</code></td>
+              </tr>
+              <tr>
+                <td><strong>异常时段</strong></td>
+                <td>瞬时 / 开场前期 / 整场持续 / 结束前</td>
+                <td>节点</td>
+                <td>经验调整动作是什么（开场前期 → 提前预热；整场 → 换切片或降级）</td>
+                <td><code>F.memory_targets</code></td>
+              </tr>
+
+              <!-- 记忆演化 -->
+              <tr>
+                <td rowspan="4"><strong>记忆演化</strong></td>
+                <td><strong>偏好演化</strong></td>
+                <td>稳定保持 / 逐渐弃用 / 新增或升级 / 单次临时变动</td>
+                <td>线</td>
+                <td>同一偏好在时间线上怎么变</td>
+                <td><code>E.transient_preference</code>、<code>E.event_driven_change</code></td>
+              </tr>
+              <tr>
+                <td><strong>信号来源</strong></td>
+                <td>仅单据体现 / 仅对话说明 / 单据与对话一致 / 单据与对话矛盾</td>
+                <td>节点</td>
+                <td>信息在哪一侧，对应融合策略 A–D</td>
+                <td>5 个“对话+CSV”字段</td>
+              </tr>
+              <tr>
+                <td><strong>声明方式</strong></td>
+                <td>明确要求记住（“以后都这样”）/ 顺带提到 / 完全不说只体现在行为</td>
+                <td>节点</td>
+                <td>首次出现就记为长期，还是需要重复多次</td>
+                <td><code>F.memory_targets</code></td>
+              </tr>
+              <tr>
+                <td><strong>偏好适用范围</strong></td>
+                <td>全局通用 / 限定某场景或地点 / 限定某时段 / 仅本次</td>
+                <td>节点</td>
+                <td>偏好在什么条件下生效，防止误用到其他场景</td>
+                <td><code>E.scene_preference</code>、<code>E.allowed_scenarios</code></td>
+              </tr>
+
+              <!-- 交互 -->
+              <tr>
+                <td rowspan="5"><strong>交互</strong></td>
+                <td><strong>交互方式</strong></td>
+                <td>一次说清 / 缺参或有歧义需澄清 / 中途纠正 / 无关闲聊 / 域外诉求</td>
+                <td>节点</td>
+                <td>对话轮次、走快路径还是慢路径</td>
+                <td><code>F.active_requests</code></td>
+              </tr>
+              <tr>
+                <td><strong>指代方式</strong></td>
+                <td>直接给参数 / 按时间指代（“上周三那次”）/ 按特征指代（“没卡那次”）/ 按别名指代（“老地方”）/ 按排除指代（“不是晚上那场”）</td>
+                <td>节点</td>
+                <td>需要怎样检索历史单据</td>
+                <td>工作记忆台账</td>
+              </tr>
+              <tr>
+                <td><strong>意图数量</strong></td>
+                <td>单意图 / 同类多意图（两场直播）/ 异类多意图（直播 + 传文件）/ 正常意图 + 域外意图</td>
+                <td>节点</td>
+                <td>一轮话里要拆出几个工单</td>
+                <td><code>F.active_requests</code></td>
+              </tr>
+              <tr>
+                <td><strong>纠正类型</strong></td>
+                <td>改时间 / 改参数档位 / 改地点 / 否定助手的理解（“我说的不是那次”）</td>
+                <td>节点</td>
+                <td>纠正后哪些槽位要改、哪些要保留</td>
+                <td><code>F.corrections</code></td>
+              </tr>
+              <tr>
+                <td><strong>交互闭环结果</strong></td>
+                <td>一次快速闭环 / 多轮澄清后达成 / 理解失败经纠正后达成 / 未达成</td>
+                <td>节点</td>
+                <td>慢路径澄清/纠正负责产生经验，后续快路径一次闭环体现经验作用</td>
+                <td><code>F.feedback_signal</code></td>
+              </tr>
+
+              <!-- 单据质量 -->
+              <tr>
+                <td rowspan="2"><strong>单据质量</strong></td>
+                <td><strong>单据噪声</strong></td>
+                <td>无 / 背景短单（1~8min 未开保障）/ 断流子单 / 退订废单 / 重复上报 / 字段缺失</td>
+                <td>节点</td>
+                <td>CSV 清洗与聚合难度</td>
+                <td><code>F.memory_targets_csv</code></td>
+              </tr>
+              <tr>
+                <td><strong>回执状态</strong></td>
+                <td>按计划执行 / 超时延长 / 提前结束 / 执行失败</td>
+                <td>节点</td>
+                <td>对话中的计划值与单据实测值是否一致</td>
+                <td>融合策略 D</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3. 怎么组合</h3>
+        <ul class="tight">
+          <li><strong>先排布，再填内容</strong>：先从第一层取值得到时间线骨架；再按取值粒度填第二层——“用户”级因子整条故事线取一次，“线”级因子每条线取一次，“节点”级因子每个节点取一次。</li>
+          <li><strong>同层正交采样</strong>：同一层内各因子独立取值，每个取值带采样权重。</li>
+          <li><strong>少量合法性约束</strong>：只排除冲突组合，写在配置表里，不写死在代码分支中。例如“跨度 2 周 × 按月规律”、“迁移型节奏 × 稳定保持”、“4G 旧机 × 切片保障”、“仅单据体现 × 明确要求记住”。</li>
+          <li><strong>覆盖要求</strong>：参照组合测试的成对覆盖做法，保证任意两个因子的取值两两都至少出现一次，不穷举全部组合。</li>
+          <li><strong>扩展方式</strong>：新增因子只需在对应分组下加一列，不影响已有因子与已生成数据。</li>
+        </ul>
+
+        <h3>4. 因子配置表结构示例</h3>
+        <pre><code>{
+  "factors": {
+    "事件密度":   {"layer": 1, "values": {"均匀": 0.3, "忙闲交替": 0.4, "前密后疏": 0.15, "前疏后密": 0.15}},
+    "活动空间":   {"layer": 2, "scope": "线",   "values": {"固定常驻": 0.3, "通勤移动": 0.2, "人流聚集场馆": 0.2, "偏远弱覆盖": 0.15, "异地差旅": 0.15}},
+    "指代方式":   {"layer": 2, "scope": "节点", "values": {"直接给参数": 0.3, "按时间": 0.2, "按特征": 0.2, "按别名": 0.15, "按排除": 0.15}}
+  },
+  "constraints": [
+    {"if": {"时间跨度": "2 周"}, "forbid": {"时间规律": "按月或节假日"}},
+    {"if": {"设备与套餐": "旧机 4G"}, "forbid": {"网络制式": "5G 独立组网"}}
+  ],
+  "coverage": "pairwise"
+}</code></pre>
+
+        <h3>5. 一个两层组合示例</h3>
+        <div class="grid-2">
+          <div>
+            <strong>第一层排布取值</strong>
+            <pre><code>{
+  "时间跨度": "3 个月",
+  "事件线结构": "主线 + 1 条支线",
+  "阶段节奏": "迁移型",
+  "事件密度": "忙闲交替",
+  "单据与对话比例": "75 : 25",
+  "因果链": "1 条完整闭环",
+  "测试点与干扰": {"间隔": "中（5~15 步）", "干扰": "中"}
+}</code></pre>
+          </div>
+          <div>
+            <strong>第二层按线取值</strong>
+            <pre><code>{
+  "主线": {"用户角色": "内容创作者", "主力业务类型": "上行推流",
+           "活动空间": "固定常驻", "时间规律": "按日"},
+  "支线": {"用户角色": "内容创作者", "主力业务类型": "上行推流",
+           "活动空间": "人流聚集场馆", "时间规律": "按周"}
+}</code></pre>
+          </div>
+        </div>
+
+        <strong>由此得到的时间线骨架（节点级属性逐个填入）</strong>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:16%;">阶段（第一层）</th>
+                <th style="width:14%;">所属线</th>
+                <th style="width:36%;">节点内容（第二层节点属性）</th>
+                <th style="width:34%;">生成的素材</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>建立期</strong>（第 1~3 周）</td>
+                <td>主线</td>
+                <td>偏好演化=稳定保持；信号来源=仅单据体现；网络事件=无异常；交互方式=一次说清</td>
+                <td>每晚在家直播的 CSV 单据连续出现，用户几乎不在对话里说明</td>
+              </tr>
+              <tr>
+                <td><strong>稳定期</strong>（第 4~6 周，忙闲交替）</td>
+                <td>支线插入</td>
+                <td>网络事件=拥塞劣化；信号来源=单据与对话一致；交互方式=缺参需澄清 / 中途纠正</td>
+                <td>首次去场馆直播表达模糊，系统理解失败或反复追问 → 经多轮澄清与纠正敲定预热参数并沉淀经验（因果链开始）</td>
+              </tr>
+              <tr>
+                <td><strong>稳定期</strong>（第 7 周）</td>
+                <td>主线</td>
+                <td>交互方式=无关闲聊 / 域外诉求（干扰：中）</td>
+                <td>通信常识提问、宽带报修等干扰会话与背景短单据</td>
+              </tr>
+              <tr>
+                <td><strong>迁移期</strong>（第 8~10 周）</td>
+                <td>主线</td>
+                <td>偏好演化=新增或升级；信号来源=单据与对话矛盾</td>
+                <td>换新设备后单据画质升到 4K，用户口头仍说“按老规矩 1080p”</td>
+              </tr>
+              <tr>
+                <td><strong>测试点</strong>（距证据 5~15 步）</td>
+                <td>支线复现</td>
+                <td>交互方式=一次说清；因果链闭环：命中经验 → 快速闭环</td>
+                <td>再去场馆直播，检验是否直接命中经验一次快速闭环（无需再多轮澄清、不再理解失败）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <div class="step-panel" id="panel-step-2">
+      <section class="card hero">
+        <h1>二、评测数据集：构建思路、记忆设计、量化阈值与评测指标</h1>
+
+        <h3>1. 四篇论文的评测集构建、记忆设计与安排、核心评测指标</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:12%;">论文</th>
+                <th style="width:26%;">评测集构建思路</th>
+                <th style="width:34%;">记忆的设计和安排</th>
+                <th style="width:28%;">核心评测指标与打分规则</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>PersonaMem-v3</strong><br/>（2608.21381）<br/><span class="badge badge-blue">真实日志累积分值 → 跨 6 端时间戳分发</span></td>
+                <td>
+                  • <strong>数据底座</strong>：以 100 万余条真实匿名互动记录为种子（<strong>95% 是隐式停留/划走，仅 5% 是对话</strong>），聚合成 200 个用户。<br/>
+                  • <strong>生成管线</strong>：先用大模型对单条事件提议最多 3 个候选偏好，跨全量历史累加打分筛出正式记忆点；混入无依据的“假诱饵偏好（Decoys）”让审计模型核对事件 ID 剔除；最后沿原始时间戳同步扩写到 <strong>6 类应用 JSON 表</strong>（社媒、日历、地理位置、聊天、邮件、通知）。
+                </td>
+                <td>
+                  <strong>① 记忆定性：跨平台隐式行为偏好与敏感边界记忆</strong><br/>
+                  • 分四层：表层喜恶偏好（长短期兴趣与排斥话题）、12 类深层动机/私下顾虑、15 类带起止有效期的敏感生活事件（求职、手术等）、个人表达语气。<br/>
+                  <strong>② 量化阈值（出现多少次/多少分算长期记忆）</strong>：<br/>
+                  • 显式互动（点赞/评论/保存）每次 <strong><code>+1.0</code> 分</strong>；隐式互动（长停留/完播）每次 <strong><code>+0.5</code> 分</strong>；单次划走（占 63.8%）忽略，仅短时间窗密集重复划走同一话题记为负向排斥；初始置信度需满足正向 <code>≥ 0.75</code>、负向 <code>≥ 0.55</code>。<br/>
+                  • <strong>长期偏好必须累计 <code>≥ 20</code> 分</strong>（全靠显式至少 <strong>20 次</strong>；纯靠隐式停留需 <strong><code>≥ 50</code> 分，即至少 100 次停留</strong>）；<strong>短期意图累计 <code>≥ 3</code> 分</strong>（约 <strong>3~6 次</strong>集中互动）；未达标全部剔除。<br/>
+                  <strong>③ 时间跨度与排布安排</strong>：<br/>
+                  • 单用户跨度 <strong>30 天</strong>（约 4,000 条原始事件、41.6 万 tokens/人）；按 <strong><code>77%</code> 稳定保持、<code>13%</code> 自然消退、<code>8%</code> 近期新增、<code>1%</code> 单次偶发</strong>四类轨迹排布。
+                </td>
+                <td>
+                  • <strong>问答判分（4 项一票否决红线 + 4 项软评分）</strong>：先查 4 条红线——<em>提了用户近期反感/划走的话题、无关场合泄露敏感隐私、用了已消退/过期的旧偏好、说出“我知道你喜欢 X”生硬话术</em>；<strong>踩中任一红线直接判 0 分</strong>，未踩再按正反例评软分。<br/>
+                  • <strong>信息流推荐重排（<code>NDCG@5</code>）</strong>：取测试截断时刻 <code>t_test</code> 紧邻之后的 1 条真实正向互动帖 + 15 条同日划走/点踩帖，看正例排在前 5 名的第几名。<br/>
+                  • <strong>克制率与主动提醒准确率</strong>：通用问题不带入个人记忆得 1 分；跨表行程冲突主动提醒、平时无事保持静默得 1 分。
+                </td>
+              </tr>
+              <tr>
+                <td><strong>RHELM</strong><br/>（2605.31086）<br/><span class="badge badge-green">LOOP 状态机概率掷骰 → 原子证据拆解双流</span></td>
+                <td>
+                  • <strong>数据底座</strong>：维护六维动态 JSON 画像，同步生成<strong>“多轮对话流 + 外部文档流（报告、邮件、日志）”</strong>两条并行数据。<br/>
+                  • <strong>生成管线（LOOP 状态机）</strong>：<code>Plan</code> 规划长短期事件 → <code>Rollout</code> 按概率掷正负结果 → <code>ExternalGen</code> 生成外部文档同时 <code>Evolve</code> 修改 JSON 状态 → <code>BulletExtract</code> 把每日事件拆解成带唯一编号的<strong>原子证据点（<code>b_τ</code>）</strong>分流进 5 类对话 → 跨天采样 <code>b_τ</code> 合成测试题。
+                </td>
+                <td>
+                  <strong>① 记忆定性：跨源（对话 + 外部文档）动态人物状态与多跳事实记忆</strong><br/>
+                  • 围绕身份、性格、长期习惯、人际关系、名下物品、当前身体/事件状态六维档案，拆解为分散在聊天与附件文档里的原子事实块（附件类对话只传文档 ID，强制跨源拼合）。<br/>
+                  <strong>② 状态翻转与修剪阈值设计</strong>：<br/>
+                  • <strong>正负事件翻转概率 <code>p = 0.7</code></strong>：规划事件有 <strong><code>70%</code> 概率顺利完成</strong>，<strong><code>30%</code> 概率触发意外挫折/事故</strong>（如骑行受伤、设备故障、计划取消）——靠这 <code>30%</code> 负向事件强制改写状态并制造后续冲突陷阱；每隔固定周期 <code>ρ</code> 运行 <code>Prune</code> 修剪失效属性。<br/>
+                  • <strong>切块粒度阈值</strong>：对话按<strong>单轮（1 Turn）</strong>切分，外部文档按 <strong>500 tokens（重叠 50 tokens）</strong>切分。<br/>
+                  <strong>③ 时间跨度与冲突间隔安排</strong>：<br/>
+                  • 单用户跨度<strong>数月至近 1 年</strong>（单人 <strong>50 万~100 万 tokens</strong>）；误导题先在第 <code>τ</code> 天埋入负向限制状态，<strong>间隔数天至数周日常会话后</strong>再发出冲突请求。
+                </td>
+                <td>
+                  • <strong>检索阶段（<code>Recall@k</code>，k=5/20/50）</strong>：因为每个问题都绑定了生成时的原子证据点 <code>b_τ</code> 和外部文档块 ID，直接统计标准证据块有百分之多少落在 Top-k 中。<br/>
+                  • <strong>生成阶段普通题（确定性实体核对）</strong>：答案被限制为唯一具体实体（日期、人名、符合条件的次数），核对实体是否一致。<br/>
+                  • <strong>误导与幻觉题（两步判分）</strong>：第 1 步看<strong>有没有识破错误前提或状态冲突</strong>（顺着冲突请求执行直接 0 分）；第 2 步看<strong>有没有指出真实历史状态并给替代方案</strong>。
+                </td>
+              </tr>
+              <tr>
+                <td><strong>LoCoMo / LoCoMo-Plus</strong><br/>（2402.17753 / 2602.10715）<br/><span class="badge badge-amber">因果事件图 + 线索-触发字面脱钩六步嵌入</span></td>
+                <td>
+                  • <strong>LoCoMo</strong>：用带因果有向边的时序事件图控制跨月剧情，每次切一个子图生成一轮会话。<br/>
+                  • <strong>LoCoMo-Plus（六步嵌入管线）</strong>：① 生成 2 轮隐式线索短对话 <code>c_0</code> → ② 人工筛出有持续约束力的 <code>c_1</code> → ③ 生成字面脱钩的触发提问 <code>q</code> 并绑定时间间隔 <code>t</code> → ④ 算法过滤高相似配对 → ⑤ 二次唤醒校验 → ⑥ 按间隔 <code>t</code> 插入长对话。
+                </td>
+                <td>
+                  <strong>① 记忆定性：Level-1 跨会话事件事实记忆 + Level-2 隐式认知约束记忆</strong><br/>
+                  • LoCoMo 记显式事件事实与先后顺序；LoCoMo-Plus 记<strong>四类隐式行为约束（因果习惯变更、情绪/身体状态、长期目标、个人价值观）</strong>，要求早期线索与后期触发字面完全脱钩。<br/>
+                  <strong>② 线索长度与脱钩过滤阈值</strong>：<br/>
+                  • <strong>线索长度硬阈值</strong>：每条隐式线索固定为 <strong>2 轮（2 lines）对话</strong>，A 顺带流露记忆锚点，B 自然回应一句立即闭合话题。<br/>
+                  • <strong>双重低相似度过滤</strong>：触发句 <code>q</code> <strong>严禁复用线索中的核心名词与动词</strong>，并用 <strong>BM25（词面重叠）+ MPNet（句向量相似度）双重打分过滤</strong>，自动淘汰词面或表层语义接近的候选。<br/>
+                  <strong>③ 时间间隔安排（Temporal Gap <code>t</code>）</strong>：<br/>
+                  • 长对话跨度<strong>数月、最多 35 个会话（约 300 轮、9K~16K tokens）</strong>；<strong>线索与触发强制间隔 <code>t ≥ 1 周</code>（1 周至数月不等）</strong>，中间穿插数十至上百轮无关对话稀释。
+                </td>
+                <td>
+                  • <strong>LoCoMo（事实层）</strong>：简短事实问答算<strong>词级 F1 分数</strong>；不可回答题算拒答准确率。<br/>
+                  • <strong>LoCoMo-Plus（三档隐式约束一致性）</strong>：淘汰字面 F1，改由裁判模型按是否遵守早期隐式约束判分——<strong>主动顺应约束/避开禁忌得 1.0 分</strong>；未踩雷但笼统得 0.5 分；<strong>违反历史约束得 0 分</strong>。<br/>
+                  • <strong>认知缺口（Cognitive Gap）</strong>：<code>事实问答得分 − 隐式约束得分</code>（主流模型普遍暴跌约 40 分）。
+                </td>
+              </tr>
+              <tr>
+                <td><strong>LongMemEval</strong><br/>（2410.10813）<br/><span class="badge badge-purple">问题倒拆证据句 → 间接自博弈 → 背景池穿插</span></td>
+                <td>
+                  • <strong>数据底座</strong>：500 道人工精修测试题，配可自由伸缩的无关背景会话池（Haystack）。<br/>
+                  • <strong>生成管线（从题倒推三步法）</strong>：① 从 164 类属性本体采样出题，把答案拆成 <code>1~6</code> 条原子证据句 → ② 每条证据句单独通过用户-助手自博弈生成 1 个证据会话 → ③ 按时间戳将证据会话洗牌穿插进背景会话池。
+                </td>
+                <td>
+                  <strong>① 记忆定性：海量对话流中的任务导向用户事实与状态演化记忆</strong><br/>
+                  • 按五类记忆能力定性：单跳具体事实、跨会话多跳统计/对比、带时间戳的时序关系、<strong>同一属性的“旧值 → 新值”状态更新</strong>、历史未提及事实的未知边界。<br/>
+                  <strong>② 证据拆解与位置控制阈值</strong>：<br/>
+                  • <strong>单题证据会话数</strong>：单跳/拒答题 <strong>1 条</strong>，知识更新题 <strong>2~3 条</strong>（旧状态 → 新状态），多跳统计题 <strong>2~6 条</strong>；强制<strong>间接流露（Indirect Conveyance）</strong>，禁止用户直接宣布事实。<br/>
+                  • <strong>会话内深度均衡</strong>：截断修剪使证据句等比例落在单个会话的<strong>开头、中间、结尾</strong>。<br/>
+                  <strong>③ 时间间隔与背景稀释规模安排</strong>：<br/>
+                  • 设两档规模：<code>LongMemEval_S</code> 混入约 <strong>11.5 万 tokens（40~50 个会话）</strong>，<code>LongMemEval_M</code> 混入 <strong>500 个会话（约 150 万 tokens）</strong>；按递增时间戳 <code>t_1 &lt; ... &lt; t_N &lt; t_q</code> 排列（跨度<strong>数周至数月</strong>），在旧值与新值会话间塞入大量无关会话拉开间隔。
+                </td>
+                <td>
+                  • <strong>检索阶段（<code>Recall@k</code> 与 <code>NDCG@k</code>）</strong>：按会话级或轮次级统计包含证据句的那条记录有没有进前 k 条、以及排在第几名。<br/>
+                  • <strong>阅读阶段（5 类问答准确率 QA Accuracy）</strong>：0/1 二值判分——特别是<strong>知识更新题必须答出最后一次修改后的最新值（答早期旧值直接 0 分）</strong>；<strong>未知拒答题面对虚假前提必须明确拒答（瞎编直接 0 分）</strong>。
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2. 表中四个核心评测指标速查（配网络保障例子）</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:18%;">指标名称</th>
+                <th style="width:14%;">评测阶段</th>
+                <th style="width:36%;">一句话含义</th>
+                <th style="width:32%;">网络保障例子</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>词级 F1 / ROUGE</strong></td>
+                <td>抽取或早期间答</td>
+                <td>把模型输出和标准答案拆成词，<strong>算两边重合的词占多少比例</strong>（精确率与召回率的调和平均）。</td>
+                <td>标准答案是 <code>抖音 / 1080p / 20:00</code> 三个槽位，模型抽对其中两个，按词重合算 F1。</td>
+              </tr>
+              <tr>
+                <td><strong>Recall@k</strong><br/>（前 k 条召回率）</td>
+                <td>记忆检索阶段</td>
+                <td>搜出最相关的<strong>前 k 条记忆</strong>（如 <code>k=5</code>），看<strong>真正包含答案的那条历史单据/对话在不在里面</strong>（只管在不在，不管排第几）。</td>
+                <td>100 张历史单里只有 <code>SN_015</code> 是上次体育馆顺畅单，只要它进了前 5 条，<code>Recall@5 = 1.0</code>。</td>
+              </tr>
+              <tr>
+                <td><strong>NDCG@k</strong><br/>（前 k 条排序分）</td>
+                <td>记忆检索或重排</td>
+                <td>不仅看正确记录进没进前 k 条，还看<strong>它排在第几名</strong>——排第 1 名得满分 1.0，排名越靠后按对数位置打折越狠。</td>
+                <td>若 <code>SN_015</code> 排第 1 名，<code>NDCG@5 = 1.0</code>；若前面塞了 4 张过期旧单导致它掉到第 5 名，<code>NDCG@5</code> 跌到 <code>0.39</code>。</td>
+              </tr>
+              <tr>
+                <td><strong>线索与触发字面脱钩</strong></td>
+                <td>隐式约束评测</td>
+                <td><strong>早期历史记录里的词（线索 Cue）和后期提问时的词（触发 Trigger）零字面重合</strong>，逼模型靠语义映射而非关键词匹配召回记忆。</td>
+                <td>历史单据写 <code>CellLocation="京礼高速隧道群"</code>，后期用户说<code>“去崇礼钻山洞那段路开会”</code>。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="note" style="margin-bottom:0;"><strong>论文链接</strong>：PersonaMem-v3（https://arxiv.org/abs/2608.21381）｜ RHELM（https://arxiv.org/abs/2605.31086）｜ LoCoMo（https://arxiv.org/abs/2402.17753）｜ LoCoMo-Plus（https://arxiv.org/abs/2602.10715）｜ LongMemEval（https://arxiv.org/abs/2410.10813）</p>
+      </section>
+    </div>
+    <div class="step-panel" id="panel-step-3">
+      <section class="card hero" style="margin-bottom:0;">
+        <h1>三、全流程评测指标（萃取 → 召回 → 决策）</h1>
+        <p style="margin:0 0 10px;color:var(--text-secondary);">按记忆萃取、记忆检索、下游决策三个阶段划分 6 个指标，分别定位“存没存准”、“捞没捞出”和“用没用对”。</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:16%;">评测阶段</th>
+                <th style="width:22%;">核心指标</th>
+                <th style="width:38%;">怎么算（轻公式重思路）</th>
+                <th style="width:24%;">对应哪篇论文的做法</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2"><strong>阶段 1：记忆萃取与更新</strong><br/>（存得准不准）</td>
+                <td><strong>1. 画像与经验抽取 F1</strong><br/>（Extraction F1）</td>
+                <td>把系统从单据+对话中提炼出的有效画像字段、经验规则与标准答案比对，综合看“有没有漏抽（召回率）”和“有没有瞎编（精确率）”。</td>
+                <td><strong>PersonaMem-v3 / RHELM</strong>：核验每条抽出的偏好是否都有真实单据或对话依据。</td>
+              </tr>
+              <tr>
+                <td><strong>2. 状态更新准确率</strong><br/>（Update Accuracy）</td>
+                <td>在偏好演化、设备升级或单次临时变动样本上，统计<strong>正确用新状态替代旧状态、且未把单次临时变动误记为长期习惯</strong>的比例。</td>
+                <td><strong>LongMemEval（知识更新） / PersonaMem-v3（演化追踪）</strong>：防止旧偏好残留或偶发行为污染长期画像。</td>
+              </tr>
+              <tr>
+                <td rowspan="2"><strong>阶段 2：记忆检索与召回</strong><br/>（捞没捞出来、排得靠不靠前）</td>
+                <td><strong>3. 证据召回率</strong><br/>（<code>Recall@k</code>）</td>
+                <td>检索模块返回前 <code>k</code> 条记忆（如 <code>k=5</code>），看回答当前请求真正需要的历史单据、画像条目或经验卡<strong>有没有出现在这前 <code>k</code> 条里</strong>。</td>
+                <td><strong>RHELM / LongMemEval</strong>：绑定唯一证据 ID 算 <code>Recall@k</code>，单独诊断“是不是检索漏了”。</td>
+              </tr>
+              <tr>
+                <td><strong>4. 证据排序质量分</strong><br/>（<code>NDCG@k</code>）</td>
+                <td>不仅看正确证据进没进前 <code>k</code> 条，还看<strong>当前生效的正例记录有没有排在过期旧单、卡顿废单前面</strong>（排第 1 名得满分，越往后按位置打折）。</td>
+                <td><strong>LongMemEval / PersonaMem-v3（NDCG@5）</strong>：防止虽然捞出了正确记录，但排名太靠后被旧单干扰。</td>
+              </tr>
+              <tr>
+                <td rowspan="2"><strong>阶段 3：下游决策与边界</strong><br/>（用得对不对、克不克制）</td>
+                <td><strong>5. 决策与约束满足率</strong><br/>（含一票否决红线）</td>
+                <td>检查最终决策（快路径生成工单 / 慢路径反问澄清）是否同时满足当前诉求与历史隐式约束（如场馆提前预热规则）；设<strong>一票否决红线</strong>——只要引用已过期旧档位或照搬卡顿失败单，直接判 0 分。</td>
+                <td><strong>LoCoMo-Plus（隐式约束一致性） / RHELM（两步判分） / PersonaMem-v3（一票否决 Hard Checks）</strong>。</td>
+              </tr>
+              <tr>
+                <td><strong>6. 克制率与未知拒答率</strong><br/>（Restraint &amp; Abstention）</td>
+                <td>在无关闲聊、通用通信科普或从未去过的陌生场馆提问中，统计<strong>克制不强行带入个人记忆、不瞎编参数、如实拒绝或反问</strong>的比例。</td>
+                <td><strong>PersonaMem-v3（防过度个性化克制分） / LongMemEval（未知拒答）</strong>。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <div class="step-panel" id="panel-step-4">
+      <section class="card hero">
+        <h1>四、记忆要记什么（以网络保障为例）</h1>
+        <p style="margin:0;color:var(--text-secondary);">记忆是为下一次保障决策服务的：记下来的东西要能让联接 Agent <strong>少问一句、少错一个参数、提前避开一个问题</strong>。所以按“生成一张保障工单要经过哪些决策环节、每个环节缺什么信息”来倒推要记什么。</p>
+
+        <h3>总结：三类记忆解决网络保障的什么问题</h3>
+        <div class="grid-3">
+          <div class="box green">
+            <strong class="title">事实记忆：用户说得少、说得不标准</strong>
+            <ul class="tight">
+              <li><strong>问题</strong>：用户只说“照常开播”“别卡”，缺时间、地点、参数，用词也和单据字段对不上。</li>
+              <li><strong>怎么解决</strong>：记住周期习惯、默认档位和口语映射，自动补全参数、翻译成标准字段。</li>
+              <li><strong>为什么能解决</strong>：偏好是稳定且反复出现的，可以从多次单据和对话中归纳出来；要求重复出现才确认，能避免把偶发行为当成习惯。</li>
+            </ul>
+          </div>
+          <div class="box blue">
+            <strong class="title">工作记忆：用户指代过去的某一次</strong>
+            <ul class="tight">
+              <li><strong>问题</strong>：用户说“按上周六没卡那次来”“把昨天那单推迟半小时”，需要精确找到那张单。</li>
+              <li><strong>怎么解决</strong>：原样保存每张工单和执行回执，按时间、地点、体验好坏检索；同地多单时先反问。</li>
+              <li><strong>为什么能解决</strong>：具体单据是已经发生的事实，一旦归纳成偏好就会丢掉时间、实测时长和好坏这些细节，所以要逐条保存、不合并、不衰减。</li>
+            </ul>
+          </div>
+          <div class="box amber">
+            <strong class="title">经验记忆：把“多轮澄清 / 理解失败”变成“一次快速闭环”</strong>
+            <ul class="tight">
+              <li><strong>问题</strong>：遇到特殊场馆、多单歧义或复杂诉求时，系统第一次往往理解失败（配错档位/找错单）或需要多轮反问澄清。</li>
+              <li><strong>怎么解决</strong>：把首次“多轮澄清 / 理解失败被纠正”后对齐的参数调整规则与消歧流程记为经验，下次遇到同类请求直接走快路径一次闭环。</li>
+              <li><strong>为什么能解决</strong>：用户的纠正与多轮澄清已经把“什么场景该补什么参数、怎么避开理解偏差”讲清楚了，沉淀成规则后无需每次重走慢路径。</li>
+            </ul>
+          </div>
+        </div>
+        <p class="note"><strong>为什么分三类而不是放在一起</strong>：三类信息的更新方式不同——偏好要重复确认、会过时；单据是既成事实、不能改；规则要靠执行结果验证。混在一起会互相干扰，例如把一次卡顿单当成用户偏好，或者让一次临时改动覆盖长期习惯。分开存储、分开更新，才能各自保持准确。</p>
+
+        
+        <h3>1. 三层记忆分别记什么</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:12%;">对比项</th>
+                <th style="width:29%;">事实记忆</th>
+                <th style="width:29%;">工作记忆</th>
+                <th style="width:30%;">经验记忆</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>回答什么问题</strong></td>
+                <td>这个用户是谁、平时要什么</td>
+                <td>这个用户过去具体办过哪些单、结果怎样</td>
+                <td>遇到这类情况，系统该怎么做</td>
+              </tr>
+              <tr>
+                <td><strong>网络保障中记什么</strong></td>
+                <td>周期习惯（时间、地点、应用、时长）；默认参数档位；体验三档；口语与标准名映射；服务与应用映射；临时偏好及有效期</td>
+                <td>历史保障工单台账：日期、时间段、地点、应用、业务、时长、参数；执行回执（实测时长、时延丢包、体验好坏）；改期记录</td>
+                <td>“场景 × 业务 → 问题 → 调整动作 → 结果”的因果规则；处理流程；交互策略（什么时候直接办、什么时候先问）</td>
+              </tr>
+              <tr>
+                <td><strong>归属</strong></td>
+                <td>属于单个用户</td>
+                <td>属于单个用户</td>
+                <td>按场景类型、业务类型组织；同类场馆的经验可在用户之间共用（需验证）</td>
+              </tr>
+              <tr>
+                <td><strong>主要来源</strong></td>
+                <td>多次重复的 CSV 单据归纳 + 对话中的声明</td>
+                <td>CSV 单据与执行回执 + 对话中达成的预约</td>
+                <td>首次慢路径多轮澄清、理解失败后的用户纠正 + 关联 CSV 单据表现</td>
+              </tr>
+              <tr>
+                <td><strong>怎么更新</strong></td>
+                <td>重复出现才晋升（候选 → 生效 → 稳固）；新习惯替代旧习惯；长期不用逐渐衰减；单次临时变动不覆盖</td>
+                <td>每张单一条记录，按时间追加，不合并、不衰减；改期时在原记录上平移时间</td>
+                <td>同类规则增量合并；按回执结果升降置信度，失败多次则淘汰</td>
+              </tr>
+              <tr>
+                <td><strong>怎么被使用</strong></td>
+                <td>补全用户没说的参数；把口语翻译成标准字段</td>
+                <td>用户指代历史某次时，按时间、地点、体验好坏找到那张单；同地多单时先反问</td>
+                <td>首次遇到模糊/复杂情况走慢路径（多轮澄清或纠正）并沉淀经验；后续再遇同类请求直接命中经验走快路径一次闭环</td>
+              </tr>
+              <tr>
+                <td><strong>对应融合画像</strong></td>
+                <td>A–E 维度为主（如 <code>C.active_hours</code>、<code>E.expression_mappings</code>）</td>
+                <td>CSV 单据明细与回执（画像中 <code>D.*</code> 由它聚合而来）</td>
+                <td>F 维度 <code>memory_targets</code> / <code>memory_targets_csv</code></td>
+              </tr>
+              <tr>
+                <td><strong>当前工程实现</strong></td>
+                <td><code>memory_system</code> 五类子类型：<code>preferred_value</code>、<code>scene_preference</code>、<code>service_to_app</code>、<code>periodic_preference</code>、<code>expression</code>；投票晋升 + 遗忘衰减</td>
+                <td><code>working_record</code> 静态台账，不衰减；同地多规格时两阶段消歧</td>
+                <td><code>experience</code> 规则卡，含 <code>recommended_adjustments</code>；不衰减，快慢双路径</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">三层的分界：事实记忆存“偏好”，工作记忆存“发生过的具体单据”，经验记忆存“从单据和反馈里总结出的做法”。同一件事可以同时落到三层，例如场馆卡顿那次：单据本身进工作记忆，“用户常去该场馆直播”进事实记忆，“这类场馆要提前预热”进经验记忆。</p>
+
+        <h3>2. 记与不记的判断标准</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:18%;">标准</th>
+                <th style="width:41%;">要记</th>
+                <th style="width:41%;">不记或单独处理</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. 以后会再用到</strong></td>
+                <td>周期习惯、常用参数档位、口语映射、场馆经验</td>
+                <td>一次性闲聊、通用常识问答</td>
+              </tr>
+              <tr>
+                <td><strong>2. 当下拿不到</strong></td>
+                <td>用户偏好、历史体验好坏、过去约定过的处理方式</td>
+                <td>能实时查询的信息（当前基站负载、当前套餐余量）直接查，不存记忆</td>
+              </tr>
+              <tr>
+                <td><strong>3. 有足够证据</strong></td>
+                <td>多次重复出现的行为，或用户明确要求记住的内容</td>
+                <td>只出现 1~2 次的行为先记为候选，不参与决策</td>
+              </tr>
+              <tr>
+                <td><strong>4. 时效明确</strong></td>
+                <td>长期习惯；带有效期的临时偏好（标明到期时间）</td>
+                <td>单次临时变动不覆盖长期习惯；已被纠正或替代的旧值保留但不参与决策</td>
+              </tr>
+              <tr>
+                <td><strong>5. 与保障相关</strong></td>
+                <td>影响业务、时间、地点、参数、交互方式的信息</td>
+                <td>与网络保障无关的个人隐私信息；CSV 中的背景短单、断流碎片、退订废单（清洗后再统计）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3. 按决策环节倒推要记的内容</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:13%;">决策环节</th>
+                <th style="width:19%;">需要记住什么</th>
+                <th style="width:8%;">记忆层</th>
+                <th style="width:24%;">例子</th>
+                <th style="width:18%;">产生它的故事线因子</th>
+                <th style="width:18%;">对应画像字段</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. 听懂用户说的话</strong></td>
+                <td>口语与标准名的对应、服务与应用的对应</td>
+                <td>事实</td>
+                <td>“小破站开播” = <code>bilibili_live</code> 推流；“开会”默认是腾讯会议</td>
+                <td>表达习惯、声明方式</td>
+                <td><code>E.expression_mappings</code>、<code>E.app_business_preferences</code></td>
+              </tr>
+              <tr>
+                <td><strong>2. 补全没说的参数</strong></td>
+                <td>周期习惯（时间、地点、应用、时长）与默认档位</td>
+                <td>事实</td>
+                <td>“照常开播”= 每晚 20:00、家中小区、120min、1080p</td>
+                <td>时间规律、活动空间、业务时长、偏好演化</td>
+                <td><code>B.*</code>、<code>C.active_hours</code>、<code>C.geography</code>、<code>E.allowed_scenarios</code></td>
+              </tr>
+              <tr>
+                <td><strong>3. 找到用户指的那次</strong></td>
+                <td>历史工单台账与执行回执（计划值、实测值、体验好坏）</td>
+                <td>工作</td>
+                <td>“按上周六没卡那次来”→ 找到当天体验正常的那张单据</td>
+                <td>指代方式、网络事件（多单冲突）、回执状态</td>
+                <td>工作记忆台账、<code>D.stall_proxy</code></td>
+              </tr>
+              <tr>
+                <td><strong>4. 判断这次是否特殊</strong></td>
+                <td>临时偏好及有效期、事件驱动的变化</td>
+                <td>事实</td>
+                <td>“今天暴雨先降 720p”只对今天有效</td>
+                <td>偏好演化（单次临时）、外部日历事件</td>
+                <td><code>E.transient_preference</code>、<code>E.event_driven_change</code></td>
+              </tr>
+              <tr>
+                <td><strong>5. 预判风险并调参</strong></td>
+                <td>“场景 × 业务 → 问题 → 调整动作”的因果规则</td>
+                <td>经验</td>
+                <td>人流聚集场馆推流开场易拥塞 → 提前 20~30 分钟开加速与切片</td>
+                <td>网络事件、异常时段、因果链</td>
+                <td><code>F.memory_targets</code></td>
+              </tr>
+              <tr>
+                <td><strong>6. 确定参数边界</strong></td>
+                <td>体验三档（偏好、可接受降级、拒绝底线）及其实测区间</td>
+                <td>事实</td>
+                <td>会议画质可降到 720p，但语音不能断</td>
+                <td>体验档位要求、覆盖档位</td>
+                <td><code>E.experience_param_preferences</code>、<code>D.latency_profile</code></td>
+              </tr>
+              <tr>
+                <td><strong>7. 决定怎么跟用户交互</strong></td>
+                <td>什么时候直接办、什么时候先问；用户的沟通偏好</td>
+                <td>经验</td>
+                <td>工作日常规请求不必每次确认时长</td>
+                <td>交互方式、纠正类型、沟通风格</td>
+                <td><code>F.corrections</code>、<code>F.feedback_signal</code></td>
+              </tr>
+              <tr>
+                <td><strong>8. 执行后核对结果</strong></td>
+                <td>回执结果与用户反馈，用来更新经验置信度和习惯状态</td>
+                <td>经验 / 工作</td>
+                <td>按经验预热后回执正常 → 经验置信度上升</td>
+                <td>回执状态、用户反馈</td>
+                <td><code>F.feedback_signal</code>、<code>F.memory_targets_csv</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>4. 每条记忆都要带的信息</h3>
+        <ul class="tight">
+          <li><strong>来源与证据</strong>：来自单据还是对话，挂上对应的 <code>SerialNo</code> 或会话轮次。</li>
+          <li><strong>状态</strong>：候选 / 生效 / 稳固 / 已被替代。</li>
+          <li><strong>适用范围</strong>：全局、限定场景或地点、限定时段、仅本次。</li>
+          <li><strong>时效</strong>：生效时间、有效期或过期条件。</li>
+          <li><strong>置信度</strong>：随重复次数、回执验证结果升降。</li>
+        </ul>
+
+      </section>
+    </div>
+    <div class="step-panel" id="panel-step-5">
+      <section class="card hero">
+        <h1>五、记忆是如何从短期变成长期的？（北邮 MemoryOS · 业界对比 · 四步演变逻辑）</h1>
+        <p style="margin:0 0 10px;color:var(--text-secondary);">短期记忆（单次对话、单张实时单据）不能直接等于长期记忆，否则一次偶发改期或一次卡顿废单就会把用户画像污染。参考<strong>北邮与腾讯 AI Lab 的《Memory OS of AI Agent》（arXiv:2506.06326）</strong>以及业界主流团队（Claude Code、OpenAI Codex、Mem0、Zep/Graphiti、Letta/MemGPT、上海 AI Lab MemOS），“短期 → 长期”的核心逻辑是<strong>“短期定长缓冲 → 中期按主题聚合 → 靠热度/重复次数越过阈值晋升 → 长期冲突接替与冷衰减”</strong>。</p>
+
+        <h3>1. 北邮 MemoryOS（arXiv:2506.06326）的三级演变机制：STM → MTM → LPM</h3>
+        <div class="grid-3" style="margin-top:8px;">
+          <div class="box blue">
+            <strong class="title">① 短期记忆（STM）：对话页 + 对话链 FIFO</strong>
+            <ul class="tight">
+              <li><strong>存什么</strong>：把每一轮问答存成“对话页（<code>page = {Q, R, T, meta_chain}</code>）”，放进定长队列（如 7 页）；若前后页语义连贯则串成“对话链”并生成链摘要。</li>
+              <li><strong>怎么流转</strong>：队列满时，按<strong>先进先出（FIFO）</strong>把最老的对话页弹出，移交到中期记忆（MTM）。</li>
+            </ul>
+          </div>
+          <div class="box amber">
+            <strong class="title">② 中期记忆（MTM）：操作系统“段页式”话题聚合</strong>
+            <ul class="tight">
+              <li><strong>存什么</strong>：借鉴 OS 段页式内存——<strong>“段（Segment）”是话题摘要，“页（Page）”是该话题下的具体对话页</strong>。</li>
+              <li><strong>怎么归并</strong>：新页进入时算<code>向量余弦相似度 + 关键词 Jaccard 重合度</code>；超过阈值（<code>0.6</code>）就并入已有话题段，否则新建一个段。</li>
+            </ul>
+          </div>
+          <div class="box green">
+            <strong class="title">③ 长期个人记忆（LPM）：热度分（Heat）驱动晋升</strong>
+            <ul class="tight">
+              <li><strong>晋升公式</strong>：每个段算热度 <code>Heat = α·被检索次数 + β·段内累积页数 + γ·时间衰减 exp(-Δt/μ)</code>。</li>
+              <li><strong>怎么升格与淘汰</strong>：段数超限时淘汰 <code>Heat</code> 最低的冷段；当 <code>Heat &gt; 5</code> 时，大模型从中提炼出长期事实（入 <code>User KB</code>）与 90 维偏好特征（入 <code>User Traits</code>），随后<strong>将该段累积页数清零使热度回落</strong>，防止重复提炼。</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>2. 工程界的构建思路</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:16%;">团队 / 系统</th>
+                <th style="width:24%;">记忆分层怎么建</th>
+                <th style="width:34%;">短期 → 长期怎么演变（触发与提炼逻辑）</th>
+                <th style="width:26%;">怎么处理冲突、过期与容量上限</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Claude Code</strong><br/>（Anthropic）</td>
+                <td><strong>双轨本地 Markdown 架构</strong>：<br/>① <strong>静态人工层（<code>CLAUDE.md</code>）</strong>：企业 → 用户全局 → 仓库 → 子目录 → 本地五级继承；<br/>② <strong>动态自写层（Auto Memory）</strong>：主索引 <code>MEMORY.md</code> + 按主题拆分的 <code>topic.md</code> 文件。</td>
+                <td>① <strong>实时触发写入</strong>：会话中遇到用户纠正、项目惯例或排障结论时，Agent 主动调文件工具写入对应专题文件并更新 <code>MEMORY.md</code> 索引；<br/>② <strong>后台空闲整理（Auto Dream）</strong>：系统空闲时异步扫描零散的短期笔记，合并同类项、提炼规律并清理过期条目。</td>
+                <td><strong>硬性 200 行 / 25KB 截断红线</strong>：每次会话启动只把 <code>MEMORY.md</code> 前 200 行注入系统提示词，倒逼把细节下沉到子文件按需读取；旧规则直接原地编辑替换。</td>
+              </tr>
+              <tr>
+                <td><strong>OpenAI Codex CLI</strong><br/>（Memory v2）</td>
+                <td>本地分层目录（<code>~/.codex/memories_v2</code>）：<br/>① 原始会话记录 <code>raw_memories.md</code> 与单次会话摘要；<br/>② 全局长期摘要 <code>memory_summary.md</code>。</td>
+                <td><strong>后台抽取与合并 Agent（Consolidation Agent）</strong>：单次会话结束先生成短期会话摘要；后台合并进程异步读取多次会话的原始记录，将反复出现的开发环境配置、代码风格与用户指令蒸馏进全局长期摘要。</td>
+                <td><strong>严格字节预算（Byte Caps）</strong>：单会话文件限制 <code>&lt; 9KB</code>，全局长期摘要限制 <code>&lt; 10KB</code>；超限时由合并模型压缩旧条目、覆盖冲突配置。</td>
+              </tr>
+              <tr>
+                <td><strong>Mem0</strong><br/>（arXiv:2504.19413）</td>
+                <td><strong>向量库 + 知识图谱（Mem0g）双层</strong>：不存原始长对话，只存提炼后的原子事实句与“实体—关系—实体”三元组。</td>
+                <td><strong>两步抽取 + 四动作判定</strong>：每轮新对话进来，先结合当前轮与近期滑动摘要抽出候选事实；再去向量库召回最相似的 Top-S 条已有长期记忆，由大模型通过工具调用判定执行 <strong><code>ADD</code>（新增）、<code>UPDATE</code>（更新）、<code>DELETE</code>（删除矛盾）、<code>NOOP</code>（跳过）</strong>。</td>
+                <td>靠 <code>UPDATE / DELETE</code> 原地消解冲突（如新偏好直接覆盖旧偏好节点），避免同一件事存出多条相互矛盾的向量记录。</td>
+              </tr>
+              <tr>
+                <td><strong>Zep / Graphiti</strong><br/>（arXiv:2501.13956）</td>
+                <td><strong>三层时序知识图谱</strong>：<br/>① 原始事件子图（Episode，短期原样记录）；<br/>② 语义实体子图（Entity &amp; Fact，中期事实边）；<br/>③ 社区聚类子图（Community，长期高层画像）。</td>
+                <td>每次会话或业务数据先写入 Episode 节点；异步抽取实体与关系边并入语义子图（通过向量+文本匹配合并同名实体）；再按图连通度将高频共现实体聚合成长期社区摘要。</td>
+                <td><strong>双时间戳有效期接替（不物理删旧边）</strong>：每条关系边带<code>事件生效/失效时间 (t_valid ~ t_invalid)</code> 与<code>系统记录时间</code>。偏好改变时给旧边打上截止时间 <code>t_invalid</code> 并建新边，完整保留演变历史。</td>
+              </tr>
+              <tr>
+                <td><strong>Letta / MemGPT</strong><br/>（arXiv:2310.08560）</td>
+                <td><strong>仿 OS 虚拟内存两层</strong>：<br/>① <strong>核心内存（Core Memory / RAM）</strong>：常驻提示词的可编辑文本块（<code>persona</code> 块 + <code>human</code> 块）；<br/>② <strong>外部存储（Disk）</strong>：回溯对话表（Recall）与向量归档库（Archival）。</td>
+                <td><strong>上下文压力中断 + Agent 自主换页</strong>：短期对话在窗口内累积，当达到上下文容量告警线（如 70%）时触发系统中断（Memory Pressure Warning），Agent 自己调用 <code>core_memory_append/replace</code> 把关键事实写进常驻块，或调 <code>archival_memory_insert</code> 刷入外存，再把早期对话移出窗口。</td>
+                <td>核心内存块设固定字符上限，写满时由 Agent 自主重写压缩（<code>core_memory_replace</code>）；历史原始明细全部退入外存按需检索。</td>
+              </tr>
+              <tr>
+                <td><strong>MemOS（上海 AI Lab / MemTensor）</strong><br/>（arXiv:2507.03724）</td>
+                <td><strong>按计算介质分三层</strong>：<br/>① <strong>激活记忆（Activation）</strong>：运行期 KV Cache 与短期状态；<br/>② <strong>明文记忆（Plaintext）</strong>：外部文本、图谱与规则块；<br/>③ <strong>参数记忆（Parametric）</strong>：LoRA / 模型权重。</td>
+                <td>用统一容器 <code>MemCube</code>（带来源、版本号、访问频次与权限）封装记忆：短期上下文中的高频明文知识先提升为可复用的激活缓存（KV 状态）；经过长期高频调用、验证稳定的用户固定习惯，进一步通过微调蒸馏内化为参数记忆。</td>
+                <td>由调度器（<code>MemScheduler</code>）监控访问频次与衰减率：低频过期的从激活层降级回明文层或归档淘汰，带版本号控制回滚。</td>
+              </tr>
+              <tr>
+                <td><strong>MemoryBank / A-MEM</strong><br/>（2305.10250 / 2502.12110）</td>
+                <td>• <strong>MemoryBank</strong>：原始对话日志 + 每日事件摘要 + 全局用户肖像。<br/>• <strong>A-MEM</strong>：仿卡片盒笔记法（Zettelkasten）的双向链接卡片网。</td>
+                <td>• <strong>MemoryBank</strong>：按<strong>艾宾浩斯遗忘曲线</strong> <code>R = exp(-t / S)</code> 演化——初建记忆强度 <code>S=1</code>，每次被重新提及或召回命中则 <code>S + 1</code> 且时间 <code>t</code> 清零，多次强化后升入长期肖像。<br/>• <strong>A-MEM</strong>：新记录先生成带标签的结构化卡片，再自动与历史卡片建链并<strong>反向更新旧卡片的上下文描述</strong>。</td>
+                <td>MemoryBank 中单次偶发且长期未被召回的条目随 <code>exp(-t/S)</code> 自然跌破阈值被遗忘；A-MEM 通过反向更新旧卡片总结避免旧卡片语义脱节。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3. 对联接 Agent 的思路启发：</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:16%;">演变阶段</th>
+                <th style="width:24%;">在网络保障里对应什么</th>
+                <th style="width:36%;">具体流转与晋升规则（吸收北邮 MemoryOS + Zep + Mem0）</th>
+                <th style="width:24%;">真实样本例子</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>第 1 步：短期记账与成链</strong><br/>（工作记忆 / STM）</td>
+                <td>单次保障对话、单张实时下发的工单与执行后的 24 列 CSV 回执。</td>
+                <td>• 每张单据落地即原样写入<strong>工作记忆台账</strong>（不合并、不删改）；<br/>• 借鉴北邮 MemoryOS 的<strong>对话链</strong>：把围绕同一张单的“提单 → 慢路径反问 → 用户纠正 → 事后 CSV 回执”串成一条完整事件链；<br/>• 若包含 <code>今天 / 本次临时</code> 等标记，打上 <code>is_temporary_override=true</code> 旁路隔离，<strong>禁止进入长期晋升池</strong>。</td>
+                <td>用户周三说“今天下雨，晚八点直播先降到 720p” → 原样记入工作记忆单 <code>SN_004</code>，标为单次临时变动，不改默认 1080p 画像。</td>
+              </tr>
+              <tr>
+                <td><strong>第 2 步：中期按主题归并</strong><br/>（候选池 / MTM Segment）</td>
+                <td>处于 <code>candidate / weak</code>（候选）状态的习惯条目与待验证异常记录。</td>
+                <td>• 借鉴北邮 MemoryOS 的<strong>段页式归并</strong>：当新单据或新对话从短期滑出时，按<strong>“场景/小区簇 + 业务类型 + 时间窗”</strong>计算相似度，归并到同一个中期候选段下累积证据（挂载 <code>SerialNo</code> 列表）；<br/>• 只有 1~2 条单据支撑时，状态保持为 <code>candidate</code>（单源继承策略 A 标为 <code>weak</code>），不作为快路径默认参数直接下发。</td>
+                <td>第 1、2 次在周六晚去奥体中心用抖音推流（<code>SN_008, SN_011</code>）→ 归并进“周末场馆推流”中期候选段，当前累计次数 <code>count=2</code>（候选态）。</td>
+              </tr>
+              <tr>
+                <td><strong>第 3 步：越过阈值升格长期</strong><br/>（事实 &amp; 经验记忆 / LPM）</td>
+                <td>正式生效（<code>active / reinforced</code>）的 A–F 融合画像字段与经验规则卡。</td>
+                <td>参考北邮 <code>Heat</code> 热度公式与 PersonaMem-v3 证据门限，设<strong>三条晋升通道</strong>：<br/>① <strong>隐式重复晋升（→ 事实记忆）</strong>：同一中期候选段内，一致单据累计达 <strong><code>≥ 3</code> 次</strong>（且近期未衰减）→ 状态从 <code>candidate</code> 升格为 <code>active</code> 写入长期周期习惯，并清零中期未处理计数；<br/>② <strong>显式指令直通（→ 事实/经验记忆）</strong>：用户在对话中明确立规（“以后工作日开会都保 1080p”）或给出口语映射 → 高权重直接写入长期记忆；<br/>③ <strong>慢路径澄清与纠正晋升（→ 经验记忆）</strong>：中期事件链出现“首次理解失败/缺参 → 多轮澄清或用户纠正 → 最终确认工单”的完整交互闭环 → 提炼出<code>触发条件 → 曾出理解偏差/缺口 → 正确动作与参数</code>写入长期经验库，供后续直接快路径闭环。</td>
+                <td>• 第 3 次周六在奥体中心推流（<code>SN_015</code>）后，累计达 3 次 → 自动升格为长期支线周期习惯；<br/>• 从首次去场馆时“多轮澄清/理解失败被纠正”的会话与 <code>SN_008 / SN_015</code> 对比中 → 沉淀出长期经验规则卡，下次再去直接一次闭环。</td>
+              </tr>
+              <tr>
+                <td><strong>第 4 步：长期有效期接替与衰减淘汰</strong><br/>（借鉴 Zep + MemoryBank）</td>
+                <td>套餐/设备升级、常驻地迁移、长期不再去的旧场馆支线。</td>
+                <td>• <strong>新旧状态接替（不物理硬删）</strong>：当新习惯连续达标或用户换 5G 套餐时，借鉴 Zep 给旧习惯打上失效时间戳并标为 <code>superseded</code>（转入 <code>conflict_log</code> 备查），新习惯标为 <code>active</code>；<br/>• <strong>遗忘衰减与回执淘汰</strong>：借鉴 MemoryBank 遗忘曲线与北邮热度淘汰，连续多个周期未再触发的旧支线热度自然衰减为 <code>fading/expired</code>；经验规则若后续 CSV 回执连续出现劣化则扣减置信度直至降级淘汰；<br/>• <strong>常驻容量控制（借鉴 Claude Code）</strong>：常驻注入上下文的仅限 A–F 36 字段核心表，具体单据与小区级证据按需检索加载。</td>
+                <td>第 8 周用户换新机后连续 3 单变为 4K 推流 → 原 1080p 档位自动标为 <code>superseded</code>（记录失效时间），4K 成为当前唯一生效默认档位。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>4. 论文与资料链接</h3>
+        <ul class="tight">
+          <li>北邮 + 腾讯 AI Lab《Memory OS of AI Agent》（MemoryOS）：https://arxiv.org/abs/2506.06326 （代码：https://github.com/BAI-LAB/MemoryOS）</li>
+          <li>上海 AI Lab + MemTensor《MemOS: A Memory OS for AI System》：https://arxiv.org/abs/2507.03724 / https://arxiv.org/abs/2505.22101</li>
+          <li>Mem0：https://arxiv.org/abs/2504.19413 ；Zep / Graphiti：https://arxiv.org/abs/2501.13956 ；Letta / MemGPT：https://arxiv.org/abs/2310.08560</li>
+          <li>MemoryBank：https://arxiv.org/abs/2305.10250 ；A-MEM（NeurIPS 2025）：https://arxiv.org/abs/2502.12110</li>
+        </ul>
+      </section>
+    </div>
+    <div class="step-panel" id="panel-step-6">
+      <section class="card hero">
+        <h1>六、经验记忆要学到什么</h1>
+        <p style="margin:0;color:var(--text-secondary);">事实记忆回答“用户要什么”，经验记忆回答“遇到这类情况，系统该怎么做”。经验记忆学的是因果规则：<strong>在什么条件下、因为什么原因、该做什么调整、调整后结果如何</strong>，而不是某一次的具体参数。</p>
+
+        <h3>1. 相关论文与核心工作</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:28%;">论文</th>
+                <th style="width:72%;">核心工作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Reflexion</strong>（2303.11366）</td>
+                <td>把任务执行后的环境反馈信号转成文字反思（verbal reflection），存进滑动情景记忆，下一次尝试前直接读入上下文以修正行为。</td>
+              </tr>
+              <tr>
+                <td><strong>ExpeL</strong>（2308.10144）</td>
+                <td>从一批尝试轨迹中自动收集成功案例与成对的成功/失败对比轨迹，用自然语言增删改提炼出通用结论（insights），推理时同时召回结论规则与相似成功轨迹。</td>
+              </tr>
+              <tr>
+                <td><strong>Agent Workflow Memory</strong>（2409.07429）</td>
+                <td>从历史轨迹中归纳经常复用的多步处理流程（workflows），离线或在线更新进记忆库，帮智能体在后续复杂任务中减少重复摸索步骤。</td>
+              </tr>
+              <tr>
+                <td><strong>ReasoningBank</strong>（2509.25140）</td>
+                <td>从智能体自评的成功和失败经验中提炼可泛化的高层推理策略，验证了“同时学成功与失败并抽象成策略”显著优于只存原始轨迹或只存成功流程。</td>
+              </tr>
+              <tr>
+                <td><strong>CoMem</strong>（2610.25790）</td>
+                <td>从检索到的成功与失败案例中学习生成“失败假设（failure hypotheses）”，即在动手前先预判当前任务最可能在哪一步出错，用风险预判指导当前决策。</td>
+              </tr>
+              <tr>
+                <td><strong>经验跟随实证研究</strong>（2505.16067）</td>
+                <td>系统分析了检索到的历史经验如何影响当前输出：发现经验与当前输入越相似，模型越倾向于直接照搬，容易造成错误经验传播与不匹配经验误导；并提出用后续任务的执行结果作为经验质量的免费验证标签，过滤低质经验。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2. 要抓住的五个重点（从“多轮澄清/理解失败”到“快速闭环”）</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:20%;">重点</th>
+                <th style="width:40%;">含义</th>
+                <th style="width:40%;">网络保障中的例子</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. 从多轮澄清与理解失败中提炼规则</strong></td>
+                <td>首次交互时系统为什么没一次办成（漏了什么参数、误解了哪个指代、经过几轮追问/纠正才对齐），把最终对齐的做法记成规则。</td>
+                <td>首次用户说“周六去体育馆开播”，系统直接按家里普通参数下发被用户纠正（或经 3 轮澄清才确定要提前 20 分钟开切片预热）→ 沉淀为场馆推流经验规则。</td>
+              </tr>
+              <tr>
+                <td><strong>2. 下次同类请求直接快速闭环</strong></td>
+                <td>经验记忆的核心作用是<strong>把慢路径变成快路径</strong>：下次再遇到相同场景/诉求时，不再重复追问、不再理解出错，一次生成正确工单。</td>
+                <td>后续用户再说“周六去场馆播一场”，直接命中经验补齐提前预热与切片参数，1 轮快速闭环。</td>
+              </tr>
+              <tr>
+                <td><strong>3. 条件抽象到可迁移的粒度</strong></td>
+                <td>触发条件用场景类型、业务类型、指代特征描述；具体小区、会话 ID 只作为证据挂在下面。</td>
+                <td>写“人流聚集场馆 + 上行推流”或“同地存在顺畅单与卡顿单时的指代消歧”，去另一个体育馆也能直接快速闭环。</td>
+              </tr>
+              <tr>
+                <td><strong>4. 正反对比（失败/慢路径 vs. 成功/快路径）</strong></td>
+                <td>对比“初次理解失败/未预热的差单”与“纠正后/预热后的好单”，锁定真正起作用的参数动作。</td>
+                <td>对比未预热卡顿单 <code>SN_009</code> 与多轮澄清后预热顺畅单 <code>SN_015</code>，锁定关键动作是提前 20 分钟预热。</td>
+              </tr>
+              <tr>
+                <td><strong>5. 写明适用边界与回执验证</strong></td>
+                <td>标明什么情况下不适用（防止乱套用），并用后续快路径工单的回执结果持续验证。</td>
+                <td>非赛事日或普通下行点播不套用该预热规则；后续快路径执行后回执 <code>AppQuality=good</code> 则置信度上升。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3. 经验的三种类型</h3>
+        <ul class="tight">
+          <li><strong>网络问题因果规则</strong>：什么场景、什么业务容易出什么问题，该怎么调参数（预热、切片、主辅业务分流、弱网降级保语音）。</li>
+          <li><strong>处理流程</strong>：遇到某类请求按什么顺序查记忆、判断、下发（如“指代历史单 → 先排除卡顿单 → 再复用参数”）。</li>
+          <li><strong>交互策略</strong>：什么时候该直接办、什么时候该问，来自用户的纠正和反馈（如“工作日常规请求不用每次确认时长”）。</li>
+        </ul>
+
+        <h3>4. 经验记录的结构示例</h3>
+        <pre><code>{
+  "condition": {"场景类型": "人流聚集场馆", "业务类型": "上行推流", "时段特征": "赛事日开场前后"},
+  "cause": "开场前后大量用户同时接入，空口拥塞，上行时延和丢包升高",
+  "action": {"ExpOptFlag": 1, "提前开启": "20~30 分钟", "S_NSSAI": "专网切片"},
+  "outcome": "执行后回执 DelayAn 恢复正常，AppQuality=good",
+  "scope": {"适用": "同类场馆的赛事日", "不适用": "非赛事日；下行点播业务"},
+  "evidence": ["卡顿单 SN_009", "顺畅单 SN_015", "会话 S06（首次理解偏差 → 多轮澄清与纠正）"],
+  "validation": {"成功次数": 2, "失败次数": 0, "confidence": 0.86}
+}</code></pre>
+      </section>
+    </div>
+    <div class="step-panel" id="panel-step-7">
+      <section class="card hero">
+        <h1>七、融合画像总表（A–F 六大维度）</h1>
+<h3>1. 六大维度速览</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 8%;">#</th>
+                <th style="width: 18%;">维度</th>
+                <th style="width: 42%;">一句话定位</th>
+                <th style="width: 32%;">覆盖子画像</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>A</strong></td>
+                <td><strong>身份归属</strong></td>
+                <td>这个人是谁、用什么、买什么档</td>
+                <td>身份 / 设备 / 套餐</td>
+              </tr>
+              <tr>
+                <td><strong>B</strong></td>
+                <td><strong>应用行为</strong></td>
+                <td>用哪些应用、业务结构、频次</td>
+                <td>应用画像 / 子应用 / 业务构成 / 会话统计</td>
+              </tr>
+              <tr>
+                <td><strong>C</strong></td>
+                <td><strong>时空轨迹</strong></td>
+                <td>何时在线、依赖多高、跑多少流量、在哪</td>
+                <td>时段 / 依赖度 / 流量 / 地理</td>
+              </tr>
+              <tr>
+                <td><strong>D</strong></td>
+                <td><strong>网络体验</strong></td>
+                <td>用网质量如何、偏好什么制式</td>
+                <td>体验质量 / 网络环境</td>
+              </tr>
+              <tr>
+                <td><strong>E</strong></td>
+                <td><strong>意图偏好</strong></td>
+                <td>用户嘴上要什么、场景偏好、会变什么</td>
+                <td>场景 / 临时 / 角色 / 事件 / 体验偏好 / 表达映射</td>
+              </tr>
+              <tr>
+                <td><strong>F</strong></td>
+                <td><strong>反馈记忆</strong></td>
+                <td>显式诉求、情绪、纠正、应记住什么</td>
+                <td>诉求 / 情绪 / 纠正 / 记忆目标 / 行为记忆</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2. 融合画像总表（A–F 共 36 个字段）</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 12%;">维度</th>
+                <th style="width: 24%;">字段</th>
+                <th style="width: 11%;">来源</th>
+                <th style="width: 28%;">获取 / 计算方式</th>
+                <th style="width: 25%;">字段说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="5"><strong>A 身份归属</strong></td>
+                <td><code>user_id</code> 用户标识</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 <code>Gpsi</code> 去重取用户唯一 ID</td>
+                <td>用户唯一标识，画像主键</td>
+              </tr>
+              <tr>
+                <td><code>identity</code> 身份角色</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取身份 / 职业 / 角色表述</td>
+                <td>用户自称的身份、职业或角色</td>
+              </tr>
+              <tr>
+                <td><code>device_fingerprint</code> 设备指纹</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按设备指纹列去重（无则留空）</td>
+                <td>设备唯一指纹，无该列则留空</td>
+              </tr>
+              <tr>
+                <td><code>devices</code> 终端设备</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取机型 / 系统 / 多设备表述</td>
+                <td>用户在用的机型、系统及多设备情况</td>
+              </tr>
+              <tr>
+                <td><code>subscription</code> 套餐档位</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取套餐 / 流量 / 带宽档位声明</td>
+                <td>用户当前套餐及流量/带宽档位</td>
+              </tr>
+
+              <tr>
+                <td rowspan="5"><strong>B 应用行为</strong></td>
+                <td><code>app_usage_profile</code> 应用使用画像</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 <code>AppId</code> 聚合占比，取 Top 应用</td>
+                <td>各应用使用占比及主力应用</td>
+              </tr>
+              <tr>
+                <td><code>subapp_profile</code> 子应用画像</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>在 <code>AppId</code> 内按 <code>SubAppId</code> 聚合占比</td>
+                <td>应用内子应用的细分占比（如 <code>bilibili</code> 与 <code>iqiyi</code>）</td>
+              </tr>
+              <tr>
+                <td><code>business_mix</code> 业务构成</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按业务类型（视频/语音/IM/游戏/直播）聚合占比</td>
+                <td>业务类型的流量结构</td>
+              </tr>
+              <tr>
+                <td><code>app_session_stats</code> 会话统计</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>统计会话数 / 单次时长 / 出现频次</td>
+                <td>应用使用的频次与时长统计</td>
+              </tr>
+              <tr>
+                <td><code>frequent_apps</code> 常用应用</td>
+                <td><span class="pill pill-both">对话+CSV</span></td>
+                <td>对话声明应用列表，用 CSV 使用占比校准</td>
+                <td>用户常用/常提的应用列表</td>
+              </tr>
+
+              <tr>
+                <td rowspan="8"><strong>C 时空轨迹</strong></td>
+                <td><code>active_hours</code> 活跃时段</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 <code>StartTime</code> 聚合 24 小时分布，标峰值窗口</td>
+                <td>全天 24 小时活跃分布及高峰时段</td>
+              </tr>
+              <tr>
+                <td><code>workday_vs_weekend</code> 工作日/周末</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按周几分组聚合活跃量</td>
+                <td>比对工作日与周末的活跃差异</td>
+              </tr>
+              <tr>
+                <td><code>time_preference</code> 时段偏好</td>
+                <td><span class="pill pill-both">对话+CSV</span></td>
+                <td>抽取声明时段，与 CSV 实测时段并存</td>
+                <td>用户偏好/常用时段（声明与实测并列）</td>
+              </tr>
+              <tr>
+                <td><code>dependency</code> 网络依赖度</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>聚合活跃天数 + 日均在线时长</td>
+                <td>网络使用依赖度（周活/日均在线）</td>
+              </tr>
+              <tr>
+                <td><code>data_consumption</code> 流量消耗</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按日聚合上下行包数，折算 GB 档位</td>
+                <td>日均流量消耗量级（大/常/微量）</td>
+              </tr>
+              <tr>
+                <td><code>up_down_ratio</code> 上下行比</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>聚合上下行包数之比（全局 + 分应用）</td>
+                <td>上行/下行流量比，反映创作型或消费型</td>
+              </tr>
+              <tr>
+                <td><code>geography</code> 地理足迹</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 <code>Tai, CellId</code> 聚合频次取 Top</td>
+                <td>常出现的小区及家/工作点</td>
+              </tr>
+              <tr>
+                <td><code>commute_pattern</code> 通勤模式</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>聚合高频小区对 + 时段转移</td>
+                <td>高频移动的小区对与时段转移</td>
+              </tr>
+
+              <tr>
+                <td rowspan="8"><strong>D 网络体验</strong></td>
+                <td><code>latency_profile</code> 时延画像</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>分应用聚合上下行时延的中位 / 分位</td>
+                <td>各应用的上/下行时延档位</td>
+              </tr>
+              <tr>
+                <td><code>loss_profile</code> 丢包画像</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>分应用聚合丢包占比</td>
+                <td>各应用的丢包占比</td>
+              </tr>
+              <tr>
+                <td><code>stall_proxy</code> 卡顿代理</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>聚合应用质量异常 / 状态突降次数</td>
+                <td>卡顿程度的代理指标</td>
+              </tr>
+              <tr>
+                <td><code>rat_preference</code> 制式偏好</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 <code>RatType</code> 聚合 5G 占比，<code>S_NSSAI</code> 补切片</td>
+                <td>网络制式偏好（5G 优先/长效/混合）</td>
+              </tr>
+              <tr>
+                <td><code>signal_edge</code> 覆盖档位</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>综合丢包占比与上行时延判定覆盖档位</td>
+                <td>信号覆盖档位（弱覆盖/稳定覆盖）</td>
+              </tr>
+              <tr>
+                <td><code>bandwidth_env</code> 带宽环境</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>聚合下行瞬时带宽中位（仅非零）</td>
+                <td>下行带宽档位（富余/拥堵，瞬时近似）</td>
+              </tr>
+              <tr>
+                <td><code>qci_profile</code> QoS流画像</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 <code>Qci</code> 聚合占比</td>
+                <td>QoS 流分类构成</td>
+              </tr>
+              <tr>
+                <td><code>s_nssai_profile</code> 切片画像</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 <code>S_NSSAI</code> 聚合占比</td>
+                <td>网络切片使用构成</td>
+              </tr>
+
+              <tr>
+                <td rowspan="7"><strong>E 意图偏好</strong></td>
+                <td><code>scene_preference</code> 场景偏好</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取场景（通勤/校园/弱覆盖/应急）</td>
+                <td>用户提及的场景偏好</td>
+              </tr>
+              <tr>
+                <td><code>allowed_scenarios</code> 可接受场景</td>
+                <td><span class="pill pill-both">对话+CSV</span></td>
+                <td>抽取“应用×服务×参数档位”声明，用 CSV 体验分位校准档位</td>
+                <td>可接受的应用×服务×参数档位组合</td>
+              </tr>
+              <tr>
+                <td><code>transient_preference</code> 临时偏好</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取临时偏好 + 有效期</td>
+                <td>带有效期的临时偏好</td>
+              </tr>
+              <tr>
+                <td><code>event_driven_change</code> 事件驱动变化</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取“事件→变化”+ 有效窗口</td>
+                <td>由事件驱动的偏好变化（含有效窗口）</td>
+              </tr>
+              <tr>
+                <td><code>experience_param_preferences</code> 体验参数偏好</td>
+                <td><span class="pill pill-both">对话+CSV</span></td>
+                <td>抽取偏好/降级/拒绝三档，用 CSV 时延丢包分位校准</td>
+                <td>体验参数的偏好/降级/拒绝三档</td>
+              </tr>
+              <tr>
+                <td><code>app_business_preferences</code> 业务映射偏好</td>
+                <td><span class="pill pill-both">对话+CSV</span></td>
+                <td>抽取“服务→应用”映射，用 CSV 占比校准</td>
+                <td>服务到应用的映射偏好（如会议→腾讯会议）</td>
+              </tr>
+              <tr>
+                <td><code>expression_mappings</code> 表达映射</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取别名/时段/画质/速度短语映射到槽位</td>
+                <td>用户口语短语到参数槽位的映射（高清=1080p / 别卡=100ms）</td>
+              </tr>
+
+              <tr>
+                <td rowspan="5"><strong>F 反馈记忆</strong></td>
+                <td><code>active_requests</code> 主动诉求</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取显式诉求（提速/换网络/改画质）</td>
+                <td>用户显式提出的诉求（行动项）</td>
+              </tr>
+              <tr>
+                <td><code>feedback_signal</code> 反馈情绪</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取确认达成 / 多轮澄清 / 理解偏差纠正信号</td>
+                <td>用户反馈的情绪极性</td>
+              </tr>
+              <tr>
+                <td><code>corrections</code> 纠正记录</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取“我说的是 X 不是 Y”纠正</td>
+                <td>用户对先前信息的纠正记录</td>
+              </tr>
+              <tr>
+                <td><code>memory_targets</code> 对话记忆目标</td>
+                <td><span class="pill pill-dlg">对话</span></td>
+                <td>抽取应形成长期记忆的诉求 / 事实</td>
+                <td>对话侧应形成长期记忆的诉求/事实</td>
+              </tr>
+              <tr>
+                <td><code>memory_targets_csv</code> 行为记忆目标</td>
+                <td><span class="pill pill-csv">CSV</span></td>
+                <td>按 17 标签 / 21 规则聚合应形成记忆</td>
+                <td>行为侧应形成长期记忆的内容</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3. 来源、四类融合策略与关键口径</h3>
+        <div class="grid-2">
+          <div class="box green">
+            <strong class="title">来源说明与融合策略（来源为 对话+CSV 时）</strong>
+            <ul class="tight">
+              <li><strong>对话</strong>：从 Agent 对话上下文抽取（意图/声明/诉求/纠正），无 CSV 真源；</li>
+              <li><strong>CSV</strong>：从行为单据列聚合（证据），按 <code>Gpsi</code> 归用户；</li>
+              <li><strong>对话+CSV</strong>：双侧都有，按 4 类策略融合：
+                <ol style="margin: 4px 0 0; padding-left: 18px;">
+                  <li><strong>A 单源继承</strong>：仅一侧有 → 直接取，无 CSV 支撑标 <code>weak</code>。</li>
+                  <li><strong>B 主证据 + 辅校准</strong>：声明为主，用 CSV 分位数把档位校准到实测区间。</li>
+                  <li><strong>C 双侧并存</strong>：意图与行为并列，声明与实测并列（<code>∥</code>），不覆盖。</li>
+                  <li><strong>D 冲突仲裁</strong>：语义矛盾，意图/纯声明字段保留对话，行为/体验字段取 CSV 值，入 <code>conflict_log</code>。</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+          <div class="box blue">
+            <strong class="title">关键口径与 CSV 24 列</strong>
+            <ul class="tight">
+              <li><strong>CSV 是行为证据，不是偏好声明</strong>：偏好必须由行为归纳，冲突在融合阶段消除。</li>
+              <li><strong>无 GIS 时</strong>：地理 / 通勤字段降级为弱证据（仅小区 ID 频次，不做定性 OD）。</li>
+              <li><strong>体验档位推断</strong>：无 <code>AvgQoe / MostResolution</code> 列，体验档位由 <code>DelayAn / DelayDn / 丢包 / Bandwidth / AppQuality</code> 组合推断。</li>
+              <li><strong>CSV 实测列（24 列）</strong>：<code>SerialNo, TimeStamp, StartTime, Gpsi, Dnn, S_NSSAI, RatType, Qci, ExpOptFlag, ExpOptStartTime, AppId, SubAppId, AppStatus, AppQuality, Tai, CellId, DelayAn, DelayDn, UplinkBandwidth, DownlinkBandwidth, UplinkPkg, DownlinkPkg, LostUplinkPkg, LostDownlinkPkg, SubAppStartTime, InfoIndicate</code>。</li>
+            </ul>
+          </div>
+        </div>
+
+              </section>
+    </div>
+  </main>
+
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('btn-theme-parchment').classList.toggle('active', theme === 'parchment');
+      document.getElementById('btn-theme-github').classList.toggle('active', theme === 'github');
+    }
+    function setViewMode(mode) {
+      document.body.setAttribute('data-view', mode);
+      document.getElementById('btn-view-step').classList.toggle('active', mode === 'step');
+      document.getElementById('btn-view-all').classList.toggle('active', mode === 'all');
+    }
+    function selectStep(n) {
+      if (document.body.getAttribute('data-view') !== 'step') setViewMode('step');
+      for (let i = 1; i <= 7; i++) {
+        document.getElementById('tab-step-' + i).classList.toggle('active', i === n);
+        document.getElementById('panel-step-' + i).classList.toggle('active', i === n);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

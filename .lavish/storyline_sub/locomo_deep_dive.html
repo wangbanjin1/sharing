@@ -307,6 +307,33 @@
           </tbody>
         </table>
       </div>
+      <h3>具体例子对比：传统字面重合评测 vs. LoCoMo-Plus 字面不一致评测</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 18%;">场景</th>
+              <th style="width: 26%;">早期历史记录（埋点 Cue）</th>
+              <th style="width: 28%;">传统评测提问（字面高度重合，靠关键词就能搜出）</th>
+              <th style="width: 28%;">LoCoMo-Plus 提问（字面完全不重合，需理解背后的隐式约束）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>例子 1：原论文日常场景</strong><br/>（饮食与身体状况约束）</td>
+              <td>第 2 轮对话中用户提到：<br/>“医生上周查出我有严重的<strong>乳糖不耐受</strong>，以后一点牛奶和芝士都不能碰了。”</td>
+              <td>“我有什么<strong>食物不耐受</strong>？能喝<strong>牛奶</strong>吗？”<br/><em>（直接命中关键词“不耐受 / 牛奶”，BM25 或简单正则直接召回）</em></td>
+              <td>第 25 轮用户说：“今晚朋友聚餐去一家意大利餐厅，帮我挑两道适合我点的招牌菜。”<br/><em>（提问里没有任何“牛奶/乳糖/过敏”字眼，但模型必须主动召回乳糖不耐受记忆，避开奶油意面和芝士披萨）</em></td>
+            </tr>
+            <tr>
+              <td><strong>例子 2：我们的通信保障场景</strong><br/>（单据标准名称与口语不一致）</td>
+              <td>Day 03 网元单据记录：<br/><code>cell_location: "京礼高速隧道群路段"</code><br/><code>application: "腾讯会议"</code><br/><code>qos: "720p | 100ms"</code></td>
+              <td>“帮我查一下我在<strong>京礼高速隧道群路段</strong>开<strong>腾讯会议</strong>用的是什么参数？”<br/><em>（提问直接照抄单据里的标准字段名）</em></td>
+              <td>Day 15 用户说：“今天下午又要坐大巴<strong>去崇礼钻山洞那段路</strong>，一会儿车上有个<strong>线上例会</strong>，帮我按上次那套配置保一下。”<br/><em>（“去崇礼钻山洞那段路”与“京礼高速隧道群”字面零重合，需靠语义检索关联到 Day 03 单据并提取 <code>720p | 100ms</code>）</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section class="card">
