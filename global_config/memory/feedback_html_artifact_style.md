@@ -1,32 +1,29 @@
 ---
 name: feedback-html-artifact-and-terminology-style
-description: Visual, structural, modular sub-HTML folder organization, formula rendering, academic tone, and Lavish workflow standards for HTML technical reports
+description: Visual, structural, modular sub-HTML folder organization, Mermaid diagram priority over code dumps, formula restraint, plain academic tone, and Lavish workflow standards for HTML technical reports
 type: feedback
 ---
 
-技术分享、方案对齐、设计维度溯源与评测报告统一归档至 **`.lavish/` 目录**（主 HTML 置于 `.lavish/` 根目录，所有子 HTML 强制收纳进专属子文件夹，并同步注册为会话 HTML Artifact 支持 `lavish-axi` 实时批注），严格执行客观平实的总结语态、CSS Grid 自适应架构图、克制公式与原生 Unicode 符号渲染，以及纯白底色 PDF 打印规范。
+技术分享、方案对齐、设计维度溯源与评测报告统一归档至 **`.lavish/` 目录**（主 HTML 置于 `.lavish/` 根目录并优先用多 Tab 页组织同级专题，跨文件长篇论文/样本子 HTML 强制收纳进专属子文件夹，同步注册为会话 HTML Artifact 支持 `lavish-axi` 实时批注），严格执行极简客观标题、零铺垫废话、重逻辑思路与 Mermaid 框图（非代码任务不贴代码）、轻公式重思路，以及纯白底色 PDF 打印规范。
 
 **Why:** 
-1. **目录管理与单页过载问题**：若分享或报告分散在不同目录，或者将子 HTML 与主 HTML 混放平铺在 `.lavish/` 根目录，会导致主入口不清晰、不方便在 Lavish 中集中管理与修改；将方法论主干、单篇论文深度剖析与数十轮样本推演拆为主从页面并将子页收入文件夹，能让 `.lavish/` 根目录一目了然；
-2. **公式喧宾夺主与渲染乱码**：过度堆砌形式化公式会掩盖工程机制本质，且行内简单比较符（如 `$\ge 3$`、`$\mathcal{C}$`）若依赖外部 CDN 极易因网络或转义问题暴露出未渲染的 `$` 源码；
-3. **语态与自证倾向**：口语化词汇（如“堵死作弊捷径”、“瞎编”）或刻意强调“★★★ 强实证直接支撑”会削弱技术文档的客观性；直接陈述“`<功能/因子>` —— 参考 `<论文名称>`”更自然清晰；
-4. **定宽 SVG 截断与打印底色污染**：定宽 SVG `<rect>` 内嵌中文极易截断溢出；米纸主题（`#FBF7F0`）若未配置 `@media print` 白底，导出 PDF 时会在页面周围留下黄框。
+1. **标题冗长与元话语铺垫干扰阅读**：诸如“为什么必须用 X 而非 Y？”的设问式标题、“将……合并为一张总表 / 只保留最关键的 X 件事 / 合并精简版”等解释文档自身排版的车轱辘话，以及“核心矛盾”等夸张修辞，会稀释核心技术信息；直接给简洁标题并用“难点在于 / 关键问题在于”切入正题最高效；
+2. **思考文档中贴代码喧宾夺主**：在对齐算法思路、记忆演变或评测方案阶段，贴大段 Python 代码或罗列本地 `.py` 文件名会分散对机制逻辑本身的关注；用 横向 Mermaid 流程图（`flowchart LR`，节点文字简短清晰）+ 四步核心环节卡片 + 真实样本表格能更直观地把逻辑讲透；
+3. **评测集与指标拆解需抓准量化设计**：看前沿论文的数据集不能只看表面类别，必须看清“记忆定性 → 量化阈值（出现多少次/多少分算长期记忆）→ 时间跨度与间隔排布”，且指标只需保留每阶段最核心的 2 项（轻公式重思路）；
+4. **Lavish 默认批注模式拦截普通超链接**：Lavish 默认开启 `Annotate` 模式并在捕获阶段拦截普通 `<a>` 标签左键点击；同级子专题直接作为主文档的第 N 个 Tab 页（`<button class="step-tab">`），或给跨页链接加 `data-lavish-ui="true"`，才能保证左键直接点击切换。
 
 **How to apply:** 
-1. **`.lavish/` 统一归档、主从式多页 HTML 拆分与子文件夹收纳（Sub-HTML Folder Isolation & In-Context Linking）**：
-   - **统一归档至 `.lavish/`**：所有技术分享（`sharing`）、方法论与架构评测 HTML 统一集中归档在 `.lavish/` 目录下管理与修改；
-   - **主 HTML 置于 `.lavish/` 根目录**：保持简洁、扼要、一针见血，聚焦核心架构与设计维度对照表，采用有明确语义的文件名（如 `hybrid_ticket_dialogue_storyline_methodology.html`、`agent_bench_evaluation_hub.html`，避免平铺同名 `index.html`）；
-   - **子 HTML（Sub-HTML）强制收纳进子文件夹**：单篇核心论文深度拆解（如 `storyline_sub/personamem_v3_deep_dive.html`、`papers/*.html`）、长篇逐轮样本全景推演（如 `storyline_sub/storyline_sample_walkthrough.html`）必须放入专属子文件夹中，**严禁直接平铺在 `.lavish/` 根目录**；在主页面**直接将上下文中的论文名称（如 `<a href="storyline_sub/personamem_v3_deep_dive.html"><code>PersonaMem-v3</code></a>`）或样本描述文字设为内联超链接点击跳转**，子页面返回按钮指向 `../<main>.html`，不在顶栏或页面首尾额外堆砌独立跳转按钮。
-2. **平实直白总结语态与三列维度溯源表（拒绝过度包装抽象词）**：
-   - 全文保持普通总结思考文档的自然、直白语感，禁用口语化黑话、生硬的 `vs.` / `+` 拼接标题，**更严禁将简单机制包装成生涩抽象的学术造词**（如用“多次重复才记为长期习惯”代替“隐式证据累积门限”，用“单据标准名称与用户口语不一致”代替“线索-触发跨模态语义脱钩”，用“无关问题不强行带入个人记忆”代替“反过度个性化克制门控”）；
-   - 阐述机制与论文关系时直接写“`<功能机制>` —— 参考 `<论文名称>`”，去除刻意强调的“支撑”或“来源于”，不空泛套用“标准”二字；
-   - 维度表标题简洁直接（如 `七个设计维度及其影响因子`），统一采用三列表头：**`设计维度 | 影响因子与业务定义 | 参考论文`**，其中 `参考论文` 列直接写**“论文名字：该论文对应的大概工作”**，不堆砌繁琐的章节号/图表号。
-3. **克制公式与零未渲染 `$` 源码铁律**：
-   - 非核心不写复杂数学公式；行内符号、不等式与上下标（如 `≥ 3`、`±10min`、`Δk`、`→`、`R_NE`）统一使用原生 Unicode 与 HTML `<code>/<sub>/<sup>` 标签，确保离线/无 CDN 环境下 100% 零 `$` 乱码；
-   - 确需保留的核心公式下方必须紧跟符号释义列表。
-4. **视觉、防溢出卡片与 PDF 打印白底**：
-   - 架构图统一使用 CSS Grid / Flexbox 自适应卡片 + 轻量 SVG 连接线；代码块统一使用浅色底（`#F2ECE1` / `#F6F8FA`）；
-   - `@media print` 强制设置 `html, body { background: #FFFFFF !important; }` 与 `@page { margin: 12mm; }`。
-5. **HTML Artifact 与 Lavish 协同工作流**：
-   - 使用 `write_file`（含 `ArtifactMetadata`）在会话 Artifact 目录生成 `.html` 供 IDE 预览，同时同步至项目 `.lavish/`；
-   - 用户需要交互式修改时，通过 `lavish-axi.cmd <path.html>` 启动本地服务并用 `lavish-axi.cmd poll <path.html>` 后台持续监听、自动应用批注并回传 `--agent-reply`。
+1. **极简标题、零铺垫车轱辘话与平实语态**：
+   - 标题简短直接（如 `八、交互模拟与评测`、`2. 工程界的构建思路`、`3. 对联接 Agent 的思路启发：`），**严禁使用“为什么……”设问句做标题**；
+   - **严禁写解释排版动作的元话语**（如“合并精简版”、“只保留最关键”、“为了让……体现得淋漓尽致”），不用“核心矛盾”（改用“难点 / 关键问题”）；
+   - 拒绝生造抽象词（用“多次重复才记为长期习惯”代替“隐式证据累积门限”，用“单据标准名称与用户口语不一致”代替“线索-触发跨模态语义脱钩”）。
+2. **重思路与 Mermaid 框图，非代码任务不贴源码**：
+   - 讲架构、评测或记忆机制时，优先使用 **横向 Mermaid 流程图（`<div class="mermaid">flowchart LR`，横向排布适配宽屏、节点文字简短不用 `<br/>`）+ 模块逻辑卡片 + 1 个真实样本走查**；
+   - 除非用户明确要求编写代码，否则不在方案文档中贴 Python 代码块或引用具体 `.py` 脚本文件名。
+3. **评测数据集三层拆解与“轻公式重思路”指标规范**：
+   - 论文评测集对比表统一采用四列：**`论文 | 评测集构建思路 | 记忆的设计和安排 | 核心评测指标与打分规则`**，其中第 3 列按 **`① 记忆定性 → ② 量化阈值与设计规则（次数/分值门槛）→ ③ 时间间隔与排布安排`** 三层书写；
+   - 评测指标坚持**“轻公式重思路”**，聚焦核心指标（每阶段 2 个），讲清判分逻辑（如一票否决红线 Hard Checks + 软评分）与业务例子。
+4. **`.lavish/` 统一归档、多 Tab 导航与 Lavish 点击放行**：
+   - 同主题新增并列专题优先并入主 HTML 的 `<nav class="step-bar">` 作为新 Tab 页（如 `Tab 1..8`），不在顶栏额外加突兀按钮；
+   - 独立深度拆解子 HTML 放入 `.lavish/<topic>_sub/` 或 `.lavish/papers/`，跨页跳转元素添加 `data-lavish-ui="true"` 或使用 `<button>`；
+   - 保持双浅色主题（`#FBF7F0` / `#F6F8FA`）、浅底代码块、零未渲染 `$` 源码，以及 `@media print` 纯白背景（`#FFFFFF !important`）。

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="parchment">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联接 Agent 交互模拟评测与指标计算代码方案</title>
+  <style>
+    :root, [data-theme="parchment"] {
+      --bg-page: #FBF7F0;
+      --bg-card: #FFFDF9;
+      --bg-elevated: #F5EFE4;
+      --bg-code: #F2ECE1;
+      --text-main: #2C2520;
+      --text-secondary: #5C5248;
+      --text-muted: #8A7E72;
+      --border-color: #E2D9C8;
+      --border-strong: #C9BBA6;
+      --accent-primary: #8C4A27;
+      --accent-secondary: #2B5B6C;
+      --semantic-red-bg: #FDF2F2;
+      --semantic-red-border: #E5A9A9;
+      --semantic-red-text: #8B2626;
+      --semantic-green-bg: #F1F8F4;
+      --semantic-green-border: #9BC9AE;
+      --semantic-green-text: #1E5E3A;
+      --semantic-blue-bg: #F0F6FA;
+      --semantic-blue-border: #A3C4DC;
+      --semantic-blue-text: #1F4E70;
+      --semantic-amber-bg: #FEF8EC;
+      --semantic-amber-border: #E6C88A;
+      --semantic-amber-text: #7D5211;
+      --shadow-sm: 0 2px 6px rgba(44, 37, 32, 0.05);
+    }
+
+    [data-theme="github"] {
+      --bg-page: #F6F8FA;
+      --bg-card: #FFFFFF;
+      --bg-elevated: #EEF2F6;
+      --bg-code: #F6F8FA;
+      --text-main: #1F2328;
+      --text-secondary: #4D5562;
+      --text-muted: #6E7781;
+      --border-color: #D0D7DE;
+      --border-strong: #AFB8C1;
+      --accent-primary: #0969DA;
+      --accent-secondary: #1A7F37;
+      --semantic-red-bg: #FFEBE9;
+      --semantic-red-border: #FF818266;
+      --semantic-red-text: #CF222E;
+      --semantic-green-bg: #DAFBE1;
+      --semantic-green-border: #4AC26B66;
+      --semantic-green-text: #1A7F37;
+      --semantic-blue-bg: #DDF4FF;
+      --semantic-blue-border: #54AEFF66;
+      --semantic-blue-text: #0969DA;
+      --semantic-amber-bg: #FFF8C5;
+      --semantic-amber-border: #D4A72C66;
+      --semantic-amber-text: #9A6700;
+      --shadow-sm: 0 1px 3px rgba(31, 35, 40, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.62;
+      font-size: 14.5px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--accent-primary);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .back-link:hover { background: var(--accent-primary); color: #fff; text-decoration: none; }
+    .topbar-badge {
+      background: var(--accent-secondary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .topbar-title { font-size: 15.5px; font-weight: 700; }
+    .topbar-controls { display: flex; align-items: center; gap: 8px; }
+
+    .btn-group {
+      display: inline-flex;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .btn-toggle {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 5px 11px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-toggle.active { background: var(--accent-primary); color: #fff; }
+
+    .container { max-width: 1320px; margin: 0 auto; padding: 20px 24px 56px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card.hero { border-left: 5px solid var(--accent-primary); }
+
+    h1 { font-size: 19.5px; font-weight: 800; margin: 0 0 8px; }
+    h2 {
+      font-size: 16.5px;
+      font-weight: 800;
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    h3 { font-size: 14.8px; font-weight: 700; margin: 16px 0 8px; color: var(--text-main); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 14px;
+      margin: 10px 0;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .box {
+      border-radius: 8px;
+      padding: 13px 16px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-elevated);
+      font-size: 13.5px;
+    }
+    .box.red { background: var(--semantic-red-bg); border-color: var(--semantic-red-border); }
+    .box.green { background: var(--semantic-green-bg); border-color: var(--semantic-green-border); }
+    .box.blue { background: var(--semantic-blue-bg); border-color: var(--semantic-blue-border); }
+    .box.amber { background: var(--semantic-amber-bg); border-color: var(--semantic-amber-border); }
+    .box strong.title { display: block; font-size: 14px; margin-bottom: 6px; color: var(--text-main); }
+
+    .pipe-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-top: 4px solid var(--accent-primary);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+    .pipe-node.blue { border-top-color: var(--accent-secondary); }
+    .pipe-node.green { border-top-color: var(--semantic-green-text); }
+    .pipe-node.amber { border-top-color: var(--semantic-amber-text); }
+    .pipe-title { font-weight: 700; font-size: 13.8px; margin-bottom: 5px; color: var(--text-main); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--bg-card); }
+    th {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      font-weight: 700;
+      text-align: left;
+      padding: 9px 12px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+      color: var(--text-secondary);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-elevated); }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      margin-top: 3px;
+    }
+    .badge-blue { background: var(--semantic-blue-bg); color: var(--semantic-blue-text); border: 1px solid var(--semantic-blue-border); }
+    .badge-green { background: var(--semantic-green-bg); color: var(--semantic-green-text); border: 1px solid var(--semantic-green-border); }
+    .badge-amber { background: var(--semantic-amber-bg); color: var(--semantic-amber-text); border: 1px solid var(--semantic-amber-border); }
+    .badge-red { background: var(--semantic-red-bg); color: var(--semantic-red-text); border: 1px solid var(--semantic-red-border); }
+
+    pre, code { font-family: "JetBrains Mono", Consolas, monospace; }
+    code {
+      background: var(--bg-code);
+      border: 1px solid var(--border-color);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12.3px;
+      color: var(--accent-primary);
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      font-size: 12.3px;
+      line-height: 1.55;
+      color: var(--text-main);
+      margin: 8px 0 0;
+    }
+    pre code { border: none; padding: 0; background: transparent; color: inherit; }
+
+    ul.tight { margin: 4px 0 0; padding-left: 18px; color: var(--text-secondary); }
+    ul.tight li { margin-bottom: 4px; }
+    .note { font-size: 13px; color: var(--text-muted); margin: 6px 0 0; }
+
+    a { color: var(--accent-primary); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    @media print {
+      @page { margin: 12mm; }
+      html, body { background: #FFFFFF !important; }
+      .topbar { position: static; box-shadow: none; }
+      .topbar-controls { display: none !important; }
+      .card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-brand">
+      <a data-lavish-ui="true" class="back-link" id="back-to-main" href="../fused_profile_and_evaluation_spec.html#step-3" onclick="return handleBackToMain(event)">← 返回主文档（故事线·画像·记忆·指标）</a>
+      <span class="topbar-badge">INTERACTIVE EVAL HARNESS</span>
+      <span class="topbar-title">用户–Agent 在线交互模拟评测与指标计算代码方案</span>
+    </div>
+    <div class="topbar-controls">
+      <div class="btn-group">
+        <button class="btn-toggle active" id="btn-theme-parchment" onclick="setTheme('parchment')">暖阳米纸</button>
+        <button class="btn-toggle" id="btn-theme-github" onclick="setTheme('github')">GitHub 简洁</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 第一部分：痛点与目标机制对比 -->
+    <section class="card hero">
+      <h1>一、为什么评测 Agent 能力必须用“在线交互模拟”而非静态剧本回放？</h1>
+      <p style="margin:0 0 10px;color:var(--text-secondary);">
+        评测多轮记忆与意图 Agent 时，核心矛盾在于：<strong>被测 Agent 每一轮的回复是动态生成的</strong>（可能走快路径直接出单，也可能走慢路径追问不同槽位）。如果评测代码只按固定剧本逐行塞入写死的 <code>U1 → U2 → U3</code>，一旦 Agent 追问的方向与剧本预设不一致，后续对话就会答非所问。
+      </p>
+
+      <div class="grid-2">
+        <div class="box red">
+          <strong class="title" style="color:var(--semantic-red-text);">现状痛点：静态固定剧本回放（Teacher-Forcing，当前 <code>session_eval.py</code>）</strong>
+          <ul class="tight">
+            <li><strong>次轮台词写死</strong>：<code>session_turns(session)</code> 直接读取数据集里预生成的 <code>U1, U2, U3</code> 逐轮喂给被测 Agent。</li>
+            <li><strong>无法评测快慢路径分流与澄清质量</strong>：假设被测 Agent 在第 1 轮漏问了“画质档位”只问了“时长”，写死的 <code>U2</code> 依然把画质和时长全吐出来，掩盖了 Agent 漏问的缺陷；反过来，若 Agent 命中经验记忆本该 1 轮直接闭环，静态回放还会强行喂入 <code>U2</code>。</li>
+            <li><strong>缺少检索中间态与证据溯源校验</strong>：只比对最终 7 个槽位字面是否相等（JGA），没校验该槽位是真从历史记忆捞出来的，还是大模型瞎猜碰巧蒙对的。</li>
+          </ul>
+        </div>
+        <div class="box green">
+          <strong class="title" style="color:var(--semantic-green-text);">目标机制：物理信息隔离的在线双端交互评测（User-in-the-Loop Harness）</strong>
+          <ul class="tight">
+            <li><strong>受控用户模拟器动态应答</strong>：复用 <code>isolated_views.py</code> 的物理隔离视图——<code>UserSimulator</code> 手握完整目标意图，但第 1 轮被限制只能说出模糊诉求（<code>turn1_allowed_slots</code>）；后续轮次<strong>严格遵循“Agent 问了哪个槽位，才回答哪个槽位”</strong>。</li>
+            <li><strong>自然检验快路径与慢路径</strong>：Agent 第 1 轮若直接输出 <code># status: resolved</code> 则当场结束交互结算得分；若输出 <code># status: pending</code> 并发起澄清提问，则进入多轮交互循环（最多 <code>max_turns = 5</code>）。</li>
+            <li><strong>分段全链路算分</strong>：在同一套循环里同步采集并结算<strong>记忆检索分（<code>Recall@k / NDCG@k</code>）、交互路由分（<code>Route F1</code> / 平均轮数）、有依据终态槽位分（<code>Grounded JGA</code> + 一票否决红线）与多轮稳定性（<code>pass^k</code>）</strong>。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第二部分：学术界与工业界相关工作 -->
+    <section class="card">
+      <h2>二、学术界与工业界 6 项代表性工作（交互怎么模拟 + 指标怎么算）</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:18%;">论文 / 开源框架</th>
+              <th style="width:30%;">用户–Agent 交互过程怎么模拟</th>
+              <th style="width:28%;">核心指标与算分方式</th>
+              <th style="width:24%;">对我们评测代码的可落地启发</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>1. τ-bench &amp; τ²-bench</strong><br/>
+                （Sierra &amp; Princeton）<br/>
+                <a data-lavish-ui="true" href="https://arxiv.org/abs/2406.12045" target="_blank">2406.12045</a> / <a data-lavish-ui="true" href="https://arxiv.org/abs/2506.07982" target="_blank">2506.07982</a><br/>
+                <a data-lavish-ui="true" href="tau_bench_deep_dive.html">查看专题拆解 →</a>
+              </td>
+              <td>
+                • <strong>双端闭环循环</strong>：大模型驱动 <code>User Simulator</code>（仅给定任务目标与性格，按轮次渐进提供信息），被测 <code>Agent</code> 自由发起工具调用或向用户追问，直到发出停止信号或达最大轮数。<br/>
+                • <strong>τ²-bench（电信域 Telecom）</strong>：升级为 Pomdp 双控环境，用户端与网元侧各自拥有局部可观测视图。
+              </td>
+              <td>
+                • <strong>终态数据库断言（Final DB State Assertion）</strong>：完全不比对聊天字面，直接核对交互结束后的数据库状态与标准状态是否全等（0/1 奖励 <code>r ∈ {0, 1}</code>）。<br/>
+                • <strong>多轮运行一致性 <code>pass^k</code></strong>：同一任务跑 <code>n</code> 次（成功 <code>c</code> 次），算连续 <code>k</code> 次全成功的组合概率 <code>C(c, k) / C(n, k)</code>。
+              </td>
+              <td>
+                我们的终态评分直接复用 <code>session_eval.py</code> 的 7 槽位全等断言，并增加 <strong><code>pass^3</code>（同一会话独立跑 3 次全过率）</strong>评估稳定性。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>2. ToolSandbox</strong><br/>
+                （Apple，NAACL 2025）<br/>
+                <a data-lavish-ui="true" href="https://arxiv.org/abs/2408.04682" target="_blank">2408.04682</a><br/>
+                <a data-lavish-ui="true" href="../papers/stateful_tool_user.html">查看专题拆解 →</a>
+              </td>
+              <td>
+                • <strong>隐式状态依赖与信息不足罠</strong>：故意在首轮隐去必填参数（Insufficient Information），看 Agent 会不会盲目调用工具，还是先向用户模拟器发起澄清提问。<br/>
+                • <strong>动态世界状态更新</strong>：每轮交互与工具执行都会实时修改内存状态树。
+              </td>
+              <td>
+                • <strong>里程碑加权匹配（Milestone Evaluation + Minefield）</strong>：在交互轨迹上定义必经的关键状态节点（Milestones）和绝对不能踩的<strong>雷区（Minefields，如未澄清就盲目下发错误指令，踩中直接 0 分）</strong>，按序列匹配算分。
+              </td>
+              <td>
+                非常适合测我们的<strong>快慢路径切换</strong>：缺参或同地多单冲突时直接下发 <code># intent:</code> 记为踩中<strong>盲目抢跑雷区（Premature Action Minefield）</strong>直接判 0 分。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>3. AppWorld &amp; AppWorld-UL</strong><br/>
+                （Stony Brook &amp; AWS AI）<br/>
+                <a data-lavish-ui="true" href="https://arxiv.org/abs/2407.18901" target="_blank">2407.18901</a> / <a data-lavish-ui="true" href="https://arxiv.org/abs/2607.20536" target="_blank">2607.20536</a><br/>
+                <a data-lavish-ui="true" href="../papers/stateful_tool_user.html">查看专题拆解 →</a>
+              </td>
+              <td>
+                • <strong>9 类应用 + 457 个 API 沙盒</strong>：<code>AppWorld-UL</code>（2026-07）专门加入<strong>多种沟通风格的人类用户模拟器（含口语省略、中途改主意、分批给条件）</strong>，测试 Agent 边查历史记录边与用户核对。
+              </td>
+              <td>
+                • <strong>基于状态 Diff 的单元测试（State-Based Unit Tests）</strong>：每个任务绑定一组验证脚本：① 检查目标记录是否精准创建/修改；② <strong>检查无关记录是否零误伤（Zero Collateral Damage）</strong>。
+              </td>
+              <td>
+                评测阶段 1（记忆更新）与阶段 3（多意图取消 <code># cancel:</code>）时，不仅要查目标意图是否正确，还要断言<strong>同会话其他意图与无关记忆行未被误删或污染</strong>。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>4. ClarifyMT-Bench &amp; Clarification ≠ Correction</strong><br/>
+                （华为诺亚方舟实验室等）<br/>
+                <a data-lavish-ui="true" href="https://arxiv.org/abs/2512.21120" target="_blank">2512.21120</a> / <a data-lavish-ui="true" href="https://arxiv.org/abs/2609.25337" target="_blank">2609.25337</a><br/>
+                <a data-lavish-ui="true" href="clarifymt_bench_deep_dive.html">查看专题拆解 →</a>
+              </td>
+              <td>
+                • <strong>五维模糊分类与混合动作仿真</strong>：构造潜在欠指定（Underspecified）与错误前提请求，用户模拟器在多轮中执行<strong>“部分澄清 + 中途参数修正（Revision）”</strong>混合动作。
+              </td>
+              <td>
+                • <strong>何时问 / 问什么两步分</strong>：算澄清动作 F1（区分“该问不问”与“不该问乱问 Over-Clarification”）。<br/>
+                • <strong>跨轮槽位保持与修正率（<code>Δ_drop</code> / <code>Δ_update</code>）</strong>：量化用户纠正某槽位后，旧槽位是否更新、其余已确认槽位是否被意外丢弃。
+              </td>
+              <td>
+                直接对应我们慢路径澄清与中途改口（<code>T2-2 / T2-5 / T2-6</code>）的过程指标：拆出<strong>过度澄清率、盲目抢跑率、反问命中率与槽位保持率</strong>。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>5. GroundEval &amp; RuVerBench</strong><br/>
+                <a data-lavish-ui="true" href="https://arxiv.org/abs/2606.22737" target="_blank">2606.22737</a> / <a data-lavish-ui="true" href="https://arxiv.org/abs/2606.29920" target="_blank">2606.29920</a><br/>
+                <a data-lavish-ui="true" href="groundeval_deep_dive.html">GroundEval →</a> ｜ <a data-lavish-ui="true" href="ruverbench_deep_dive.html">RuVerBench →</a>
+              </td>
+              <td>
+                • <strong>多源证据注入与反事实扰动</strong>：把历史记忆/工具返回值修改为与常识相反的值，检验 Agent 的最终参数是否严格来自当前检索到的证据。
+              </td>
+              <td>
+                • <strong>证据落地核验（Grounding Audit）</strong>：要求最终输出的每个槽位值都能在本次检索返回的历史记忆/单据或用户原话中找到出处；<strong>猜对答案但检索未命中记为 <code>Ungrounded Lucky Guess</code> 判 0 分</strong>。<br/>
+                • <strong>符号规则校验（Rule Verification）</strong>：算术与协议硬校验。
+              </td>
+              <td>
+                将 <code>report_metrics.py</code> 的 <code>build_source_map</code> 与 <code>validator.py</code> 结合：对 <code>source_type="memory"</code> 的槽位，核查其 <code>source_ref</code> 是否真在 <code>memory_trace</code> Top-k 中。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>6. Agent-as-a-Judge &amp; Mind2Web 2</strong><br/>
+                （Meta AI / OSU）<br/>
+                <a data-lavish-ui="true" href="https://arxiv.org/abs/2410.10934" target="_blank">2410.10934</a> / <a data-lavish-ui="true" href="https://arxiv.org/abs/2506.21506" target="_blank">2506.21506</a><br/>
+                <a data-lavish-ui="true" href="../papers/judge_and_trace_audit.html">查看专题拆解 →</a>
+              </td>
+              <td>
+                • <strong>全轨迹分层审计</strong>：在交互结束后，把完整轨迹（每轮检索结果、中间状态、回复文本、最终输出）交给结构化审计器逐节点核对。
+              </td>
+              <td>
+                • <strong>代码断言优先 + 轻量裁判兜底</strong>：凡是能用确定性代码核对的（槽位值、算术关系、证据 ID 命中）一律用代码算；仅“反问话术是否自然、是否说出刺探隐私话术”用轻量裁判模型按二值准则判 0/1。
+              </td>
+              <td>
+                避免全靠大模型主观打分带来的高昂成本与波动：<strong>90% 指标由确定性 Python 代码直接算出，仅话术检查用规则+轻量 Judge</strong>。
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 第三部分：四模块评测代码架构 -->
+    <section class="card">
+      <h2>三、评测代码整体架构与四模块设计（基于现有仓库无缝升级）</h2>
+      <p style="margin:0 0 10px;color:var(--text-secondary);">
+        结合我们本地已有的 <code>D:\coding\qwen_intent_rag\session_eval.py</code>（被测 Agent 逐轮推理与 JGA 判分）和 <code>D:\coding\cross_memory_data\src\generation\tau_bench_simulator.py</code>（物理信息隔离的用户模拟器），只需将两者组合为以下 4 个解耦模块：
+      </p>
+
+      <div class="grid-4">
+        <div class="pipe-node">
+          <div class="pipe-title">模块 1：受控用户模拟器<br/><code>ControlledUserSimulator</code></div>
+          <ul class="tight">
+            <li><strong>输入</strong>：<code>user_private_view</code>（含 <code>turn1_allowed_slots</code>、<code>turn1_forbidden_values</code>、<code>turn2_reveal_slots</code>）+ Agent 上一轮自然语言回复 <code>a_t</code>。</li>
+            <li><strong>受控约束</strong>：Turn 1 只说模糊诉求；Turn ≥ 2 <strong>仅当 <code>a_{t-1}</code> 明确追问了某缺失/歧义槽位时才揭晓对应值</strong>；若 Agent 反问偏题则顺着追问反驳。</li>
+          </ul>
+        </div>
+        <div class="pipe-node blue">
+          <div class="pipe-title">模块 2：在线交互驱动器<br/><code>InteractionRunner</code></div>
+          <ul class="tight">
+            <li><strong>双端闭环</strong>：替代 <code>session_eval.py</code> 原本遍历静态列表的 <code>for t in turns</code>，改为 <code>while turn &lt;= max_turns</code> 动态循环。</li>
+            <li><strong>终止条件</strong>：当 Agent 输出 <code># status: resolved</code>（快路径闭环或澄清完成）、或者明确拒答域外诉求（OOD）、或达到 <code>max_turns = 5</code> 时终止。</li>
+          </ul>
+        </div>
+        <div class="pipe-node amber">
+          <div class="pipe-title">模块 3：全链路轨迹记录器<br/><code>TrajectoryLogger</code></div>
+          <ul class="tight">
+            <li><strong>逐轮快照</strong>：每轮记录 <code>u_t</code>、记忆检索结果 <code>memory_trace</code>（Top-k 候选 ID 与分数）、Agent 动作路由（<code>resolved / pending / cancel / ood_reject</code>）、槽位状态 <code>preds</code> 与自然语言回复 <code>a_t</code>。</li>
+            <li><strong>落盘格式</strong>：输出结构化 <code>interactive_eval.json</code> 供复盘与归因。</li>
+          </ul>
+        </div>
+        <div class="pipe-node green">
+          <div class="pipe-title">模块 4：三层指标结算器<br/><code>MetricsCalculator</code></div>
+          <ul class="tight">
+            <li><strong>阶段 1 &amp; 2</strong>：核对记忆库更新 Diff 与检索 <code>Recall@k / NDCG@k</code>。</li>
+            <li><strong>交互过程</strong>：算快慢路径 <code>Route F1</code>、反问命中率、平均交互轮数与跨轮槽位保持率。</li>
+            <li><strong>阶段 3 终态</strong>：算 <code>Grounded JGA</code> + <code>validator.py</code> 算术自洽 + 4 项一票否决红线 + <code>pass^k</code>。</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>核心代码实现骨架（<code>interactive_session_eval.py</code>）</h3>
+      <pre><code>from __future__ import annotations
+import logging
+from typing import Any
+from validator import validate
+
+logger = logging.getLogger(__name__)
+
+
+class ControlledUserSimulator:
+    """物理信息隔离的受控用户模拟器：仅在被测 Agent 问对问题时才揭晓隐藏槽位。"""
+
+    def __init__(self, llm_client: Any, user_private_view: dict[str, Any]) -> None:
+        self.llm = llm_client
+        self.view = user_private_view
+
+    def first_turn_utterance(self) -> str:
+        # Turn 1 仅可根据 turn1_allowed_slots 生成口语诉求，严禁泄露 turn1_forbidden_values
+        return self.llm.generate_u1(
+            allowed_slots=self.view["turn1_allowed_slots"],
+            forbidden_values=self.view["turn1_forbidden_values"],
+            persona_style=self.view["persona_style"],
+        )
+
+    def reply_to_agent(self, history: list[dict[str, str]], agent_question: str) -> str:
+        # Turn >= 2：检查 agent_question 询问了哪些槽位，仅从 turn2_reveal_slots 中释放被问到的槽位
+        return self.llm.generate_ut(
+            history=history,
+            agent_question=agent_question,
+            revealable_slots=self.view["turn2_reveal_slots"],
+            correction_rule=self.view.get("correction_instruction", ""),
+        )
+
+
+def run_interactive_session(
+    agent_pipe: Any,
+    user_sim: ControlledUserSimulator,
+    session_meta: dict[str, Any],
+    max_turns: int = 5,
+) -> dict[str, Any]:
+    """在线驱动 UserSimulator 与被测 Agent 逐轮交互，并采集全链路轨迹。"""
+    ref_time = session_meta.get("reference_time", "")
+    prev_states: dict[str, dict[str, Any]] = {}
+    prev_statuses: dict[str, str] = {}
+    history: list[dict[str, str]] = []
+    trajectory: list[dict[str, Any]] = []
+
+    u_t = user_sim.first_turn_utterance()
+
+    for turn_idx in range(1, max_turns + 1):
+        # 1. 被测 Agent 执行单轮检索与状态推理（内部调用 memory_bridge 检索三层记忆）
+        prev_states, prev_statuses, turn_entry = evaluate_agent_turn(
+            pipe=agent_pipe,
+            utterance=u_t,
+            ref_time=ref_time,
+            turn_idx=turn_idx,
+            prev_states=prev_states,
+            prev_statuses=prev_statuses,
+            session_meta=session_meta,
+        )
+        agent_reply = turn_entry.get("agent_utterance", "")
+        turn_status = turn_entry.get("status_pred", {})
+        trajectory.append({"turn": turn_idx, "user": u_t, "agent": agent_reply, **turn_entry})
+        history.append({"user": u_t, "agent": agent_reply})
+
+        # 2. 检查是否满足闭环终止条件（全部意图 resolved 或明确拒答 OOD）
+        all_resolved = bool(turn_status) and all(s == "resolved" for s in turn_status.values())
+        if all_resolved or turn_entry.get("is_ood_rejected", False):
+            break
+
+        # 3. 若处于慢路径 pending 状态，由受控用户模拟器根据 Agent 的追问生成下一轮回答
+        if turn_idx &lt; max_turns:
+            u_t = user_sim.reply_to_agent(history=history, agent_question=agent_reply)
+
+    return {
+        "session_id": session_meta["session_id"],
+        "num_turns": len(trajectory),
+        "final_preds": trajectory[-1]["preds"] if trajectory else {},
+        "trajectory": trajectory,
+    }</code></pre>
+    </section>
+
+    <!-- 第四部分：真实样本举例 -->
+    <section class="card">
+      <h2>四、完整真实样本举例（样本 <code>S_eval_018</code>：慢路径消歧与时长修改 → 沉淀经验 → 快路径闭环）</h2>
+      <p style="margin:0 0 10px;color:var(--text-secondary);">
+        下面展示同一个用户在<strong>阶段 A（首次遇到同地多单冲突与临时加时，走慢路径澄清）</strong>与<strong>阶段 B（沉淀经验规则后再次发起同类请求，走快路径一次闭环）</strong>的真实评测输入、在线交互过程与逐项算分结果：
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <strong>1. 用户模拟器私有视图（<code>user_private_view</code>，Agent 不可见）</strong>
+          <pre><code>{
+  "session_id": "S_eval_018",
+  "reference_time": "2026-08-15 19:00:00",
+  "expected_route": "slow_path_clarification",
+  "turn1_allowed_slots": {
+    "scenario_env": "国家体育场(鸟巢)",
+    "application_name": "抖音",
+    "service_name": "看直播",
+    "start_timestamp": "2026-08-15 19:30:00",
+    "reference_hint": "按上周六在鸟巢没卡的那单办"
+  },
+  "turn1_forbidden_values": ["4K", "20ms", "180min", "2026-08-15 22:30:00"],
+  "turn2_reveal_slots": {
+    "selected_ticket_id": "SN_20260808_A (下午彩排顺畅单: 4K / 20ms)",
+    "revised_duration": "180min",
+    "revised_end_timestamp": "2026-08-15 22:30:00"
+  },
+  "ground_truth_final_slots": {
+    "application_name": "抖音",
+    "service_name": "开直播",
+    "resolution": "4K",
+    "rtt": "20ms",
+    "start_timestamp": "2026-08-15 19:30:00",
+    "end_timestamp": "2026-08-15 22:30:00",
+    "duration": "180min"
+  },
+  "required_evidence_ids": ["SN_20260808_A", "EXP_OVERLAPPING_ORDER_01"]
+}</code></pre>
+        </div>
+        <div>
+          <strong>2. Agent 可观测记忆库快照（<code>agent_observable_view</code>）</strong>
+          <pre><code>{
+  "working_records_ledger": [
+    {
+      "record_id": "SN_20260808_A",
+      "location": "国家体育场(鸟巢)",
+      "time": "2026-08-08 15:00~17:00 (120min)",
+      "app_service": "抖音 / 开直播",
+      "params": {"resolution": "4K", "rtt": "20ms"},
+      "quality_receipt": "顺畅 (平均上行 65Mbps, 0 卡顿)"
+    },
+    {
+      "record_id": "SN_20260808_B",
+      "location": "国家体育场(鸟巢)",
+      "time": "2026-08-08 20:00~22:00 (120min)",
+      "app_service": "抖音 / 开直播",
+      "params": {"resolution": "1080p", "rtt": "50ms"},
+      "quality_receipt": "劣化 (晚高峰拥塞, 掉帧 4 次)"
+    }
+  ],
+  "active_orders_today": [
+    {
+      "order_id": "ORD_20260815_01",
+      "time": "2026-08-15 19:00~20:00",
+      "app_service": "抖音 / 看直播 (背景预约单)"
+    }
+  ],
+  "forbidden_expired_records": ["SN_20260808_B"]
+}</code></pre>
+        </div>
+      </div>
+
+      <h3>3. 在线交互轨迹与逐阶段自动算分对账表</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:12%;">轮次 / 环节</th>
+              <th style="width:36%;">在线交互真实轨迹（UserSimulator ⇄ Agent）</th>
+              <th style="width:28%;">评测代码检查的中间态 / 断言条件</th>
+              <th style="width:24%;">本样本算分结果</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Turn 1 检索</strong><br/>（阶段 2：召回）</td>
+              <td>
+                • <strong>UserSimulator (<code>U1</code>)</strong>：“我这会儿到鸟巢了，19:30 准备用抖音看直播，还是照着上周六在这儿没卡的那单办吧。”<br/>
+                • <strong>Agent 检索返回 Top-3</strong>：<code>[1] SN_20260808_A</code>（顺畅单，score=0.91）、<code>[2] EXP_OVERLAPPING_ORDER_01</code>（同应用时段重叠消歧经验，score=0.86）、<code>[3] SN_20260808_B</code>（卡顿单，score=0.72）。
+              </td>
+              <td>
+                • 核对 <code>required_evidence_ids</code>（<code>SN_20260808_A</code> 与 <code>EXP_OVERLAPPING_ORDER_01</code>）是否全部进入 Top-5，且正例 <code>SN_20260808_A</code> 是否排在劣化单 <code>SN_20260808_B</code> 前面。
+              </td>
+              <td>
+                • <code>Recall@5 = 2/2 = 1.00</code><br/>
+                • <code>NDCG@5 = 1.00</code>（两条目标证据占据第 1、第 2 名）
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Turn 1 路由与追问</strong><br/>（慢路径分流）</td>
+              <td>
+                • <strong>Agent 内部状态</strong>：<code># status: pending</code>（未盲目直接出单）。<br/>
+                • <strong>Agent 回复 (<code>A1</code>)</strong>：“查到您上周六在鸟巢下午场那笔顺畅单是<strong>抖音开直播（4K、20ms、原定 120min）</strong>，另外系统里您今晚 19:00~20:00 已有一笔『看直播』预约单重叠。请问今晚 19:30 是要切换成『开直播（4K/20ms）』吗？时长还是按 120 分钟保到 21:30 吗？”
+              </td>
+              <td>
+                • <strong>快慢路径路由检查</strong>：存在多单/重叠冲突且时长待确认，<code>expected_route == "slow_path"</code>，Agent 正确输出 <code>pending</code>。<br/>
+                • <strong>反问靶向率检查</strong>：<code>A1</code> 同时覆盖了 ① 业务重叠冲突（看直播→开直播）与 ② 原单参数/时长确认 2 个待澄清点。
+              </td>
+              <td>
+                • <code>Route Match = 1.0</code>（未抢跑、未过度澄清）<br/>
+                • <code>Question Targeting = 2/2 = 1.00</code>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Turn 2 补充与修正</strong><br/>（受控模拟器应答）</td>
+              <td>
+                • <strong>UserSimulator (<code>U2</code>)</strong>：“对，不是看直播，是切回开直播，画质 4K 和 20ms 照旧；不过今晚演出加场了，120 分钟不够，给我保满 3 个小时到 22:30 吧。”
+              </td>
+              <td>
+                • <code>ControlledUserSimulator</code> 检测到 <code>A1</code> 询问了业务冲突与时长，按规释放 <code>turn2_reveal_slots</code> 中的 <code>service_name="开直播"</code> 与 <code>revised_duration="180min"</code>。
+              </td>
+              <td>
+                • 模拟器无提前泄密（Turn 1 零违规词）
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Turn 2 终态闭环</strong><br/>（阶段 3：决策执行）</td>
+              <td>
+                • <strong>Agent 输出终态 DSL</strong>：<br/>
+                <code># status: resolved</code><br/>
+                <code># intent: application_name="抖音", service_name="开直播", resolution="4K", rtt="20ms", start_timestamp="2026-08-15 19:30:00", end_timestamp="2026-08-15 22:30:00", duration="180min"</code>
+              </td>
+              <td>
+                1. <strong>一票否决红线检查</strong>：未引用劣化单 <code>SN_20260808_B (1080p/50ms)</code> → 通过；<br/>
+                2. <strong>证据出处核验（Grounding）</strong>：<code>4K/20ms</code> 均命中 Turn 1 Top-1 证据 <code>SN_20260808_A</code> → 通过；<br/>
+                3. <strong>算术自洽（<code>validator.py</code>）</strong>：<code>22:30 - 19:30 == 180min</code> → 通过；<br/>
+                4. <strong>7 槽位严格全等（JGA）</strong>：7/7 槽位与 GT 完全一致。
+              </td>
+              <td>
+                • <code>Hard Check = PASS</code><br/>
+                • <code>Slot Revision Acc = 1.00</code>（时长从 120min 更新为 180min，4K/20ms 保持未丢）<br/>
+                • <code>Grounded Session JGA = 1.00</code><br/>
+                • <code>Turns Used = 2 轮</code>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>后续同类请求验证</strong><br/>（阶段 1 沉淀经验 → 快路径）</td>
+              <td>
+                • <strong>会话后记忆更新（阶段 1）</strong>：将“鸟巢晚间演出默认按开直播 4K/20ms/180min 执行并自动覆盖看直播背景单”沉淀为长期经验卡。<br/>
+                • <strong>下周同类测试会话 <code>S_eval_025</code></strong>：用户说“今晚 19:30 在鸟巢照上次演出规格开播” → Agent 命中新经验，<strong>第 1 轮直接输出 <code># status: resolved</code> 完成 7 槽位闭环</strong>。
+              </td>
+              <td>
+                • 核对经验记忆生效前后，同类场景的交互轮数是否从 <code>2 轮</code> 降至 <code>1 轮</code>，且无关业务记忆行 0 误伤。
+              </td>
+              <td>
+                • <code>Update Accuracy = 1.00</code><br/>
+                • <code>Fast-Path Closure Gain</code>：交互轮数 <strong><code>2 轮 → 1 轮</code>（节省 50% 轮次）</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 第五部分：三层 9 项指标计算公式与代码落地清单 -->
+    <section class="card" style="margin-bottom:0;">
+      <h2>五、评测代码自动计算的三层 9 项指标汇总表</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:15%;">指标分层</th>
+              <th style="width:21%;">指标名称</th>
+              <th style="width:38%;">代码里的确定性计算方式</th>
+              <th style="width:26%;">主要诊断什么问题</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3"><strong>第一层：记忆萃取与检索指标</strong><br/>（对应主文档阶段 1 &amp; 2）</td>
+              <td><strong>1. 画像与经验抽取 F1 &amp; 状态更新准确率</strong></td>
+              <td>跑完学习会话后，对比记忆库快照与标准记忆快照（<code>Ground-Truth Memory Snapshot</code>）的字段交集算 F1；在偏好变更会话上检查旧值是否被替换、临时变动是否未污染长期表、无关记忆行是否 <code>0</code> 改动。</td>
+              <td>定位“单据/对话里的习惯和慢路径澄清后的经验有没有存准、旧偏好有没有残留”。</td>
+            </tr>
+            <tr>
+              <td><strong>2. 证据召回率 <code>Recall@k</code></strong><br/>（<code>k = 3, 5</code>）</td>
+              <td>从每轮 <code>memory_trace</code> 提取检索返回的 Top-k 记忆 ID 集合 <code>R_k</code>，与该会话绑定的标准证据 ID 集合 <code>E_gt</code> 比对：<code>|R_k ∩ E_gt| / |E_gt|</code>。</td>
+              <td>单独剥离检索问题：终态做错时，先看是不是检索根本没把那张历史单/经验卡捞出来。</td>
+            </tr>
+            <tr>
+              <td><strong>3. 证据排序分 <code>NDCG@k</code></strong><br/>（<code>k = 5</code>）</td>
+              <td>正例证据（当前生效习惯、顺畅工单）相关性标为 <code>rel = 2</code>，无关记录标为 <code>0</code>，已过期旧偏好或卡顿废单若混入前 k 条则不给分，计算 <code>DCG@5 / IDCG@5</code>。</td>
+              <td>防止“正例虽然进了前 5 条，但排在过期旧单/卡顿单后面，误导下游大模型选错”。</td>
+            </tr>
+            <tr>
+              <td rowspan="3"><strong>第二层：模拟交互与快慢路径指标</strong><br/>（在线交互过程专有）</td>
+              <td><strong>4. 快/慢路径分流准确率</strong><br/>（含过度澄清率 &amp; 盲目抢跑率）</td>
+              <td>比对 Agent 在第 1 轮的动作（<code>resolved</code> 快路径 vs. <code>pending</code> 慢路径反问）与样本 <code>expected_route</code>：<br/>• <strong>过度澄清率</strong>：本该快路径一次闭环却发起反问的比例；<br/>• <strong>盲目抢跑率（Minefield）</strong>：缺参或多单冲突本该反问却直接出单的比例。</td>
+              <td>管住两头极端：既防止 Agent 畏首畏尾什么都反问，也防止缺参时盲目瞎猜参数直接下发。</td>
+            </tr>
+            <tr>
+              <td><strong>5. 慢路径反问命中率 &amp; 平均交互轮数</strong></td>
+              <td>• <strong>反问命中率</strong>：慢路径下第 1 轮反问覆盖的缺失/歧义槽位数 ÷ 实际待澄清槽位数；<br/>• <strong>平均交互轮数（<code>Avg Turns</code>）</strong>：统计达成闭环消耗的轮数，对比经验记忆沉淀前后的轮数下降幅度。</td>
+              <td>直接量化经验记忆的核心价值：<strong>把首次多轮澄清（2~3 轮）变成后续一次快速闭环（1 轮）</strong>。</td>
+            </tr>
+            <tr>
+              <td><strong>6. 跨轮槽位保持与修正率</strong><br/>（<code>Slot Retention &amp; Revision</code>）</td>
+              <td>在多轮补充或用户中途纠正（含 <code># cancel:</code>）的会话中，分别统计：① 被纠正/补充的目标槽位正确更新的比例（<code>Δ_update</code>）；② 其余已确认槽位在跨轮透传中未丢失的比例（<code>1 - Δ_drop</code>）。</td>
+              <td>诊断多轮对话中最常见的“改了时长却把上一轮确认好的 4K 画质弄丢了”或“取消子意图失败”。</td>
+            </tr>
+            <tr>
+              <td rowspan="3"><strong>第三层：终态决策、红线与稳定性指标</strong><br/>（对应主文档阶段 3）</td>
+              <td><strong>7. 有依据终态准确率</strong><br/>（<code>Grounded Session JGA</code> + 一票否决红线）</td>
+              <td>单个会话得 1 分必须<strong>同时通过 4 道关卡</strong>：<br/>① <strong>一票否决红线</strong>：未引用过期旧偏好、未照搬卡顿失败单、未说出刺探隐私话术（踩中直接 0 分）；<br/>② <strong>证据落地核验</strong>：记忆补全槽位的 <code>source_ref</code> 必须存在于当轮 <code>memory_trace</code> Top-k 中；<br/>③ <strong>算术自洽</strong>：通过 <code>validator.py</code>（<code>end - start == duration</code>）；<br/>④ <strong>7 槽位严格全等</strong>：预测意图集合与 GT 7 个字段完全一致。</td>
+              <td>杜绝“检索没命中却靠大模型先验蒙对参数”的虚假高分，并确保踩中红线的危险输出直接清零。</td>
+            </tr>
+            <tr>
+              <td><strong>8. 克制率与未知拒答率</strong><br/>（<code>Restraint &amp; OOD Abstention</code>）</td>
+              <td>在无关闲聊、通用通信问题、域外诉求（如 <code>T1-2</code> 宽带报修）或无历史记录的陌生场馆样本上，统计 Agent <strong>不强行塞入个人记忆、不伪造保障单（<code>preds == {}</code>）并准确拒止/反问</strong>的比例。</td>
+              <td>防止“过度个性化”——不该用记忆的时候坚决不用，不知道的参数坚决不编。</td>
+            </tr>
+            <tr>
+              <td><strong>9. 多轮运行一致性 <code>pass^k</code></strong><br/>（默认 <code>k = 3</code>）</td>
+              <td>对同一测试会话独立运行 <code>n = 3</code> 次在线交互（温度 <code>T = 0.2</code>），只有 <strong>3 次全部拿到 <code>Grounded Session JGA = 1.0</code></strong> 才计为该会话 <code>pass^3 = 1</code>。</td>
+              <td>衡量生产可靠性：单次碰巧跑通不算稳定，连续多次交互均零失误才算真正掌握。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function handleBackToMain(e) {
+      if (e) e.preventDefault();
+      if (document.referrer && document.referrer.indexOf('/artifact/e583fec204d0ce2c/') !== -1 && window.history.length > 1) {
+        window.history.back();
+        return false;
+      }
+      if (window.location.pathname.indexOf('/artifact/7a311978d6030eb5/') === 0) {
+        window.location.href = '/artifact/e583fec204d0ce2c/fused_profile_and_evaluation_spec.html#step-3';
+      } else {
+        window.location.href = '../fused_profile_and_evaluation_spec.html#step-3';
+      }
+      return false;
+    }
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('btn-theme-parchment').classList.toggle('active', theme === 'parchment');
+      document.getElementById('btn-theme-github').classList.toggle('active', theme === 'github');
+      try { localStorage.setItem('lavish-theme', theme); } catch (e) {}
+    }
+    (function init() {
+      try {
+        var savedTheme = localStorage.getItem('lavish-theme');
+        if (savedTheme === 'github' || savedTheme === 'parchment') setTheme(savedTheme);
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
