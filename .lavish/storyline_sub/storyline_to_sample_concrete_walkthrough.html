@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>故事线到网元单据混合对话的数据样本实例（USER_001）</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg-desk: #ECEEF2;
+      --bg-page: #FFFFFF;
+      --text-main: #111111;
+      --text-muted: #444444;
+      --text-subtle: #666666;
+      --link-navy: #003366;
+      --rule-heavy: 1.8px solid #111111;
+      --rule-mid: 1px solid #222222;
+      --rule-light: 0.6px solid #CCCCCC;
+      --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+      --font-sans: "PingFang SC", "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+      --font-mono: "JetBrains Mono", "Consolas", "Source Code Pro", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background-color: var(--bg-desk);
+      color: var(--text-main);
+      font-family: var(--font-serif);
+      font-size: 15px;
+      line-height: 1.78;
+      -webkit-font-smoothing: antialiased;
+    }
+    .screen-toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: #1F2937; color: #F9FAFB;
+      padding: 8px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-sans); font-size: 13px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    .screen-toolbar .toolbar-title { font-weight: 600; letter-spacing: 0.02em; }
+    .screen-toolbar .toolbar-actions { display: flex; gap: 10px; align-items: center; }
+    .screen-toolbar button, .screen-toolbar a.btn-link {
+      background: #374151; color: #FFFFFF;
+      border: 1px solid #4B5563; padding: 5px 12px;
+      font-size: 12.5px; font-family: var(--font-sans);
+      cursor: pointer; text-decoration: none;
+    }
+    .screen-toolbar button:hover, .screen-toolbar a.btn-link:hover { background: #4B5563; }
+    .report-container {
+      max-width: 1020px;
+      margin: 28px auto 60px auto;
+      background: var(--bg-page);
+      padding: 54px 56px 72px 56px;
+      box-shadow: 0 4px 22px rgba(0, 0, 0, 0.08);
+    }
+    .running-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-family: var(--font-serif); font-size: 12px; color: var(--text-muted);
+      border-bottom: 0.6px solid #333333;
+      padding-bottom: 4px; margin-bottom: 26px; margin-top: 46px;
+    }
+    .running-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-serif); font-size: 12px; color: var(--text-muted);
+      margin-top: 28px; padding-top: 8px;
+      border-top: 0.5px solid #E5E7EB;
+    }
+    .titlepage {
+      padding-top: 18px; padding-bottom: 28px;
+      border-bottom: 1px solid #CCCCCC; margin-bottom: 34px;
+    }
+    .titlepage .main-title {
+      text-align: center; font-family: var(--font-sans);
+      font-size: 26px; font-weight: 700; line-height: 1.38;
+      margin: 0 0 10px 0; color: #000000;
+    }
+    .titlepage .sub-title {
+      text-align: center; font-family: var(--font-sans);
+      font-size: 16px; font-weight: 600; color: #222222;
+      margin: 0 0 20px 0;
+    }
+    .titlepage .author-line {
+      text-align: center; font-family: var(--font-serif);
+      font-size: 14.5px; color: #222222; margin-bottom: 4px;
+    }
+    .titlepage .date-line {
+      text-align: center; font-family: var(--font-serif);
+      font-size: 13.5px; color: #444444; margin-bottom: 22px;
+    }
+    .meta-tcolorbox {
+      background: #FAFAFA; border: 1px solid #555555;
+      border-radius: 0; padding: 14px 18px;
+      margin: 0 auto 22px auto; font-size: 13.8px; line-height: 1.72;
+    }
+    .meta-tcolorbox p { margin: 4px 0; text-indent: 0 !important; }
+    .index-tcolorbox {
+      border: 1px solid #5B7696; background: #F4F7FA;
+      border-radius: 0; margin: 0 auto 28px auto;
+    }
+    .index-tcolorbox .box-header {
+      background: #5B7696; color: #FFFFFF;
+      font-family: var(--font-sans); font-weight: 700;
+      font-size: 14px; padding: 6px 14px;
+    }
+    .index-tcolorbox .box-body {
+      padding: 12px 16px; font-size: 13.8px; line-height: 1.78;
+    }
+    .index-tcolorbox .index-item { margin: 4px 0; text-indent: 0 !important; }
+    .toc-section { margin-bottom: 32px; }
+    .toc-section h2.toc-title {
+      font-family: var(--font-sans); font-size: 20px;
+      font-weight: 700; margin: 0 0 14px 0; color: #000000;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.82; }
+    .toc-row { display: flex; align-items: baseline; width: 100%; }
+    .toc-row.level-1 { font-family: var(--font-sans); font-weight: 700; margin-top: 8px; }
+    .toc-row.level-2 { padding-left: 1.8em; font-family: var(--font-serif); }
+    .toc-row a { color: #000000; text-decoration: none; }
+    .toc-row a:hover { color: var(--link-navy); text-decoration: underline; }
+    .toc-dots { flex: 1; border-bottom: 1px dotted #888888; margin: 0 8px; height: 1em; }
+    .toc-page { font-family: var(--font-serif); color: #222222; font-size: 13px; }
+    h1.section-title {
+      font-family: var(--font-sans); font-size: 21px; font-weight: 700;
+      color: #000000; margin: 26px 0 14px 0; line-height: 1.35;
+    }
+    h2.subsection-title {
+      font-family: var(--font-sans); font-size: 17px; font-weight: 700;
+      color: #000000; margin: 24px 0 10px 0; line-height: 1.4;
+    }
+    h3.subsubsection-title {
+      font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+      color: #111111; margin: 18px 0 8px 0; line-height: 1.45;
+    }
+    p { margin: 0 0 10px 0; text-indent: 2em; text-align: justify; }
+    p.no-indent { text-indent: 0; }
+    ul, ol { margin: 6px 0 12px 0; padding-left: 2.2em; }
+    li { margin-bottom: 4px; text-align: justify; }
+    li p { text-indent: 0; margin: 0; }
+    a { color: var(--link-navy); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: var(--font-mono); font-size: 0.88em;
+      background: #F4F5F7; padding: 1px 5px; border: 0.5px solid #DCDFE4;
+    }
+    pre {
+      background: #F7F8FA; border: 1px solid #D1D5DB;
+      padding: 12px 16px; overflow-x: auto;
+      font-family: var(--font-mono); font-size: 12.6px;
+      line-height: 1.56; margin: 6px 0 14px 0;
+    }
+    pre code { background: transparent; border: none; padding: 0; }
+    .listing-caption {
+      font-family: var(--font-sans); font-size: 12.8px; font-weight: 600;
+      color: #1F2937; background: #EAECEF; border: 1px solid #D1D5DB;
+      border-bottom: none; padding: 5px 12px; margin-top: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .listing-caption span.src-tag {
+      font-family: var(--font-mono); font-size: 11.5px; font-weight: 400; color: #4B5563;
+    }
+    .table-wrap { margin: 16px 0 20px 0; overflow-x: auto; }
+    .table-caption {
+      font-family: var(--font-serif); font-size: 13.4px; color: #111111;
+      text-align: center; margin-bottom: 6px; text-indent: 0 !important; font-weight: 600;
+    }
+    table.booktabs {
+      width: 100%; border-collapse: collapse;
+      border-top: var(--rule-heavy); border-bottom: var(--rule-heavy);
+      font-size: 13.2px; line-height: 1.56;
+    }
+    table.booktabs thead th {
+      font-family: var(--font-sans); font-weight: 700; text-align: left;
+      padding: 7px 8px; border-bottom: var(--rule-mid); color: #000000; background: transparent;
+    }
+    table.booktabs tbody td { padding: 6px 8px; vertical-align: top; border: none; }
+    table.booktabs tbody tr.midrule-row td { border-top: var(--rule-light); }
+    .tcolorbox { border-radius: 0; margin: 16px 0 18px 0; page-break-inside: avoid; break-inside: avoid; }
+    .tcolorbox .tcb-title { font-family: var(--font-sans); font-weight: 700; font-size: 14px; padding: 6px 14px; }
+    .tcolorbox .tcb-body { padding: 12px 16px; font-size: 14px; line-height: 1.72; }
+    .tcolorbox .tcb-body p { text-indent: 0; margin: 0 0 8px 0; }
+    .tcolorbox .tcb-body p:last-child { margin-bottom: 0; }
+    .tcolorbox .tcb-body ul, .tcolorbox .tcb-body ol { margin: 4px 0 6px 0; padding-left: 1.8em; }
+    .tcolorbox.importantbox { border: 1px solid #C5A64E; background: #FFFDF2; }
+    .tcolorbox.importantbox .tcb-title { background: #DFC36D; color: #111111; border-bottom: 1px solid #C5A64E; }
+    .tcolorbox.knowledgebox { border: 1px solid #4A77A5; background: #F4F8FB; }
+    .tcolorbox.knowledgebox .tcb-title { background: #2B547E; color: #FFFFFF; }
+    .tcolorbox.warningbox { border: 1px solid #C94A4A; background: #FDF5F5; }
+    .tcolorbox.warningbox .tcb-title { background: #A62626; color: #FFFFFF; }
+    .tcolorbox.dialoguebox { border: 1px solid #4D9460; background: #F4FAF6; }
+    .tcolorbox.dialoguebox .tcb-title { background: #2E6F40; color: #FFFFFF; }
+    .figure-wrap { margin: 22px 0 24px 0; text-align: center; page-break-inside: avoid; break-inside: avoid; }
+    .mermaid-box { background: #FFFFFF; border: 1px solid #CBD5E1; padding: 4px 6px; display: block; overflow-x: auto; width: 100%; }
+    .mermaid-box pre.mermaid { width: 100%; margin: 0; padding: 0; background: transparent; border: none; display: block; line-height: 1; }
+    .mermaid-box svg { width: 100% !important; max-width: 100% !important; height: auto !important; display: block; margin: 0; }
+    .mermaid-box .node foreignObject > div { text-align: left !important; }
+    .mermaid-box .node .nodeLabel { display: inline-block !important; padding: 6px 12px !important; line-height: 1.55 !important; text-align: left !important; }
+    .mermaid-box .cluster-label .nodeLabel { display: inline-block !important; padding: 2px 6px !important; line-height: 1.35 !important; }
+    .figure-caption {
+      font-family: var(--font-serif); font-size: 13.4px; color: #222222;
+      text-align: left; margin-top: 8px; line-height: 1.65; text-indent: 0 !important;
+    }
+    .figure-caption strong { display: inline-block; margin-bottom: 2px; }
+    @media print {
+      @page { size: A4 portrait; margin: 11mm; }
+      html, body { background: #FFFFFF !important; font-size: 9.5pt; line-height: 1.54; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .screen-toolbar { display: none !important; }
+      .report-container { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-toolbar" data-lavish-ui="true">
+    <div class="toolbar-title">故事线到网元单据混合对话的数据样本实例（USER_001）</div>
+    <div class="toolbar-actions">
+      <a class="btn-link" href="../fused_profile_and_evaluation_wdkns_report.html" data-lavish-ui="true">返回综述主报告</a>
+      <button onclick="window.print()" data-lavish-ui="true">导出 / 打印 A4 PDF</button>
+    </div>
+  </div>
+  <div class="report-container">
+
+    <!-- Titlepage -->
+    <div class="titlepage">
+      <h1 class="main-title">故事线到网元单据混合对话的数据样本实例</h1>
+      <div class="sub-title">—— 巡回活动讲者（<code>USER_001</code>）30 天双流穿插完整样本记录</div>
+      <div class="date-line">样本编号：<code>USER_001 (mobile_persona_001)</code> · 周期：<code>Day 01 ~ Day 30</code></div>
+
+      <div class="meta-tcolorbox">
+        <p><strong>用户角色与终端</strong>：林峰（巡回活动讲者 &amp; 技术主播，钻石级 VIP），名下绑定主力直播机 <code>HUAWEI Mate 60 Pro (DEV_M60P)</code> 与移动办公备机 <code>HUAWEI Mate X5 (DEV_MX5)</code>。</p>
+        <p><strong>样本组成规模</strong>：30 天周期内共包含 <code>21</code> 个业务节点，由 <code>15</code> 笔结构化网元单据（<code>NE-01 ~ NE-15</code>，占比 <code>71.4%</code>）与 <code>6</code> 场自然语言多轮对话（<code>S-01 ~ S-06</code>，占比 <code>28.6%</code>）按时间顺序穿插构成。</p>
+        <p><strong>主支线与事件结构</strong>：包含 <code>1</code> 条日常直播主线（杭州滨江基地午间抖音直播，Day 20 起时长由 <code>60min</code> 升级为 <code>90min</code>）、<code>2</code> 条支线（沪杭高速大巴移动视频会议、开播前微信视频连线对词）、<code>1</code> 个短期大型场馆事件窗（北京奥体中心 / 工体中心巡回直播）以及 <code>3</code> 笔背景噪声与异常撤单记录。</p>
+      </div>
+
+      <div class="index-tcolorbox">
+        <div class="box-header">样本内容结构索引</div>
+        <div class="box-body">
+          <p class="index-item"><strong>1. 故事线设定与两层因子取值</strong>：给出该样本在排布层（规模节奏、单据对话配比、主支线拓扑、偏好版本升级、慢转快跨度）与内容层（用户属性、口语词典、业务线指标、单据异常与多轮纠偏）的具体设定值与故事线 JSON。</p>
+          <p class="index-item"><strong>2. 30 天网元单据与多轮对话穿插时间轴</strong>：按 Day 01 至 Day 30 时间顺序排列全部 21 个节点（<code>15 笔单据 + 6 场对话</code>），标明节点间的指代与因果依赖关系。</p>
+          <p class="index-item"><strong>3. 网元结构化单据样本明细（<code>NE-01 ~ NE-15</code>）</strong>：展示全部 15 笔网元单据的完整业务槽位、基站物理指标（<code>PRB</code>、上行吞吐、卡顿次数、工单状态）与 JSON 数据样本。</p>
+          <p class="index-item"><strong>4. 自然语言多轮对话样本明细（<code>S-01 ~ S-06</code>）</strong>：展示全部 6 场对话的用户侧与系统侧双盲输入视图、逐轮真实对话原文以及每个槽位的最终取值与来源标注。</p>
+          <p class="index-item"><strong>5. 样本对应的四类记忆真值与评测问答对</strong>：给出 Day 30 终态下的四类记忆标准快照（事实-语义、事实-情景、工作记忆、经验记忆）及对应的萃取与检索测试题。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc-section">
+      <h2 class="toc-title">目 录</h2>
+      <ul class="toc-list">
+        <li class="toc-row level-1"><a href="#sec-1">1 故事线设定与两层因子取值（<code>USER_001</code>）</a><span class="toc-dots"></span><span class="toc-page">1</span></li>
+        <li class="toc-row level-2"><a href="#sec-1-1">1.1 排布层与内容层设定参数表</a><span class="toc-dots"></span><span class="toc-page">1</span></li>
+        <li class="toc-row level-2"><a href="#sec-1-2">1.2 故事线设定 JSON 数据（<code>persona_skeleton.json</code>）</a><span class="toc-dots"></span><span class="toc-page">3</span></li>
+        <li class="toc-row level-1"><a href="#sec-2">2 30 天网元单据与多轮对话穿插时间轴（21 节点总表）</a><span class="toc-dots"></span><span class="toc-page">4</span></li>
+        <li class="toc-row level-1"><a href="#sec-3">3 网元结构化单据数据样本（<code>NE-01 ~ NE-15</code>）</a><span class="toc-dots"></span><span class="toc-page">5</span></li>
+        <li class="toc-row level-2"><a href="#sec-3-1">3.1 15 笔网元单据全量槽位与物理指标表</a><span class="toc-dots"></span><span class="toc-page">5</span></li>
+        <li class="toc-row level-2"><a href="#sec-3-2">3.2 网元单据 JSON 数据样本（<code>NE-05</code> 与奥体同日三单 <code>NE-09/10/11</code>）</a><span class="toc-dots"></span><span class="toc-page">7</span></li>
+        <li class="toc-row level-1"><a href="#sec-4">4 自然语言多轮对话数据样本（<code>S-01 ~ S-06</code>）</a><span class="toc-dots"></span><span class="toc-page">8</span></li>
+        <li class="toc-row level-2"><a href="#sec-4-1">4.1 双盲输入视图数据样本（以 <code>S-06</code> 为例）</a><span class="toc-dots"></span><span class="toc-page">8</span></li>
+        <li class="toc-row level-2"><a href="#sec-4-2">4.2 <code>S-01 ~ S-03</code> 多轮对话原文与槽位结果</a><span class="toc-dots"></span><span class="toc-page">9</span></li>
+        <li class="toc-row level-2"><a href="#sec-4-3">4.3 <code>S-04 ~ S-06</code> 多轮对话原文与槽位结果</a><span class="toc-dots"></span><span class="toc-page">11</span></li>
+        <li class="toc-row level-1"><a href="#sec-5">5 样本对应的四类记忆真值快照与评测样本对</a><span class="toc-dots"></span><span class="toc-page">13</span></li>
+        <li class="toc-row level-2"><a href="#sec-5-1">5.1 Day 30 四类记忆标准真值 JSON（<code>gold_memory_snapshot.json</code>）</a><span class="toc-dots"></span><span class="toc-page">13</span></li>
+        <li class="toc-row level-2"><a href="#sec-5-2">5.2 配套记忆萃取（<code>M vs. N</code>）与记忆检索（<code>P vs. Q</code>）测试题样本</a><span class="toc-dots"></span><span class="toc-page">14</span></li>
+      </ul>
+    </div>
+
+    <!-- ==================== SECTION 1 ==================== -->
+    <div class="running-header">
+      <span>1 故事线设定与两层因子取值（USER_001）</span>
+      <span>故事线到网元单据混合对话的数据样本实例</span>
+    </div>
+
+    <h1 class="section-title" id="sec-1">1 故事线设定与两层因子取值（<code>USER_001</code>）</h1>
+
+    <p>本样本围绕巡回活动讲者林峰（<code>USER_001</code>）在 30 天内的专网保障业务展开。下图给出了该样本从故事线设定到 30 天网元单据与多轮对话混合序列的整体演进脉络。</p>
+
+    <div class="figure-wrap">
+      <div class="mermaid-box">
+        <pre class="mermaid">
+flowchart LR
+  subgraph S_LINE["故事线三线设定 (USER_001)"]
+    direction TB
+    M1["主线 M1：滨江基地午间抖音直播<br/>v1 (Day 01-19): 12:30-13:30 (60min)<br/>v2 (Day 20-30): 12:30-14:00 (90min)"]
+    S1["支线 S1：沪杭高速大巴移动会议<br/>17:30-18:15 (45min) | 腾讯会议 | 720p<br/>支线 S2：开播前微信视频连线对词"]
+    E1["短期事件窗 E1：北京奥体/工体场馆直播<br/>Day 10 同地3单 (含PRB=96%拥塞与撤单)<br/>Day 12 沉淀提前30min预热 → Day 28 工体复用"]
+  end
+
+  subgraph TIMELINE["30 天双流穿插样本序列 (15 笔单据 + 6 场对话)"]
+    direction TB
+    T1["Day 01-08：S-01 建档 + NE-01~05<br/>S-02 跨通道指代纯单据 NE-05"]
+    T2["Day 09-12：NE-06/07 噪声 + NE-09/10/11 奥体三单<br/>S-03 针对 NE-10 拥塞纠偏 → 沉淀场馆预热经验"]
+    T3["Day 16-28：S-04 字面陷阱纠偏 + NE-13/14 升90min<br/>S-05 奥体三单消歧 + S-06 工体1轮快路径直通"]
+    T1 --> T2 --> T3
+  end
+
+  subgraph MEM["Day 30 四类记忆真值快照"]
+    direction TB
+    M_OUT["事实-语义：MF_001(v2:90min), MF_002, 口语词典<br/>事实-情景：EP_STADIUM_TOUR_01<br/>工作记忆：11笔有效单 + 1笔劣化单 + 3笔剔除单<br/>经验记忆：场馆预热规则 + 对词路由规则"]
+  end
+
+  S_LINE --> TIMELINE --> MEM
+        </pre>
+      </div>
+      <p class="figure-caption"><strong>图 1.1：样本 <code>USER_001</code> 的故事线设定、30 天单据与对话混合序列及四类记忆真值对应关系图</strong><br/>&emsp;&emsp;样本由日常直播主线、大巴移动会议支线、开播前对词支线以及大型场馆短期事件窗交织而成，在 30 天内生成 15 笔结构化网元单据与 6 场多轮自然语言对话。</p>
+    </div>
+
+    <h2 class="subsection-title" id="sec-1-1">1.1 排布层与内容层设定参数表</h2>
+
+    <p>表 1.1 与表 1.2 分别列出了该样本在第一层排布因子（宏观拓扑与时间演化）和第二层内容因子（用户级、线级、节点级）上的具体设定值。</p>
+<div class="table-wrap">
+      <div class="table-caption">表 1.1：样本 <code>USER_001</code> 的第一层排布因子（宏观拓扑与时间演化）采样明细表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 18%;">排布层一级维度</th>
+            <th style="width: 22%;">二级控制参数</th>
+            <th style="width: 28%;"><code>USER_001</code> 实例采样值</th>
+            <th style="width: 32%;">在混合数据样本中的具体落点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2"><strong>规模与时间节奏</strong></td>
+            <td>时间跨度与节点总数</td>
+            <td>跨度 <code>30 天</code>，共 <code>21</code> 个业务节点（<code>15</code> 笔单据 + <code>6</code> 场对话）</td>
+            <td>覆盖完整的月度周期，满足长期偏好频次累积阈值（$\ge 3$ 次）与版本更替跨度</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>节点时间间隔分布</td>
+            <td>常态节点间隔 <code>2~4 天</code>；Day 10 奥体彩排日单日爆发 <code>3</code> 笔工单</td>
+            <td>常态期检验长间隔记忆保持，Day 10 密集爆发期检验同日多单分辨能力</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="2"><strong>双流构成与穿插模式</strong></td>
+            <td>单据与对话数量占比</td>
+            <td>网元单据 <code>15 笔 (71.4%)</code> : 多轮对话 <code>6 场 (28.6%)</code></td>
+            <td>还原真实网元业务“后台静默执行工单多、前台人工对话少”的非对称分布</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>双流前后因果穿插关系</td>
+            <td>① 纯单据复刻（<code>NE-05 → S-02</code>）<br/>② 单据异常触发对话（<code>NE-10 → S-03</code>）<br/>③ 同地多单消歧（<code>NE-09/10/11 → S-05</code>）</td>
+            <td>强制 Agent 必须在自然语言对话中检索后台网元单据台账才能补全缺失槽位</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="2"><strong>主支线拓扑结构</strong></td>
+            <td>主线、支线与短期事件窗</td>
+            <td><code>1</code> 条日常直播主线 + <code>2</code> 条支线（高速大巴移动会议、游戏联机）+ <code>1</code> 个短期事件窗（Day 10~15 异地峰会）</td>
+            <td>构造多业务线并存环境，防止模型将短期异地差旅或单次支线误记为全局默认习惯</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>多线交替穿插方式</td>
+            <td>日常主线（<code>NE-01/02/04/06...</code>）与大巴移动支线（<code>NE-03/05/08</code>）、奥体事件窗（<code>NE-09~12, S-03</code>）交错出现</td>
+            <td>检验记忆抽取与检索在多场景频繁切换下的抗干扰与条件路由能力</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="2"><strong>偏好形成与演化</strong></td>
+            <td>习惯形成频次门槛</td>
+            <td>固定习惯需累积 <code>≥ 3</code> 次同分布执行（Day 06 <code>NE-04</code> 后正式确立主线习惯）</td>
+            <td>区分“偶然执行 1 次的临时业务（如 <code>NE-06</code> 腾讯视频）”与“高频稳定习惯”</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>偏好转变方式</td>
+            <td>Day 20（<code>NE-13</code>）起主线午间直播时长从 <code>60min</code> 升级为 <code>90min (12:30-14:00)</code></td>
+            <td>构造新旧参数版本更替（<code>v1: 60min → v2: 90min</code>），评测时效覆盖与旧版本抑制</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>慢转快因果跨度</strong></td>
+            <td>澄清源点与快路径复用距离</td>
+            <td>① <strong>因果链 A</strong>：<code>S-03 (Day 12)</code> 慢路径沉淀场馆预热规则 $\rightarrow$ 间隔 16 天（跨 3 笔单据 + 2 场对话）$\rightarrow$ <code>S-06 (Day 28)</code> 异地工体中心 1 轮快路径直通<br/>② <strong>因果链 B</strong>：<code>S-04 (Day 16)</code> 慢路径纠偏字面陷阱（对词=微信通话）</td>
+            <td>评测 Agent 能否在长跨度噪声后准确召回适用经验并实现跨地点泛化推理</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 1.2：样本 <code>USER_001</code> 的第二层内容因子（用户级、线级、节点级与多轮交互）采样明细表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 16%;">内容层归属层级</th>
+            <th style="width: 22%;">内容因子名称</th>
+            <th style="width: 32%;"><code>USER_001</code> 实例采样内容</th>
+            <th style="width: 30%;">对应的记忆构造与评测作用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2"><strong>1. 用户级内容因子</strong></td>
+            <td>静态身份与绑定终端列表</td>
+            <td>姓名：林峰（巡回活动讲者，钻石 VIP）；主力直播机 <code>Mate 60 Pro (DEV_M60P)</code>，备用移动办公机 <code>Mate X5 (DEV_MX5)</code></td>
+            <td>提供跨业务线的静态实体底座，支持终端切换与套餐等级核验</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>口语化别名与自定义词典</td>
+            <td><code>“阿抖” → 抖音-开直播</code>；<code>“老规矩/中午那档” → 12:30 起播午间档</code>；<code>“千万别转圈” → latency ≤ 50ms</code>；<code>“超清档” → 1080p</code></td>
+            <td>构造口语表达与标准工单字段之间的语义鸿沟，评测个性化表述映射能力</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="2"><strong>2. 线级内容因子</strong></td>
+            <td>各业务线空间场景与基站关联</td>
+            <td>① <strong>主线 M1</strong>：杭州滨江直播基地（固定室内 <code>5G-A_Binjiang_01</code>）<br/>② <strong>支线 S1</strong>：沪杭高速大巴（高速移动跨区切换 <code>G60_HighSpeed_Corridor</code>）<br/>③ <strong>事件窗 E1</strong>：北京奥体中心 / 工体中心（大型高密场馆）</td>
+            <td>将不同业务参数绑定在明确的空间环境条件上，支撑带空间前提的条件检索</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>各业务线网络质量（QoS/KQI）诉求</td>
+            <td>① <strong>M1 直播主线</strong>：上行带宽 <code>≥ 20Mbps</code>，时延 <code>≤ 50ms</code>，<code>1080p</code><br/>② <strong>S1 移动会议</strong>：防切换掉线，时延 <code>≤ 80ms</code>，<code>720p</code></td>
+            <td>区分不同业务线对上行码率与防抖切换的差异化指标要求</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="3"><strong>3. 节点级内容因子（单据侧）</strong></td>
+            <td>业务并发结构与单据时长分布</td>
+            <td>单业务独立执行（<code>NE-01~08</code>）与同场馆三单密集爆发（<code>NE-09/10/11</code>）；时长覆盖 <code>1min</code>（废单）、<code>3min</code>（闪退单）、<code>45min</code>、<code>60min</code>、<code>90min</code>、<code>120min</code></td>
+            <td>打破固定时长硬编码，检验参数自洽校验（<code>end - start == duration</code>）与短废单过滤</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>网元链路状态与异常退化原因</td>
+            <td><code>NE-10 (Day 10 12:30)</code> 奥体正赛直播遭遇晚/午高峰基站高负载：<code>PRB = 96%</code>，上行吞吐跌至 <code>6.8Mbps</code>，<code>freeze_count = 8</code>，状态标记为 <code>sla_degraded (congestion)</code></td>
+            <td>在网元单据流中埋入客观物理故障，作为后续 <code>S-03</code> 用户抱怨卡顿与沉淀预热规则的真实物理证据</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>背景噪声单与异常废单混入</td>
+            <td>① <code>NE-06</code>：单次偶然看剧（<code>腾讯视频-看视频, 45min</code>）<br/>② <code>NE-07</code>：<code>3min</code> 未开启保障的后台抖音刷视频短单<br/>③ <code>NE-11</code>：奥体中心误触提交后 <code>1min</code> 主动撤单（<code>aborted</code>）</td>
+            <td>评测萃取器与工作记忆在汇总时能否剔除偶发单、未保障短单与撤单废单</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="3"><strong>4. 节点级内容因子（对话侧）</strong></td>
+            <td>首轮信息缺失度与模糊度</td>
+            <td>双盲约束下首轮严禁直接报出标准槽位：如 <code>S-02</code> 仅说“按上周四傍晚大巴上那套来”，<code>S-06</code> 仅说“今天 12:30 到 14:00 在工体给阿抖开播，按老规矩走”</td>
+            <td>逼迫 Agent 依赖长短期记忆主动补全槽位，无法靠单轮字面提取过关</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>指代跨度與多候选歧义</td>
+            <td>① <strong>跨流指代</strong>：<code>S-02</code> 指代 3 天前无对话记录的纯网元工单 <code>NE-05</code><br/>② <strong>同地多单歧义</strong>：<code>S-05</code> 指代“上次在奥体办的那笔”，命中 <code>NE-09/10/11</code> 三笔候选</td>
+            <td>评测工作记忆跨模态台账检索与多候选状态对比消歧能力</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>显式纠正类型与单次临时豁免</td>
+            <td>① <strong>时长扩容纠正</strong>（<code>S-03</code>：因 <code>NE-10</code> 拥塞要求提前半小时预热，<code>90min → 120min</code>）<br/>② <strong>字面陷阱纠正 + 单次豁免</strong>（<code>S-04</code>：“对抖音的词”实为 <code>微信-视频通话</code>；且声明“仅今天改 720p，别改老规矩”）</td>
+            <td>构造慢路径纠偏源点以沉淀因果经验记忆，同时测试单次临时变更不污染长期画像</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    
+    <h2 class="subsection-title" id="sec-1-2">1.2 故事线设定 JSON 数据（<code>persona_skeleton.json</code>）</h2>
+    <p>下方 JSON 数据给出了 <code>USER_001</code> 的静态用户画像、口语词典映射、日常直播主线（含 v1 至 v2 时长升级）、两条支线、大型场馆短期事件窗及背景干扰项的完整设定：</p>
+    <div class="listing-caption">
+      <span>数据样本 1.1：<code>USER_001</code> 故事线设定 JSON（<code>persona_skeleton.json</code>）</span>
+      <span class="src-tag">文件路径：mobile_persona_001/persona_skeleton.json</span>
+    </div>
+    <pre><code>{
+  "user_id": "USER_001",
+  "persona_id": "mobile_persona_001",
+  "static_profile": {
+    "name": "林峰",
+    "occupation": "巡回活动讲者 / 技术主播",
+    "vip_tier": "钻石级 VIP (5G-A 专网保障签约用户)",
+    "bound_devices": [
+      {"device_id": "DEV_M60P", "model": "HUAWEI Mate 60 Pro", "role": "主力直播终端"},
+      {"device_id": "DEV_MX5",  "model": "HUAWEI Mate X5",     "role": "移动办公与大巴会议终端"}
+    ],
+    "colloquial_lexicon": {
+      "阿抖": {"field": "service_app", "std_value": "抖音-开直播"},
+      "老规矩": {"field": "time_window", "std_value": "午间直播档 (12:30 起播)"},
+      "超清档": {"field": "resolution",  "std_value": "1080p"},
+      "千万别转圈": {"field": "max_latency", "std_value": "50ms"}
+    }
+  },
+  "periodic_main_storyline": {
+    "storyline_id": "MAIN_NOON_LIVE",
+    "scene_label": "杭州滨江固定直播间日常技术开播",
+    "base_location": "杭州-滨江直播基地 (Cell: 5G-A_Binjiang_01)",
+    "device_id": "DEV_M60P",
+    "service_app": "抖音-开直播",
+    "kqi_target": {"resolution": "1080p", "uplink_min_mbps": 20, "max_latency": "50ms"},
+    "version_evolution": [
+      {
+        "version": "v1",
+        "effective_days": "Day 01 ~ Day 19",
+        "start_time": "12:30", "end_time": "13:30", "duration": "60min",
+        "trigger_reason": "初始日常午间 1 小时技术分享直播"
+      },
+      {
+        "version": "v2",
+        "effective_days": "Day 20 ~ Day 30",
+        "start_time": "12:30", "end_time": "14:00", "duration": "90min",
+        "trigger_reason": "增设观众连麦答疑环节，常态直播延长至 90 分钟"
+      }
+    ]
+  },
+  "sub_storylines": [
+    {
+      "storyline_id": "SUB_HIGHWAY_MEETING",
+      "scene_label": "沪杭高速大巴移动跨城远程视频会议",
+      "base_location": "沪杭高速大巴移动走廊 (Cell: G60_HighSpeed_Corridor)",
+      "device_id": "DEV_MX5",
+      "service_app": "腾讯会议-视频会议",
+      "time_slot": {"start_time": "17:30", "end_time": "18:15", "duration": "45min"},
+      "kqi_target": {"resolution": "720p", "handover_protection": true, "max_latency": "80ms"}
+    },
+    {
+      "storyline_id": "SUB_PARTNER_REHEARSAL",
+      "scene_label": "开播前与搭档一对一远程对词及机位确认",
+      "base_location": "杭州-滨江直播基地",
+      "device_id": "DEV_MX5",
+      "service_app": "微信-视频通话",
+      "literal_trap_note": "用户口头常说'对一下抖音直播的词'，真实承载应用为微信视频通话而非抖音开播"
+    }
+  ],
+  "short_term_event_windows": [
+    {
+      "event_id": "EVT_STADIUM_TOUR",
+      "active_days": "Day 10 ~ Day 15 (及 Day 28 异地返场)",
+      "venues": ["北京-奥体中心场馆", "北京-工体中心场馆"],
+      "risk_profile": "万人高密场馆正赛时段基站 PRB 极易超过 95% 导致上行拥塞卡顿",
+      "target_experience_rule": "EXP_PREWARM_BUFFER_01: 大型高密场馆开播需将 start_time 提前 30min 预热锁流，duration 相应 +30min"
+    }
+  ],
+  "distractor_pool": [
+    {"type": "one_off_entertainment", "service_app": "腾讯视频-看视频", "duration": "45min", "note": "偶发单次看剧，频次=1"},
+    {"type": "unassured_micro_usage", "service_app": "抖音-刷视频",     "duration": "3min",  "note": "后台未开保障短时刷视频"},
+    {"type": "aborted_order",         "service_app": "抖音-开直播",     "duration": "1min",  "note": "误触后 1 分钟内撤单 (aborted)"}
+  ]
+}</code></pre>
+
+    
+
+    <!-- ==================== SECTION 2 ==================== -->
+    <div class="running-header">
+      <span>2 30 天网元单据与多轮对话穿插时间轴（21 节点总表）</span>
+      <span>故事线到网元单据混合对话的数据样本实例</span>
+    </div>
+
+    <h1 class="section-title" id="sec-2">2 30 天网元单据与多轮对话穿插时间轴（21 节点总表）</h1>
+    <p>根据第 1 节的故事线设定，<code>15</code> 笔网元单据（<code>NE-01 ~ NE-15</code>）与 <code>6</code> 场多轮自然语言对话（<code>S-01 ~ S-06</code>）在 Day 01 至 Day 30 时间轴上的具体穿插顺序及节点间关联如下表所示：</p>
+    <div class="table-wrap">
+      <div class="table-caption">表 2.1：<code>USER_001</code> 在 30 天周期内的网元单据（15 笔）与自然语言对话（6 场）双流穿插全景表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 9%;">日期</th>
+            <th style="width: 11%;">节点 ID</th>
+            <th style="width: 12%;">通道类型</th>
+            <th style="width: 16%;">所属业务线 / 事件窗</th>
+            <th style="width: 28%;">核心业务参数与执行状态</th>
+            <th style="width: 24%;">跨节点因果与记忆作用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Day 01</td>
+            <td><code>S-01</code> + <code>NE-01</code></td>
+            <td>多轮对话 + 网元工单</td>
+            <td>主线 M1 (v1)</td>
+            <td><code>12:30-13:30 (60min)</code> | 滨江基地 | <code>抖音-开直播</code> | <code>1080p, ≤50ms</code> | <code>completed</code></td>
+            <td><strong>冷启动建档</strong>：3 轮澄清对齐全量槽位，写入口语映射（阿抖/老规矩），落地首单 <code>NE-01</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 03</td>
+            <td><code>NE-02</code></td>
+            <td>纯网元工单</td>
+            <td>主线 M1 (v1)</td>
+            <td><code>12:30-13:30 (60min)</code> | 滨江基地 | <code>抖音-开直播</code> | <code>1080p, ≤50ms</code> | <code>completed</code></td>
+            <td>主线 v1 第 2 次重复执行（后台静默履约，无对话）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 04</td>
+            <td><code>NE-03</code></td>
+            <td>纯网元工单</td>
+            <td>支线 S1 (移动会议)</td>
+            <td><code>17:30-18:15 (45min)</code> | 沪杭高速大巴 | <code>腾讯会议-视频会议</code> | <code>720p, ≤80ms</code> | <code>completed</code></td>
+            <td>首次出现高速移动大巴跨区会议工单（终端 <code>DEV_MX5</code>）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 06</td>
+            <td><code>NE-04</code></td>
+            <td>纯网元工单</td>
+            <td>主线 M1 (v1)</td>
+            <td><code>12:30-13:30 (60min)</code> | 滨江基地 | <code>抖音-开直播</code> | <code>1080p, ≤50ms</code> | <code>completed</code></td>
+            <td><strong>习惯正式成型</strong>：主线 v1 累计达 <code>3</code> 次（$\ge 3$ 阈值），沉淀长期语义记忆 <code>MF_001(v1)</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 07</td>
+            <td><code>NE-05</code></td>
+            <td>纯网元工单</td>
+            <td>支线 S1 (移动会议)</td>
+            <td><code>17:30-18:15 (45min)</code> | 沪杭高速大巴 | <code>腾讯会议-视频会议</code> | <code>720p, ≤80ms</code> | <code>completed</code></td>
+            <td><strong>跨流指代源点</strong>：周四傍晚纯后台工单，作为次日 <code>S-02</code> 跨通道指代的目标记录</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 08</td>
+            <td><code>S-02</code></td>
+            <td>多轮对话</td>
+            <td>支线 S1 (移动会议)</td>
+            <td>用户仅说“按上周四傍晚大巴车上那套会议配置再来一单” $\rightarrow$ 复用 <code>NE-05</code> 全套槽位</td>
+            <td><strong>跨模态工作记忆检索</strong>：对话历史中无记录，Agent 必须检索网元单据表命中 <code>NE-05</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 09</td>
+            <td><code>NE-06</code>, <code>NE-07</code></td>
+            <td>纯网元工单 ($\times 2$)</td>
+            <td>背景噪声单</td>
+            <td><code>NE-06</code>：<code>21:00-21:45 (45min)</code> 腾讯视频看剧（单次偶发）<br/><code>NE-07</code>：<code>22:10-22:13 (3min)</code> 抖音刷视频（未开保障短单）</td>
+            <td><strong>噪声抑制测试源</strong>：检验记忆汇总时能否过滤频次为 1 的娱乐单与 3 分钟碎片短单</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 10</td>
+            <td><code>NE-08</code></td>
+            <td>纯网元工单</td>
+            <td>支线 S1 (移动会议)</td>
+            <td><code>17:30-18:15 (45min)</code> | 沪杭高速大巴 | <code>腾讯会议-视频会议</code> | <code>720p, ≤80ms</code> | <code>completed</code></td>
+            <td>支线 S1 累计达 <code>3</code> 次，沉淀第二条条件长期偏好 <code>MF_002</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 10</td>
+            <td><code>NE-09</code>, <code>NE-10</code>, <code>NE-11</code></td>
+            <td>纯网元工单 ($\times 3$)</td>
+            <td>事件窗 E1 (北京奥体)</td>
+            <td>① <code>NE-09</code>：上午 <code>09:30-10:15 (45min)</code> 彩排顺畅单（<code>PRB=42%, completed</code>）<br/>② <code>NE-10</code>：午间 <code>12:30-14:00 (90min)</code> 正赛高负载拥塞单（<code>PRB=96%, freeze=8, sla_degraded</code>）<br/>③ <code>NE-11</code>：下午 <code>14:05-14:06 (1min)</code> 误触主动撤单（<code>aborted</code>）</td>
+            <td><strong>同地三单并发与异常埋点</strong>：既为 <code>S-03</code> 提供基站拥塞物理根因，又为 <code>S-05</code> 构造“奥体中心三选一”消歧现场</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 12</td>
+            <td><code>S-03</code> + <code>NE-12</code></td>
+            <td>多轮对话 + 网元工单</td>
+            <td>事件窗 E1 (北京奥体)</td>
+            <td>用户抱怨前天奥体卡顿并指出“大型场馆得提前半小时预热调试” $\rightarrow$ 修正为 <code>12:00-14:00 (120min)</code> 生成 <code>NE-12</code></td>
+            <td><strong>慢路径沉淀因果规则 1</strong>：关联 <code>NE-10</code> 拥塞日志与用户纠偏，沉淀经验规则 <code>EXP_PREWARM_BUFFER_01</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 16</td>
+            <td><code>S-04</code></td>
+            <td>多轮对话</td>
+            <td>支线 S2 + 单次临时豁免</td>
+            <td>用户说“开播前跟搭档对一下抖音直播的词，今天带宽紧改 720p/100ms，别改老规矩” $\rightarrow$ <code>微信-视频通话, 30min</code></td>
+            <td><strong>慢路径纠偏 2 + 临时隔离</strong>：沉淀 <code>EXP_MULTI_INTENT_PARTITION_01</code>（对词=微信通话），且严禁覆盖长期画像 <code>1080p/50ms</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 20 ~ 21</td>
+            <td><code>NE-13</code>, <code>NE-14</code></td>
+            <td>纯网元工单 ($\times 2$)</td>
+            <td>主线 M1 (<strong>v2 升级</strong>)</td>
+            <td><code>12:30-14:00 (90min)</code> | 滨江基地 | <code>抖音-开直播</code> | <code>1080p, ≤50ms</code> | <code>completed</code></td>
+            <td><strong>偏好版本演进</strong>：主线午间直播时长正式由 <code>60min</code> 升级为 <code>90min</code>（<code>MF_001: v1 → v2</code>）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 22</td>
+            <td><code>S-05</code></td>
+            <td>多轮对话</td>
+            <td>事件窗回溯复刻</td>
+            <td>用户说“按上次在奥体办的那笔参数来，时长改 60 分钟” $\rightarrow$ 过滤撤单 <code>NE-11</code>、对比 <code>NE-09/10</code> 后选中 <code>NE-09</code> 修改时长</td>
+            <td><strong>同地多单消歧与局部覆写</strong>：检验工作记忆废单剔除、异常单提示与跨槽位重算</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>Day 28</td>
+            <td><code>S-06</code> + <code>NE-15</code></td>
+            <td>多轮对话 + 网元工单</td>
+            <td>事件窗 E1 (异地工体)</td>
+            <td>用户说“今天 12:30 到 14:00 在工体中心场馆给阿抖开播，按老规矩超清档走” $\rightarrow$ Agent 1 轮自动预热为 <code>12:00-14:00 (120min)</code> 落地 <code>NE-15</code></td>
+            <td><strong>跨地点快路径闭环</strong>：跨场馆名称召回 <code>EXP_PREWARM_BUFFER_01</code> + <code>MF_001(v2)</code>，1 轮零追问直通</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    
+
+    <!-- ==================== CHAPTER 3 ==================== -->
+    <div class="running-header">
+      <span>3 网元结构化单据数据样本（NE-01 ~ NE-15）</span>
+      <span>故事线到网元单据混合对话的数据样本实例</span>
+    </div>
+
+    <h1 class="section-title" id="sec-3">3 网元结构化单据数据样本（<code>NE-01 ~ NE-15</code>）</h1>
+
+    <p>本节给出时间轴上全部 15 笔网元单据（<code>working_records.json</code>）的具体数据样本。每一笔网元单据包含标准业务槽位（<code>service_app</code>、<code>location_zone</code>、<code>start_time</code>、<code>end_time</code>、<code>duration</code>、<code>resolution</code>、<code>max_latency</code>），还携带底层基站的物理测量指标（<code>telemetry</code>：无线资源块利用率 <code>prb_util_pct</code>、实测上行带宽 <code>ul_throughput_mbps</code>、卡顿次数 <code>freeze_count</code> 以及工单履约状态 <code>status</code>）。</p>
+
+    <h2 class="subsection-title" id="sec-3-1">3.1 15 笔网元单据全量槽位与物理指标表</h2>
+
+    <p>表 3.1 列出了 <code>USER_001</code> 在 30 天内产生的全部 15 笔网元单据明细。为了避免评测集退化为固定时长或全成功工单的简单列表，单据流中同时包含了常态周期主线单、跨区移动支线单、单次娱乐偶发单、未开启保障的 3 分钟短单、同场馆同日 3 笔并发单（顺畅彩排单、<code>PRB=96%</code> 拥塞降级单、<code>1min</code> 误触撤单）以及 Day 20 时长升级后的新版本主线单。</p>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 3.1：<code>USER_001</code> 结构化网元单据流（<code>NE-01 ~ NE-15</code>）全量业务槽位与物理 Telemetry 台账表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 8%;">单号</th>
+            <th style="width: 8%;">日期</th>
+            <th style="width: 14%;">起止时间与时长</th>
+            <th style="width: 16%;">空间位置与基站小区</th>
+            <th style="width: 13%;">标准业务名 (<code>service_app</code>)</th>
+            <th style="width: 13%;">目标 KQI 槽位</th>
+            <th style="width: 16%;">实测 Telemetry 与状态</th>
+            <th style="width: 12%;">样本角色定位</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>NE-01</code></td>
+            <td>Day 01</td>
+            <td><code>12:30-13:30</code><br/>(<code>60min</code>)</td>
+            <td>杭州-滨江直播基地<br/>(<code>5G-A_Binjiang_01</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>38%</code> | UL: <code>24.5Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td>主线 v1 第 1 单（由 <code>S-01</code> 触发）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-02</code></td>
+            <td>Day 03</td>
+            <td><code>12:30-13:30</code><br/>(<code>60min</code>)</td>
+            <td>杭州-滨江直播基地<br/>(<code>5G-A_Binjiang_01</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>41%</code> | UL: <code>23.8Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td>主线 v1 第 2 单（静默工单）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-03</code></td>
+            <td>Day 04</td>
+            <td><code>17:30-18:15</code><br/>(<code>45min</code>)</td>
+            <td>沪杭高速大巴走廊<br/>(<code>G60_Corridor</code>)</td>
+            <td><code>腾讯会议-视频会议</code></td>
+            <td><code>720p</code> | <code>≤80ms</code><br/><code>DEV_MX5</code></td>
+            <td>PRB: <code>52%</code> | UL: <code>12.4Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td>移动支线 S1 第 1 单</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-04</code></td>
+            <td>Day 06</td>
+            <td><code>12:30-13:30</code><br/>(<code>60min</code>)</td>
+            <td>杭州-滨江直播基地<br/>(<code>5G-A_Binjiang_01</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>39%</code> | UL: <code>25.1Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td>主线 v1 满 3 次，确立长期语义记忆</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-05</code></td>
+            <td>Day 07</td>
+            <td><code>17:30-18:15</code><br/>(<code>45min</code>)</td>
+            <td>沪杭高速大巴走廊<br/>(<code>G60_Corridor</code>)</td>
+            <td><code>腾讯会议-视频会议</code></td>
+            <td><code>720p</code> | <code>≤80ms</code><br/><code>DEV_MX5</code></td>
+            <td>PRB: <code>49%</code> | UL: <code>13.1Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td><strong><code>S-02</code> 跨流指代的目标源工单</strong></td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-06</code></td>
+            <td>Day 09</td>
+            <td><code>21:00-21:45</code><br/>(<code>45min</code>)</td>
+            <td>杭州-西湖住宅区<br/>(<code>5G_Xihu_Res_04</code>)</td>
+            <td><code>腾讯视频-看视频</code></td>
+            <td><code>1080p</code> | <code>≤100ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>45%</code> | DL: <code>65.0Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td><strong>偶发干扰单</strong>（频次=1，禁入长期画像）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-07</code></td>
+            <td>Day 09</td>
+            <td><code>22:10-22:13</code><br/>(<code>3min</code>)</td>
+            <td>杭州-西湖住宅区<br/>(<code>5G_Xihu_Res_04</code>)</td>
+            <td><code>抖音-刷视频</code></td>
+            <td><code>无保障 (Best-Effort)</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>40%</code> | UL: <code>4.2Mbps</code><br/>状态: <code>unassured_short</code></td>
+            <td><strong>短时背景噪声单</strong>（3min 碎片，必须过滤）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-08</code></td>
+            <td>Day 10</td>
+            <td><code>07:30-08:15</code><br/>(<code>45min</code>)</td>
+            <td>沪杭高速大巴走廊<br/>(<code>G60_Corridor</code>)</td>
+            <td><code>腾讯会议-视频会议</code></td>
+            <td><code>720p</code> | <code>≤80ms</code><br/><code>DEV_MX5</code></td>
+            <td>PRB: <code>47%</code> | UL: <code>13.5Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td>移动支线 S1 满 3 次，确立支线偏好</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-09</code></td>
+            <td>Day 10</td>
+            <td><code>09:30-10:15</code><br/>(<code>45min</code>)</td>
+            <td>北京-奥体中心场馆<br/>(<code>5G-A_Aoti_Stadium</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>42%</code> | UL: <code>22.6Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td><strong>奥体同日第 1 单</strong>（上午空场彩排，顺畅）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-10</code></td>
+            <td>Day 10</td>
+            <td><code>12:30-14:00</code><br/>(<code>90min</code>)</td>
+            <td>北京-奥体中心场馆<br/>(<code>5G-A_Aoti_Stadium</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td><strong>PRB: <code>96%</code> | UL: <code>6.8Mbps</code><br/>卡顿: <code>8次</code> | <code>sla_degraded</code></strong></td>
+            <td><strong>奥体同日第 2 单</strong>（正赛拥塞劣化，触发 <code>S-03</code>）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-11</code></td>
+            <td>Day 10</td>
+            <td><code>14:05-14:06</code><br/>(<code>1min</code>)</td>
+            <td>北京-奥体中心场馆<br/>(<code>5G-A_Aoti_Stadium</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>94%</code> | 耗时: <code>48s</code><br/>状态: <code>aborted (用户撤单)</code></td>
+            <td><strong>奥体同日第 3 单</strong>（1min 误触撤单废单）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-12</code></td>
+            <td>Day 12</td>
+            <td><code>12:00-14:00</code><br/>(<code>120min</code>)</td>
+            <td>北京-奥体中心场馆<br/>(<code>5G-A_Aoti_Stadium</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code> (含30m预热)</td>
+            <td>PRB: <code>89%</code> | UL: <code>21.4Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td><code>S-03</code> 慢路径纠偏后提前 30min 预热成功单</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-13</code></td>
+            <td>Day 20</td>
+            <td><code>12:30-14:00</code><br/>(<code>90min</code>)</td>
+            <td>杭州-滨江直播基地<br/>(<code>5G-A_Binjiang_01</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>40%</code> | UL: <code>24.2Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td><strong>主线 v2 升级第 1 单</strong>（时长由 60m 升为 90m）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-14</code></td>
+            <td>Day 21</td>
+            <td><code>12:30-14:00</code><br/>(<code>90min</code>)</td>
+            <td>杭州-滨江直播基地<br/>(<code>5G-A_Binjiang_01</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code></td>
+            <td>PRB: <code>37%</code> | UL: <code>24.9Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td><strong>主线 v2 升级第 2 单</strong>（巩固 <code>90min</code> 新版本）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><code>NE-15</code></td>
+            <td>Day 28</td>
+            <td><code>12:00-14:00</code><br/>(<code>120min</code>)</td>
+            <td>北京-工体中心场馆<br/>(<code>5G-A_Gongti_Stadium</code>)</td>
+            <td><code>抖音-开直播</code></td>
+            <td><code>1080p</code> | <code>≤50ms</code><br/><code>DEV_M60P</code> (含30m预热)</td>
+            <td>PRB: <code>91%</code> | UL: <code>22.0Mbps</code><br/>卡顿: <code>0</code> | <code>completed</code></td>
+            <td><code>S-06</code> 跨场馆快路径自动预热闭环落地单</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="subsection-title" id="sec-3-2">3.2 网元单据 JSON 数据样本（<code>NE-05</code> 与奥体同日三单 <code>NE-09/10/11</code>）</h2>
+
+    <p>为直观展示工作记忆台账的底层数据结构，清单 3.1 给出了 <code>working_records.json</code> 中最具代表性的 4 笔单据原始 JSON：Day 07 的高速大巴移动会议工单 <code>NE-05</code>（无配套对话，供后续 <code>S-02</code> 跨通道指代），以及 Day 10 在北京奥体中心同日产生的 3 笔同地点工单 <code>NE-09</code>、<code>NE-10</code>、<code>NE-11</code>。</p>
+
+    <div class="listing-caption">
+      <span>数据样本 3.1：结构化网元单据流 JSON 样本片段（<code>NE-05</code> 与奥体同日三单 <code>NE-09/10/11</code>）</span>
+      <span class="src-tag">文件路径：mobile_persona_001/working_records.json</span>
+    </div>
+    <pre><code>[
+  {
+    "record_id": "NE-05",
+    "day": 7,
+    "weekday": "Thursday",
+    "channel": "network_element_ticket",
+    "linked_session_id": null,
+    "slots": {
+      "device_id": "DEV_MX5",
+      "location_zone": "沪杭高速大巴移动走廊",
+      "cell_id": "G60_HighSpeed_Corridor",
+      "service_app": "腾讯会议-视频会议",
+      "start_time": "17:30",
+      "end_time": "18:15",
+      "duration": "45min",
+      "resolution": "720p",
+      "max_latency": "80ms"
+    },
+    "telemetry": {
+      "status": "completed",
+      "prb_util_pct": 49,
+      "ul_throughput_mbps": 13.1,
+      "handover_count": 6,
+      "freeze_count": 0
+    }
+  },
+  {
+    "record_id": "NE-09",
+    "day": 10,
+    "channel": "network_element_ticket",
+    "slots": {
+      "device_id": "DEV_M60P",
+      "location_zone": "北京-奥体中心场馆",
+      "cell_id": "5G-A_Aoti_Stadium_01",
+      "service_app": "抖音-开直播",
+      "start_time": "09:30",
+      "end_time": "10:15",
+      "duration": "45min",
+      "resolution": "1080p",
+      "max_latency": "50ms"
+    },
+    "telemetry": {
+      "status": "completed",
+      "prb_util_pct": 42,
+      "ul_throughput_mbps": 22.6,
+      "freeze_count": 0,
+      "qos_Diagnostic": "上午空场彩排时段，基站负载正常，推流顺畅"
+    }
+  },
+  {
+    "record_id": "NE-10",
+    "day": 10,
+    "channel": "network_element_ticket",
+    "slots": {
+      "device_id": "DEV_M60P",
+      "location_zone": "北京-奥体中心场馆",
+      "cell_id": "5G-A_Aoti_Stadium_01",
+      "service_app": "抖音-开直播",
+      "start_time": "12:30",
+      "end_time": "14:00",
+      "duration": "90min",
+      "resolution": "1080p",
+      "max_latency": "50ms"
+    },
+    "telemetry": {
+      "status": "sla_degraded",
+      "degradation_reason": "cell_prb_congestion_at_peak_entry",
+      "prb_util_pct": 96,
+      "ul_throughput_mbps": 6.8,
+      "freeze_count": 8,
+      "qos_diagnostic": "12:30 观众集中入场导致 PRB 瞬时飙升至 96%，未提前锁流导致前 15 分钟出现 8 次画面卡顿"
+    }
+  },
+  {
+    "record_id": "NE-11",
+    "day": 10,
+    "channel": "network_element_ticket",
+    "slots": {
+      "device_id": "DEV_M60P",
+      "location_zone": "北京-奥体中心场馆",
+      "cell_id": "5G-A_Aoti_Stadium_01",
+      "service_app": "抖音-开直播",
+      "start_time": "14:05",
+      "end_time": "14:06",
+      "duration": "1min",
+      "resolution": "1080p",
+      "max_latency": "50ms"
+    },
+    "telemetry": {
+      "status": "aborted",
+      "abort_reason": "user_cancelled_within_60s",
+      "actual_active_seconds": 48,
+      "qos_diagnostic": "下播后误触重新提交，48 秒后用户主动撤单，属无效废单"
+    }
+  }
+]</code></pre>
+
+    
+    <!-- ==================== CHAPTER 4 ==================== -->
+    <div class="running-header">
+      <span>4 自然语言多轮对话数据样本（S-01 ~ S-06）</span>
+      <span>故事线到网元单据混合对话的数据样本实例</span>
+    </div>
+
+    <h1 class="section-title" id="sec-4">4 自然语言多轮对话数据样本（<code>S-01 ~ S-06</code>）</h1>
+
+    <p>本节给出 6 场自然语言多轮对话（<code>S-01 ~ S-06</code>）的完整样本数据，包括对话生成前的用户侧与系统侧双盲输入视图、逐轮真实对话原文以及每场对话落盘后的槽位来源字典（<code>turn_intents</code>）。</p>
+
+    <h2 class="subsection-title" id="sec-4-1">4.1 双盲输入视图数据样本（以 <code>S-06</code> 为例）</h2>
+
+    <p>每一场对话的输入数据由两份物理隔离的 JSON 视图构成：<strong>用户私有视图（<code>user_private_view</code>）</strong>仅包含用户的真实业务诉求、口语词典与首轮禁词表（<code>turn1_forbidden_values</code>，严禁首轮直接说出被省略的记忆槽位标准值）；<strong>Agent 可观测视图（<code>agent_observable_view</code>）</strong>仅包含截止到当前日期之前的历史网元单据台账与已沉淀的四类记忆快照，严禁透视当轮真值槽位。下方数据样本 4.1 展示了 <code>S-06 (Day 28)</code> 的双盲输入视图数据。</p>
+
+    <div class="listing-caption">
+      <span>数据样本 4.1：<code>S-06 (Day 28 工体中心异地开播)</code> 双盲信息隔离输入视图对比 JSON</span>
+      <span class="src-tag">文件路径：mobile_persona_001/isolated_views/S-06.json</span>
+    </div>
+    <pre><code>{
+  "session_id": "S-06",
+  "day": 28,
+  "user_private_view": {
+    "current_situation": "今天（Day 28）在北京工体中心场馆有一场 12:30 到 14:00 的午间直播，希望按日常超清直播标准保障，且默认系统已记住之前大型场馆需提前半小时预热的规矩",
+    "colloquial_hints": ["阿抖", "老规矩", "超清档"],
+    "turn1_forbidden_values": [
+      "抖音-开直播", "1080p", "50ms", "DEV_M60P", "提前30分钟", "12:00", "120min"
+    ],
+    "hidden_ground_truth_intent": {
+      "device_id": "DEV_M60P",
+      "location_zone": "北京-工体中心场馆",
+      "service_app": "抖音-开直播",
+      "start_time": "12:00",
+      "end_time": "14:00",
+      "duration": "120min",
+      "resolution": "1080p",
+      "max_latency": "50ms"
+    }
+  },
+  "agent_observable_view": {
+    "hidden_ground_truth_intent": "<<< PHYSICALLY MASKED >>>",
+    "current_user_utterance_turn_1": "今天 12:30 到 14:00 我在北京工体中心场馆给阿抖开播，按老规矩超清档走，直接帮我把保障单下了吧。",
+    "memory_snapshot_before_day_28": {
+      "semantic_facts": ["MF_001 (v2): 午间 12:30-14:00 (90min) 抖音-开直播, 1080p, <=50ms, DEV_M60P"],
+      "working_tickets": ["NE-01 .. NE-14 (含 NE-10 奥体拥塞单与 NE-12 奥体 120min 预热单)"],
+      "experience_rules": [
+        "EXP_PREWARM_BUFFER_01: 当 location_zone 属于大型高密场馆且业务为直播时，主动将 start_time 提前 30min 预热锁流，duration 同步 +30min",
+        "EXP_MULTI_INTENT_PARTITION_01: 当口语提及'对词/看机位'时路由至微信-视频通话（本轮不触发）"
+      ]
+    }
+  }
+}</code></pre>
+
+    <h2 class="subsection-title" id="sec-4-2">4.2 <code>S-01 ~ S-03</code> 多轮对话原文与槽位结果</h2>
+
+    <p>下面逐场给出前半程 <code>S-01</code>（Day 01 冷启动建档）、<code>S-02</code>（Day 08 跨流指代纯网元工单 <code>NE-05</code>）与 <code>S-03</code>（Day 12 关联 <code>NE-10</code> 基站拥塞退化并慢路径沉淀场馆预热经验规则）的真实多轮对话文本与槽位溯源结构。</p>
+
+    <div class="tcolorbox dialoguebox">
+      <div class="tcb-title">会话样本 1：<code>S-01 (Day 01)</code> —— 零记忆冷启动 3 轮澄清与个性化口语词典建档</div>
+      <div class="tcb-body">
+        <p><strong>【背景状态】</strong>：Day 01 初始时刻，四类记忆库均为空（<code>snapshot_before = []</code>）。用户首次发起模糊请求。</p>
+        <ul>
+          <li><strong>Turn 1 [User]</strong>：<code>“中午我在杭州滨江基地这边准备给阿抖开场直播，帮我把专网保障开一下，千万别转圈。”</code></li>
+          <li><strong>Turn 1 [Agent]</strong>：<code>“收到，林先生！检测到您当前为首次配置滨江基地直播保障。已为您匹配【抖音-开直播】业务与低时延防卡顿档位（时延 ≤50ms）。为精准锁定专网切片，请确认：1）今天中午具体的起止时间与时长；2）需要绑定的直播终端（您名下有 Mate 60 Pro 与 Mate X5）；3）推流清晰度要求（720p 或 1080p）？”</code></li>
+          <li><strong>Turn 2 [User]</strong>：<code>“时间定在 12:30 到 13:30 播满 60 分钟，用我那台主力机 Mate 60 Pro，画质肯定要 1080p 超清档。对了，以后我提‘老规矩’或者‘中午那档’，指的就是这套配置。”</code></li>
+          <li><strong>Turn 2 [Agent]</strong>：<code>“明白！已为您记下【老规矩/阿抖/超清档】的专属配置偏好，并正式下发今日保障工单 NE-01：【终端】Mate 60 Pro (DEV_M60P) | 【位置】杭州-滨江直播基地 | 【业务】抖音-开直播 | 【时段】12:30-13:30 (60min) | 【指标】1080p, 时延 ≤50ms。”</code></li>
+        </ul>
+        <p><strong>【槽位溯源 <code>turn_intents</code> 与记忆沉淀】</strong>：全量 7 个槽位来源均为 <code>user_explicit_clarification</code>；对话结束后注册口语映射表（<code>阿抖→抖音-开直播</code>、<code>老规矩→12:30起播</code>、<code>超清档→1080p</code>、<code>千万别转圈→≤50ms</code>），并生成首笔工单 <code>NE-01</code>。</p>
+      </div>
+    </div>
+
+    <div class="tcolorbox dialoguebox">
+      <div class="tcb-title">会话样本 2：<code>S-02 (Day 08)</code> —— 跨通道指代纯网元单据 <code>NE-05</code>（无历史对话支撑）</div>
+      <div class="tcb-body">
+        <p><strong>【背景状态】</strong>：用户在 Day 04（<code>NE-03</code>）和 Day 07 周四傍晚（<code>NE-05</code>）通过后台自动触发生效了两笔沪杭高速大巴移动会议工单，但此前<strong>从未在对话窗口中聊过大巴开会的事</strong>。</p>
+        <ul>
+          <li><strong>Turn 1 [User]</strong>：<code>“我现在又上沪杭高速大巴了，帮我按上周四傍晚在车上办过的那套会议配置再来一单，时间还是 17:30 开始。”</code></li>
+          <li><strong>Turn 1 [Agent]</strong>：<code>“已为您检索工作记忆中的历史网元单据台账，定位到上周四（Day 07）傍晚的移动工单 NE-05。为您复刻全套参数并直接建单：【终端】Mate X5 (DEV_MX5) | 【位置】沪杭高速大巴移动走廊 | 【业务】腾讯会议-视频会议 | 【时段】17:30-18:15 (45min) | 【指标】720p, 时延 ≤80ms（开启跨区切换保护）。请问是否直接执行？”</code></li>
+          <li><strong>Turn 2 [User]</strong>：<code>“对，就是这套，直接执行吧。”</code></li>
+        </ul>
+        <p><strong>【槽位溯源 <code>turn_intents</code>】</strong>：<code>start_time="17:30"</code> 与 <code>location_zone="沪杭高速大巴移动走廊"</code> 来自 <code>current_turn_input</code>；其余 5 个核心槽位（<code>device_id="DEV_MX5"</code>、<code>service_app="腾讯会议-视频会议"</code>、<code>end_time="18:15"</code>、<code>duration="45min"</code>、<code>resolution="720p"</code>、<code>max_latency="80ms"</code>）全部溯源至 <code>working_memory_ticket_ref: NE-05</code>。</p>
+      </div>
+    </div>
+
+    <div class="tcolorbox dialoguebox">
+      <div class="tcb-title">会话样本 3：<code>S-03 (Day 12)</code> —— 关联 <code>NE-10</code> 基站拥塞日志与慢路径沉淀场馆预热经验规则</div>
+      <div class="tcb-body">
+        <p><strong>【背景状态】</strong>：两天前（Day 10）用户在奥体中心执行正赛直播工单 <code>NE-10 (12:30-14:00, 90min)</code> 时，因 12:30 观众入场高峰导致基站 <code>PRB=96%</code>，发生 8 次严重画面卡顿（<code>sla_degraded</code>）。Day 12 用户再次在奥体中心发起直播。</p>
+        <ul>
+          <li><strong>Turn 1 [User]</strong>：<code>“今天中午 12:30 到 14:00 我还在北京奥体中心场馆给阿抖开播，按老规矩来。”</code></li>
+          <li><strong>Turn 1 [Agent]</strong>：<code>“收到，准备为您按日常直播偏好配置今日奥体中心保障：【时段】12:30-14:00 (90min) | 【业务】抖音-开直播 | 【指标】1080p, ≤50ms | 【终端】Mate 60 Pro。请确认是否下发？”</code></li>
+          <li><strong>Turn 2 [User]</strong>：<code>“等等！不能直接按 12:30 踩点开！前天（Day 10）中午在奥体中心 12:30 刚开播那会儿卡得厉害，画面连着冻了七八次！这种万人大型场馆人流一进来基站全挤爆了，必须提前半小时从 12:00 就开始预热锁流调试，一直保到 14:00！以后凡是去这种大型高密场馆直播都按这个规矩办！”</code></li>
+          <li><strong>Turn 2 [Agent]</strong>：<code>“非常抱歉！刚核对了前天奥体中心工单 NE-10 的底层网元日志，12:30 正赛入场高峰时基站 PRB 负载确实飙升至 96%，上行跌至 6.8Mbps 导致了 8 次卡顿。已为您将今日工单 NE-12 修正为【12:00-14:00（总时长 120min，含前 30min 预热锁流）】，同时将【大型高密场馆直播自动提前 30 分钟预热扩容（EXP_PREWARM_BUFFER_01）】写入您的长期经验记忆库，后续去同类场馆将自动为您预热！”</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="listing-caption">
+      <span>数据样本 4.2：<code>S-03 (Day 12)</code> 慢路径纠偏槽位演化与因果经验规则沉淀 JSON 明细</span>
+      <span class="src-tag">文件路径：mobile_persona_001/sessions.json (S-03)</span>
+    </div>
+    <pre><code>{
+  "session_id": "S-03",
+  "day": 12,
+  "mode": "slow_path_correction_and_rule_crystallization",
+  "linked_ticket_evidence": "NE-10 (Day 10, PRB=96%, freeze_count=8, status=sla_degraded)",
+  "slot_revision_trace": {
+    "draft_in_turn_1": {"start_time": "12:30", "end_time": "14:00", "duration": "90min"},
+    "revised_in_turn_2": {"start_time": "12:00", "end_time": "14:00", "duration": "120min"},
+    "revision_action": "prepend_prewarm_buffer(delta_start=-30min, delta_duration=+30min)"
+  },
+  "crystallized_experience_rule": {
+    "rule_id": "EXP_PREWARM_BUFFER_01",
+    "trigger_condition": "scene_type == '大型高密场馆/体育中心' AND service_app == '抖音-开直播'",
+    "root_cause": "万人场馆正赛入场时刻基站 PRB 瞬时拥塞（>95%），踩点开播易抢不到高优上行切片",
+    "action_policy": "自动将用户请求的 start_time 提前 30 分钟开启预热锁流，end_time 不变，duration 同步增加 30 分钟"
+  }
+}</code></pre>
+
+    <h2 class="subsection-title" id="sec-4-3">4.3 <code>S-04 ~ S-06</code> 多轮对话原文与槽位结果</h2>
+
+    <p>后半程的三场对话重点检验：<strong>字面关键词陷阱纠偏与单次临时豁免隔离（<code>S-04</code>）</strong>、<strong>工作记忆同地多笔工单（含异常单与废单）的对比消歧（<code>S-05</code>）</strong>，以及间隔 16 天后在全新场馆（北京工体中心）对沉淀经验的<strong>1 轮快路径泛化闭环（<code>S-06</code>）</strong>。</p>
+
+    <div class="tcolorbox dialoguebox">
+      <div class="tcb-title">会话样本 4：<code>S-04 (Day 16)</code> —— 字面陷阱慢路径纠偏（“对抖音的词” $\neq$ 抖音直播）与单次临时降档豁免</div>
+      <div class="tcb-body">
+        <p><strong>【背景状态】</strong>：用户口头提到“抖音直播”，但真实意图是在正式开播前用备机跟搭档通过微信视频通话对台本；同时因当天驻地网络受限，临时要求本场降为 <code>720p / 100ms</code>，但严禁修改长期习惯。</p>
+        <ul>
+          <li><strong>Turn 1 [User]</strong>：<code>“上午 11:00 到 11:30 我在滨江基地得先跟搭档连线对一下中午抖音直播的词、顺便看眼机位，帮我保一下。”</code></li>
+          <li><strong>Turn 1 [Agent]</strong>：<code>“收到！检测到关键词‘抖音直播’，准备为您下发【抖音-开直播 | 11:00-11:30 (30min) | 1080p, ≤50ms | Mate 60 Pro】保障单，请确认？”</code></li>
+          <li><strong>Turn 2 [User]</strong>：<code>“搞错了！我是正式开播前跟搭档一对一连线对台本看机位，用的是备机 Mate X5 打【微信视频通话】，不是直接上抖音开播！另外今天上午基地内网改造带宽紧，单就今天这一场给我降成 720p、时延放宽到 100ms 就行，千万别动我中午正式直播的老规矩！”</code></li>
+          <li><strong>Turn 2 [Agent]</strong>：<code>“明白！已为您纠正业务映射并记录经验规则【开播前对词/看机位 → 路由至 Mate X5 微信-视频通话（EXP_MULTI_INTENT_PARTITION_01）】。本场保障单已按【微信-视频通话 | 11:00-11:30 (30min) | 720p, ≤100ms | Mate X5】下发，且已标记为单次临时豁免（session_scoped_override），绝不覆盖您 1080p/50ms 的长期直播画像！”</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tcolorbox dialoguebox">
+      <div class="tcb-title">会话样本 5：<code>S-05 (Day 22)</code> —— 工作记忆同地多单消歧（过滤 <code>NE-11</code> 废单、辨析 <code>NE-09/10</code>）与局部覆写</div>
+      <div class="tcb-body">
+        <p><strong>【背景状态】</strong>：Day 10 用户在奥体中心留下了 3 笔工单：上午顺畅彩排单 <code>NE-09 (45min, completed)</code>、午间拥塞劣化单 <code>NE-10 (90min, sla_degraded)</code> 与下午 1 分钟撤单废单 <code>NE-11 (1min, aborted)</code>。Day 22 用户发起模糊复刻请求。</p>
+        <ul>
+          <li><strong>Turn 1 [User]</strong>：<code>“帮我按上次在北京奥体中心彩排那会儿跑通的那笔参数再来一单，不过今天时间改到 10:00 开始，播满 60 分钟。”</code></li>
+          <li><strong>Turn 1 [Agent]</strong>：<code>“正在检索您在【北京-奥体中心场馆】的历史网元单据：已自动为您剔除 1 分钟内撤单的无效记录 NE-11 (aborted)，并排除午间发生基站拥塞降级的正赛单 NE-10 (PRB=96%, sla_degraded)，精准锁定 Day 10 上午运行顺畅的彩排工单 NE-09（抖音-开直播, 1080p, ≤50ms, Mate 60 Pro）。按您的要求将时段局部覆写为【10:00-11:00 (60min)】，其余参数保持不变，是否确认执行？”</code></li>
+          <li><strong>Turn 2 [User]</strong>：<code>“完全正确，就按这个下发。”</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tcolorbox dialoguebox">
+      <div class="tcb-title">会话样本 6：<code>S-06 (Day 28)</code> —— 跨场馆快路径 1 轮直通闭环（联合召回长期画像 <code>MF_001(v2)</code> + 场馆预热经验 <code>EXP_PREWARM_BUFFER_01</code>）</div>
+      <div class="tcb-body">
+        <p><strong>【背景状态】</strong>：距离 Day 12（<code>S-03</code>）沉淀奥体中心预热规则已过去 16 天，期间经历了多次常规直播、微信对词支线以及 Day 20 的主线时长升级（<code>v2: 90min</code>）。Day 28 用户首次来到全新场馆<strong>“北京工体中心场馆”</strong>。</p>
+        <ul>
+          <li><strong>Turn 1 [User]</strong>：<code>“今天 12:30 到 14:00 我在北京工体中心场馆给阿抖开播，按老规矩超清档走，直接帮我把保障单下了吧。”</code></li>
+          <li><strong>Turn 1 [Agent]</strong>：<code>“收到，林先生！已为您联合匹配长期直播画像与大型场馆保障经验，无需额外追问，直接为您生成今日工体中心专网工单 NE-15：
+  1）【口语与长期画像补全 (MF_001 v2)】：‘阿抖/超清档/老规矩’映射为【抖音-开直播 | 1080p | 时延 ≤50ms | 主力机 Mate 60 Pro (DEV_M60P)】；
+  2）【跨场馆经验规则主动介入 (EXP_PREWARM_BUFFER_01)】：识别到【北京-工体中心场馆】同属万人高密场馆，为避免正赛入场基站 PRB 拥塞卡顿，已自动为您将起播时间从 12:30 提前 30 分钟至【12:00】开启预热锁流，保障时段调整为【12:00-14:00（总时长 120min）】。工单已生效！”</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="listing-caption">
+      <span>数据样本 4.3：<code>S-06 (Day 28)</code> 快路径 1 轮直通的全槽位多源溯源字典（<code>turn_intents</code>）</span>
+      <span class="src-tag">文件路径：mobile_persona_001/sessions.json (S-06)</span>
+    </div>
+    <pre><code>{
+  "session_id": "S-06",
+  "day": 28,
+  "interaction_mode": "fast_path_single_turn_closure",
+  "total_turns": 1,
+  "final_slots_and_provenance": {
+    "location_zone": {
+      "value": "北京-工体中心场馆",
+      "source": "current_turn_utterance"
+    },
+    "service_app": {
+      "value": "抖音-开直播",
+      "source": "colloquial_lexicon('阿抖') + semantic_memory('MF_001_v2')"
+    },
+    "device_id": {
+      "value": "DEV_M60P",
+      "source": "semantic_memory('MF_001_v2')"
+    },
+    "resolution": {
+      "value": "1080p",
+      "source": "colloquial_lexicon('超清档') + semantic_memory('MF_001_v2')"
+    },
+    "max_latency": {
+      "value": "50ms",
+      "source": "semantic_memory('MF_001_v2')"
+    },
+    "start_time": {
+      "value": "12:00",
+      "raw_user_input": "12:30",
+      "source": "experience_memory_override('EXP_PREWARM_BUFFER_01', delta=-30min)"
+    },
+    "end_time": {
+      "value": "14:00",
+      "source": "current_turn_utterance + semantic_memory('MF_001_v2')"
+    },
+    "duration": {
+      "value": "120min",
+      "raw_user_implied": "90min",
+      "source": "experience_memory_recalc('EXP_PREWARM_BUFFER_01', 14:00 - 12:00 = 120min)"
+    }
+  }
+}</code></pre>
+
+    
+    <!-- ==================== CHAPTER 5 ==================== -->
+    <div class="running-header">
+      <span>5 样本对应的四类记忆真值快照与评测样本对</span>
+      <span>故事线到网元单据混合对话的数据样本实例</span>
+    </div>
+
+    <h1 class="section-title" id="sec-5">5 样本对应的四类记忆真值快照与评测样本对</h1>
+
+    <p>在 30 天的 15 笔网元单据与 6 场多轮对话执行完毕后，该混合样本在 Day 30 终态对应一份唯一的<strong>四类记忆标准真值快照（<code>gold_memory_snapshot.json</code>）</strong>，以及配套的<strong>记忆萃取（$M$ vs. $N$）</strong>与<strong>记忆检索（$P$ vs. $Q$）</strong>评测问答对。</p>
+
+    <h2 class="subsection-title" id="sec-5-1">5.1 Day 30 四类记忆标准真值 JSON（<code>gold_memory_snapshot.json</code>）</h2>
+
+    <p>数据样本 5.1 给出了 <code>USER_001</code> 在 Day 30 结束时的标准四类记忆状态快照：包含经过频次过滤与版本升级后的<strong>事实记忆-语义记忆</strong>、保留时空因果链的<strong>事实记忆-情景记忆</strong>、已完成废单清洗与状态标记的<strong>工作记忆（程序化记忆）</strong>，以及从两次慢路径澄清中提炼出的<strong>经验记忆规则卡</strong>。</p>
+
+    <div class="listing-caption">
+      <span>数据样本 5.1：<code>USER_001</code> 在 Day 30 终态下的四类记忆标准快照（<code>gold_memory_snapshot.json</code>）</span>
+      <span class="src-tag">文件路径：mobile_persona_001/gold_memory_snapshot.json</span>
+    </div>
+    <pre><code>{
+  "user_id": "USER_001",
+  "snapshot_day": 30,
+  "1_factual_semantic_memory": {
+    "active_long_term_preferences": [
+      {
+        "fact_id": "MF_001",
+        "version": "v2 (upgraded_on_day_20)",
+        "condition": "日常固定基地午间直播 (杭州-滨江直播基地)",
+        "slots": {
+          "device_id": "DEV_M60P",
+          "service_app": "抖音-开直播",
+          "start_time": "12:30",
+          "end_time": "14:00",
+          "duration": "90min",
+          "resolution": "1080p",
+          "max_latency": "50ms"
+        },
+        "historical_archived_versions": [
+          {"version": "v1", "effective_days": "Day 01~19", "duration": "60min (12:30-13:30)", "status": "superseded"}
+        ]
+      },
+      {
+        "fact_id": "MF_002",
+        "version": "v1",
+        "condition": "沪杭高速大巴移动跨城办公",
+        "slots": {
+          "device_id": "DEV_MX5",
+          "service_app": "腾讯会议-视频会议",
+          "start_time": "17:30",
+          "end_time": "18:15",
+          "duration": "45min",
+          "resolution": "720p",
+          "max_latency": "80ms"
+        }
+      }
+    ],
+    "colloquial_lexicon_mappings": {
+      "阿抖": "抖音-开直播",
+      "老规矩 / 中午那档": "12:30 起播午间直播主线配置",
+      "超清档": "1080p",
+      "千万别转圈": "max_latency <= 50ms"
+    },
+    "suppressed_noise_audit": [
+      "NE-06 (腾讯视频-看视频, 45min): 仅出现 1 次 (<3 次频次门槛)，禁止写入长期语义偏好",
+      "NE-07 (抖音-刷视频, 3min): 未开启保障的碎片背景流量，禁止写入",
+      "S-04 (720p, 100ms): 显式声明仅单场生效 (session_scoped_override)，禁止覆盖 MF_001"
+    ]
+  },
+  "2_factual_episodic_memory": [
+    {
+      "episode_id": "EP_STADIUM_TOUR_01",
+      "time_span": "Day 10 ~ Day 12 (及 Day 28 返场)",
+      "summary": "北京奥体/工体大型高密场馆巡回技术直播事件窗：Day 10 上午空场彩排顺畅 (NE-09)，午间 12:30 正赛因万人入场基站 PRB=96% 发生 8 次卡顿 (NE-10)，Day 12 经用户慢路径反馈改为 12:00 提前半小时预热锁流 (NE-12, 120min) 后恢复零卡顿，并在 Day 28 工体中心成功复用 (NE-15)。"
+    }
+  ],
+  "3_working_procedural_memory": {
+    "valid_ticket_ledger_ids": ["NE-01", "NE-02", "NE-03", "NE-04", "NE-05", "NE-08", "NE-09", "NE-12", "NE-13", "NE-14", "NE-15"],
+    "degraded_warning_ticket_ids": ["NE-10 (sla_degraded, PRB=96%, freeze=8)"],
+    "filtered_invalid_ticket_ids": ["NE-06 (偶发娱乐)", "NE-07 (3min未保障短单)", "NE-11 (1min主动撤单aborted)"]
+  },
+  "4_experiential_memory": [
+    {
+      "rule_id": "EXP_PREWARM_BUFFER_01",
+      "source_session": "S-03 (Day 12) + NE-10 (Day 10)",
+      "when_condition": "目标地点属于大型高密体育场馆/会展中心 AND 业务为抖音-开直播",
+      "then_action": "自动将 start_time 提前 30min 开启预热锁流，end_time 保持不变，duration 同步 +30min"
+    },
+    {
+      "rule_id": "EXP_MULTI_INTENT_PARTITION_01",
+      "source_session": "S-04 (Day 16)",
+      "when_condition": "用户话语虽含'抖音直播'字眼，但核心动作为'开播前跟搭档对词/看机位'",
+      "then_action": "将真实业务路由至 微信-视频通话 + 备用终端 DEV_MX5，禁止误触发抖音-开直播"
+    }
+  ]
+}</code></pre>
+
+    <h2 class="subsection-title" id="sec-5-2">5.2 配套记忆萃取（<code>M vs. N</code>）与记忆检索（<code>P vs. Q</code>）测试题样本</h2>
+
+    <p>有了上述混合样本流与真值快照，可进一步派生出两阶段评测基准题：表 5.1 展示了针对该样本的<strong>记忆萃取阶段（$M$ vs. $N$）</strong>核心考核点与正误判分示例；表 5.2 展示了针对该样本的<strong>记忆检索阶段（$P$ vs. $Q$）</strong>六类检索探测题实例。</p>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 5.1：基于 <code>USER_001</code> 混合样本派生的记忆萃取阶段（模型预测集 $M$ vs. 标准真值集 $N$）评测实例表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 15%;">目标记忆类型</th>
+            <th style="width: 17%;">萃取评测子能力</th>
+            <th style="width: 24%;">输入混合流片段证据</th>
+            <th style="width: 24%;">标准真值集 $N$ 要求</th>
+            <th style="width: 20%;">典型错误预测 $M$（扣分项）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="3"><strong>事实-语义记忆</strong></td>
+            <td><strong>偏好抽取与口语映射</strong></td>
+            <td><code>S-01</code> 口语约定 + <code>NE-01/02/04</code> 连续 3 次同分布工单</td>
+            <td>抽取 <code>抖音-开直播, 1080p, ≤50ms, DEV_M60P</code>，建立 <code>阿抖/老规矩/超清档</code> 映射</td>
+            <td>漏掉口语词典映射，或未满 3 次即提前写入长期习惯</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>偏好整合（版本覆盖）</strong></td>
+            <td>Day 01~19 的 <code>60min</code> 工单 + Day 20~21 的 <code>NE-13/14 (90min)</code></td>
+            <td>将 <code>MF_001</code> 的活跃时长更新为 <code>90min (12:30-14:00)</code>，旧版 <code>60min</code> 归档</td>
+            <td>新旧版本并存冲突，或仍返回旧版 <code>60min</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>噪声抑制与临时豁免</strong></td>
+            <td><code>NE-06</code>（单次腾讯视频）、<code>NE-07</code>（3min 短单）、<code>S-04</code>（单场 720p/100ms）</td>
+            <td>三者均被严格拦截在长期语义记忆之外（噪声混入率 $= 0$）</td>
+            <td>把单次看剧或 <code>S-04</code> 临时降档误写入长期画像</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>工作记忆</strong></td>
+            <td><strong>多单状态标记与废单清洗</strong></td>
+            <td>Day 10 奥体三单 <code>NE-09 (completed)</code>、<code>NE-10 (sla_degraded)</code>、<code>NE-11 (aborted)</code></td>
+            <td>剔除 1 分钟撤单 <code>NE-11</code>，保留 <code>NE-09</code> 为正常基准并标记 <code>NE-10</code> 为拥塞劣化</td>
+            <td>未过滤 <code>NE-11</code> 废单，或把 <code>NE-10</code> 劣化单当作正常模板</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>经验记忆</strong></td>
+            <td><strong>长流定位澄清案例并提取因果规则</strong></td>
+            <td>在 21 个混合节点中定位 <code>S-03 (+NE-10)</code> 与 <code>S-04</code> 两处慢路径纠偏会话</td>
+            <td>准确提取 <code>EXP_PREWARM_BUFFER_01</code> 与 <code>EXP_MULTI_INTENT_PARTITION_01</code> 两条结构化规则</td>
+            <td>漏检 <code>S-03/S-04</code> 澄清节点，或把 <code>S-01</code> 常规补槽误当成纠偏规则</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 5.2：基于 <code>USER_001</code> 混合样本派生的记忆检索阶段（检索返回集 $P$ vs. 相关真值集 $Q$）评测实例表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 16%;">检索评测维度</th>
+            <th style="width: 28%;">在线测试 Query 输入</th>
+            <th style="width: 30%;">相关记忆真值集 $Q$（必须召回项）</th>
+            <th style="width: 26%;">干扰排除与排序判分要点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 口语映射与时效排序检索</strong></td>
+            <td><code>“今天中午在滨江基地给阿抖开播，按老规矩走。”</code>（Day 25 发起）</td>
+            <td><code>MF_001 (v2: 12:30-14:00, 90min)</code> + 口语词典 <code>阿抖→抖音-开直播</code></td>
+            <td><code>v2 (90min)</code> 必须排在 Top-1；若返回已过期的 <code>v1 (60min)</code> 判时效倒置失败</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>2. 跨模态纯单据指代检索</strong></td>
+            <td><code>“按上周四傍晚在沪杭大巴车上办过的那套会议参数再来一单。”</code>（<code>S-02</code>）</td>
+            <td>工作记忆网元工单 <code>NE-05 (DEV_MX5, 腾讯会议, 17:30-18:15, 45min, 720p, ≤80ms)</code></td>
+            <td>历史对话流中无记录，仅查对话历史的检索器召回率为 <code>0</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. 同地多单消歧与排除检索</strong></td>
+            <td><code>“按上次在北京奥体中心彩排跑通的那笔参数来，时长改 60 分钟。”</code>（<code>S-05</code>）</td>
+            <td>召回 <code>NE-09 (09:30-10:15, completed)</code></td>
+            <td>必须排除撤单废单 <code>NE-11 (aborted)</code> 与午间拥塞单 <code>NE-10 (sla_degraded)</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>4. 跨地点经验泛化与组合检索</strong></td>
+            <td><code>“今天 12:30 到 14:00 在北京工体中心场馆给阿抖开播，按老规矩超清档走。”</code>（<code>S-06</code>）</td>
+            <td>联合召回 <code>MF_001 (v2)</code> + 场馆预热经验规则 <code>EXP_PREWARM_BUFFER_01</code></td>
+            <td>虽未出现“奥体”字面词，但需识别“工体中心”同属大型场馆并触发提前 30min 预热（<code>12:00-14:00, 120min</code>）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>5. 字面陷阱经验抑制与精准路由</strong></td>
+            <td><code>“开播前我先用备机跟搭档连线对一下中午抖音直播的词。”</code></td>
+            <td>召回经验规则 <code>EXP_MULTI_INTENT_PARTITION_01</code>（路由至 <code>微信-视频通话 + DEV_MX5</code>）</td>
+            <td>严禁被字面词“抖音直播”误导而召回 <code>MF_001 (抖音-开直播)</code> 或 <code>EXP_PREWARM_BUFFER_01</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>6. 缺失槽位诚实拒答与追问</strong></td>
+            <td><code>“今晚 20:00 我在广州天河体育中心想用快手开一场游戏直播。”</code></td>
+            <td>召回 <code>EXP_PREWARM_BUFFER_01</code>（大型场馆预热），但识别出 <code>快手-游戏直播</code> 无历史清晰度/结束时间记录</td>
+            <td>禁止拿抖音参数硬套快手；必须对缺失的结束时间与画质发起澄清追问</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="running-footer">
+      <span>故事线到网元单据混合对话的数据样本实例（<code>USER_001</code>）</span>
+      <span>Day 01 ~ Day 30 双流混合完整样本</span>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "\\[", right: "\\]", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false }
+          ],
+          throwOnError: false
+        });
+      }
+      if (window.mermaid) {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: "neutral",
+          securityLevel: "loose",
+          themeVariables: {
+            fontSize: "15px",
+            fontFamily: '"PingFang SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif'
+          },
+          flowchart: {
+            htmlLabels: true,
+            curve: "basis",
+            nodeSpacing: 30,
+            rankSpacing: 40,
+            padding: 14,
+            subGraphTitleMargin: { top: 4, bottom: 4 },
+            useMaxWidth: false
+          }
+        });
+        mermaid.run({
+          querySelector: ".mermaid"
+        }).then(function () {
+          document.querySelectorAll(".mermaid-box .node foreignObject div, .mermaid-box .node .nodeLabel").forEach(function (el) {
+            el.style.textAlign = "left";
+          });
+          document.querySelectorAll(".mermaid-box svg").forEach(function (svg) {
+            try {
+              var bbox = svg.getBBox();
+              if (bbox && bbox.width > 0 && bbox.height > 0) {
+                var pad = 2;
+                svg.setAttribute(
+                  "viewBox",
+                  (bbox.x - pad) + " " + (bbox.y - pad) + " " + (bbox.width + pad * 2) + " " + (bbox.height + pad * 2)
+                );
+              }
+            } catch (e) {}
+            svg.removeAttribute("height");
+            svg.style.maxWidth = "100%";
+            svg.style.width = "100%";
+            svg.style.height = "auto";
+            svg.style.display = "block";
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

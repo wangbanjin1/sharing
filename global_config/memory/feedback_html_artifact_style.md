@@ -27,3 +27,7 @@ type: feedback
    - 同主题新增并列专题优先并入主 HTML 的 `<nav class="step-bar">` 作为新 Tab 页（如 `Tab 1..8`），不在顶栏额外加突兀按钮；
    - 独立深度拆解子 HTML 放入 `.lavish/<topic>_sub/` 或 `.lavish/papers/`，跨页跳转元素添加 `data-lavish-ui="true"` 或使用 `<button>`；
    - 保持双浅色主题（`#FBF7F0` / `#F6F8FA`）、浅底代码块、零未渲染 `$` 源码，以及 `@media print` 纯白背景（`#FFFFFF !important`）。
+5. **`wdkns-skills` 出版级技术报告风格与模板（默认报告标准）**：
+   - **版式与结构**：默认采用 `wdkns-skills`（`bilibili-render-pdf` / `codebase-lecture-notes`）的 **A4 学术讲义版式**——纯白 A4 纸张（`max-width: 1020px`，衬线正文 `Noto Serif SC / Songti SC` + 首行缩进 `text-indent: 2em` + 两端对齐 `text-align: justify`，黑体标题 `PingFang SC`）；扉页固定包含居中主副标题、灰色直角元信息框（`meta-tcolorbox`）、蓝色章节摘要框（`index-tcolorbox`）与带点线页码的多级目录（`toc-section`）；每章顶部配页眉横线（`running-header`），章末固定以 `X.Y 本章小结` 收尾。
+   - **组件规范**：表格统一采用 **`booktabs` 学术三线表**（顶底粗黑线 `2px`、表头中细线 `1.2px`、行间浅分隔线，零竖线）；重点提示统一采用 **四类直角 `tcolorbox`**（`importantbox` 暖金、`knowledgebox` 靛蓝、`warningbox` 砖红、`dialoguebox` 森绿，标题动态具体化，严禁在盒内嵌套大图）；公式遵循 **Formula Sandwich**（中文动机引入 $\rightarrow$ 独立公式 $\rightarrow$ `符号解释如下：` 编号列表逐一解释符号）。
+   - **配图与图注换行空格铁律**：非 GPU/底层算子/张量主题（如记忆架构、Agent 方法论、评测体系、业务数据流）**只需绘制清晰的 Mermaid 框图（`flowchart TB / LR`）**，无需画复杂的张量网格矢量图；**所有图注（`<p class="figure-caption">`）在加粗图题后必须换行（`<br/>`），且换行后的解释正文开头必须严格缩进两格空格（`&emsp;&emsp;`）**，格式固定为：`<p class="figure-caption"><strong>图 X：图题。</strong><br/>&emsp;&emsp;图注后的详细解释内容……</p>`。

@@ -509,10 +509,15 @@
       margin: 0;
     }
 
+    .mermaid-box .node foreignObject > div {
+      text-align: left !important;
+    }
+
     .mermaid-box .node .nodeLabel {
       display: inline-block !important;
       padding: 6px 12px !important;
-      line-height: 1.5 !important;
+      line-height: 1.55 !important;
+      text-align: left !important;
     }
 
     .mermaid-box .cluster-label .nodeLabel {
@@ -744,14 +749,14 @@
       <div class="date-line">2026 年 11 月</div>
 
       <div class="meta-tcolorbox">
-        <p><strong>报告摘要：</strong>对当前学术界与工业界（2024–2026）在<strong>长周期合成故事线、记忆与多轮意图评测基准、全链路分层指标、三层记忆分工、短期到长期记忆演变、经验自进化及 Agent 评测</strong>七大核心问题上的系统化方法论总结与思考。以<strong>联接 Agent（网络体验保障，含网元结构化单据 + 前台自然语言对话流）</strong>为统一问题背景，总结一套系统的方法论。</p>
+        <p><strong>报告摘要：</strong>对当前学术界与工业界（2024–2026）在<strong>长周期合成故事线、记忆与多轮意图评测基准、全链路分层指标、三层记忆分工、短期到长期记忆演变、经验自进化及 Agent 评测</strong>七大核心问题上的系统化方法论总结与思考。以<strong>联接 Agent（网络体验保障，含自然语言对话与网元结构化单据）</strong>为统一问题背景，总结一套系统的方法论。</p>
         <p><strong>系统梳理的文献规模：</strong>精选 <strong>22 篇</strong>聚焦意图理解与长程记忆演化的核心评测基准（五大方向：PersonaMem-v3、BehaviorMem、LoCoMo-Plus、LongMemEval、Speak &amp; Spell、BlendX、READI、IntentDelta、IN3、CICC、ClarifyMT-Bench、&tau;-bench、&tau;&sup2;-bench、CAREFUL-Bench、UserProxyBench 等）、<strong>5 套</strong>经典短期→长期记忆演变架构（北邮 MemoryOS、Mem0、Zep/Graphiti、Letta/MemGPT、MemoryBank/A-MEM）、<strong>5 篇</strong>经验记忆归纳工作（Reflexion、ExpeL、AWM、ReasoningBank、经验跟随实证研究）及 <strong>5 项</strong>在线交互评测框架。</p>
       </div>
 
       <div class="index-tcolorbox">
         <div class="box-header">章节摘要</div>
         <div class="box-body">
-          <p class="index-item"><strong>1. <a href="#sec-1">故事线的正交因子方法论（两层解耦设计）</a></strong> — 排布层 12 个因子 + 内容层 28 个因子、成对覆盖组合与跨 3 个月示例</p>
+          <p class="index-item"><strong>1. <a href="#sec-1">故事线的正交因子方法论（排布层 &times; 内容层 MECE 解耦设计）</a></strong> — 第一层排布因子与第二层内容因子解耦设计、四类记忆（事实记忆［语义 + 情景］/ 工作记忆［程序化记忆］/ 经验记忆）构建因子划分及跨 3 个月示例</p>
           <p class="index-item"><strong>2. <a href="#sec-2">记忆与意图交互评测数据集系统调研（2024–2026，精选 22 篇）</a></strong> — 五大方向 22 篇核心基准拆解、语法/语义/语用 18 类变体盲区、16&times;16 交互动作矩阵</p>
           <p class="index-item"><strong>3. <a href="#sec-3">全流程评测指标方法论（萃取 &rarr; 召回 &rarr; 决策）</a></strong> — 三阶段 6 项核心指标与 12 个细分子项拆解、核心打分逻辑与一票否决红线</p>
           <p class="index-item"><strong>4. <a href="#sec-4">记忆要记什么：三层记忆分工与按决策环节分解</a></strong> — 事实记忆、工作记忆与经验记忆的分界、记与不记的五条标准、八步决策分解</p>
@@ -765,13 +770,13 @@
       <div class="toc-section" id="toc">
         <h2 class="toc-title">目录</h2>
         <div class="toc-list">
-          <div class="toc-row level-1"><a href="#sec-1">1 故事线的正交因子方法论（排布层 12 因子 &times; 内容层 28 因子）</a><span class="toc-dots"></span><span class="toc-page">2</span></div>
-          <div class="toc-row level-2"><a href="#sec-1-1">1.1 业界长程合成数据的痛点与“两层解耦”设计思路</a><span class="toc-dots"></span><span class="toc-page">2</span></div>
-          <div class="toc-row level-2"><a href="#sec-1-2">1.2 第一层：故事线排布因子（三组共 12 个因子）</a><span class="toc-dots"></span><span class="toc-page">2</span></div>
-          <div class="toc-row level-2"><a href="#sec-1-3">1.3 第二层：故事线内容因子（七组共 28 个因子与三级取值粒度）</a><span class="toc-dots"></span><span class="toc-page">3</span></div>
-          <div class="toc-row level-2"><a href="#sec-1-4">1.4 两层组合规则、配置表结构与跨 3 个月完整组合示例</a><span class="toc-dots"></span><span class="toc-page">4</span></div>
-          <div class="toc-row level-2"><a href="#sec-1-5">1.5 本章小结与拓展阅读</a><span class="toc-dots"></span><span class="toc-page">5</span></div>
-
+          <div class="toc-row level-1"><a href="#sec-1">1 故事线的正交因子方法论（排布层 &times; 内容层 MECE 解耦设计）</a><span class="toc-dots"></span><span class="toc-page">2</span></div>
+          <div class="toc-row level-2"><a href="#sec-1-1">1.1 业界长程合成数据的痛点与“两层 MECE 正交解耦”设计思路</a><span class="toc-dots"></span><span class="toc-page">2</span></div>
+          <div class="toc-row level-2"><a href="#sec-1-2">1.2 第一层：故事线排布因子</a><span class="toc-dots"></span><span class="toc-page">2</span></div>
+          <div class="toc-row level-2"><a href="#sec-1-3">1.3 第二层：故事线内容因子</a><span class="toc-dots"></span><span class="toc-page">3</span></div>
+          <div class="toc-row level-2"><a href="#sec-1-4">1.4 四类记忆用哪些故事线因子构造及对应评测内容</a><span class="toc-dots"></span><span class="toc-page">5</span></div>
+          <div class="toc-row level-2"><a href="#sec-1-5">1.5 两层组合规则、配置表结构与跨 3 个月完整组合示例</a><span class="toc-dots"></span><span class="toc-page">6</span></div>
+          <div class="toc-row level-2"><a href="#sec-1-6">1.6 本章小结与拓展阅读</a><span class="toc-dots"></span><span class="toc-page">7</span></div>
           <div class="toc-row level-1"><a href="#sec-2">2 记忆与意图交互评测数据集系统调研（2024–2026，精选 22 篇核心工作）</a><span class="toc-dots"></span><span class="toc-page">5</span></div>
           <div class="toc-row level-2"><a href="#sec-2-1">2.1 2024–2026 记忆、意图与多轮交互 Benchmark 构造与评测全景（五大方向 22 篇）</a><span class="toc-dots"></span><span class="toc-page">5</span></div>
           <div class="toc-row level-2"><a href="#sec-2-2">2.2 意图理解数据集在“语法 · 语义 · 语用”三层 18 类变体上的拆解与现有盲区</a><span class="toc-dots"></span><span class="toc-page">9</span></div>
@@ -812,427 +817,526 @@
     <!-- ==================== 第 1 章 ==================== -->
     <div class="running-header" id="sec-1">
       <span>长程记忆演化、多轮意图交互与 Agent 评测业界方法论综述 · 第 1 章</span>
-      <span>1 故事线的正交因子方法论（排布层 12 因子 &times; 内容层 28 因子）</span>
+      <span>1 故事线的正交因子方法论（排布层 &times; 内容层 MECE 解耦设计）</span>
     </div>
 
-    <h1 class="section-title">1 故事线的正交因子方法论（排布层 12 因子 &times; 内容层 28 因子）</h1>
+    <h1 class="section-title">1 故事线的正交因子方法论（排布层 &times; 内容层 MECE 解耦设计）</h1>
 
-    <h2 class="subsection-title" id="sec-1-1">1.1 业界长程合成数据的痛点与“两层解耦”设计思路</h2>
+    <h2 class="subsection-title" id="sec-1-1">1.1 业界长程合成数据的痛点与“两层 MECE 正交解耦”设计思路</h2>
 
-    <p>评估具备长期记忆与多轮意图理解能力的智能体（例如面向移动网络体验保障的联接 Agent），关键问题在于<strong>构造跨度数周至数月、同时包含“网元结构化单据”与“前台自然语言对话流”的高拟真长程测试轨迹</strong>。</p>
+    <p>评估具备长期记忆与多轮意图理解能力的智能体（例如面向移动网络体验保障的联接 Agent），关键问题在于<strong>构造跨度数周至数月、同时包含自然语言对话与网元结构化单据的高拟真长程测试轨迹</strong>，并确保合成出的轨迹能够全面覆盖下游记忆萃取（偏好抽取、合并更新、分场景组织、画像生成、噪声抑制）与记忆检索（直接、排序、条件、排除、组合、缺失拒答）的全部考核点。</p>
 
-    <p>早期的合成数据管线通常在代码里写死几套固定的剧本模板（例如把会话总数、第几轮学习、第几轮测试以及支线发生的时间预设硬编码在脚本分支中）。这种单层硬编码做法存在两个明显瓶颈：第一，<strong>“时间线怎么排布”与“每个事件填什么业务内容”紧耦合</strong>，每当测试新的干扰密度或新的主支线穿插方式时，必须重写整套生成代码；第二，<strong>同质化严重且易出现单源捷径依赖</strong>，例如所有单据均取固定时长（如一律 <code>120min</code>），或所有偏好均在第 1 轮直白说出，导致模型无需真正具备跨周期聚合与消歧能力即可通过测试。</p>
+    <p>早期的合成数据管线通常在代码里写死几套固定的剧本模板，或者将所有控制变量平铺在同一张一维表里。这种做法存在三个明显问题：第一，<strong>“宏观时间线怎么排布”与“每个事件填什么业务内容”紧耦合</strong>，调整干扰密度或主支线穿插方式时往往牵一发而动全身；第二，<strong>同层因子之间存在父子条件依赖或跨层语义重复（不够正交）</strong>——例如将受限于时间窗口的“事件规模”与“时间跨度”平铺并列，将仅在存在支线时才生效的“支线归宿”与“事件线结构”并列，或在排布层与内容层重复定义“偏好演进”与“闲聊干扰”；第三，<strong>评测盲区漏测</strong>，缺乏对负向排斥偏好、短期临时偏好过期、未提及属性拒答边界以及闲聊、试探、情绪发泄、单次偶发等非偏好噪声的系统化因子控制。</p>
 
-    <p>综合 2024–2026 年 <code>PersonaMem-v3</code>、<code>LoCoMo</code>、<code>RHELM</code> 与 <code>LongMemEval</code> 等基准的合成思想，可扩展的故事线生成方法论分为两层正交解耦设计：<strong>第一层定排布（12 个排布因子）</strong>，控制整条时间线的宏观骨架、主支线拓扑与测试编排；<strong>第二层定内容（28 个内容因子）</strong>，按“用户级 &rarr; 线级 &rarr; 节点级”三种粒度往时间线骨架上填充具体的用户角色、业务属性、网络异常与交互方式。同层因子相互独立，组合后交由大模型 API 批量渲染单据序列与多轮对话，并由确定性状态机生成标准真值标签（图 1）。</p>
+    <p>综合 2024–2026 年 <code>PersonaMem-v3</code>、<code>LoCoMo</code>、<code>DynamicMem</code>、<code>MemoryAgentBench</code> 与 <code>LongMemEval</code> 等基准的合成思想，并遵循 <strong>MECE（相互独立、完全穷尽）原则</strong>，我们将故事线生成拆分为<strong>“排布层 + 内容层”</strong>两层结构（图 1）：</p>
+    <ul>
+      <li><strong>第一层定排布（时间线与主支线结构）：</strong>控制整条时间线的总时长、事件规模与密度、主支线结构、跨期变化趋势、跨会话因果关系与测试点安排；其中受父级条件约束的属性（如<code>1. 时间跨度</code>下的<code>1.1 事件规模</code>与<code>1.2 事件密度</code>，<code>3. 事件线结构</code>下的<code>3.1 支线触发事件</code>与<code>3.2 支线归宿</code>）作为对应主因子的子因子采样。</li>
+      <li><strong>第二层定内容（业务画像属性与信息表达方式）：</strong>按<strong>“用户级 &rarr; 线级 &rarr; 节点级”</strong>三种取值粒度，无重叠地覆盖<strong>用户身份与资产、应用与业务行为、时空轨迹与流量、网络环境与 KQI 偏好、信息来源与噪声干扰、多轮交互与反馈纠正</strong>六个方面。</li>
+    </ul>
 
     <div class="figure-wrap">
       <div class="mermaid-box">
         <pre class="mermaid">
 flowchart TB
-  subgraph Layer1["第一层：故事线排布因子（共 12 个因子 · 决定整条时间线的宏观骨架）"]
+  subgraph Layer1["第一层：故事线排布因子（决定时间线整体结构）"]
     direction LR
-    L1_A["一、时间轴骨架（4 项）<br/>时间跨度 / 事件规模<br/>事件密度 / 外部日历事件"]
-    L1_B["二、事件结构（5 项）<br/>起始状态 / 事件线结构<br/>支线归宿 / 阶段节奏 / 因果链"]
-    L1_C["三、测试编排（3 项）<br/>单据与对话比例 (75:25 ~ 25:75)<br/>测试点间隔与干扰 / 测试题型配比"]
+    L1_A["<b>一、时间范围与规模</b><br/>1. 时间跨度 (2周 / 1月 / 3月 / 半年)<br/>&nbsp;&nbsp;├─ 1.1 事件规模 (少10-15 / 中16-22 / 多30+)<br/>&nbsp;&nbsp;└─ 1.2 事件密度 (均匀 / 忙闲交替 / 前密后疏)"]
+    L1_B["<b>二、主支线结构与变化趋势</b><br/>2. 起始状态 (冷启动 / 热启动)<br/>3. 事件线结构 (单主线 / 主线+支线)<br/>&nbsp;&nbsp;├─ 3.1 支线触发事件 &nbsp;&nbsp;└─ 3.2 支线归宿<br/>4. 跨期变化趋势 &nbsp;|&nbsp; 5. 跨会话因果关系"]
+    L1_C["<b>三、测试点与数据配比</b><br/>6. 测试目标与题型配比<br/>&nbsp;&nbsp;├─ 6.1 单据与对话总体配比 (75:25 ~ 25:75)<br/>&nbsp;&nbsp;├─ 6.2 证据至测试点间隔 (&lt;5步 / 5-15步 / 15-35步)<br/>&nbsp;&nbsp;└─ 6.3 间隔期干扰占比 (低 / 中 / 高)"]
   end
 
-  subgraph Layer2["第二层：故事线内容因子（七大组共 28 个因子 · 按「用户 / 线 / 节点」三级粒度填入属性）"]
+  subgraph Layer2["第二层：故事线内容因子（按用户级 · 线级 · 节点级粒度填充）"]
     direction LR
-    L2_A["用户级粒度（整条故事线取一次）<br/>用户角色 / 设备与套餐 / 表达习惯<br/>沟通风格 / 配合与纠正度"]
-    L2_B["线级粒度（主线、支线各取一次）<br/>主力业务类型 / 业务时长 / 体验档位<br/>活动空间 / 时间规律 / 所在时段 / 覆盖环境 / 偏好演化"]
-    L2_C["节点级粒度（每个事件节点独立取）<br/>业务并发 / 移动状态 / 网络事件 / 异常时段<br/>信号来源 / 声明方式 / 交互方式 / 指代方式 / 单据噪声 / 回执状态"]
+    L2_A["<b>业务画像属性（记什么业务信息）</b><br/>• <b>一、用户身份与资产：</b>1. 职业身份 | 2. 终端组合 | 3. 套餐档位<br/>• <b>二、应用与业务行为：</b>4. 应用与业务大类 (├─ 4.1 业务并发方式 └─ 4.2 持续时长)<br/>• <b>三、时空轨迹与流量：</b>5. 活动空间 (└─ 5.1 移动状态) | 6. 时段规律 (└─ 6.1 浮动) | 7. 流量与上下行比例<br/>• <b>四、网络环境与 KQI：</b>8. KQI 档位 (└─ 8.1 降级与互斥权重) | 9. 覆盖与制式 | 10. 网络异常 (└─ 10.1 异常阶段)"]
+    L2_B["<b>信息表达与多轮交互（怎么表达、受扰与纠正）</b><br/>• <b>五、信息来源与噪声干扰：</b><br/>&nbsp;&nbsp;11. 信息来源渠道 (└─ 11.1 证据强度) | 12. 显隐式表达 (├─ 12.1 正负向极性 └─ 12.2 措辞与口语映射)<br/>&nbsp;&nbsp;13. 适用范围与有效期 | 14. 缺失边界 (不编造/主动拒答) | 15. 非偏好噪声与单据脏数据<br/>• <b>六、多轮交互与反馈纠正：</b>16. 历史诉求与情绪变化 | 17. 交互与历史指代 | 18. 显式纠正与闭环"]
   end
 
-  subgraph Engine["两层正交组合与双流素材生成管线"]
+  subgraph MemMap["四类目标记忆构建划分 & 双流素材生成管线"]
     direction LR
-    E1["同层正交采样 + 配置表合法性约束<br/>排除冲突组合，执行成对覆盖 (Pairwise)"] --> E2["生成带时间戳的全局事件骨架<br/>主线建立期 → 支线插入 → 迁移期 → 测试点"]
-    E2 --> E3["大模型 API 渲染双流素材 + 状态机生成标签<br/>网元结构化单据序列 + 多轮对话 + 标准记忆状态快照"]
+    M1["<b>1. 事实记忆 — 语义记忆</b><br/>• 跨周期稳定画像、周期习惯与默认档位<br/>• 分场景常驻 KQI、应用映射与口语映射"]
+    M2["<b>2. 事实记忆 — 情景记忆</b><br/>• 外部日程窗口（搬家/出差/赛事）与临时偏好<br/>• 历史主动诉求、情绪变化与显式纠正记录"]
+    M3["<b>3. 工作记忆（程序化记忆）</b><br/>• 历史保障工单台账与网元单据执行回执<br/>• 跨会话单据指代复用、改期平移与多单消歧"]
+    M4["<b>4. 经验记忆</b><br/>• 慢路径澄清/理解失败纠正后的因果调参规则<br/>• 后续同类请求 1 轮快路径一次闭环"]
   end
 
-  Layer1 ==> Engine
-  Layer2 ==> Engine
+  Layer1 ==> Layer2
+  Layer2 ==> MemMap
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 1：故事线“第一层排布因子（12 项） &times; 第二层内容因子（28 项）”两层解耦合成架构图。</strong><br/>上方第一层决定时间跨度、主支线穿插与因果链骨架；中间第二层按“用户级、线级、节点级”三种粒度填入具体网络保障与交互属性；下方通过成对覆盖采样与状态机生成网元结构化单据流、多轮对话流与标准记忆状态快照。</p>
+      <p class="figure-caption"><strong>图 1：故事线“第一层排布因子 &times; 第二层内容因子”的分层解耦与四类记忆对应关系图。</strong><br/>&emsp;&emsp;上方第一层决定时间跨度、主支线结构、跨期变化趋势与测试点安排；中间第二层将“业务画像属性（身份、应用、时空、网络 KQI）”与“信息表达及多轮交互（双源一致性、显隐式、正负向、分场景/临时有效期、缺失拒答边界、非偏好噪声、多轮指代与纠正）”分开定义；下方说明各因子如何分别构造事实记忆（语义记忆 + 情景记忆）、工作记忆（程序化记忆）与经验记忆。</p>
     </div>
 
-    <h2 class="subsection-title" id="sec-1-2">1.2 第一层：故事线排布因子（三组共 12 个因子）</h2>
+    <h2 class="subsection-title" id="sec-1-2">1.2 第一层：故事线排布因子</h2>
 
-    <p>第一层排布因子分为<strong>时间轴骨架（4 项）、事件结构（5 项）、测试编排（3 项）</strong>三组，共 12 个因子。它将原本写死在代码里的会话数、学习轮与测试轮位置、支线时间预设全部抽离为可采样配置项。表 1.1 列出了这 12 个因子的可取值范围、决定的骨架特征及其对应的学术界参考做法。</p>
+    <p>第一层排布因子围绕<strong>时间范围与规模、主支线结构与变化趋势、测试点与数据配比</strong>三个维度定义时间线的整体骨架（表 1.1）。其中存在条件约束的维度采用主从结构：先由<code>1. 时间跨度</code>确定总时间窗口，再在其下采样<code>1.1 事件规模</code>与<code>1.2 事件密度</code>；先由<code>3. 事件线结构</code>确定是否包含支线，当存在支线时再采样<code>3.1 支线触发事件</code>与<code>3.2 支线归宿</code>；先由<code>6. 测试目标与题型配比</code>确定考核重点，再配置<code>6.1 单据与对话总体配比</code>、<code>6.2 证据至测试点间隔</code>与<code>6.3 间隔期干扰占比</code>。</p>
 
     <div class="table-wrap">
-      <div class="table-caption">表 1.1：第一层故事线排布因子（三组共 12 个因子）完整定义与学术参考</div>
+      <div class="table-caption">表 1.1：第一层故事线排布因子定义与学术参考</div>
       <table class="booktabs">
         <thead>
           <tr>
-            <th style="width: 11%;">分组</th>
-            <th style="width: 14%;">因子名称</th>
-            <th style="width: 32%;">可取值范围</th>
-            <th style="width: 24%;">决定时间线骨架的什么特征</th>
-            <th style="width: 19%;">学术界参考做法</th>
+            <th style="width: 12%;">因子分组</th>
+            <th style="width: 20%;">排布因子（含主从子因子）</th>
+            <th style="width: 30%;">可取值范围（MECE 切分）</th>
+            <th style="width: 22%;">决定时间线结构的什么特征</th>
+            <th style="width: 16%;">学术界参考做法</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td rowspan="4"><strong>一、时间轴骨架</strong><br/>（4 项）</td>
+            <td rowspan="3"><strong>一、时间范围与规模</strong></td>
             <td><strong>1. 时间跨度</strong></td>
-            <td>2 周 / 1 个月 / 3 个月 / 半年</td>
-            <td>能容纳哪些周期规律，记忆需要保持多久</td>
-            <td>PersonaMem-v3：30 天；LoCoMo：跨数月</td>
+            <td>2 周 / 1 个月 / 3 个月 / 半年（~15 个月）</td>
+            <td>决定整条故事线的物理时间窗口上限、可容纳的周期规律跨度及长期记忆保持周期</td>
+            <td>PersonaMem-v3：30 天；DynamicMem：15 个月</td>
           </tr>
           <tr>
-            <td><strong>2. 事件规模</strong></td>
-            <td>少（10~15 个节点）/ 中（16~22）/ 多（30 以上）</td>
-            <td>时间线总长度与上下文累积压力</td>
+            <td style="padding-left: 1.5em;"><strong>├─ 1.1 事件规模</strong></td>
+            <td>少（10~15 个节点）/ 中（16~22 个节点）/ 多（30 个节点以上）</td>
+            <td>在父因子“时间跨度”范围内，决定总事件节点数与上下文累积长度（避免短跨度配超大节点数冲突）</td>
             <td>LoCoMo：最多 35 会话；LongMemEval：多档规模</td>
           </tr>
           <tr>
-            <td><strong>3. 事件密度</strong></td>
-            <td>均匀 / 忙闲交替 / 前密后疏 / 前疏后密</td>
-            <td>事件在时间轴上的整体疏密走势</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 1.2 事件密度</strong></td>
+            <td>均匀分布 / 忙闲交替 / 前密后疏 / 前疏后密</td>
+            <td>在给定时间跨度与事件规模后，控制事件节点在时间轴上的整体疏密走势</td>
             <td>LAMP、EasyTPP 时序点过程</td>
           </tr>
-          <tr>
-            <td><strong>4. 外部日历事件</strong></td>
-            <td>无 / 法定节假日 / 大型赛事或展会 / 恶劣天气 / 月初月末结算</td>
-            <td>时间线上有哪些外部环境触发点</td>
-            <td>LoCoMo 日历事件图谱；PersonaMem-v3 日历联动</td>
-          </tr>
           <tr class="midrule-row">
-            <td rowspan="5"><strong>二、事件结构</strong><br/>（5 项）</td>
-            <td><strong>5. 起始状态</strong></td>
-            <td>冷启动（无任何历史）/ 热启动（已有前一周期的历史记忆）</td>
-            <td>第一个测试点之前系统已知多少背景</td>
-            <td>PersonaMem-v1/v2：从零建档 vs. 预置历史画像</td>
+            <td rowspan="6"><strong>二、主支线结构与变化趋势</strong></td>
+            <td><strong>2. 起始状态</strong></td>
+            <td>冷启动（全新用户，历史记忆全空）/ 热启动（已预置前一周期历史记忆快照）</td>
+            <td>决定首轮交互时系统处于零记录状态（直接考核未知拒答边界）还是增量演化状态</td>
+            <td>PersonaMem-v1/v2；MemoryAgentBench</td>
           </tr>
           <tr>
-            <td><strong>6. 事件线结构</strong></td>
+            <td><strong>3. 事件线结构</strong></td>
             <td>单主线 / 主线 + 1 条支线 / 主线 + 多条支线交织 / 主线中断后恢复</td>
-            <td>同时并行几条事件线，彼此如何穿插</td>
-            <td>RHELM：日常主线穿插阶段事件</td>
+            <td>决定同时并行几条场景事件线（如“日常居家主线 + 异地差旅支线”）及穿插方式</td>
+            <td>RHELM：日常主线穿插阶段支线</td>
           </tr>
           <tr>
-            <td><strong>7. 支线归宿</strong></td>
-            <td>结束后回到原主线 / 转为新主线 / 周期性复现</td>
-            <td>支线事件对长期习惯有没有持久影响</td>
-            <td>PersonaMem-v3：偶发脉冲回退 vs. 新习惯接替</td>
+            <td style="padding-left: 1.5em;"><strong>├─ 3.1 支线触发事件</strong></td>
+            <td>搬家或入职入学 / 法定节假日 / 大型赛事或展会 / 异地出差或旅行 / 突发恶劣天气（仅含支线时生效）</td>
+            <td>在时间线上注入外部环境或生命阶段突变窗口，驱动分场景存储与跨事件推理</td>
+            <td>LoCoMo 全局事件图谱；PERMA 事件驱动时间线</td>
           </tr>
           <tr>
-            <td><strong>8. 阶段节奏</strong></td>
-            <td>平稳型 / 单次扰动型 / 迁移型 / 多次波动型</td>
-            <td>整条故事线分几个阶段、偏好在哪个阶段变</td>
-            <td>PersonaMem-v3 四类时间轨迹；RHELM 阶段演化</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 3.2 支线归宿</strong></td>
+            <td>结束后回到原主线（单次偶发或临时偏好过期回退）/ 转为新主线（永久迁移）/ 周期性复现</td>
+            <td>决定支线事件是作为短期偶发事件回退，还是沉淀为独立的长期常驻场景习惯</td>
+            <td>PersonaMem-v3：偶发回退 vs. 新习惯接替</td>
           </tr>
           <tr>
-            <td><strong>9. 因果链</strong></td>
-            <td>无 / 1 条短链（首次缺参或理解失败 &rarr; 多轮澄清/纠正 &rarr; 沉淀经验）/ 1 条完整闭环（首次多轮澄清或纠正 &rarr; 沉淀经验规则 &rarr; 后续同类请求直接快速闭环）/ 多条交叉</td>
-            <td>前因后果有几条，经验记忆从哪里产生并在哪里验证闭环</td>
-            <td>LoCoMo 事件因果图；RHELM 状态演进</td>
+            <td><strong>4. 跨期变化趋势</strong></td>
+            <td>平稳保持型（跨会话同义多表述重复）/ 单次迁移覆盖型（升档或降档、换机、迁居，新版 <code>active</code> 覆盖旧版 <code>superseded/obsolete</code>）/ 逐渐弃用型 / 多次波动与纠正后改回型</td>
+            <td>统一控制画像属性在时间线上的形成与版本演化轨迹（检验跨会话同义合并去重、新旧覆盖更新、旧版本过期归档及多次纠正时序排序）</td>
+            <td>PersonaMem-v3 四类轨迹；DynamicMem 状态演化；PERMA 时间线</td>
+          </tr>
+          <tr>
+            <td><strong>5. 跨会话因果关系</strong></td>
+            <td>无 / 1 条短链（首次缺参或冲突 &rarr; 澄清/纠正 &rarr; 沉淀经验）/ 1 条完整闭环（沉淀经验后再次遇同类请求 &rarr; 快路径一次闭环）/ 多条交叉</td>
+            <td>控制跨会话的前因后果闭环，专门定义经验记忆从何处产生、在何处验证快路径加速效果</td>
+            <td>LoCoMo 事件因果图；MemoryAgentBench TTL</td>
           </tr>
           <tr class="midrule-row">
-            <td rowspan="3"><strong>三、测试编排</strong><br/>（3 项）</td>
-            <td><strong>10. 单据与对话比例</strong></td>
-            <td>单据为主（<code>75 : 25</code>）/ 均衡（<code>50 : 50</code>）/ 对话为主（<code>25 : 75</code>）</td>
-            <td>记忆信息主要从后台行为单据还是从前台对话获得</td>
-            <td>PersonaMem-v3：95% 隐式行为日志</td>
+            <td rowspan="4"><strong>三、测试点与数据配比</strong></td>
+            <td><strong>6. 测试目标与题型配比</strong></td>
+            <td><strong>萃取侧（画像形成过程）：</strong>偏好抽取 / 偏好整合 / 偏好组织 / 画像生成 / 噪声抑制；<br/><strong>检索侧（意图复杂度递进）：</strong>直接召回 &rarr; 排序召回 &rarr; 条件召回 &rarr; 排除召回 &rarr; 组合召回 &rarr; 缺失召回（两线独立配比评测）</td>
+            <td>将“画像形成过程（零碎、显/隐式、长短程、分场景）”与“检索意图从简单到复杂递进（直接找&rarr;排序&rarr;加场景&rarr;加负向约束&rarr;跨维组合&rarr;未知拒答）”解耦编排</td>
+            <td>LongMemEval（索引/检索分离）；MemoryAgentBench（AR/TTL/LRU/CR）；LoCoMo</td>
           </tr>
           <tr>
-            <td><strong>11. 测试点与干扰</strong></td>
-            <td>证据到测试的间隔：短（<code>&lt; 5 步</code>）/ 中（<code>5~15 步</code>）/ 长（<code>15~35 步</code>）；干扰占比：低 / 中 / 高</td>
-            <td>测试题离证据多远、中间混入多少无关闲聊或背景短单</td>
-            <td>LongMemEval：历史长度与干扰密度可调</td>
+            <td style="padding-left: 1.5em;"><strong>├─ 6.1 单据与对话总体配比</strong></td>
+            <td>网元结构化单据为主（<code>75 : 25</code>）/ 双源均衡（<code>50 : 50</code>）/ 自然语言对话为主（<code>25 : 75</code>）</td>
+            <td>在故事线全局层面控制记忆证据主要分布在网元结构化单据还是自然语言对话中</td>
+            <td>PersonaMem-v3：95% 行为流 + 5% 对话</td>
           </tr>
           <tr>
-            <td><strong>12. 测试题型配比</strong></td>
-            <td>事实记忆 / 工作记忆（历史单指代）/ 经验记忆 / 边界（克制与拒答）四类题的占比</td>
-            <td>这条故事线主要考核哪一类记忆能力与克制边界</td>
-            <td>LongMemEval 五类能力；RHELM 七类提问</td>
+            <td style="padding-left: 1.5em;"><strong>├─ 6.2 证据至测试点间隔</strong></td>
+            <td>短间隔（<code>&lt; 5 步</code>）/ 中间隔（<code>5~15 步</code>）/ 长间隔（<code>15~35 步</code>）</td>
+            <td>控制关键记忆写入节点与下游测试提问点之间的跨会话步数距离</td>
+            <td>LongMemEval：证据与提问点距离可调</td>
+          </tr>
+          <tr>
+            <td style="padding-left: 1.5em;"><strong>└─ 6.3 间隔期干扰占比</strong></td>
+            <td>低干扰（<code>&lt; 20%</code>）/ 中干扰（<code>20%~50%</code>）/ 高干扰（<code>&gt; 50%</code>）</td>
+            <td>控制证据节点与测试点之间混入非偏好背景事件的比例，考核长程抗遗忘与抗干扰能力</td>
+            <td>LongMemEval 背景干扰会话占比</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h2 class="subsection-title" id="sec-1-3">1.3 第二层：故事线内容因子（七组共 28 个因子与三级取值粒度）</h2>
+    <h2 class="subsection-title" id="sec-1-3">1.3 第二层：故事线内容因子</h2>
 
-    <p>第二层内容因子负责给第一层生成的时间线骨架填入具体业务属性，采用<strong>三级取值粒度（Scope Granularity）</strong>：<strong>“用户”级因子</strong>在整条故事线中只取一次（决定这个人是谁、说话什么习惯）；<strong>“线”级因子</strong>按主线或支线各取一次（决定这条线的常规业务、常驻空间与时段规律）；<strong>“节点”级因子</strong>在每个具体事件节点上独立采样（决定当次是否发生拥塞异常、是否缺参需要澄清、单据是否有噪声）。表 1.2 列出了七大组共 28 个内容因子及其取值粒度。</p>
+    <p>在第一层时间线结构确定后，第二层内容因子按<strong>“用户级（整条故事线取一次） &rarr; 线级（主线、支线各取一次） &rarr; 节点级（每个事件节点独立取）”</strong>三种粒度填入具体属性（表 1.2）：</p>
+    <ul>
+      <li><strong>业务画像属性（一至四类，决定记什么业务信息）：</strong>覆盖<strong>用户身份与资产、应用与业务行为、时空轨迹与流量、网络环境与 KQI 偏好</strong>四个方面。其中应用下的并发方式与持续时长、活动空间下的物理移动状态、活跃时段下的时间窗浮动幅度、KQI 下的降级容忍与互斥权重、以及网络异常下的发生阶段均作为对应主因子的子因子采样（如无网络异常时不采样异常发生阶段）。</li>
+      <li><strong>信息表达与多轮交互（五至六类，决定怎么表达、受扰与纠正）：</strong>第五类控制<strong>信息来源渠道与双源冲突（含证据强度与置信度）、显隐式表达方式（含正负向极性与口语映射）、偏好作用域与临时有效期、信息缺失边界、以及非偏好噪声与单据脏数据</strong>；第六类控制<strong>历史诉求与情绪变化、跨轮历史单据指代与显式纠正闭环</strong>。</li>
+    </ul>
 
     <div class="table-wrap">
-      <div class="table-caption">表 1.2：第二层故事线内容因子（七组共 28 个因子）与三级取值粒度总表</div>
+      <div class="table-caption">表 1.2：第二层故事线内容因子与三级取值粒度总表</div>
       <table class="booktabs">
         <thead>
           <tr>
-            <th style="width: 11%;">分组</th>
-            <th style="width: 15%;">因子名称</th>
-            <th style="width: 38%;">可取值范围</th>
-            <th style="width: 11%;">取值粒度</th>
-            <th style="width: 25%;">决定节点或故事线的什么属性</th>
+            <th style="width: 12%;">因子类别</th>
+            <th style="width: 19%;">内容因子（含主从子因子）</th>
+            <th style="width: 36%;">可取值范围（含评测覆盖特征）</th>
+            <th style="width: 9%;">取值粒度</th>
+            <th style="width: 24%;">决定的故事线属性与支撑的评测点</th>
           </tr>
         </thead>
         <tbody>
-          <!-- 用户 5 项 -->
+          <!-- 一、用户身份与资产 -->
           <tr>
-            <td rowspan="5"><strong>一、用户</strong><br/>（5 项）</td>
-            <td><strong>1. 用户角色</strong></td>
-            <td>内容创作者 / 移动办公与外勤 / 学生与游戏玩家 / 商务差旅 / 公共服务与应急 / 居家普通用户</td>
+            <td rowspan="3"><strong>一、用户身份与资产</strong><br/>（对应身份归属域）</td>
+            <td><strong>1. 职业与角色身份</strong></td>
+            <td>游戏主播 / 外卖骑手 / 网约车司机 / 程序员 / 教师 / 医生 / 护士 / 学生 / 短视频创作者 / 电商主播 / 证券交易员 / 健身教练 / 货车司机 / 快递员 / 房产中介 / 自媒体UP主 / 自由撰稿人 / 电竞选手 / 记者 / 银行柜员等</td>
             <td>用户</td>
-            <td>主力应用、作息规律、常去地点的大致范围</td>
+            <td>决定用户的基础作息、主力应用与上下行网络诉求基线（支撑显式声明抽取、从大上行流量隐式推断身份及“职业+场景”跨维组合召回）</td>
           </tr>
           <tr>
-            <td><strong>2. 设备与套餐</strong></td>
-            <td>基础套餐 / 大流量套餐 / 加速包；单设备 / 多设备（手机 + 平板 + CPE）</td>
-            <td>用户（可随阶段变）</td>
-            <td>可用保障档位与多终端情况，套餐升级时触发偏好迁移</td>
+            <td><strong>2. 终端设备与指纹状态</strong></td>
+            <td>终端类型（华为、苹果、小米、荣耀、OPPO/vivo、三星 + 平板、笔记本、台式机、车机、可穿戴、游戏主机）&times; <strong>主备关系（<code>1主1备 / 1主多备 / 双主并重 / 无主备</code>）</strong> &times; <strong>设备指纹状态（<code>单指纹稳定 / 多指纹切换 / 跨周重定向 / 无指纹或已清除</code>）</strong></td>
+            <td>用户<br/>（可跨期换机）</td>
+            <td>决定网元单据中的终端与指纹记录（支撑主从设备优先级排序、换机覆盖更新、指纹记录直接召回与无指纹/多指纹无法确认时的缺失拒答）</td>
           </tr>
           <tr>
-            <td><strong>3. 表达习惯</strong></td>
-            <td>标准说法 / 口语简称多（“小破站”）/ 体感描述（“别卡”“别跳 ping”）/ 专业术语（“上行 50M、时延 30ms”）</td>
-            <td>用户</td>
-            <td>单据标准名称与用户口语之间的差距大小</td>
+            <td><strong>3. 套餐档位与资费约束</strong></td>
+            <td>宽带档位（<code>100M~2000M</code>）+ 移动流量档位（<code>10G~100G</code>）+ 附加服务包（游戏加速包/定向流量包/夜间限速包/VoIP包）&times; <strong>资费倾向（低价敏感 vs. 品质优先；升档与降档）</strong></td>
+            <td>用户<br/>（可跨期升降档）</td>
+            <td>决定物理签约速率上限与资费边界（支撑新旧套餐排序、排除低于现档方案、排除高延迟低价档及夜间限速/时段溢价不划算包）</td>
           </tr>
-          <tr>
-            <td><strong>4. 沟通风格</strong></td>
-            <td>简短直接 / 信息冗长夹杂闲聊 / 情绪化 / 反复改主意</td>
-            <td>用户</td>
-            <td>对话中有效信息的密度与背景噪声比例</td>
-          </tr>
-          <tr>
-            <td><strong>5. 配合与纠正度</strong></td>
-            <td>高（理解偏差立即明确纠正）/ 中（追问时逐步补充）/ 低（尽量少说、靠系统补全）</td>
-            <td>用户</td>
-            <td>慢路径澄清或系统理解偏差时，用户如何给出纠正信息</td>
-          </tr>
-          <!-- 业务 4 项 -->
+          <!-- 二、应用与业务行为 -->
           <tr class="midrule-row">
-            <td rowspan="4"><strong>二、业务</strong><br/>（4 项）</td>
-            <td><strong>6. 主力业务类型</strong></td>
-            <td>上行推流 / 低时延交互（游戏、远控）/ 实时会议 / 下行大流量点播 / 后台大文件传输</td>
+            <td rowspan="3"><strong>二、应用与业务行为</strong><br/>（对应应用行为域）</td>
+            <td><strong>4. 目标应用与业务大类</strong></td>
+            <td><strong>应用层级结构：</strong>业务大类（视频、语音、IM、游戏、直播、办公、下载、网页）&rarr; 细分场景子类（长视频/短视频、手游/端游/云游戏/电竞档、视频会议/远程办公/云桌面/在线文档）&rarr; 具体应用；配 <strong>占比分布（<code>Top3 集中 / Top5 / Top10 / 并列占比长尾均摊</code>）</strong></td>
             <td>线</td>
-            <td>网元结构化单据中关键看哪类指标，保障参数怎么定</td>
+            <td>决定核心业务负载、应用至大类的层级归档及使用占比分布（支撑主力应用与业务构成按占比排序、画像去重只留 Top 项、以及排除不用/零占比子应用服务包）</td>
           </tr>
           <tr>
-            <td><strong>7. 业务并发</strong></td>
-            <td>单业务 / 同类双业务 / 主辅业务并发（前台实时 + 后台传输）</td>
+            <td style="padding-left: 1.5em;"><strong>├─ 4.1 业务并发方式</strong></td>
+            <td>单业务独立运行 / 同类双业务并发（如 B站 vs. 爱奇艺同开竞争）/ 主辅异类业务并发（如“前台腾讯会议或游戏 + 后台 Steam 大文件下载”）</td>
             <td>节点</td>
-            <td>单次节点是否需要分流与优先级处理</td>
+            <td>决定单次事件节点是否出现多业务争抢带宽，触发分流优先级决策与复合多意图拆解</td>
           </tr>
           <tr>
-            <td><strong>8. 业务时长</strong></td>
-            <td>短（<code>15~45min</code>）/ 中（<code>60~120min</code>）/ 长（<code>150~240min</code>）</td>
-            <td>线（节点内随机浮动）</td>
-            <td>单据时长多分布采样，严禁固定 120min 硬编码</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 4.2 单次持续时长</strong></td>
+            <td>短时（<code>15~45min</code>）/ 中时（<code>60~120min</code>）/ 长时（<code>150~240min</code>），在区间内连续随机采样</td>
+            <td>线<br/>（节点随机浮动）</td>
+            <td>保证网元结构化单据的业务时长具备真实多分布特征（杜绝固定时长硬编码，并与 1~8min 噪声短单拉开差距）</td>
           </tr>
-          <tr>
-            <td><strong>9. 体验档位要求</strong></td>
-            <td>只要偏好档 / 偏好档 + 可接受降级档 / 三档齐全（偏好、降级、拒绝）</td>
-            <td>线</td>
-            <td>弱网拥塞时能否降级、用户的拒绝底线在哪</td>
-          </tr>
-          <!-- 时空 5 项 -->
+          <!-- 三、时空轨迹与流量 -->
           <tr class="midrule-row">
-            <td rowspan="5"><strong>三、时空</strong><br/>（5 项）</td>
-            <td><strong>10. 活动空间</strong></td>
-            <td>固定常驻 / 通勤移动 / 人流聚集场馆 / 偏远弱覆盖 / 异地差旅</td>
+            <td rowspan="5"><strong>三、时空轨迹与流量</strong><br/>（对应时空轨迹域）</td>
+            <td><strong>5. 活动场景空间</strong></td>
+            <td><strong>场景层级：</strong>标准场景（家、办公、学校、通勤、出差、旅行、户外、应急、游戏厅、医院）及下属微场景（如电梯/地下室/郊区/酒店/商场/短差/长差/高铁/跨境）&rarr; 归入驻留/移动大场景</td>
             <td>线</td>
-            <td>小区分布特征、容易出现哪类网络问题</td>
+            <td>决定事件发生的空间位置与多级场景归属（支撑分场景独立存储不串味、当前场景优先于通用偏好排序、带场景条件召回与未记录场景拒答）</td>
           </tr>
           <tr>
-            <td><strong>11. 移动状态</strong></td>
-            <td>静止 / 步行 / 城市车载 / 高速或高铁</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 5.1 物理移动状态</strong></td>
+            <td>固定静止 / 步行移动 / 城市车载移动（早晚高峰通勤 vs. 长途通勤）/ 高速公路或高铁跨区高速移动</td>
             <td>节点</td>
-            <td>是否伴随高频基站小区切换与断流</td>
+            <td>决定网元结构化单据中是否伴随高频基站小区切换（Handover）与移动性断流风险</td>
           </tr>
           <tr>
-            <td><strong>12. 时间规律</strong></td>
-            <td>按日 / 按周 / 按月或节假日 / 无规律突发</td>
+            <td><strong>6. 活跃时段与周期规律</strong></td>
+            <td>显式时段（清晨 5-8、上午 8-12、午间 12-14、下午 14-18、晚高峰 19-23、凌晨 0-3）+ 隐式作息时段（下班后&rarr;晚高峰、睡前&rarr;凌晨、午休&rarr;午间、通勤&rarr;早晚峰、摸鱼&rarr;上午、加班&rarr;深夜）；配 <strong>峰型分布（<code>单峰 / 双峰 / 三峰 / 零散均匀</code>）</strong>与<strong>“时段&rarr;日&rarr;周（工作日/周末/节假日）&rarr;季”多级归档</strong></td>
             <td>线</td>
-            <td>单据在时间轴上的周期分布与间隔</td>
+            <td>决定业务在时间轴上的分布规律与多峰排序（支撑零散时段归并为峰值段、多活跃时段按活跃度排序、工作日/周末/节假日条件过滤与免打扰时段排除）</td>
           </tr>
           <tr>
-            <td><strong>13. 所在时段</strong></td>
-            <td>清晨 / 白天工作时段 / 晚高峰 / 深夜</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 6.1 时间窗浮动幅度</strong></td>
+            <td>准点守时（<code>&plusmn;2min</code>）/ 小幅自然浮动（<code>&plusmn;10min</code>）/ 大幅弹性浮动（<code>&plusmn;30min</code>）</td>
             <td>线</td>
-            <td>同小区背景负载高低（晚高峰更易发生拥塞）</td>
+            <td>控制网元单据起止时间戳的抖动方差，调节从行为流中挖掘周期规律的算法难度</td>
           </tr>
           <tr>
-            <td><strong>14. 时间浮动</strong></td>
-            <td>准点（<code>&plusmn;2min</code>）/ 小幅浮动（<code>&plusmn;10min</code>）/ 大幅浮动（<code>&plusmn;30min</code>）</td>
+            <td><strong>7. 流量消耗与上下行比例</strong></td>
+            <td>日均流量档位（微量 <code>&lt;100MB</code>、常规 <code>100M~1G</code>、大流量 <code>1~5G</code>、超大 <code>&gt;5G</code>）&times; 上下行比例（下行主导消费型 <code>1:9</code>、上下行均衡型、上行主导创作型）&times; 月末流量余量状态（充裕 vs. 月底流量吃紧）</td>
             <td>线</td>
-            <td>周期习惯挖掘与时间窗对齐的识别难度</td>
+            <td>决定网元单据中的上下行吞吐量比例与流量约束（支撑流量量级与上下行比例直接召回、以及“月底流量紧+打游戏卡”保时延省流组合推理）</td>
           </tr>
-          <!-- 网络 3 项（精简） -->
+          <!-- 四、网络环境与 KQI 偏好 -->
           <tr class="midrule-row">
-            <td rowspan="3"><strong>四、网络</strong><br/>（3 项）</td>
-            <td><strong>15. 覆盖环境</strong></td>
-            <td>稳定覆盖 / 高峰拥堵 / 边缘弱覆盖</td>
+            <td rowspan="5"><strong>四、网络环境与 KQI 偏好</strong><br/>（对应网络体验与意图偏好域）</td>
+            <td><strong>8. 核心 KQI 与画质档位要求</strong></td>
+            <td>时延（<code>&le;30ms / &le;50ms / &le;100ms / &le;200ms / 不敏感</code>）、丢包（<code>&le;0.01% / &le;0.1% / &le;0.5% / &lt;1% / 不敏感</code>）、带宽（<code>&ge;100M ~ &ge;1000M</code>）、抖动（<code>&le;5ms</code>）、<strong>画质分辨率（<code>360p / 480p / 720p / 1080p / 4K~8K HDR</code>）</strong>；<strong>严格区分下行侧与上行侧 KQI（上行时延/上行带宽/上行丢包）</strong>及<strong>“单指标&rarr;场景级&rarr;全局”层级结构</strong></td>
             <td>线</td>
-            <td>该事件线所处的基础无线网络环境条件</td>
+            <td>定义各场景下的核心网络质量底线（支撑 KQI 多维完整性、上行/下行独立抽取、仅提下行问上行时的缺失拒答、以及高延迟/高丢包方案排除）</td>
           </tr>
           <tr>
-            <td><strong>16. 网络事件</strong></td>
-            <td>无异常 / 拥塞卡顿 / 切换断流 / 多单冲突（时间重叠、同地多单）</td>
-            <td>节点</td>
-            <td>是否出现体验劣化或同地多单冲突，触发消歧澄清与经验沉淀</td>
-          </tr>
-          <tr>
-            <td><strong>17. 异常时段</strong></td>
-            <td>开场前期 / 整场持续 / 瞬时波动</td>
-            <td>节点</td>
-            <td>决定经验调整动作（如开场前期拥塞 &rarr; 提前 20min 预热）</td>
-          </tr>
-          <!-- 记忆演化 4 项 -->
-          <tr class="midrule-row">
-            <td rowspan="4"><strong>五、记忆演化</strong><br/>（4 项）</td>
-            <td><strong>18. 偏好演化</strong></td>
-            <td>稳定保持 / 逐渐弃用 / 新增或升级 / 单次临时变动</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 8.1 降级容忍与互斥权重</strong></td>
+            <td><strong>多 KQI 偏好强度排序（如 <code>时延 &gt; 丢包 &gt; 带宽</code>）</strong> / 互斥指标冲突取舍（<code>带宽 vs. 时延</code>、<code>时延 vs. 丢包</code>、<code>带宽 vs. 抖动</code>） / 拥塞或限流时的降级容忍度（禁止夜间降级 vs. 允许 4K 降 1080p 保时延）</td>
             <td>线</td>
-            <td>同一偏好在时间线上如何演进或发生单次例外</td>
+            <td>决定多指标并存时的优先级排序（支撑网络硬性要求排序召回、互斥 KQI 不可兼得时的权重推理及禁用降级档位排除）</td>
           </tr>
           <tr>
-            <td><strong>19. 信号来源</strong></td>
-            <td>仅单据体现 / 仅对话说明 / 单据与对话一致 / 单据与对话矛盾</td>
-            <td>节点</td>
-            <td>关键信息落在哪一侧，检验网元结构化单据与对话的双源冲突消解</td>
+            <td><strong>9. 覆盖环境、制式与切片偏好</strong></td>
+            <td>无线覆盖（稳定覆盖 / 一般覆盖 / 边缘弱覆盖 / 重度弱覆盖）&times; 网络制式（<code>5G 速率优先 / 4G 稳定优先 / 混合自适应</code>，含 <code>SA vs. NSA</code>）&times; <strong>网络切片偏好（<code>eMBB 高带宽切片 / URLLC 低时延切片 / S-NSSAI 切片 ID / 未知未存储</code>）</strong></td>
+            <td>线</td>
+            <td>决定底层无线信道条件、制式与切片选择（支撑弱覆盖应急预期召回、排除不喜制式及对应切片方案、以及切片 ID 未存储时的缺失拒答）</td>
           </tr>
           <tr>
-            <td><strong>20. 声明方式</strong></td>
-            <td>明确要求记住（“以后都这样”）/ 顺带提到 / 完全不说只体现在行为</td>
+            <td><strong>10. 网络异常与卡顿优先级</strong></td>
+            <td>无异常 / <strong>业务卡顿（游戏、直播、视频、会议、通话；支持单类发生或多类卡顿齐现并按影响程度排序，如 <code>游戏卡顿 &gt; 直播 &gt; 会议 &gt; 视频</code>）</strong> / 切换断流 / 同地多单冲突</td>
             <td>节点</td>
-            <td>决定首次出现即直通长期记忆，还是必须多次重复才记为长期习惯</td>
+            <td>决定当次节点是否触发体验劣化及多类卡顿并存时的处置优先级（支撑卡顿 KQI 偏好召回、多类卡顿优先处理排序与综合排障组合推理）</td>
           </tr>
           <tr>
-            <td><strong>21. 偏好适用范围</strong></td>
-            <td>全局通用 / 限定某场景或地点 / 限定某时段 / 仅本次有效</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 10.1 异常发生阶段</strong></td>
+            <td>开场前期拥塞 / 整场持续劣化 / 短暂波动（仅当 <code>10. 网络异常 &ne; 无异常</code> 时生效）</td>
             <td>节点</td>
-            <td>界定偏好的生效作用域，防止将局部偏好误用到其他场景</td>
+            <td>决定针对性的保障参数调整动作（如开场前期拥塞对应“提前 20min 预热切片”经验规则）</td>
           </tr>
-          <!-- 交互 5 项 -->
+          <!-- 五、信息来源与噪声干扰 -->
           <tr class="midrule-row">
-            <td rowspan="5"><strong>六、交互</strong><br/>（5 项）</td>
-            <td><strong>22. 交互方式</strong></td>
-            <td>一次说清 / 缺参或有歧义需澄清 / 中途纠正 / 无关闲聊 / 域外诉求</td>
+            <td rowspan="8"><strong>五、信息来源与噪声干扰</strong><br/>（控制怎么表达、生效与抗干扰）</td>
+            <td><strong>11. 信息来源渠道与双源冲突</strong></td>
+            <td><strong>来源标注（<code>会话声明 sessions / 单据实测 CSV logs / 行为推断 inferred / 纠正记录 corrections</code>）</strong> &times; <strong>双源关系（单源体现 / 声明与实测一致 / 声明<code>&parallel;</code>实测并列保留且各注来源 / 声明与实测矛盾冲突［如说对网速无要求但实测高流量、说早睡但凌晨活跃、说爱玩原神但占比仅 1%］）</strong></td>
             <td>节点</td>
-            <td>决定当次会话轮次、走快路径直接办还是走慢路径澄清</td>
+            <td>控制信息来源与冲突仲裁策略（检验分源标注准确性、检索侧实测优先于口头声明排序、以及冲突时体验/时段取实测并将矛盾声明记入 <code>conflict_log</code> 或降权为 <code>weak</code>）</td>
           </tr>
           <tr>
-            <td><strong>23. 指代方式</strong></td>
-            <td>直接给参数 / 按时间指代（“上周三那次”）/ 按特征指代（“没卡那次”）/ 按别名指代（“老地方”）/ 按排除指代（“不是晚上那场”）</td>
-            <td>节点</td>
-            <td>决定检索器需要如何从工作记忆台账中定位历史单据</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 11.1 证据强度与置信度</strong></td>
+            <td>强证据高置信（<code>strong</code>：网元单据高频实测或跨会话多次重申）/ 弱证据低置信（<code>weak</code>：单次口头自称、间接暗示或占比 <code>1%</code> 偶现；按场景与时间分别标注置信度）</td>
+            <td>线 / 节点</td>
+            <td>决定生成画像条目的置信度等级（检验画像按场景/时间标注 <code>strong/weak</code> 置信度，以及检索侧高置信优先于低置信排序）</td>
           </tr>
           <tr>
-            <td><strong>24. 意图数量</strong></td>
-            <td>单意图 / 同类多意图（两场直播）/ 异类多意图（直播 + 传文件）/ 正常意图 + 域外意图</td>
+            <td><strong>12. 显隐式表达方式</strong></td>
+            <td>显式直接陈述（直接说出身份/套餐/场景/KQI/诉求）/ 隐式行为推断（从持续大上行流量推断直播创作者、从高频打开推断主力应用、从“下班后/睡前”推断活跃时段、从反复抱怨“又卡了/转圈”推断时延与抖动偏好、从叹气推断不满情绪）</td>
             <td>节点</td>
-            <td>单轮话语中需要拆解出几个独立工单或拒答哪部分</td>
+            <td>决定记忆萃取需走直接槽位提取还是跨多轮/多单据统计归纳（全面覆盖各画像维度的显式陈述识别与隐式行为推断）</td>
           </tr>
           <tr>
-            <td><strong>25. 纠正类型</strong></td>
-            <td>改时间 / 改参数档位 / 改地点 / 否定助手的理解（“我说的不是那次”）</td>
+            <td style="padding-left: 1.5em;"><strong>├─ 12.1 偏好极性方向</strong></td>
+            <td>正向偏好（喜欢某应用/要求某档位/满意评价）/ 负向排斥禁忌（别推贵的、最烦某 App 弹窗广告、晚上别推广告打扰、最讨厌高延迟、出差别限速、不要降画质、强烈不满投诉）</td>
             <td>节点</td>
-            <td>用户中途改口或纠正后，哪些槽位要覆写、哪些已确认槽位要保持</td>
+            <td>控制偏好的正负符号（检验萃取侧正负向极性不混淆，以及检索侧主动避开反感选项与负向口语档位的“排除召回”）</td>
           </tr>
           <tr>
-            <td><strong>26. 交互闭环结果</strong></td>
-            <td>一次快速闭环 / 多轮澄清后达成 / 理解失败经纠正后达成 / 未达成</td>
-            <td>节点</td>
-            <td>慢路径澄清/纠正负责产生经验，后续快路径一次闭环体现经验作用</td>
+            <td style="padding-left: 1.5em;"><strong>└─ 12.2 措辞与口语映射</strong></td>
+            <td>标准带单位数值 / <strong>易混淆数值与对象消歧（“129块1000兆”取 1000M 非 129、“延迟低于30”取 <code>&le;30ms</code> 非 30s/30G、“八点到十二点”消歧为 <code>20:00–24:00</code>、“投诉宽带非话费”）</strong> / 应用别名归一（“小破站/哔哩”&rarr;Bilibili） / <strong>口语体感词映射（高清&rarr;1080p、别卡&rarr;100ms、流畅&rarr;360p、要快&rarr;高带宽、不卡就行&rarr;200ms、极致丝滑&rarr;30ms）</strong></td>
+            <td>用户 / 节点</td>
+            <td>控制单据标准名称与用户口语之间的差异（检验数值单位精准抽取不张冠李戴、跨会话同义多措辞合并去重与口语档位正/负向映射）</td>
           </tr>
-          <!-- 单据质量 2 项 -->
+          <tr>
+            <td><strong>13. 偏好作用域与有效期</strong></td>
+            <td>全局常驻通用 / 限定特定场景空间（家 vs. 出差 vs. 办公 vs. 校园独立存储）/ <strong>短期临时偏好（本周、本月、假期、出差期间、特殊事件期）&times; 有效期状态（<code>全部未过期 / 临近过期 / 已过期 / 未过期+已过期混合</code>）</strong></td>
+            <td>线 / 节点</td>
+            <td>界定记忆生效的时空边界（支撑未过期排在已过期前、带场景条件返回对应偏好、无场景条件返回通用偏好、以及临时偏好全部过期时主动说明而不返回旧值）</td>
+          </tr>
+          <tr>
+            <td><strong>14. 信息完备度与缺失边界</strong></td>
+            <td>画像属性齐备 / <strong>典型缺失形态：① 冷启动全新用户（对话与单据全空）、② 仅有会话无结论或仅有单据无身份标签、③ 单侧或单项 KQI 未提及（仅提下行未提上行、未提抖动、缺切片 <code>S-NSSAI</code>）、④ 特定场景未记录（如校园/应急/医院/出国未记录）、⑤ 应用从未出现或仅出现 1 次无占比、⑥ 活跃样本不足 1 周或被截断</strong></td>
+            <td>用户 / 线</td>
+            <td>构造“已知与未知”的边界（检验画像生成阶段对未提及身份/应用/时段/抖动/场景/诉求绝不编造，以及检索侧缺失召回如实拒答并引导补充）</td>
+          </tr>
+          <tr>
+            <td><strong>15. 非偏好噪声与单据脏数据</strong></td>
+            <td>无噪声 / <strong>对话侧非偏好噪声：① 日常寒暄闲聊（天气/八卦/刷到好玩的不抽偏好）、② 假设性试探（“如果换千兆…”“要不试试原神”“以后周末可能多用”“要是能远程办公”标待确认不入库）、③ 纯情绪发泄（“烦死了”“这网真烂”只记入 <code>feedback_signal</code> 不抽成稳定偏好）、④ 单次偶发行为（单次优惠购卡/单次大下载/单次熬夜加班/单次卡顿/单次出差/单次查话费不固化为长期习惯）</strong> / 单据侧 1~8min 短单与废单</td>
+            <td>节点</td>
+            <td>模拟真实对话与网管日志中的高频干扰（全面检验记忆萃取的噪声抑制能力，杜绝把闲聊、假设、情绪气话与一次性行为写入稳定画像）</td>
+          </tr>
+          <!-- 六、多轮交互与反馈纠正 -->
           <tr class="midrule-row">
-            <td rowspan="2"><strong>七、单据质量</strong><br/>（2 项）</td>
-            <td><strong>27. 单据噪声</strong></td>
-            <td>无 / 背景短单（1~8min 未开保障）/ 断流子单 / 退订废单 / 重复上报 / 字段缺失</td>
+            <td rowspan="3"><strong>六、多轮交互与反馈纠正</strong><br/>（对应反馈记忆域与慢路径交互）</td>
+            <td><strong>16. 历史诉求与情绪轨迹</strong></td>
+            <td>主动诉求（提速、换套餐、改画质、查账单、解除限速、补流量；含提出时间、解决时间及 <code>active</code> 未完结 vs. <code>closed</code> 已完结/已停用状态）&times; 情绪变化轨迹（满意、中性、不满、强烈不满投诉、事后改观；含全局整体评价汇总）</td>
             <td>节点</td>
-            <td>模拟真实网管日志噪声，检验网元结构化单据清洗与有效会话聚合能力</td>
+            <td>记录用户与系统的历史服务交互台账（支撑诉求多轮重申合并、新诉求关闭旧诉求、带历史投诉条件召回、整体评价汇总及“情绪+诉求+偏好”组合推理）</td>
           </tr>
           <tr>
-            <td><strong>28. 回执状态</strong></td>
-            <td>按计划执行 / 超时延长 / 提前结束 / 执行失败</td>
+            <td><strong>17. 会话交互与历史指代方式</strong></td>
+            <td>一次说清（快路径）/ 缺参或歧义需主动追问澄清（慢路径）/ 跨轮指代历史单据（按时间“上周三那次”、按特征“没卡那次”、按地点别名“老地方”、按排除“不是晚上那场”）/ 单轮复合多意图</td>
             <td>节点</td>
-            <td>对话中的计划预约值与网元单据实测回执值是否一致</td>
+            <td>决定当轮对话走快路径还是慢路径，以及检索器如何通过多跳条件定位历史情景单据</td>
+          </tr>
+          <tr>
+            <td><strong>18. 显式纠正与闭环结果</strong></td>
+            <td>无纠正一次闭环 / 澄清后达成 / <strong>用户显式纠正系统记忆偏差（涵盖时段纠正、档位纠正、应用纠正、身份纠正、来源纠正；含单次纠正、多次连续纠正与纠正后又改回等时序）</strong> / 撤销原诉求或取消定向包</td>
+            <td>节点</td>
+            <td>检验系统被用户纠正后能否立即覆写旧值、标注 <code>source=corrections</code>、按最新纠正时序优先排序、并在推荐时主动排除已纠正与已撤销项</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h2 class="subsection-title" id="sec-1-4">1.4 两层组合规则、配置表结构与跨 3 个月完整组合示例</h2>
+    <h2 class="subsection-title" id="sec-1-4">1.4 四类记忆用哪些故事线因子构造及对应评测内容</h2>
 
-    <p>第一层 12 个排布因子与第二层 28 个内容因子组合为具体故事线时，遵循五条规则：</p>
+    <p>与第 4 章的记忆架构一致，联接 Agent 的记忆系统分为<strong>事实记忆（语义记忆与情景记忆）、工作记忆（程序化记忆）以及经验记忆</strong>。在利用故事线两层因子构造评测集时，<strong>事实记忆与工作记忆</strong>重点通过排布因子与内容因子的组合，全面覆盖各类画像属性与历史工单的抽取、整合、组织与多维检索（表 1.3 前三行）；而<strong>经验记忆</strong>针对给定的多轮澄清 Case 提取“问题 &rarr; 澄清/调整动作 &rarr; 结果”因果关系本身并不复杂，<strong>真正的难点在于“如何在长程流与新请求中找到这些相关 Case”</strong>，因此其故事线构造与评测重点聚焦于<strong>源头慢路径 Case 定位识别</strong>与<strong>后续跨表述相似 Case 检索匹配</strong>（表 1.3 第四行）。</p>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 1.3：四类记忆的故事线构造因子（第一层排布 &times; 第二层内容）与对应评测内容</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 14%;">目标记忆类型</th>
+            <th style="width: 23%;">这类记忆记什么<br/>（与第 4 章对齐）</th>
+            <th style="width: 25%;">用哪些【第一层排布因子】构造<br/>&amp; 测什么时间线特征</th>
+            <th style="width: 38%;">用哪些【第二层内容因子】构造<br/>&amp; 测什么萃取与检索内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 1. 语义记忆 -->
+          <tr>
+            <td><strong>一、事实记忆<br/>— 语义记忆</strong><br/>（Semantic Memory）</td>
+            <td>解决<strong>“这个用户是谁、平时默认要什么”</strong>：跨周期长期成立的<strong>稳定身份与终端套餐、常驻主力应用与业务占比、周期习惯（<code>periodic_preference</code>）、默认参数档位（<code>preferred_value</code>）、分场景常驻偏好（<code>scene_preference</code>）、服务与应用映射（<code>service_to_app</code>）及口语映射（<code>expression</code>）</strong>。</td>
+            <td>
+              &bull; <strong><code>1. 时间跨度（&ge;1月）</code> + <code>1.1 事件规模</code>：</strong>让同一属性跨周反复出现 &rarr; <em>测多次重复沉淀长期习惯</em>；<br/>
+              &bull; <strong><code>3. 事件线结构</code> + <code>3.2 支线归宿（转新主线/周期复现）</code>：</strong>构造居家与办公/出差并行 &rarr; <em>测分场景独立组织存储（不串味）</em>；<br/>
+              &bull; <strong><code>4. 跨期变化趋势（平稳/迁移覆盖/弃用）</code>：</strong>构造同义重复或跨期换机升档 &rarr; <em>测同义合并去重、新值（<code>active</code>）覆盖旧值（<code>superseded</code>）及新旧排序</em>；<br/>
+              &bull; <strong><code>6.1 单据与对话配比</code>：</strong>调节双源比例 &rarr; <em>测从单据/对话生成完整简洁画像</em>。
+            </td>
+            <td>
+              &bull; <strong>身份、终端与套餐（<code>因子 1~3</code>）：</strong>填职业、主备终端、设备指纹、套餐与资费倾向 &rarr; <em>测显隐式身份套餐抽取、主备设备与新旧套餐排序召回、排除降级/高价包</em>；<br/>
+              &bull; <strong>主力应用与周期规律（<code>因子 4~7</code>）：</strong>填“业务&rarr;子类&rarr;应用”层级、Top 占比、显隐式作息时段、多峰规律与上下行流量比 &rarr; <em>测零散时段归并、多级归档、按占比/活跃度排序、工作日/周末条件召回、排除零占比应用与免打扰时段</em>；<br/>
+              &bull; <strong>分场景常驻 KQI、切片与口语映射（<code>因子 8~9、11~13</code>）：</strong>按场景配上下行 KQI、制式切片、强弱置信度、双源冲突（实测 <code>strong</code> 优先于口头自称 <code>weak</code>）、口语词（“极致丝滑”&rarr;30ms）与易混淆数值 &rarr; <em>测数值精准抽取、双源冲突整合、当前场景优先排序、带场景条件召回与跨维组合推荐</em>；<br/>
+              &bull; <strong>未提及缺失边界（<code>因子 14</code>）：</strong>设冷启动、仅提下行未提上行、未提抖动或无切片 ID &rarr; <em>测画像生成不编造、检索侧缺失主动拒答</em>。
+            </td>
+          </tr>
+
+          <!-- 2. 情景记忆 -->
+          <tr class="midrule-row">
+            <td><strong>二、事实记忆<br/>— 情景记忆</strong><br/>（Episodic Memory）</td>
+            <td>解决<strong>“用户在特定时间窗发生过什么阶段性事件与反馈”</strong>：绑定具体时间窗的<strong>外部日程变故（搬家、出差、节假日、大型赛事）、带有效期的短期临时偏好（到期失效不覆盖常驻语义记忆）、以及历史主动诉求（<code>active / closed</code>）、满意度情绪变化与当面显式纠正记录</strong>。</td>
+            <td>
+              &bull; <strong><code>3.1 支线触发事件（搬家/赛事/出差）</code> + <code>3.2 结束后回原主线</code>：</strong>插入短期事件窗口 &rarr; <em>测临时偏好按时间窗隔离存储、到期自动回退不污染常驻记忆</em>；<br/>
+              &bull; <strong><code>4. 跨期变化（多次波动与纠正后改回）</code>：</strong>编排诉求跟进与多次纠正时序链 &rarr; <em>测诉求闭环更新与最新纠正时序覆写</em>；<br/>
+              &bull; <strong><code>6.2 证据间隔</code> + <code>6.3 干扰占比</code>：</strong>穿插不同比例背景会话 &rarr; <em>测抗干扰过滤与长程回忆</em>。
+            </td>
+            <td>
+              &bull; <strong>短期临时偏好与阶段状态（<code>因子 13、5.1、7</code>）：</strong>填本周/假期/出差临时要求（设未过期、已过期、混合状态）与月底流量吃紧 &rarr; <em>测未过期排已过期前、阶段条件召回、“流量紧+游戏卡”省流保时延组合推理、以及全部过期时主动说明</em>；<br/>
+              &bull; <strong>历史主动诉求、情绪与显式纠正（<code>因子 16、18</code>）：</strong>填提速/换套餐诉求（<code>active/closed</code>）、情绪轨迹（不满&rarr;改观）与当面纠正（标 <code>source=corrections</code>） &rarr; <em>测诉求重申合并、新诉求关闭旧诉求、最新纠正优先排序、排除已纠正/已撤销项、以及“不满+诉求+偏好”组合安抚方案</em>；<br/>
+              &bull; <strong>对话侧非偏好噪声（<code>因子 15</code>）：</strong>穿插日常闲聊、假设试探（“如果换千兆…”）、纯情绪抱怨与单次偶发行为 &rarr; <em>测噪声抑制（防 <code>FP</code> 误记，闲聊/试探/偶发不入正式库，情绪只记入反馈），且仅存试探/偶发时查询常驻偏好如实拒答</em>。
+            </td>
+          </tr>
+
+          <!-- 3. 工作记忆（程序化记忆） -->
+          <tr class="midrule-row">
+            <td><strong>三、工作记忆<br/>（程序化记忆）</strong><br/>（Working / Procedural Memory）</td>
+            <td>解决<strong>“用户过去具体办过哪些单、实测结果怎样，以及如何复用/改期/消歧”</strong>（见表 4.1）：<strong>原样保存每张历史保障工单台账（日期、时间段、地点、应用、时长、参数）与网元单据执行回执（实测时延丢包、顺畅或卡顿 <code>AppQuality</code>）及改期记录</strong>，按时间追加、不合并；支撑跨会话指代老单据、改期平移与同地多单消歧。</td>
+            <td>
+              &bull; <strong><code>1.2 事件密度（忙闲交替/前密后疏）</code>：</strong>生成带精确日期与起止时间戳的工单流水 &rarr; <em>测工作记忆台账按时间原样追加、不合并、不衰减</em>；<br/>
+              &bull; <strong><code>6.1 单据配比</code> + <code>6.2 证据间隔（5~35步）</code>：</strong>拉远历史工单与当前指代提问的跨会话距离 &rarr; <em>测跨多轮精准找回历史老单据</em>。
+            </td>
+            <td>
+              &bull; <strong>单次工单并发与随机时长（<code>因子 4.1、4.2</code>）：</strong>填单业务/双并发及 <code>15~240min</code> 连续随机时长 &rarr; <em>测单次工单完整槽位的原样记录与同行槽位提取</em>；<br/>
+              &bull; <strong>网元单据实测回执与废单清洗（<code>因子 10、11、15</code>）：</strong>在 CSV 单据回执中标注顺畅正例单（<code>AppQuality=good</code>）与多类业务卡顿单（<code>AppQuality=bad</code>），同地埋入顺畅单 <code>SN_A</code> 与卡顿单 <code>SN_B</code>，并混入 <code>1~8min</code> 废单 &rarr; <em>测入库过滤废单、直接调取工单回执、以及多类卡顿按严重度（<code>游戏&gt;直播&gt;会议&gt;视频</code>）排序召回</em>；<br/>
+              &bull; <strong>跨轮历史单据指代与改期平移（<code>因子 17</code>）：</strong>构造按时间/地点/“没卡那次”指代并叠加“推迟半小时”改期，或同地多单模糊指代 &rarr; <em>测条件与排除召回（排除卡顿单 <code>SN_B</code>、命中顺畅单 <code>SN_A</code>）、同行参数提取与改期平移、以及同地多单/虚假单主动反问消歧</em>。
+            </td>
+          </tr>
+
+          <!-- 4. 经验记忆 -->
+          <tr class="midrule-row">
+            <td><strong>四、经验记忆</strong><br/>（Experiential Memory）</td>
+            <td>针对<strong>多轮澄清、用户纠正或初次排障失败后改参成功</strong>的 Case，提取<code>适用条件 &rarr; 歧义/原因 &rarr; 澄清结论/调整动作 &rarr; 结果</code>因果关系。<br/><strong>注：给定 Case 提取因果关系本身很直接，核心难点在于“如何在长程流中定位这些源头 Case，以及后续换说法时如何找准相关 Case 复用”。</strong></td>
+            <td>
+              &bull; <strong><code>5. 跨会话因果关系</code> + <code>6.2 证据间隔</code> + <code>6.3 干扰占比</code>：</strong>把“初次偏差/卡顿 &rarr; 慢路径澄清纠正”埋入大量日常快路径会话与闲聊干扰中 &rarr; <em>测从长程混杂流中定位并串联出慢路径源头 Case 的能力</em>；<br/>
+              &bull; <strong><code>3. 事件线结构（主支线切换）</code>：</strong>前序澄清放在支线 A（如鸟巢演唱会），后序请求放在同类支线 B（工体球赛）或异类主线（居家看球） &rarr; <em>测跨地点找准同类 Case 与异类场景隔离</em>。
+            </td>
+            <td>
+              &bull; <strong>构造混杂流中的慢路径源头 Case（<code>因子 17 缺参追问</code> + <code>18 显式纠正</code> + <code>10/11 正反单据对比</code> + <code>15 试探噪声</code>）：</strong>埋入“多轮追问才敲定参数”、“初次推荐被纠正”或“前单 <code>bad</code> 改参后 <code>good</code>”的闭环片段，同时混入未达成结论的假设闲聊 &rarr; <em>测<strong>源头 Case 识别与因果提取</strong>：能否从海量普通会话中精准揪出已闭环的慢路径 Case 提取因果规则，且不把未闭环试探误当经验</em>；<br/>
+              &bull; <strong>构造“换说法/换具体地点、但底层同场景”的正向测试 Case（<code>因子 5 场景层级</code> + <code>8.1/10.1 互斥与拥塞</code> + <code>12.2 口语换词</code>）：</strong>前序在“鸟巢演唱会”澄清沉淀了高密弱覆盖场馆预热切片经验，后序用户改口说“周末去工体看球顺便开播” &rarr; <em>测<strong>相关经验 Case 泛化召回</strong>：能否跨越字面地名差异，按“人流聚集场馆+上行推流”底层条件找准该条经验，1 轮快路径直接闭环</em>；<br/>
+              &bull; <strong>构造“字面相似、但底层条件不符”的负向干扰 Case（<code>因子 5 场景切换</code> + <code>9 覆盖环境</code>）：</strong>后序用户在“家里千兆宽带”说“今晚在家看球赛直播”（字面同含看球直播，但无弱覆盖拥塞） &rarr; <em>测<strong>经验适用边界过滤</strong>：识别底层条件不符、主动排除场馆降画质经验，防止不匹配经验误导</em>。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="subsection-title" id="sec-1-5">1.5 两层组合规则、配置表结构与跨 3 个月完整组合示例</h2>
+
+    <p>第一层排布因子与第二层内容因子组合为具体故事线时，遵循以下工程规则：</p>
     <ol>
-      <li><strong>先排布，再按三级粒度填内容：</strong>先从第一层采样得到时间线骨架；再按取值粒度填第二层——“用户”级因子整条故事线取一次，“线”级因子每条事件线取一次，“节点”级因子每个事件节点取一次。</li>
-      <li><strong>同层正交采样：</strong>同一层内部各因子独立按权重采样，互不绑死。</li>
-      <li><strong>配置化合法性约束（不写死在代码分支中）：</strong>只排除物理或逻辑冲突的组合，并统一声明在配置表的 <code>constraints</code> 列表中。例如排除“时间跨度 2 周 &times; 按月规律”、“迁移型节奏 &times; 稳定保持”、“无网络异常 &times; 异常时段整场持续”、“仅单据体现 &times; 明确要求记住”。</li>
-      <li><strong>成对覆盖（Pairwise Coverage）：</strong>参照软件工程组合测试的成对覆盖做法，保证任意两个因子的合法取值两两至少出现一次，无需穷举指数级全排列。</li>
-      <li><strong>平滑横向扩展：</strong>后续若需新增测试维度，只需在对应分组下加一列因子定义，不影响已有因子与已生成数据。</li>
+      <li><strong>先定时间线结构，再按三级粒度填内容：</strong>先从第一层采样得到时间线结构；再按取值粒度填第二层——“用户”级因子整条故事线取一次，“线”级因子每条事件线取一次，“节点”级因子每个事件节点独立取一次。</li>
+      <li><strong>主从层级条件采样（消除父子条件冲突）：</strong>按照“先采样主因子，再在其范围内采样对应子因子”的顺序执行。例如先定<code>1. 时间跨度</code>，再定与之匹配的<code>1.1 事件规模</code>与<code>1.2 事件密度</code>；仅当<code>3. 事件线结构</code>包含支线时才采样<code>3.1 支线触发事件</code>与<code>3.2 支线归宿</code>；仅当<code>10. 网络异常 &ne; 无异常</code>时才采样<code>10.1 异常发生阶段</code>。</li>
+      <li><strong>声明式合法性约束（不写死在代码分支中）：</strong>只排除物理或逻辑冲突的组合，并统一声明在配置表的 <code>constraints</code> 列表中（例如排除“时间跨度 2 周 &times; 按月周期规律”、“平稳保持型节奏 &times; 套餐跨期升降级”、“仅网元单据体现 &times; 对话显式直接陈述”）。</li>
+      <li><strong>“先答案后会话”反向真值绑定与分阶段构建策略：</strong>前期与中期采用<strong>“先定义答案、再反向生成会话”</strong>路线（参照 <code>LongMemEval</code>、<code>DynamicMem</code>、<code>PERMA</code>）：① 先定义评测骨架（测试维度 &times; 测试目的 &times; 难度分布）&rarr; ② 先写出结构化标准答案（萃取侧写明 <code>gold_profile</code> 的生效值、过期值、来源与置信度，检索侧写明 <code>gold_answer</code> 与 <code>gold_memory_ids</code>）&rarr; ③ 按成对覆盖（Pairwise Coverage）采样两层因子，反向生成能唯一推导出该答案的自然语言对话与网元结构化单据序列 &rarr; ④ 通过多 LLM 交叉验证检验对话自然度与答案唯一性；到后期上线阶段再结合<strong>“先有真实会话、后抽检标注答案”</strong>路线（参照 <code>LoCoMo</code>、<code>MemoryAgentBench</code>）补充长尾边界样本。</li>
+      <li><strong>平滑横向扩展：</strong>后续若需新增测试维度，只需在对应因子类别下新增主因子或子因子定义，不影响已有因子与已生成数据。</li>
     </ol>
 
     <div class="tcolorbox dialoguebox">
-      <div class="tcb-title">真实组合示例：跨 3 个月“主线居家直播 + 支线场馆推流”的两层因子实例化</div>
+      <div class="tcb-title">真实组合示例：跨 3 个月“主线居家直播 + 支线异地场馆推流”的两层因子取值示例</div>
       <div class="tcb-body">
-        <p><strong>1. 第一层排布因子取值：</strong><code>时间跨度 = 3 个月</code>，<code>事件线结构 = 主线 + 1 条支线</code>，<code>阶段节奏 = 迁移型</code>，<code>事件密度 = 忙闲交替</code>，<code>单据与对话比例 = 75 : 25</code>，<code>因果链 = 1 条完整闭环</code>，<code>测试点与干扰 = 间隔中（5~15 步）、干扰中</code>。</p>
-        <p><strong>2. 第二层线级因子取值：</strong></p>
+        <p><strong>1. 第一层排布因子取值：</strong><code>1. 时间跨度 = 3 个月</code> &rarr; <code>1.1 事件规模 = 中（18 个节点）</code> &amp; <code>1.2 事件密度 = 忙闲交替</code>；<code>2. 起始状态 = 冷启动</code>；<code>3. 事件线结构 = 主线 + 1 条支线</code> &rarr; <code>3.1 支线触发 = 大型赛事展会/出差</code> &amp; <code>3.2 支线归宿 = 周期性复现</code>；<code>4. 跨期变化趋势 = 单次迁移覆盖型</code>；<code>5. 跨会话因果关系 = 1 条完整闭环</code>；<code>6. 测试编排</code> &rarr; <code>6.1 单据与对话配比 = 75 : 25</code>、<code>6.2 间隔 = 中（5~15 步）</code>、<code>6.3 干扰 = 中</code>。</p>
+        <p><strong>2. 第二层用户级与线级因子取值：</strong></p>
         <ul>
-          <li><strong>主线（日常居家）：</strong><code>用户角色 = 内容创作者</code>，<code>主力业务类型 = 上行推流</code>，<code>活动空间 = 固定常驻</code>，<code>时间规律 = 按日</code>；</li>
-          <li><strong>支线（周末场馆）：</strong><code>用户角色 = 内容创作者</code>，<code>主力业务类型 = 上行推流</code>，<code>活动空间 = 人流聚集场馆</code>，<code>时间规律 = 按周</code>。</li>
+          <li><strong>用户级（全局取一次）：</strong><code>1. 职业身份 = 游戏主播</code>，<code>2. 终端组合 = 华为手机（主）+ iPhone（备）</code>，<code>3. 套餐档位 = 1000M &rarr; 2000M（跨期升级）</code>，<code>12.2 措辞映射 = 口语体感词（“极致丝滑”&rarr;30ms、“高清”&rarr;1080p）</code>；</li>
+          <li><strong>主线（日常居家）：</strong><code>4. 应用与业务 = 抖音/B站上行直播</code>，<code>5. 活动空间 = 家（固定静止）</code>，<code>6. 活跃时段 = 晚高峰 19-23（按日规律，&plusmn;10min）</code>，<code>7. 流量与上下行比例 = 超大流量（&gt;5G）+ 上行主导</code>，<code>8. KQI 要求 = 带宽 &ge;100M、丢包 &le;0.1%</code>；</li>
+          <li><strong>支线（周末异地场馆）：</strong><code>4. 应用与业务 = 户外赛事直播 + 微信语音</code>，<code>5. 活动空间 = 户外/人流聚集场馆</code>，<code>6. 活跃时段 = 周末下午</code>，<code>8. KQI 要求 = 时延 &le;30ms（8.1 允许画质降级保时延）</code>，<code>9. 覆盖环境 = 边缘弱覆盖</code>。</li>
         </ul>
       </div>
     </div>
 
-    <p>由上述两层配置生成的跨 3 个月时间线骨架及逐阶段填入的节点级属性如表 1.3 所示。</p>
+    <p>由上述两层配置生成的跨 3 个月时间线骨架、逐阶段填入的节点级属性及其分别构建的四类记忆如表 1.4 所示。</p>
 
     <div class="table-wrap">
-      <div class="table-caption">表 1.3：跨 3 个月故事线骨架与第二层节点属性填充演进表</div>
+      <div class="table-caption">表 1.4：跨 3 个月故事线骨架、第二层节点属性填充与四类记忆构建演进表</div>
       <table class="booktabs">
         <thead>
           <tr>
-            <th style="width: 18%;">阶段（第一层排布）</th>
-            <th style="width: 12%;">所属事件线</th>
-            <th style="width: 36%;">节点内容（第二层节点级属性采样）</th>
-            <th style="width: 34%;">最终渲染生成的双流素材与测试目的</th>
+            <th style="width: 16%;">阶段（第一层排布）</th>
+            <th style="width: 11%;">所属事件线</th>
+            <th style="width: 29%;">第二层节点级属性采样</th>
+            <th style="width: 18%;">构建的目标记忆类型</th>
+            <th style="width: 26%;">生成的对话与单据素材及支撑的评测点</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>1. 建立期</strong><br/>（第 1~3 周）</td>
-            <td>主线</td>
-            <td><code>偏好演化=稳定保持</code>；<code>信号来源=仅单据体现</code>；<code>网络事件=无异常</code>；<code>交互方式=一次说清</code></td>
-            <td>每晚在家直播的网元结构化单据连续出现（满 3 次以上），用户几乎不在对话里说明，考验从纯行为流归纳周期习惯。</td>
+            <td>主线（家）</td>
+            <td><code>11. 信息来源 = 仅网元结构化单据体现</code>；<code>12. 表达方式 = 隐式行为推断</code>；<code>10. 网络异常 = 无异常</code></td>
+            <td><strong>事实记忆 — 语义记忆</strong><br/>（常驻画像与分场景 KQI）</td>
+            <td>每晚在家直播的网元结构化单据连续出现（上行大流量、时长 60~180min 随机分布），考验从纯单据行为流隐式推断“游戏主播”身份与居家常驻 KQI 偏好。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>2. 稳定期</strong><br/>（第 4~6 周，忙闲交替）</td>
-            <td>支线插入</td>
-            <td><code>网络事件=拥塞劣化</code>；<code>信号来源=单据与对话一致</code>；<code>交互方式=缺参需澄清 / 中途纠正</code></td>
-            <td>首次去体育场馆直播表达模糊，系统理解失败或反复追问 &rarr; 经多轮澄清与纠正敲定提前预热参数并沉淀经验（<strong>因果链起点</strong>）。</td>
+            <td><strong>2. 支线工单与慢路径澄清期</strong><br/>（第 4~6 周）</td>
+            <td>支线（场馆）</td>
+            <td><code>10. 网络异常 = 直播卡顿 vs. 顺畅同地双单</code> &rarr; <code>10.1 阶段 = 开场前期拥塞</code>；<code>17. 交互方式 = 缺参需澄清</code>；<code>18. 显式纠正 = 纠正活跃时段为周末</code></td>
+            <td><strong>工作记忆（程序化记忆）<br/>&amp; 经验记忆</strong></td>
+            <td>场馆产生两张历史工单（下午顺畅单 <code>SN_A</code> 与晚上卡顿单 <code>SN_B</code>）原样记入<strong>工作记忆台账</strong>；用户显式纠正“周末活跃”（记入情景记忆），并经慢路径澄清敲定“场馆开场前 20min 预热切片 + 降画质保 30ms 时延”规则（沉淀为<strong>经验记忆</strong>，因果链起点）。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>3. 稳定期干扰</strong><br/>（第 7 周）</td>
-            <td>主线</td>
-            <td><code>交互方式=无关闲聊 / 域外诉求（干扰：中）</code>；<code>单据噪声=背景短单</code></td>
-            <td>穿插通信常识提问、手机碎屏报修等域外会话与 1~8min 背景短单据，检验记忆清洗与无关场景克制。</td>
+            <td><strong>3. 临时偏好与噪声干扰期</strong><br/>（第 7 周）</td>
+            <td>主线（家）</td>
+            <td><code>13. 作用域 = 短期临时有效期（本周暂停推荐）</code>；<code>15. 噪声 = 寒暄闲聊 + 假设试探 + 单次熬夜 + 1~8min 短单</code></td>
+            <td><strong>事实记忆 — 情景记忆<br/>&amp; 噪声抑制</strong></td>
+            <td>声明“本周暂停套餐推荐”（作为带有效期的短期临时偏好记入情景记忆，到期自动失效不覆盖常驻习惯）；同时穿插天气寒暄、“如果换千兆…”试探、单次熬夜与 1~8min 短单，检验萃取侧噪声抑制能力。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>4. 迁移期</strong><br/>（第 8~10 周）</td>
-            <td>主线</td>
-            <td><code>偏好演化=新增或升级</code>；<code>信号来源=单据与对话矛盾</code></td>
-            <td>近期网元单据实测习惯画质已升到 <code>4K</code>，但用户口头仍顺嘴说“按老规矩 1080p”，检验双流冲突仲裁与状态更新。</td>
+            <td><strong>4. 迁移与双源冲突期</strong><br/>（第 8~10 周）</td>
+            <td>主线（家）</td>
+            <td><code>3. 套餐升级 = 1000M&rarr;2000M</code>；<code>11. 信息来源 = 单据实测与对话声明矛盾</code>；<code>14. 缺失边界 = 从未提抖动指标</code></td>
+            <td><strong>事实记忆 — 语义记忆更新<br/>&amp; 缺失拒答控制</strong></td>
+            <td>套餐升至 <code>2000M</code>（旧版 <code>1000M</code> 标 <code>superseded</code>）；网元单据实测画质已升至 <code>4K</code> 但用户口头仍顺嘴说“按老规矩 1080p”（检验双源冲突仲裁与新旧排序）；当被问及从未提及的“抖动容忍度”时，严格执行缺失主动拒答。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>5. 因果链测试点</strong><br/>（距证据 5~15 步）</td>
+            <td><strong>5. 因果链闭环测试点</strong><br/>（第 11~12 周）</td>
             <td>支线复现</td>
-            <td><code>交互方式=一次说清</code>；<code>因果链闭环：命中经验 &rarr; 快速闭环</code></td>
-            <td>再次去场馆直播，检验系统能否直接命中第 4~6 周沉淀的场馆预热经验<strong>一次快速闭环</strong>（无需再多轮澄清、不再理解失败）。</td>
+            <td><code>17. 交互方式 = 一次说清 + 按特征指代历史工单（“按上次场馆没卡那次来，再往后推半小时”）</code>；<code>5. 因果链闭环</code></td>
+            <td><strong>工作记忆历史单定位/改期<br/>&amp; 经验记忆快路径闭环</strong></td>
+            <td>再次去场馆直播并指代历史单据，检验系统能否在<strong>工作记忆台账</strong>中排除卡顿单 <code>SN_B</code>、精准定位顺畅单 <code>SN_A</code> 完成改期平移，同时命中<strong>经验记忆</strong>场馆预热规则，实现<strong>1 轮快路径直接闭环</strong>。</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h2 class="subsection-title" id="sec-1-5">1.5 本章小结与拓展阅读</h2>
+    <h2 class="subsection-title" id="sec-1-6">1.6 本章小结与拓展阅读</h2>
 
     <ul>
-      <li><strong>两层正交解耦：</strong>第一层 12 个排布因子控制时间轴骨架与因果链编排，第二层 28 个内容因子按“用户 / 线 / 节点”三级粒度控制业务语义与异常干扰，将硬编码剧本改造为声明式配置表。</li>
-      <li><strong>因果链显式建模：</strong>在第一层排布因子中专门设置“因果链（首次多轮澄清/理解失败纠正 &rarr; 沉淀经验 &rarr; 后续同类请求快路径闭环）”，从数据源头为第 6 章经验记忆与第 7 章 Agent 评测埋好前后呼应的证据链。</li>
-      <li><strong>拓展阅读：</strong>PersonaMem-v3 (arXiv:2608.21381)；LoCoMo (ACL 2024, arXiv:2402.17753)；RHELM (arXiv:2605.31086)；LongMemEval (ICLR 2025, arXiv:2410.10813)。</li>
+      <li><strong>两层因子与主从结构：</strong>第一层排布因子控制时间范围与规模、主支线结构、跨期变化趋势与测试点安排；第二层内容因子按“用户 / 线 / 节点”三级粒度覆盖业务画像属性与信息表达交互过程，存在条件依赖的属性作为对应主因子的子因子采样。</li>
+      <li><strong>四类记忆构建划分（与第 4 章统一对齐）：</strong>明确划分了哪些排布因子与内容因子分别用于构建<strong>事实记忆—语义记忆</strong>（跨周期稳定画像、周期习惯、默认档位、分场景常驻偏好与口语映射）、<strong>事实记忆—情景记忆</strong>（特定外部日程窗口、短期临时偏好、历史诉求、情绪轨迹与显式纠正记录）、<strong>工作记忆（程序化记忆）</strong>（原样保存的历史保障工单台账与网元单据执行回执，支撑跨会话单据指代复用、改期平移与同地多单消歧）以及<strong>经验记忆</strong>（慢路径澄清/纠正与排障沉淀的因果调参规则与快慢路径策略）。</li>
+      <li><strong>全面覆盖下游评测特征：</strong>在故事线源头完整内置了显隐式表达、正负向极性、口语与易混淆数值、自然语言对话与网元结构化单据双源冲突、分场景隔离、临时偏好过期、未提及属性拒答边界以及闲聊、试探、情绪发泄、单次偶发等非偏好噪声，支撑下游记忆萃取与检索评测。</li>
+      <li><strong>拓展阅读：</strong>PersonaMem-v3 (arXiv:2608.21381)；LoCoMo (ACL 2024, arXiv:2402.17753)；DynamicMem (arXiv:2602.16756)；MemoryAgentBench (ICLR 2026)；LongMemEval (ICLR 2025, arXiv:2410.10813)。</li>
     </ul>
+
 
     <!-- ==================== 第 2 章 ==================== -->
     <div class="running-header page-break" id="sec-2">
@@ -1273,7 +1377,7 @@ flowchart TB
       direction LR
       D4_A["模糊分级追问与保形消歧<br/>IN3 / MediQ / CICC<br/>ClarifyMT-Bench / FinInteract"]
       D5_A["双控排障环境与写操作二次确认<br/>τ-bench / τ²-bench (Telecom)<br/>UserBench / CAREFUL-Bench"]
-      D5_B["信息披露门控与模拟器契约审计<br/>Disclosure-Gated Sim<br/>UserProxyBench"]
+      D5_B["信息分步提供与模拟器规则校验<br/>Disclosure-Gated Sim<br/>UserProxyBench"]
     end
 
     D1 --> Gap["三维度方法论提炼：1. 样本分布构建与定性/量化阈值 → 2. 语法/语义/语用 18 类变体盲区 → 3. 16×16 双向交互动作矩阵"]
@@ -1282,7 +1386,7 @@ flowchart TB
   end
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 2：2024–2026 年五大方向 22 篇核心意图与记忆评测基准全景图。</strong><br/>上方汇总支撑缺省意图补全的长程记忆基准（5 篇）；中部汇总语法噪声、多意图 OOD 与语用改口基准（9 篇）；下方汇总多轮主动澄清与受控用户模拟器基准（8 篇）。</p>
+      <p class="figure-caption"><strong>图 2：2024–2026 年五大方向 22 篇核心意图与记忆评测基准全景图。</strong><br/>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;上方汇总支撑缺省意图补全的长程记忆基准（5 篇）；中部汇总语法噪声、多意图 OOD 与语用改口基准（9 篇）；下方汇总多轮主动澄清与受控用户模拟器基准（8 篇）。</p>
     </div>
 
     <h2 class="subsection-title" id="sec-2-1">2.1 2024–2026 记忆、意图与多轮交互 Benchmark 构造与评测全景（五大方向 22 篇）</h2>
@@ -1306,32 +1410,32 @@ flowchart TB
           <tr>
             <td rowspan="5"><strong>一、历史习惯<br/>记忆与缺省<br/>槽位补全<br/>（前置记忆准备，<br/>5 篇）</strong></td>
             <td><strong>PersonaMem-v3</strong><br/>arXiv:2608.21381 (2026)<br/>(&amp; <strong>v1/v2</strong>: 2504.14225)</td>
-            <td>• <strong>底座与规模</strong>：从 400 万事件池按每 10 名同好聚合重采样出 <strong>200 名用户、30 天连续时间窗、超 100 万条事件</strong>（人均 <code>~4,000</code> 条事件、<code>41.6 万 tokens</code>），扩写为 <strong>6 张跨端 JSON 表</strong>；v2 含 1,000 名用户、<code>128k–1M tokens</code>；<br/>• <strong>信号与轨迹分布</strong>：<strong>5% 显式互动</strong> vs. <strong>95% 隐式浏览</strong>（<code>63.8%</code> 划走、<code>36.2%</code> 长停留）；提炼 <strong>1,554 条持续偏好轨迹</strong>，按 4 类自然时间轨迹配比：<strong>77% 强化稳定型、13% 逐渐消退型、8% 近期新增型、1% 单次脉冲型</strong>。</td>
-            <td>• <strong>① 显/隐式赋分与长/短期定性阈值</strong>：单次显式互动（发帖/对话明说）赋 <code>+1.0 分</code>，隐式长停留/完播赋 <code>+0.5 分</code>；单次划走（<code>&lt; 1.5s</code>）忽略，连续密集划走同标签升级为反感候选。提取置信度门槛：<strong>正向 <code>&ge; 0.75</code>、负向 <code>&ge; 0.55</code></strong>。30 天跨端累积阈值：<strong>长期稳定偏好要求显式累加 <code>&ge; 20 分</code>（纯隐式要求 <code>&ge; 50 分</code>，即至少 100 次长停留）</strong>；<strong>短期临时意图（绑定旅行/就医等事件窗，事毕即失效）要求 <code>&ge; 3 分</code></strong>；<code>&lt; 3 分</code> 当噪声剪枝；<br/>• <strong>② 4 类自然时间轨迹定性边界（30 天滑窗）</strong>：<strong>强化稳定（77%）</strong>为全月前/中/后三旬持续复现且达长期门槛；<strong>逐渐消退（13%）</strong>为前中期高频但近 10~14 天交互归零；<strong>近期新增（8%）</strong>为前 20 天无记录、近 7~10 天密集涌现且跨过 <code>&ge; 3 分</code>；<strong>单次脉冲（1%）</strong>为仅在 1~3 天窄窗内爆发随后彻底消失，严禁升格为长期习惯。</td>
+            <td>• <strong>数据规模与来源</strong>：从 400 万事件池按每 10 名同好聚合重采样出 <strong>200 名用户、30 天连续时间窗、超 100 万条事件</strong>（人均 <code>~4,000</code> 条事件、<code>41.6 万 tokens</code>），扩写为 <strong>6 张跨端 JSON 表</strong>；v2 含 1,000 名用户、<code>128k–1M tokens</code>；<br/>• <strong>信号与轨迹分布</strong>：<strong>5% 显式互动</strong> vs. <strong>95% 隐式浏览</strong>（<code>63.8%</code> 划走、<code>36.2%</code> 长停留）；提炼 <strong>1,554 条持续偏好轨迹</strong>，按 4 类自然时间轨迹配比：<strong>77% 强化稳定型、13% 逐渐消退型、8% 近期新增型、1% 单次偶发型</strong>。</td>
+            <td>• <strong>① 显/隐式赋分与长/短期定性阈值</strong>：单次显式互动（发帖/对话明说）赋 <code>+1.0 分</code>，隐式长停留/完播赋 <code>+0.5 分</code>；单次划走（<code>&lt; 1.5s</code>）忽略，连续密集划走同标签升级为反感候选。提取置信度门槛：<strong>正向 <code>&ge; 0.75</code>、负向 <code>&ge; 0.55</code></strong>。30 天跨端累积阈值：<strong>长期稳定偏好要求显式累加 <code>&ge; 20 分</code>（纯隐式要求 <code>&ge; 50 分</code>，即至少 100 次长停留）</strong>；<strong>短期临时意图（绑定旅行/就医等事件窗，事毕即失效）要求 <code>&ge; 3 分</code></strong>；<code>&lt; 3 分</code> 当噪声剪枝；<br/>• <strong>② 4 类自然时间轨迹定性边界（30 天滑窗）</strong>：<strong>强化稳定（77%）</strong>为全月前/中/后三旬持续复现且达长期门槛；<strong>逐渐消退（13%）</strong>为前中期高频但近 10~14 天交互归零；<strong>近期新增（8%）</strong>为前 20 天无记录、近 7~10 天密集涌现且跨过 <code>&ge; 3 分</code>；<strong>单次偶发（1%）</strong>为仅在 1~3 天窄窗内爆发随后彻底消失，严禁升格为长期习惯。</td>
             <td>① <strong>问答四项一票否决红线 + 软评分</strong>（踩中近期反感、泄露隐私、用消退过期偏好、生硬说破直接判 0 分）；② <strong>信息流重排 <code>NDCG@5</code></strong>；③ <strong>通用问题克制率</strong>。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>BehaviorMem</strong><br/>arXiv:2610.34790 (2026)</td>
-            <td>• <strong>底座与规模</strong>：采集淘宝 <strong>2023.06–2026.06（跨度 3 年）</strong>真实日志，保留有效访问 <strong><code>&ge; 50 次</code>的 1,194 名用户</strong>，共 <strong>913,271 次访问、17,462 个行为批次（Batch）、16,268 个“历史批次 <code>B_&le;t</code> &rarr; 未来批次 <code>B_t+1</code>”转移预测样本</strong>。</td>
+            <td>• <strong>数据规模与来源</strong>：采集淘宝 <strong>2023.06–2026.06（跨度 3 年）</strong>真实日志，保留有效访问 <strong><code>&ge; 50 次</code>的 1,194 名用户</strong>，共 <strong>913,271 次访问、17,462 个行为批次（Batch）、16,268 个“历史批次 <code>B_&le;t</code> &rarr; 未来批次 <code>B_t+1</code>”转移预测样本</strong>。</td>
             <td>• <strong>① 行为批次（Batch）切分时间与数量阈值</strong>：单批次累积满 <strong><code>50 次访问</code>或时间跨度达 <code>120 天</code></strong> 后进入可闭合态，并在下一次<strong>相邻访问间隔 <code>&gt; 15 分钟</code></strong> 处正式切分闭合（防止切断同次连续会话）；正样本仅取收藏、加购、购买及深度浏览，<strong>剔除浅层单次点击</strong>；<br/>• <strong>② 记忆池（Remember Pool）vs. 推理池（Infer Pool）定性边界</strong>：<strong>Remember Pool</strong> 定性为“历史已直接访问过的 <code>L2</code> 类目或高频稳定 <code>L1</code> 大类下属类目”；<strong>Infer Pool</strong> 定性为“历史仅轻度涉足的相关类目或具跨大类生活场景关联的未知类目”。</td>
             <td>分别在 Remember Pool 与 Infer Pool 上评测：① <strong>具体证据回忆准确率与排序分</strong>；② <strong>跨类目潜在需求推理准确率</strong>。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>Why Bother Me Again?</strong><br/>(MemPABench)<br/>arXiv:2610.30485 (2026)</td>
             <td>• <strong>规模与分布</strong>：构建 <strong>4 名模拟用户、跨越 4 个月时间线、共 99 个多轮会话</strong>，覆盖<strong>工作（Work）与个人（Personal）双场景下的 14 个交互偏好维度</strong>，每名用户埋入 <strong>5 次事件驱动的偏好极性翻转（共 20 次突变）</strong>。</td>
-            <td>• <strong>① 内容记忆 vs. 交互方式偏好（Interaction Preference）定性</strong>：内容记忆定性为“客体事实喜好（订哪家）”；交互偏好定性为“用户希望被如何协助的 14 维协作规矩”（语气正式度、回复详略、自主执行层级、主动推送边界、追问密度等）；<br/>• <strong>② 双场景隔离与 4 个月翻转规则</strong>：同一用户的 14 维偏好按<strong>工作态 vs. 个人态物理隔离</strong>（测跨场景串味污染）；每隔约 15~20 个会话植入升职、赶 deadline或休假事件，使指定维度从“每步先确认”反转为“高自主免确认直办”。</td>
-            <td>在决策探针点三层打分：① <strong>偏好选择准确率（PSA）</strong>；② <strong>行为兑现率（BRS，是否真少问/少打扰）</strong>；③ <strong>用户感知满意度（PRS）</strong>。</td>
+            <td>• <strong>① 内容记忆 vs. 交互方式偏好（Interaction Preference）定性</strong>：内容记忆定性为“具体事实喜好（订哪家）”；交互偏好定性为“用户希望被如何协助的 14 维协作规矩”（语气正式度、回复详略、自主执行层级、主动推送边界、追问密度等）；<br/>• <strong>② 双场景隔离与 4 个月翻转规则</strong>：同一用户的 14 维偏好按<strong>工作态 vs. 个人态物理隔离</strong>（测跨场景串味污染）；每隔约 15~20 个会话植入升职、赶 deadline或休假事件，使指定维度从“每步先确认”反转为“高自主免确认直办”。</td>
+            <td>在测试决策点三层打分：① <strong>偏好选择准确率（PSA）</strong>；② <strong>行为兑现率（BRS，是否真少问/少打扰）</strong>；③ <strong>用户感知满意度（PRS）</strong>。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>LoCoMo</strong> (2402.17753)<br/><strong>LoCoMo-Plus</strong> (2602.10715)</td>
             <td>• <strong>LoCoMo</strong>：跨 6–12 个月、<strong>16–35 个会话（均长 ~300 轮、<code>~9.2k tokens</code>）</strong>长对话，配 1,986 道 5 类 QA（单跳 28%/多跳 21%/时序 24%/开放 15%/对抗 12%）；<br/>• <strong>LoCoMo-Plus</strong>：新增 <strong>401 条隐式认知记忆测试对</strong>。</td>
-            <td>• <strong>① Level-1 显式事实记忆 vs. Level-2 隐式认知记忆定性</strong>：<strong>事实记忆</strong>定性为明文陈述、具唯一真值 <code>y*</code> 的客体事实；<strong>认知记忆</strong>定性为限制未来意图决策空间的 <strong>4 类隐式约束（因果习惯变化 Causal、情绪状态 State-Based、长远目标 Goal-Oriented、价值准则 Value-Based）</strong>；<br/>• <strong>② 跨会话脱钩量化阈值</strong>：强制要求触发句（Trigger）与早先线索句（Cue）相隔 <strong><code>&ge; 10 个会话（数周）</code></strong>，且通过语义过滤使两者的<strong>字面重叠率与 Embedding 余弦相似度压低至随机无关轮水平</strong>。</td>
+            <td>• <strong>① Level-1 显式事实记忆 vs. Level-2 隐式认知记忆定性</strong>：<strong>事实记忆</strong>定性为明文陈述、具唯一真值 <code>y*</code> 的具体事实；<strong>认知记忆</strong>定性为限制未来意图决策空间的 <strong>4 类隐式约束（因果习惯变化 Causal、情绪状态 State-Based、长远目标 Goal-Oriented、价值准则 Value-Based）</strong>；<br/>• <strong>② 跨会话脱钩量化阈值</strong>：强制要求触发句（Trigger）与早先线索句（Cue）相隔 <strong><code>&ge; 10 个会话（数周）</code></strong>，且通过语义过滤使两者的<strong>字面重叠率与 Embedding 余弦相似度压低至随机无关轮水平</strong>。</td>
             <td>评测 5 类 QA 准确率、无答案对抗题拒答率，以及事实回忆率与认知约束满足率落差（<code>&Delta;r = r_fact &minus; r_cog</code>）。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>LongMemEval</strong><br/>arXiv:2410.10813 (2024)</td>
             <td>• <strong>规模与双档位分布</strong>：<strong>500 道人工精标跨会话评测题</strong>，将证据会话混入海量无关日常会话中，设两个标准上下文长度档位：<strong><code>LongMemEval_S</code>（<code>~40 个会话</code>，<code>115k tokens</code>）</strong>与 <strong><code>LongMemEval_M</code>（<code>~500 个会话</code>，<code>1.5M tokens</code>）</strong>。</td>
-            <td>• <strong>① 五大跨会话记忆能力定性切分與判分规则</strong>：将 500 题正交切分为 5 类——<strong>单会话信息提取（IE）</strong>、<strong>跨会话多跳聚合（MR，需跨 2–5 个不同日期的会话做计数/求和/对比）</strong>、<strong>知识更新覆写（KU，属性随时间被推翻修改，答出旧值直接判 0 分）</strong>、<strong>时序推理（TR，基于会话时间戳推算先后与间隔天数）</strong>、<strong>未提及拒答（ABS，针对历史未出现过的虚假前提提问，必须明确拒答）</strong>。</td>
+            <td>• <strong>① 五大跨会话记忆能力定性切分与判分规则</strong>：将 500 题正交切分为 5 类——<strong>单会话信息提取（IE）</strong>、<strong>跨会话多跳聚合（MR，需跨 2–5 个不同日期的会话做计数/求和/对比）</strong>、<strong>知识更新覆写（KU，属性随时间被推翻修改，答出旧值直接判 0 分）</strong>、<strong>时序推理（TR，基于会话时间戳推算先后与间隔天数）</strong>、<strong>未提及拒答（ABS，针对历史未出现过的虚假前提提问，必须明确拒答）</strong>。</td>
             <td>会话/轮次级检索 <code>Recall@k / NDCG@k</code> + 下游生成问答准确率、知识更新覆盖率与未知拒答准确率。</td>
           </tr>
 
@@ -1384,7 +1488,7 @@ flowchart TB
           </tr>
           <tr class="midrule-row">
             <td><strong>Multi-User DST</strong><br/>arXiv:2506.10504 (2025)</td>
-            <td>• <strong>规模与分布</strong>：在 MultiWOZ 多轮对话底座上，按言语行为理论在原用户与 Agent 轮次之间受控插入<strong>第二名同行用户（同伴/家人）的插话轮次</strong>。</td>
+            <td>• <strong>规模与分布</strong>：在 MultiWOZ 多轮对话数据集基础上，按言语行为理论在原用户与 Agent 轮次之间受控插入<strong>第二名同行用户（同伴/家人）的插话轮次</strong>。</td>
             <td>• <strong>① 第二发言人插话动作四分类定性与真值采纳阈值</strong>：将同伴插话按言语行为定性切分为 <strong>补充新槽位提议（Suggesting）、条件反驳/改口（Disagreeing/Revising）、附和确认（Confirming）、无关旁白闲聊（Chit-chat）</strong>；严格规定<strong>仅当主叫用户显式采纳或默认同意同伴的有效提议时才写入最终状态真值；纯闲聊或被主叫当场否决的提议严禁入库</strong>。</td>
             <td>对比单用户 vs. 双用户插话下的<strong>零样本联合目标准确率（<code>Multi-User JGA</code>）</strong>与槽位级抗干扰率。</td>
           </tr>
@@ -1400,7 +1504,7 @@ flowchart TB
           <tr class="midrule-row">
             <td><strong>MediQ</strong><br/>arXiv:2406.00922 (2024)</td>
             <td>• <strong>规模与分布</strong>：将 MedQA 与 iCliniq <strong>1,200+ 个静态病例</strong>改造为由<strong>患者模拟器（Patient System）+ 专家问诊系统（Expert System）</strong>组成的多轮按问给值交互基准。</td>
-            <td>• <strong>① 首轮可见主诉 vs. 隐藏原子事实（Atomic Facts）定性隔离</strong>：将完整实例拆为 <strong><code>1 句初始主诉（首轮唯一可见）</code> + <code>N 条隐藏原子事实（初始全部锁死）</code></strong>；模拟器采用 <code>Fact-Select</code> 门控，仅当问题精准命中某条原子事实时才释放该条信息，严禁主动多说；<br/>• <strong>② 暂缓作答（Abstention）置信度阈值</strong>：未达置信度门槛时严禁武断作答，必须继续追问（引入置信度门控使交互准确率提升 <strong><code>+22.3%</code></strong>）。</td>
+            <td>• <strong>① 首轮可见主诉 vs. 隐藏原子事实（Atomic Facts）定性隔离</strong>：将完整实例拆为 <strong><code>1 句初始主诉（首轮唯一可见）</code> + <code>N 条隐藏原子事实（初始全部锁死）</code></strong>；模拟器采用 <code>Fact-Select</code> 规则，仅当问题精准命中某条原子事实时才提供该条信息，严禁主动多说；<br/>• <strong>② 暂缓作答（Abstention）置信度阈值</strong>：未达置信度门槛时严禁武断作答，必须继续追问（引入置信度过滤使交互准确率提升 <strong><code>+22.3%</code></strong>）。</td>
             <td>评测<strong>过早武断作答率（Premature Answering）</strong>、每轮追问信息增益效率与最终决策准确率。</td>
           </tr>
           <tr class="midrule-row">
@@ -1438,9 +1542,9 @@ flowchart TB
           </tr>
           <tr class="midrule-row">
             <td><strong>Disclosure-Gated Sim</strong> (2609.00982)<br/><strong>UserProxyBench</strong> (2609.38043)</td>
-            <td>• <strong>Disclosure-Gated</strong>：构建 <strong>5 级有序披露门控（合并为表层/中层/深层 3 层）</strong>评测 12 个系统；<br/>• <strong>UserProxyBench</strong>：在 <code>&tau;-bench</code> 家族 <strong>375 个任务</strong>上配 <strong>4–8 条带原文锚点的可证伪原子准则</strong>。</td>
-            <td>• <strong>① 五级有序信息披露门控（<code>2609.00982</code>）</strong>：将隐藏信息锁定在 <strong>5 个有序状态</strong>，设<strong>解锁转移与退缩守卫（Retreat Guards）</strong>——仅当 Agent 问对切入点才向上解锁一级；若机械连珠炮审讯则门控锁死甚至后退一级；<br/>• <strong>② Agent 得分（<code>R_&tau;</code>）vs. 模拟器契约忠实度（<code>UFS</code>）实测阈值（<code>2609.38043</code>）</strong>：固定 Agent 仅换用户模拟器，任务得分波动达 <strong><code>15.2 个百分点</code></strong>；且在 Agent 得满分（<code>R_&tau; = 1</code>）的轨迹中，竟有 <strong><code>24.4%</code> 存在模拟器违约放水</strong>（过早泄底未问槽位 / 谎称已执行物理操作 / 编造设备状态）；<code>UFS</code> 采用一票否决连乘 <code>f_i = &prod; 1{c_ij passes}</code>。</td>
-            <td>• <strong>Disclosure-Gated</strong>：<strong>门控披露合规率（防首轮泄底）</strong>；<br/>• <strong>UserProxyBench</strong>：<strong>模拟器契约忠实度（<code>UFS</code>）</strong>与物理动作确定性探针。</td>
+            <td>• <strong>Disclosure-Gated</strong>：构建 <strong>5 级分步信息提供规则（合并为表层/中层/深层 3 层）</strong>评测 12 个系统；<br/>• <strong>UserProxyBench</strong>：在 <code>&tau;-bench</code> 家族 <strong>375 个任务</strong>上配 <strong>4–8 条带原文锚点的可证伪原子准则</strong>。</td>
+            <td>• <strong>① 五级分步信息提供规则（<code>2609.00982</code>）</strong>：将隐藏信息分为 <strong>5 个有序阶段</strong>，仅当 Agent 问对当前维度才提供下一级信息；若连续机械追问则停止提供；<br/>• <strong>② Agent 得分（<code>R_&tau;</code>）vs. 模拟器规则遵循度（<code>UFS</code>）实测阈值（<code>2609.38043</code>）</strong>：固定 Agent 仅换用户模拟器，任务得分波动达 <strong><code>15.2 个百分点</code></strong>；且在 Agent 得满分（<code>R_&tau; = 1</code>）的轨迹中，有 <strong><code>24.4%</code> 存在模拟器违反规则</strong>（提前透露未问槽位 / 谎称已执行终端操作 / 编造设备状态）；<code>UFS</code> 采用一票否决连乘 <code>f_i = &prod; 1{c_ij passes}</code>。</td>
+            <td>• <strong>Disclosure-Gated</strong>：<strong>按问提供合规率（防首轮提前透露未问参数）</strong>；<br/>• <strong>UserProxyBench</strong>：<strong>模拟器契约忠实度（<code>UFS</code>）</strong>与终端动作确定性检查点。</td>
           </tr>
         </tbody>
       </table>
@@ -1583,7 +1687,7 @@ flowchart TB
 
     <h2 class="subsection-title" id="sec-2-3">2.3 多轮会话“用户 &#8644; Agent” 16 对正交动作映射与 6 类多轮组合模式</h2>
 
-    <p>综合多轮对话行为分类标准与 2024–2026 交互式 Agent 评测基准（<code>IN3</code>、<code>IntentDelta</code>、<code>&tau;&sup2;-bench</code>、<code>CAREFUL-Bench</code>、<code>Multi-User DST</code>），多轮交互动作从两个正交层面梳理：<strong>① 单轮原子动作的 1 对 1 触发–响应映射（表 2.3，按四个阶段将 <code>U1–U16</code> 与 <code>A1–A16</code> 逐行严格对齐，回答“用户出什么招、Agent 必须怎么接”）</strong>；<strong>② 跨轮次的正交动作组合模式（表 2.4，由原子动作对串联而成的 6 类标准多轮交互轨迹拓扑）</strong>。</p>
+    <p>综合多轮对话行为分类标准与 2024–2026 交互式 Agent 评测基准（<code>IN3</code>、<code>IntentDelta</code>、<code>&tau;&sup2;-bench</code>、<code>CAREFUL-Bench</code>、<code>Multi-User DST</code>），多轮交互动作从两个正交层面梳理：<strong>① 单轮原子动作的 1 对 1 触发–响应映射（表 2.3，按四个阶段将 <code>U1–U16</code> 与 <code>A1–A16</code> 逐行严格对齐，回答“用户出什么招、Agent 必须怎么接”）</strong>；<strong>② 跨轮次的正交动作组合模式（表 2.4，由原子动作对串联而成的 6 类标准多轮交互组合模式）</strong>。</p>
 
     <div class="table-wrap">
       <div class="table-caption">表 2.3：多轮会话四阶段“用户触发动作 U1–U16 &rarr; Agent 响应动作 A1–A16” 16 对正交一一映射表</div>
@@ -1678,7 +1782,7 @@ flowchart TB
           </tr>
           <!-- 维度四 -->
           <tr class="midrule-row">
-            <td rowspan="4"><strong>四、安全门控<br/>与收尾维</strong><br/>（4 对）</td>
+            <td rowspan="4"><strong>四、安全确认<br/>与收尾维</strong><br/>（4 对）</td>
             <td><code>U13&rarr;A13</code></td>
             <td><strong>U13. 试探性假设咨询（What-If）</strong>：仅问“如果把保障从 4K 降回 1080p 会怎样？”，未授权执行。</td>
             <td><strong>A13. 咨询态推演与写接口静默克制</strong>：仅调用只读分析回答影响，<strong>严禁调用写接口改配置</strong>。</td>
@@ -1709,7 +1813,7 @@ flowchart TB
     <p>上述 16 对单轮原子动作在实际多轮评测中并非随机堆砌，而是正交组合为表 2.4 所示的 <strong>6 类标准多轮交互组合模式（Multi-Turn Composition Patterns）</strong>，覆盖从 1 轮快路径到多轮复杂博弈的全部评测路径。</p>
 
     <div class="table-wrap">
-      <div class="table-caption">表 2.4：由 16 对原子动作构成的 6 类正交多轮交互组合模式（评测轨迹拓扑）</div>
+      <div class="table-caption">表 2.4：由 16 对原子动作构成的 6 类多轮交互组合模式</div>
       <table class="booktabs">
         <thead>
           <tr>
@@ -1773,7 +1877,7 @@ flowchart TB
         <ul>
           <li><strong>在记忆测试点构造上：</strong>综合 <code>PersonaMem-v3</code>、<code>BehaviorMem</code>、<code>Why Bother Me Again?</code> 与 <code>LoCoMo-Plus</code>，不仅要埋入跨周期的事实与习惯（含 77% 稳定、13% 消退、8% 新增、1% 偶发四类轨迹及 <code>&ge; 20 分 / &ge; 3 次</code>晋升阈值），还要埋入<strong>用户的交互免打扰边界（哪些已知槽位不准重复追问）</strong>与零字面重合的隐式认知约束。</li>
           <li><strong>在语法 · 语义 · 语用变体构造上：</strong>针对现有数据集最欠缺的盲区，重点构造<strong>“必须联合个人三层记忆才能消解的变体”</strong>——包括语法层的<strong>电报式残缺短语 + 句内多次口误自我修正（Self-Repair）</strong>、语义层的<strong>零字面重合个性化表述映射（查 <code>expression</code> 映射） + 复合意图否定排除（<code>A &and; &not;B</code> 否定子句分离与权重衰减过滤）</strong>、以及语用层的<strong>高情绪抱怨言外之意（<code>Read the Room ISA</code>） + 跨周历史工单省略指代 + 试探性咨询态与执行态区分（<code>CAREFUL-Bench</code>）</strong>。</li>
-          <li><strong>在多轮用户–Agent 交互模拟上：</strong>借鉴 <code>&tau;&sup2;-bench</code> 双控环境、<code>Disclosure-Gated Simulation</code> 5 级信息披露门控与 <code>UserProxyBench</code> 契约忠实度审计，严禁模拟用户第一轮吐露全部底牌或无条件配合，而是覆盖 <strong>16 &times; 16 双向交互动作</strong>（含反问原由、中途改口 <code>IntentDelta</code>、旁人插话干扰 <code>Multi-User DST</code> 与高危写操作执行前二次确认 <code>CAREFUL-Bench</code>）。</li>
+          <li><strong>在多轮用户–Agent 交互模拟上：</strong>借鉴 <code>&tau;&sup2;-bench</code> 双控环境、<code>Disclosure-Gated Simulation</code> 5 级分步信息提供规则与 <code>UserProxyBench</code> 契约忠实度审计，严禁模拟用户第一轮吐露全部底牌或无条件配合，而是覆盖 <strong>16 &times; 16 双向交互动作</strong>（含反问原由、中途改口 <code>IntentDelta</code>、旁人插话干扰 <code>Multi-User DST</code> 与高危写操作执行前二次确认 <code>CAREFUL-Bench</code>）。</li>
         </ul>
       </div>
     </div>
@@ -1821,7 +1925,7 @@ flowchart TB
   Stage2 ==>|"核对 Top-k 检索结果"| Stage3
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 3：全流程“萃取 &rarr; 召回 &rarr; 决策”三阶段 6 项核心指标与 12 个细分子项归因架构图。</strong><br/>每一项核心指标均由一个“正向能力子项（召回/替代/顺应）”与一个“负向防错子项（防虚构/防临时污染/防旧记录倒置/防越界红线）”配对组成。</p>
+      <p class="figure-caption"><strong>图 3：全流程“萃取 &rarr; 召回 &rarr; 决策”三阶段 6 项核心指标与 12 个细分子项归因架构图。</strong><br/>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;每一项核心指标均由一个“正向能力子项（召回/替代/顺应）”与一个“负向防错子项（防虚构/防临时污染/防旧记录倒置/防越界红线）”配对组成。</p>
     </div>
 
     <div class="table-wrap">
@@ -1837,38 +1941,38 @@ flowchart TB
         </thead>
         <tbody>
           <tr>
-            <td rowspan="2"><strong>阶段 1：<br/>记忆萃取与更新</strong><br/>（存得准不准）</td>
-            <td><strong>1. 记忆与经验抽取 F1</strong><br/>（Extraction F1）</td>
+            <td rowspan="2"><strong>阶段 1：<br/>记忆萃取与更新</strong><br/>（真实应记集合 <code>M</code> vs. 实际写入集合 <code>N</code>）</td>
+            <td><strong>1. 记忆抽取准确率与召回率（Extraction P / R / F1）</strong></td>
             <td>
-              <strong>① 事实记忆子项与经验规则召回率（防漏抽）</strong>：将多次重复达标的<strong>事实记忆五类子项</strong>（周期习惯、默认档位、场景偏好、服务与应用映射、个性化表述映射）及慢路径澄清后的<strong>经验记忆规则</strong>完整提炼入库的比例。<br/>
-              <strong>② 无据记忆误抽率（防虚构，<code>FDR = 1 &minus; P</code>）</strong>：把无真实单据/对话支撑的信息、背景短单碎片或随口闲聊误抽进事实记忆或经验记忆的比例。
+              <strong>① 萃取召回率 <code>Recall = TP / (TP + FN)</code>（防漏记 <code>FN</code>）</strong>：对真实应写入集合 <code>M</code> 中的<strong>显/隐式偏好抽取、正负向极性、精确数值与口语映射、四类来源标注（<code>sessions/logs/inferred/corrections</code>）、分场景与多级树层级组织、强弱置信度标注及经验规则</strong>完整提炼入库（<code>TP = |N &cap; M|</code>）的比例。<br/>
+              <strong>② 萃取准确率 <code>Precision = TP / (TP + FP)</code> 与误抽率（防误记 <code>FP</code>）</strong>：排除<strong>日常闲聊、假设性试探、纯情绪发泄、单次偶发行为</strong>四类非偏好噪声，且对历史未提及属性（如未提上行/抖动/身份）绝不虚构编造的比例。
             </td>
-            <td><strong>PersonaMem-v3 / RHELM</strong>：混入无依据假诱饵（Decoys），审计每条抽出记忆是否有真实单据/对话 ID 支撑。</td>
+            <td><strong>PersonaMem-v3 / DynamicMem / PERMA</strong>：全面考核偏好抽取、分场景层级组织、画像完整性/简洁性/无幻觉/置信度与四类噪声抑制。</td>
           </tr>
           <tr>
-            <td><strong>2. 状态更新准确率</strong><br/>（Update Accuracy）</td>
+            <td><strong>2. 偏好整合与状态更新准确率</strong><br/>（Integration &amp; Update）</td>
             <td>
-              <strong>① 正确的状态替代率</strong>：当事实记忆中的周期习惯、默认档位或常用应用发生演化时，用新状态覆盖过期旧状态且旧值不再残留的比例（含工作记忆改期时正确平移时间的比例）。<br/>
-              <strong>② 临时变动误记率</strong>：单次临时改期、带有效期的临时偏好或未达重复门槛（<code>&lt; 3 次</code>）的偶发行为，被错误写入长期固定事实记忆的比例。
+              <strong>① 同义合并去重与新旧覆盖更新率</strong>：跨会话同一偏好的多种表述合并去重（画像简洁不堆砌）；当套餐、主力应用、时段或 KQI 演化时，新版标 <code>active</code> 覆盖旧版、旧版正确标记 <code>superseded/obsolete</code>，且单据实测与口头声明冲突时按规则仲裁（实测优先、声明记入 <code>conflict_log</code>）。<br/>
+              <strong>② 临时偏好与偶发变动隔离率</strong>：带有效期的临时偏好（本周/出差期）到期自动失效，单次临时改期或 <code>&lt; 3 次</code>偶发行为不污染长期稳定画像的比例。
             </td>
-            <td><strong>LongMemEval（知识更新） / PersonaMem-v3（1% 单次偶发过滤）</strong>：同时测“新能否代旧”与“临时变动是否污染长期事实记忆”。</td>
+            <td><strong>LongMemEval（知识更新） / MemoryAgentBench（冲突解决 CR） / PersonaMem-v3</strong>。</td>
           </tr>
           <tr class="midrule-row">
-            <td rowspan="2"><strong>阶段 2：<br/>记忆检索与召回</strong><br/>（捞没捞出来、<br/>排得靠不靠前）</td>
-            <td><strong>3. 证据召回率</strong><br/>（<code>Recall@k</code>）</td>
+            <td rowspan="2"><strong>阶段 2：<br/>记忆检索与召回</strong><br/>（真实应取集合 <code>P</code> vs. 实际提取集合 <code>Q</code>）</td>
+            <td><strong>3. 检索准确率与多级召回率</strong><br/>（<code>Precision &amp; Recall@k</code>）</td>
             <td>
-              <strong>① 事实记忆多子项与二阶段关联召回率</strong>：用户省略参数或使用个人表述时，前 <code>k</code> 条成功召回事实记忆中对应的<strong>周期习惯、默认档位、场景偏好、表述映射</strong>，以及通过<strong>“服务&rarr;应用&rarr;周期习惯”二阶段关联表补全</strong>的目标记录的比例。<br/>
-              <strong>② 跨层（事实 + 工作 + 经验）联合召回全齐率（<code>Hit_all@k</code>）</strong>：复杂请求中，前 <code>k</code> 条把决策所需的<strong>事实记忆子项 + 工作记忆历史工单 + 经验记忆规则卡</strong>全部捞齐的比例。
+              <strong>① 检索召回率 <code>Recall = TP / (TP + FN)</code> 与准确率 <code>Precision = TP / (TP + FP)</code></strong>：衡量系统实际提取集合 <code>Q</code> 对真实应检索集合 <code>P</code> 的命中率（<code>TP = |Q &cap; P|</code>）与唯一精准度（不混入无关场景或过期项 <code>FP</code>），覆盖<strong>直接召回（单维唯一命中）</strong>与<strong>条件召回（带场景/时段/弱覆盖/诉求过滤，无条件返回通用偏好）</strong>。<br/>
+              <strong>② 跨维组合召回与二阶段关联全齐率（<code>Hit_all@k</code>）</strong>：需跨多条偏好（如“身份+出差场景”、“应用+丢包”、“高峰+卡顿+上行”、“月底流量紧+打游戏卡”、“情绪+诉求”）联合推理时，前 <code>k</code> 条把所需跨层记忆全部捞齐的比例。
             </td>
-            <td><strong>RHELM（跨源双流绑定证据 ID） / LoCoMo-Plus（隐式语义映射召回）</strong>。</td>
+            <td><strong>LoCoMo（单跳&rarr;多跳条件&rarr;组合递进） / RHELM / LoCoMo-Plus</strong>。</td>
           </tr>
           <tr>
-            <td><strong>4. 证据排序质量分</strong><br/>（<code>NDCG@k</code>）</td>
+            <td><strong>4. 优先级排序与负向排除率</strong><br/>（<code>NDCG@k</code> &amp; Exclusion）</td>
             <td>
-              <strong>① 生效正例排序分（<code>NDCG@k</code>）</strong>：当前生效的事实记忆（最新周期习惯/档位）、目标工作记忆工单或高置信度经验卡排在前 <code>k</code> 条顶部的折损得分。<br/>
-              <strong>② 干扰与旧记录压制率</strong>：工作记忆存在同地多张不同体验单据（正常记录 vs 体验异常记录）、或事实记忆存在新旧习惯交替时，生效正例排在所有异常记录与已替代旧记录前面的比例。
+              <strong>① 排序召回质量分（<code>NDCG@k</code>）</strong>：多条相关记忆并存时，按<strong>主设备 &gt; 备设备、新版本 &gt; 旧版本（<code>superseded</code>）、高频占比 &gt; 低频占比、单据实测 &gt; 口头声明、当前场景 &gt; 通用偏好、未过期临时偏好 &gt; 已过期、高置信 <code>strong</code> &gt; 低置信 <code>weak</code>、最新纠正 &gt; 旧记录、互斥 KQI 高权重优先</strong>正确排在顶部的折损得分。<br/>
+              <strong>② 排除召回准确率</strong>：推荐或决策时，主动识别并排除用户明确反感的负向 KQI（高延迟/高丢包低价档）、低于现档方案、不用的子应用/业务包、夜间限速包、不喜制式/切片、以及<strong>已被用户显式纠正或已撤销的旧方案</strong>的比例。
             </td>
-            <td><strong>PersonaMem-v3（1 正例 vs 15 同日负例重排） / LongMemEval（时序新旧排序）</strong>。</td>
+            <td><strong>PersonaMem-v3（重排与负向约束） / LongMemEval（时序排序）</strong>。</td>
           </tr>
           <tr class="midrule-row">
             <td rowspan="2"><strong>阶段 3：<br/>下游决策与边界</strong><br/>（用得对不对、<br/>克不克制）</td>
@@ -1978,7 +2082,7 @@ flowchart TB
   StepsRow1 ==> StepsRow2
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 4：三层记忆分工原理与八步保障决策分解映射架构图（三排结构）。</strong><br/>第一排展示事实记忆、工作记忆与经验记忆各自的存储内容与更新规律；第二排展示环节 1–4（口语解码、缺省补全、历史指代定位与临时例外判断）；第三排展示环节 5–8（风险调参、降级底线、快慢分流与事后回执回写）。</p>
+      <p class="figure-caption"><strong>图 4：三层记忆分工原理与八步保障决策分解映射架构图（三排结构）。</strong><br/>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;第一排展示事实记忆、工作记忆与经验记忆各自的存储内容与更新规律；第二排展示环节 1–4（口语解码、缺省补全、历史指代定位与临时例外判断）；第三排展示环节 5–8（风险调参、降级底线、快慢分流与事后回执回写）。</p>
     </div>
 
     <h2 class="subsection-title" id="sec-4-2">4.2 三层记忆横向对比与“记与不记”的五条判断标准</h2>
@@ -2267,7 +2371,7 @@ flowchart TB
   Step3 ==> Step4
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 5：吸收北邮 MemoryOS、Zep、Mem0 与 Letta 的“短期 &rarr; 中期 &rarr; 长期 &rarr; 接替淘汰”四步演变方法论架构图。</strong><br/>展示了单张实时单据与对话如何先在工作记忆成链，再经中期段页式归并，通过三条晋升通道升格为长期事实与经验记忆，最终通过双时间戳接替完成新旧更替。</p>
+      <p class="figure-caption"><strong>图 5：吸收北邮 MemoryOS、Zep、Mem0 与 Letta 的“短期 &rarr; 中期 &rarr; 长期 &rarr; 接替淘汰”四步演变方法论架构图。</strong><br/>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;展示了单张实时单据与对话如何先在工作记忆成链，再经中期段页式归并，通过三条晋升通道升格为长期事实与经验记忆，最终通过双时间戳接替完成新旧更替。</p>
     </div>
 
     <div class="table-wrap">
@@ -2366,7 +2470,7 @@ flowchart TB
 
     <h2 class="subsection-title" id="sec-6-2">6.2 经验记忆要抓住的五个重点与三种经验类型</h2>
 
-    <p>结合上述 5 篇论文与网络保障场景，构建经验记忆需抓住<strong>五个方法论重点</strong>（图 6 与表 6.2）：<strong>把首次的“慢路径多轮澄清 / 理解失败被纠正”转化为后续同类请求的“快路径一次闭环”</strong>，并利用正反单据对比（<code>ExpeL / ReasoningBank</code>）与后续回执验证（<code>2505.16067</code>）防止经验误用。</p>
+    <p>在实际工程中，针对一段已经给定的多轮澄清对话去提取“问题 &rarr; 调整动作 &rarr; 结果”因果关系本身并不困难；<strong>真正困难的是：① 如何在长程混杂会话与单据流中准确识别并串联出值得沉淀的慢路径 Case；② 当后续用户换了口语说法或具体地点时，如何跨字面差异准确找回相关经验 Case（同时防止字面相似但场景条件不符的误套用）</strong>。结合上述 5 篇论文与网络保障场景，构建经验记忆需抓住<strong>五个方法论重点</strong>（图 6 与表 6.2）：</p>
 
     <div class="figure-wrap">
       <div class="mermaid-box">
@@ -2394,7 +2498,7 @@ flowchart TB
   Card ==> FastPath
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 6：从“慢路径多轮澄清/理解偏差纠正”到“快路径一次闭环”的经验归纳与复用架构图。</strong><br/>上方通过正反单据对比与慢路径交互提炼因果规律；中部将其封装为带适用边界的结构化规则卡；下方在后续同类场景中直接触发快路径一步闭环并用执行回执持续验证。</p>
+      <p class="figure-caption"><strong>图 6：从“慢路径多轮澄清/理解偏差纠正”到“快路径一次闭环”的经验归纳与复用架构图。</strong><br/>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;上方通过正反单据对比与慢路径交互提炼因果规律；中部将其封装为带适用边界的结构化规则卡；下方在后续同类场景中直接触发快路径一步闭环并用执行回执持续验证。</p>
     </div>
 
     <div class="table-wrap">
@@ -2491,7 +2595,7 @@ flowchart TB
   Compare ==> Pipeline
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 7：静态剧本回放与在线交互模拟对比及“双端视图隔离 &rarr; 受控按问给值循环 &rarr; 全轨迹采集 &rarr; 三层结算”四环节架构图。</strong><br/>通过物理切分用户私有视图与 Agent 可观测视图，避免首轮泄密与未校验参数蒙对。</p>
+      <p class="figure-caption"><strong>图 7：静态剧本回放与在线交互模拟对比及“双端视图隔离 &rarr; 受控按问给值循环 &rarr; 全轨迹采集 &rarr; 三层结算”四环节架构图。</strong><br/>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;通过物理切分用户私有视图与 Agent 可观测视图，避免首轮泄密与未校验参数蒙对。</p>
     </div>
 
     <h2 class="subsection-title" id="sec-7-2">7.2 学术界与工业界 5 项代表性交互评测工作拆解</h2>
@@ -2530,9 +2634,9 @@ flowchart TB
           </tr>
           <tr class="midrule-row">
             <td><strong>4. Disclosure-Gated Sim &amp; UserProxyBench</strong><br/>2609.00982 / 2609.38043</td>
-            <td>• <strong>5 级有序披露门控与退缩守卫</strong>：将隐藏槽位锁在 5 级状态中，仅当 Agent 问对切入点才解锁下一级，机械连问则锁死。<br/>• <strong>模拟器违约审计</strong>：监控模拟器是否过早泄底未问槽位或编造设备状态（满分轨迹中 24.4% 存在放水）。</td>
-            <td>• <strong>门控披露合规率</strong>：检查首轮与每轮是否严格按问给值。<br/>• <strong>模拟器契约忠实度 <code>UFS</code></strong>：对 4–8 条可证伪原子准则执行一票否决连乘 <code>f_i = &prod; 1{c_ij passes}</code>。</td>
-            <td>构建用户模拟器私有视图的 <code>turn1_forbidden</code> 与 <code>turn2_reveal</code> 硬门控，防止模拟器首轮泄底导致评测虚高。</td>
+            <td>• <strong>5 级分步信息提供控制</strong>：将隐藏槽位分为 5 级状态，仅当 Agent 问到对应维度才提供下一级信息，机械连问则停止提供。<br/>• <strong>模拟器规则校验</strong>：检查模拟器是否提前透露未问槽位或编造设备状态（满分轨迹中 24.4% 存在放水）。</td>
+            <td>• <strong>按问提供合规率</strong>：检查首轮与每轮是否严格按问给值。<br/>• <strong>模拟器契约忠实度 <code>UFS</code></strong>：对 4–8 条可证伪原子准则执行一票否决连乘 <code>f_i = &prod; 1{c_ij passes}</code>。</td>
+            <td>构建用户模拟器私有视图的 <code>turn1_forbidden</code> 与 <code>turn2_reveal</code> 限制规则，防止模拟器首轮提前透露未问参数导致评测虚高。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>5. GroundEval &amp; RuVerBench</strong><br/>2606.22737 / 2606.29920</td>
@@ -2659,7 +2763,7 @@ flowchart TB
           <tr class="midrule-row">
             <td rowspan="3"><strong>第二层：<br/>模拟交互过程</strong><br/>（快慢路径与追问质量）</td>
             <td><strong>4. 快/慢路径分流准确率</strong><br/>（过度澄清率 &amp; 盲目抢跑率）</td>
-            <td>比对被测 Agent 第 1 轮的路径选择与样本预期路径：<br/>• <strong>过度澄清率</strong>：信息充足或已有经验本该 1 轮直接办，却多此一举发起反问的比例；<br/>• <strong>盲目抢跑率</strong>：缺必填参数或存在多单冲突本该先问，却直接瞎猜参数下发工单的比例。</td>
+            <td>比对被测 Agent 第 1 轮的路径选择与样本预期路径：<br/>• <strong>过度澄清率</strong>：信息充足或已有经验本该 1 轮直接办，却多此一举发起反问的比例；<br/>• <strong>盲目抢跑率</strong>：缺必填参数或存在多单冲突本该先问，却未校验直接生成参数下发工单的比例。</td>
             <td>管住两头极端：既防止什么都反问打扰用户，也防止缺参时盲目抢跑下错单。</td>
           </tr>
           <tr>
@@ -2675,8 +2779,8 @@ flowchart TB
           <tr class="midrule-row">
             <td rowspan="3"><strong>第三层：<br/>终态决策与稳定性</strong><br/>（对应阶段 3）</td>
             <td><strong>7. 有依据终态准确率</strong><br/>（含一票否决红线）</td>
-            <td>单个会话得 1 分必须<strong>同时满足 4 个条件</strong>：<br/>① <strong>未踩一票否决红线</strong>（未用已过期旧档位、未照搬卡顿失败单、未违规刺探隐私，踩中直接 0 分）；<br/>② <strong>检索证据落地</strong>（记忆补全的槽位确实出现在当轮检索 Top-k 结果中，非瞎猜蒙对）；<br/>③ <strong>时间算术自洽</strong>（<code>结束时间 &minus; 开始时间 == 保障时长</code>）；<br/>④ <strong>7 个业务槽位与标准答案严格全等</strong>。</td>
-            <td>杜绝“检索没命中却碰巧猜对参数”的虚假高分，并确保踩中红线的危险输出直接判零。</td>
+            <td>单个会话得 1 分必须<strong>同时满足 4 个条件</strong>：<br/>① <strong>未踩一票否决红线</strong>（未用已过期旧档位、未照搬卡顿失败单、未违规刺探隐私，踩中直接 0 分）；<br/>② <strong>检索证据落地</strong>（记忆补全的槽位确实出现在当轮检索 Top-k 结果中，非未校验猜测生成）；<br/>③ <strong>时间算术自洽</strong>（<code>结束时间 &minus; 开始时间 == 保障时长</code>）；<br/>④ <strong>7 个业务槽位与标准答案严格全等</strong>。</td>
+            <td>杜绝“检索未命中却仅凭猜测填对参数”的虚假高分，并确保踩中红线的危险输出直接判零。</td>
           </tr>
           <tr>
             <td><strong>8. 克制率与未知拒答率</strong></td>
@@ -2734,6 +2838,12 @@ flowchart TB
         mermaid.run({
           querySelector: ".mermaid"
         }).then(function () {
+          document.querySelectorAll(".mermaid-box .node foreignObject div, .mermaid-box .node .nodeLabel").forEach(function (el) {
+            el.style.textAlign = "left";
+          });
+          document.querySelectorAll(".mermaid-box .node foreignObject div, .mermaid-box .node .nodeLabel").forEach(function (el) {
+            el.style.textAlign = "left";
+          });
           document.querySelectorAll(".mermaid-box svg").forEach(function (svg) {
             try {
               var bbox = svg.getBBox();
