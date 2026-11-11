@@ -3,19 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>联接 Agent 认知记忆系统技术报告：从萃取、检索到上下文注入的完整链路</title>
+  <title>联接 Agent 记忆系统技术报告：从萃取、检索到上下文注入</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
   <style>
     :root {
-      --bg-desk: #ECEEF2;
+      --bg-desk: #EBEBEB;
       --bg-page: #FFFFFF;
       --text-main: #111111;
       --text-muted: #444444;
-      --text-subtle: #666666;
-      --link-navy: #003366;
+      --link-dark: #111111;
       --rule-heavy: 1.8px solid #111111;
       --rule-mid: 1px solid #222222;
       --rule-light: 0.6px solid #CCCCCC;
@@ -30,135 +29,131 @@
       color: var(--text-main);
       font-family: var(--font-serif);
       font-size: 15px;
-      line-height: 1.78;
+      line-height: 1.76;
       -webkit-font-smoothing: antialiased;
     }
     .screen-toolbar {
       position: sticky; top: 0; z-index: 100;
-      background: #1F2937; color: #F9FAFB;
+      background: #18181B; color: #FAFAFA;
       padding: 8px 24px;
       display: flex; justify-content: space-between; align-items: center;
       font-family: var(--font-sans); font-size: 13px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
     }
-    .screen-toolbar .toolbar-title { font-weight: 600; letter-spacing: 0.02em; }
+    .screen-toolbar .toolbar-title { font-weight: 600; }
     .screen-toolbar .toolbar-actions { display: flex; gap: 10px; align-items: center; }
     .screen-toolbar button, .screen-toolbar a.btn-link {
-      background: #374151; color: #FFFFFF;
-      border: 1px solid #4B5563; padding: 5px 12px;
+      background: #27272A; color: #FFFFFF;
+      border: 1px solid #52525B; padding: 5px 12px;
       font-size: 12.5px; font-family: var(--font-sans);
       cursor: pointer; text-decoration: none;
     }
-    .screen-toolbar button:hover, .screen-toolbar a.btn-link:hover { background: #4B5563; }
+    .screen-toolbar button:hover, .screen-toolbar a.btn-link:hover { background: #3F3F46; }
     .report-container {
-      max-width: 1020px;
+      max-width: 1000px;
       margin: 28px auto 60px auto;
       background: var(--bg-page);
-      padding: 54px 56px 72px 56px;
-      box-shadow: 0 4px 22px rgba(0, 0, 0, 0.08);
+      padding: 52px 56px 68px 56px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
     .running-header {
       display: flex; justify-content: space-between; align-items: baseline;
       font-family: var(--font-serif); font-size: 12px; color: var(--text-muted);
       border-bottom: 0.6px solid #333333;
-      padding-bottom: 4px; margin-bottom: 26px; margin-top: 46px;
+      padding-bottom: 4px; margin-bottom: 24px; margin-top: 42px;
     }
     .running-footer {
       display: flex; justify-content: space-between; align-items: center;
       font-family: var(--font-serif); font-size: 12px; color: var(--text-muted);
       margin-top: 28px; padding-top: 8px;
-      border-top: 0.5px solid #E5E7EB;
+      border-top: 0.5px solid #D4D4D8;
     }
     .titlepage {
-      padding-top: 18px; padding-bottom: 28px;
-      border-bottom: 1px solid #CCCCCC; margin-bottom: 34px;
+      padding-top: 14px; padding-bottom: 24px;
+      border-bottom: 1px solid #CCCCCC; margin-bottom: 30px;
     }
     .titlepage .main-title {
       text-align: center; font-family: var(--font-sans);
-      font-size: 25px; font-weight: 700; line-height: 1.38;
-      margin: 0 0 10px 0; color: #000000;
+      font-size: 24px; font-weight: 700; line-height: 1.38;
+      margin: 0 0 8px 0; color: #000000;
     }
     .titlepage .sub-title {
       text-align: center; font-family: var(--font-sans);
-      font-size: 15.5px; font-weight: 600; color: #222222;
-      margin: 0 0 18px 0;
+      font-size: 15px; font-weight: 600; color: #333333;
+      margin: 0 0 16px 0;
     }
     .titlepage .date-line {
       text-align: center; font-family: var(--font-serif);
-      font-size: 13.5px; color: #444444; margin-bottom: 22px;
+      font-size: 13.5px; color: #444444; margin-bottom: 20px;
     }
     .meta-tcolorbox {
-      background: #FAFAFA; border: 1px solid #555555;
-      border-radius: 0; padding: 14px 18px;
-      margin: 0 auto 22px auto; font-size: 13.8px; line-height: 1.72;
+      background: #FAFAFA; border: 1px solid #222222;
+      padding: 13px 18px; margin: 0 auto 20px auto;
+      font-size: 13.8px; line-height: 1.72;
     }
     .meta-tcolorbox p { margin: 4px 0; text-indent: 0 !important; }
     .index-tcolorbox {
-      border: 1px solid #5B7696; background: #F4F7FA;
-      border-radius: 0; margin: 0 auto 28px auto;
+      border: 1px solid #222222; background: #FAFAFA;
+      margin: 0 auto 24px auto;
     }
     .index-tcolorbox .box-header {
-      background: #5B7696; color: #FFFFFF;
+      background: #222222; color: #FFFFFF;
       font-family: var(--font-sans); font-weight: 700;
-      font-size: 14px; padding: 6px 14px;
+      font-size: 13.8px; padding: 6px 14px;
     }
     .index-tcolorbox .box-body {
-      padding: 12px 16px; font-size: 13.8px; line-height: 1.78;
+      padding: 12px 16px; font-size: 13.8px; line-height: 1.75;
     }
     .index-tcolorbox .index-item { margin: 4px 0; text-indent: 0 !important; }
-    .toc-section { margin-bottom: 32px; }
+    .toc-section { margin-bottom: 30px; }
     .toc-section h2.toc-title {
-      font-family: var(--font-sans); font-size: 20px;
-      font-weight: 700; margin: 0 0 14px 0; color: #000000;
+      font-family: var(--font-sans); font-size: 19px;
+      font-weight: 700; margin: 0 0 12px 0; color: #000000;
     }
-    .toc-list { list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.82; }
+    .toc-list { list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.8; }
     .toc-row { display: flex; align-items: baseline; width: 100%; }
-    .toc-row.level-1 { font-family: var(--font-sans); font-weight: 700; margin-top: 8px; }
+    .toc-row.level-1 { font-family: var(--font-sans); font-weight: 700; margin-top: 6px; }
     .toc-row.level-2 { padding-left: 1.8em; font-family: var(--font-serif); }
     .toc-row a { color: #000000; text-decoration: none; }
-    .toc-row a:hover { color: var(--link-navy); text-decoration: underline; }
+    .toc-row a:hover { text-decoration: underline; }
     .toc-dots { flex: 1; border-bottom: 1px dotted #888888; margin: 0 8px; height: 1em; }
     .toc-page { font-family: var(--font-serif); color: #222222; font-size: 13px; }
     h1.section-title {
-      font-family: var(--font-sans); font-size: 21px; font-weight: 700;
-      color: #000000; margin: 26px 0 14px 0; line-height: 1.35;
+      font-family: var(--font-sans); font-size: 20px; font-weight: 700;
+      color: #000000; margin: 24px 0 12px 0; line-height: 1.35;
     }
     h2.subsection-title {
-      font-family: var(--font-sans); font-size: 17px; font-weight: 700;
-      color: #000000; margin: 24px 0 10px 0; line-height: 1.4;
-    }
-    h3.subsubsection-title {
-      font-family: var(--font-sans); font-size: 15px; font-weight: 700;
-      color: #111111; margin: 18px 0 8px 0; line-height: 1.45;
+      font-family: var(--font-sans); font-size: 16.5px; font-weight: 700;
+      color: #000000; margin: 22px 0 10px 0; line-height: 1.4;
     }
     p { margin: 0 0 10px 0; text-indent: 2em; text-align: justify; }
     p.no-indent { text-indent: 0; }
-    ul, ol { margin: 6px 0 12px 0; padding-left: 2.2em; }
+    ul, ol { margin: 6px 0 12px 0; padding-left: 2.1em; }
     li { margin-bottom: 4px; text-align: justify; }
     li p { text-indent: 0; margin: 0; }
-    a { color: var(--link-navy); text-decoration: none; }
+    a { color: var(--link-dark); text-decoration: none; }
     a:hover { text-decoration: underline; }
     code {
       font-family: var(--font-mono); font-size: 0.88em;
-      background: #F4F5F7; padding: 1px 5px; border: 0.5px solid #DCDFE4;
+      background: #F4F4F5; padding: 1px 5px; border: 0.5px solid #D4D4D8;
     }
     pre {
-      background: #F7F8FA; border: 1px solid #D1D5DB;
+      background: #F8F8F8; border: 1px solid #CCCCCC;
       padding: 12px 16px; overflow-x: auto;
-      font-family: var(--font-mono); font-size: 12.6px;
-      line-height: 1.56; margin: 0 0 14px 0;
+      font-family: var(--font-mono); font-size: 12.5px;
+      line-height: 1.55; margin: 0 0 14px 0;
     }
     pre code { background: transparent; border: none; padding: 0; }
     .listing-caption {
       font-family: var(--font-sans); font-size: 12.8px; font-weight: 600;
-      color: #1F2937; background: #EAECEF; border: 1px solid #D1D5DB;
+      color: #111111; background: #EFEFEF; border: 1px solid #CCCCCC;
       border-bottom: none; padding: 5px 12px; margin-top: 12px;
       display: flex; justify-content: space-between; align-items: center;
     }
     .listing-caption span.src-tag {
-      font-family: var(--font-mono); font-size: 11.5px; font-weight: 400; color: #4B5563;
+      font-family: var(--font-mono); font-size: 11.5px; font-weight: 400; color: #555555;
     }
-    .table-wrap { margin: 16px 0 20px 0; overflow-x: auto; }
+    .table-wrap { margin: 14px 0 18px 0; overflow-x: auto; }
     .table-caption {
       font-family: var(--font-serif); font-size: 13.4px; color: #111111;
       text-align: center; margin-bottom: 6px; text-indent: 0 !important; font-weight: 600;
@@ -174,69 +169,243 @@
     }
     table.booktabs tbody td { padding: 6px 8px; vertical-align: top; border: none; }
     table.booktabs tbody tr.midrule-row td { border-top: var(--rule-light); }
-    .tcolorbox { border-radius: 0; margin: 16px 0 18px 0; page-break-inside: avoid; break-inside: avoid; }
-    .tcolorbox .tcb-title { font-family: var(--font-sans); font-weight: 700; font-size: 14px; padding: 6px 14px; }
-    .tcolorbox .tcb-body { padding: 12px 16px; font-size: 14px; line-height: 1.72; }
-    .tcolorbox .tcb-body p { text-indent: 0; margin: 0 0 8px 0; }
+    .tcolorbox {
+      margin: 14px 0 16px 0;
+      border: 1px solid #222222;
+      background: #FAFAFA;
+      page-break-inside: avoid; break-inside: avoid;
+    }
+    .tcolorbox .tcb-title {
+      font-family: var(--font-sans); font-weight: 700; font-size: 13.6px;
+      padding: 5px 14px;
+      background: #EFEFEF; color: #111111;
+      border-bottom: 1px solid #222222;
+    }
+    .tcolorbox .tcb-body { padding: 10px 15px; font-size: 13.8px; line-height: 1.7; }
+    .tcolorbox .tcb-body p { text-indent: 0; margin: 0 0 6px 0; }
     .tcolorbox .tcb-body p:last-child { margin-bottom: 0; }
-    .tcolorbox .tcb-body ul, .tcolorbox .tcb-body ol { margin: 4px 0 6px 0; padding-left: 1.8em; }
-    .tcolorbox.importantbox { border: 1px solid #C5A64E; background: #FFFDF2; }
-    .tcolorbox.importantbox .tcb-title { background: #DFC36D; color: #111111; border-bottom: 1px solid #C5A64E; }
-    .tcolorbox.knowledgebox { border: 1px solid #4A77A5; background: #F4F8FB; }
-    .tcolorbox.knowledgebox .tcb-title { background: #2B547E; color: #FFFFFF; }
-    .tcolorbox.warningbox { border: 1px solid #C94A4A; background: #FDF5F5; }
-    .tcolorbox.warningbox .tcb-title { background: #A62626; color: #FFFFFF; }
-    .tcolorbox.dialoguebox { border: 1px solid #4D9460; background: #F4FAF6; }
-    .tcolorbox.dialoguebox .tcb-title { background: #2E6F40; color: #FFFFFF; }
-    .figure-wrap { margin: 22px 0 24px 0; text-align: center; page-break-inside: avoid; break-inside: avoid; }
-    .mermaid-box { background: #FFFFFF; border: 1px solid #CBD5E1; padding: 6px 8px; display: block; overflow-x: auto; width: 100%; }
-    .mermaid-box pre.mermaid { width: 100%; margin: 0; padding: 0; background: transparent; border: none; display: block; line-height: 1; }
-    .mermaid-box svg { width: 100% !important; max-width: 100% !important; height: auto !important; display: block; margin: 0; }
-    .mermaid-box .node foreignObject > div { text-align: left !important; }
-    .mermaid-box .node .nodeLabel { display: inline-block !important; padding: 6px 12px !important; line-height: 1.55 !important; text-align: left !important; }
-    .mermaid-box .cluster-label .nodeLabel { display: inline-block !important; padding: 2px 6px !important; line-height: 1.35 !important; }
+    .tcolorbox .tcb-body ol, .tcolorbox .tcb-body ul { margin: 4px 0; padding-left: 1.8em; }
+    .figure-wrap { margin: 18px 0 22px 0; page-break-inside: avoid; break-inside: avoid; width: 100%; }
+    .mermaid-box {
+      background: #FFFFFF;
+      border: 1px solid #222222;
+      padding: 16px 18px;
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
+    .mermaid-box pre.mermaid {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      display: block;
+      line-height: 1.42;
+    }
+    .mermaid-box svg {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      display: block;
+      margin: 0 auto;
+    }
+    .mermaid-box .node rect,
+    .mermaid-box .node polygon,
+    .mermaid-box .node path {
+      fill: #FFFFFF !important;
+      stroke: #111111 !important;
+      stroke-width: 1.2px !important;
+      rx: 0px !important;
+      ry: 0px !important;
+    }
+    .mermaid-box .edgePath .path {
+      stroke: #111111 !important;
+      stroke-width: 1.15px !important;
+    }
+    .mermaid-box marker path {
+      fill: #111111 !important;
+      stroke: #111111 !important;
+    }
+    .mermaid-box .edgeLabel {
+      background-color: #FFFFFF !important;
+      color: #111111 !important;
+      font-family: var(--font-sans) !important;
+      font-size: 12px !important;
+      padding: 1px 4px !important;
+    }
+    .mermaid-box .edgeLabel rect {
+      fill: #FFFFFF !important;
+      stroke: none !important;
+      opacity: 1 !important;
+    }
+    .mermaid-box .nodeLabel {
+      color: #111111 !important;
+      line-height: 1.45 !important;
+    }
     .figure-caption {
-      font-family: var(--font-serif); font-size: 13.4px; color: #222222;
-      text-align: left; margin-top: 8px; line-height: 1.65; text-indent: 0 !important;
+      font-family: var(--font-serif); font-size: 13.2px; color: #222222;
+      text-align: left; margin-top: 8px; line-height: 1.62; text-indent: 0 !important;
     }
     .figure-caption strong { display: inline-block; margin-bottom: 2px; }
-    @media print {
-      @page { size: A4 portrait; margin: 11mm; }
-      html, body { background: #FFFFFF !important; font-size: 9.5pt; line-height: 1.54; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .katex { font-size: 1.02em; }
+    .katex-display { margin: 12px 0; }
+        @media print {
+      @page { size: A4 portrait; margin: 7.5mm 9.5mm; }
+      html, body {
+        background: #FFFFFF !important;
+        font-size: 9pt !important;
+        line-height: 1.44 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       .screen-toolbar { display: none !important; }
-      .report-container { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
+      .report-container {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
+      .page-break {
+        page-break-before: auto !important;
+        break-before: auto !important;
+      }
+      .running-header {
+        margin-top: 12px !important;
+        margin-bottom: 8px !important;
+        padding-bottom: 3px !important;
+      }
+      .titlepage {
+        padding-top: 4px !important;
+        padding-bottom: 10px !important;
+        margin-bottom: 12px !important;
+      }
+      .titlepage .main-title { font-size: 18pt !important; margin-bottom: 4px !important; }
+      .titlepage .sub-title { font-size: 11pt !important; margin-bottom: 8px !important; }
+      .titlepage .date-line { font-size: 9.5pt !important; margin-bottom: 10px !important; }
+      .meta-tcolorbox, .index-tcolorbox, .tcolorbox {
+        margin: 8px 0 !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+      }
+      .tcolorbox .tcb-title, .index-tcolorbox .box-header {
+        padding: 4px 10px !important;
+        font-size: 9.5pt !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+      .tcolorbox .tcb-body, .index-tcolorbox .box-body, .meta-tcolorbox {
+        padding: 6px 10px !important;
+        font-size: 8.8pt !important;
+        line-height: 1.42 !important;
+      }
+      .toc-section { margin-bottom: 12px !important; }
+      .toc-list { font-size: 9pt !important; line-height: 1.48 !important; }
+      h1.section-title {
+        font-size: 13.5pt !important;
+        margin: 12px 0 6px 0 !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+      h2.subsection-title {
+        font-size: 11pt !important;
+        margin: 10px 0 5px 0 !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+      p { margin: 0 0 5px 0 !important; }
+      ul, ol { margin: 4px 0 6px 0 !important; }
+      li { margin-bottom: 2px !important; }
+      .figure-wrap {
+        margin: 8px 0 10px 0 !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+      }
+      .mermaid-box {
+        padding: 8px 10px !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+      }
+      .mermaid-box svg {
+        max-height: 220mm !important;
+      }
+      .figure-caption {
+        font-size: 8.4pt !important;
+        margin-top: 4px !important;
+        line-height: 1.38 !important;
+      }
+      .table-wrap {
+        margin: 8px 0 10px 0 !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+      }
+      .table-caption {
+        font-size: 8.8pt !important;
+        margin-bottom: 4px !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+      table.booktabs {
+        font-size: 8.2pt !important;
+        line-height: 1.35 !important;
+      }
+      table.booktabs thead { display: table-header-group; }
+      table.booktabs tr { page-break-inside: avoid; break-inside: avoid; }
+      table.booktabs thead th, table.booktabs tbody td {
+        padding: 3.5px 5px !important;
+      }
+      pre {
+        padding: 6px 10px !important;
+        font-size: 7.8pt !important;
+        line-height: 1.34 !important;
+        margin: 0 0 8px 0 !important;
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+      }
+      .listing-caption {
+        padding: 3px 8px !important;
+        font-size: 8.4pt !important;
+        margin-top: 6px !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
     }
   </style>
 </head>
 <body>
   <div class="screen-toolbar" data-lavish-ui="true">
-    <div class="toolbar-title">联接 Agent 认知记忆系统技术报告：从萃取、检索到上下文注入的完整链路</div>
+    <div class="toolbar-title">联接 Agent 记忆系统技术报告：从萃取、检索到上下文注入</div>
     <div class="toolbar-actions">
       <a class="btn-link" href="fused_profile_and_evaluation_wdkns_report.html" data-lavish-ui="true">返回综述主报告</a>
-      <a class="btn-link" href="storyline_sub/storyline_to_sample_concrete_walkthrough.html" data-lavish-ui="true">查看 30 天样本实例</a>
+      <a class="btn-link" href="storyline_sub/storyline_to_sample_concrete_walkthrough.html" data-lavish-ui="true">查看样本实例</a>
       <button onclick="window.print()" data-lavish-ui="true">导出 / 打印 A4 PDF</button>
     </div>
   </div>
 
-  <div class="report-container" id="top">
+        <div class="report-container" id="top">
     <!-- Titlepage -->
     <div class="titlepage">
-      <h1 class="main-title">四类认知记忆系统架构设计：<br/>从双模态萃取、演进、混合检索到上下文注入的完整链路</h1>
-      <div class="sub-title">—— 事实记忆（语义 + 情景）、程序化记忆与经验记忆的正交建模及快慢路径协同技术报告</div>
-      <div class="date-line">系统实现：<code>memory_system</code> · 业务域：6G NGC · 2026 年 11 月</div>
+      <h1 class="main-title">联接 Agent 记忆系统技术报告：<br/>基于 CoALA 的长短期分层管理、经验提炼与混合检索注入</h1>
+      <div class="sub-title">—— 短期工作记忆与三类长期记忆（语义记忆、情景记忆、程序化/经验记忆）的架构与工程设计</div>
+      <div class="date-line">对应代码仓：<code>memory_system</code> · 业务域：6G NGC · 2026 年 11 月</div>
 
       <div class="meta-tcolorbox">
-        <p><strong>报告摘要</strong>：围绕 6G NGC 移动网络体验保障场景下“75% 网元结构化单据 + 25% 自然语言多轮对话”双模态长周期数据流，阐述认知记忆系统的全链路工程架构。系统按职责边界与生命周期更新规律，将记忆划分为<strong>事实记忆-语义记忆</strong>（身份套餐权益、<code>expression</code> 个性化表述映射、<code>service_to_app</code> 业务绑定、<code>preferred_value</code> 基础默认档位）、<strong>事实记忆-情景记忆</strong>（<code>episodic_record</code> 历史单次保障台账与网元体验回执 <code>AppQuality=good/bad</code>）、<strong>程序化记忆</strong>（<code>periodic_preference</code> 周期时间窗习惯、<code>scene_preference</code> 常驻与支线空间默认流及降级底线）与<strong>经验记忆</strong>（<code>experience_card</code> 从慢路径多轮澄清与正反单据对比中提炼的因果调参规则）四大正交模块，打通<strong>双模态萃取与四步晋升演进 $\rightarrow$ 滑动窗口与结构化四路混合检索 $\rightarrow$ 确定性门控与快慢双路径上下文注入</strong>的端到端闭环。</p>
+        <p><strong>摘要</strong>：围绕 6G NGC 网络体验保障中网元结构化保障单据与用户自然语言对话交织的数据特征，参考普林斯顿大学 <code>CoALA</code>（<em>Cognitive Architectures for Language Agents</em>, arXiv:2309.02427）认知架构，介绍联接 Agent 记忆系统的<strong>“短期记忆与长期记忆”两级分层与四类记忆模块设计</strong>。其中，<strong>短期记忆（Short-Term Memory）</strong>为当前会话活跃的<strong>工作记忆（Working Memory）</strong>，负责维护本轮输入、多轮澄清中间槽位以及当轮从长期记忆检索读入的活跃上下文；<strong>长期记忆（Long-Term Memory）</strong>跨会话持久存储在外部数据库中，细分为三类：① <strong>语义记忆（Semantic Memory，事实记忆—语义层）</strong>，记录跨周期长期稳定的周期作息习惯、分场景常驻偏好、默认档位、服务与应用映射及个性化表述映射；② <strong>情景记忆（Episodic Memory，事实记忆—情景层）</strong>，原样保存每次历史保障单据记录与网元实际运行结果（<code>SerialNo</code>、<code>AppQuality=good/bad</code>），以及绑定具体时间窗的差旅/赛事事件、带有效期 <code>TTL</code> 的临时偏好与显式纠正记录；③ <strong>程序化记忆 / 经验记忆（Procedural / Experiential Memory）</strong>，记录从短期工作记忆慢路径澄清与长期情景记忆正反单据对比中提炼的因果调参规则、多单消歧流程（Workflows）与交互策略。</p>
       </div>
 
       <div class="index-tcolorbox">
-        <div class="box-header">报告章节结构</div>
+        <div class="box-header">章节概览：长短期分层与分表 &rarr; 演变萃取 &rarr; 经验提炼 &rarr; 混合检索 &rarr; 工作记忆拼装与写回 &rarr; 样本与评测</div>
         <div class="box-body">
-          <p class="index-item"><strong>第 1 章 · 四类记忆正交架构与双索引存储设计</strong>：分析单层向量库混存的局限性，定义四类记忆的职责边界与 SQLite“左结构化槽位列 + 右 4~10 字短词向量列”双索引 Schema。</p>
-          <p class="index-item"><strong>第 2 章 · 记忆萃取与短期到长期演进机制</strong>：阐述网元短单清洗、断流子单合并、满 3 次证据累积晋升状态机、时间保持率衰减规则，以及<strong>从长周期混杂流中定位慢路径源头样本并差分提炼经验卡</strong>的机制。</p>
-          <p class="index-item"><strong>第 3 章 · 滑动窗口向量匹配与四路差异化混合检索</strong>：阐述 <code>6~10</code> 字滑动窗口切分、否定子句分离与权重衰减过滤，以及语义解码、程序化匹配、情景回执消歧、经验跨场馆泛化与不适用边界过滤四条检索路由。</p>
-          <p class="index-item"><strong>第 4 章 · 上下文卡片装配与快慢双路径注入决策</strong>：阐述注入前确定性路径裁决器、快路径原地参数合成、慢路径最小消歧集注入模板与事后网元回执反哺闭环。</p>
-          <p class="index-item"><strong>第 5 章 · 端到端完整样本走查与三阶段评测对齐</strong>：基于 <code>USER_001</code> 巡回主播样本走查从萃取落盘、多记忆耦合检索到快慢路径注入的数据流转，并对齐萃取、检索与交互三阶段评测指标。</p>
+          <p class="index-item"><strong>第 1 章 · 记忆要记什么：CoALA 四类记忆分工、长短期分层管理与分表存储结构</strong>：说明单层向量库混存的四类问题，基于 <code>CoALA</code> 定义短期工作记忆与三类长期记忆（语义、情景、程序化/经验）的双向读写闭环（<code>Retrieval</code> 读入与 <code>Learning</code> 写回）、六维对比表、“记与不记”五条标准、8 个决策环节分解表及 SQLite 分表存储结构。</p>
+          <p class="index-item"><strong>第 2 章 · 记忆从短期到长期的演变机制与萃取更新规则</strong>：拆解北邮 <code>MemoryOS (STM&rarr;MTM&rarr;LPM)</code> 与 <code>Mem0</code>、<code>Zep/Graphiti</code>、<code>Letta/MemGPT</code>、上海 AI Lab <code>MemOS</code>、<code>MemoryBank/A-MEM</code> 5 套架构，归纳从短期工作记忆经中期候选池升格为三类长期记忆的四步演变逻辑，给出单据过滤、候选池晋升参数与保持率衰减算式。</p>
+          <p class="index-item"><strong>第 3 章 · 程序化 / 经验记忆要学到什么：从“多轮澄清/理解失败”到“快速闭环”</strong>：对比 5 篇经验学习代表论文，总结程序化/经验记忆构建的五个方法论重点，说明如何串联情景记忆中的异常单据、工作记忆中的澄清对话与调整后正常单据提炼规则，并展示落盘 JSON 示例。</p>
+          <p class="index-item"><strong>第 4 章 · 三类长期记忆的混合检索流程</strong>：阐述长句否定子句分离与滑动窗口切分，语义记忆、情景记忆、程序化（经验）记忆三类长期记忆的并行检索与二阶段关联表补全，以及综合排序算式与多记忆联合检索优先级。</p>
+          <p class="index-item"><strong>第 5 章 · 短期工作记忆的上下文拼装注入与长短期写回闭环</strong>：说明如何将检索出的长期记忆过滤、预计算时间偏移并拼装加载进短期工作记忆（Working Memory），以及单据执行完毕后如何从工作记忆向三类长期记忆写回与更新。</p>
+          <p class="index-item"><strong>第 6 章 · 完整样本示例与评测指标</strong>：通过主播用户 <code>USER_001</code> 跨周期业务样本串联短期工作记忆与三类长期记忆的协同全流程，并汇总三阶段评测指标。</p>
+          <p class="index-item"><strong>第 7 章 · 总结与工程检查项</strong>：汇总表字段边界、无效单据过滤、经验排除范围与长短期双向同步的四项工程核对要求。</p>
         </div>
       </div>
     </div>
@@ -245,755 +414,1171 @@
     <div class="toc-section">
       <h2 class="toc-title">目 录</h2>
       <ul class="toc-list">
-        <li class="toc-row level-1"><a href="#sec-1">1 四类记忆正交架构与双索引存储设计</a><span class="toc-dots"></span><span class="toc-page">01</span></li>
-        <li class="toc-row level-2"><a href="#sec-1-1">1.1 单层向量库混存的局限性</a><span class="toc-dots"></span><span class="toc-page">01</span></li>
-        <li class="toc-row level-2"><a href="#sec-1-2">1.2 四类记忆的职责切分与演化规律</a><span class="toc-dots"></span><span class="toc-page">02</span></li>
-        <li class="toc-row level-2"><a href="#sec-1-3">1.3 全链路架构与左列右向量双索引表设计</a><span class="toc-dots"></span><span class="toc-page">03</span></li>
-        <li class="toc-row level-2"><a href="#sec-1-4">1.4 四类记忆正交 Schema 与字段边界对照</a><span class="toc-dots"></span><span class="toc-page">04</span></li>
+        <li class="toc-row level-1"><a href="#sec-1">1 记忆要记什么：CoALA 四类记忆分工、长短期分层管理与分表存储结构</a><span class="toc-dots"></span><span class="toc-page">01</span></li>
+        <li class="toc-row level-2"><a href="#sec-1-1">1.1 单层向量库混存的问题与 CoALA“一短期 + 三长期”记忆分工</a><span class="toc-dots"></span><span class="toc-page">01</span></li>
+        <li class="toc-row level-2"><a href="#sec-1-2">1.2 短期工作记忆与三类长期记忆的分层管理及六维横向对比</a><span class="toc-dots"></span><span class="toc-page">02</span></li>
+        <li class="toc-row level-2"><a href="#sec-1-3">1.3 按 8 个决策环节分解要记的内容与每条记忆必备元信息</a><span class="toc-dots"></span><span class="toc-page">03</span></li>
+        <li class="toc-row level-2"><a href="#sec-1-4">1.4 整体处理流程与三类长期记忆 SQLite 分表存储结构设计</a><span class="toc-dots"></span><span class="toc-page">04</span></li>
         <li class="toc-row level-2"><a href="#sec-1-5">1.5 本章小结</a><span class="toc-dots"></span><span class="toc-page">05</span></li>
 
-        <li class="toc-row level-1"><a href="#sec-2">2 记忆萃取与短期到长期演进机制</a><span class="toc-dots"></span><span class="toc-page">06</span></li>
-        <li class="toc-row level-2"><a href="#sec-2-1">2.1 双模态输入流特征与萃取难点</a><span class="toc-dots"></span><span class="toc-page">06</span></li>
-        <li class="toc-row level-2"><a href="#sec-2-2">2.2 双模态预处理与短期到长期四步晋升机制</a><span class="toc-dots"></span><span class="toc-page">07</span></li>
-        <li class="toc-row level-2"><a href="#sec-2-3">2.3 记忆保持率衰减与状态流转规则</a><span class="toc-dots"></span><span class="toc-page">08</span></li>
-        <li class="toc-row level-2"><a href="#sec-2-4">2.4 经验记忆萃取：混杂流慢路径源头定位与正反单差分提炼</a><span class="toc-dots"></span><span class="toc-page">09</span></li>
-        <li class="toc-row level-2"><a href="#sec-2-5">2.5 四类记忆落盘数据结构示例</a><span class="toc-dots"></span><span class="toc-page">10</span></li>
-        <li class="toc-row level-2"><a href="#sec-2-6">2.6 本章小结</a><span class="toc-dots"></span><span class="toc-page">11</span></li>
+        <li class="toc-row level-1"><a href="#sec-2">2 记忆从短期到长期的演变机制与萃取更新规则</a><span class="toc-dots"></span><span class="toc-page">05</span></li>
+        <li class="toc-row level-2"><a href="#sec-2-1">2.1 北邮 MemoryOS（arXiv:2506.06326）的三级演变机制：STM &rarr; MTM &rarr; LPM</a><span class="toc-dots"></span><span class="toc-page">05</span></li>
+        <li class="toc-row level-2"><a href="#sec-2-2">2.2 经典与主流 5 套 Agent 记忆系统横向对比</a><span class="toc-dots"></span><span class="toc-page">06</span></li>
+        <li class="toc-row level-2"><a href="#sec-2-3">2.3 对联接 Agent 的思路启发：从短期工作记忆到三类长期记忆的四步演变逻辑</a><span class="toc-dots"></span><span class="toc-page">07</span></li>
+        <li class="toc-row level-2"><a href="#sec-2-4">2.4 单据预处理、候选池累积参数与记忆保持率衰减计算</a><span class="toc-dots"></span><span class="toc-page">08</span></li>
+        <li class="toc-row level-2"><a href="#sec-2-5">2.5 本章小结与拓展阅读</a><span class="toc-dots"></span><span class="toc-page">09</span></li>
 
-        <li class="toc-row level-1"><a href="#sec-3">3 滑动窗口向量匹配与四路差异化混合检索</a><span class="toc-dots"></span><span class="toc-page">12</span></li>
-        <li class="toc-row level-2"><a href="#sec-3-1">3.1 自然语言长句检索难点</a><span class="toc-dots"></span><span class="toc-page">12</span></li>
-        <li class="toc-row level-2"><a href="#sec-3-2">3.2 滑动窗口切分、否定子句分离与二阶段关联表补全</a><span class="toc-dots"></span><span class="toc-page">13</span></li>
-        <li class="toc-row level-2"><a href="#sec-3-3">3.3 四路差异化检索路由与综合排序评分</a><span class="toc-dots"></span><span class="toc-page">14</span></li>
-        <li class="toc-row level-2"><a href="#sec-3-4">3.4 多类记忆交叉耦合检索协同机制</a><span class="toc-dots"></span><span class="toc-page">16</span></li>
-        <li class="toc-row level-2"><a href="#sec-3-5">3.5 本章小结</a><span class="toc-dots"></span><span class="toc-page">17</span></li>
+        <li class="toc-row level-1"><a href="#sec-3">3 程序化 / 经验记忆要学到什么：从“多轮澄清/理解失败”到“快速闭环”</a><span class="toc-dots"></span><span class="toc-page">09</span></li>
+        <li class="toc-row level-2"><a href="#sec-3-1">3.1 经验学习领域的 5 篇代表性论文与核心工作</a><span class="toc-dots"></span><span class="toc-page">09</span></li>
+        <li class="toc-row level-2"><a href="#sec-3-2">3.2 程序化 / 经验记忆要抓住的五个重点与三种经验类型</a><span class="toc-dots"></span><span class="toc-page">10</span></li>
+        <li class="toc-row level-2"><a href="#sec-3-3">3.3 从长周期记录中定位慢路径源头与正反单据对比提炼</a><span class="toc-dots"></span><span class="toc-page">11</span></li>
+        <li class="toc-row level-2"><a href="#sec-3-4">3.4 短期工作记忆与三类长期记忆的结构化数据示例</a><span class="toc-dots"></span><span class="toc-page">11</span></li>
+        <li class="toc-row level-2"><a href="#sec-3-5">3.5 本章小结与拓展阅读</a><span class="toc-dots"></span><span class="toc-page">12</span></li>
 
-        <li class="toc-row level-1"><a href="#sec-4">4 上下文卡片装配与快慢双路径注入决策</a><span class="toc-dots"></span><span class="toc-page">18</span></li>
-        <li class="toc-row level-2"><a href="#sec-4-1">4.1 原始检索记录直塞上下文的缺陷</a><span class="toc-dots"></span><span class="toc-page">18</span></li>
-        <li class="toc-row level-2"><a href="#sec-4-2">4.2 注入前确定性路径裁决与快路径原地参数合成</a><span class="toc-dots"></span><span class="toc-page">19</span></li>
-        <li class="toc-row level-2"><a href="#sec-4-3">4.3 上下文注入卡片结构与事后回执反哺闭环</a><span class="toc-dots"></span><span class="toc-page">21</span></li>
-        <li class="toc-row level-2"><a href="#sec-4-4">4.4 本章小结</a><span class="toc-dots"></span><span class="toc-page">22</span></li>
+        <li class="toc-row level-1"><a href="#sec-4">4 三类长期记忆的混合检索流程</a><span class="toc-dots"></span><span class="toc-page">12</span></li>
+        <li class="toc-row level-2"><a href="#sec-4-1">4.1 滑动窗口切分与否定子句处理</a><span class="toc-dots"></span><span class="toc-page">12</span></li>
+        <li class="toc-row level-2"><a href="#sec-4-2">4.2 语义、情景、程序化（经验）三类长期记忆并行检索与二阶段关联补全</a><span class="toc-dots"></span><span class="toc-page">13</span></li>
+        <li class="toc-row level-2"><a href="#sec-4-3">4.3 综合排序评分与多记忆联合检索</a><span class="toc-dots"></span><span class="toc-page">13</span></li>
+        <li class="toc-row level-2"><a href="#sec-4-4">4.4 本章小结</a><span class="toc-dots"></span><span class="toc-page">14</span></li>
 
-        <li class="toc-row level-1"><a href="#sec-5">5 端到端完整样本走查与三阶段评测对齐</a><span class="toc-dots"></span><span class="toc-page">23</span></li>
-        <li class="toc-row level-2"><a href="#sec-5-1">5.1 跨 30 天完整业务样本走查</a><span class="toc-dots"></span><span class="toc-page">23</span></li>
-        <li class="toc-row level-2"><a href="#sec-5-2">5.2 萃取（M 对 N）· 检索（P 对 Q）· 注入交互三阶段指标对齐</a><span class="toc-dots"></span><span class="toc-page">25</span></li>
-        <li class="toc-row level-2"><a href="#sec-5-3">5.3 本章小结</a><span class="toc-dots"></span><span class="toc-page">26</span></li>
+        <li class="toc-row level-1"><a href="#sec-5">5 短期工作记忆的上下文拼装注入与长短期写回闭环</a><span class="toc-dots"></span><span class="toc-page">14</span></li>
+        <li class="toc-row level-2"><a href="#sec-5-1">5.1 短期工作记忆的容量控制与长期检索结果结构化拼装</a><span class="toc-dots"></span><span class="toc-page">14</span></li>
+        <li class="toc-row level-2"><a href="#sec-5-2">5.2 工作记忆上下文文本示例与向三类长期记忆的写回闭环</a><span class="toc-dots"></span><span class="toc-page">15</span></li>
+        <li class="toc-row level-2"><a href="#sec-5-3">5.3 本章小结</a><span class="toc-dots"></span><span class="toc-page">15</span></li>
 
-        <li class="toc-row level-1"><a href="#sec-6">6 总结与工程核查清单</a><span class="toc-dots"></span><span class="toc-page">27</span></li>
+        <li class="toc-row level-1"><a href="#sec-6">6 完整样本示例与评测指标</a><span class="toc-dots"></span><span class="toc-page">16</span></li>
+        <li class="toc-row level-2"><a href="#sec-6-1">6.1 跨周期业务样本串联示例（USER_001）</a><span class="toc-dots"></span><span class="toc-page">16</span></li>
+        <li class="toc-row level-2"><a href="#sec-6-2">6.2 萃取、检索与注入三阶段评测指标</a><span class="toc-dots"></span><span class="toc-page">16</span></li>
+        <li class="toc-row level-2"><a href="#sec-6-3">6.3 本章小结</a><span class="toc-dots"></span><span class="toc-page">17</span></li>
+
+        <li class="toc-row level-1"><a href="#sec-7">7 总结与工程检查项</a><span class="toc-dots"></span><span class="toc-page">17</span></li>
       </ul>
     </div>
 
     <!-- ==================== CHAPTER 1 ==================== -->
     <div class="running-header">
-      <span>第 1 章 · 四类记忆正交架构与双索引存储设计</span>
-      <span>联接 Agent 认知记忆系统技术报告</span>
+      <span>第 1 章 · 记忆要记什么：CoALA 四类记忆分工、长短期分层管理与分表存储结构</span>
+      <span>联接 Agent 记忆系统技术报告</span>
     </div>
 
-    <h1 class="section-title" id="sec-1">1 四类记忆正交架构与双索引存储设计</h1>
+    <h1 class="section-title" id="sec-1">1 记忆要记什么：CoALA 四类记忆分工、长短期分层管理与分表存储结构</h1>
 
-    <h2 class="subsection-title" id="sec-1-1">1.1 单层向量库混存的局限性</h2>
-    <p>在 6G NGC 移动网络体验保障场景中，联接 Agent 同时处理两类异构信息源：一类是占总量约 <code>75%</code> 的<strong>网元结构化保障单据与事后体验回执</strong>（包含基站小区 <code>CGI</code>、位置语义、起止时间、上下行吞吐、时延丢包以及体验评估标签 <code>AppQuality=good/bad</code>）；另一类是占约 <code>25%</code> 的<strong>用户自然语言多轮对话</strong>（包含口语简称、历史工单指代、中途改口与多轮澄清）。若采用常规 RAG 做法，将所有对话摘要与历史单据平铺写入单一向量库，在实际长周期运行中会出现四类典型问题：</p>
+    <h2 class="subsection-title" id="sec-1-1">1.1 单层向量库混存的问题与 CoALA“一短期 + 三长期”记忆分工</h2>
+    <p>在 6G NGC 网络体验保障场景中，系统输入同时包含网元结构化保障单据及网络实际运行结果（记录小区标识 <code>CGI</code>、地点、起止时间、保障规格及事后体验质量 <code>AppQuality=good/bad</code>）与用户多轮自然语言对话。如果把当前对话上下文、用户长期习惯和历史单据直接混存在同一个无分层的文本向量库中，会出现以下四个问题：</p>
     <ol>
-      <li><strong>自定义简称与常驻参数耦合污染</strong>：用户口头使用的“破站开播”、“打排位”等个性化简称，若与某次具体工单的地点（如“奥体中心”）和时长混存在同一段文本向量中，当用户回到常驻基地再说“破站开播”时，检索器会连带召回上次场馆的特殊参数，造成跨场景参数串味。</li>
-      <li><strong>单次偶发单据与背景短单篡改常驻习惯</strong>：用户在工作日晚间因暴雨临时将户外推流降为 <code>720p</code>，或后台产生 <code>1~8min</code> 的短视频浏览碎片单；若不区分“单次已发生事实”与“多次重复验证的常驻习惯”，单次记录会直接覆盖用户长期稳定的 <code>4K</code> 直播默认档位。</li>
-      <li><strong>同地正反双单缺乏回执极性区分</strong>：用户上周六在鸟巢先后产生两笔工单（一笔抖音上行推流体验顺畅 <code>AppQuality=good</code>，另一笔快手看直播卡顿劣化 <code>AppQuality=bad</code>）。当用户再次到达场馆并说“照上周六没卡那单办”时，纯语义向量检索对两笔同地工单的余弦相似度几乎相同，极易误选失败单参数。</li>
-      <li><strong>慢路径澄清结论未能沉淀为可泛化规则</strong>：首次在大型聚集场馆开播时，因开场空口高并发拥塞及同晚预约重叠，Agent 经过 2~3 轮慢路径追问才对齐“需提前 20 分钟开启 6G NGC 上行专网切片”；若只保存最终工单而不单独提炼“触发条件 $\rightarrow$ 原因 $\rightarrow$ 参数调整规则 $\rightarrow$ 适用边界”，下次用户换到工人体育场或换种口语说法时，系统仍会退化回多轮追问，或者在用户仅看下行视频点播时错误套用上行预热规则。</li>
+      <li><strong>用户的口语叫法与单次外出地点混在一起</strong>：用户的口语表达（如“小破站开播”）如果与某次外出场馆的地点、时长存在同一条文本中，回到常驻地点再次使用该叫法时，容易误带出上次外出场馆的参数。</li>
+      <li><strong>短期临时改动覆盖平时的固定习惯</strong>：用户因异地出差、月末流量紧张或某天暴雨临时将画质降为 <code>720p</code>，如果不与长期常驻习惯分开存储，会直接覆盖平时稳定的 <code>1080p / 4K</code> 默认配置。</li>
+      <li><strong>同一地点的正常单据与卡顿单据难以区分</strong>：同一场馆如果先后存在运行顺畅的单据（<code>good</code>）与发生卡顿的单据（<code>bad</code>），纯文本向量相似度几乎一致，用户说“照上次没卡那笔办”时很容易选错记录。</li>
+      <li><strong>多轮沟通确定的参数调整无法直接用于同类新场景</strong>：首次在大型场馆遇到拥塞并经多轮沟通确定提前开启上行切片后，如果只保存当次单据而不提炼通用规则，下次换到其他体育场时仍需重复追问；反过来如果不做适用业务限制，在场馆内看视频点播时又会误触发上行切片。</li>
     </ol>
 
+    <p>参考普林斯顿大学提出的 <strong><code>CoALA</code>（<em>Cognitive Architectures for Language Agents</em>, arXiv:2309.02427）</strong> 认知架构，系统首先按生命周期将记忆划分为<strong>短期记忆（Short-Term Memory）</strong>与<strong>长期记忆（Long-Term Memory）</strong>两级，其中<strong>只有工作记忆属于短期记忆，而语义记忆、情景记忆、程序化（经验）记忆三者均属于跨会话持久保存的长期记忆</strong>：</p>
+    <ul>
+      <li><strong>短期记忆（Short-Term Memory）—— 1. 工作记忆（Working Memory，解决“当前会话正在处理什么、中间槽位与当轮上下文是什么”）：</strong>仅在当前单次会话或当前决策周期内活跃的瞬时上下文草稿板（Scratchpad），也是大模型推理核心唯一直接读取的内存区域。工作记忆负责维护：① 本轮用户输入与当前任务目标；② 多轮澄清交互中的活跃槽位状态（已确认槽位、待澄清冲突项、中途改口修正状态、旁人插话过滤状态）与定长对话页链（<code>FIFO</code> 缓冲）；③ 当轮通过检索（<code>Retrieval</code>）从三类长期记忆中召回并过滤拼装后的活跃记忆上下文。会话结束后，工作记忆中的有效信息通过学习写回（<code>Learning</code>）沉淀至长期记忆，自身随会话终结而释放。</li>
+      <li><strong>长期记忆 ①（Long-Term）—— 2. 语义记忆（Semantic Memory，事实记忆—语义层，解决“用户平时稳定要什么、口语怎么对应标准字段”）：</strong>脱离单次具体事件背景、跨周期长期稳定的客观事实与常驻偏好（<em>What is true</em>）。记录用户的静态身份与套餐权益、长期周期作息习惯（<code>periodic_preference</code>，如工作日午间固定直播时段）、分场景常驻网络偏好与体验三档底线（<code>scene_preference</code>，如常驻基地与高铁移动会议）、服务与应用映射（<code>service_to_app</code>）、个性化表述映射（<code>expression</code>，如“小破站开播”对应 <code>bilibili:openlive</code>）以及基础默认档位（<code>preferred_value</code>）。隐式行为需经中期候选池跨周期累积达标（满足跨度 \(W_{\text{span}}\) 与得分阈值 \(\theta_{\text{long}}\)）后晋升生效；档位升级时采用双时间戳接替（旧记录标为 <code>superseded</code>）；长期未触发按遗忘曲线自然衰减。</li>
+      <li><strong>长期记忆 ②（Long-Term）—— 3. 情景记忆（Episodic Memory，事实记忆—情景层，解决“过去具体发生过哪些单据与事件、当前处于什么阶段性情境”）：</strong>绑定具体时间戳与时空背景的过往具体事件记录、历史单据流水与阶段性状态（<em>What happened &amp; when</em>）。包含两部分内容：① <strong>历史保障单据记录与网元实际运行结果（<code>episodic_order_record</code>）</strong>：原样保存过去每次实际执行过的保障单据（单号 <code>SerialNo</code>、执行日期、地点、<code>CGI</code>、起止时间、保障参数）与实际运行结果（<code>AppQuality=good/bad</code>），<strong>按单号逐笔原样追加、不跨单合并为平均习惯、不随时间衰减</strong>，用于按时间、地点或运行结果好坏精确回溯特定历史单据（如“照上周六在奥体没卡那次来”）或叠加改期平移；② <strong>阶段性事件窗与带有效期 <code>TTL</code> 的临时偏好（<code>episodic_event_preference</code>）</strong>：记录异地差旅/赛事事件窗、短期临时降档/省流偏好（带到期时间 <code>TTL</code>）、历史主动诉求（<code>active/closed</code>）与当面显式纠正记录，在有效期内局部覆盖常驻语义记忆，到期后自动标为 <code>expired</code> 失效回退。</li>
+      <li><strong>长期记忆 ③（Long-Term）—— 4. 程序化记忆 / 经验记忆（Procedural / Experiential Memory，解决“遇到特定无线场景或歧义情况时，系统该怎么调参与处置”）：</strong>关于“如何执行动作、流程与调参规则”的显式程序化知识（<em>How to do</em>，对应 <code>CoALA</code> 中的显式程序化记忆 Explicit Procedural Memory）。记录从短期工作记忆的慢路径多轮澄清对话以及长期情景记忆的正反单据（<code>bad</code> 与 <code>good</code>）对比中提炼的<strong>网络问题因果调参规则</strong>（<code>触发条件 Condition &rarr; 问题根因 Cause &rarr; 参数调整规则 Action &rarr; 预期结果 Outcome</code>）、<strong>同地多单消歧处理流程（Workflows）</strong>与<strong>交互免打扰策略</strong>，显式绑定适用与不适用范围（<code>scope.exclude</code>），供后续同类场景直接召回复用。</li>
+    </ul>
+
     <div class="tcolorbox warningbox">
-      <div class="tcb-title">设计约束：禁止单层文本块混存与跨子类型槽位耦合</div>
+      <div class="tcb-title">短期记忆（工作记忆）与三类长期记忆（语义、情景、程序化/经验）的分层管理原则</div>
       <div class="tcb-body">
-        <p>将“用户静态属性”、“单次历史工单台账”、“常驻周期与场景习惯”以及“冲突与拥塞调参规则”混装在同一向量条目中，会导致更新机制冲突（原样追加、满阈值晋升与新代旧覆盖相互覆盖）并稀释短词向量的余弦相似度分布。</p>
+        <p>1. <strong>读写隔离（Retrieval &amp; Learning 双通道）</strong>：大模型在单步推理时只直接读取<strong>短期工作记忆（Working Memory）</strong>；长期语义记忆、长期情景记忆与长期程序化（经验）记忆存储在外部 SQLite + 向量数据库中，必须通过<strong>混合检索（<code>Retrieval</code>）</strong>按需筛选并拼装加载进短期工作记忆后才能参与当轮推理；会话与单据执行产生的反馈则通过<strong>异步学习（<code>Learning</code>）</strong>从短期工作记忆写回或经中期候选池晋升至三类长期记忆。</p>
+        <p>2. <strong>三类长期记忆分表独立更新</strong>：<strong>长期语义记忆</strong>靠跨周期重复累积达标晋升并按双时间戳新旧更替；<strong>长期情景记忆</strong>中的历史单据按单原样追加、不合并、不衰减，阶段性临时偏好按 <code>TTL</code> 到期失效；<strong>长期程序化（经验）记忆</strong>靠后续单据的实际运行结果（<code>AppQuality</code> 好坏）持续升降置信度。分表存储、独立更新，才能避免单次临时变动或单笔异常单据污染常驻语义习惯。</p>
       </div>
     </div>
 
-    <h2 class="subsection-title" id="sec-1-2">1.2 四类记忆的职责切分与演化规律</h2>
-    <p>结合认知长时记忆分类与 <code>memory_system</code> 的工程实践，系统按<strong>决策职责</strong>与<strong>生命周期更新规律</strong>，将记忆体系划分为四类独立存储、协同检索的模块：</p>
-    <ul>
-      <li><strong>事实记忆 — 语义记忆（Factual - Semantic Memory）</strong>：解决<strong>“用户是谁、口语简称指代什么、基础权益与默认档位是什么”</strong>。涵盖用户身份与 6G NGC 套餐加速包权益上限、个性化表述映射层（<code>expression</code>：如“破站开播” $\rightarrow$ <code>bilibili:openlive</code>）、无主业务到常驻 APP 绑定（<code>service_to_app</code>）以及全局基础默认 QoS 档位（<code>preferred_value</code>）。此类记忆通过显式声明直通或跨单据归纳生成，发生套餐升级或偏好迁移时执行<strong>新代旧覆盖（<code>superseded</code>）</strong>。</li>
-      <li><strong>事实记忆 — 情景记忆（Factual - Episodic Memory）</strong>：解决<strong>“过去具体哪一天、在什么地点办过哪笔单、网元实际回执好不好”</strong>。对应历史具体保障工单与网元回执台账（<code>episodic_record</code>）。此类记忆是客观发生过的历史事实，遵循<strong>“一单一记录按时间原样追加、不跨单合并、不随时间衰减”</strong>原则，支撑跨周特定单回溯（“照上周六没卡那单办”）与单次临时改期隔离。</li>
-      <li><strong>程序化记忆（Procedural Memory）</strong>：解决<strong>“在特定周期时间窗或特定空间场景下，默认按什么标准流程与规格执行保障”</strong>。涵盖周期时间窗路由指针（<code>periodic_preference</code>，如工作日午间 <code>12:00~13:30</code> 绑定抖音推流）与特定空间场景默认档位及降级底线（<code>scene_preference</code>，如常驻直播基地与高速大巴移动视频会议）。此类记忆要求<strong>连续一致重复达 <code>≥ 3</code> 次（跨度 <code>≥ 7</code> 天）</strong>方能从中期候选池（<code>candidate</code>）晋升为长期生效态（<code>active</code>），长期未触发时按时间保持率自然冷衰减。</li>
-      <li><strong>经验记忆（Experiential Memory）</strong>：解决<strong>“遇到特定无线风险或历史多单冲突时，系统如何主动调整参数或选择快慢交互路径”</strong>。将首次慢路径多轮澄清与同地正反单据回执对比（<code>bad</code> 与 <code>good</code>）提炼为结构化因果规则卡（<code>experience_card</code>：含触发条件 <code>condition</code>、问题原因 <code>cause</code>、参数调整规则 <code>recommended_adjustments</code>、回执结果 <code>outcome</code> 及适用与不适用边界 <code>scope</code>），使后续同类场景请求从 2~3 轮慢路径追问收敛为 <strong>1 轮快路径直办闭环</strong>。</li>
-    </ul>
+    <h2 class="subsection-title" id="sec-1-2">1.2 短期工作记忆与三类长期记忆的分层管理及六维横向对比</h2>
 
-    <h2 class="subsection-title" id="sec-1-3">1.3 全链路架构与左列右向量双索引表设计</h2>
-    <p>围绕上述四类记忆，系统构建了从<strong>双模态输入流萃取与演进（Stage 1）</strong>、<strong>滑动窗口向量匹配与四路混合检索（Stage 2）</strong>到<strong>上下文卡片装配与快慢路径注入（Stage 3）</strong>的完整闭环。图 1.1 给出了全链路数据流转架构：</p>
+    <p>表 1.1 从生命周期层级、回答的核心问题、网络保障具体内容、归属范围、数据来源、更新机制与使用方式对<strong>短期工作记忆</strong>及<strong>三类长期记忆（语义记忆、情景记忆、程序化/经验记忆）</strong>进行横向对比。</p>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 1.1：基于 CoALA 的短期工作记忆与三类长期记忆（语义、情景、程序化/经验）横向对比表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 11%;">对比维度</th>
+            <th style="width: 21%;">短期记忆：<br/>1. 工作记忆<br/>（Working Memory）</th>
+            <th style="width: 23%;">长期记忆 ①：<br/>2. 语义记忆<br/>（Semantic Memory）</th>
+            <th style="width: 23%;">长期记忆 ②：<br/>3. 情景记忆<br/>（Episodic Memory）</th>
+            <th style="width: 22%;">长期记忆 ③：<br/>4. 程序化 / 经验记忆<br/>（Procedural / Experiential）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 生命周期与存储介质</strong></td>
+            <td><strong>短期（Short-Term）</strong>：仅在当前单次会话存活；存于内存与活跃提示词上下文窗口</td>
+            <td><strong>长期（Long-Term）</strong>：跨会话持久保存；存于外部结构化与短语向量数据库</td>
+            <td><strong>长期（Long-Term）</strong>：跨会话持久保存；历史单据永久追加，阶段性偏好带 <code>TTL</code></td>
+            <td><strong>长期（Long-Term）</strong>：跨会话持久保存；存于外部显式规则与流程库</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>2. 回答什么问题</strong></td>
+            <td>当前这轮对话正在办什么、哪些槽位已确认、刚检索出什么上下文</td>
+            <td>用户是谁、平时常驻默认要什么、口语怎么对应标准字段（<em>What is true</em>）</td>
+            <td>过去具体办过哪些单据且结果如何、当前处于什么差旅/临时阶段（<em>What happened</em>）</td>
+            <td>遇到这类无线场景或歧义情况，系统该怎么调参与处置（<em>How to do</em>）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. 网络保障记什么</strong></td>
+            <td>本轮用户输入；多轮澄清/改口中的中间槽位状态；<code>FIFO</code> 对话页链；当轮检索拼装的活跃记忆块</td>
+            <td>长期周期作息习惯；分场景常驻偏好与体验三档底线；基础默认档位；服务与应用映射；个性化表述映射</td>
+            <td>① <strong>历史保障单据记录</strong>（单号、日期、地点、参数、运行结果 <code>good/bad</code>）；② 差旅事件窗、短期临时偏好（<code>TTL</code>）、诉求与纠正记录</td>
+            <td>“场景与业务 &rarr; 根因 &rarr; 参数调整规则 &rarr; 结果”的因果规则；同地多单消歧流程（Workflows）；交互免打扰策略与 <code>scope</code></td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>4. 主要来源</strong></td>
+            <td>当前会话实时用户输入 + 当轮从三类长期记忆检索读入（<code>Retrieval</code>）的结果</td>
+            <td>从工作记忆滑入中期候选池跨周期重复归纳 + 对话中的长期显式声明</td>
+            <td>网元结构化保障单据与实际运行结果回写 + 对话中声明的差旅/临时变动与纠偏</td>
+            <td>工作记忆中的慢路径多轮澄清轨迹 + 情景记忆中同场景正反单据（<code>bad/good</code>）对比</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>5. 怎么更新</strong></td>
+            <td>每轮交互实时刷新槽位状态（支持中途改口覆写与旁白过滤）；会话终结后写回长期库并清空释放</td>
+            <td>候选池累积达标后晋升（<code>candidate &rarr; active</code>）；新档位替代旧档位（<code>superseded</code>）；长期未用按保持率衰减</td>
+            <td>历史单据按单号逐笔原样追加，<strong>不跨单合并、不随时间衰减</strong>；短期临时偏好按 <code>TTL</code> 到期自动转为 <code>expired</code></td>
+            <td>同类规则增量合并；按后续单据实际运行结果升降置信度，连续异常则降级停用</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>6. 怎么被使用</strong></td>
+            <td>直接作为大模型当前决策步的输入上下文，支撑槽位核对与指令生成</td>
+            <td>被检索读入工作记忆，将口语转为标准字段并自动补全用户省略的常驻应用、时段与默认档位</td>
+            <td>被检索读入工作记忆，在有效期内用临时偏好局部覆盖常驻档位，或按时间/地点/体验好坏精确锁定历史单据</td>
+            <td>被检索读入工作记忆，在适用边界内自动提供场馆提前预热/切片调整参数及多单消歧流程</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>决定一条信息是否从短期工作记忆写入长期记忆的五条过滤标准见表 1.2。</p>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 1.2：从短期工作记忆写入长期记忆的五条判断标准（写入长期库与仅留工作记忆）</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 18%;">判断标准</th>
+            <th style="width: 41%;">应当写入三类长期记忆库的内容</th>
+            <th style="width: 41%;">仅在短期工作记忆处理或直接丢弃的内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 以后跨会话会再用</strong></td>
+            <td>周期作息习惯、常用参数档位、个人口语映射、历史有效保障单据、场馆排障与预热经验规则</td>
+            <td>一次性日常寒暄闲聊、通用通信常识科普问答、未授权执行的假设性试探咨询（仅在当前工作记忆应答后释放）</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>2. 当下实时接口拿不到</strong></td>
+            <td>用户个人历史偏好、过往单据实际运行结果好坏、过去约定过的多单消歧处理方式</td>
+            <td>能通过接口实时查询的瞬态信息（当前基站实时负载、当前套餐剩余流量）直接查接口读入工作记忆，不存长期记忆</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. 有足够支撑证据</strong></td>
+            <td>跨周期多次重复出现的稳定行为（满足最小频次阈值 \(N_{\text{min}}\) 与得分阈值 \(\theta_{\text{long}}\)），或用户明确要求长期记住的内容</td>
+            <td>只出现 1~2 次的偶发行为先停留在中期候选池（<code>candidate</code>），未达标前不升格为长期语义记忆默认参数</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>4. 时效与作用域明确</strong></td>
+            <td>长期稳定习惯入<strong>长期语义记忆</strong>；带明确有效期 <code>TTL</code> 的临时偏好与历史单据入<strong>长期情景记忆</strong></td>
+            <td>单次临时变动（如“今天下雨降 720p”）严禁写入长期语义记忆覆盖常驻习惯；已被替代的旧值标为 <code>superseded</code> 归档备查</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>5. 与保障业务相关</strong></td>
+            <td>直接影响业务类型、时间、地点、保障参数与交互方式的信息</td>
+            <td>与网络保障无关的个人敏感隐私；网元单据中的背景短时单据（不足 \(T_{\min}\)）、断流碎片、中途取消的无效单据（入长期情景库前先清洗剔除）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="subsection-title" id="sec-1-3">1.3 按 8 个决策环节分解要记的内容与每条记忆必备元信息</h2>
+
+    <p>联接 Agent 生成保障工单的 <strong>8 个决策环节</strong>及对应的长短期记忆分工见图 1.1 与表 1.3。</p>
 
     <div class="figure-wrap">
       <div class="mermaid-box">
         <pre class="mermaid">
 flowchart TB
-    subgraph S1["Stage 1: 双模态输入清洗、四类记忆正交萃取与四步演进 (Extraction & Evolution)"]
-        I1["6G NGC 网元结构化单据流 (75%)<br/>(CGI / 时段 / QoS / AppQuality 回执)"] --> C0["单据预处理与慢路径事件成链<br/>(滤除 1~8m 短单 / 合并断流子单 / 标记临时单)"]
-        I2["自然语言多轮对话流 (25%)<br/>(口语简称 / 历史指代 / 慢路径澄清)"] --> C0
-        C0 --> E1["1. 事实-语义萃取<br/>(expression / service_to_app / preferred_value)<br/>显式直通 + 新代旧覆盖"]
-        C0 --> E2["2. 事实-情景归档<br/>(episodic_record 工单+回执)<br/>一单一记录追加 / 零衰减"]
-        C0 --> E3["3. 程序化记忆归纳<br/>(periodic / scene_preference)<br/>中期归并满 ≥3 次晋升 active"]
-        C0 --> E4["4. 经验记忆差分提炼<br/>(慢路径源头三元定位 + 正反单对比)<br/>生成 condition→action→scope"]
-    end
+  subgraph CoALATiers["一、CoALA 短期工作记忆与三类长期记忆的分层管理（Retrieval 读入 + Learning 写回）"]
+    direction LR
+    T_wm["【短期记忆】1. 工作记忆 (Working)<br/>当前会话活跃上下文草稿板<br/>本轮输入 + 多轮澄清中间槽位<br/>+ 当轮检索读入的活跃长期记忆"] ~~~ T_sem["【长期记忆 ①】2. 语义记忆 (Semantic)<br/>常驻周期习惯 / 场景偏好 / 默认档位<br/>服务→应用映射 / 个性化表述映射<br/>更新：候选池达标晋升 · 新代旧 · 衰减"] ~~~ T_epi["【长期记忆 ②】3. 情景记忆 (Episodic)<br/>历史保障单据记录 + 实际运行结果(good/bad)<br/>+ 差旅事件窗 / 短期临时偏好(TTL)<br/>更新：单据逐笔原样追加 · 临时项按TTL失效"] ~~~ T_proc["【长期记忆 ③】4. 程序化/经验记忆<br/>场景与业务→根因→调整规则→结果<br/>因果调参规则 / 消歧流程(Workflows)<br/>更新：慢路径对比提炼 · 按运行结果升降级"]
+  end
 
-    subgraph DB["混合持久化底座：SQLite 左列右向量双索引表 (memory.db) + FileStore 树"]
-        D1["左半区：结构化槽位过滤列 (SQL 精确/范围 SELECT)<br/>category | app_col | biz_col | scene_col | time_window_col | executed_date | app_quality | status"]
-        D2["右半区：4~10 字高纯度短词向量列 (Cosine 匹配)<br/>phrase_text (纯代称/纯地点/纯时段/触发短语) + embedding (1024维 float32)"]
-        E1 & E2 & E3 & E4 --> D1 & D2
-    end
+  subgraph StepsRow1["二、前 4 个决策环节：从三类长期记忆检索读入短期工作记忆（Retrieval）"]
+    direction LR
+    S1["环节 1：听懂用户话<br/>查【长期-语义】口语与应用映射"] --> S2["环节 2：补全常驻缺省参数<br/>查【长期-语义】周期习惯与默认档"]
+    S2 --> S3["环节 3：定位历史单据指代<br/>查【长期-情景】历史单据记录与运行结果"]
+    S3 --> S4["环节 4：判断当次临时例外<br/>查【长期-情景】临时偏好(TTL)与事件窗"]
+  end
 
-    subgraph S2["Stage 2: 滑动窗口向量匹配与四路差异化混合检索 (Hybrid Retrieval)"]
-        Q0["当前会话用户输入 Query + 基准时间 reference_time"] --> SW["6~10字滑动窗口切分 (L=8, step=4)<br/>+ 否定子句分离与权重衰减过滤 + 批量向量化"]
-        D1 & D2 --> R1 & R2 & R3 & R4
-        SW --> R1["路由 1：语义记忆解码<br/>命中 expression 读取 target_col<br/>+ 二阶段补全 service_to_app"]
-        SW --> R2["路由 2：程序化记忆匹配<br/>按 (app, biz, scene, 时段) SELECT<br/>区分主常驻线与周末场馆支线"]
-        SW --> R3["路由 3：情景记忆回溯消歧<br/>相对日期换算 + 地点向量匹配<br/>+ AppQuality=good 压制卡顿单"]
-        SW --> R4["路由 4：经验记忆泛化与过滤<br/>高层场景特征跨场馆召回<br/>+ scope.exclude 拦截异类请求"]
-    end
+  subgraph StepsRow2["三、后 4 个决策环节：工作记忆内调参汇总与事后向长期记忆写回（Learning）"]
+    direction LR
+    S5["环节 5：预判风险调参<br/>查【长期-程序化/经验】场馆预热规则"] --> S6["环节 6：确定降级底线<br/>查【长期-语义】场景体验三档边界"]
+    S6 --> S7["环节 7：工作记忆汇总与消歧<br/>查【长期-程序化/经验】消歧流程与交互策略"]
+    S7 --> S8["环节 8：事后运行结果写回<br/>从【工作记忆】追加【情景单据】并更新【经验】"]
+  end
 
-    subgraph S3["Stage 3: 确定性路径裁决、上下文卡片装配与快慢双路径注入 (Context Injection)"]
-        R1 & R2 & R3 & R4 --> G0{"注入前确定性路径裁决器<br/>(Routing Gate)"}
-        G0 -- "槽位齐备 / 命中高置信经验" --> P_FAST["快路径原地参数合成 (1 轮闭环)<br/>基准槽位叠加经验偏移量 (提前20m+切片)<br/>注入 [快路径已就绪方案卡]"]
-        G0 -- "同地多单冲突 / 预约重叠 / 缺核心槽位" --> P_SLOW["慢路径最小消歧集注入 (2~3 轮反问)<br/>组装冲突选项与待确认槽位<br/>注入 [慢路径待澄清冲突卡]"]
-        G0 -- "通用闲聊 / 越界诉求 / 咨询态" --> P_BOUND["边界克制与拒答注入<br/>闲聊禁套记忆 / 咨询态禁调写接口"]
-        P_FAST & P_SLOW --> FB["事后网元回执反哺闭环：写入情景台账并更新经验卡 confidence"]
-    end
+  CoALATiers ==> StepsRow1
+  StepsRow1 ==> StepsRow2
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 1.1：四类认知记忆系统从双模态萃取、双索引落盘、四路混合检索到快慢路径上下文注入的全景架构图</strong><br/>&emsp;&emsp;系统在存储层通过“左结构化槽位列 + 右 4~10 字高纯度短词向量”实现单库双索引；在检索层通过滑动窗口切分与同行槽位提取串联四类记忆；在注入层通过确定性门控将检索结果转化为快路径合成方案或慢路径最小反问指令。</p>
+      <p class="figure-caption"><strong>图 1.1：基于 CoALA 的“短期工作记忆 + 三类长期记忆”分层管理原理与八步保障决策映射架构图。</strong><br/>&emsp;&emsp;第一排展示短期工作记忆（Working Memory）与三类长期记忆（语义记忆、情景记忆、程序化/经验记忆）的职责边界；第二排展示环节 1–4 如何将长期语义与长期情景记忆检索读入工作记忆；第三排展示环节 5–8 如何结合长期程序化/经验记忆完成决策并在事后写回长期库。</p>
     </div>
 
-    <h2 class="subsection-title" id="sec-1-4">1.4 四类记忆正交 Schema 与字段边界对照</h2>
-    <p>为避免短词向量池被无关修饰词稀释，<code>memory.db</code> 执行<strong>“左结构化槽位列 + 右高纯度短词向量列”</strong>的正交分表规范：每类记忆子项只允许在结构化列中保存本层职责内的槽位，且右侧 <code>phrase_text</code> 限制为 <code>4~10</code> 字的核心触发短词。表 1.1 给出了四类记忆（共 7 个存储子项）的完整 Schema 与字段边界：</p>
-
     <div class="table-wrap">
-      <p class="table-caption">表 1.1：四类记忆（7 个正交存储子项）的职责边界、主键设计、结构化槽位列与短词向量索引规范</p>
+      <div class="table-caption">表 1.3：按生成保障工单的 8 个决策环节分解所需记忆内容与长短期归属</div>
       <table class="booktabs">
         <thead>
           <tr>
-            <th style="width:15%;">记忆大类</th>
-            <th style="width:17%;">正交存储子项 (<code>category</code>)</th>
-            <th style="width:22%;">唯一业务主键 (<code>memory_key</code>)</th>
-            <th style="width:24%;">左半区：结构化列与 Payload（禁止越界混装）</th>
-            <th style="width:22%;">右半区：短词向量列 (<code>phrase_text</code>) 与生命周期</th>
+            <th style="width: 17%;">下游决策环节</th>
+            <th style="width: 24%;">需要读取或维护的核心记忆内容</th>
+            <th style="width: 15%;">CoALA 记忆归属</th>
+            <th style="width: 25%;">网络保障具体实例</th>
+            <th style="width: 19%;">产生它的故事线因子</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td rowspan="3"><strong>一、事实记忆<br/>（语义记忆）</strong></td>
-            <td>1. 个性化表述映射<br/><code>expression</code></td>
-            <td><code>alias</code><br/>（如 <code>"破站开播"</code>）</td>
-            <td><code>alias_col</code>, <code>target_col</code>（如 <code>"bilibili:openlive"</code>），可选轻量作用域；<strong>禁存时间窗与时长</strong></td>
-            <td>纯口语代称 <code>"{alias}"</code>；显式直通 <code>active</code>，新代旧覆盖</td>
+            <td><strong>1. 听懂用户说的话</strong></td>
+            <td>个性化表述映射（<code>expression</code>）、服务与应用映射（<code>service_to_app</code>）</td>
+            <td>长期 — 语义记忆</td>
+            <td>“小破站开播” = <code>bilibili:openlive</code>；“开会”默认指腾讯会议</td>
+            <td>口语表达习惯、显式声明</td>
           </tr>
           <tr class="midrule-row">
-            <td>2. 业务归属映射<br/><code>service_to_app</code></td>
+            <td><strong>2. 补全常驻缺省参数</strong></td>
+            <td>周期作息习惯（<code>periodic_preference</code>）、场景常驻偏好（<code>scene_preference</code>）与基础默认档位（<code>preferred_value</code>）</td>
+            <td>长期 — 语义记忆</td>
+            <td>“照常开播” = 工作日午间 12:30~14:00、滨江基地、抖音开直播、4K / 90min</td>
+            <td>时间规律、活动空间、业务时长、偏好演化</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. 找到用户指的那次</strong></td>
+            <td>历史保障单据记录与实际运行结果（<code>episodic_order_record</code>：计划值、实测值、<code>good/bad</code>）</td>
+            <td>长期 — 情景记忆</td>
+            <td>“按上周六在奥体没卡那次来” &rarr; 排除拥塞单 <code>NE-05</code>，锁定顺畅单 <code>NE-09</code></td>
+            <td>历史单据指代、同地多单冲突、运行结果状态</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>4. 判断这次是否特殊</strong></td>
+            <td>差旅/赛事事件窗、带有效期 <code>TTL</code> 的短期临时偏好、当面纠正记录（<code>episodic_event_preference</code>）</td>
+            <td>长期 — 情景记忆</td>
+            <td>“今天暴雨先降 720p”或“出差三天省流模式”仅在有效期内局部生效</td>
+            <td>短期支线事件窗、有效期 <code>TTL</code>、单次豁免声明</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>5. 预判风险并调参</strong></td>
+            <td>“场景与业务 &rarr; 问题根因 &rarr; 参数调整规则”的因果经验（<code>procedural_experience</code>）</td>
+            <td>长期 — 程序化/经验记忆</td>
+            <td>人流聚集场馆推流开场易拥塞 &rarr; 提前 20~30 分钟开启专网切片预热</td>
+            <td>基站拥塞事件、慢路径澄清与正反单据对比</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>6. 确定参数妥协边界</strong></td>
+            <td>分场景体验三档（偏好档、可接受降级档、不可接受底线）与互斥 KQI 权重</td>
+            <td>长期 — 语义记忆</td>
+            <td>高速大巴移动会议画质在弱网下可降到 720p，但跨区切换绝不能断流</td>
+            <td>降级容忍度、互斥指标权重、无线覆盖条件</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>7. 跨轮槽位跟踪与消歧</strong></td>
+            <td>当前会话已确认槽位、中途改口覆写状态（工作记忆）+ 多单冲突消歧流程（程序化/经验记忆）</td>
+            <td>短期 — 工作记忆 +<br/>长期 — 程序化/经验</td>
+            <td>用户在第 2 轮改口“保满 3 小时到 22:30”时，工作记忆更新时长并保持第 1 轮已确认的 4K 画质不丢失</td>
+            <td>多轮澄清交互、中途改口、同伴旁白干扰</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>8. 执行后写回长期记忆</strong></td>
+            <td>将当次完结单据与运行结果（<code>AppQuality=good/bad</code>）从工作记忆写回长期情景记忆，并更新经验置信度</td>
+            <td>短期 — 工作记忆 &rarr;<br/>长期 — 情景/经验</td>
+            <td>按经验提前预热后单据运行结果 <code>AppQuality=good</code> &rarr; 新单据追加进情景记忆，经验成功计数 +1</td>
+            <td>实际运行结果状态、用户后续反馈</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>每条落入三类长期记忆库的条目携带五项基础治理元信息：<strong>① 来源与证据指针</strong>（来自网元单据还是对话，挂载对应的 <code>SerialNo</code> 或会话轮次 ID）；<strong>② 状态标签</strong>（<code>candidate</code> 候选 / <code>active</code> 生效 / <code>reinforced</code> 稳固 / <code>superseded</code> 已被替代 / <code>expired</code> 已过期）；<strong>③ 适用范围</strong>（全局、限定场景或地点、限定时段、仅本次）；<strong>④ 时效窗口</strong>（生效时间 \(t_{\text{valid}}\)、失效时间 \(t_{\text{invalid}}\) 或 <code>TTL</code> 到期时间戳）；<strong>⑤ 置信度</strong>（随重复次数与运行结果验证动态升降）。</p>
+
+    <h2 class="subsection-title" id="sec-1-4">1.4 整体处理流程与三类长期记忆 SQLite 分表存储结构设计</h2>
+    <p>记忆系统的运行过程围绕<strong>“短期工作记忆 &harr; 三类长期记忆”</strong>展开，分为<strong>短期感知与清洗、候选萃取与写入长期分表、三类长期记忆混合检索、读入短期工作记忆拼装与事后写回</strong>四个阶段，如图 1.2 所示。</p>
+
+    <div class="figure-wrap">
+      <div class="mermaid-box">
+        <pre class="mermaid">
+flowchart LR
+    S1["<b>短期工作记忆感知</b><br/>当前会话槽位 · 单据与对话流"] --> S2["<b>Learning 写回与晋升</b><br/>写入语义 / 情景 / 程序化(经验)分表"]
+    S2 --> S3["<b>Retrieval 并行混合检索</b><br/>三类长期记忆短语向量 + 二阶段关联"]
+    S3 --> S4["<b>拼装读入短期工作记忆</b><br/>注入活跃上下文 · 事后运行结果闭环"]
+        </pre>
+      </div>
+      <p class="figure-caption"><strong>图 1.2：短期工作记忆与三类长期记忆之间的双向读写（Learning 写回与 Retrieval 读入）整体流程</strong><br/>&emsp;&emsp;短期工作记忆维护当前会话状态；完结后的单据与对话经预处理后分别写入或晋升至语义记忆、情景记忆、程序化（经验）记忆三类长期分表；新一轮会话时再通过混合检索将相关长期记忆读入短期工作记忆。</p>
+    </div>
+
+    <p>在持久化存储层（<code>memory.db</code>）中，<strong>短期工作记忆</strong>作为会话期内存状态结构（<code>WorkingMemoryState</code>）驻留内存；而跨会话持久保存的<strong>三类长期记忆（语义记忆、情景记忆、程序化/经验记忆）</strong>存储在 SQLite 与向量索引表中，每条长期记忆同时包含<strong>结构化槽位列</strong>（用于 SQL 精确条件过滤）和<strong>受长度上限 \(L_{\text{phrase}}\) 约束的短语向量列</strong>（<code>phrase_text</code> 及其稠密向量）。具体存储表划分与字段边界见表 1.4。</p>
+
+    <div class="table-wrap">
+      <p class="table-caption">表 1.4：短期工作记忆内存结构与三类长期记忆（8 个存储子项）的职责、主键及字段边界</p>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width:16%;">层级与记忆类别</th>
+            <th style="width:18%;">存储子项 (<code>category</code>)</th>
+            <th style="width:20%;">唯一主键 (<code>memory_key</code>)</th>
+            <th style="width:24%;">结构化槽位列与内容限制</th>
+            <th style="width:22%;">短语向量文本 (<code>phrase_text</code>) 与更新方式</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>【短期记忆】<br/>1. 工作记忆</strong><br/>（Working Memory）</td>
+            <td>0. 会话活跃草稿板<br/><code>working_session_state</code><br/>（驻留内存）</td>
+            <td><code>session_id | turn_id</code></td>
+            <td>当前轮输入、已确认 7 槽位字典、待澄清冲突项、<code>FIFO</code> 近期对话页链、当轮检索读入的 Top-\(k\) 长期记忆引用</td>
+            <td>不建持久化向量索引；每轮实时更新槽位，会话终结后触发 <code>Learning</code> 写回长期库并释放</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="5"><strong>【长期记忆 ①】<br/>2. 语义记忆</strong><br/>（Semantic Memory）</td>
+            <td>1. 个性化表述映射<br/><code>expression</code></td>
+            <td><code>alias</code><br/>（如 <code>"小破站开播"</code>）</td>
+            <td><code>alias_col</code>, <code>target_col</code>（如 <code>"bilibili:openlive"</code>）；不存时间窗与时长</td>
+            <td>用户口语表达原文；明确声明即生效，新声明覆盖旧值</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>2. 业务默认应用<br/><code>service_to_app</code></td>
             <td><code>business</code><br/>（如 <code>"openlive"</code>）</td>
-            <td><code>biz_col</code> $\rightarrow$ <code>app_col</code>（如 <code>"openlive"</code> $\rightarrow$ <code>"douyin"</code>）；<strong>禁存画质、时延与地点</strong></td>
-            <td>纯业务词 <code>"{service}"</code>；跨单据 <code>≥ 2</code> 次一致归纳或显式绑定</td>
+            <td><code>biz_col</code> &rarr; <code>app_col</code>（如 <code>"openlive"</code> 对应 <code>"douyin"</code>）；不存画质与地点</td>
+            <td>纯业务名称；明确指定或累计达到阈值 \(\theta_{\text{app}}\) 后生效</td>
           </tr>
           <tr class="midrule-row">
             <td>3. 基础默认档位<br/><code>preferred_value</code></td>
             <td><code>app | business</code><br/>（如 <code>"douyin|openlive"</code>）</td>
-            <td><code>app_col</code>, <code>biz_col</code> + Payload（<code>resolution</code>, <code>latency</code>, <code>preferred_duration</code>, <code>package_tier</code>）；<strong>禁存地点与时间窗</strong></td>
-            <td><code>"{app} {service}"</code>；套餐/档位升级时标旧记录为 <code>superseded</code></td>
+            <td><code>app_col</code>, <code>biz_col</code> 及默认分辨率、时延、时长、套餐档位；不存具体地点与时段</td>
+            <td><code>"{应用} {业务}"</code>；档位升级时将旧记录记下 \(t_{\text{invalid}}\) 并标为 <code>superseded</code></td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>二、事实记忆<br/>（情景记忆）</strong></td>
-            <td>4. 历史工单与回执<br/><code>episodic_record</code></td>
-            <td><code>serial_no</code><br/>（如 <code>"NE_20260808_09"</code>）</td>
-            <td><code>executed_date</code>, <code>scene_col</code>, <code>cgi</code>, <code>app_col</code>, <code>biz_col</code>, <code>start_time</code>, <code>end_time</code>, <code>duration</code>, <code>app_quality</code> (<code>good/bad</code>), <code>is_temporary</code></td>
-            <td>纯地点短词 <code>"{location}"</code>；<strong>落地即 <code>active</code>，不随时间衰减，一单一记录追加不合并</strong></td>
+            <td>4. 固定时段习惯<br/><code>periodic_preference</code></td>
+            <td><code>time_window | app:biz</code></td>
+            <td><code>time_window_col</code>, 周期类型, <code>app_col</code>, <code>biz_col</code>, <code>scene_col</code>；仅存时段与业务对应关系，不存画质</td>
+            <td>时段名称（如 <code>"午间例行直播"</code>）；跨期满足 \(W_{\text{span}}\) 且累计达 \(\theta_{\text{long}}\) 后生效</td>
           </tr>
           <tr class="midrule-row">
-            <td rowspan="2"><strong>三、程序化记忆</strong></td>
-            <td>5. 周期时间窗习惯<br/><code>periodic_preference</code></td>
-            <td><code>time_window | app:biz</code><br/>（如 <code>"12:00-13:30|douyin:openlive"</code>）</td>
-            <td><code>time_window_col</code>, <code>cycle_type</code>（按日/按周）, <code>app_col</code>, <code>biz_col</code>, <code>scene_col</code>；<strong>仅作时间路由指针，禁存画质/时延</strong></td>
-            <td>口语时段词 <code>"{window_label}"</code>（如 <code>"午间例行档期"</code>）；<strong>连续 <code>≥ 3</code> 次晋升 <code>active</code></strong>，支持冷衰减</td>
+            <td>5. 空间场景常驻偏好<br/><code>scene_preference</code></td>
+            <td><code>scene | app | business</code></td>
+            <td><code>scene_col</code>, <code>app_col</code>, <code>biz_col</code> 及该场景特定参数与体验三档降级底线；不存固定时间窗</td>
+            <td>场景名称（如常驻基地与高铁移动走廊）；达 \(\theta_{\text{long}}\) 后生效，主支线独立存储</td>
           </tr>
           <tr class="midrule-row">
-            <td>6. 空间场景默认流<br/><code>scene_preference</code></td>
-            <td><code>scene | app | business</code><br/>（如 <code>"高速大巴|tencent_meeting|conf"</code>）</td>
-            <td><code>scene_col</code>, <code>app_col</code>, <code>biz_col</code> + 场景差异化参数与体验降级底线（如“保语音不中断、画质可降 720p”）；<strong>禁存固定时间窗</strong></td>
-            <td>纯空间场景短词 <code>"{scene}"</code>（<code>4~10</code> 字）；连续 <code>≥ 3</code> 次晋升，主线与支线物理隔离</td>
+            <td rowspan="2"><strong>【长期记忆 ②】<br/>3. 情景记忆</strong><br/>（Episodic Memory）</td>
+            <td>6. 历史保障单据记录<br/><code>episodic_order_record</code></td>
+            <td><code>serial_no</code><br/>（如 <code>"NE-09"</code>）</td>
+            <td><code>executed_date</code>, <code>scene_col</code>, <code>cgi</code>, <code>app_col</code>, <code>biz_col</code>, 起止时间与时长, 保障参数, 实际运行结果 <code>app_quality</code> (<code>good/bad</code>)</td>
+            <td>单据地点与业务短语；<strong>逐笔原样追加、不跨单合并、不随时间衰减</strong>，入库前过滤不足 \(T_{\min}\) 的无效单据</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>四、经验记忆</strong></td>
-            <td>7. 因果调参规则卡<br/><code>experience_card</code></td>
-            <td><code>scene_type | biz_type | risk_tag</code></td>
-            <td><code>condition</code>（高层场景+业务+无线特征）, <code>cause</code>, <code>recommended_adjustments</code>（如 <code>lead_time: -20m</code>, <code>slice: 6G-A/NGC</code>）, <code>scope</code>（<code>include / exclude</code>）, <code>evidence_ids</code>, <code>confidence</code></td>
-            <td>抽象触发短语（如 <code>"大型聚集场馆 上行高清推流 演艺赛事"</code>）；慢路径澄清+正反回执验证生成，按后续回执动态调权</td>
+            <td>7. 阶段事件与临时偏好<br/><code>episodic_event_preference</code></td>
+            <td><code>event_id | scope_time</code></td>
+            <td>事件/差旅名称, <code>scene_col</code>, 临时覆写槽位（如临时 <code>720p</code> 省流）、主动诉求状态（<code>active/closed</code>）、显式纠正记录、生效与到期时间 <code>ttl</code></td>
+            <td>短期事件或临时诉求短语；有效期内局部优先，到期后自动标为 <code>expired</code> 不污染长期语义记忆</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>【长期记忆 ③】<br/>4. 程序化 / 经验记忆</strong><br/>（Procedural / Experiential）</td>
+            <td>8. 因果调参规则与流程<br/><code>procedural_experience</code></td>
+            <td><code>scene_type | biz_type | risk</code></td>
+            <td>触发条件（通用场景类别+业务+无线特征）、原因、参数调整规则（如提前预热时长、切片类型）、消歧流程、适用与不适用范围 <code>scope</code>、验证统计</td>
+            <td>通用场景与业务特征短语；由短期工作记忆慢路径澄清与长期情景记忆正反单据对比提炼生成</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="tcolorbox importantbox">
-      <div class="tcb-title">设计要点：周期时间窗指针（periodic_preference）与默认档位（preferred_value）解耦</div>
-      <div class="tcb-body">
-        <p><code>periodic_preference</code> 仅存储“时段 $\rightarrow$ 应用与业务 + 空间场景”的路由关系，不存储具体画质或时延。当用户升级 6G NGC 套餐并将 <code>preferred_value</code> 更新为 <code>4K</code> 时，检索阶段通过<strong>二阶段关联表补全</strong>实时拉取 <code>preferred_value</code> 的最新档位，避免旧周期记录中残留过期画质。</p>
-      </div>
-    </div>
-
     <h2 class="subsection-title" id="sec-1-5">1.5 本章小结</h2>
-    <p>本章梳理了单层向量库混存在长周期移动保障场景下的局限性，定义了<strong>事实记忆（语义 + 情景）、程序化记忆与经验记忆</strong>的四分类正交架构，并通过“左结构化槽位列 + 右 4~10 字短词向量列”的双索引设计，从底层存储上隔离了不同演化周期与职责边界的记忆条目。</p>
+    <p>本章严格对齐 <code>CoALA</code> 认知架构，确立了<strong>“1 个短期记忆（工作记忆）+ 3 个长期记忆（语义记忆、情景记忆、程序化/经验记忆）”</strong>的两级分层体系，明确了短期工作记忆与三类长期记忆之间的 <code>Retrieval</code>（检索读入）和 <code>Learning</code>（学习写回）管理边界，并给出了对应的分表存储结构。</p>
 
     <!-- ==================== CHAPTER 2 ==================== -->
     <div class="running-header">
-      <span>第 2 章 · 记忆萃取与短期到长期演进机制</span>
-      <span>联接 Agent 认知记忆系统技术报告</span>
+      <span>第 2 章 · 记忆从短期到长期的演变机制与萃取更新规则</span>
+      <span>联接 Agent 记忆系统技术报告</span>
     </div>
 
-    <h1 class="section-title" id="sec-2">2 记忆萃取与短期到长期演进机制</h1>
+    <h1 class="section-title" id="sec-2">2 记忆从短期到长期的演变机制与萃取更新规则</h1>
 
-    <h2 class="subsection-title" id="sec-2-1">2.1 双模态输入流特征与萃取难点</h2>
-    <p>在长周期运行中，记忆萃取管线持续摄入 30~90 天内交织到达的网元结构化单据与多轮会话，面临三个工程问题：</p>
+    <h2 class="subsection-title" id="sec-2-1">2.1 北邮 MemoryOS（arXiv:2506.06326）的三级演变机制：STM &rarr; MTM &rarr; LPM</h2>
+
+    <p>短期工作记忆中的单次对话或单张实时单据不能直接等同于长期语义记忆，否则单次偶发改期或基站故障异常单据会污染用户的常驻习惯。<strong>北京邮电大学与腾讯 AI Lab 联合提出的《Memory OS of AI Agent》（MemoryOS, arXiv:2506.06326）</strong>借鉴操作系统的分层内存管理思想，在短期记忆与长期记忆之间引入中期缓冲层，划分为<strong>短期记忆（STM） &rarr; 中期记忆（MTM） &rarr; 长期个人记忆（LPM）</strong>三级架构：</p>
+
     <ol>
-      <li><strong>网元单据流存在碎片噪声与切换断流切分</strong>：蜂窝网侧既有持续 <code>60~180min</code> 的真实保障主单，也夹杂 <code>1~8min</code> 的后台消息推送短单，以及用户在移动或基站负载均衡下产生的“断流重连子单”（一次 90 分钟直播被切为两笔间隔 1 分钟的子单）。直接按原始单据计数会导致伪习惯误晋升或真实频次漏计。</li>
-      <li><strong>单次临时改期与长期习惯迁移混杂</strong>：当某天单据或对话出现新参数（如平时每晚 <code>20:00</code> 播 <code>120min</code>，某天改为 <code>21:00</code> 播 <code>60min</code>），系统需区分“单次临时变动（<code>temporary</code>）”与“新常驻习惯的起点”，防止偶发脉冲污染长期程序化记忆。</li>
-      <li><strong>经验记忆的慢路径源头样本淹没在长周期混杂流中</strong>：给定一段单独挑出的多轮澄清对话提取“条件 $\rightarrow$ 动作”规则较为直接；但在实际系统中，并没有预先标注哪一轮对话、哪两笔单据构成了一次经验学习事件。系统必须从数十笔日常单据、背景短单和闲聊会话中，定位出“前序参数不足导致体验劣化或冲突 $\rightarrow$ 慢路径多轮追问纠偏 $\rightarrow$ 参数调整后回执恢复正常”的因果事件链。</li>
+      <li><strong>① 短期记忆（STM，对应 CoALA 工作记忆）：对话页 + 对话链 FIFO 缓冲。</strong>系统把当前会话的每一轮问答封装为一个“对话页（<code>page = {Q, R, T, meta_chain}</code>）”，放入定长 FIFO 队列（如容量为 7 页）；若前后页语义连贯，则自动串联成“对话链”并生成链级摘要。当定长队列满或会话结束时，按<strong>先进先出（FIFO）</strong>将对话页弹出，移交至中期记忆（MTM）。</li>
+      <li><strong>② 中期记忆（MTM）：操作系统“段页式（Segmented Paging）”话题聚合。</strong>借鉴 OS 段页式内存设计——<strong>“段（Segment）”对应话题摘要，“页（Page）”对应该话题下的具体对话页或单据记录</strong>。当新页从短期工作记忆滑入时，计算向量余弦相似度与关键词 Jaccard 重合度；若超过阈值（如 <code>0.6</code>）则归并入已有话题段累积证据，否则开辟一个新话题段。</li>
+      <li><strong>③ 长期个人记忆（LPM，对应 CoALA 长期语义/程序化记忆）：热度分（Heat）驱动晋升与累积清零。</strong>系统为每个中期话题段维护一个综合热度分：\(\text{Heat} = \alpha\cdot\text{被检索次数} + \beta\cdot\text{段内累积页数} + \gamma\cdot\exp(-\Delta t/\mu)\)。当段数超限时优先淘汰 <code>Heat</code> 最低的冷段；一旦某个话题段的热度分越过晋升阈值，便从该段中提炼出长期稳定事实与偏好特征写入长期记忆，随后<strong>将该段的累积页数清零使热度回落</strong>，防止同一批证据被重复提炼。</li>
     </ol>
 
-    <h2 class="subsection-title" id="sec-2-2">2.2 双模态预处理与短期到长期四步晋升机制</h2>
-    <p>萃取与演进管线采用三级递进处理流程（见图 2.1）：</p>
-    <ul>
-      <li><strong>第一级（网元单据清洗与会话事件对齐）</strong>：进入记忆提取器前，先滤除时长 <code>&lt; 10min</code> 且无显式对话关联的背景短单碎片；将同一用户、同一业务且时间间隔 <code>≤ 3min</code> 的跨小区切换断流子单合并为 1 笔完整情景记录；对对话中含“今天临时/今晚加场/仅本次”的记录标记 <code>is_temporary_override = true</code>。</li>
-      <li><strong>第二级（四步证据累积晋升闭环）</strong>：吸收北邮 <code>MemoryOS</code> 的“短期队列 $\rightarrow$ 中期段页式归并 $\rightarrow$ 长期热度晋升”机制与 <code>Zep/Mem0</code> 的冲突消解策略，将所有非临时单据先记入<strong>情景记忆台账</strong>，再按“空间小区簇 + 业务类型 + 时间窗”归并至中期候选段（<code>candidate</code>），仅当独立单据/会话累计一致达 <strong><code>≥ 3</code> 次（且时间跨度 <code>≥ 7</code> 天）</strong>时才晋升为长期 <code>active</code> 程序化记忆。</li>
-      <li><strong>第三级（慢路径源头三元锚定与正反差分提炼）</strong>：通过追踪<strong>“同场景前序异常差单（<code>NE_bad</code>） + 慢路径多轮消歧/纠偏会话（<code>S_slow</code>） + 调整后正常好单（<code>NE_good</code>）”</strong>三元锚点，在混杂流中自动锁定经验源头，并对比正反单据的结构化槽位差集提取参数调整规则与适用边界。</li>
-    </ul>
+    <h2 class="subsection-title" id="sec-2-2">2.2 经典与主流 5 套 Agent 记忆系统横向对比</h2>
 
-    <div class="figure-wrap">
-      <div class="mermaid-box">
-        <pre class="mermaid">
-flowchart LR
-    subgraph P0["Step 1: 双模态预处理与情景记账"]
-        A1["原始网元单据流 + 多轮对话"] --> A2["短单滤除 (<10min)<br/>+ 断流子单合并 (间隔<=3min)"]
-        A2 --> A3["写入事实-情景记忆台账<br/>(episodic_record, 零衰减)"]
-        A2 --> A4{"是否含单次临时修饰?<br/>(is_temporary_override)"}
-        A4 -- "是 (如今晚加场/临时改期)" --> A5["旁路隔离：仅留情景台账<br/>不进入程序化候选池"]
-    end
+    <p>表 2.1 横向对比了学术界与工业界具有代表性的 <strong>5 套经典 Agent 记忆架构</strong>（包括 <code>Mem0</code>、<code>Zep/Graphiti</code>、<code>Letta/MemGPT</code>、上海 AI Lab <code>MemOS</code> 以及 <code>MemoryBank / A-MEM</code>），梳理它们<strong>如何划分短期与长期层级、如何触发短期向长期演变、以及如何处理冲突、过期与容量上限</strong>。</p>
 
-    subgraph P1["Step 2: 中期主题归并与三条长期晋升通道"]
-        A4 -- "否 (常规业务记录)" --> B1["中期候选池 (MTM Candidate)<br/>按 (小区簇, app:biz, 时段) 归并计票"]
-        B1 --> C1["通道① 隐式重复晋升 (程序化记忆)<br/>累计一致 >=3 次且跨度 >=7 天 → active"]
-        A1 --> C2["通道② 显式指令直通 (事实-语义记忆)<br/>明确立规/简称映射 → 直接写 active"]
-        A3 --> C3["通道③ 慢路径三元锚定 (经验记忆)<br/>定位 (差单NE_bad + 慢路径会话S_slow + 好单NE_good)<br/>正反槽位差分提炼 experience_card"]
-    end
-
-    subgraph P2["Step 3: 有效期接替与冷衰减维护"]
-        C1 & C2 --> D1["双时间戳新代旧接替 (Zep 机制)<br/>新档位连续 >=3 次达标 → 旧记录标 superseded"]
-        C1 --> D2["时间保持率衰减<br/>长期未触发习惯按 R(t,n) 降权归档"]
-        C3 --> D3["事后回执动态调权<br/>后续快路径回执 good 加分 / bad 降权淘汰"]
-    end
-        </pre>
-      </div>
-      <p class="figure-caption"><strong>图 2.1：双模态输入预处理、短期到长期四步晋升与经验记忆慢路径源头定位流程</strong><br/>&emsp;&emsp;单次临时变动在 Step 1 被旁路隔离至情景记忆台账；常规隐式记录需在中期候选池累积满 3 次才晋升为程序化记忆；经验记忆则通过三元锚定在长周期流中捕获慢路径源头并做正反单差分提炼。</p>
+    <div class="table-wrap">
+      <div class="table-caption">表 2.1：5 套主流 Agent 记忆架构的长短期分层、晋升机制与冲突治理对比表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 17%;">团队 / 系统名称</th>
+            <th style="width: 24%;">短期与长期分层怎么建</th>
+            <th style="width: 34%;">短期 &rarr; 长期怎么演变（触发与提炼逻辑）</th>
+            <th style="width: 25%;">怎么处理冲突、过期与容量上限</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Mem0</strong><br/>（arXiv:2504.19413）</td>
+            <td><strong>短期滑动窗口 + 长期向量库与知识图谱（Mem0g）</strong>：长期库只存提炼后的原子事实句与“实体—关系—实体”三元组。</td>
+            <td><strong>两步抽取 + 四动作判定</strong>：每轮新对话进来，先结合当前工作记忆与近期滑动摘要抽出候选事实；再去长期向量库召回最相似的 Top-S 条已有记忆，由大模型通过工具调用判定执行 <strong><code>ADD</code>（新增）、<code>UPDATE</code>（更新）、<code>DELETE</code>（删除矛盾）、<code>NOOP</code>（跳过）</strong>。</td>
+            <td>靠 <code>UPDATE / DELETE</code> 原地消解冲突（如新偏好直接覆盖旧偏好节点），避免同一件事存出多条相互矛盾的向量记录。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>2. Zep / Graphiti</strong><br/>（arXiv:2501.13956）</td>
+            <td><strong>三层时序知识图谱</strong>：<br/>① 原始事件子图（Episode，对应情景流水）；<br/>② 语义实体子图（Entity &amp; Fact，对应语义关系边）；<br/>③ 社区聚类子图（Community，长期高层画像）。</td>
+            <td>每次会话或业务数据先写入 Episode 情景节点；异步抽取实体与关系边并入语义子图（通过向量+文本匹配合并同名实体）；再按图连通度将高频共现实体聚合成长期社区摘要。</td>
+            <td><strong>双时间戳有效期接替（不物理删旧边）</strong>：每条关系边带<code>事件生效/失效时间 (t_valid ~ t_invalid)</code> 与<code>系统记录时间</code>。偏好改变时给旧边打上截止时间 <code>t_invalid</code> 并建新边，完整保留演变历史。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. Letta / MemGPT</strong><br/>（arXiv:2310.08560）</td>
+            <td><strong>仿 OS 虚拟内存两层</strong>：<br/>① <strong>核心内存（Core Memory / RAM，对应短期工作记忆常驻块）</strong>；<br/>② <strong>外部存储（Disk，对应长期记忆）</strong>：回溯表（Recall）与归档库（Archival）。</td>
+            <td><strong>上下文压力中断 + Agent 自主换页</strong>：短期对话在工作记忆窗口内累积，当达到上下文容量告警线（如 70%）时触发系统中断，Agent 自主调用函数把关键事实写进常驻块或刷入长期外存，再把早期对话移出短期窗口。</td>
+            <td>短期工作记忆设固定字符上限，写满时自主重写压缩；历史原始明细全部退入长期外存按需检索读入。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>4. MemOS（上海 AI Lab）</strong><br/>（arXiv:2507.03724）</td>
+            <td><strong>按计算介质分三层</strong>：<br/>① <strong>激活记忆（Activation，短期 KV Cache 与工作状态）</strong>；<br/>② <strong>明文记忆（Plaintext，长期外部文本、图谱与规则块）</strong>；<br/>③ <strong>参数记忆（Parametric，模型权重）</strong>。</td>
+            <td>用统一容器 <code>MemCube</code>（带来源、版本号、访问频次与权限）封装记忆：短期工作上下文中的高频知识先提升为可复用的激活缓存；经过长期高频调用、验证稳定的用户固定习惯与规则，进一步固化至长期明文或参数记忆。</td>
+            <td>由调度器（<code>MemScheduler</code>）监控访问频次与衰减率：低频过期的从激活层降级或归档淘汰，带版本号控制回滚。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>5. MemoryBank / A-MEM</strong><br/>（2305.10250 / 2502.12110）</td>
+            <td>• <strong>MemoryBank</strong>：短期对话日志 &rarr; 长期每日事件摘要（情景）+ 全局用户肖像（语义）。<br/>• <strong>A-MEM</strong>：仿卡片盒笔记法（Zettelkasten）的双向关联长期记录网。</td>
+            <td>• <strong>MemoryBank</strong>：按<strong>艾宾浩斯遗忘曲线</strong> \(R = \exp(-t / S)\) 演化——初建记忆强度 \(S=1\)，每次被重新提及或召回命中则 \(S + 1\) 且时间 \(t\) 清零，多次强化后升入长期肖像。<br/>• <strong>A-MEM</strong>：新记录先生成带标签的结构化记录，再自动与历史记录建链并<strong>反向更新旧记录的上下文描述</strong>。</td>
+            <td>MemoryBank 中单次偶发且长期未被召回的条目随 \(\exp(-t/S)\) 自然跌破阈值被遗忘；A-MEM 通过反向更新旧记录总结避免旧记录语义脱节。</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <h2 class="subsection-title" id="sec-2-3">2.3 记忆保持率衰减与状态流转规则</h2>
-    <p>对于事实-语义记忆与程序化记忆，每条记录维护跨日期去重后的正向证据票数、检索复用次数以及生命周期状态（<code>candidate</code> 初筛候选 $\rightarrow$ <code>active</code> 生效 $\rightarrow$ <code>reinforced</code> 稳固 $\rightarrow$ <code>superseded</code> 被新档位替代）。为体现“重复与复用次数越多、遗忘越慢”的规律，每条记录的时间保持率 $R(t, n)$ 按带复习强化因子的指数衰减公式计算：</p>
+    <h2 class="subsection-title" id="sec-2-3">2.3 对联接 Agent 的思路启发：从短期工作记忆到三类长期记忆的四步演变逻辑</h2>
 
-    $$R(t, n) = \exp\left(-\frac{\lambda}{1 + \kappa \ln(1 + n)} \cdot \Delta t\right)$$
-
-    <p class="no-indent">符号解释如下：</p>
-    <ol>
-      <li>$n$：有效复习与复用总次数，等于超出首票的复现票数与下游检索命中复用次数之和。</li>
-      <li>$\kappa$：记忆强度增强系数（默认取 $0.8$）；$n$ 越大，分母越大，时间衰减越平缓。</li>
-      <li>$\lambda$：基础时间衰减率；程序化记忆默认取 $\lambda = 0.03\text{ d}^{-1}$，而<strong>事实-情景记忆台账（<code>episodic_record</code>）与经验记忆规则卡（<code>experience_card</code>）固定取 $\lambda = 0$</strong>（历史工单不随时间衰减，经验卡仅按事后回执准确率动态调权）。</li>
-      <li>$\Delta t$：当前会话基准时间距离该记忆最近一次被证实或被访问的天数。</li>
-    </ol>
-
-    <h2 class="subsection-title" id="sec-2-4">2.4 经验记忆萃取：混杂流慢路径源头定位与正反单差分提炼</h2>
-    <p>在长周期混杂流中，系统通过<strong>慢路径经验源头三元锚定准则</strong>自动识别需要提炼为经验记忆的事件链。当时间轴上出现同时满足以下三项条件的关联序列 <code>(NE_bad, S_slow, NE_good)</code> 时，触发经验记忆萃取器：</p>
-    <ol>
-      <li><strong>前序异常或冲突锚点（<code>NE_bad</code> 或多单冲突态）</strong>：在同类空间场景（如大型体育场馆、跨城高铁）与同业务下，存在前序网元单据回执劣化（<code>AppQuality = bad</code>，如上行丢包率偏高、多次卡顿），或存在同地多笔不同规格单据冲突、同晚预约单重叠。</li>
-      <li><strong>慢路径澄清与纠偏会话锚点（<code>S_slow</code>）</strong>：会话交互轮数 <code>≥ 2</code>，且包含系统消歧反问动作（<code>A3 / A7</code>）或用户显式纠偏/抱怨指代动作（<code>U2 / U9 / U10</code>，如“上次在五棵松开场卡死了”、“照没卡那次办，提前二十分钟把切片开上”）。</li>
-      <li><strong>后验正向回执闭环锚点（<code>NE_good</code>）</strong>：会话 <code>S_slow</code> 达成共识下发的参数所生成的网元单据 <code>NE_good</code>，其事后网元回执验证为顺畅（<code>AppQuality = good</code>，零卡顿）。</li>
-    </ol>
-    <p>锁定三元事件链后，萃取器对比 <code>NE_good</code> 与 <code>NE_bad</code> 的结构化参数差异，提取出真正生效的<strong>参数调整规则（<code>recommended_adjustments</code>，如起点平移 <code>-20min</code>、时长增加 <code>+20min</code>、开启 <code>6G NGC</code> 上行切片）</strong>，同时完成两项关键泛化与边界处理：</p>
-
-    <div class="tcolorbox knowledgebox">
-      <div class="tcb-title">经验卡的高层场景抽象（condition）与反向排除边界（scope.exclude）</div>
-      <div class="tcb-body">
-        <p>1. <strong>高层场景抽象支撑跨场馆泛化</strong>：将具体基站小区 <code>CGI</code> 与具体场馆名（如“北京奥体中心”）向上抽象为无线场景类别 <code>scene_category = "大型演艺与体育聚集场馆"</code>，具体单号仅存入 <code>evidence_chain</code>。当用户后续前往“工人体育场”或“五棵松体育馆”开播时，仍可通过场景类别匹配召回该经验卡。</p>
-        <p>2. <strong>反向排除边界拦截字面相似异类请求</strong>：根据正反单的业务方向与无线特征，显式写入不适用列表 <code>scope.exclude = ["下行视频点播 (live_watch / vod)", "普通室内常驻基地", "非赛事演出空闲时段"]</code>。当用户在同场馆看台上刷短视频点播或在家中室内直播时，检索层据此直接拦截，防止误触发场馆上行专网切片预热。</p>
-      </div>
-    </div>
-
-    <h2 class="subsection-title" id="sec-2-5">2.5 四类记忆落盘数据结构示例</h2>
-    <p>以巡回主播 <code>USER_001</code> 在 30 天双模态流中的落盘状态为例，经过预处理、满 3 次投票晋升、套餐升级新代旧接替以及慢路径三元差分提炼后，<code>memory.db</code> 与 <code>FileStore</code> 中生成的四类记忆标准 JSON 结构如下：</p>
-
-    <div class="listing-caption">
-      <span>清单 2.1：四类记忆正交落盘的标准数据结构示例（含双时间戳接替与经验正反边界）</span>
-      <span class="src-tag">source: memory_system/storage/index.py &amp; models.py</span>
-    </div>
-    <pre><code>{
-  "factual_semantic_memory": {
-    "expression": [
-      {
-        "memory_key": "expr|小破站开播",
-        "alias_col": "小破站开播",
-        "target_col": "bilibili:openlive",
-        "phrase_text": "小破站开播",
-        "status": "active", "positive_votes": 3, "confidence": 0.95,
-        "provenance": ["S-01:turn_1"]
-      }
-    ],
-    "preferred_value": [
-      {
-        "memory_key": "pref|douyin|openlive|v1",
-        "app_col": "douyin", "biz_col": "openlive",
-        "payload": {"resolution": "1080p", "duration": "60min", "package_tier": "6G_NGC_Standard"},
-        "status": "superseded", "t_valid": "2026-11-01", "t_invalid": "2026-11-20",
-        "superseded_by": "pref|douyin|openlive|v2"
-      },
-      {
-        "memory_key": "pref|douyin|openlive|v2",
-        "app_col": "douyin", "biz_col": "openlive",
-        "payload": {"resolution": "4K", "bitrate_ul": "25Mbps", "duration": "90min", "package_tier": "6G_NGC_Live_Pro"},
-        "phrase_text": "抖音 开直播",
-        "status": "active", "positive_votes": 4, "confidence": 0.92,
-        "t_valid": "2026-11-20", "t_invalid": null,
-        "provenance": ["S-04", "NE-11", "NE-12", "NE-14"]
-      }
-    ]
-  },
-  "factual_episodic_memory": [
-    {
-      "memory_key": "NE-05",
-      "executed_date": "2026-11-09", "scene_col": "北京奥体中心体育场", "cgi": "460-00-8921-01",
-      "app_col": "douyin", "biz_col": "openlive", "time_window": "19:30~21:30", "duration": "120min",
-      "payload": {"resolution": "1080p", "prewarm_min": 0, "prb_util": "92%", "stall_count": 6},
-      "app_quality": "bad", "is_temporary": false,
-      "phrase_text": "北京奥体中心体育场", "status": "active", "decay_lambda": 0.0
-    },
-    {
-      "memory_key": "NE-09",
-      "executed_date": "2026-11-15", "scene_col": "北京奥体中心体育场", "cgi": "460-00-8921-01",
-      "app_col": "douyin", "biz_col": "openlive", "time_window": "19:10~21:30", "duration": "140min",
-      "payload": {"resolution": "4K", "prewarm_min": 20, "slice": "6G_NGC_UL_Slice", "stall_count": 0},
-      "app_quality": "good", "is_temporary": false,
-      "phrase_text": "北京奥体中心体育场", "status": "active", "decay_lambda": 0.0
-    }
-  ],
-  "procedural_memory": [
-    {
-      "memory_key": "proc_period|12:00-13:30|douyin:openlive",
-      "category": "periodic_preference",
-      "time_window_col": "12:00~13:30", "cycle_type": "workday_daily",
-      "app_col": "douyin", "biz_col": "openlive", "scene_col": "杭州滨江直播基地",
-      "phrase_text": "午间例行直播档",
-      "status": "reinforced", "positive_votes": 6, "confidence": 0.94, "decay_lambda": 0.03
-    }
-  ],
-  "experiential_memory": [
-    {
-      "memory_key": "exp|stadium_crowd|openlive|ul_congestion",
-      "condition": {
-        "scene_category": "大型演艺与体育聚集场馆",
-        "biz_type": "openlive (上行高清推流)",
-        "wireless_risk": "开场前后高并发空口拥塞 (PRB >= 85%)"
-      },
-      "cause": "大型场馆演出开场前后海量终端集中驻留，准点开启保障无法避开空口突发拥塞峰值",
-      "recommended_adjustments": {
-        "start_time_offset_min": -20,
-        "duration_offset_min": 20,
-        "qos_override": {"slice_mode": "6G_NGC_UL_Dedicated_Slice", "min_ul_Mbps": 25}
-      },
-      "scope": {
-        "include": ["体育场", "体育馆", "演唱会场馆", "大型会展中心"],
-        "exclude": ["下行视频点播 (live_watch / vod)", "普通室内常驻基地", "语音通话"]
-      },
-      "phrase_text": "大型聚集场馆 演出赛事 上行推流 提前预热",
-      "evidence_chain": {"bad_ticket": "NE-05", "slow_session": "S-03", "good_ticket": "NE-09"},
-      "validation": {"success_count": 2, "fail_count": 0, "confidence": 0.90},
-      "status": "active", "decay_lambda": 0.0
-    }
-  ]
-}</code></pre>
-
-    <h2 class="subsection-title" id="sec-2-6">2.6 本章小结</h2>
-    <p>本章阐述了从双模态原始数据流到四类记忆落盘的萃取与演进管线：通过短单滤除、断流子单合并与临时单旁路隔离保障输入纯度；通过中期主题归并与满 3 次晋升门限避免偶发记录篡改常驻程序化记忆；并通过<strong>“前序差单 + 慢路径澄清会话 + 修正后好单”三元锚定与正反槽位差分</strong>，解决了从长周期混杂流中定位经验源头并提炼可泛化因果规则的问题。</p>
-
-    <!-- ==================== CHAPTER 3 ==================== -->
-    <div class="running-header">
-      <span>第 3 章 · 滑动窗口向量匹配与四路差异化混合检索</span>
-      <span>联接 Agent 认知记忆系统技术报告</span>
-    </div>
-
-    <h1 class="section-title" id="sec-3">3 滑动窗口向量匹配与四路差异化混合检索</h1>
-
-    <h2 class="subsection-title" id="sec-3-1">3.1 自然语言长句检索难点</h2>
-    <p>当用户在当前会话发起一条自然语言请求（例如：<code>“今天不去滨江基地了，今晚七点半在工体中心用小破站开播，别用上次卡顿那套参数，照没卡那次办”</code>）时，如果直接将整句 Query 编码为单个向量去检索记忆库，会面临三个检索瓶颈：</p>
-    <ol>
-      <li><strong>长句编码导致局部短词语义稀释</strong>：一句话内同时包含地点转折（“不去滨江基地”、“在工体中心”）、时间（“今晚七点半”）、个性化简称（“小破站开播”）与历史工单体验指代（“照没卡那次办”）。整句编码后，<code>4~6</code> 字的口语简称（如“小破站开播”）在全局向量中的权重被稀释，导致余弦相似度低于召回阈值。</li>
-      <li><strong>否定子句引发反向误召回</strong>：子句“今天不去滨江基地了”与“别用上次卡顿那套”包含实体词“滨江基地”，纯向量检索会因字面高重合度优先召回“滨江基地”的常驻记忆，造成否定污染。</li>
-      <li><strong>四类记忆的命中条件与跨表关联逻辑不同</strong>：语义简称需要查表解码，程序化周期习惯需要对齐时间窗，情景工单需要换算相对日期并按 <code>AppQuality=good/bad</code> 过滤，经验规则则需要跨越具体地名做高层场景泛化并剔除不适用业务。单一向量 Top-k 排序无法同时满足这四类异构约束。</li>
-    </ol>
-
-    <h2 class="subsection-title" id="sec-3-2">3.2 滑动窗口切分、否定子句分离与二阶段关联表补全</h2>
-    <p>检索引擎在统一的“左结构化列 + 右短词向量列”双索引底座上，采用<strong>“前置滑窗切分与否定分离 $\rightarrow$ 向量命中记录定位与同行槽位提取 $\rightarrow$ 四路差异化路由与二阶段关联表补全”</strong>的两级检索架构（见图 3.1）：</p>
-    <ul>
-      <li><strong>前置层（6~10 字滑动窗口切分与否定子句分离）</strong>：将用户长句按标点与连词切分为子句，对含否定词（<code>不去 / 别用 / 取消 / 别动</code>）的子句执行<strong>否定子句分离与权重衰减过滤</strong>，若候选记录命中被排斥实体且未被后续正向子句重新指定，直接施加 <code>-0.35</code> 权重惩罚并剔除；对正向子句按窗口长度 <code>8</code> 字、步长 <code>4</code> 字切分为重叠短窗，批量编码向量并与库内 <code>4~10</code> 字短词向量计算跨窗口最大余弦相似度（Max-Pooling）。</li>
-      <li><strong>向量相似度检索与同行槽位提取 $\rightarrow$ 二阶段关联表补全</strong>：向量匹配仅用于定位候选记录（如短窗命中 <code>expression</code> 中的 <code>"小破站开播"</code>，或命中 <code>periodic_preference</code> 中的 <code>"午间例行直播档"</code>）；一旦命中，立即<strong>读取同行结构化槽位列</strong>拿到精确的 <code>app_col / biz_col / time_window_col</code>，再通过<strong>二阶段关联表补全</strong>（经 <code>service_to_app</code> 或 <code>preferred_value</code> 执行结构化 SQL <code>SELECT</code>）拉取配套的最新画质、时延与时长。</li>
-    </ul>
+    <p>综合 <code>CoALA</code> 的长短期架构与北邮 <code>MemoryOS</code>、<code>Zep</code>、<code>Mem0</code>、<code>Letta / MemGPT</code> 的工程机制，联接 Agent 中<strong>从短期工作记忆向三类长期记忆（情景记忆、语义记忆、程序化/经验记忆）演变的四步逻辑</strong>如图 2.1 与表 2.2 所示。</p>
 
     <div class="figure-wrap">
       <div class="mermaid-box">
         <pre class="mermaid">
 flowchart TB
-    Q["用户输入自然语言 Query + 基准时间 reference_time"] --> SEG["子句切分与否定子句分离 (_NEGATION_PATTERNS)<br/>负向子句实体归入抑制集 (施加 -0.35 权重衰减)<br/>正向子句按 L=8, step=4 切分 6~10 字滑动窗口"]
-    SEG --> EMB["单次批量 Embedding (1024维) + 跨窗口 Max-Pooling 余弦打分"]
-    EMB --> R1 & R2 & R3 & R4
+  subgraph Step1["第 1 步：短期工作记忆感知成链与长期情景记忆直写（Working Memory → Episodic Memory）"]
+    direction LR
+    S1_A["当前会话在短期工作记忆中维护活跃槽位<br/>串联『提单 → 追问澄清 → 纠正 → 事后运行结果』"] --> S1_B["有效单据 + 网元实际运行结果 (good/bad)<br/>清洗后原样追加写入【长期-情景记忆】（不合并、不衰减）"]
+    S1_B --> S1_C["差旅事件窗与带有效期 TTL 的临时变动<br/>写入【长期-情景记忆】，到期自动失效不入语义候选池"]
+  end
 
-    subgraph R1["路由 1：事实-语义记忆检索 (Semantic Route)"]
-        S1["窗口向量匹配 expression (sim >= 0.65)<br/>定位向量命中记录并读取同行 target_col (解码口语简称)"]
-        S2["若仅含无主业务词 → 查 service_to_app 补全默认 app_col"]
-        S3["携带 (app_col, biz_col) 执行 SQL SELECT<br/>读取最新 active 的 preferred_value (过滤 superseded 旧档)"]
-        S1 --> S2 --> S3
-    end
+  subgraph Step2["第 2 步：中期候选池按主题段页式归并（MTM Segment 候选缓冲池）"]
+    direction LR
+    S2_A["从工作记忆滑出的常规单据与对话按『场景/小区簇 + 业务 + 时间窗』<br/>计算相似度归并到同一中期候选段累积证据（挂载 SerialNo 列表）"] --> S2_B["未满门槛保持候选态 candidate<br/>未达最小跨度 W_span 与阈值 θ_long 前保持 candidate<br/>不作为【长期-语义记忆】常驻默认参数直接生效"]
+  end
 
-    subgraph R2["路由 2：程序化记忆检索 (Procedural Route)"]
-        P1["窗口向量匹配 periodic_preference / scene_preference<br/>或按 reference_time 所在时段与当前定位匹配"]
-        P2["区分主常驻线 (工作日基地) 与周期支线 (周末球馆/高速大巴)<br/>仅召回 status IN ('active', 'reinforced') 且 votes >= 3 记录"]
-        P3["二阶段关联表补全：结合路由 1 的 preferred_value<br/>补齐该周期/场景下的最新分辨率与时长"]
-        P1 --> P2 --> P3
-    end
+  subgraph Step3["第 3 步：越过阈值升格为长期语义记忆与长期程序化/经验记忆（LTM Promotion）"]
+    direction LR
+    P1["通道 ①：隐式重复晋升 (→ 长期-语义记忆)<br/>同一中期段内跨越 W_span 且累计得分达 θ_long<br/>升格为 active 周期/场景常驻习惯并清零中期计数"] ~~~ P2["通道 ②：显式指令直通 (→ 长期-语义记忆)<br/>用户对话明确声明常驻偏好（“以后都保4K”）<br/>或给出口语映射 → 高权重直接写入长期语义记忆"] ~~~ P3["通道 ③：慢路径对比提炼 (→ 长期-程序化/经验记忆)<br/>串联情景库前序异常单 + 工作记忆澄清 + 调整后正常单<br/>提炼因果调参规则与消歧流程写入长期程序化/经验记忆"]
+  end
 
-    subgraph R3["路由 3：事实-情景记忆检索 (Episodic Route)"]
-        E1["相对时间词换算闭区间 (如上周六 → 日期区间)<br/>+ 窗口向量匹配历史工单地点 phrase_text"]
-        E2["多列联合 SQL SELECT 检索 episodic_record 台账"]
-        E3["体验回执极性重排与冲突检测：<br/>① 若指代『没卡那次』→ 强制过滤 app_quality='good' 压制 'bad' 单<br/>② 若同地命中 >=2 笔不同业务规格单 → 标记 multi_spec_conflict"]
-        E1 --> E2 --> E3
-    end
+  subgraph Step4["第 4 步：三类长期记忆的有效期接替、遗忘衰减与工作记忆容量控制"]
+    direction LR
+    S4_A["长期语义记忆：双时间戳接替与遗忘衰减<br/>旧档位打失效时间 t_invalid 标为 superseded；长期未用按 R 衰减"] --> S4_B["长期情景与经验记忆：TTL 失效与运行结果验证<br/>情景单据永久保留、临时项按 TTL 失效；经验连续异常则降级停用<br/>短期工作记忆仅按需读入 Top-k 有效长期记录，控制上下文长度"]
+  end
 
-    subgraph R4["路由 4：经验记忆检索 (Experiential Route)"]
-        X1["高层场景特征映射 (如工体/鸟巢 → 大型演艺与体育聚集场馆)<br/>+ 窗口短词向量与触发词组混合匹配 experience_card"]
-        X2{"适用边界双向校验<br/>(Scope Boundary Check)"}
-        X3["命中 scope.include 且未触碰 scope.exclude<br/>→ 召回 recommended_adjustments (提前20m+专网切片)"]
-        X4["命中 scope.exclude (如场馆内看点播 / 普通室内)<br/>→ 强制拦截剔除，严禁误套用上行预热经验"]
-        X1 --> X2
-        X2 -- "通过边界校验" --> X3
-        X2 -- "触碰不适用边界" --> X4
-    end
+  Step1 ==> Step2
+  Step2 ==> Step3
+  Step3 ==> Step4
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 3.1：前置滑动窗口切分、否定子句分离与四路差异化混合检索流程图</strong><br/>&emsp;&emsp;四路检索共享底层的短窗向量打分，但各自执行独立的业务过滤与关联补全逻辑：路由 1 负责简称解码与最新默认档获取，路由 2 负责常驻与支线周期匹配，路由 3 负责特定历史单回溯与好坏单消歧，路由 4 负责跨场馆经验泛化与不适用边界拦截。</p>
+      <p class="figure-caption"><strong>图 2.1：从短期工作记忆（Working Memory）经中期候选段向三类长期记忆（情景、语义、程序化/经验）演变的四步方法论架构图。</strong><br/>&emsp;&emsp;第 1 步在短期工作记忆内完成当次会话成链，并将完结单据与短期 `TTL` 临时项直写长期情景记忆；第 2 步对常规行为在中期候选池做段页式归并；第 3 步通过三条通道分别升格为长期语义记忆与长期程序化/经验记忆；第 4 步执行双时间戳版本接替、遗忘衰减与工作记忆常驻容量控制。</p>
     </div>
 
-    <h2 class="subsection-title" id="sec-3-3">3.3 四路差异化检索路由与综合排序评分</h2>
-    <p>对于通过结构化过滤与生效状态校验（<code>status IN ('active', 'reinforced')</code>）的候选记忆记录 $r_i$，系统结合有效向量相似度、时间保持率、近期访问热度与证据置信度计算综合排序分 $\text{Score}(r_i)$：</p>
+    <div class="table-wrap">
+      <div class="table-caption">表 2.2：从短期工作记忆向三类长期记忆演变的四步规则与真实样本对照表</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 17%;">演变阶段</th>
+            <th style="width: 23%;">涉及的 CoALA 记忆层级</th>
+            <th style="width: 36%;">具体流转与晋升规则（吸收 CoALA + MemoryOS + Zep + Mem0）</th>
+            <th style="width: 24%;">网络保障真实样本例子</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>第 1 步：<br/>短期工作记忆成链与<br/>长期情景记忆直写</strong></td>
+            <td><strong>短期 — 工作记忆</strong> &rarr;<br/><strong>长期 — 情景记忆</strong></td>
+            <td>• 会话进行中，<strong>短期工作记忆</strong>实时跟踪多轮槽位并串联“提单 &rarr; 追问澄清 &rarr; 用户纠正 &rarr; 事后网元运行结果”；<br/>• 单据完结后，清洗剔除不足 \(T_{\min}\) 的无效单据，将有效单据与运行结果（<code>good/bad</code>）原样追加写入<strong>长期情景记忆（<code>episodic_order_record</code>）</strong>；<br/>• 若含异地差旅或<code>今天 / 本次临时</code>声明，带有效期 <code>TTL</code> 写入<strong>长期情景记忆（<code>episodic_event_preference</code>）</strong>，不进入语义晋升池。</td>
+            <td>用户周三说“今天下雨，晚八点直播先降到 720p” &rarr; 完结后单据原样追加进长期情景记忆 <code>SN_004</code>，临时降档带当日 <code>TTL</code> 写入长期情景记忆，不改长期语义记忆中的常驻 1080p 偏好。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>第 2 步：<br/>中期候选池按主题<br/>段页式归并</strong></td>
+            <td><strong>中期候选缓冲池</strong><br/>（<code>MTM candidate</code>）</td>
+            <td>• 借鉴北邮 MemoryOS 的<strong>段页式归并</strong>：当常规单据或对话从短期工作记忆滑出时，按<strong>“场景/小区簇 + 业务类型 + 时间窗”</strong>计算相似度，归并到同一个中期候选段下累积证据（挂载情景单据 <code>SerialNo</code> 列表）；<br/>• 未满足最小时间跨度 \(W_{\text{span}}\) 与得分阈值 \(\theta_{\text{long}}\) 前保持 <code>candidate</code>，不写入长期语义记忆。</td>
+            <td>第 1、2 次在周六晚去奥体中心用抖音推流（<code>SN_008, SN_011</code>） &rarr; 归并进“周末场馆推流”中期候选段（候选态 <code>candidate</code>）。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>第 3 步：<br/>越过阈值升格为<br/>长期语义与程序化记忆</strong></td>
+            <td><strong>长期 — 语义记忆</strong> &amp;<br/><strong>长期 — 程序化/经验记忆</strong></td>
+            <td>参考北邮 <code>Heat</code> 热度机制与 PersonaMem-v3 证据门限，设<strong>三条长期化通道</strong>：<br/>① <strong>隐式重复晋升（&rarr; 长期语义记忆）</strong>：同一中期候选段内，一致记录跨越 \(W_{\text{span}}\) 且累计得分达 \(\theta_{\text{long}}\)（或频次达 \(N_{\text{min}}\)） &rarr; 升格为 <code>active</code> 写入长期语义记忆，并清零中期未处理计数；<br/>② <strong>显式指令直通（&rarr; 长期语义记忆）</strong>：用户在对话中明确声明常驻偏好或口语映射 &rarr; 高权重直接写入长期语义记忆；<br/>③ <strong>慢路径对比提炼（&rarr; 长期程序化/经验记忆）</strong>：串联长期情景记忆中的前序异常单据、短期工作记忆中的多轮澄清轨迹与调整后正常单据 &rarr; 提炼因果调参规则或消歧流程写入长期程序化/经验记忆。</td>
+            <td>• 多次周六在奥体中心推流达标后 &rarr; 升格为长期语义记忆中的周期场景习惯；<br/>• 从首次去场馆拥塞（<code>NE-05</code>）经澄清改为提前 20min 预热成功（<code>NE-09</code>）的对比中 &rarr; 提炼出大型聚集场馆程序化/经验规则。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>第 4 步：<br/>长期记忆接替衰减与<br/>工作记忆容量控制</strong></td>
+            <td><strong>三类长期记忆</strong> &harr;<br/><strong>短期 — 工作记忆</strong></td>
+            <td>• <strong>长期语义记忆双时间戳接替与遗忘</strong>：当用户升级套餐或新档位连续达标时，给旧语义记录写入失效时间 \(t_{\text{invalid}}\) 并标为 <code>superseded</code>，新记录标为 <code>active</code>；长期未触发习惯按保持率衰减；<br/>• <strong>长期情景与经验记忆治理</strong>：情景单据永久保真，阶段性临时偏好按 <code>TTL</code> 转为 <code>expired</code>；程序化/经验规则若后续运行结果连续异常则降级停用；<br/>• <strong>短期工作记忆换页控制（借鉴 Letta）</strong>：每轮只将 Top-\(k\) 生效长期记忆加载进短期工作记忆。</td>
+            <td>用户升级 4K 直播套餐后 &rarr; 长期语义记忆中原 <code>1080p / 60min</code> 记录标为 <code>superseded</code>，新一轮会话检索时只将 <code>active</code> 的 <code>4K / 90min</code> 读入短期工作记忆。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    $$\text{Score}(r_i) = \Big(0.50 \cdot \text{sim}_{\text{eff}} + 0.20 \cdot R(t, n_i) + 0.10 \cdot \text{heat}_{\text{eff}} + 0.20 \cdot \text{conf}_i\Big) \cdot \Phi_{\text{gate}}$$
+    <h2 class="subsection-title" id="sec-2-4">2.4 单据预处理、候选池累积参数与记忆保持率衰减计算</h2>
+    <p>原始网元单据流中混有持续时间很短的后台流量记录、基站切换产生的断流拆分记录，以及用户的临时改动或偶发行为。工程实现时，具体业务阈值用可配置参数表示（不在代码里写死固定数值），从短期工作记忆向长期情景记忆、长期语义记忆流转的处理流程与参数定义如图 2.2 与表 2.3 所示：</p>
+    <ol>
+      <li><strong>过滤时长过短的无效单据，合并因断流拆开的多笔记录 —— 参考 <code>BehaviorMem</code> (arXiv:2610.34790)</strong>：系统按最小有效时长参数 \(T_{\min}\) 剔除无对话对应的短时后台记录及中途取消的无效单据；对于同一用户、同一业务因基站切换在短时间间隔 \(\Delta t_{\text{gap}}\) 内断开重连产生的多笔记录，合并为 1 笔完整单据追加写入<strong>长期情景记忆（<code>episodic_order_record</code>）</strong>，避免同一次连续保障被切碎并重复计算次数。</li>
+      <li><strong>区分对话明确声明与单据重复行为的权重，将短期变动写入长期情景记忆 —— 参考 <code>PersonaMem-v3</code> (arXiv:2608.21381)</strong>：系统分别为对话显式声明与单据隐式行为配置权重参数 \(w_{\text{exp}}\) 与 \(w_{\text{imp}}\)（满足 \(w_{\text{exp}} > w_{\text{imp}}\)）。对话中说明“今天临时”、“出差这几天”的记录附带有效期 <code>TTL</code> 只写入<strong>长期情景记忆（<code>episodic_event_preference</code>）</strong>，到期自动失效；累计得分低于噪声下限 \(\theta_{\text{noise}}\) 的单次偶发行为不进入长期语义库。</li>
+      <li><strong>先放入中期候选池累积，满足跨度与得分阈值后再晋升为长期语义记忆 —— 参考北邮 <code>MemoryOS</code> (arXiv:2506.06326)</strong>：常规记录先按“所在区域、应用与业务、时间段”归并到中期候选池（状态标为 <code>candidate</code>）。当同一类记录跨越最小时间范围 \(W_{\text{span}}\) 持续出现，且累计得分达到长期阈值 \(\theta_{\text{long}}\) 时，状态转为正式生效（<code>active</code>）写入<strong>长期语义记忆（Semantic Memory）</strong>，同时清零该候选段的未处理计数。</li>
+      <li><strong>偏好变化时保留旧记录并标记失效时间 —— 参考 <code>Zep / Graphiti</code> (arXiv:2501.13956)</strong>：当默认档位或常驻时段更新时，给长期语义记忆中的旧记录写入失效时间 \(t_{\text{invalid}}\) 并标为 <code>superseded</code>，同时写入新记录并标为 <code>active</code>（记录生效时间 \(t_{\text{valid}}\)）。</li>
+    </ol>
+
+    <div class="figure-wrap">
+      <div class="mermaid-box">
+        <pre class="mermaid">
+flowchart LR
+    A["<b>短期工作记忆输出清洗</b><br/>剔除不足 <i>T</i><sub>min</sub> 记录 · 合并断流记录"] --> B["<b>直写长期情景记忆</b><br/>历史单据原样追加 · 临时项带 TTL 存储"]
+    B --> C["<b>归入中期候选池累积</b><br/>按对话 <i>w</i><sub>exp</sub> 与单据 <i>w</i><sub>imp</sub> 累计得分"]
+    C -- "未达阈值 <i>θ</i><sub>long</sub> 或单次偶发" --> D["<b>保留 candidate 或丢弃</b><br/>不升格为长期语义默认参数"]
+    C -- "满足跨度 <i>W</i><sub>span</sub> 且达 <i>θ</i><sub>long</sub>" --> E["<b>晋升为长期语义记忆</b><br/>标为 active · 旧记录标 superseded"]
+        </pre>
+      </div>
+      <p class="figure-caption"><strong>图 2.2：从短期工作记忆清洗写入长期情景记忆、并经中期候选池晋升为长期语义记忆的处理流程</strong><br/>&emsp;&emsp;有效单据与带有效期的短期变动先写入长期情景记忆；常规记录在中期候选池中按权重累计得分，满足最小时间跨度与得分阈值后晋升为正式生效的长期语义记忆。</p>
+    </div>
+
+    <div class="table-wrap">
+      <p class="table-caption">表 2.3：单据过滤、候选累积与长短期流转的可配置参数说明及参考依据</p>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width:18%;">处理步骤</th>
+            <th style="width:24%;">可配置参数</th>
+            <th style="width:34%;">判断规则与流转方式</th>
+            <th style="width:24%;">参考评测集与记忆系统</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 过滤无效记录与<br/>合并断流单据</strong></td>
+            <td>\(T_{\min}\)（最小有效时长）<br/>\(\Delta t_{\text{gap}}\)（断流合并最大间隔）</td>
+            <td>时长不足 \(T_{\min}\) 且无对话对应的记录直接剔除；间隔在 \(\Delta t_{\text{gap}}\) 内的同业务断流记录合并为 1 笔完整单据写入长期情景记忆。</td>
+            <td><code>BehaviorMem</code>：剔除浅层瞬时访问，按时间间隔合并同一次连续行为</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>2. 区分信号权重与<br/>写入阶段情景记录</strong></td>
+            <td>\(w_{\text{exp}}, w_{\text{imp}}\)（对话与单据权重）<br/>\(\theta_{\text{noise}}, \theta_{\text{short}}\)（噪声下限与短期阈值）</td>
+            <td>对话明确声明的权重高于单据行为（\(w_{\text{exp}} > w_{\text{imp}}\)）；累计得分低于 \(\theta_{\text{noise}}\) 的偶发记录不入长期语义库；绑定差旅/短期事件且达 \(\theta_{\text{short}}\) 的记录带 <code>TTL</code> 写入长期情景记忆。</td>
+            <td><code>PersonaMem-v3</code>：区分显式与隐式行为分值，划分持续稳定、逐渐消退、近期新增与单次偶发四类轨迹</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. 候选池累积与<br/>晋升长期语义记忆</strong></td>
+            <td>\(W_{\text{span}}\)（最小时间跨度）<br/>\(\theta_{\text{long}}\)（转为长期习惯的得分阈值）</td>
+            <td>未达阈值前保持 <code>candidate</code> 候选状态；时间跨度满足 \(W_{\text{span}}\) 且累计得分达到 \(\theta_{\text{long}}\) 后转为 <code>active</code> 写入长期语义记忆，并清零已处理计数。</td>
+            <td>北邮 <code>MemoryOS</code>：按主题段页归并候选记录，达到热度阈值后晋升长期记忆并清零计数</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>4. 新旧记录更替与<br/>长期未用衰减</strong></td>
+            <td>\(t_{\text{valid}}, t_{\text{invalid}}\)（生效与失效时间）<br/>\(\lambda, \kappa\)（衰减率与复现强化参数）</td>
+            <td>档位变化时给旧语义记录写入失效时间 \(t_{\text{invalid}}\) 并标为 <code>superseded</code>；长期不再触发的周期/场景语义习惯按保持率自然衰减。</td>
+            <td><code>Zep / Graphiti</code>：双时间戳保留历史；<code>MemoryBank</code>：按遗忘曲线衰减与强化</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>参考 <code>MemoryBank</code> (arXiv:2305.10250) 的遗忘曲线计算方式，<strong>长期语义记忆</strong>中的周期与场景习惯如果长期不再触发，其保持率随间隔时间下降；累计确认和检索使用的次数越多，衰减越平缓：</p>
+
+    $$R = \exp\!\left(-\frac{\lambda t}{1 + \kappa \ln(1 + n)}\right)$$
 
     <p class="no-indent">符号解释如下：</p>
     <ol>
-      <li>$\text{sim}_{\text{eff}}$：跨正向滑动短窗的最大余弦相似度（若命中否定子句实体则扣减 <code>0.35</code>）。</li>
-      <li>$R(t, n_i)$ 与 $\text{heat}_{\text{eff}}$：分别为第 2.3 节计算的记忆时间保持率与 7 天半衰期访问热度。</li>
-      <li>$\text{conf}_i$：该记忆记录当前的证据置信度（范围 <code>0.60 ~ 0.95</code>）。</li>
-      <li>$\Phi_{\text{gate}} \in \{0,\, 0.2,\, 1.0\}$：<strong>四类记忆业务门控乘子</strong>——在情景记忆路由中，当用户指代正向体验（“照没卡那次办”）时，对 <code>app_quality = 'bad'</code> 的卡顿单取 $\Phi_{\text{gate}} = 0.2$ 进行降权压制；在经验记忆路由中，若当前请求落入反向排除边界 <code>scope.exclude</code>（如在场馆内看下行点播），则取 $\Phi_{\text{gate}} = 0$ 直接剔除。</li>
+      <li>\(t\)：距离该条记忆最近一次被确认或使用的间隔天数；\(n\)：累计有效出现与被检索命中的次数。</li>
+      <li>\(\lambda, \kappa\)：分别为基础日衰减率参数与强化系数（作为配置参数按业务周期设定；<strong>长期情景记忆中的历史单据记录固定取 \(\lambda = 0\)，不随时间自然衰减</strong>，阶段性临时偏好按到期时间戳 <code>TTL</code> 判定失效）。</li>
     </ol>
 
-    <h2 class="subsection-title" id="sec-3-4">3.4 多类记忆交叉耦合检索协同机制</h2>
-    <p>在复杂业务请求中，单次检索往往需要同时调动多类记忆协同解码。表 3.1 总结了四类典型多记忆交叉耦合场景在检索层的两阶段协同顺序与冲突消解优先级：</p>
+    <h2 class="subsection-title" id="sec-2-5">2.5 本章小结与拓展阅读</h2>
+    <ul>
+      <li><strong>长短期三级缓冲与四步演变：</strong>结合 <code>CoALA</code> 与北邮 <code>MemoryOS (STM &rarr; MTM &rarr; LPM)</code>，短期工作记忆负责会话内成链，完结单据与带 <code>TTL</code> 临时项直写长期情景记忆，常规行为经中期候选池段页式归并累积（跨度 \(W_{\text{span}}\) 且达 \(\theta_{\text{long}}\)）后晋升为长期语义记忆，并通过双时间戳版本接替（<code>superseded</code>）保留历史。</li>
+      <li><strong>拓展阅读：</strong>普林斯顿 <em>CoALA</em> (arXiv:2309.02427)；北邮+腾讯 AI Lab <em>MemoryOS</em> (arXiv:2506.06326)；上海 AI Lab <em>MemOS</em> (arXiv:2507.03724)；<em>Mem0</em> (arXiv:2504.19413)；<em>Zep/Graphiti</em> (arXiv:2501.13956)；<em>Letta/MemGPT</em> (arXiv:2310.08560)；<em>MemoryBank</em> (arXiv:2305.10250)；<em>A-MEM</em> (arXiv:2502.12110)。</li>
+    </ul>
+
+    <!-- ==================== CHAPTER 3 ==================== -->
+    <div class="running-header">
+      <span>第 3 章 · 程序化 / 经验记忆要学到什么：从“多轮澄清/理解失败”到“快速闭环”</span>
+      <span>联接 Agent 记忆系统技术报告</span>
+    </div>
+
+    <h1 class="section-title" id="sec-3">3 程序化 / 经验记忆要学到什么：从“多轮澄清/理解失败”到“快速闭环”</h1>
+
+    <h2 class="subsection-title" id="sec-3-1">3.1 经验学习领域的 5 篇代表性论文与核心工作</h2>
+
+    <p>在 <code>CoALA</code> 的三类长期记忆中，长期语义记忆记录“用户常驻要什么”，长期情景记忆记录“过去具体办过哪些单据且结果如何”，而<strong>长期程序化 / 经验记忆（Procedural / Experiential Memory）记录“遇到特定无线场景或歧义情况时，系统该怎么调参与处置（<em>How to do</em>）”</strong>。程序化/经验记忆要学习的是具备可迁移性的因果规则与办事流程：<strong>在什么条件下（Condition）、因为什么原因（Cause）、该执行什么参数调整规则或消歧流程（Action / Workflow）、执行后实际运行结果如何（Outcome）</strong>。表 3.1 列出学术界在智能体程序化与经验学习方向具有代表性的 5 篇核心论文。</p>
 
     <div class="table-wrap">
-      <p class="table-caption">表 3.1：多类记忆交叉耦合场景的检索协同顺序与优先级消解规则</p>
+      <div class="table-caption">表 3.1：智能体程序化与经验学习领域的 5 篇代表性工作拆解</div>
       <table class="booktabs">
         <thead>
           <tr>
-            <th style="width:18%;">耦合类型</th>
-            <th style="width:26%;">典型用户请求示例</th>
-            <th style="width:32%;">跨路由协同检索顺序（Hop 1 $\rightarrow$ Hop 2）</th>
-            <th style="width:24%;">冲突消解与排序压制规则</th>
+            <th style="width: 28%;">代表性论文与编号</th>
+            <th style="width: 72%;">核心工作与机制贡献</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>1. 语义 + 情景耦合</strong></td>
-            <td>“今晚在奥体中心用<strong>小破站开播</strong>，按<strong>上周没卡那次</strong>规格来”</td>
-            <td><strong>Hop 1（路由1）：</strong>短窗命中 <code>expression</code> 将“小破站开播”解码为 <code>bilibili:openlive</code>；<br/><strong>Hop 2（路由3）：</strong>按上周日期窗 + 地点“奥体中心”检索情景台账，提取 <code>app_quality='good'</code> 单据参数。</td>
-            <td>用户当轮显式指定的业务（<code>bilibili</code>）优先于历史单中的旧 APP；历史好单参数覆盖卡顿差单。</td>
+            <td><strong>1. Reflexion</strong><br/>Shinn et al. (arXiv:2303.11366)</td>
+            <td>把任务执行后的环境反馈信号转成文字反思（Verbal Reflection），存进记忆缓冲区，下一次尝试前直接读入短期工作记忆以修正行为。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>2. 语义 + 程序化耦合</strong></td>
-            <td>（已升 4K 套餐后）<br/>“中午在滨江基地<strong>照例开播</strong>”</td>
-            <td><strong>Hop 1（路由2）：</strong>命中 <code>periodic_preference</code>（<code>12:00~13:30</code> $\rightarrow$ <code>douyin:openlive</code>）；<br/><strong>Hop 2（路由1）：</strong>携带 <code>(douyin, openlive)</code> 查 <code>preferred_value</code>，拉取最新升级的 <code>active</code> 档位（<code>4K / 90min</code>）。</td>
-            <td><code>preferred_value</code> 中 <code>active (v2: 4K)</code> 强制压制已标记为 <code>superseded (v1: 1080p)</code> 的历史旧档。</td>
+            <td><strong>2. ExpeL</strong><br/>Zhao et al. (arXiv:2308.10144)</td>
+            <td>从一批尝试轨迹中自动收集成功案例与<strong>成对的成功/失败对比轨迹</strong>，用自然语言增删改操作提炼出通用结论（Insights），推理时同时召回结论规则与相似成功轨迹读入工作记忆。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>3. 程序化 + 经验耦合</strong></td>
-            <td>（周六晚演出日）<br/>“到奥体了，按周末场馆习惯开抖音直播”</td>
-            <td><strong>Hop 1（路由2）：</strong>命中周末支线 <code>scene_preference</code>（奥体场馆 <code>19:30~21:30</code>）；<br/><strong>Hop 2（路由4）：</strong>场景“奥体”映射为“大型聚集场馆”且业务为“上行推流”，同时召回场馆预热 <code>experience_card</code>。</td>
-            <td>经验卡的动态调整动作（<code>lead_time: -20min</code>，提前至 <code>19:10</code> 开启切片）叠加在程序化基准时间窗之上。</td>
+            <td><strong>3. Agent Workflow Memory (AWM)</strong><br/>Wang et al. (arXiv:2409.07429)</td>
+            <td>从历史轨迹中归纳经常复用的<strong>多步处理流程（Workflows，即显式程序化记忆）</strong>，离线或在线更新进长期记忆库，帮助智能体在后续同类任务中直接复用成熟流程、减少重复摸索步骤。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>4. 四类记忆全耦合</strong></td>
-            <td>“今晚 19:30 去<strong>工体中心</strong>用<strong>破站开播</strong>，照之前在<strong>奥体没卡那次</strong>办”（同晚 19:00 有会议预约单）</td>
-            <td><strong>路由1</strong>解码“破站开播”；<strong>路由3</strong>回溯奥体 <code>good</code> 单并检出今晚 19:00 预约重叠冲突；<strong>路由2</strong>核对场馆常驻档位；<strong>路由4</strong>跨场馆（奥体$\rightarrow$工体）泛化召回场馆预热与冲突反问经验卡。</td>
-            <td>检出同晚时间窗重叠冲突时，<strong>慢路径安全门控优先于快路径直发</strong>，将四路证据打包送入慢路径消歧卡。</td>
+            <td><strong>4. ReasoningBank</strong><br/>arXiv:2509.25140 (2025)</td>
+            <td>从智能体自评的成功和失败经验中提炼可泛化的高层推理策略，实证验证了<strong>“同时学成功与失败并抽象成策略”显著优于只存原始轨迹或只存成功流程</strong>。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>5. 经验跟随实证研究</strong><br/>arXiv:2505.16067 (2025)</td>
+            <td>系统分析了检索到的历史经验如何影响当前输出：发现经验与当前输入越相似，模型越倾向于盲目照搬，容易造成<strong>错误经验传播与不匹配经验误导</strong>；并提出<strong>用后续任务的执行结果作为经验质量的验证标签</strong>，持续过滤低质经验。</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h2 class="subsection-title" id="sec-3-5">3.5 本章小结</h2>
-    <p>本章阐述了面向四类记忆的混合检索引擎：通过 <code>6~10</code> 字滑动窗口切分与否定子句权重衰减解决长句局部短词稀释与否定误召回问题；通过“向量命中记录定位 $\rightarrow$ 读取同行结构化槽位列 $\rightarrow$ 二阶段关联表补全”串联语义、程序化、情景与经验四条检索路由；并通过体验回执门控与经验适用边界校验，保障多记忆交叉耦合场景下的高召回与抗扰排序。</p>
+    <h2 class="subsection-title" id="sec-3-2">3.2 程序化 / 经验记忆要抓住的五个重点与三种经验类型</h2>
+
+    <p>针对给定的多轮澄清对话提取“问题 &rarr; 参数调整规则 &rarr; 结果”较为直接，实际难点在于：<strong>① 从长周期混杂会话与单据流中识别并关联值得沉淀的慢路径源头样本；② 当后续请求更换口语表述或具体场馆名称时，跨字面差异召回相关经验规则，并过滤字面相似但无线环境条件不符的干扰项</strong>。结合上述论文与网络保障场景，长期程序化/经验记忆的构建包含以下五个重点（图 3.1 与表 3.2）：</p>
+
+    <div class="figure-wrap">
+      <div class="mermaid-box">
+        <pre class="mermaid">
+flowchart TB
+  subgraph SlowPath["一、经验的产生源头：短期工作记忆慢路径澄清 + 长期情景记忆正反单据对比 (ExpeL / ReasoningBank)"]
+    direction LR
+    S_fail["前序异常单据（长期情景记忆）<br/>情景单据 NE-05：去体育馆按普通参数下发<br/>开场空口拥塞导致卡顿掉帧 (AppQuality=bad)"] --> S_clar["慢路径多轮澄清与纠正（短期工作记忆 S-03）<br/>经过多轮追问与用户纠正<br/>确定方案：提前 20~30min 开启专网切片预热"]
+    S_clar --> S_succ["调整后正常单据验证（长期情景记忆）<br/>情景单据 NE-09：按预热方案执行后<br/>网元运行结果 DelayAn 正常, AppQuality=good"]
+  end
+
+  subgraph Card["二、长期程序化 / 经验记忆条目沉淀（抽象到可迁移粒度 + 明确适用与不适用边界）"]
+    direction LR
+    C1["触发条件 Condition<br/>场景类别=大型演艺与体育聚集场馆<br/>业务=上行推流 | 时段=演出/赛事日"] --> C2["根因与参数调整规则 Cause &amp; Action<br/>原因：开场并发接入空口拥塞<br/>调整：start_time 提前20-30m, 专网切片"]
+    C2 --> C3["适用边界与验证 Scope &amp; Validation<br/>适用：同类高密场馆 | 不适用：非赛事日/下行点播/室内驻地<br/>挂载情景证据：[NE-05, S-03, NE-09] | 置信度=0.90"]
+  end
+
+  subgraph FastPath["三、后续跨场馆检索读入短期工作记忆与事后运行结果验证 (AWM / 2505.16067)"]
+    direction LR
+    F1["后续同类请求（去另一体育馆工体中心开播）<br/>检索命中程序化/经验规则并读入短期工作记忆"] --> F2["工作记忆内预计算提前预热与切片参数<br/>无需重复多轮追问，支撑下游 1 轮闭环"]
+    F2 --> F3["事后网元运行结果闭环验证<br/>运行结果 AppQuality=good 则置信度上升<br/>若连续异常则降级停用防止错误经验传播"]
+  end
+
+  SlowPath ==> Card
+  Card ==> FastPath
+        </pre>
+      </div>
+      <p class="figure-caption"><strong>图 3.1：从“长期情景记忆正反单据对比 + 短期工作记忆多轮澄清”中提炼长期程序化/经验记忆并在后续复用的架构图。</strong><br/>&emsp;&emsp;上方通过长期情景记忆中的正反单据对比与短期工作记忆中的多轮澄清对话提炼因果规律；中部将其封装为带适用边界（<code>scope</code>）的长期程序化/经验规则条目；下方在后续同类新场馆中检索读入短期工作记忆并用运行结果持续验证。</p>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-caption">表 3.2：程序化 / 经验记忆构建要抓住的五个方法论重点及网络保障实例</div>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width: 22%;">方法论重点</th>
+            <th style="width: 39%;">核心机制含义</th>
+            <th style="width: 39%;">网络保障中的具体实例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 从多轮澄清与理解失败中提炼规则</strong></td>
+            <td>复盘首次交互时系统为什么没能一次办成（漏了什么参数、误解了哪个指代、经过几轮追问/纠正才对齐），把最终验证有效的做法记入长期程序化/经验记忆。</td>
+            <td>首次去奥体中心按普通参数下发发生卡顿（情景单据 <code>NE-05</code>），后续会话 <code>S-03</code> 经多轮沟通确定提前 20~30 分钟开启上行切片预热 &rarr; 沉淀为场馆推流经验规则。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>2. 读入工作记忆支撑后续快速闭环</strong></td>
+            <td>程序化/经验记忆的核心价值是在下次遇到相同场景特征时，被检索读入短期工作记忆直接补齐调整参数，使下游不再重复追问或配错普通档位。</td>
+            <td>后续用户换去工人体育场说“今晚开播”，检索召回场馆预热经验读入短期工作记忆，直接提供提前预热与切片参数。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. 条件抽象到可迁移的通用粒度</strong></td>
+            <td>触发条件用<strong>通用场景类别、业务类型、无线特征</strong>描述；具体小区 ID、情景单据号只作为底层证据挂载，确保跨具体地点可迁移。</td>
+            <td>触发条件不写死“奥体中心”，而归纳为“大型演艺与体育聚集场馆 + 上行推流”，用户换去工人体育场、五棵松体育馆也能直接召回。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>4. 情景正反单据对比锁定调整动作</strong></td>
+            <td>对比长期情景记忆中“初次未预热的异常单据（<code>bad</code>）”与“澄清调整后的正常单据（<code>good</code>）”（参考 <code>ExpeL</code>），锁定真正起作用的参数调整规则。</td>
+            <td>对比奥体未预热异常单据 <code>NE-05</code> 与提前预热正常单据 <code>NE-09</code>，锁定差异动作是“开始时间前移 20 分钟 + 上行专网切片”。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>5. 写明适用边界与运行结果验证</strong></td>
+            <td>标明什么情况下<strong>不适用（<code>scope.exclude</code>）</strong>（防止相似字面盲目套用 —— 参考 <code>arXiv:2505.16067</code>），并用后续单据的网元实际运行结果持续更新置信度。</td>
+            <td>写明 <code>exclude = ["下行视频点播", "普通室内常驻场所", "语音通话"]</code>；用户在体育场看台刷点播视频或回室内基地看球开播时自动排除该规则。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>长期程序化 / 经验记忆涵盖<strong>三种互补类型</strong>：① <strong>网络问题因果调参规则</strong>（什么场景、什么业务容易出什么无线问题，该怎么调提前预热、专网切片或弱网降级保语音）；② <strong>多单消歧与排障处理流程（Workflows）</strong>（遇到某类请求按什么顺序查记忆与核实，如“指代历史单据 &rarr; 先在长期情景记忆中排除卡顿异常单据 &rarr; 若仍有多笔有效单据冲突则列明差异供确认”）；③ <strong>交互免打扰策略</strong>（哪些已稳固的常驻语义参数无需每次重复向用户确认）。</p>
+
+    <h2 class="subsection-title" id="sec-3-3">3.3 从长周期记录中定位慢路径源头与正反单据对比提炼</h2>
+    <p>在实际业务流中，慢路径对话与历史单据穿插在大量日常快路径工单与闲聊之间。参考 <code>ExpeL</code> (arXiv:2308.10144) 与 <code>ReasoningBank</code> (arXiv:2509.25140)，系统通过长期情景记忆中的单据号与场景标签串联以下三条记录定位经验源头（见图 3.2）：</p>
+    <ol>
+      <li><strong>长期情景记忆中的前序同场景异常单据（\(\text{NE}_{\text{bad}}\)）</strong>：同一类空间场景下，存在事后实际运行结果为异常（<code>AppQuality = bad</code>，如基站 <code>PRB &ge; 95%</code> 拥塞导致掉帧）的历史单据，或同一地点存在多笔不同规格单据冲突。</li>
+      <li><strong>短期工作记忆捕获的多轮澄清或用户纠偏对话（\(S_{\text{slow}}\)）</strong>：后续会话中针对该异常或歧义发生多轮追问确认或用户主动纠偏（如“上次开场太卡了，这次提前二十分钟把上行切片开上”，或纠正“对抖音的词其实是微信视频通话”）。</li>
+      <li><strong>长期情景记忆中调整参数后的正常单据（\(\text{NE}_{\text{good}}\)）</strong>：按沟通后的调整参数执行工单，事后网元实际运行结果恢复为正常（<code>AppQuality = good</code>）。（注：仅做假设性咨询而未实际落单闭环的对话不提炼为程序化/经验规则。）</li>
+    </ol>
+
+    <div class="figure-wrap">
+      <div class="mermaid-box">
+        <pre class="mermaid">
+flowchart LR
+    X1["<b>前序异常单据 (长期情景记忆)</b><br/>准点开播未预热 · 运行结果 bad"] --> X2["<b>多轮澄清与纠偏 (短期工作记忆)</b><br/>沟通确定提前开启上行切片"]
+    X2 --> X3["<b>调整后正常单据 (长期情景记忆)</b><br/>提前开启切片 · 运行结果 good"]
+    X3 --> X4["<b>提炼长期程序化/经验记忆</b><br/>归纳通用场景 · 写明 exclude 排除范围"]
+        </pre>
+      </div>
+      <p class="figure-caption"><strong>图 3.2：串联长期情景记忆中的异常单据、短期工作记忆中的澄清对话与调整后正常单据提炼长期程序化/经验记忆的流程</strong><br/>&emsp;&emsp;通过对比调整前后的两笔情景单据锁定起作用的参数调整规则，将具体地名归纳为通用场景类别，并写明不适用的业务范围。</p>
+    </div>
+
+    <h2 class="subsection-title" id="sec-3-4">3.4 短期工作记忆与三类长期记忆的结构化数据示例</h2>
+    <p>清单 3.1 给出了用户 <code>USER_001</code> 在第 28 天会话进行时的<strong>短期记忆（工作记忆 <code>working_memory_short_term</code>）</strong>内存快照，以及数据库中持久保存的<strong>三类长期记忆（语义记忆 <code>semantic_memory_long_term</code>、情景记忆 <code>episodic_memory_long_term</code>、程序化/经验记忆 <code>procedural_experiential_memory_long_term</code>）</strong>的实际 JSON 结构：</p>
+
+    <div class="listing-caption">
+      <span>清单 3.1：CoALA 短期工作记忆与三类长期记忆（语义、情景、程序化/经验）结构化数据示例</span>
+      <span class="src-tag">source: memory_system/storage/index.py &amp; runtime/working_memory.py</span>
+    </div>
+    <pre><code>{
+  "working_memory_short_term": {
+    "session_id": "S-06", "current_turn": 1, "lifecycle": "short_term_active_session_only",
+    "current_user_utterance": "到工体了，19:30用小破站开播，别用卡顿那套，照奥体没卡那次办",
+    "active_slot_state": {
+      "location": "北京工人体育场", "app": "bilibili", "service": "openlive",
+      "resolution": "4K", "start_time": "19:10", "end_time": "21:30", "duration": "140min",
+      "unresolved_conflicts": []
+    },
+    "retrieved_long_term_memory_ids": [
+      "expr|小破站开播", "pref|bilibili|openlive|v2", "NE-09", "exp|stadium_crowd|openlive"
+    ]
+  },
+  "long_term_memories": {
+    "semantic_memory_long_term": {
+      "expression": [
+        {
+          "memory_key": "expr|小破站开播",
+          "alias_col": "小破站开播", "target_col": "bilibili:openlive",
+          "phrase_text": "小破站开播", "status": "active", "confidence": 0.95
+        }
+      ],
+      "preferred_value": [
+        {
+          "memory_key": "pref|douyin|openlive|v1",
+          "payload": {"resolution": "1080p", "duration": "60min"},
+          "t_valid": "2026-11-01", "t_invalid": "2026-11-19",
+          "status": "superseded", "superseded_by": "pref|douyin|openlive|v2"
+        },
+        {
+          "memory_key": "pref|douyin|openlive|v2",
+          "app_col": "douyin", "biz_col": "openlive",
+          "payload": {"resolution": "4K", "bitrate_ul": "25Mbps", "duration": "90min", "package": "6G_NGC_Live_Pro"},
+          "phrase_text": "抖音 开直播", "t_valid": "2026-11-20", "t_invalid": null,
+          "status": "active", "evidence_score": 6.5, "confidence": 0.92
+        }
+      ],
+      "periodic_preference": [
+        {
+          "memory_key": "period|12:30-14:00|douyin:openlive",
+          "time_window_col": "12:30~14:00", "app_col": "douyin", "biz_col": "openlive", "scene_col": "杭州滨江基地",
+          "phrase_text": "午间例行直播", "status": "active", "evidence_score": 8.0, "confidence": 0.94
+        }
+      ]
+    },
+    "episodic_memory_long_term": {
+      "episodic_order_record": [
+        {
+          "memory_key": "NE-05", "executed_date": "2026-11-09", "scene_col": "北京奥体中心",
+          "app_col": "douyin", "biz_col": "openlive", "time_window": "19:30~21:30", "duration": "120min",
+          "payload": {"resolution": "1080p", "prewarm_min": 0, "stall_count": 6},
+          "app_quality": "bad", "phrase_text": "北京奥体中心 抖音直播", "status": "active"
+        },
+        {
+          "memory_key": "NE-09", "executed_date": "2026-11-15", "scene_col": "北京奥体中心",
+          "app_col": "douyin", "biz_col": "openlive", "time_window": "19:10~21:30", "duration": "140min",
+          "payload": {"resolution": "4K", "prewarm_min": 20, "slice": "6G_NGC_UL_Slice", "stall_count": 0},
+          "app_quality": "good", "phrase_text": "北京奥体中心 抖音直播", "status": "active"
+        }
+      ],
+      "episodic_event_preference": [
+        {
+          "memory_key": "epi|2026-11-16|temp_720p_override",
+          "scene_col": "杭州滨江基地", "override_slots": {"resolution": "720p"},
+          "reason": "用户声明仅今天临时改 720p，不修改常驻语义默认档位",
+          "t_valid": "2026-11-16T00:00:00", "ttl": "2026-11-16T23:59:59",
+          "phrase_text": "今天临时降画质 720p", "status": "expired"
+        }
+      ]
+    },
+    "procedural_experiential_memory_long_term": [
+      {
+        "memory_key": "exp|stadium_crowd|openlive",
+        "condition": {"scene_category": "大型演艺与体育聚集场馆", "biz_type": "openlive"},
+        "cause": "演出开场前后高并发接入导致上行拥塞，准点开启保障来不及收敛",
+        "recommended_adjustments": {"start_time_offset_min": -20, "duration_offset_min": 20, "slice": "6G_NGC_UL_Slice"},
+        "scope": {
+          "include": ["体育场", "体育馆", "演唱会场馆", "会展中心"],
+          "exclude": ["下行视频点播", "普通室内常驻场所", "语音通话"]
+        },
+        "phrase_text": "大型聚集场馆 演出赛事 上行推流",
+        "evidence": ["NE-05", "S-03", "NE-09"], "validation": {"success": 2, "fail": 0}, "confidence": 0.90, "status": "active"
+      }
+    ]
+  }
+}</code></pre>
+
+    <h2 class="subsection-title" id="sec-3-5">3.5 本章小结与拓展阅读</h2>
+    <ul>
+      <li><strong>程序化/经验归纳与边界控制：</strong>从长期情景记忆中的前序异常单据（\(\text{NE}_{\text{bad}}\)）、短期工作记忆中的多轮澄清对话（\(S_{\text{slow}}\)）与调整后正常单据（\(\text{NE}_{\text{good}}\)）对比中提炼显式程序化/经验规则，将触发条件抽象至可跨地点迁移的通用场景类别，并显式绑定适用与不适用边界（<code>scope.exclude</code>）及运行结果验证计数。</li>
+      <li><strong>拓展阅读：</strong>CoALA (arXiv:2309.02427)；Reflexion (arXiv:2303.11366)；ExpeL (arXiv:2308.10144)；AWM (arXiv:2409.07429)；ReasoningBank (arXiv:2509.25140)；Empirical Study of Experience Following (arXiv:2505.16067)。</li>
+    </ul>
 
     <!-- ==================== CHAPTER 4 ==================== -->
     <div class="running-header">
-      <span>第 4 章 · 上下文卡片装配与快慢双路径注入决策</span>
-      <span>联接 Agent 认知记忆系统技术报告</span>
+      <span>第 4 章 · 三类长期记忆的混合检索流程</span>
+      <span>联接 Agent 记忆系统技术报告</span>
     </div>
 
-    <h1 class="section-title" id="sec-4">4 上下文卡片装配与快慢双路径注入决策</h1>
+    <h1 class="section-title" id="sec-4">4 三类长期记忆的混合检索流程</h1>
 
-    <h2 class="subsection-title" id="sec-4-1">4.1 原始检索记录直塞上下文的缺陷</h2>
-    <p>在完成四路记忆检索后，若直接将 Top-k 原始 JSON 记录拼接到 System Prompt 中，由对话大模型自行判断何时直接出单、何时发起反问以及如何加减预热时间，在工程评测中会出现两类高频问题：</p>
+    <h2 class="subsection-title" id="sec-4-1">4.1 滑动窗口切分与否定子句处理</h2>
+    <p>当短期工作记忆接收到包含多个子句的用户长句输入（如<code>“今天不去滨江基地了，今晚七点半在工体中心用小破站开播，别用卡顿那套，照奥体没卡那次办”</code>）时，整句直接转成单个向量会稀释局部口语表达（如“小破站开播”）的权重，而且容易把否定词后面的地点（“滨江基地”）误召回。因此，在向三类长期记忆发起检索（<code>Retrieval</code>）前，先切分子句并处理否定表达（见图 4.1）：</p>
     <ol>
-      <li><strong>盲目抢跑</strong>：当情景记忆中同一地点存在两笔不同业务规格的历史单（如既有“抖音开直播 4K”，又有“快手看直播 1080p”），或用户口误将常驻的“开直播”说成“看直播”，且当晚已有预约单重叠时，大模型容易直接挑选排名第一的记录生成派单指令，触发一票否决红线。</li>
-      <li><strong>过度澄清与时间算术不一致</strong>：当四类记忆已经完备补齐了全部 7 个核心槽位且命中了高置信度场馆预热经验卡（本应 1 轮快路径直办）时，大模型却因历史单与当前时间不同而向用户重复确认时长；或者在执行“提前 20 分钟开启并顺延时长”时出现起止时间与总时长算术不自洽（<code>end - start != duration</code>）。</li>
+      <li><strong>否定子句分离与权重衰减过滤 —— 参考 <code>BlendX</code> (arXiv:2403.18277)</strong>：按标点与连词切分子句，识别带否定词的子句（如“不去”、“别用”、“取消”），提取其中被排斥的地点或状态；如果某条长期记忆候选记录匹配了被排斥项且未被后续正向子句重新指定，将其向量相似度扣减 \(\delta_{\text{neg}}\)。</li>
+      <li><strong>按滑动窗口切分短语并匹配向量</strong>：对正向子句按窗口长度参数 \(L_{\text{win}}\)、步长参数 \(S_{\text{step}}\) 切分为多个重叠的短窗口，批量编码为向量后与长期记忆库内 <code>phrase_text</code> 的短语向量计算余弦相似度，取所有正向窗口中的最高值作为该记录的向量匹配得分。</li>
     </ol>
-
-    <h2 class="subsection-title" id="sec-4-2">4.2 注入前确定性路径裁决与快路径原地参数合成</h2>
-    <p>为避免模型在快慢路径之间摇摆，<code>memory_system</code> 在检索层与 LLM 提示词组装层之间设置了<strong>确定性路径裁决与参数合成器（<code>pipeline/fastpath.py</code> 与 <code>api.py:build_context_for_session</code>）</strong>：先在代码层完成槽位对齐、冲突检测与时间偏移算术计算，再按裁决路径生成结构化上下文注入卡片（见图 4.1）。</p>
 
     <div class="figure-wrap">
       <div class="mermaid-box">
         <pre class="mermaid">
 flowchart LR
-    subgraph IN["四路检索产出 (Stage 2 Output)"]
-        M1["语义记忆：解码后 app/biz + 最新 preferred_value"]
-        M2["程序化记忆：匹配到的周期时间窗与场景默认档"]
-        M3["情景记忆：历史目标单 (good/bad) 及当晚已预约单"]
-        M4["经验记忆：命中的 experience_card (含 offset 与 scope)"]
-    end
-
-    M1 & M2 & M3 & M4 --> GATE{"确定性路径裁决器<br/>(Routing Gate)"}
-
-    subgraph B_BOUND["路径 C：边界克制与拒答注入 (Boundary Path)"]
-        GATE -- "① 纯闲聊 / 越界OOD / 试探咨询态(What-If)" --> C_CARD["装配 [边界克制与咨询态约束卡]<br/>• 闲聊/通用问题：屏蔽个人记忆卡片注入<br/>• 咨询态：仅回答推演结果，禁止调用派单写接口"]
-    end
-
-    subgraph B_SLOW["路径 B：慢路径最小消歧注入 (Slow Path)"]
-        GATE -- "② 同地多单冲突 / 当晚预约重叠 / 核心槽位缺失" --> S_CARD["装配 [慢路径待澄清冲突与缺失项卡]<br/>• 列出冲突单据对比 (如 A单开直播 vs 口头看直播)<br/>• 锁定唯一待追问槽位集 (禁止追问已齐备槽位)<br/>• 驱动 LLM 发起 1 轮聚焦式最小反问"]
-    end
-
-    subgraph B_FAST["路径 A：快路径原地参数合成注入 (Fast Path)"]
-        GATE -- "③ 7槽位齐备且无冲突 + (可选)命中 active 经验卡" --> F_SYN["原地参数算术合成器 (Slot Synthesizer)<br/>开始时间 = 基准起点 - 提前预热偏移 (如 -20min)<br/>总时长 = 基准时长 + 偏移增量, 校验 end - start == duration"]
-        F_SYN --> F_CARD["装配 [快路径已就绪保障方案卡]<br/>• 注入唯一合成后的 7 槽位完整参数<br/>• 声明『零追问一步直办』指令，1 轮输出终态派单"]
-    end
-
-    S_CARD --> TURN2["用户模拟器按问给值回复 → Turn 2 锁定唯一参数 → 异步触发经验萃取"]
-    F_CARD --> EXEC["下发网元执行并接收 AppQuality 回执 → 反哺情景台账与经验置信度"]
+    Q1["<b>工作记忆接收长句输入</b><br/>包含口语叫法与否定表达"] --> Q2["<b>分离否定子句</b><br/>提取被排斥的地点或状态"]
+    Q2 --> Q3["<b>滑动窗口切分</b><br/>按窗口 <i>L</i><sub>win</sub> · 步长 <i>S</i><sub>step</sub> 切分"]
+    Q3 --> Q4["<b>计算向量匹配分</b><br/>取各窗口最高值 · 扣减 <i>δ</i><sub>neg</sub>"]
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 4.1：注入前确定性三路分流裁决器、快路径原地参数合成与慢路径最小消歧集装配流程</strong><br/>&emsp;&emsp;大模型接收经过确定性状态机裁决后的专属指令卡：快路径下直接拿到算好时间偏移与切片参数的完整方案一步闭环；慢路径下拿到精确标注的冲突焦点发起最小追问。</p>
+      <p class="figure-caption"><strong>图 4.1：短期工作记忆输入长句的滑动窗口切分与否定子句处理流程</strong><br/>&emsp;&emsp;先分离包含否定词的子句避免反向误召回，再将正向子句切分为多个短窗口与长期记忆库内的短语向量逐一比对，保留局部口语表达的匹配精度。</p>
     </div>
 
-    <p>路径裁决与参数合成的具体执行规则如下：</p>
+    <h2 class="subsection-title" id="sec-4-2">4.2 语义、情景、程序化（经验）三类长期记忆并行检索与二阶段关联补全</h2>
+    <p>得到短语窗口的向量匹配结果后，系统通过<strong>向量相似度检索定位候选记录，读取同行结构化槽位列，再做二阶段关联表补全</strong>，从三类长期记忆中并行检索并读入短期工作记忆（见图 4.2）：</p>
     <ul>
-      <li><strong>路径 C（边界克制与拒答路径 <code>BOUNDARY_PATH</code>）</strong>：当首轮意图识别为日常闲聊、域外诉求（OOD）或试探性咨询（如“如果把 4K 降为 1080p 会影响推流吗？”）时，屏蔽个人记忆槽位下发或锁死写操作工具接口，防止过度个性化或误触发业务变更。</li>
-      <li><strong>路径 B（慢路径消歧澄清路径 <code>SLOW_PATH</code>）</strong>：当检出至少 1 项未消解冲突（同地多笔不同规格单据冲突、口头表述与所指代历史单业务方向不一致、或当晚已有预约单时间窗重叠）或核心 7 槽位（<code>app, service, location, start_time, end_time, duration, qos_tier</code>）存在缺失时，转入慢路径，将待确认焦点组装进消歧卡片。</li>
-      <li><strong>路径 A（快路径原地合成路径 <code>FAST_PATH</code>）</strong>：当核心 7 槽位齐备且无冲突时，激活快路径。若同时命中通过边界校验的 <code>experience_card</code>，由代码层直接将经验调整量（如起点前置 <code>-20min</code>、时长增加 <code>+20min</code>、挂载 <code>6G NGC</code> 专网切片）叠加到基准参数上，并执行 <code>end_time - start_time == duration</code> 算术自洽校验后注入上下文。</li>
+      <li><strong>长期记忆 ① — 语义记忆检索（Semantic Memory Retrieval）</strong>：正向窗口向量命中 <code>expression</code>（达到相似度阈值 \(\tau_{\text{sim}}\)）后，读取同行 <code>target_col</code> 将口语叫法转为标准应用与业务；若只提到业务而未指定应用，查询 <code>service_to_app</code> 补全默认应用；结合当前时间与地点匹配常驻周期习惯 <code>periodic_preference</code> 或场景常驻偏好 <code>scene_preference</code>（仅查询 <code>active</code> 记录，分开管理常驻主线与外出支线 —— 参考 <code>MemPABench</code>），再通过二阶段关联查询 <code>preferred_value</code> 补齐最新默认分辨率与时长（自动跳过标为 <code>superseded</code> 的旧记录 —— 参考 <code>LongMemEval</code>）。</li>
+      <li><strong>长期记忆 ② — 情景记忆检索（Episodic Memory Retrieval）</strong>：① <strong>查询历史保障单据记录（<code>episodic_order_record</code>）</strong>：将口语时间词（如“上周六”）换算为具体日期范围，结合地点向量匹配查询历史单据。如果用户要求“照没卡那次办”，优先保留 <code>app_quality = 'good'</code> 的正常单据并降低同地点 <code>bad</code> 异常单据的排名；如果同一地点命中多笔不同规格单据，则将候选单据及各自运行结果一并读入短期工作记忆；② <strong>查询阶段性事件与临时偏好（<code>episodic_event_preference</code>）</strong>：核查当前时间 <code>reference_time</code> 下处于有效期内（未超过 <code>ttl</code>）的差旅事件窗、短期临时降档偏好及最新显式纠正记录，已过期记录（<code>expired</code>）直接过滤。</li>
+      <li><strong>长期记忆 ③ — 程序化 / 经验记忆检索（Procedural / Experiential Memory Retrieval）</strong>：将当前地点归入通用场景类别（如“工体中心”归为“大型演艺与体育聚集场馆”），匹配 <code>procedural_experience</code> 记录的触发条件与多单消歧流程，并检查不适用列表 <code>scope.exclude</code>——如果当前请求属于下行视频点播或普通室内常驻场景，直接剔除该条经验记录。</li>
     </ul>
 
-    <div class="tcolorbox importantbox">
-      <div class="tcb-title">工程实践：在代码层完成时间偏移算术合成，不在 Prompt 中让大模型做时间加减法</div>
-      <div class="tcb-body">
-        <p>大模型在处理跨小时边界的时间加减（如 <code>19:30</code> 提前 <code>20min</code> 变为 <code>19:10</code>，结束时间保持 <code>21:30</code> 不变，总时长应变为 <code>140min</code>）时容易出现起止时间与时长不一致。由 <code>fastpath.py</code> 在注入前用确定性代码计算合成后的起止时间与总时长并直接写入注入卡片，可确保终态参数 100% 满足自洽断言。</p>
+    <div class="figure-wrap">
+      <div class="mermaid-box">
+        <pre class="mermaid">
+flowchart LR
+    IN["<b>工作记忆检索请求</b><br/>正向短语窗口 · 当前时间"] --> M1["<b>长期-语义记忆</b>：转换口语 · 匹配周期场景与默认档"]
+    IN --> M2["<b>长期-情景记忆(单据)</b>：查询历史单据 · 正常单据排前"]
+    IN --> M3["<b>长期-情景记忆(事件)</b>：查询未过期 TTL 临时偏好与纠正"]
+    IN --> M4["<b>长期-程序化/经验记忆</b>：匹配同类通用场景 · 剔除不适用业务"]
+    M1 --> C["<b>二阶段关联读取槽位</b><br/>跨表补齐应用、画质与时长"]
+    M2 --> C
+    M3 --> C
+    M4 --> C
+    C --> OUT["<b>综合打分排序 (Retrieval)</b><br/>Top-<i>k</i> 读入短期工作记忆"]
+        </pre>
       </div>
+      <p class="figure-caption"><strong>图 4.2：三类长期记忆（语义、情景、程序化/经验）并行检索、二阶段关联补全并读入短期工作记忆的流程</strong><br/>&emsp;&emsp;长期语义记忆、长期情景记忆（含历史单据流水与带 <code>TTL</code> 阶段事件）以及长期程序化/经验记忆并行完成匹配与跨表槽位补齐，统一排序后将 Top-\(k\) 有效记录读入短期工作记忆。</p>
     </div>
 
-    <h2 class="subsection-title" id="sec-4-3">4.3 上下文注入卡片结构与事后回执反哺闭环</h2>
-    <p>根据路径裁决结果，<code>build_context_for_session</code> 生成结构化 Markdown 注入块并拼入系统提示词。清单 4.1 对比展示了<strong>慢路径冲突消歧注入卡片</strong>与<strong>快路径经验合成注入卡片</strong>的实际载荷格式：</p>
+    <h2 class="subsection-title" id="sec-4-3">4.3 综合排序评分与多记忆联合检索</h2>
+    <p>对通过条件过滤的长期记忆候选记录，综合向量相似度、记忆保持率、近期访问热度与置信度加权计算排序得分：</p>
 
-    <div class="listing-caption">
-      <span>清单 4.1：慢路径待澄清冲突注入卡与快路径经验合成注入卡的 Prompt 载荷对比</span>
-      <span class="src-tag">source: memory_system/api.py &amp; pipeline/fastpath.py</span>
+    $$S_i = \alpha_i \big(w_s s_i + w_r R_i + w_h h_i + w_c c_i\big)$$
+
+    <p class="no-indent">符号解释如下：</p>
+    <ol>
+      <li>\(s_i, R_i, h_i, c_i\)：分别为正向窗口最高余弦相似度（命中否定表达已扣减 \(\delta_{\text{neg}}\)）、时间保持率、近期访问热度与记录置信度；\(w_s, w_r, w_h, w_c\) 为对应的权重参数（满足 \(w_s + w_r + w_h + w_c = 1\)）。</li>
+      <li>\(\alpha_i\)：状态过滤系数；正常生效记录取 \(1\)，用户指代顺畅体验时的同地点卡顿异常情景单据取降权系数 \(\gamma_{\text{bad}}\)（\(0 < \gamma_{\text{bad}} < 1\)，排在正常单据之后），已替代的旧语义档位（<code>superseded</code>）、已过期的情景临时偏好（<code>expired</code>）或落入不适用列表 <code>scope.exclude</code> 的程序化/经验记录取 \(0\)（直接剔除）。</li>
+    </ol>
+
+    <p>在实际复杂请求中，通常需要三类长期记忆配合读入短期工作记忆。表 4.1 列出了四类常见联合检索场景的配合顺序与优先级规则：</p>
+
+    <div class="table-wrap">
+      <p class="table-caption">表 4.1：三类长期记忆联合检索读入短期工作记忆的配合顺序与冲突优先级</p>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width:20%;">长期记忆组合类型</th>
+            <th style="width:25%;">用户请求示例</th>
+            <th style="width:31%;">配合检索顺序（Retrieval &rarr; 工作记忆）</th>
+            <th style="width:24%;">工作记忆内的槽位优先级规则</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>长期语义 +<br/>长期情景（临时事件）</strong></td>
+            <td>（出差或月末省流有效期内）<br/>“中午照例开播”</td>
+            <td>先查<strong>长期语义记忆</strong>得到固定时段 <code>12:30~14:00</code> 与默认 <code>4K</code> 档位；再查<strong>长期情景记忆</strong>命中未过期的临时 <code>720p</code> 省流偏好。</td>
+            <td>有效期内（未过 <code>TTL</code>）的情景临时偏好在工作记忆中局部覆盖画质槽位；过期后自动恢复常驻 <code>4K</code>。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>长期语义 +<br/>长期情景（历史单据）</strong></td>
+            <td>“今晚在奥体用<strong>小破站开播</strong>，按<strong>上周没卡那次</strong>办”</td>
+            <td>先查<strong>长期语义记忆</strong>将“小破站开播”转为 <code>bilibili:openlive</code>；再查<strong>长期情景记忆（单据表）</strong>找到奥体上周运行结果为 <code>good</code> 的正常单据读取规格。</td>
+            <td>当轮明确指定的应用优先于旧单据中的应用；正常情景单据（<code>good</code>）排在卡顿单据（<code>bad</code>）之前。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>长期语义 +<br/>长期程序化/经验</strong></td>
+            <td>（周六晚演出日）<br/>“到工体了，按周末习惯开抖音直播”</td>
+            <td>先查<strong>长期语义记忆</strong>读取常用档位 <code>4K</code>；再按“大型演艺与体育聚集场馆 + 上行推流”从<strong>长期程序化/经验记忆</strong>召回提前 20 分钟开启上行切片规则。</td>
+            <td>在常驻档位基础上叠加程序化/经验调整参数（开始时间前移 20 分钟并开启上行专网切片）。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>三类长期记忆全联合<br/>&rarr; 短期工作记忆</strong></td>
+            <td>“今晚 19:30 去<strong>工体</strong>用<strong>小破站开播</strong>，照<strong>奥体那次</strong>办”（奥体存在多笔不同规格单据）</td>
+            <td><strong>长期语义记忆</strong>转换口语叫法 + <strong>长期情景记忆</strong>核查当晚短期日程并查出奥体多笔候选历史单据 + <strong>长期程序化/经验记忆</strong>跨场馆召回预热规则与多单消歧流程。</td>
+            <td>将多笔候选情景单据差异与消歧流程一并读入<strong>短期工作记忆</strong>，供下游向用户核实确认。</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <pre><code># ================== 形态 A：慢路径待澄清冲突注入卡片 (Slow-Path Disambiguation Card) ==================
-[系统路径裁决]: SLOW_PATH (检出业务方向冲突 + 同晚预约时间窗重叠，禁止直接生成派单指令)
-[已解码语义与情景记忆]:
-  - 个性化简称映射: "小破站开播" -> 应用=哔哩哔哩 (bilibili), 业务=上行开直播 (openlive)
-  - 历史目标顺畅单 (Q+, AppQuality=good): 单号 NE-09 | 2026-11-15 | 北京奥体中心 | 抖音开直播 | 4K/20ms | 19:10~21:30 (含提前20min预热)
-  - 历史同地异常单 (Q-, AppQuality=bad, 已压制禁用): 单号 NE-05 | 1080p 未预热 | 卡顿6次
-[当前检出的待澄清冲突项]:
-  1. 业务方向冲突: 用户口头说『看直播 (live_watch)』，但所指代的上周未卡顿单 NE-09 实为『开直播 (openlive)』；
-  2. 同晚预约重叠: 今晚 19:00~20:00 已存在『移动视频会议』预约单，与 19:30 开播时间窗重叠。
-[本轮响应指令]: 请在 1 轮回复中同时向用户核实上述 2 个冲突点及本次预期时长，已明确的 4K/20ms 档位禁止重复追问。
-
-# ================== 形态 B：快路径原地合成注入卡片 (Fast-Path Synthesized Card) ==================
-[系统路径裁决]: FAST_PATH (核心 7 槽位已完备对齐且命中高置信场馆经验卡，禁止发起多余追问，1 轮直接确认出单)
-[四类记忆联合溯源]:
-  - 事实-语义记忆: 应用=抖音 (douyin), 业务=上行开直播 (openlive), 最新生效档位=4K / 25Mbps / 20ms (pref|v2)
-  - 事实-情景记忆: 参照历史顺畅单 NE-09 (北京奥体中心, AppQuality=good)
-  - 经验记忆命中: exp|stadium_crowd|openlive (大型聚集场馆演出推流 -> 自动提前 20min 开启 6G NGC 上行专网切片)
-[原地合成终态保障参数 (已通过 end - start == duration 校验)]:
-  - 目标场馆: 北京工人体育场 (跨场馆泛化命中)
-  - 保障时间窗: 2026-11-28 19:10 ~ 2026-11-28 21:30 (基准 19:30 起点已前置平移 -20min 预热)
-  - 保障总时长: 140min
-  - 保障规格: 4K 分辨率 | 20ms 时延上限 | 6G_NGC_UL_Dedicated_Slice 专网切片</code></pre>
 
     <h2 class="subsection-title" id="sec-4-4">4.4 本章小结</h2>
-    <p>本章阐述了从检索结果到 LLM 上下文注入的受控衔接机制：通过注入前确定性三路门控（快路径、慢路径、边界路径）消除模型自由判断的随意性；在快路径下由代码层完成基准参数与经验偏移量的原地算术合成，实现 1 轮闭环；在慢路径下仅注入冲突焦点集合驱动最小反问，并通过事后网元回执反哺完成闭环更新。</p>
+    <p>本章通过滑动窗口切分与否定表达扣分保留了长句中局部短语的匹配精度，按长期语义记忆、长期情景记忆（含历史单据与阶段性临时事件）与长期程序化/经验记忆并行检索与二阶段关联补全，并通过状态过滤系数实现了正常单据优先、过期记录屏蔽与不适用经验剔除。</p>
 
     <!-- ==================== CHAPTER 5 ==================== -->
     <div class="running-header">
-      <span>第 5 章 · 端到端完整样本走查与三阶段评测对齐</span>
-      <span>联接 Agent 认知记忆系统技术报告</span>
+      <span>第 5 章 · 短期工作记忆的上下文拼装注入与长短期写回闭环</span>
+      <span>联接 Agent 记忆系统技术报告</span>
     </div>
 
-    <h1 class="section-title" id="sec-5">5 端到端完整样本走查与三阶段评测对齐</h1>
+    <h1 class="section-title" id="sec-5">5 短期工作记忆的上下文拼装注入与长短期写回闭环</h1>
 
-    <h2 class="subsection-title" id="sec-5-1">5.1 跨 30 天完整业务样本走查</h2>
-    <p>为展示四类记忆在<strong>“萃取 $\rightarrow$ 检索 $\rightarrow$ 注入”</strong>三阶段的完整协同过程，以下追踪巡回主播 <code>USER_001</code> 在 30 天时间线上的三个关联节点：<strong>节点 A（Day 09 奥体中心未预热异常单 <code>NE-05</code>）$\rightarrow$ 节点 B（Day 15 奥体中心慢路径 2 轮澄清会话 <code>S-03</code> 与顺畅单 <code>NE-09</code>，触发经验卡沉淀）$\rightarrow$ 节点 C（Day 28 跨场馆去工人体育场会话 <code>S-06</code>，四类记忆耦合检索与快路径 1 轮闭环）</strong>。</p>
+    <h2 class="subsection-title" id="sec-5-1">5.1 短期工作记忆的容量控制与长期检索结果结构化拼装</h2>
+    <p>在 <code>CoALA</code> 架构中，<strong>短期工作记忆（Working Memory）是连接外部长期记忆库与大模型推理核心的唯一枢纽</strong>。如果把外部长期记忆库中的原始长对话或已失效的历史记录全部塞进短期工作记忆，一方面会超出上下文窗口容量上限，另一方面容易让下游模型混淆当前生效值与历史旧值。参考 <code>CoALA</code> 与 <code>Letta / MemGPT</code> (arXiv:2310.08560) 的工作记忆换页管理机制，系统按以下三项原则将检索出的三类长期记忆拼装进短期工作记忆（见图 5.1）：</p>
+    <ul>
+      <li><strong>常驻摘要与按需明细分离（控制短期工作记忆容量）</strong>：短期工作记忆中仅常驻保留当前会话的活跃槽位状态、生效中（<code>active</code>）的长期语义映射/默认档位摘要以及未过期（未超 <code>TTL</code>）的情景临时偏好；长期情景记忆中的具体历史单据明细与长期程序化/经验记忆条目仅在当轮检索命中时按需换入短期工作记忆，且严禁混入标为 <code>superseded</code> 或 <code>expired</code> 的旧记录。</li>
+      <li><strong>程序化/经验偏移参数预计算与时间算术自洽</strong>：当检索命中长期程序化/经验记忆中的提前预热偏移规则（如 <code>start_time_offset_min = -20</code>）时，在读入短期工作记忆时直接基于基准起止时间算好调整后的推荐时间窗与总时长（保证 \(t_{\text{end}} - t_{\text{start}} = \text{duration}\)），避免下游大模型口算时间出错。</li>
+      <li><strong>同地多笔候选情景单据与状态差异显式呈递</strong>：当长期情景记忆在同一地点命中多笔不同规格或不同运行结果的单据（如奥体中心同时存在顺畅单 <code>NE-09 [good]</code> 与卡顿单 <code>NE-05 [bad]</code>）时，在短期工作记忆上下文中明确列出每笔候选单据的单号、规格差异与 <code>AppQuality</code> 运行结果状态，并附上程序化消歧流程供下游使用。</li>
+    </ul>
 
     <div class="figure-wrap">
       <div class="mermaid-box">
         <pre class="mermaid">
 flowchart LR
-    subgraph N1["节点 A (Day 09): 首次场馆异常单"]
-        A1["网元单据 NE-05<br/>奥体中心 | 抖音开直播<br/>19:30~21:30 | 1080p | 未预热"] --> A2["事后回执: AppQuality=bad<br/>(PRB=92%, 卡顿6次)<br/>原样写入情景记忆台账"]
-    end
-
-    subgraph N2["节点 B (Day 15): 慢路径澄清与经验萃取"]
-        B1["会话 S-03 首轮请求:<br/>『在奥体19:30直播，别像上次那样卡』"] --> B2["检索 NE-05(bad) 触发 SLOW_PATH<br/>2轮澄清对齐: 提前20m预热 + 4K切片"]
-        B2 --> B3["执行生成好单 NE-09 (AppQuality=good)<br/>三元锚定 (NE-05, S-03, NE-09)<br/>差分提炼场馆经验卡 exp|stadium"]
-    end
-
-    subgraph N3["节点 C (Day 28): 跨场馆四记忆耦合快路径闭环"]
-        C1["会话 S-06 首轮请求:<br/>『到工体了，19:30用小破站开播，<br/>照奥体没卡那次规格办』"] --> C2["四路混合检索协同:<br/>① 语义解码『小破站』=bilibili<br/>② 情景锁定 NE-09(good) 压制 NE-05<br/>③ 程序化对齐场馆常驻档<br/>④ 经验跨馆(奥体→工体)命中预热规则"]
-        C2 --> C3["FAST_PATH 原地参数合成:<br/>bilibili | openlive | 工体 | 4K<br/>19:10~21:30 (140min, 含提前20m)<br/>注入快路径卡 → 1 轮零追问直办"]
-    end
-
-    A2 --> B1
-    B3 --> C1
+    R["<b>三类长期记忆 Top-<i>k</i></b><br/>语义 · 情景 · 程序化/经验"] --> F["<b>Retrieval 过滤与预计算</b><br/>剔除 superseded/expired · 算好时间偏移"]
+    F --> C["<b>加载至短期工作记忆</b><br/>当前会话活跃槽位 + 结构化长期记忆块"]
+    C --> M["<b>支撑下游推理与 Learning 写回</b><br/>完结后写回长期情景单据 · 更新语义与经验"]
         </pre>
       </div>
-      <p class="figure-caption"><strong>图 5.1：巡回主播样本（USER_001）跨 30 天的“情景记账 $\rightarrow$ 慢路径三元差分萃取经验 $\rightarrow$ 跨场馆四记忆耦合快路径注入”演进链路</strong><br/>&emsp;&emsp;Day 15 的慢路径澄清与好单回执完成了经验记忆的首次沉淀；Day 28 用户更换到新场馆（工人体育场）并使用自定义口语简称（“小破站开播”）时，四路检索与快路径合成器协同实现 1 轮闭环。</p>
+      <p class="figure-caption"><strong>图 5.1：从三类长期记忆检索加载至短期工作记忆（Retrieval）并在执行后写回长期记忆（Learning）的闭环流程</strong><br/>&emsp;&emsp;先剔除已替代或已过期记录并完成程序化经验的时间偏移预计算，按结构化分块加载进短期工作记忆供当前轮推理；单据执行完毕后，再从短期工作记忆向三类长期记忆执行异步写回与更新。</p>
     </div>
 
-    <div class="table-wrap">
-      <p class="table-caption">表 5.1：节点 C（Day 28 工人体育场测试会话 <code>S-06</code>）在萃取、检索与注入各环节的内部状态流转表</p>
-      <table class="booktabs">
-        <thead>
-          <tr>
-            <th style="width:16%;">链路阶段</th>
-            <th style="width:22%;">输入信号与触发模块</th>
-            <th style="width:36%;">内部计算过程与同行槽位提取明细</th>
-            <th style="width:26%;">阶段产出与下游作用</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>1. 滑窗切分与<br/>否定分离</strong></td>
-            <td>Query：<code>"到工体了，19:30用小破站开播，别用卡顿那套，照奥体没卡那次办"</code></td>
-            <td>• 负向子句分离：<code>"别用卡顿那套"</code> $\rightarrow$ 标记排斥 <code>app_quality='bad'</code>；<br/>• 正向短窗切分：<code>w1="到工体了"</code>, <code>w2="用小破站开播"</code>, <code>w3="照奥体没卡那次"</code>。</td>
-            <td>生成正向滑动短窗向量集与负向体验过滤约束。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td><strong>2. 四路混合检索<br/>（Stage 2）</strong></td>
-            <td><code>MemorySearch.retrieve</code><br/>（双索引表联合查询）</td>
-            <td>• <strong>路由1（语义）：</strong><code>w2</code> 命中 <code>expr|小破站开播</code>（相似度 <code>0.96</code>）$\rightarrow$ 读取同行 <code>target_col="bilibili:openlive"</code>；查 <code>preferred_value</code> 得最新生效档位 <code>4K</code>；<br/>• <strong>路由3（情景）：</strong><code>w3</code> 命中地点 <code>"北京奥体中心"</code>，按体验门控对 <code>NE-09 (good)</code> 保持原权、对 <code>NE-05 (bad)</code> 施加 <code>0.2</code> 压制系数，锁定 <code>NE-09 (120min, 4K)</code>；<br/>• <strong>路由4（经验）：</strong>“工体”映射至“大型演艺与体育聚集场馆”，业务为 <code>openlive</code>（未触碰 <code>scope.exclude</code> 点播边界），召回 <code>exp|stadium</code>（<code>lead_time: -20min</code>, <code>duration: +20min</code>, <code>slice: 6G-A/NGC</code>）。</td>
-            <td>四路必需证据集合 <code>Q</code> 在 Top-5 内全部召回（<code>Hit_all@5 = 1.0</code>），且顺畅正例稳居卡顿单之前。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td><strong>3. 路径裁决与<br/>原地参数合成<br/>（Stage 3）</strong></td>
-            <td><code>RoutingGate</code> &amp;<br/><code>SlotSynthesizer</code></td>
-            <td>• 冲突检查：当晚工体无重叠预约单，核心 7 槽位全齐 $\rightarrow$ 裁决为 <code>FAST_PATH</code>；<br/>• 原地算术合成：基准起点 <code>19:30</code> 叠加经验前置偏移 <code>-20min</code> 得 <code>19:10</code>；基准时长 <code>120min</code> 加 <code>20min</code> 得 <code>140min</code>（<code>19:10~21:30</code>）。</td>
-            <td>装配 <code>[快路径已就绪保障方案卡]</code> 注入 Prompt，驱动 Agent <strong>第 1 轮直接输出完整派单</strong>（交互轮数由 2 轮降为 1 轮）。</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h2 class="subsection-title" id="sec-5-2">5.2 工作记忆上下文文本示例与向三类长期记忆的写回闭环</h2>
+    <p>清单 5.1 给出了两种典型场景下，短期工作记忆（Working Memory）整合当轮槽位状态与检索读入的三类长期记忆后，实际注入提示词的结构化上下文文本：</p>
 
-    <h2 class="subsection-title" id="sec-5-2">5.2 萃取（M 对 N）· 检索（P 对 Q）· 注入交互三阶段指标对齐</h2>
-    <p>为使记忆系统各模块在工程迭代中可独立量化与归因，全链路评测按三阶段解耦核算，分别比对萃取落盘库、检索 Top-k 列表与注入后的在线交互轨迹（表 5.2）：</p>
-
-    <div class="table-wrap">
-      <p class="table-caption">表 5.2：认知记忆系统“萃取 — 检索 — 注入交互”三阶段评测指标与工程核验标准</p>
-      <table class="booktabs">
-        <thead>
-          <tr>
-            <th style="width:16%;">链路阶段</th>
-            <th style="width:22%;">比对对象</th>
-            <th style="width:26%;">核心评测指标</th>
-            <th style="width:36%;">判分准则与重点防范的工程缺陷</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td rowspan="2"><strong>Stage 1：<br/>记忆萃取与演进</strong></td>
-            <td rowspan="2">系统萃取记忆库 <code>M</code><br/>对比<br/>标准真值快照库 <code>N</code></td>
-            <td>1. 四类记忆抽取 F1<br/>（含召回率 <code>R</code> 与误抽率 <code>FDR</code>）</td>
-            <td>按“记忆类别 + 适用范围 + 核心槽位 + 状态 <code>active</code> + 证据单号交集”五维对齐；重点考察<strong>混杂流中慢路径经验卡是否漏抽</strong>、1~8min 短单与闲聊是否被误抽入库。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td>2. 状态更新准确率 <code>Acc_upd</code></td>
-            <td>核验套餐/档位升级后旧记录是否正确标记为 <code>superseded</code>（防旧值残留为 <code>active</code>），以及单次临时改期（<code>temporary</code>）是否零污染常驻程序化记忆。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td rowspan="2"><strong>Stage 2：<br/>四路混合检索</strong></td>
-            <td rowspan="2">检索召回 Top-k 集合 <code>P</code><br/>对比<br/>当前轮必需证据集 <code>Q</code></td>
-            <td>3. 联合证据召回率 <code>Recall@k</code><br/>与全齐率 <code>Hit_all@k</code></td>
-            <td>在多记忆交叉耦合样本上，要求 Top-k 同时召回语义简称、程序化周期、情景好单与跨场馆经验卡（缺一即判 <code>Hit_all@k = 0</code>）。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td>4. 排序质量 <code>NDCG@k</code><br/>与负例压制率 <code>R_sup</code></td>
-            <td>要求所有生效正例 <code>Q+</code> 的排序位置高于同地 <code>AppQuality=bad</code> 卡顿单、已作废旧单以及触碰 <code>scope.exclude</code> 的异类经验卡。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td rowspan="3"><strong>Stage 3：<br/>上下文注入与<br/>受控在线交互</strong></td>
-            <td rowspan="3">注入卡片驱动下的<br/>在线交互轨迹与终态单<br/>对比<br/>双盲用户模拟器真值</td>
-            <td>5. 快/慢路径分流准确率<br/>（过度澄清率 &amp; 盲目抢跑率）</td>
-            <td>核验 <code>RoutingGate</code> 裁决准确性：槽位齐备且命中经验时多问计入<strong>过度澄清</strong>；存在多单冲突或预约重叠时不反问直接出单计入<strong>盲目抢跑（直接 0 分）</strong>。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td>6. 慢路径反问命中率<br/>与平均交互轮数下降</td>
-            <td>统计慢路径首轮追问对缺失/冲突槽位的覆盖率；对比经验沉淀前（2~3 轮）与沉淀后跨场馆同类请求（<strong>1 轮</strong>）的轮数收敛效果。</td>
-          </tr>
-          <tr class="midrule-row">
-            <td>7. 有依据终态准确率<br/>与多轮一致性 <code>pass^3</code></td>
-            <td>单会话得 1 分须同时满足：<strong>① 零红线违例 + ② 参数源自 Top-k 检索落地证据 + ③ <code>end - start == duration</code> + ④ 7 槽位全等</strong>；独立运行 3 次全过计 <code>pass^3 = 1</code>。</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="listing-caption">
+      <span>清单 5.1：短期工作记忆（整合当轮活跃槽位与三类长期记忆检索结果）的上下文拼装示例</span>
+      <span class="src-tag">source: memory_system/api.py &amp; runtime/working_memory.py</span>
     </div>
+    <pre><code># ================== 场景 A：跨场馆直播请求（三类长期记忆读入短期工作记忆，含预热偏移计算结果） ==================
+[短期工作记忆 (Working Memory - Active Session Context)]:
+  0. [当前会话活跃槽位状态 (Active Slots)]:
+     - 当轮输入: "到工体了，19:30用小破站开播，别用卡顿那套，照奥体没卡那次办"
+     - 已解析槽位: 地点=北京工人体育场, 原始请求开始时间=19:30
+  1. [读入的长期记忆 ① - 语义记忆 (Semantic Memory)]:
+     - 口语映射 (expression): "小破站开播" -> 应用=哔哩哔哩 (bilibili), 业务=上行开直播 (openlive)
+     - 当前生效默认档位 (preferred_value, active): 分辨率=4K, 上行码率=25Mbps, 时延上限=20ms
+  2. [读入的长期记忆 ② - 情景记忆 (Episodic Memory)]:
+     - 阶段性临时偏好 (episodic_event_preference): 当前无未过期临时覆写项
+     - 历史保障单据记录 (episodic_order_record):
+       * 命中顺畅参考单据 NE-09 (2026-11-15, 北京奥体中心, 4K/20ms, 基准时长 120min, 运行结果 AppQuality=good)
+       * 同地点异常单据 NE-05 (2026-11-09, 1080p 未预热, 运行结果 AppQuality=bad, 卡顿6次 -> 已降权排除)
+  3. [读入的长期记忆 ③ - 程序化 / 经验记忆 (Procedural / Experiential Memory)]:
+     - 命中规则 exp|stadium_crowd|openlive (适用场景: 大型演艺与体育聚集场馆 + 上行推流)
+     - 调整动作与预计算时间窗: 在 19:30~21:30 (120min) 基础上提前 20min 开启 6G_NGC_UL_Slice 切片
+     - 工作记忆合成后的推荐参数 (已核对 end - start == duration): 开始=19:10, 结束=21:30, 总时长=140min
+
+# ================== 场景 B：模糊指代同地多单且存在日程重叠（工作记忆呈递多单差异与消歧流程） ==================
+[短期工作记忆 (Working Memory - Active Session Context)]:
+  0. [当前会话活跃槽位状态 (Active Slots)]:
+     - 当轮输入: "19:30 准备用抖音看直播，按上周六在鸟巢没卡的那单办"
+     - 待消解冲突项: ① 口头说『看直播』与所指代历史顺畅单『开直播』方向不一致；② 与当晚 19:00~20:00 预约单时段重叠
+  1. [读入的长期记忆 ① - 语义记忆 (Semantic Memory)]:
+     - 当前生效默认档位 (preferred_value, active): 抖音 (douyin) | 开直播 (openlive) | 4K / 20ms
+  2. [读入的长期记忆 ② - 情景记忆 (Episodic Memory)]:
+     - 当晚已生效预约日程: ORD_20260815_01 (19:00~20:00, 抖音-看直播, 与当轮 19:30 请求时段重叠)
+     - 同地点历史保障单据记录 (episodic_order_record):
+       * 候选单据 1: SN_20260808_A (鸟巢下午场, 15:00~17:00, 120min, 抖音-开直播, 4K/20ms, 运行结果 AppQuality=good)
+       * 候选单据 2: SN_20260808_B (鸟巢晚高峰, 20:00~22:00, 120min, 抖音-开直播, 1080p/50ms, 运行结果 AppQuality=bad [禁用参考])
+  3. [读入的长期记忆 ③ - 程序化 / 经验记忆 (Procedural / Experiential Memory)]:
+     - 命中多单消歧流程 EXP_OVERLAPPING_ORDER_01: 存在同地多单或同应用预约重叠时，列明候选单规格与重叠时段核实确认</code></pre>
+
+    <p>当会话终结且保障单据执行完毕后，系统触发从<strong>短期工作记忆向三类长期记忆的写回闭环（<code>Learning</code>）</strong>：① 将本次完整单据与网元实际运行结果（<code>AppQuality = good / bad</code> 及实测时延、丢包）作为新事件原样追加写入<strong>长期情景记忆（<code>episodic_order_record</code>）</strong>；② 将常规执行记录滑入中期候选池累加证据得分，跨越 \(W_{\text{span}}\) 且达 \(\theta_{\text{long}}\) 时晋升写入<strong>长期语义记忆（Semantic Memory）</strong>；③ 若本次会话在短期工作记忆中经历了慢路径多轮澄清纠偏，则结合情景单据对比提炼新规则写入<strong>长期程序化/经验记忆</strong>；若本次单据直接复用了已有程序化/经验规则，则根据实际运行结果（参考 <code>arXiv:2505.16067</code>）更新该规则的成功/失败验证计数与置信度，随后清空释放当前短期工作记忆。</p>
 
     <h2 class="subsection-title" id="sec-5-3">5.3 本章小结</h2>
-    <p>本章通过巡回主播跨 30 天的业务样本走查，展示了四类记忆从差单记账、慢路径三元差分提炼经验，到跨场馆四路耦合检索与快路径原地合成注入的完整闭环，并将工程模块与三阶段评测指标对齐。</p>
+    <p>本章明确了短期工作记忆与三类长期记忆之间的上下文拼装与写回闭环：通过常驻摘要与按需明细分离控制短期工作记忆长度，屏蔽已替代与已过期长期记录，在读入工作记忆时预计算经验时间偏移以保证起止时间与总时长一致，并在事后根据网元实际运行结果从短期工作记忆写回更新三类长期记忆。</p>
 
     <!-- ==================== CHAPTER 6 ==================== -->
     <div class="running-header">
-      <span>第 6 章 · 总结与工程核查清单</span>
-      <span>联接 Agent 认知记忆系统技术报告</span>
+      <span>第 6 章 · 完整样本示例与评测指标</span>
+      <span>联接 Agent 记忆系统技术报告</span>
     </div>
 
-    <h1 class="section-title" id="sec-6">6 总结与工程核查清单</h1>
+    <h1 class="section-title" id="sec-6">6 完整样本示例与评测指标</h1>
 
-    <h2 class="subsection-title" id="sec-6-1">6.1 核心设计总结</h2>
-    <p>整套认知记忆系统从底层表结构到上层上下文注入遵循三条设计原则：</p>
-    <ol>
-      <li><strong>分类正交化（四类记忆分库治理）</strong>：将<strong>事实-语义记忆</strong>（身份权益、<code>expression</code> 简称映射、<code>service_to_app</code>、<code>preferred_value</code>）、<strong>事实-情景记忆</strong>（<code>episodic_record</code> 历史单据与好坏回执，一单一记录追加零衰减）、<strong>程序化记忆</strong>（<code>periodic_preference</code> 与 <code>scene_preference</code>，满 3 次晋升）与<strong>经验记忆</strong>（<code>experience_card</code> 因果调参规则与适用边界）物理分离，配合“左结构化槽位列 + 右 4~10 字短词向量”双索引表，消除跨层参数污染。</li>
-      <li><strong>经验可定位、可泛化、可约束</strong>：针对经验记忆的三项工程难点——在萃取侧通过<strong>“前序差单 + 慢路径澄清会话 + 修正后好单”三元锚定与正反槽位差分</strong>从长周期混杂流中定位源头；在检索侧通过<strong>场景特征高层抽象</strong>实现跨场馆与跨说法泛化召回；在门控侧通过<strong>校验 <code>scope.exclude</code></strong> 拦截场馆内看点播或普通室内直播等字面相似异类请求。</li>
-      <li><strong>检索结构化与注入确定化</strong>：用“<code>6~10</code> 字滑动窗口向量匹配 + 否定子句分离 + 同行结构化槽位提取 + 二阶段关联表补全”替代粗放的长文本相似度检索；用注入前的确定性三路门控与代码层时间偏移算术合成替代大模型自由推演，将首次慢路径多轮澄清稳定转化为后续同类请求的 1 轮快路径闭环。</li>
-    </ol>
+    <h2 class="subsection-title" id="sec-6-1">6.1 跨周期业务样本串联示例（USER_001）</h2>
+    <p>以技术主播用户 <code>USER_001</code> 在 30 天评测周期内的关键时间节点为例，串联展示<strong>短期工作记忆</strong>如何与<strong>长期情景记忆、长期语义记忆、长期程序化/经验记忆</strong>协同完成写入、晋升、隔离与跨场馆联合检索（见图 6.1 与表 6.1）。</p>
 
-    <div class="tcolorbox dialoguebox">
-      <div class="tcb-title">工程落地四项核查清单（Engineering Checklist）</div>
+    <div class="figure-wrap">
+      <div class="mermaid-box">
+        <pre class="mermaid">
+flowchart LR
+    T1["<b>Day 09-10 · 写入长期情景记忆</b><br/>奥体未预热发生拥塞 · 原样记入情景单据表"] --> T2["<b>Day 12-15 · 提炼长期程序化/经验记忆</b><br/>工作记忆多轮澄清 + 情景正反单据对比立规"]
+    T2 --> T3["<b>Day 16-20 · 情景 TTL 隔离与语义晋升</b><br/>单日720p带TTL入情景库 · 90min晋升长期语义库"]
+    T3 --> T4["<b>Day 28 · 三类长期记忆读入工作记忆</b><br/>前往工体中心开播 · 联合召回配齐全部参数"]
+        </pre>
+      </div>
+      <p class="figure-caption"><strong>图 6.1：样本 <code>USER_001</code> 在 30 天周期内短期工作记忆与三类长期记忆的协同演化及跨场馆联合召回过程</strong><br/>&emsp;&emsp;长期情景记忆原样记录奥体正反单据并隔离单日临时 720p 变动，长期程序化/经验记忆从工作记忆慢路径澄清与情景单据对比中提炼场馆预热规则，长期语义记忆完成常驻档位升级，最终在第 28 天前往新场馆（工人体育场）时将三类长期记忆联合读入短期工作记忆配齐参数。</p>
+    </div>
+
+    <div class="table-wrap">
+      <p class="table-caption">表 6.1：第 28 天工人体育场会话（<code>S-06</code>）在长短期记忆各环节的处理明细</p>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width:16%;">处理步骤</th>
+            <th style="width:24%;">输入内容</th>
+            <th style="width:36%;">短期工作记忆与三类长期记忆内部交互结果</th>
+            <th style="width:24%;">输出结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 工作记忆接收与<br/>滑动窗口切分</strong></td>
+            <td><code>"到工体了，19:30用小破站开播，别用卡顿那套，照奥体没卡那次办"</code></td>
+            <td>短期工作记忆接收本轮输入，分离否定子句<code>"别用卡顿那套"</code>（标记降低长期情景记忆中 <code>bad</code> 异常单据排名）；切分正向窗口：<code>"到工体了"</code>、<code>"用小破站开播"</code>、<code>"照奥体没卡那次"</code>。</td>
+            <td>正向短语窗口向量组与异常单据降权标记。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>2. 三类长期记忆<br/>并行检索（Retrieval）</strong></td>
+            <td>短语窗口向量 + 当前日期 <code>Day 28</code></td>
+            <td>• <strong>长期语义记忆：</strong>将<code>"小破站开播"</code>转为 <code>bilibili:openlive</code>，查得最新生效默认档位 <code>4K</code>（跳过 <code>superseded</code> 旧版）；<br/>• <strong>长期情景记忆：</strong>核查 Day 16 的临时 <code>720p</code> 记录已过期（<code>expired</code>）；在历史单据表中定位奥体顺畅单据 <code>NE-09 (120min, 4K, good)</code>，将卡顿单据 <code>NE-05 (bad)</code> 乘降权系数 \(\gamma_{\text{bad}}\) 排后；<br/>• <strong>长期程序化/经验记忆：</strong>“工体”归入大型演艺与体育聚集场馆且业务为上行推流，召回提前 20 分钟开启上行切片规则。</td>
+            <td>前 5 条结果内集齐长期语义、长期情景与长期程序化/经验全部所需记录（\(\text{Hit}_{\text{all}}@5 = 1.0\)）。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td><strong>3. 读入短期工作记忆<br/>拼装与时间预计算</strong></td>
+            <td>召回的三类长期记忆记录</td>
+            <td>读入短期工作记忆后，在奥体顺畅情景单据基准时间窗（<code>19:30~21:30, 120min</code>）上叠加程序化/经验规则偏移量（提前 <code>20min</code>），预计算开始时间为 <code>19:10</code>、结束时间为 <code>21:30</code>、总时长为 <code>140min</code>（核对 \(21:30 - 19:10 = 140\text{min}\)）。</td>
+            <td>短期工作记忆输出完整活跃上下文，支撑下游 1 轮直接生成准确保障单据，事后将新单据写回长期情景记忆。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="subsection-title" id="sec-6-2">6.2 萃取、检索与注入三阶段评测指标</h2>
+    <p>为分别评估长短期记忆系统各环节的准确性，评测按<strong>阶段 1：从短期工作记忆向长期记忆的萃取与更新（Learning）、阶段 2：三类长期记忆的混合检索与排序（Retrieval）、阶段 3：读入短期工作记忆后的下游应用与边界</strong>三个阶段计算指标（见表 6.2）：</p>
+
+    <div class="table-wrap">
+      <p class="table-caption">表 6.2：记忆系统三阶段评测指标与判分说明</p>
+      <table class="booktabs">
+        <thead>
+          <tr>
+            <th style="width:16%;">评测阶段</th>
+            <th style="width:22%;">比对对象</th>
+            <th style="width:24%;">核心指标</th>
+            <th style="width:38%;">判分规则与考察重点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2"><strong>阶段 1：<br/>长期记忆萃取与更新<br/>（Learning）</strong></td>
+            <td rowspan="2">系统落盘长期记忆集 \(\mathcal{N}\)<br/>对比<br/>Ground Truth 标准记忆状态快照 \(\mathcal{M}\)</td>
+            <td>1. 记忆抽取准确率与召回率<br/>（Extraction P / R / F1）</td>
+            <td>按“三类长期记忆类别 + 适用范围 + 核心槽位 + 生效状态 + 证据单号交集”比对；考察长周期混杂流中程序化/经验规则是否漏抽（防 <code>FN</code>），以及仅属于短期工作记忆的闲聊、假设试探、过短记录和单次偶发行为是否被误记为长期语义习惯（防 <code>FP</code>）。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>2. 偏好整合与状态更新准确率</td>
+            <td>考察长期语义记忆升级后旧记录是否正确写入失效时间 \(t_{\text{invalid}}\) 并标为 <code>superseded</code>，以及长期情景记忆中带有效期 <code>TTL</code> 的短期临时偏好到期后是否自动失效、未污染长期语义习惯。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="2"><strong>阶段 2：<br/>长期记忆混合检索<br/>（Retrieval）</strong></td>
+            <td rowspan="2">检索读入工作记忆的前 \(k\) 条结果集 \(\mathcal{Q}\)<br/>对比<br/>当轮所需长期证据集 \(\mathcal{P}\)</td>
+            <td>3. 多级召回率 \(\text{Recall}@k\)<br/>与跨层全齐率 \(\text{Hit}_{\text{all}}@k\)</td>
+            <td>在多类记忆耦合请求中，检查长期语义映射、长期情景记忆中的未过期临时偏好与目标历史正常单据、以及长期程序化/经验规则是否在前 \(k\) 条结果内全部召回读入短期工作记忆。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>4. 优先级排序 \(\text{NDCG}@k\)<br/>与负向排除准确率</td>
+            <td>检查当前生效的正常记录（\(\text{rel}=2\)）是否排在同地点卡顿异常情景单据、已替代旧语义档位以及不适用经验记录（\(\text{rel}=0\)）之前，并主动排除用户明确反感的负向 KQI 档位。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td rowspan="2"><strong>阶段 3：<br/>工作记忆应用与边界</strong></td>
+            <td rowspan="2">工作记忆支撑下的下游决策输出<br/>对比<br/>Ground Truth 标准答案</td>
+            <td>5. 决策与约束满足率<br/>（含一票否决红线）</td>
+            <td>套用已过期旧档位、照搬长期情景记忆中卡顿异常单据参数或违规刺探隐私直接触发一票否决判 0 分（\(V_{\text{veto}}=1\)）；未踩红线前提下核算短期工作记忆跨轮槽位保持率、长期语义/情景槽位补全率与程序化/经验规则顺应准确率。</td>
+          </tr>
+          <tr class="midrule-row">
+            <td>6. 无关场景克制率<br/>与未知事实拒答率</td>
+            <td>在日常闲聊或通用科普中克制不强行带入长期个人记忆；当用户指代长期情景记忆中不存在的虚假历史单据或未覆盖的陌生属性时，杜绝未校验参数生成并如实拒答或追问。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="subsection-title" id="sec-6-3">6.3 本章小结</h2>
+    <p>本章以 30 天业务样本串联说明短期工作记忆与三类长期记忆（语义记忆、情景记忆、程序化/经验记忆）的演化与联合召回过程，并列出萃取、检索与下游应用三个阶段的评测指标。</p>
+
+    <!-- ==================== CHAPTER 7 ==================== -->
+    <div class="running-header">
+      <span>第 7 章 · 总结与工程检查项</span>
+      <span>联接 Agent 记忆系统技术报告</span>
+    </div>
+
+    <h1 class="section-title" id="sec-7">7 总结与工程检查项</h1>
+
+    <p>围绕 6G NGC 网络体验保障场景，本报告基于 <code>CoALA</code> 架构给出了<strong>短期工作记忆（Working Memory）与三类长期记忆（语义记忆、情景记忆、程序化/经验记忆）分层管理</strong>的记忆系统方案。工程实现与参数配置时需核对以下四项要求：</p>
+
+    <div class="tcolorbox">
+      <div class="tcb-title">工程实现检查项</div>
       <div class="tcb-body">
         <ol>
-          <li><strong>Schema 正交核查</strong>：检查 <code>extractor.py</code> 与 <code>index.py</code>，确保 <code>periodic_preference</code> 中不含画质/时延字段，<code>preferred_value</code> 的 <code>phrase_text</code> 中不混入地点词，所有短词向量控制在 <code>4~10</code> 字。</li>
-          <li><strong>短期防污染核查</strong>：确保时长 <code>&lt; 10min</code> 的背景短单在预处理阶段被滤除，间隔 <code>≤ 3min</code> 的同业务断流子单合并计票，且带 <code>is_temporary_override=true</code> 的单次改期记录仅写入情景记忆台账，不进入程序化候选池。</li>
-          <li><strong>慢路径三元锚定与边界核查</strong>：确保每张落盘的 <code>experience_card</code> 均具备完整的三元证据链（<code>bad_ticket + slow_session + good_ticket</code>）及非空的 <code>scope.include / scope.exclude</code> 列表。</li>
-          <li><strong>时间自洽与证据落地断言</strong>：在 <code>fastpath.py</code> 合成终态参数后，强制执行 <code>assert end_time - start_time == duration</code> 与检索 Top-k 证据溯源校验，杜绝未校验参数生成。</li>
+          <li><strong>长短期分层与分表字段边界</strong>：<strong>短期工作记忆（<code>working_session_state</code>）</strong>仅驻留当前会话内存，维护当轮活跃槽位与检索读入的上下文，会话终结后释放；<strong>长期语义记忆</strong>的固定时段记录（<code>periodic_preference</code>）不重复保存画质与时延，基础默认档位（<code>preferred_value</code>）的短语向量文本中不带入具体地点词；<strong>长期情景记忆</strong>（<code>episodic_order_record</code>）逐笔原样保存历史单据与运行结果而不跨单合并；最小有效时长 \(T_{\min}\)、断流合并间隔 \(\Delta t_{\text{gap}}\)、晋升长期语义记忆的时间跨度 \(W_{\text{span}}\) 与得分阈值 \(\theta_{\text{long}}\) 统一放入配置文件管理。</li>
+          <li><strong>无效单据过滤与阶段性情景隔离</strong>：不足最小有效时长 \(T_{\min}\) 的后台流量记录或中途取消的无效单据在写入长期情景记忆前剔除，间隔在 \(\Delta t_{\text{gap}}\) 内的同业务断流记录合并计算；带有效期 <code>TTL</code> 的差旅或单次临时改动只写入长期情景记忆（<code>episodic_event_preference</code>），到期自动转为 <code>expired</code>，严禁污染长期语义记忆。</li>
+          <li><strong>程序化/经验规则的正反单据证据链与排除范围</strong>：每条长期程序化/经验记忆记录（<code>procedural_experience</code>）均需关联对应的长期情景记忆前序异常单据（<code>bad</code>）、短期工作记忆多轮澄清对话与调整后正常单据（<code>good</code>）编号，同时将触发条件归纳为通用场景类别，并写明非空的不适用业务列表（<code>scope.exclude</code>）。</li>
+          <li><strong>Retrieval 读入工作记忆与 Learning 写回长期记忆闭环</strong>：检索读入短期工作记忆前自动过滤 <code>superseded</code> 与 <code>expired</code> 记录，叠加程序化经验提前预热偏移后在工作记忆拼装层核对 \(t_{\text{end}} - t_{\text{start}} = \text{duration}\)；单据执行完毕后根据网元实际运行结果从短期工作记忆异步追加长期情景单据并更新程序化/经验规则的验证计数与置信度。</li>
         </ol>
       </div>
     </div>
 
     <div class="running-footer">
-      <span>联接 Agent 认知记忆系统技术报告（萃取 · 检索 · 注入完整链路）</span>
+      <span>联接 Agent 记忆系统技术报告（CoALA 长短期分层 · 演变萃取 · 程序化经验学习 · 混合检索 · 工作记忆拼装回写）</span>
       <span><a href="#top" data-lavish-ui="true">↑ 返回扉页与目录</a></span>
     </div>
   </div>
-
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       if (window.renderMathInElement) {
@@ -1009,17 +1594,50 @@ flowchart LR
       }
       if (window.mermaid) {
         mermaid.initialize({
-          startOnLoad: true,
-          theme: "neutral",
+          startOnLoad: false,
+          theme: "base",
           securityLevel: "loose",
+          themeVariables: {
+            background: "#FFFFFF",
+            primaryColor: "#FFFFFF",
+            primaryTextColor: "#111111",
+            primaryBorderColor: "#111111",
+            lineColor: "#111111",
+            secondaryColor: "#F5F5F5",
+            tertiaryColor: "#FFFFFF",
+            edgeLabelBackground: "#FFFFFF",
+            fontFamily: '"PingFang SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif',
+            fontSize: "13.5px"
+          },
           flowchart: {
-            useMaxWidth: true,
+            useMaxWidth: false,
             htmlLabels: true,
-            curve: "basis",
-            nodeSpacing: 28,
+            curve: "linear",
+            nodeSpacing: 22,
             rankSpacing: 36,
             padding: 10
           }
+        });
+        mermaid.run({
+          querySelector: ".mermaid"
+        }).then(function () {
+          document.querySelectorAll(".mermaid-box svg").forEach(function (svg) {
+            try {
+              var bbox = svg.getBBox();
+              if (bbox && bbox.width > 0 && bbox.height > 0) {
+                var pad = 4;
+                svg.setAttribute(
+                  "viewBox",
+                  (bbox.x - pad) + " " + (bbox.y - pad) + " " + (bbox.width + pad * 2) + " " + (bbox.height + pad * 2)
+                );
+              }
+            } catch (e) {}
+            svg.removeAttribute("height");
+            svg.style.maxWidth = "100%";
+            svg.style.width = "100%";
+            svg.style.height = "auto";
+            svg.style.display = "block";
+          });
         });
       }
     });
