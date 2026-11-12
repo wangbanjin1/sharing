@@ -749,7 +749,7 @@
       <div class="date-line">2026 年 11 月</div>
 
       <div class="meta-tcolorbox">
-        <p><strong>报告摘要：</strong>围绕联接 Agent（网络体验保障，含自然语言对话与网元结构化单据）场景，总结长周期故事线构造、记忆与多轮意图评测数据集、全流程评测指标、记忆分层分工、短期到长期演变机制、经验记忆归纳及在线交互评测方法。</p>
+        <p><strong>报告摘要：</strong>围绕联接 Agent（网络体验保障，含自然语言对话与网元单据）场景，总结长周期故事线构造、记忆与多轮意图评测数据集、全流程评测指标、记忆分层分工、短期到长期演变机制、经验记忆归纳及在线交互评测方法。</p>
         <p><strong>参考工作范围：</strong>涵盖 <strong>22 篇</strong>意图理解与长程记忆评测基准（五大方向：PersonaMem-v3、BehaviorMem、LoCoMo-Plus、LongMemEval、Speak &amp; Spell、BlendX、READI、IntentDelta、IN3、CICC、ClarifyMT-Bench、&tau;-bench、&tau;&sup2;-bench、CAREFUL-Bench、UserProxyBench 等）、<strong>5 套</strong>经典短期→长期记忆演变架构（北邮 MemoryOS、Mem0、Zep/Graphiti、Letta/MemGPT、MemoryBank/A-MEM）、<strong>5 篇</strong>经验记忆归纳工作（Reflexion、ExpeL、AWM、ReasoningBank、经验跟随实证研究）及 <strong>5 项</strong>在线交互评测框架。</p>
       </div>
 
@@ -824,11 +824,11 @@
 
     <h2 class="subsection-title" id="sec-1-1">1.1 故事线两层解耦设计思路</h2>
 
-    <p>面向移动网络体验保障（联接 Agent）的长期记忆与多轮意图评测，需要<strong>构造跨度数周至数月、包含自然语言对话与网元结构化单据的长周期测试数据</strong>，覆盖记忆萃取（偏好抽取、合并更新、分场景组织、画像生成、噪声抑制）与记忆检索（直接、排序、条件、排除、组合、缺失拒答）的各项测试点。</p>
+    <p>面向移动网络体验保障（联接 Agent）的长期记忆与多轮意图评测，需要<strong>构造跨度数周至数月、包含自然语言对话与网元单据的长周期测试数据</strong>，覆盖记忆萃取（偏好抽取、合并更新、分场景组织、画像生成、噪声抑制）与记忆检索（直接、排序、条件、排除、组合、缺失拒答）的各项测试点。</p>
 
-    <p>固定剧本模板或单层平铺变量表存在三方面问题：第一，<strong>时间线排布与事件内容耦合</strong>，调整干扰密度或主支线穿插方式时会影响单点业务内容；第二，<strong>同层因子存在条件依赖或跨层重复</strong>，例如将受时间窗口约束的“事件规模”与“时间跨度”并列，将仅在存在支线时生效的“支线归宿”与“事件线结构”并列，或在排布层与内容层重复定义“偏好演进”与“闲聊干扰”；第三，<strong>边界与噪声场景覆盖不全</strong>，缺少对负向排斥偏好、短期临时偏好过期、未提及属性拒答边界以及闲聊、试探、情绪发泄、单次偶发等非偏好噪声的控制参数。</p>
+    <p>然而，传统的固定剧本模板或单层平铺变量表在实际构造中面临三方面局限：其一，<strong>时间线排布与事件内容耦合</strong>，调整干扰密度或主支线穿插方式时会影响单点业务内容；其二，<strong>同层因子之间存在条件依赖或跨层重复</strong>，例如将受时间窗口约束的“事件规模”与“时间跨度”并列，将仅在存在支线时生效的“支线归宿”与“事件线结构”并列，或在排布层与内容层重复定义“偏好演进”与“闲聊干扰”；其三，<strong>边界与噪声场景覆盖不足</strong>，缺少对负向排斥偏好、短期临时偏好过期、未提及属性拒答边界以及闲聊、试探、情绪发泄、单次偶发等非偏好噪声的控制参数。</p>
 
-    <p>参考 <code>PersonaMem-v3</code>、<code>LoCoMo</code>、<code>DynamicMem</code>、<code>MemoryAgentBench</code> 与 <code>LongMemEval</code> 的设计，故事线生成拆分为<strong>排布层与内容层</strong>两层结构（图 1）：</p>
+    <p>为此，参考 <code>PersonaMem-v3</code>、<code>LoCoMo</code>、<code>DynamicMem</code>、<code>MemoryAgentBench</code> 与 <code>LongMemEval</code> 的主流做法，我们将故事线生成解耦为<strong>排布层与内容层</strong>两层结构（图 1）：</p>
     <ul>
       <li><strong>第一层定排布（时间线与主支线结构）：</strong>控制整条时间线的总时长、事件规模与密度、主支线结构、跨期变化趋势、跨会话因果关系与测试点安排；其中受父级条件约束的属性（如<code>1. 时间跨度</code>下的<code>1.1 事件规模</code>与<code>1.2 事件密度</code>，<code>3. 事件线结构</code>下的<code>3.1 支线触发事件</code>与<code>3.2 支线归宿</code>）作为对应主因子的子因子采样。</li>
       <li><strong>第二层定内容（业务画像属性与信息表达方式）：</strong>按<strong>“用户级 &rarr; 线级 &rarr; 节点级”</strong>三种取值粒度，无重叠地覆盖<strong>用户身份与资产、应用与业务行为、时空轨迹与流量、网络环境与 KQI 偏好、信息来源与噪声干扰、多轮交互与反馈纠正</strong>六个方面。</li>
@@ -948,8 +948,8 @@ flowchart TB
           </tr>
           <tr>
             <td style="padding-left: 1.5em;"><strong>├─ 6.1 单据与对话总体配比</strong></td>
-            <td>网元结构化单据为主（<code>75 : 25</code>）/ 双源均衡（<code>50 : 50</code>）/ 自然语言对话为主（<code>25 : 75</code>）</td>
-            <td>在故事线全局层面控制记忆证据主要分布在网元结构化单据还是自然语言对话中</td>
+            <td>网元单据为主（<code>75 : 25</code>）/ 双源均衡（<code>50 : 50</code>）/ 自然语言对话为主（<code>25 : 75</code>）</td>
+            <td>在故事线全局层面控制记忆证据主要分布在网元单据还是自然语言对话中</td>
             <td>PersonaMem-v3：95% 行为流 + 5% 对话</td>
           </tr>
           <tr>
@@ -1027,7 +1027,7 @@ flowchart TB
             <td style="padding-left: 1.5em;"><strong>└─ 4.2 单次持续时长</strong></td>
             <td>短时（<code>15~45min</code>）/ 中时（<code>60~120min</code>）/ 长时（<code>150~240min</code>），在区间内连续随机采样</td>
             <td>线<br/>（节点随机浮动）</td>
-            <td>保证网元结构化单据的业务时长具备真实多分布特征（杜绝固定时长硬编码，并与 1~8min 噪声短时单据拉开差距）</td>
+            <td>保证网元单据的业务时长具备真实多分布特征（杜绝固定时长硬编码，并与 1~8min 噪声短时单据拉开差距）</td>
           </tr>
           <!-- 三、时空轨迹与流量 -->
           <tr class="midrule-row">
@@ -1041,7 +1041,7 @@ flowchart TB
             <td style="padding-left: 1.5em;"><strong>└─ 5.1 物理移动状态</strong></td>
             <td>固定静止 / 步行移动 / 城市车载移动（早晚高峰通勤 与 长途通勤）/ 高速公路或高铁跨区高速移动</td>
             <td>节点</td>
-            <td>决定网元结构化单据中是否伴随高频基站小区切换（Handover）与移动性断流风险</td>
+            <td>决定网元单据中是否伴随高频基站小区切换（Handover）与移动性断流风险</td>
           </tr>
           <tr>
             <td><strong>6. 活跃时段与周期规律</strong></td>
@@ -1097,7 +1097,7 @@ flowchart TB
           <tr class="midrule-row">
             <td rowspan="8"><strong>五、信息来源与噪声干扰</strong><br/>（控制怎么表达、生效与抗干扰）</td>
             <td><strong>11. 信息来源渠道与双源冲突</strong></td>
-            <td><strong>来源标注（<code>会话声明 sessions / 单据实测 CSV logs / 行为推断 inferred / 纠正记录 corrections</code>）</strong> 、 <strong>双源关系（单源体现 / 声明与实测一致 / 声明<code>&parallel;</code>实测并列保留且各注来源 / 声明与实测矛盾冲突［如说对网速无要求但实测高流量、说早睡但凌晨活跃、说爱玩原神但占比仅 1%］）</strong></td>
+            <td><strong>来源标注（<code>会话声明 sessions / 网元单据实测记录 / 行为推断 inferred / 纠正记录 corrections</code>）</strong> 、 <strong>双源关系（单源体现 / 声明与实测一致 / 声明<code>&parallel;</code>实测并列保留且各注来源 / 声明与实测矛盾冲突［如说对网速无要求但实测高流量、说早睡但凌晨活跃、说爱玩原神但占比仅 1%］）</strong></td>
             <td>节点</td>
             <td>控制信息来源与冲突仲裁策略（检验分源标注准确性、检索侧实测优先于口头声明排序、以及冲突时体验/时段取实测并将矛盾声明记入 <code>conflict_log</code> 或降权为 <code>weak</code>）</td>
           </tr>
@@ -1222,7 +1222,7 @@ flowchart TB
             <td><strong>4. 用户口头说法与网元单据记录一致或冲突</strong></td>
             <td>
               &bull; <strong>排布层：</strong><code>6.1 单据与对话总体配比（纯单据/纯对话/均衡混合）</code><br/>
-              &bull; <strong>内容层：</strong><code>11. 来源标注（sessions / CSV logs）与双源关系（一致/并列保留/口头声明与网元实测矛盾冲突）</code>、<code>11.1 证据强度（strong 多次实测 与 weak 随口声明）</code>
+              &bull; <strong>内容层：</strong><code>11. 来源标注（对话与网元单据）与双源关系（一致/并列保留/口头声明与网元实测矛盾冲突）</code>、<code>11.1 证据强度（strong 多次实测 与 weak 随口声明）</code>
             </td>
             <td>
               &bull; <strong>萃取：</strong>双源一致强化置信度；双源冲突时按证据强度整合（如口称“平时对网速没要求”但网元实测长期高上行直播流量，以 <code>strong</code> 实测为准或双源并列注记来源）；<br/>
@@ -1397,7 +1397,7 @@ flowchart TB
       <li><strong>先定时间线结构，再按三级粒度填内容：</strong>先从第一层采样得到时间线结构；再按取值粒度填第二层——“用户”级因子整条故事线取一次，“线”级因子每条事件线取一次，“节点”级因子每个事件节点独立取一次。</li>
       <li><strong>主从层级条件采样（消除父子条件冲突）：</strong>先采样主因子，再在其范围内采样对应子因子。例如先定<code>1. 时间跨度</code>，再定与之匹配的<code>1.1 事件规模</code>与<code>1.2 事件密度</code>；仅当<code>3. 事件线结构</code>包含支线时才采样<code>3.1 支线触发事件</code>与<code>3.2 支线归宿</code>；仅当<code>10. 网络异常 &ne; 无异常</code>时才采样<code>10.1 异常发生阶段</code>。</li>
       <li><strong>声明式合法性约束（不写死在代码分支中）：</strong>只排除物理或逻辑冲突的组合，并统一声明在配置表的 <code>constraints</code> 列表中（例如排除“时间跨度 2 周与按月周期规律”、“平稳保持型节奏与套餐跨期升降级”、“仅网元单据体现与对话显式直接陈述”）。</li>
-      <li><strong>“先答案后会话”反向真值绑定与分阶段构建策略：</strong>前期与中期采用<strong>“先定义答案、再反向生成会话”</strong>路线（参照 <code>LongMemEval</code>、<code>DynamicMem</code>、<code>PERMA</code>）：① 先定义评测骨架（测试维度、测试目的与难度分布）&rarr; ② 先写出结构化标准答案（萃取侧写明 <code>gold_profile</code> 的生效值、过期值、来源与置信度，检索侧写明 <code>gold_answer</code> 与 <code>gold_memory_ids</code>）&rarr; ③ 按成对覆盖（Pairwise Coverage）采样两层因子，反向生成能唯一推导出该答案的自然语言对话与网元结构化单据序列 &rarr; ④ 通过多 LLM 交叉验证检验对话自然度与答案唯一性；到后期上线阶段再结合<strong>“先有真实会话、后抽检标注答案”</strong>路线（参照 <code>LoCoMo</code>、<code>MemoryAgentBench</code>）补充长尾边界样本。</li>
+      <li><strong>“先答案后会话”反向真值绑定与分阶段构建策略：</strong>前期与中期采用<strong>“先定义答案、再反向生成会话”</strong>路线（参照 <code>LongMemEval</code>、<code>DynamicMem</code>、<code>PERMA</code>）：① 先定义评测骨架（测试维度、测试目的与难度分布）&rarr; ② 先写出结构化标准答案（萃取侧写明 <code>gold_profile</code> 的生效值、过期值、来源与置信度，检索侧写明 <code>gold_answer</code> 与 <code>gold_memory_ids</code>）&rarr; ③ 按成对覆盖（Pairwise Coverage）采样两层因子，反向生成能唯一推导出该答案的自然语言对话与网元单据序列 &rarr; ④ 通过多 LLM 交叉验证检验对话自然度与答案唯一性；到后期上线阶段再结合<strong>“先有真实会话、后抽检标注答案”</strong>路线（参照 <code>LoCoMo</code>、<code>MemoryAgentBench</code>）补充长尾边界样本。</li>
       <li><strong>增量扩展：</strong>新增测试维度时，直接在对应因子类别下补充主因子或子因子定义，不影响已有因子与数据。</li>
     </ol>
 
@@ -1432,9 +1432,9 @@ flowchart TB
           <tr>
             <td><strong>1. 建立期</strong><br/>（第 1~3 周）</td>
             <td>主线（家）</td>
-            <td><code>11. 信息来源 = 仅网元结构化单据体现</code>；<code>12. 表达方式 = 隐式行为推断</code>；<code>10. 网络异常 = 无异常</code></td>
+            <td><code>11. 信息来源 = 仅网元单据体现</code>；<code>12. 表达方式 = 隐式行为推断</code>；<code>10. 网络异常 = 无异常</code></td>
             <td><strong>【长期记忆 ①】语义记忆</strong><br/>（常驻画像与分场景 KQI）</td>
-            <td>每晚在家直播的网元结构化单据连续出现（上行大流量、时长 60~180min 随机分布），考验从纯单据行为流隐式推断“游戏主播”身份与居家常驻 KQI 偏好。</td>
+            <td>每晚在家直播的网元单据连续出现（上行大流量、时长 60~180min 随机分布），考验从纯单据行为流隐式推断“游戏主播”身份与居家常驻 KQI 偏好。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>2. 支线工单与慢路径澄清期</strong><br/>（第 4~6 周）</td>
@@ -1516,7 +1516,7 @@ flowchart TB
     subgraph D45["四、缺失槽位主动反问与快慢路径分流（4 篇） + 五、多轮受控用户模拟与端到端评测（4 篇）"]
       direction LR
       D4_A["模糊分级追问与保形消歧<br/>IN3 / MediQ / CICC<br/>ClarifyMT-Bench / FinInteract"]
-      D5_A["双控排障环境与写操作二次确认<br/>τ-bench / τ²-bench (Telecom)<br/>UserBench / CAREFUL-Bench"]
+      D5_A["双端协同排障（Dual-Control）与写操作二次确认<br/>τ-bench / τ²-bench (Telecom)<br/>UserBench / CAREFUL-Bench"]
       D5_B["信息分步提供与模拟器规则校验<br/>Disclosure-Gated Sim<br/>UserProxyBench"]
     end
 
@@ -1638,7 +1638,7 @@ flowchart TB
             <td rowspan="4"><strong>四、缺失槽位<br/>主动反问与<br/>快慢路径分流<br/>（主动反问消歧，<br/>4 篇）</strong></td>
             <td><strong>IN3 (Intention-in-Interaction)</strong><br/>arXiv:2402.09205 (2024)</td>
             <td>• <strong>规模与分布</strong>：面向百余种 Agent 工具调用场景构造多轮交互意图理解基准，逐条标注<strong>初始模糊等级、缺失意图维度清单及完整目标真值</strong>。</td>
-            <td>• <strong>① 初始指令三档模糊度定性切分与轮次阈值</strong>：<strong>清晰指令（Clear）</strong>定性为执行槽位齐全无歧义，要求 <strong>0 轮追问</strong>直达工具执行（走快路径，追问即扣过度澄清分）；<strong>轻度模糊（Slightly Vague）</strong>定性为核心目标明确但缺 <code>1~2 个</code>次要偏好，要求 <strong>1 轮精准追问</strong>或给合理默认配置；<strong>高度模糊（Highly Vague）</strong>定性为仅含宽泛目标、缺失 <code>&ge; 3 个</code>核心维度，要求分步追问补齐后再执行（盲目执行判 0 分）。</td>
+            <td>• <strong>① 初始指令三档模糊度定性切分与轮次阈值</strong>：<strong>清晰指令（Clear）</strong>定性为执行槽位齐全无歧义，要求 <strong>0 轮追问</strong>直达工具执行（走快路径，若发起多余追问则计入 Over-Clarification 扣分）；<strong>轻度模糊（Slightly Vague）</strong>定性为核心目标明确但缺 <code>1~2 个</code>次要偏好，要求 <strong>1 轮精准追问</strong>或给合理默认配置；<strong>高度模糊（Highly Vague）</strong>定性为仅含宽泛目标、缺失 <code>&ge; 3 个</code>核心维度，要求分步追问补齐后再执行（盲目执行判 0 分）。</td>
             <td>① <strong>清晰指令零冗余追问率</strong>；② <strong>模糊指令缺失维度召回率（Missing Info Recovery）</strong>；③ 下游工具调用成功率。</td>
           </tr>
           <tr class="midrule-row">
@@ -1656,7 +1656,7 @@ flowchart TB
           <tr class="midrule-row">
             <td><strong>ClarifyMT-Bench</strong> (2512.21120)<br/><strong>FinInteract</strong> (2609.24002)</td>
             <td>• <strong>ClarifyMT-Bench</strong>：构建 <strong>多维歧义与不同用户风格</strong>（合作/惜字如金/跑题/暴躁/术语盲/摇摆）多轮交互集；<br/>• <strong>FinInteract</strong>：中英双语 <strong>173 个模糊实例</strong>，覆盖 5 类口径歧义。</td>
-            <td>• <strong>① 多维歧义、用户风格与轮次上限（ClarifyMT-Bench）</strong>：交互轮次硬上限 <strong><code>T_max = 5 轮</code></strong>；定性区分<strong>过度澄清（无歧义却反问）与盲目抢跑（必问槽位未齐即执行）</strong>，量化中途改口时的槽位更新率 <code>&Delta;_update</code> 与遗忘率 <code>&Delta;_drop</code>；<br/>• <strong>② “默认常见口径（Default）”与“真实预期口径（Intended）”双真值定性（FinInteract）</strong>：揭露传统单真值评测把“盲猜常见口径”当成“解开歧义”的 <strong>3.1 倍准确率虚高</strong>（给口径后准确率 <code>&gt; 90%</code>，自主澄清最高仅 <strong><code>28.9%</code></strong>）。</td>
+            <td>• <strong>① 多维歧义、用户风格与轮次上限（ClarifyMT-Bench）</strong>：交互轮次硬上限 <strong><code>T_max = 5 轮</code></strong>；定性区分<strong>冗余追问（Over-Clarification，槽位已齐却重复反问）与未澄清直接执行（Premature Execution，必填槽位缺失即下发指令）</strong>，量化中途改口时的槽位更新率 <code>&Delta;_update</code> 与遗忘率 <code>&Delta;_drop</code>；<br/>• <strong>② “默认常见口径（Default）”与“真实预期口径（Intended）”双真值定性（FinInteract）</strong>：揭露传统单真值评测把“盲猜常见口径”当成“解开歧义”的 <strong>3.1 倍准确率虚高</strong>（给口径后准确率 <code>&gt; 90%</code>，自主澄清最高仅 <strong><code>28.9%</code></strong>）。</td>
             <td>• <strong>ClarifyMT-Bench</strong>：何时问/问什么 F1、单轮信息增益、跨轮槽位保持率；<br/>• <strong>FinInteract</strong>：首轮歧义命中率（<code>AC@1</code>）与双口径准确率。</td>
           </tr>
 
@@ -1665,7 +1665,7 @@ flowchart TB
             <td rowspan="4"><strong>五、多轮受控<br/>用户模拟与<br/>端到端评测<br/>（端到端测试闭环，<br/>4 篇）</strong></td>
             <td><strong>&tau;-bench</strong> (2406.12045)<br/><strong>&tau;&sup2;-bench</strong> (2506.07982)</td>
             <td>• <strong>&tau;-bench</strong>：覆盖 <strong>Retail（115 个任务）与 Airline（50 个任务）</strong>，含数据库 API、业务规程与模拟用户；<br/>• <strong>&tau;&sup2;-bench</strong>：新增 <strong>Telecom（电信排障）领域</strong>，构建部分可观测双控环境（<code>Dec-POMDP</code>）。</td>
-            <td>• <strong>① 单控（Single-Control）与双控（Dual-Control）定性边界</strong>：<code>&tau;-bench</code> 单控下仅 Agent 能调 API 读写数据库；<code>&tau;&sup2;-bench</code> 电信双控下，<strong>模拟用户同样挂载专属物理侧工具（开关飞行模式、插拔 SIM 卡、重置 APN、读信号格与报错码）</strong>，世界状态由 Agent 后台操作与用户终端操作共同改变；<br/>• <strong>② <code>Pass^k</code> 多轮一致性构建参数</strong>：要求同一工单独立重跑 <strong><code>k</code> 次（<code>k = 1, 2, 4, 8</code>）全部 100% 达成目标数据库与设备终态</strong>。</td>
+            <td>• <strong>① Agent 单端操作（Single-Control）与用户-Agent 双端协同（Dual-Control）边界</strong>：<code>&tau;-bench</code> 单控下仅 Agent 能调 API 读写数据库；<code>&tau;&sup2;-bench</code> 电信双控下，<strong>模拟用户同样挂载专属物理侧工具（开关飞行模式、插拔 SIM 卡、重置 APN、读信号格与报错码）</strong>，世界状态由 Agent 后台操作与用户终端操作共同改变；<br/>• <strong>② <code>Pass^k</code> 多轮一致性构建参数</strong>：要求同一工单独立重跑 <strong><code>k</code> 次（<code>k = 1, 2, 4, 8</code>）全部 100% 达成目标数据库与设备终态</strong>。</td>
             <td>终态数据库与设备状态精确比对 + <strong><code>Pass^k</code> 多轮可靠性曲线</strong>。</td>
           </tr>
           <tr class="midrule-row">
@@ -1722,7 +1722,7 @@ flowchart TB
             <td>欠缺<strong>跨句追补修饰导致前句槽位绑定关系反转</strong>的精细标注。</td>
           </tr>
           <tr>
-            <td><strong>3. 当轮口语自我修正（Self-Repair）</strong></td>
+            <td><strong>3. 句内口误改口（Self-Repair）</strong></td>
             <td>“帮我把周三…不对，周四晚上八点半的游戏加速改到九点”</td>
             <td>中等覆盖（<code>IntentDelta 2610.33806</code> 覆盖跨轮改口）</td>
             <td>欠缺<strong>单句话内部连续多次口误折返（“A…不对 B…算了还是 C”）</strong>时的抗作废槽位干扰测试。</td>
@@ -1848,7 +1848,7 @@ flowchart TB
             <td><code>U1&rarr;A1</code></td>
             <td><strong>U1. 全参/常驻习惯发起</strong>：参数齐全，或省写但个人长期记忆可唯一确定（“老规矩开直播加速”）。</td>
             <td><strong>A1. 记忆静默补全与一步快办</strong>：后台查事实/经验记忆补齐槽位并一步下发工单，<strong>0 轮追问</strong>。</td>
-            <td>多此一举反问扣<strong>过度澄清分</strong>（<code>IN3</code>）</td>
+            <td>多余反问计入<strong>冗余追问（Over-Clarification）</strong>扣分（<code>IN3</code>）</td>
           </tr>
           <tr>
             <td><code>U2&rarr;A2</code></td>
@@ -1873,7 +1873,7 @@ flowchart TB
             <td rowspan="4"><strong>二、澄清协同<br/>与推进维</strong><br/>（4 对）</td>
             <td><code>U5&rarr;A5</code></td>
             <td><strong>U5. 槽位直答与终端协同配合</strong>：顺应追问给出参数，或配合反馈手机端状态（<code>&tau;&sup2;-bench</code>）。</td>
-            <td><strong>A5. 槽位合入与双控协同推进</strong>：合入新槽位；若需终端配合则指导开关飞行模式/重置 APN。</td>
+            <td><strong>A5. 槽位合入与双端协同推进</strong>：合入新槽位；若需终端配合则指导开关飞行模式/重置 APN。</td>
             <td>已给槽位重复追问扣<strong>交互冗余分</strong></td>
           </tr>
           <tr>
@@ -2001,11 +2001,11 @@ flowchart TB
             <td><strong>否定子句分离过滤</strong>、旁人插话抗扰率、虚假前提拒答纠偏率。</td>
           </tr>
           <tr class="midrule-row">
-            <td><strong>模式 6：双控终端排障与越界转接模式</strong></td>
+            <td><strong>模式 6：双端协同排障（Dual-Control）与越界转人工模式</strong></td>
             <td><code>(U2 &rarr; A2) &rarr; (U5 &harr; A5) &rarr; (U15 &rarr; A15)</code></td>
             <td><strong>2~4 轮</strong></td>
-            <td>用户报高铁断流 &rarr; Agent 指导重插 SIM 卡/切飞行模式（<code>A5</code> 双控排障）；若属基站或手机硬件故障（<code>U15</code>），带齐已测槽位平滑转人工（<code>A15</code>）。</td>
-            <td>双控环境用户端动作指导准确率、<strong>Near-OOD 边界拒识与上下文交接完整率</strong>。</td>
+            <td>用户报高铁断流 &rarr; Agent 指导重插 SIM 卡/切飞行模式（<code>A5</code> 双端协同排障）；若属基站或手机硬件故障（<code>U15</code>），带齐已测槽位平滑转人工（<code>A15</code>）。</td>
+            <td>双端协同（Dual-Control）下用户动作引导准确率、<strong>Near-OOD 边界拒识与上下文交接完整率</strong>。</td>
           </tr>
         </tbody>
       </table>
@@ -2016,8 +2016,8 @@ flowchart TB
       <div class="tcb-body">
         <ul>
           <li><strong>在记忆测试点构造上：</strong>综合 <code>PersonaMem-v3</code>、<code>BehaviorMem</code>、<code>Why Bother Me Again?</code> 与 <code>LoCoMo-Plus</code>，不仅要埋入跨周期的事实与习惯（含 77% 稳定、13% 消退、8% 新增、1% 偶发四类轨迹及 <code>&ge; 20 分 / &ge; 3 次</code>晋升阈值），还要埋入<strong>用户的交互免打扰边界（哪些已知槽位不准重复追问）</strong>与零字面重合的隐式认知约束。</li>
-          <li><strong>在语法 · 语义 · 语用变体构造上：</strong>针对现有数据集最欠缺的盲区，重点构造<strong>“必须联合三类长期记忆与短期工作记忆才能消解的变体”</strong>——包括语法层的<strong>电报式残缺短语 + 句内多次口误自我修正（Self-Repair）</strong>、语义层的<strong>零字面重合个性化表述映射（查 <code>expression</code> 映射） + 复合意图否定排除（<code>A &and; &not;B</code> 否定子句分离与权重衰减过滤）</strong>、以及语用层的<strong>高情绪抱怨言外之意（<code>Read the Room ISA</code>） + 跨周历史工单省略指代 + 试探性咨询态与执行态区分（<code>CAREFUL-Bench</code>）</strong>。</li>
-          <li><strong>在多轮用户–Agent 交互模拟上：</strong>借鉴 <code>&tau;&sup2;-bench</code> 双控环境、<code>Disclosure-Gated Simulation</code> 5 级分步信息提供规则与 <code>UserProxyBench</code> 契约忠实度审计，严禁模拟用户第一轮吐露全部底牌或无条件配合，而是覆盖 <strong>双向交互动作</strong>（含反问原由、中途改口 <code>IntentDelta</code>、旁人插话干扰 <code>Multi-User DST</code> 与高危写操作执行前二次确认 <code>CAREFUL-Bench</code>）。</li>
+          <li><strong>在语法 · 语义 · 语用变体构造上：</strong>针对现有数据集最欠缺的盲区，重点构造<strong>“必须联合三类长期记忆与短期工作记忆才能消解的变体”</strong>——包括语法层的<strong>省略主谓语的简短口语及句内口误改口（Self-Repair）</strong>、语义层的<strong>零字面重合个性化表述映射（查 <code>expression</code> 映射） + 复合意图否定排除（<code>A &and; &not;B</code> 否定子句分离与权重衰减过滤）</strong>、以及语用层的<strong>高情绪抱怨言外之意（<code>Read the Room ISA</code>） + 跨周历史工单省略指代 + 试探性咨询态与执行态区分（<code>CAREFUL-Bench</code>）</strong>。</li>
+          <li><strong>在多轮用户–Agent 交互模拟上：</strong>参考 <code>&tau;&sup2;-bench</code> 的用户-Agent 双端协同环境（Dual-Control）、<code>Disclosure-Gated Simulation</code> 5 级分步信息提供规则与 <code>UserProxyBench</code> 契约忠实度审计，严禁模拟用户第一轮吐露全部底牌或无条件配合，而是覆盖 <strong>双向交互动作</strong>（含反问原由、中途改口 <code>IntentDelta</code>、旁人插话干扰 <code>Multi-User DST</code> 与高危写操作执行前二次确认 <code>CAREFUL-Bench</code>）。</li>
         </ul>
       </div>
     </div>
@@ -2859,7 +2859,7 @@ flowchart TB
         <tbody>
           <tr>
             <td><strong>1. &tau;-bench &amp; &tau;&sup2;-bench</strong><br/>（Sierra &amp; Princeton）<br/>2406.12045 / 2506.07982</td>
-            <td>• <strong>双端闭环循环</strong>：大模型驱动用户模拟器（仅给定任务目标与性格，按轮次渐进提供信息），被测 Agent 自由发起工具调用或向用户追问。<br/>• <strong>&tau;&sup2;-bench（电信域 Telecom）</strong>：升级为双控环境，用户端与网元侧各自拥有局部可观测视图。</td>
+            <td>• <strong>双端闭环循环</strong>：大模型驱动用户模拟器（仅给定任务目标与性格，按轮次渐进提供信息），被测 Agent 自由发起工具调用或向用户追问。<br/>• <strong>&tau;&sup2;-bench（电信域 Telecom）</strong>：引入用户端与网元侧双端协同环境（Dual-Control），两端各自持有局部可观测视图。</td>
             <td>• <strong>终态数据库断言</strong>：完全不比对聊天字面，直接核对交互结束后的业务状态与标准状态是否全等（0/1 判分）。<br/>• <strong>多轮运行一致性 <code>pass^k</code></strong>：同一任务独立跑 <code>n</code> 次（成功 <code>c</code> 次），算连续 <code>k</code> 次全成功的概率 <code>C(c, k) / C(n, k)</code>。</td>
             <td>终态评分采用 7 个业务槽位严格全等判定，并引入 <strong><code>pass^3</code>（同一会话独立跑 3 次全过率）</strong>检验多轮交互稳定性。</td>
           </tr>
@@ -2867,13 +2867,13 @@ flowchart TB
             <td><strong>2. ToolSandbox</strong><br/>（Apple，NAACL 2025）<br/>arXiv:2408.04682</td>
             <td>• <strong>信息不足陷阱（Insufficient Information）</strong>：故意在首轮隐去必填参数，看 Agent 会不会盲目调用工具，还是先向用户模拟器发起澄清提问。<br/>• <strong>动态状态更新</strong>：每轮交互与动作执行都会实时更新环境状态。</td>
             <td>• <strong>里程碑与雷区匹配（Milestone + Minefield）</strong>：在交互轨迹上定义必经的关键状态节点（Milestones）和绝对不能踩的<strong>雷区（Minefields，如未澄清就盲目下发错误指令，踩中直接 0 分）</strong>。</td>
-            <td>直接用于检验<strong>快慢路径切换</strong>：缺参或同地多单冲突时若不反问直接下发工单，记为踩中<strong>盲目抢跑雷区</strong>直接判 0 分。</td>
+            <td>直接用于检验<strong>快慢路径切换</strong>：缺参或同地多单冲突时若不反问直接下发工单，记为触发<strong>未澄清直接执行（Premature Execution）</strong>红线判 0 分。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>3. ClarifyMT-Bench &amp; Clarification &ne; Correction</strong><br/>（华为诺亚方舟实验室等）<br/>2512.21120 / 2609.25337</td>
-            <td>• <strong>五维模糊分类与混合动作仿真</strong>：构造欠指定（Underspecified）与错误前提请求，用户模拟器在多轮中执行<strong>“部分澄清 + 中途参数修正”</strong>混合动作（上限 5 轮）。</td>
+            <td>• <strong>五维模糊分类与混合动作仿真</strong>：构造信息缺失或指代模糊（Underspecified）与错误前提请求，用户模拟器在多轮中执行<strong>“部分澄清 + 中途参数修正”</strong>混合动作（上限 5 轮）。</td>
             <td>• <strong>何时问 / 问什么两步分</strong>：算澄清动作 F1（区分“该问不问”与“不该问乱问 Over-Clarification”）。<br/>• <strong>跨轮槽位保持与修正率（<code>&Delta;_drop</code> / <code>&Delta;_update</code>）</strong>：量化用户修改某槽位后，目标槽位是否更新、其余已确认槽位是否被意外丢弃。</td>
-            <td>对应慢路径澄清与中途改口的过程指标：拆出<strong>过度澄清率、盲目抢跑率、反问命中率与跨轮槽位保持率</strong>。</td>
+            <td>对应慢路径澄清与中途改口的过程指标：拆出<strong>冗余追问率（Over-Clarification）、未澄清直接执行率（Premature Execution）、反问命中率与跨轮槽位保持率</strong>。</td>
           </tr>
           <tr class="midrule-row">
             <td><strong>4. Disclosure-Gated Sim &amp; UserProxyBench</strong><br/>2609.00982 / 2609.38043</td>
@@ -2883,8 +2883,8 @@ flowchart TB
           </tr>
           <tr class="midrule-row">
             <td><strong>5. GroundEval &amp; RuVerBench</strong><br/>2606.22737 / 2606.29920</td>
-            <td>• <strong>多源证据注入与反事实扰动</strong>：把历史记忆或工具返回值修改为与常识相反的值，检验 Agent 的最终参数是否严格来自当前检索到的证据。</td>
-            <td>• <strong>证据落地核验（Grounding Audit）</strong>：要求最终输出的每个槽位值都能在本次检索返回的历史记忆/单据或用户原话中找到出处；<strong>猜对答案但检索未命中直接判 0 分</strong>。<br/>• <strong>符号规则校验</strong>：时间与算术约束硬校验。</td>
+            <td>• <strong>多源证据注入与反事实参数替换（Counterfactual Perturbation）</strong>：把历史记忆或工具返回值修改为与常识相反的值，检验 Agent 的最终参数是否严格来自当前检索到的证据。</td>
+            <td>• <strong>检索证据一致性核验（Grounding Verification）</strong>：要求最终输出的每个槽位值都能在本次检索返回的历史记忆/单据或用户原话中找到出处；<strong>猜对答案但检索未命中直接判 0 分</strong>。<br/>• <strong>符号规则校验</strong>：时间与算术约束硬校验。</td>
             <td>对靠记忆补全的槽位，强制核查其对应的历史单据/偏好 ID 是否确实出现在当轮检索 Top-k 结果中，杜绝未校验参数蒙对。</td>
           </tr>
         </tbody>
@@ -3005,7 +3005,7 @@ flowchart TB
           </tr>
           <tr class="midrule-row">
             <td rowspan="3"><strong>第二层：<br/>模拟交互过程</strong><br/>（快慢路径与追问质量）</td>
-            <td><strong>4. 快/慢路径分流准确率</strong><br/>（过度澄清率 &amp; 盲目抢跑率）</td>
+            <td><strong>4. 快/慢路径分流准确率</strong><br/>（冗余追问率 &amp; 未澄清直接执行率）</td>
             <td>比对被测 Agent 第 1 轮的路径选择与样本预期路径：<br/>• <strong>过度澄清率</strong>：信息充足或已有经验本该 1 轮直接办，却多此一举发起反问的比例；<br/>• <strong>盲目抢跑率</strong>：缺必填参数或存在多单冲突本该先问，却未校验直接生成参数下发工单的比例。</td>
             <td>管住两头极端：既防止什么都反问打扰用户，也防止缺参时盲目抢跑下错单。</td>
           </tr>
