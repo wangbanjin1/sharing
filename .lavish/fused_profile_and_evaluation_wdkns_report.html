@@ -1035,7 +1035,7 @@ flowchart TB
             <td><strong>5. 活动场景空间</strong></td>
             <td><strong>场景层级：</strong>标准场景（家、办公、学校、通勤、出差、旅行、户外、应急、游戏厅、医院）及下属微场景（如电梯/地下室/郊区/酒店/商场/短差/长差/高铁/跨境）&rarr; 归入驻留/移动大场景</td>
             <td>线</td>
-            <td>决定事件发生的空间位置与多级场景归属（支撑分场景独立存储不串味、当前场景优先于通用偏好排序、带场景条件召回与未记录场景拒答）</td>
+            <td>决定事件发生的空间位置与多级场景归属（支撑分场景独立存储不发生跨场景交叉污染、当前场景优先于通用偏好排序、带场景条件召回与未记录场景拒答）</td>
           </tr>
           <tr>
             <td style="padding-left: 1.5em;"><strong>└─ 5.1 物理移动状态</strong></td>
@@ -1203,7 +1203,7 @@ flowchart TB
               &bull; <strong>内容层：</strong><code>5. 活动空间（室内驻地/地铁通勤/高铁高速/商圈户外）与移动状态</code>、<code>8~9. 上下行 KQI 指标、无线覆盖与网络切片偏好</code>、<code>13. 场景空间作用域</code>
             </td>
             <td>
-              &bull; <strong>萃取：</strong>不同空间下的 KQI 与网络保障偏好按场景槽位独立存储（如驻地直播保上行 1080p 与 高铁会议保跨区切换防抖，互不串味）；<br/>
+              &bull; <strong>萃取：</strong>不同空间下的 KQI 与网络保障偏好按场景槽位独立存储（如驻地直播保上行 1080p 与 高铁会议保跨区切换防抖，互不交叉污染（Cross-Scenario Isolation））；<br/>
               &bull; <strong>检索：</strong>当前所处场景优先排序、带空间/无线覆盖条件召回与跨维组合推荐。
             </td>
           </tr>
@@ -1317,7 +1317,7 @@ flowchart TB
             <td><strong>1. 从历史多轮澄清和排障过程中提炼调参经验</strong></td>
             <td>
               &bull; <strong>排布层：</strong><code>5. 跨会话因果关系</code>、<code>6.2 证据间隔</code>、<code>6.3 干扰占比（穿插大量日常快路径与闲聊）</code><br/>
-              &bull; <strong>内容层：</strong><code>17~18. 缺参追问与显式纠偏（如字面陷阱纠偏、要求高密场馆提前预热锁流）</code>、<code>10~11. 同场馆前单拥塞 bad 改参后顺畅 good 正反对比</code>、<code>15. 未闭环试探噪声</code>
+              &bull; <strong>内容层：</strong><code>17~18. 缺参追问与显式纠偏（如表层字面歧义消解（Lexical Distractor Disambiguation）、要求高密场馆提前预热锁流）</code>、<code>10~11. 同场馆前单拥塞 bad 改参后顺畅 good 正反对比</code>、<code>15. 未闭环试探噪声</code>
             </td>
             <td>
               &bull; <strong>萃取（源头样本定位与因果提取）：</strong>评测能否从海量日常会话与单据流中识别已闭环的慢路径澄清/排障样本，提炼“场景条件&rarr;无线根因&rarr;调参动作&rarr;结果”因果规则，且不把未闭环试探误提炼为经验。
@@ -1563,7 +1563,7 @@ flowchart TB
           <tr class="midrule-row">
             <td><strong>Why Bother Me Again?</strong><br/>(MemPABench)<br/>arXiv:2610.30485 (2026)</td>
             <td>• <strong>规模与分布</strong>：构建 <strong>4 名模拟用户、跨越 4 个月时间线、共 99 个多轮会话</strong>，覆盖<strong>工作（Work）与个人（Personal）双场景下的 14 个交互偏好维度</strong>，每名用户埋入 <strong>5 次事件驱动的偏好极性翻转（共 20 次突变）</strong>。</td>
-            <td>• <strong>① 内容记忆 与 交互方式偏好（Interaction Preference）定性</strong>：内容记忆定性为“具体事实喜好（订哪家）”；交互偏好定性为“用户希望被如何协助的 14 维协作规矩”（语气正式度、回复详略、自主执行层级、主动推送边界、追问密度等）；<br/>• <strong>② 双场景隔离与 4 个月翻转规则</strong>：同一用户的 14 维偏好按<strong>工作态 与 个人态物理隔离</strong>（测跨场景串味污染）；每隔约 15~20 个会话植入升职、赶 deadline或休假事件，使指定维度从“每步先确认”反转为“高自主免确认直办”。</td>
+            <td>• <strong>① 内容记忆 与 交互方式偏好（Interaction Preference）定性</strong>：内容记忆定性为“具体事实喜好（订哪家）”；交互偏好定性为“用户希望被如何协助的 14 维协作规矩”（语气正式度、回复详略、自主执行层级、主动推送边界、追问密度等）；<br/>• <strong>② 双场景隔离与 4 个月翻转规则</strong>：同一用户的 14 维偏好按<strong>工作态 与 个人态物理隔离</strong>（测跨场景上下文噪声污染（Context Contamination））；每隔约 15~20 个会话植入升职、赶 deadline或休假事件，使指定维度从“每步先确认”反转为“高自主免确认直办”。</td>
             <td>在测试决策点三层打分：① <strong>偏好选择准确率（PSA）</strong>；② <strong>行为兑现率（BRS，是否真少问/少打扰）</strong>；③ <strong>用户感知满意度（PRS）</strong>。</td>
           </tr>
           <tr class="midrule-row">
@@ -1644,7 +1644,7 @@ flowchart TB
           <tr class="midrule-row">
             <td><strong>MediQ</strong><br/>arXiv:2406.00922 (2024)</td>
             <td>• <strong>规模与分布</strong>：将 MedQA 与 iCliniq <strong>1,200+ 个静态病例</strong>改造为由<strong>患者模拟器（Patient System）+ 专家问诊系统（Expert System）</strong>组成的多轮按问给值交互基准。</td>
-            <td>• <strong>① 首轮可见主诉 与 隐藏原子事实（Atomic Facts）定性隔离</strong>：将完整实例拆为 <strong><code>1 句初始主诉（首轮唯一可见）</code> + <code>N 条隐藏原子事实（初始全部锁死）</code></strong>；模拟器采用 <code>Fact-Select</code> 规则，仅当问题精准命中某条原子事实时才提供该条信息，严禁主动多说；<br/>• <strong>② 暂缓作答（Abstention）置信度阈值</strong>：未达置信度门槛时严禁武断作答，必须继续追问（引入置信度过滤使交互准确率提升 <strong><code>+22.3%</code></strong>）。</td>
+            <td>• <strong>① 首轮可见主诉 与 待确认细粒度事实项（Atomic Facts）定性隔离</strong>：将完整实例拆为 <strong><code>1 句初始主诉（首轮唯一可见）</code> + <code>N 条隐藏原子事实（初始全部锁死）</code></strong>；模拟器采用 <code>Fact-Select</code> 规则，仅当问题精准命中某条原子事实时才提供该条信息，严禁主动多说；<br/>• <strong>② 暂缓作答（Abstention）置信度阈值</strong>：未达置信度门槛时严禁武断作答，必须继续追问（引入置信度过滤使交互准确率提升 <strong><code>+22.3%</code></strong>）。</td>
             <td>评测<strong>过早武断作答率（Premature Answering）</strong>、每轮追问信息增益效率与最终决策准确率。</td>
           </tr>
           <tr class="midrule-row">
@@ -1664,7 +1664,7 @@ flowchart TB
           <tr class="midrule-row">
             <td rowspan="4"><strong>五、多轮受控<br/>用户模拟与<br/>端到端评测<br/>（端到端测试闭环，<br/>4 篇）</strong></td>
             <td><strong>&tau;-bench</strong> (2406.12045)<br/><strong>&tau;&sup2;-bench</strong> (2506.07982)</td>
-            <td>• <strong>&tau;-bench</strong>：覆盖 <strong>Retail（115 个任务）与 Airline（50 个任务）</strong>，含数据库 API、业务规程与模拟用户；<br/>• <strong>&tau;&sup2;-bench</strong>：新增 <strong>Telecom（电信排障）领域</strong>，构建部分可观测双控环境（<code>Dec-POMDP</code>）。</td>
+            <td>• <strong>&tau;-bench</strong>：覆盖 <strong>Retail（115 个任务）与 Airline（50 个任务）</strong>，含数据库 API、业务规程与模拟用户；<br/>• <strong>&tau;&sup2;-bench</strong>：新增 <strong>Telecom（电信排障）领域</strong>，构建部分可观测用户–Agent 双端协同环境（Dual-Control）（<code>Dec-POMDP</code>）。</td>
             <td>• <strong>① Agent 单端操作（Single-Control）与用户-Agent 双端协同（Dual-Control）边界</strong>：<code>&tau;-bench</code> 单控下仅 Agent 能调 API 读写数据库；<code>&tau;&sup2;-bench</code> 电信双控下，<strong>模拟用户同样挂载专属物理侧工具（开关飞行模式、插拔 SIM 卡、重置 APN、读信号格与报错码）</strong>，世界状态由 Agent 后台操作与用户终端操作共同改变；<br/>• <strong>② <code>Pass^k</code> 多轮一致性构建参数</strong>：要求同一工单独立重跑 <strong><code>k</code> 次（<code>k = 1, 2, 4, 8</code>）全部 100% 达成目标数据库与设备终态</strong>。</td>
             <td>终态数据库与设备状态精确比对 + <strong><code>Pass^k</code> 多轮可靠性曲线</strong>。</td>
           </tr>
@@ -1860,7 +1860,7 @@ flowchart TB
             <td><code>U3&rarr;A3</code></td>
             <td><strong>U3. 缺参模糊与多单歧义发起</strong>：缺核心槽位，或历史存在多张冲突单据（“照上次场馆那单办”）。</td>
             <td><strong>A3. 聚焦式最小消歧追问</strong>：进入慢路径，仅针对缺失或冲突的 1~2 个槽位精准提问（<code>CICC</code>）。</td>
-            <td>未问清直接盲猜下发判<strong>抢跑 0 分</strong></td>
+            <td>未澄清直接下发计为<strong>Premature Execution（判 0 分）</strong></td>
           </tr>
           <tr>
             <td><code>U4&rarr;A4</code></td>
@@ -1918,7 +1918,7 @@ flowchart TB
             <td><code>U12&rarr;A12</code></td>
             <td><strong>U12. 同伴旁白插话与主叫否决</strong>：旁人插嘴提其他诉求，或被主叫当场否决（<code>Multi-User DST</code>）。</td>
             <td><strong>A12. 主授权人锁定与旁人噪声过滤</strong>：仅采纳主叫显式认可的提议，彻底屏蔽旁人闲聊与被否提议。</td>
-            <td>将旁人未获批插话写入槽位判<strong>串味污染</strong></td>
+            <td>将旁人未获批插话写入槽位判<strong>上下文噪声污染（Context Contamination）</strong></td>
           </tr>
           <!-- 维度四 -->
           <tr class="midrule-row">
@@ -2158,7 +2158,7 @@ flowchart TB
     </div>
 
     <ul>
-      <li>$V_{\text{veto}} \in \{0, 1\}$：一票否决红线标志。凡是套用已过期事实档位、照搬工作记忆中体验异常（卡顿/掉帧）单据的参数、未澄清便盲目抢跑下发冲突单、或违规刺探无关隐私，均令 $V_{\text{veto}} = 1 \implies \text{Score} = 0$；</li>
+      <li>$V_{\text{veto}} \in \{0, 1\}$：一票否决红线标志。凡是套用已过期事实档位、照搬工作记忆中体验异常（卡顿/掉帧）单据的参数、未澄清直接执行（Premature Execution）下发冲突单、或违规刺探无关隐私，均令 $V_{\text{veto}} = 1 \implies \text{Score} = 0$；</li>
       <li>$S^*$ 与 $\hat{S}$：分别为标准答案要求满足的“事实记忆补全槽位 + 工作记忆指代槽位 + 经验记忆调整动作”集合与系统实际输出集合。</li>
     </ul>
 
@@ -2548,7 +2548,7 @@ flowchart LR
         <tbody>
           <tr>
             <td><strong>1. Mem0</strong><br/>（arXiv:2504.19413）</td>
-            <td><strong>向量库 + 知识图谱（Mem0g）双层</strong>：不存原始长对话，只存提炼后的原子事实句与“实体—关系—实体”三元组。</td>
+            <td><strong>向量库 + 知识图谱（Mem0g）双层</strong>：不存原始长对话，只存提炼后的独立事实条目（Atomic Facts）与“实体—关系—实体”三元组。</td>
             <td><strong>两步抽取 + 四动作判定</strong>：每轮新对话进来，先结合当前轮与近期滑动摘要抽出候选事实；再去向量库召回最相似的 Top-S 条已有长期记忆，由大模型通过工具调用判定执行 <strong><code>ADD</code>（新增）、<code>UPDATE</code>（更新）、<code>DELETE</code>（删除矛盾）、<code>NOOP</code>（跳过）</strong>。</td>
             <td>靠 <code>UPDATE / DELETE</code> 原地消解冲突（如新偏好直接覆盖旧偏好节点），避免同一件事存出多条相互矛盾的向量记录。</td>
           </tr>
@@ -2877,7 +2877,7 @@ flowchart TB
           </tr>
           <tr class="midrule-row">
             <td><strong>4. Disclosure-Gated Sim &amp; UserProxyBench</strong><br/>2609.00982 / 2609.38043</td>
-            <td>• <strong>5 级分步信息提供控制</strong>：将隐藏槽位分为 5 级状态，仅当 Agent 问到对应维度才提供下一级信息，机械连问则停止提供。<br/>• <strong>模拟器规则校验</strong>：检查模拟器是否提前透露未问槽位或编造设备状态（满分轨迹中 24.4% 存在放水）。</td>
+            <td>• <strong>5 级分步信息提供控制</strong>：将隐藏槽位分为 5 级状态，仅当 Agent 问到对应维度才提供下一级信息，机械连问则停止提供。<br/>• <strong>模拟器规则校验</strong>：检查模拟器是否提前透露未问槽位或编造设备状态（满分轨迹中 24.4% 存在模拟器提前泄密违规（Premature Disclosure Violation））。</td>
             <td>• <strong>按问提供合规率</strong>：检查首轮与每轮是否严格按问给值。<br/>• <strong>模拟器契约忠实度 <code>UFS</code></strong>：对 4–8 条可证伪原子准则执行一票否决连乘 <code>f_i = &prod; 1{c_ij passes}</code>。</td>
             <td>构建用户模拟器私有视图的 <code>turn1_forbidden</code> 与 <code>turn2_reveal</code> 限制规则，防止模拟器首轮提前透露未问参数导致评测虚高。</td>
           </tr>
@@ -3007,7 +3007,7 @@ flowchart TB
             <td rowspan="3"><strong>第二层：<br/>模拟交互过程</strong><br/>（快慢路径与追问质量）</td>
             <td><strong>4. 快/慢路径分流准确率</strong><br/>（冗余追问率 &amp; 未澄清直接执行率）</td>
             <td>比对被测 Agent 第 1 轮的路径选择与样本预期路径：<br/>• <strong>过度澄清率</strong>：信息充足或已有经验本该 1 轮直接办，却多此一举发起反问的比例；<br/>• <strong>盲目抢跑率</strong>：缺必填参数或存在多单冲突本该先问，却未校验直接生成参数下发工单的比例。</td>
-            <td>管住两头极端：既防止什么都反问打扰用户，也防止缺参时盲目抢跑下错单。</td>
+            <td>管住两头极端：既防止什么都反问打扰用户，也防止缺参时未澄清直接执行（Premature Execution）。</td>
           </tr>
           <tr>
             <td><strong>5. 慢路径反问命中率 &amp; 平均交互轮数</strong></td>

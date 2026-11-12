@@ -833,7 +833,7 @@ flowchart LR
         <tbody>
           <tr>
             <td><strong>1. Mem0</strong><br/>（arXiv:2504.19413）</td>
-            <td><strong>短期滑动窗口 + 长期向量库与知识图谱（Mem0g）</strong>：长期库只存提炼后的原子事实句与“实体—关系—实体”三元组。</td>
+            <td><strong>短期滑动窗口 + 长期向量库与知识图谱（Mem0g）</strong>：长期库只存提炼后的独立事实条目（Atomic Facts）与“实体—关系—实体”三元组。</td>
             <td><strong>两步抽取 + 四动作判定</strong>：每轮新对话进来，先结合当前工作记忆与近期滑动摘要抽出候选事实；再去长期向量库召回最相似的 Top-S 条已有记忆，由大模型通过工具调用判定执行 <strong><code>ADD</code>（新增）、<code>UPDATE</code>（更新）、<code>DELETE</code>（删除矛盾）、<code>NOOP</code>（跳过）</strong>。</td>
             <td>靠 <code>UPDATE / DELETE</code> 原地消解冲突（如新偏好直接覆盖旧偏好节点），避免同一件事存出多条相互矛盾的向量记录。</td>
           </tr>
