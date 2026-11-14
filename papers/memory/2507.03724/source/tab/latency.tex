@@ -1,0 +1,33 @@
+\begin{table}[ht]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.4}
+\caption{
+We evaluated the latency and LLM evaluation scores of various API methods on the LoCoMo benchmark under different QPS (queries per second) pressure of network request. 
+Metrics reported include the P99, P90, and mean latency, as well as the success percentage rate for both add and search operations. 
+Our results show that \textsc{MemOS-1031} exhibited the most robustness, maintaining the lowest latency across nearly all metrics regardless of the QPS pressure. 
+Furthermore, \textsc{MemOS-1031} achieved a 100\% success rate and maintained reasonable latency even under 100 QPS.
+}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|c|cccc|cccc}
+\hline
+                        &               & \multicolumn{4}{c|}{Add}                                                                                          & \multicolumn{4}{c}{Search} \\ \cline{3-10}
+QPS                     & API           & P99(ms) $\downarrow$  & P90(ms) $\downarrow$  & \makecell{mean \\ latency \\(ms) $\downarrow$} & \makecell{success \\ percentage \\ (\%) $\uparrow$} & P99(ms) $\downarrow$  & P90(ms) $\downarrow$  & \makecell{mean \\ latency \\(ms) $\downarrow$} & \makecell{success \\ percentage \\ (\%) $\uparrow$}  \\\hline
+\multirow{6}{*}{10 qps} & Mem0          & 2841.0                & 1650.0                & 888.0                         & \textbf{100.0}                    & 4637.0                & 1397.0                & 1089.0                        & \textbf{100.0} \\
+                        & Memobase      & 6169.1                & 1533.1                & 1126.2                        & 99.9                              & 14856.7               & 5974.7                & 2105.2                        & 99.9  \\
+                        & Supermemory   & 3467.4                & 1816.9                & 1446.3                        & \textbf{100.0}                    & 2107.6                & 1457.4                & 1057.1                        & \textbf{100.0} \\
+                        & MemU          & 12070.6               & 7273.1                & 5077.9                        & 64.2                              & 63000.7               & 60539.5               & 47554.5                       & 7.7   \\
+                        & Zep           & \textbf{375.1}        & 254.5                 & 239.0                         & 99.7                              & 5348.7                & 614.8                 & 571.7                         & 99.9  \\
+                        & \cellcolor[HTML]{EFEFEF}\textsc{MemOS-1031}    & \cellcolor[HTML]{EFEFEF}376.4                 & \cellcolor[HTML]{EFEFEF}\textbf{211.6}        & \cellcolor[HTML]{EFEFEF}\textbf{191.9}                & \cellcolor[HTML]{EFEFEF}\textbf{100.0}                    & \cellcolor[HTML]{EFEFEF}\textbf{777.1}        & \cellcolor[HTML]{EFEFEF}\textbf{528.4}        & \cellcolor[HTML]{EFEFEF}\textbf{440.5}                & \cellcolor[HTML]{EFEFEF}\textbf{100.0}   \\ \hline
+\multirow{6}{*}{40 qps} & Mem0          & 2624.0                & 1258.0                & 672.89                        & 41.7                              & 1723.0                & 1309.0                & 698.22                        & 51.2  \\
+                        & Memobase      & 7074.0                & 6251.5                & 2794.4                        & 68.8                              & 39985.3               & 18822.0               & 5515.5                        & 97.8  \\
+                        & Supermemory   & 60639.1               & 50951.5               & 24996.6                       & 89.4                              & 2050.8                & 1117.2                & 926.0                         & \textbf{100.0} \\
+                        & MemU          & 42129.9               & 35730.3               & 29033.0                       & 7.5                               & 61944.1               & 60565.2               & 41042.7                       & 3.8   \\
+                        & Zep           & \textbf{269.9}        & 240.5                 & 227.7                         & 26.6                              & 5802.5                & 1480.2                & 670.0                         & 26.8  \\
+                        & \cellcolor[HTML]{EFEFEF}\textsc{MemOS-1031}    & \cellcolor[HTML]{EFEFEF}282.1                 & \cellcolor[HTML]{EFEFEF}\textbf{222}          & \cellcolor[HTML]{EFEFEF}\textbf{192.6}                & \cellcolor[HTML]{EFEFEF}\textbf{100.0}                      & \cellcolor[HTML]{EFEFEF}\textbf{951.6}        & \cellcolor[HTML]{EFEFEF}\textbf{767.6}        & \cellcolor[HTML]{EFEFEF}\textbf{613.8}                & \cellcolor[HTML]{EFEFEF}\textbf{100.0} \\ \hline
+100 qps                 & \cellcolor[HTML]{EFEFEF}\textsc{MemOS-1031}    & \cellcolor[HTML]{EFEFEF}463.2                 & \cellcolor[HTML]{EFEFEF}311.1                 & \cellcolor[HTML]{EFEFEF}251.9                         & \cellcolor[HTML]{EFEFEF}100.0                              & \cellcolor[HTML]{EFEFEF}1171.1                & \cellcolor[HTML]{EFEFEF}872.5                 & \cellcolor[HTML]{EFEFEF}741.2                         & \cellcolor[HTML]{EFEFEF}100.0 \\ \hline
+\end{tabular}
+}
+
+\label{tab:time_latency}
+\end{table}

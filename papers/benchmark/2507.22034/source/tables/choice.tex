@@ -1,0 +1,21 @@
+\begin{table}[!t]
+\begin{center}
+\small
+\tabcolsep=0.02\linewidth
+\resizebox{1.0\linewidth}{!}{
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model Name} & \textbf{Original (w10n5)} & \textbf{w10n0} & \textbf{w5n5} & \textbf{w8n2} \\
+\midrule
+GPT-4o & 0.340 & $0.344_{\green{\uparrow 0.004}}$ & $0.360_{\green{\uparrow 0.020}}$ & $0.350_{\green{\uparrow 0.010}}$ \\
+Deepseek-V3 & 0.223 & $0.271_{\green{\uparrow 0.048}}$ & $0.249_{\green{\uparrow 0.027}}$ & $0.241_{\green{\uparrow 0.018}}$ \\
+Qwen3-32B & 0.210 & $0.220_{\green{\uparrow 0.010}}$ & $0.241_{\green{\uparrow 0.031}}$ & $0.224_{\green{\uparrow 0.014}}$ \\
+Qwen3-14B & 0.214 & $0.225_{\green{\uparrow 0.011}}$ & $0.199_{\red{\downarrow 0.015}}$ & $0.203_{\red{\downarrow 0.011}}$ \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+\vspace{-3mm}
+\caption{Impact of choice distribution on model scores. ``w10n5'' indicates a setting where, in addition to the correct and best options, there are 10 wrong and 5 noise options as distractors. Each cell reports the model's score and its change relative to the original setup.}
+\label{tab:choice}
+\end{table}

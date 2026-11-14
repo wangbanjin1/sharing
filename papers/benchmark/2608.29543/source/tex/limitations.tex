@@ -1,0 +1,4 @@
+\section*{Limitations}
+\label{sec:limitations}
+
+This study has limitations. First, although BIRD offers cross-domain coverage, generalization to other benchmarks remains untested. Second, chain ambiguity is restricted to two clarification layers; extending the counterfactual test to deeper chains remains future work. Third, Joint samples follow only a chain-then-drift order, leaving drift-then-chain unexplored. Finally, our evaluation relies on an LLM-based user simulator. Although the simulator is validated on \textsc{UserSim-Guard} and on expert-labeled traces (Fleiss' $\kappa = 0.802$), it remains an imperfect proxy; human-in-the-loop evaluation would better reflect real user behavior across practical settings and more clearly reveal simulator-specific biases.

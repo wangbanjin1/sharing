@@ -1,0 +1,24 @@
+
+\begin{table}[!ht]
+\centering
+\resizebox{0.9\columnwidth}{!}{%
+\begin{tabular}{l|rrr}
+\hline
+Method & \multicolumn{1}{r|}{\makecell{Uniq. \\ Words}} & \multicolumn{1}{r}{\makecell{NE.chg \\ \text{[ \% ]}}}  & \multicolumn{1}{r}{\makecell{Pronoun  \\ Sim.\text{[\%]}}}  \\ \hline
+Baseline         & 1                          & -    & -  \\\hline
+AEDA \cite{aeda} & \multicolumn{1}{l}{1.00$\times$} & 44.29   & 91.57         \\
+EDA \cite{eda}   & \multicolumn{1}{l}{0.86$\times$} & 70.03   & 61.14         \\
+BT \cite{BT}     & \multicolumn{1}{l}{1.21$\times$} & 73.46   & 77.17         \\
+TTS-ASR       & \multicolumn{1}{l}{1.01$\times$} & 38.84 & \textbf{98.93}  \\
+Translating           & \multicolumn{1}{l}{0.84$\times$} & 39.59 & 94.07           \\
+\rowcolor[gray]{0.9}  EPA     & \multicolumn{1}{l}{\textbf{1.81}$\times$} & \textbf{95.47} & 91.57  \\
+\quad w/o Keyword Err. & \multicolumn{1}{l}{1.57$\times$} & 68.81  & 93.14      \\ 
+\hline
+\end{tabular}%
+}
+\caption{Assessment of EPA dataset quality: Unique word increased rate, Named entity changed rate (NE.chg), and pronunciation similarity. }
+\label{tab:quality}
+\end{table}
+
+% Error analysis of EPA especially on keyword.
+% Assessment of EPA dataset quality across three key aspects (Uniq.Words, NE.differ, AudioSim.) 

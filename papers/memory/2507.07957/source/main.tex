@@ -1,0 +1,137 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+\PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2025
+
+% ready for submission
+\usepackage[preprint]{neurips_2025}
+
+% to compile a preprint version, e.g., for submission to arXiv, add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2025}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2025}
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2025}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage[table]{xcolor} % for table row colors
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{colortbl}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{xspace}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{fontawesome} % for icons
+% \usepackage{xcolor}      % for custom colors
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usetikzlibrary{shadows}
+\usepackage{tabularx,adjustbox}
+\usepackage{subcaption}
+\usepackage{tabularx}
+
+\newcommand{\oursrow}{\rowcolor[HTML]{F2F9FF}}
+\newtcbox{\codeblock}{
+  colback=gray!10,
+  colframe=black!20,
+  left=0pt,right=0pt,top=0pt,bottom=0pt,
+  boxrule=0.2pt,
+  fontupper=\footnotesize\ttfamily,
+  sharp corners,
+  nobeforeafter,
+  width=\linewidth,
+  halign=flush left,
+}
+% Define custom colors
+\definecolor{cream}{RGB}{255, 251, 234}
+\definecolor{goldenstar}{RGB}{255, 204, 0}
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\definecolor{deepgreen}{HTML}{0aa344}
+\definecolor{deeppurple}{HTML}{7030a0}
+\definecolor{deepblue}{HTML}{171d91}
+\definecolor{brown}{HTML}{843c0c}
+\definecolor{shadered}{HTML}{ffe5e5}
+\definecolor{shadegreen}{HTML}{e5f7ed}
+\definecolor{msftBlack}{RGB}{0,0,0}
+\definecolor{lightred}{RGB}{255,163,163}
+\definecolor{deepred}{RGB}{146,0,0}
+\definecolor{headergray}{RGB}{240,240,240}
+\definecolor{groupblue}{RGB}{220,235,250}
+\definecolor{groupgreen}{RGB}{220,250,220}
+\definecolor{grouppink}{RGB}{250,230,240}
+\definecolor{groupyellow}{RGB}{255,250,205}
+\definecolor{groupgray}{RGB}{245,245,245}
+
+\newcommand{\wy}[1]{{\color{purple}{#1}}}
+
+% Define the custom styled takeaway box
+\tcbset{
+  takeawaystyle/.style={
+    colback=cream,
+    colframe=black!30,
+    boxrule=0.4pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt,
+    fonttitle=\bfseries,
+    coltitle=black,
+    enhanced,
+    drop shadow={shadow xshift=1pt, shadow yshift=-1pt, opacity=0.15},
+  }
+}
+
+\title{MIRIX: Multi-Agent Memory System for\\LLM-Based Agents}
+
+\newif\ifshowcomments
+\showcommentstrue
+
+\newcommand{\ours}{MIRIX\xspace}
+
+\author{%
+  Yu Wang, Xi Chen \\
+  MIRIX AI \\
+  \texttt{yuw164@ucsd.edu}\\
+  \texttt{xc13@stern.nyu.edu} \\
+\url{https://mirix.io/}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Although memory capabilities of AI agents are gaining increasing attention, existing solutions remain fundamentally limited. Most rely on flat, narrowly scoped memory components, constraining their ability to personalize, abstract, and reliably recall user-specific information over time. To this end, we introduce MIRIX, a modular, multi-agent memory system that redefines the future of AI memory by solving the field’s most critical challenge: enabling language models to \emph{truly} remember. Unlike prior approaches, MIRIX transcends text to embrace rich visual and multimodal experiences, making memory genuinely useful in real-world scenarios. MIRIX consists of six distinct, carefully structured memory types: Core, Episodic, Semantic, Procedural, Resource Memory, and Knowledge Vault, coupled with a multi-agent framework that dynamically controls and coordinates updates and retrieval. This design enables agents to persist, reason over, and accurately retrieve diverse, long-term user data at scale.
+We validate MIRIX in two demanding settings. First, on ScreenshotVQA, a challenging multimodal benchmark comprising nearly 20,000 high-resolution computer screenshots per sequence, requiring deep contextual understanding and where no existing memory systems can be applied, MIRIX achieves 35\% higher accuracy than the RAG baseline while reducing storage requirements by 99.9\%. Second, on LOCOMO, a long-form conversation benchmark with single-modal textual input, MIRIX attains state-of-the-art performance of 85.4\%, far surpassing existing baselines. These results show that MIRIX sets a new performance standard for memory-augmented LLM Agents. To allow users to experience our memory system, we provide a packaged application powered by \ours. It monitors the screen in real time, builds a personalized memory base, and offers intuitive visualization and secure local storage to ensure privacy.
+\end{abstract}
+
+\input{1_introduction}
+\input{9_usecase}
+\input{3_method}
+\input{4_experiments}
+\input{2_related_work}
+\input{5_conclusion}
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{ref}
+
+\clearpage
+
+\appendix
+\input{6_appendix}
+
+\end{document}

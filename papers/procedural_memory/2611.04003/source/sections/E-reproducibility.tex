@@ -1,0 +1,74 @@
+\section{Implementation and Reproducibility}
+\label{app:reproducibility}
+
+\paragraph{Environment.}
+Each task ran in a Docker environment connected to self-hosted GitLab,
+RocketChat, OwnCloud, and Plane services. We used \texttt{pi-agent} v0.75.3 as
+the fixed executor harness and exposed bash as its only action
+tool. All service interaction, including API calls, was therefore
+issued through shell commands. Every attempt was launched with
+\texttt{--no-session}, so the harness wrote no session state to disk and
+nothing it might otherwise retain could carry across tasks or rounds.
+Self-hosted services were confirmed running before each execution batch.
+
+\paragraph{Environment reset between attempts.}
+
+\paragraph{Models and retrieval.}
+Claude Opus 4.6, GPT-5.4, and GLM-5 are the executor-consolidator model
+variants. Claude Sonnet 4.6 performs evaluation, and Cohere Embed v4
+provides 1024-dimensional semantic-search embeddings. The LLM wiki was available through link navigation from
+\texttt{index.md} and semantic search over page contents. All conditions used
+the same executor loop and a retrieval stage before planning. Consolidated
+representations used retrieval-only agents with representation-specific
+adapters, while \cond{No Memory} omitted retrieval and \cond{No Consolidation} supplied raw
+rollout evidence. Table~\ref{tab:retrieval-adapters} gives the exact
+protocols.
+
+\paragraph{Evaluator protocol for checkpoint scoring.}
+
+\paragraph{Compute, time, and human effort.}
+Experiments were orchestrated on an Amazon EC2 \texttt{g5.2xlarge} host with
+8 vCPUs and 30 GiB of memory. Model inference was served through
+provider APIs,
+while the host ran the agent harness, benchmark services, and Docker
+environments. One complete 127-task evaluation batch occupied approximately 12
+wall-clock hours. Producing \cond{Checkpoint-binary + Human} feedback for one rollout
+batch required approximately six hours from a qualified annotator.
+
+\begin{table}[t]
+\caption{\textbf{API cost of one complete 127-task evaluation batch.}
+Execution is the task-execution phase, retrieval is the memory-query phase, and
+\cond{Free Form} total is their sum. Consolidation costs are reported separately in
+the experiment tables. Evaluator, embedding, host-compute, and
+human-feedback costs are outside these values.}
+\label{tab:execution-cost}
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Model & No Memory execution & Free Form execution & Retrieval &
+Free Form total \\
+\midrule
+Claude Opus 4.6 & \$106.6 & \$88.9 & \$60.4 & \$149.3 \\
+GPT-5.4 & \$108.5 & \$87.1 & \$60.6 & \$147.8 \\
+GLM-5 & \$56.3 & \$47.2 & \$18.6 & \$65.9 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\paragraph{Round procedure.}
+Within each round, all benchmark tasks executed against a frozen memory store and
+produced one rollout batch. Feedback records were generated from checkpoint
+evaluation and, for the rich condition, human failure diagnosis. The
+consolidator then updated a copy of the previous wiki. The semantic index was
+rebuilt before the next execute phase. R0 used no store and supplied the rollout
+batch from which R1 memory was created.
+
+\paragraph{Validation.}
+Metric denominators were normalized to the benchmark totals for every
+condition. Shared conditions reuse one canonical result wherever they appear
+across experiments. All main and appendix tables, and the values behind
+every figure, are transcribed from the same source-of-truth result pages.
+
+\paragraph{Experiment code.}

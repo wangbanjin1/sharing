@@ -1,0 +1,114 @@
+\section{Telecom Domain}
+\label{app:telecom}
+
+The number of tasks spanning different user intents and number of tasks are shown in \Cref{tab:telecom_num_tasks}.
+
+\input{tables/telecom_num_tasks}
+
+
+There are 3 different intents in the telecom domain: \serviceissue, \mobiledataissue, and \mmsissue.
+How the number of actions required to solve the issues varies between intents is shown in \Cref{tab:telecom_intent_stats}.
+
+\input{tables/telecom_intent_stats}
+
+\subsection{User Persona}
+\label{app:telecom-user-persona}
+
+We define two distinct user personas to represent different levels of technical expertise and comfort with technology:
+
+\begin{description}
+\item[Persona 1: Easy] 
+\begin{quote}
+As a 41-year-old office administrator, you use your cellphone daily for both work and personal tasks. While you're familiar with common phone functions, you wouldn't call yourself a tech enthusiast.
+
+Your technical skills are average - you handle standard smartphone features like calls, texts, email, and basic apps with ease. You understand the fundamental settings, but prefer clear, step-by-step guidance when trying something new.
+
+In interactions, you're naturally friendly and patient. When receiving help, you listen attentively and aren't afraid to ask questions. You make sure to confirm your understanding and provide detailed feedback on each instruction you receive.
+\end{quote}
+
+\item[Persona 2: Hard]
+\begin{quote}
+At 64 years old, you're a retired librarian who keeps your phone use simple - mainly for calls, texts, and capturing photos of your grandchildren. Technology in general makes you feel uneasy and overwhelmed.
+
+Your technical knowledge is quite limited. Step-by-step instructions often confuse you, and technical terms like "VPN" or "APN" might as well be a foreign language. You only share information when specifically asked.
+
+When dealing with technology, you tend to get flustered quickly. You need constant reassurance and often interrupt with anxious questions. Simple requests like "reboot the phone" can trigger worries about losing precious photos.
+\end{quote}
+\end{description}
+
+\subsection{Example Task}
+\label{app:telecom-example-task}
+
+\begin{minted}[escapeinside=||, fontsize=\small, breaklines, breaksymbol=, breaksymbolleft=, breaksymbolright=, breakanywhere, bgcolor=gray!10]{markdown}
+# Task Details
+
+## ID
+[service_issue]airplane_mode_on|unseat_sim_card
+
+## Description
+- **Purpose**: Test resolution path: No Service/Connection Issues.
+
+## User Scenario
+- **Instructions**:
+  - **Domain**: telecom
+  - **Reason for call**: Your phone has been showing 'No Service' for the past few hours.
+  - **Known info**: You are John Smith with phone number 555-123-2002.
+  - **Unknown info**: null
+  - **Task instructions**: If the agent suggests actions that don't immediately fix the issue, 
+    follow their guidance but express mild frustration after the first unsuccessful attempt. 
+    You will consider the issue resolved when the status bar shows that you have signal. 
+    If the tool call does not return updated status information, you might need to perform 
+    another tool call to get the updated status.
+
+## Ticket
+The user is experiencing issues with their phone service. They are unable to make or receive 
+calls, and the status bar shows 'No Service'. Customer name: John Smith, phone number: 
+555-123-2002. They will consider the issue resolved when the status bar shows that they have 
+signal.
+
+## Initial State
+- **Initialization Data**: null
+- **Initialization Actions**:
+  1. **Action**: set_user_info
+     - **Env Type**: user
+     - **Arguments**:
+       - name: John Smith
+       - phone_number: 555-123-2002
+  2. **Action**: turn_airplane_mode_on
+     - **Env Type**: user
+     - **Arguments**: {}
+  3. **Action**: unseat_sim_card
+     - **Env Type**: user
+     - **Arguments**: {}
+
+## Evaluation Criteria
+### Actions
+1. **Action ID**: toggle_airplane_mode_0
+   - **Requestor**: user
+   - **Name**: toggle_airplane_mode
+   - **Arguments**: {}
+
+2. **Action ID**: reseat_sim_card_1
+   - **Requestor**: user
+   - **Name**: reseat_sim_card
+   - **Arguments**: {}
+
+### Environment Assertions
+- **Env Type**: user
+- **Function**: assert_service_status
+- **Arguments**:
+  - expected_status: connected
+- **Assert Value**: true
+\end{minted}
+
+\subsection{Example Trajectory 1: \basemode mode}
+\label{app:telecom-example-trajectory-base}
+Trajectory for the task in \Cref{app:telecom-example-task} in the \basemode mode.
+
+\input{tables/trajectory}
+\subsection{Example Trajectory 2: \solomode mode}
+\label{app:telecom-example-trajectory-solo}
+Trajectory for the task in \Cref{app:telecom-example-task} in the \solomode mode.
+
+\input{tables/trajectory_solo}
+

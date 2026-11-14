@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.3}
+\caption{
+We evaluated our \textsc{MemOS-1031} model against various baselines on the LoCoMo benchmark, all using the same GPT-4o-mini foundation LLM. 
+We report the performance based on LLM Judge Scores across five major tasks (single-hop, multi-hop, temporal reasoning, open-domain, and overall), alongside the overall F1 score and the context tokens used by each method. 
+The results demonstrate that \textsc{MemOS-1031} consistently outperformed baseline methods in almost all scenarios, all while maintaining acceptable context length and a reasonable F1 score.
+}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|ccccc|cc}
+\hline
+Method                                          & Tokens& Single-hop $\uparrow$     & Multi-hop $\uparrow$  & Temporal Reasoning $\uparrow$ & Open-domain $\uparrow$    & Overall $\uparrow$    & Overall F1 $\uparrow$ \\\hline
+MIRIX                                           & -     & 68.22                     & 54.26                     & 68.54                             & 46.88                         & 64.33                     & 28.10 \\
+Mem0                                            & 1172  & 73.33                     & 58.75                     & 52.34                             & 45.83                         & 64.57                     & 43.46 \\
+Zep                                             & 2701  & 66.23                     & 52.12                     & 54.82                             & 33.33                         & 59.22                     & 41.23 \\
+Memobase                                        & 2102  & 73.12                     & 64.65                     & \textbf{81.20}                             & 53.12                         & 72.01                     & \textbf{50.18} \\
+MemU                                            & 617   & 66.34                     & 63.12                     & 27.10                             & 50.01                         & 56.55                     & 35.15 \\
+Supermemory                                     & 500   & 67.30                     & 51.12                     & 31.77                             & 42.67                         & 55.34                     & 34.87 \\
+\rowcolor[HTML]{EFEFEF} \textsc{MemOS-1031}     & 1589  & \textbf{81.09}            & \textbf{67.49}            & 75.18                    & \textbf{55.90}                & \textbf{75.80}            & 45.27 \\\hline
+\end{tabular}
+}
+\label{tab:new_locomo}
+\end{table}

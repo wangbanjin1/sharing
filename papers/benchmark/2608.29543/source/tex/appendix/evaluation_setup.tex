@@ -1,0 +1,45 @@
+\section{Evaluation Setup}
+\label{app:evaluation-setup}
+
+\noindent\textbf{Models.} We evaluate 12 frontier LLMs, all accessed via official APIs: Claude-Sonnet-4.6, GPT-4o, GPT-5.4, o3-mini, o4-mini, Gemini-2.5-Flash, Grok-4-Fast, Grok-4.1-Fast, Qwen2.5-72B, Qwen-Max, Llama-3.3-70B, and DeepSeek-V4-Flash. Both reasoning and
+non-reasoning models are included to span the current capability frontier; exact model configurations are also listed in Table~\ref{tab:model_configs}.
+
+\namedpara{Dialogue harness.} Each evaluation runs an agent--simulator dialogue loop bounded by a maximum of 20 turns. Each agent turn yields either a clarification request or a candidate SQL query, parsed from a JSON response under the schema described below. Malformed responses trigger a single retry; persistent failures count as an abstention and the trajectory terminates. Candidate SQL is executed against the corresponding BIRD SQLite database under read-only mode; execution results are not surfaced back to the agent at any subsequent turn.
+
+\namedpara{Inputs to the agent.} At each turn, the agent receives the database DDL, the rewritten
+evidence (\S\ref{subsec:pipeline}, with clauses pre-resolving L1 or L2 removed), and the dialogue history through that turn. The agent prompt is fixed across all 12 models.
+
+\namedpara{Agent prompt.}
+The system prompt template is shown in
+Figure~\ref{fig:agent-prompt}. It defines the required JSON response
+schema and the permitted agent actions.
+
+\begin{table}[t]
+\centering
+\small
+\renewcommand{\arraystretch}{1.30}
+\begin{tabular}{ll}
+\toprule
+\textbf{Display name} & \textbf{Model configuration} \\
+\midrule
+Claude Sonnet 4.6 & \texttt{claude-sonnet-4.6} \\
+Qwen2.5-72B & \texttt{qwen2.5-72b-instruct} \\
+o4-mini & \texttt{o4-mini} \\
+GPT-4o & \texttt{gpt-4o-2024-11-20} \\
+GPT-5.4 & \texttt{gpt-5.4} \\
+Llama-3.3-70B & \texttt{llama-3.3-70b-instruct} \\
+o3-mini & \texttt{o3-mini} \\
+Gemini-2.5-Flash & \texttt{gemini-2.5-flash-nothinking} \\
+Grok-4.1-Fast & \texttt{grok-4-1-fast-reasoning} \\
+Qwen-Max & \texttt{qwen-max} \\
+DeepSeek-V4-Flash & \texttt{deepseek-chat} \\
+Grok-4-Fast & \texttt{grok-4-fast-non-reasoning} \\
+\bottomrule
+\end{tabular}
+\caption{Display names and API model configurations for the 12
+evaluated LLMs. The configuration strings identify exact model
+variants and, where applicable, their reasoning modes used in all
+reported evaluations.}
+\label{tab:model_configs}
+\vspace{-4mm}
+\end{table}

@@ -1,0 +1,49 @@
+
+\begin{figure*}[h]
+    \begin{tcolorbox}
+    \textbf{Summaries} \\
+
+    Below is a transcript of a conversation between a human user and an AI assistant. Please summarize the following dialogue as concisely as possible in a short paragraph, extracting the main themes and key information. In your summary, focus more on what the user mentioned or asked for. Dialogue content: \{session or round\} \\
+
+    \hrule
+    \bigskip
+
+    \textbf{Keyphrases} \\
+
+    Below is a transcript of a conversation between a human user and an AI assistant. Generate a list of keyphrases for the session. Separate each keyphrase with a semicolon. Dialogue content: \{session or round\}
+    \\
+
+    \hrule
+    \bigskip
+    
+    \textbf{User Facts} \\
+
+    You will be given a list of messages from a human user to an AI assistant. Extract all the personal information, life events, experience, and preferences related to the user. Make sure you include all details such as life events, personal experience, preferences, specific numbers, locations, or dates. State each piece of information in a simple sentence. Put these sentences in a json list, each element being a standalone personal fact about the user. Minimize the coreference across the facts, e.g., replace pronouns with actual entities. If there is no specific events, personal information, or preference mentioned, just generate an empty list. \\
+    
+    Human user messages: \{session\} \\
+    
+    Personal facts about the user (a list of strings in json format; do not generate anything else): \\
+    
+    \end{tcolorbox}
+    \caption{Zero-shot prompts for extracting information from the value items for indexing. For user fact extraction, we additionally provide ten in-context examples. }
+    \label{fig:value-compression-prompt}
+\end{figure*}
+
+
+\begin{figure*}[htb]
+    \begin{tcolorbox}
+    \textbf{Extracting Timestamped Events} \\
+
+    You will be given a list of messages from a human user to an AI assistant, as well as the time the conversation took place. Extract all events related to the user as long as its date is specified or could be inferred. If the time some event took place cannot be inferred, do not extract that event. Return the events in a json list where each item contains two fields: "date" and "event". Write date in the form YYYY/MM/DD. If there is no specific event, just write an empty list. \\
+
+    \hrule
+    \bigskip
+    
+    \textbf{Query Expansion} \\
+
+    You will be given a question from a human user asking about some prvious events, as well as the time the question is asked. Infer a potential time range such that the events happening in this range is likely to help to answer the question (a start date and an end date). Write a json dict two fields: "start" and "end". Write date in the form YYYY/MM/DD. If the question does not have any temporal referencea, do not attempt to guess a time range. Instead, just say N/A."
+    
+    \end{tcolorbox}
+    \caption{Zero-shot prompt for extracting timestamped events from the value items for indexing and the prompt for extracting time range from the user question. For both settings, we additionally provide ten in-context examples.}
+    \label{fig:temporal-query-prompt}
+\end{figure*}

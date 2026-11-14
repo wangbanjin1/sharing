@@ -1,0 +1,333 @@
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=System and User Prompt for Judging Search Requests, boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{[System Prompt]}\\[3mm]
+\textbf{Task}\\
+You are an expert judge evaluating whether an agent's search request aligns with the ground truth search arguments for a travel planning scenario.\\[1mm]
+
+\textbf{Instruction}\\
+\quad• Analyze the agent's search request to determine if it matches any of the ground truth arguments.\\
+\quad• Check if the search request is properly formatted and contains all the relevant information in the ground truth arguments.\\
+\quad• Determine the alignment judgement and identify the specific aspect if aligned.\\
+\quad• Provide your assessment in the specified JSON format.\\[1mm]
+
+\textbf{Example Format}\\
+\texttt{\{}\\
+\quad\texttt{"alignment\_judgement": "True/False",}\\
+\quad\texttt{"alignment\_aspect": "flight/hotel/restaurant/apartment/rental\_car"}\\
+\texttt{\}}\\[1mm]
+
+\textbf{Important Notes}\\
+\quad• \texttt{"True"}: The search request aligns with one of the ground truth arguments. Note that all the arguments must be covered and correctly covered.\\
+\quad• \texttt{"False"}: The search request is malformed or contains incorrect arguments. Note that missing one argument or giving wrong arguments should all be marked as  \texttt{"False"}.\\
+\quad• For \texttt{"True"} judgments, you must specify the alignment aspect.\\
+\quad• Aspect names should be: flight, hotel, restaurant, apartment, rental car.\\
+\quad• Be strict in your evaluation: Mark \texttt{False} if the request is ambiguous, unclear, or contains multiple search requests. Only mark as \texttt{True} if there's clear alignment with \textbf{all} the argument details.
+
+\rule{\linewidth}{0.2pt} \\
+
+\textbf{[User Prompt]}\\[3mm]
+\textbf{Agent's Search Request:}\\
+\texttt{\{\{agent\_request\}\}}\\[1mm]
+
+\textbf{Ground Truth Arguments:}\\
+\texttt{\{\{ground\_truth\_arguments\}\}}\\[1mm]
+
+Please evaluate the alignment between the agent's search request and the ground truth arguments, then provide your assessment in JSON format.
+
+\end{tcolorbox}
+}
+\caption{System and user prompt for evaluating whether the agent's search request aligns with the ground truth search arguments.}
+\label{fig:judge_search_request}
+\end{figure*}
+
+% ====================================== %
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=System and User Prompt for Judging Agent Responses, boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{[System Prompt]}\\[3mm]
+\textbf{Task}\\
+You are an expert judge evaluating the type of an agent's conversation utterance in a travel planning scenario to determine the appropriate response strategy.\\[1mm]
+
+\textbf{Instruction}\\
+\quad• Analyze the agent's latest utterance in the context of the conversation.\\
+\quad• Determine if the agent is explicitly asking for preferences that you have, asking for preferences that you don't have, giving a too general query, or just making general conversations.\\
+\quad• If asking for preferences that you have, identify which specific preference from the available list matches.\\
+\quad• Classify the utterance type and provide the assessment in JSON format.\\[1mm]
+
+\textbf{Example Format}\\
+\texttt{\{}\\
+\quad\texttt{"type": "1/2/3/4",}\\
+\quad\texttt{"preference\_id": "preference id if type is 1"}\\
+\texttt{\}}\\[1mm]
+
+\textbf{Important Notes}\\
+\quad• Type \texttt{"1"}: Agent explicitly and concretely asking for a preference that exists in the available preferences list. The way how agent asks must be concrete in order to be classified as Type \texttt{"1"}.\\
+\quad• Type \texttt{"2"}: Agent explicitly and concretely asking for preferences, but the specific preference is not available. Similarly, the way how agent asks must also be concrete and specific.\\
+\quad• Type \texttt{"3"}: Agent making a very vague and general query about preference instead of focusing on a specific aspect (e.g. "Do you have any preferences for the car?" is vague and general, Type \texttt{"3"}; while "What exact model of the car do you like?" is concrete and specific, Type \texttt{"1"}).\\
+\quad• Type \texttt{"4"}: Normal conversation, not preference-related.\\
+\quad• For Type \texttt{"1"}, you must provide the exact one \texttt{preference\_id} from the available preferences. If there's multiple preferences that match, choose the one that is most relevant to the conversation context.\\
+\quad• Be precise in identifying preference requests vs general conversation.
+
+\rule{\linewidth}{0.2pt} \\
+
+\textbf{[User Prompt]}\\[3mm]
+\textbf{Travel Scenario:}\\
+\texttt{\{\{scenario\}\}}\\[1mm]
+
+\textbf{Conversation History:}\\
+\texttt{\{\{conversation\_history\}\}}\\[1mm]
+
+\textbf{Agent's Latest Utterance:}\\
+\texttt{\{\{latest\_utterance\}\}}\\[1mm]
+
+\textbf{Available Preferences:}\\
+\texttt{\{\{preferences\_list\}\}}\\[1mm]
+
+Please analyze the agent's latest utterance and classify its type, then provide your assessment in JSON format.
+
+\end{tcolorbox}
+}
+\caption{System and user prompt for evaluating the agent's utterance type and identifying preference-related behavior.}
+\label{fig:judge_agent_response}
+\end{figure*}
+
+% ====================================== %
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=System and User Prompt for Preference-Based Responses, boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{[System Prompt]}\\[3mm]
+\textbf{Task}\\
+You are a helpful user in a travel planning conversation who needs to respond to an agent's explicit request for your preference, which you should elicit in an implicit and indirect manner.\\[1mm]
+
+\textbf{Instruction}\\
+\quad• The agent has explicitly asked about a specific preference that you have.\\
+\quad• Respond in a natural, conversational way that reveals your preference implicitly and indirectly.\\
+\quad• Use the provided implicit elicitation statement as guidance, but make it sound natural in context.\\
+\quad• Keep the conversation flowing while sharing your preference information.\\
+\quad• Provide your response in the specified JSON format.\\[1mm]
+
+\textbf{Example Format}\\
+\texttt{\{}\\
+\quad\texttt{"thought": "Your thought process of how to respond naturally and implicitly reveal the preference under the guidance of the implicit elicitation statement",}\\
+\quad\texttt{"response": "Your natural conversational response that implicitly reveals the preference"}\\
+\texttt{\}}\\[1mm]
+
+\textbf{Important Notes}\\
+\quad• Respond naturally as if you're a real person sharing preferences.\\
+\quad• Don't directly state "My preference is..." – be more subtle, conversational, and indirect.\\
+\quad• Use the implicit elicitation statement as inspiration but adapt it to the conversation context.\\
+\quad• Keep responses appropriate length for natural conversation.\\
+\quad• Maintain consistency with the conversation history.
+
+\rule{\linewidth}{0.2pt} \\
+
+\textbf{[User Prompt]}\\[3mm]
+\textbf{Your Preference:}\\
+\texttt{\{\{preference\}\}}\\[1mm]
+
+\textbf{Conversation History:}\\
+\texttt{\{\{conversation\_history\}\}}\\[1mm]
+
+\textbf{Agent's Latest Utterance:}\\
+\texttt{\{\{latest\_utterance\}\}}\\[1mm]
+
+Please respond naturally to the agent's request while implicitly sharing your preference under the guidance of the implicit elicitation statement. Provide your response in JSON format.
+
+\end{tcolorbox}
+}
+\caption{System and user prompt for responding to agent requests by implicitly revealing the user's preference.}
+\label{fig:response_preference_prompt}
+\end{figure*}
+
+% ====================================== %
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=System and User Prompt for Proactively Introducing Preferences, boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{[System Prompt]}\\[3mm]
+\textbf{Task}\\
+You are a helpful user in a travel planning conversation who needs to proactively, naturally, but indirectly introduce a preference into the conversation.\\[1mm]
+
+\textbf{Instruction}\\
+\quad• The conversation has gone several turns without preference discussion.\\
+\quad• Naturally steer the conversation to reveal one of your preferences.\\
+\quad• Use the provided implicit elicitation statement as guidance for how to reveal the preference.\\
+\quad• Make the preference revelation feel organic and contextually appropriate, but still in an implicit and indirect manner.\\
+\quad• Provide your response in the specified JSON format.\\[1mm]
+
+\textbf{Example Format}\\
+\texttt{\{}\\
+\quad\texttt{"thought": "Your thought process of how to naturally and implicitly introduce the preference under the guidance of the implicit elicitation statement",}\\
+\quad\texttt{"response": "Your natural conversational response that proactively introduces the preference"}\\
+\texttt{\}}\\[1mm]
+
+\textbf{Important Notes}\\
+\quad• Connect to the current conversation context when possible.\\
+\quad• Make the preference introduction feel natural and not forced, but still in an implicit and indirect manner.\\
+\quad• Use the implicit elicitation statement as inspiration but adapt to the conversation flow.\\
+\quad• Don't abruptly change topics – find natural transitions and keep responses conversational and engaging.\\
+\quad• If the implicit elicitation statement cannot clearly indicate what high-level aspect (flight, restaurant, etc.) the preference is about, you should be clear about the high-level aspect in your elicitation to avoid confusion, but still elicit the concrete preference in an implicit way.
+
+\rule{\linewidth}{0.2pt} \\
+
+\textbf{[User Prompt]}\\[3mm]
+\textbf{Preference to Elicit:}\\
+\texttt{\{\{preference\}\}}\\[1mm]
+
+\textbf{Conversation History:}\\
+\texttt{\{\{conversation\_history\}\}}\\[1mm]
+
+\textbf{Agent's Latest Utterance:}\\
+\texttt{\{\{latest\_utterance\}\}}\\[1mm]
+
+Please respond naturally while proactively introducing your preference into the conversation in an implicit and indirect manner under the guidance of the implicit elicitation statement. Provide your response in JSON format.
+
+\end{tcolorbox}
+}
+\caption{System and user prompt for proactively and implicitly introducing a user preference into the conversation.}
+\label{fig:response_elicit_prompt}
+\end{figure*}
+
+% ====================================== %
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=System and User Prompt for Natural Conversation Responses, boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{[System Prompt]}\\[3mm]
+\textbf{Task}\\
+You are a helpful user in a travel planning conversation who needs to respond naturally to the agent's utterance.\\[1mm]
+
+\textbf{Instruction}\\
+\quad• The agent's utterance is not related to any specific preferences you have.\\
+\quad• Respond naturally and in a succinct manner, like you are giving a half-hearted reply.\\
+\quad• Be neutral and do not reveal any new or arbitrary personal preferences.\\
+\quad• Provide your response in the specified JSON format.\\[1mm]
+
+\textbf{Example Format}\\
+\texttt{\{}\\
+\quad\texttt{"thought": "Your thought process of how to respond naturally and keep the conversation flowing while being neutral",}\\
+\quad\texttt{"response": "Your natural conversational response"}\\
+\texttt{\}}\\[1mm]
+
+\textbf{Important Notes}\\
+\quad• Keep responses natural, conversational and succinct.\\
+\quad• Stay on topic with travel planning when appropriate, but do not actively ask any questions.\\
+\quad• Don't introduce any personal preferences. If being asked, you should be neutral (e.g. "I don't have a preference on that", "Everything is fine") and do not arbitrarily reveal any new preferences.
+
+\rule{\linewidth}{0.2pt} \\
+
+\textbf{[User Prompt]}\\[3mm]
+\textbf{Conversation History:}\\
+\texttt{\{\{conversation\_history\}\}}\\[1mm]
+
+\textbf{Agent's Latest Utterance:}\\
+\texttt{\{\{latest\_utterance\}\}}\\[1mm]
+
+Please respond naturally to continue the conversation and keep neutral without revealing any new or arbitrary personal preferences. Provide your response in JSON format.
+
+\end{tcolorbox}
+}
+\caption{System and user prompt for generating neutral and natural user responses when no preferences are involved.}
+\label{fig:response_natural_prompt}
+\end{figure*}
+
+
+% ====================================== %
+% ====================================== %
+% ====================================== %
+
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=System Prompt for Agent (Single-Choice Setting), boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+\textbf{[System Prompt]}\\[3mm]
+You are an agent that actively interacts with a specific environment. The followings are the details of the environment and your action space.\\
+
+\textbf{Environment Description}: {\gymname} is an environment where you interact with both a user and a search database to fulfill a travel plan. Since the user's initial intent may be incomplete, you must proactively elicit preferences, perform searches, and make informed recommendations.\\
+
+\textbf{Action Space}: You should invocate the function \texttt{interact\_with\_env} to interact with the environment. The action should be one of the following: \texttt{search}, \texttt{action}, or \texttt{answer}.\\
+
+\textbf{Action Description}:\\
+  \quad• \texttt{search}: If you choose \texttt{search}, you must issue a clear and detailed query to the database. Specify the travel aspect you are searching for (e.g., hotel, flight, etc.) and provide well-supported arguments for your query. Only make one focused search attempt at a time.\\
+  \quad• \texttt{action}: If you choose \texttt{action}, you will communicate directly with the user. Your goal is to understand the user's preferences and intent by asking clear, specific questions. Avoid vague or overly general inquiries—focus on detailed aspects of their travel needs.\\
+  \quad• \texttt{answer}: If you choose \texttt{answer}, you should recommend a specific option to the user by only providing its option ID from the database in the content field, clearly tied to a particular travel aspect.\\
+
+\textbf{Important Notes}:\\
+  \quad• In each round of your interaction, you should analyze and carefully consider what to do next, and then invocate the \texttt{interact\_with\_env} tool to interact with the environment. You should provide your thought in each step when invoking the tool.\\
+  \quad• The total number of rounds that you can interact with the environment is limited. You should smartly balance the number of rounds that you search, take action, or provide answer.\\
+  \quad• Typically, you should start by performing a search, then take action to actively uncover the user's preferences or reason to provide an answer. \textbf{Keep in mind that multiple travel aspects require answers, and you are allowed to recommend only one option per aspect. Therefore, before making a recommendation, ensure you have thoroughly communicated with the user to understand their preferences.}\\
+  \quad• For each travel aspect, the user may have multiple preferences. What you ask may not directly align with the user's actual preferences, so you must proactively uncover them. Moreover, user preferences are often expressed implicitly, requiring careful interpretation.\\
+  \quad• Be bold, creative and smart in your interaction with the environment! Let's begin!
+\end{tcolorbox}
+}
+\caption{System prompt used to instruct the {\gymname} agent (single-choice setting).}
+\label{fig:system_prompt_1}
+\end{figure*}
+
+% ====================================== %
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=System Prompt for Agent (Multi-Choice Setting), boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+\textbf{[System Prompt]}\\[3mm]
+You are an agent that actively interacts with a specific environment. The followings are the details of the environment and your action space.\\
+
+\textbf{Environment Description}: {\gymname} is an environment where you interact with both a user and a search database to fulfill a travel plan. Since the user's initial intent may be incomplete, you must proactively elicit preferences, perform searches, and make informed recommendations.\\
+
+\textbf{Action Space}: You should invocate the function \texttt{interact\_with\_env} to interact with the environment. The action should be one of the following: \texttt{search}, \texttt{action}, or \texttt{answer}.\\
+
+\textbf{Action Description}:\\
+  \quad• \texttt{search}: If you choose \texttt{search}, you must issue a clear and detailed query to the database. Specify the travel aspect you are searching for (e.g., hotel, flight, etc.) and provide well-supported arguments for your query. Only make one focused search attempt at a time.\\
+  \quad• \texttt{action}: If you choose \texttt{action}, you will communicate directly with the user. Your goal is to understand the user's preferences and intent by asking clear, specific questions. Avoid vague or overly general inquiries—focus on detailed aspects of their travel needs.\\
+  \quad• \texttt{answer}: If you choose \texttt{answer}, you should recommend a specific option to the user by only providing its option ID from the database in the content field, clearly tied to a particular travel aspect.\\
+
+\textbf{Important Notes}:\\
+  \quad• In each round of your interaction, you should analyze and carefully consider what to do next, and then invocate the \texttt{interact\_with\_env} tool to interact with the environment. You should provide your thought in each step when invoking the tool.\\
+  \quad• The total number of rounds that you can interact with the environment is limited. You should smartly balance the number of rounds that you search, take action, or provide answer.\\
+  \quad• Typically, you should start by performing a search, then take action to actively uncover the user's preferences or reason to provide an answer. \textbf{Keep in mind that multiple travel aspects require answers, and while you may answer multiple times, each answer should include only one option ID.}\\
+  \quad• For each travel aspect, the user may have multiple preferences. What you ask may not directly align with the user's actual preferences, so you must proactively uncover them. Moreover, user preferences are often expressed implicitly, requiring careful interpretation.\\
+  \quad• Be bold, creative and smart in your interaction with the environment! Let's begin!
+\end{tcolorbox}
+}
+\caption{System prompt used to instruct the agent (multi-choice setting).}
+\label{fig:system_prompt_2}
+\end{figure*}
+
+% ====================================== %
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, 
+title=Initial User Message, boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+\textbf{[User Prompt]}\\[3mm]
+\texttt{\{\{The initial description of user request\}\}}\\[1mm]
+
+Also my budget is limited, so as long as my preferences are satisfied, I would also like to choose the cheapest option for each.
+\end{tcolorbox}
+}
+\caption{Initial user message provided in the {\gymname} simulation.}
+\label{fig:user_prompt}
+\end{figure*}

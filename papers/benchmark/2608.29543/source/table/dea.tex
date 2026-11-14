@@ -1,0 +1,57 @@
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.52}
+
+\begin{tabular*}{\linewidth}{
+@{}
+c@{\hspace{4pt}}
+l@{\hspace{6pt}}
+c@{\extracolsep{\fill}}
+c c c c c c c c
+@{}
+}
+
+\toprule
+\multirow{2}{*}{\textbf{\#}}
+& \multicolumn{1}{c@{\hspace{6pt}}}
+  {\multirow{2}{*}{\textbf{Model}}}
+& \multirow{2}{*}{\textbf{Chain-only}}
+& \multicolumn{4}{c}{\textbf{Drift-only}}
+& \multicolumn{4}{c}{\textbf{Joint}} \\
+\cmidrule(lr){4-7}
+\cmidrule(lr){8-11}
+
+& &
+& \textbf{Value}
+& \textbf{Constraint}
+& \textbf{Projection}
+& \textbf{All}
+& \textbf{Value}
+& \textbf{Constraint}
+& \textbf{Projection}
+& \textbf{All} \\
+
+\midrule
+1  & Claude-Sonnet-4.6 & \textbf{35.9} & \textbf{47.7} & \textbf{44.2} & 43.4 & \textbf{45.1} & \textbf{31.2} & 20.2 & \textbf{31.4} & \textbf{27.8} \\
+2  & Qwen2.5-72B       & 32.4 & 44.3 & 41.1 & \underline{44.0} & \underline{43.2} & \underline{30.1} & \underline{21.5} & 28.6 & \underline{26.8} \\
+3  & o4-mini           & \underline{32.9} & 42.6 & 41.1 & 40.0 & 41.2 & \textbf{31.2} & \underline{21.5} & 27.4 & \underline{26.8} \\
+4  & GPT-4o            & 30.9 & \underline{46.0} & 38.7 & \textbf{44.6} & \underline{43.2} & 27.8 & \textbf{22.1} & \underline{29.7} & 26.7 \\
+5  & GPT-5.4           & 32.5 & 43.2 & 36.8 & 42.3 & 40.9 & 27.8 & 20.9 & \underline{29.7} & 26.3 \\
+6  & Llama-3.3-70B     & 32.7 & 40.3 & 39.3 & 38.9 & 39.5 & 29.5 & \textbf{22.1} & 26.9 & 26.3 \\
+7  & o3-mini           & 32.6 & 40.9 & 37.4 & 38.9 & 39.1 & 29.5 & 18.4 & 28.6 & 25.7 \\
+8  & Gemini-2.5-Flash  & 31.6 & 39.2 & 42.9 & 33.1 & 38.3 & 27.3 & 20.2 & 27.4 & 25.1 \\
+9  & Grok-4.1-Fast     & 30.4 & 41.5 & 36.2 & 41.7 & 39.9 & 29.0 & 18.4 & 25.1 & 24.3 \\
+10 & Qwen-Max          & 30.5 & 40.3 & \underline{43.6} & 40.6 & 41.4 & 28.4 & 20.9 & 21.7 & 23.7 \\
+11 & DeepSeek-V4-Flash & 27.3 & 40.9 & 39.9 & 39.4 & 40.1 & 21.6 & 17.8 & 26.9 & 22.2 \\
+12 & Grok-4-Fast       & 25.9 & 36.9 & 33.7 & 38.9 & 36.6 & 19.9 & 14.7 & 22.9 & 19.3 \\
+\bottomrule
+
+\end{tabular*}
+
+\vspace{-1mm}
+\caption{DEA (\%) under the paired factorial design. The best and second-best results per column are in bold and underlined, respectively. Chain-only reports strict execution accuracy; Drift-only and Joint report end-to-end accuracy broken down by drift subtype; All denotes aggregate performance, and higher metric values are better.}
+\label{tab:dea}
+\vspace{-1mm}
+\end{table*}

@@ -1,0 +1,52 @@
+\section{User Simulator Quality}
+\label{app:user-sim-quality}
+
+\subsection{Common Error Types and Failure Modes (\retail)}
+Manual analysis of the 20 annotated errors in the \retail domain exposes three recurring failure modes:
+\begin{itemize}
+    \item \textbf{Conversation-structure rule violation} (11/20) --- the simulator breaks turn-taking or dialogue-flow instructions (e.g., mixes tool calls with natural language in the same turn).
+    \item \textbf{Premature termination} (3/20) --- the simulator halts the conversation immediately after the user's confirmation (\texttt{\#\#\#STOP\#\#\#}), preventing the agent from completing the transaction.
+    \item \textbf{Ungrounded reference} (2/20) --- the simulator invents or misstates contextual details such as payment method or order status.
+    \item \textbf{Missing constraint} (4/20) --- the simulator omits a required instruction (e.g., neglects to request an alternative SKU when the desired colour is unavailable).
+\end{itemize}
+Most task-critical errors stem from either premature termination or missing constraints, whereas conversation-structure violations and ungrounded references are typically task-benign and readily recoverable by the agent.
+
+\subsection{Common Error Types and Failure Modes (\airline)}
+Preliminary analysis of annotated \airline dialogues identifies three dominant issues:
+\begin{itemize}
+    \item \textbf{Missing constraint} (11/47)
+    \item \textbf{Conversation‑structure rule violation} (19/47)
+    \item \textbf{Ungrounded reference} (15/47)
+    \item \textbf{Premature termination} (2/47)
+\end{itemize}
+Again, most task‑critical errors stem from missing constraints. 
+
+
+\subsection{Common Error Types and Failure Modes (\telecom)}
+Manual analysis of the 8 annotated errors in the \telecom domain reveals that all errors are caused by \textbf{Premature termination} (8/8, 100\%). The user returns the \texttt{\#\#\#TRANSFER\#\#\#} token before the assistant calls the transfer tool. This error is critical only if this causes a task failure by preventing the agent from performing an expected transfer.
+    
+
+\subsection{Illustrative Cases}
+\textbf{Task-critical error (\retail). Premature termination.} After the assistant requests final confirmation to modify order \#W5061109, the simulator ends the dialogue with \texttt{\#\#\#STOP\#\#\#} immediately following confirming its intent, preventing the agent from executing the modification and issuing a receipt:
+
+\begin{quote}
+\textbf{assistant:} Please confirm that you have provided all the items you want to modify in this order, as this action can only be done once\ldots\\
+\textbf{user:} Yes, I confirm that I want to modify my pending order \#W5061109 to \ldots Please proceed. Thank you!\texttt{\#\#\#STOP\#\#\#}
+\end{quote}
+
+\textbf{Task‑critical error (\airline). Missing constraint.} Here the simulator is instructed to ask for a transfer to a human agent in the case of outbound trip unavailability, but proceeds to book the return trip instead, violating goal constraints.
+
+\begin{quote}
+\textbf{assistant:} It appears that one of your original outbound flights (HAT030 on 2024‑05‑13) is no longer available in economy class for the upgrade. To proceed, I will need to find available economy class flights for your outbound journey as well.
+Would you like me to search for available economy class flights for your outbound trip (Los Angeles → Atlanta) and your new return trip (Atlanta → Las Vegas)? Please confirm so I can continue.
+
+\textbf{user:} Yes, please go ahead and find available economy class flights for both the outbound trip to Atlanta and the new return trip to Las Vegas. Thank you! \texttt{\#\#\#STOP\#\#\#}
+\end{quote}
+
+\textbf{Task-critical error (\telecom). Premature termination.} The simulator ends the dialogue with \texttt{\#\#\#TRANSFER\#\#\#} before the agent could perform the actual transfer:
+
+\begin{quote}
+\textbf{assistant:} ... The next step is to escalate your issue to a human technical support agent who can provide more advanced help, possibly including SIM replacement or device diagnostics.
+Would you like me to transfer you to a human agent for further assistance?\\
+\textbf{user:} Yes, please transfer me to someone who can help further. I just want my phone to work again. Thank you for your help so far.\texttt{\#\#\#TRANSFER\#\#\#}
+\end{quote}

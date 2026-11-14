@@ -1,0 +1,188 @@
+\begin{thebibliography}{37}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Ardila et~al.(2020)Ardila, Branson, Davis, Kohler, Meyer, Henretty, Morais, Saunders, Tyers, and Weber}]{ardila-etal-2020-common}
+Rosana Ardila, Megan Branson, Kelly Davis, Michael Kohler, Josh Meyer, Michael Henretty, Reuben Morais, Lindsay Saunders, Francis Tyers, and Gregor Weber. 2020.
+\newblock \href {https://aclanthology.org/2020.lrec-1.520} {Common voice: A massively-multilingual speech corpus}.
+\newblock In \emph{Proceedings of the Twelfth Language Resources and Evaluation Conference}, pages 4218--4222, Marseille, France. European Language Resources Association.
+
+\bibitem[{Bastianelli et~al.(2020)Bastianelli, Vanzo, Swietojanski, and Rieser}]{slurp}
+Emanuele Bastianelli, Andrea Vanzo, Pawel Swietojanski, and Verena Rieser. 2020.
+\newblock \href {https://doi.org/10.18653/v1/2020.emnlp-main.588} {{SLURP}: A spoken language understanding resource package}.
+\newblock In \emph{Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 7252--7262, Online. Association for Computational Linguistics.
+
+\bibitem[{Brown et~al.(2020)Brown, Mann, Ryder, Subbiah, Kaplan, Dhariwal, Neelakantan, Shyam, Sastry, Askell et~al.}]{incontext}
+Tom Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared~D Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, and 1 others. 2020.
+\newblock Language models are few-shot learners.
+\newblock \emph{Advances in neural information processing systems}, 33:1877--1901.
+
+\bibitem[{Eric et~al.(2019)Eric, Goel, Paul, Kumar, Sethi, Ku, Goyal, Agarwal, Gao, and Hakkani-Tur}]{woz2.1}
+Mihail Eric, Rahul Goel, Shachi Paul, Adarsh Kumar, Abhishek Sethi, Peter Ku, Anuj~Kumar Goyal, Sanchit Agarwal, Shuyang Gao, and Dilek Hakkani-Tur. 2019.
+\newblock Multiwoz 2.1: A consolidated multi-domain dialogue dataset with state corrections and state tracking baselines.
+\newblock \emph{arXiv preprint arXiv:1907.01669}.
+
+\bibitem[{Gwet(2008)}]{gwet}
+Kilem~Li Gwet. 2008.
+\newblock Computing inter-rater reliability and its variance in the presence of high agreement.
+\newblock \emph{British Journal of Mathematical and Statistical Psychology}, 61(1):29--48.
+
+\bibitem[{Heck et~al.(2020)Heck, van Niekerk, Lubis, Geishauser, Lin, Moresi, and Ga{\v{s}}i{\'c}}]{trippy}
+Michael Heck, Carel van Niekerk, Nurul Lubis, Christian Geishauser, Hsien-Chin Lin, Marco Moresi, and Milica Ga{\v{s}}i{\'c}. 2020.
+\newblock Trippy: A triple copy strategy for value independent neural dialog state tracking.
+\newblock \emph{arXiv preprint arXiv:2005.02877}.
+
+\bibitem[{Hrinchuk et~al.(2020)Hrinchuk, Popova, and Ginsburg}]{sc-BERT}
+Oleksii Hrinchuk, Mariya Popova, and Boris Ginsburg. 2020.
+\newblock \href {https://doi.org/10.1109/ICASSP40776.2020.9053051} {Correction of automatic speech recognition with transformer sequence-to-sequence model}.
+\newblock In \emph{ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pages 7074--7078.
+
+\bibitem[{Huang and Chen(2020)}]{huang2020learning}
+Chao-Wei Huang and Yun-Nung Chen. 2020.
+\newblock Learning asr-robust contextualized embeddings for spoken language understanding.
+\newblock In \emph{ICASSP 2020-2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pages 8009--8013. IEEE.
+
+\bibitem[{Jacqmin et~al.(2023)Jacqmin, Druart, Vielzeuf, Rojas-Barahona, Est{\`e}ve, and Favre}]{jacqmin2023olisia}
+L{\'e}o Jacqmin, Lucas Druart, Valentin Vielzeuf, Lina~Maria Rojas-Barahona, Yannick Est{\`e}ve, and Beno{\^\i}t Favre. 2023.
+\newblock Olisia: a cascade system for spoken dialogue state tracking.
+\newblock \emph{arXiv preprint arXiv:2304.11073}.
+
+\bibitem[{Karimi et~al.(2021)Karimi, Rossi, and Prati}]{aeda}
+Akbar Karimi, Leonardo Rossi, and Andrea Prati. 2021.
+\newblock Aeda: an easier data augmentation technique for text classification.
+\newblock \emph{arXiv preprint arXiv:2108.13230}.
+
+\bibitem[{Karpukhin et~al.(2020)Karpukhin, Oguz, Min, Lewis, Wu, Edunov, Chen, and Yih}]{DPR}
+Vladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick~SH Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, and Wen-tau Yih. 2020.
+\newblock Dense passage retrieval for open-domain question answering.
+\newblock In \emph{EMNLP (1)}, pages 6769--6781.
+
+\bibitem[{Kim et~al.(2021)Kim, Liu, Jin, Papangelis, Gopalakrishnan, Hedayatnia, and Hakkani-T{\"u}r}]{kim2021robust}
+Seokhwan Kim, Yang Liu, Di~Jin, Alexandros Papangelis, Karthik Gopalakrishnan, Behnam Hedayatnia, and Dilek Hakkani-T{\"u}r. 2021.
+\newblock “how robust ru?”: Evaluating task-oriented dialogue systems on spoken conversations.
+\newblock In \emph{2021 IEEE Automatic Speech Recognition and Understanding Workshop (ASRU)}, pages 1147--1154. IEEE.
+
+\bibitem[{Kim et~al.(2019)Kim, Yang, Kim, and Lee}]{kim2019efficient}
+Sungdong Kim, Sohee Yang, Gyuwan Kim, and Sang-Woo Lee. 2019.
+\newblock Efficient dialogue state tracking by selectively overwriting memory.
+\newblock \emph{arXiv preprint arXiv:1911.03906}.
+
+\bibitem[{Liang et~al.(2024)Liang, Wang, Song, Hu, Wang, Li, Xiong, and Tang}]{control2}
+Xun Liang, Hanyu Wang, Shichao Song, Mengting Hu, Xunzhi Wang, Zhiyu Li, Feiyu Xiong, and Bo~Tang. 2024.
+\newblock Controlled text generation for large language model with dynamic attribute graphs.
+\newblock \emph{arXiv preprint arXiv:2402.11218}.
+
+\bibitem[{Loshchilov and Hutter(2017)}]{loshchilov2017decoupled}
+Ilya Loshchilov and Frank Hutter. 2017.
+\newblock Decoupled weight decay regularization.
+\newblock \emph{arXiv preprint arXiv:1711.05101}.
+
+\bibitem[{Nechaev et~al.(2021)Nechaev, Ruan, and Kiss}]{Nechaev2021}
+Yaroslav Nechaev, Weitong Ruan, and Imre Kiss. 2021.
+\newblock \href {https://www.amazon.science/publications/towards-nlu-model-robustness-to-asr-errors-at-scale} {Towards nlu model robustness to asr errors at scale}.
+\newblock In \emph{KDD 2021 Workshop on Data-Efficient Machine Learning}.
+
+\bibitem[{Ouyang et~al.(2022)Ouyang, Wu, Jiang, Almeida, Wainwright, Mishkin, Zhang, Agarwal, Slama, Ray, Schulman, Hilton, Kelton, Miller, Simens, Askell, Welinder, Christiano, Leike, and Lowe}]{openai}
+Long Ouyang, Jeff Wu, Xu~Jiang, Diogo Almeida, Carroll~L. Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, John Schulman, Jacob Hilton, Fraser Kelton, Luke Miller, Maddie Simens, Amanda Askell, Peter Welinder, Paul Christiano, Jan Leike, and Ryan Lowe. 2022.
+\newblock \href {https://arxiv.org/abs/2203.02155} {Training language models to follow instructions with human feedback}.
+\newblock \emph{Preprint}, arXiv:2203.02155.
+
+\bibitem[{Pal et~al.(2020)Pal, Guillot, Shrivastava, Renders, and Besacier}]{pal2020modeling}
+Vaishali Pal, Fabien Guillot, Manish Shrivastava, Jean-Michel Renders, and Laurent Besacier. 2020.
+\newblock Modeling asr ambiguity for dialogue state tracking using word confusion networks.
+\newblock \emph{arXiv preprint arXiv:2002.00768}.
+
+\bibitem[{Radford et~al.(2022)Radford, Kim, Xu, Brockman, McLeavey, and Sutskever}]{whisper}
+Alec Radford, Jong~Wook Kim, Tao Xu, Greg Brockman, Christine McLeavey, and Ilya Sutskever. 2022.
+\newblock \href {https://doi.org/10.48550/ARXIV.2212.04356} {Robust speech recognition via large-scale weak supervision}.
+\newblock \emph{arXiv preprint}.
+
+\bibitem[{Radford et~al.(2019)Radford, Wu, Child, Luan, Amodei, Sutskever et~al.}]{gpt2}
+Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, Ilya Sutskever, and 1 others. 2019.
+\newblock Language models are unsupervised multitask learners.
+\newblock \emph{OpenAI blog}, 1(8):9.
+
+\bibitem[{Roberts et~al.(2019)Roberts, Raffel, Lee, Matena, Shazeer, Liu, Narang, Li, and Zhou}]{t5}
+Adam Roberts, Colin Raffel, Katherine Lee, Michael Matena, Noam Shazeer, Peter~J Liu, Sharan Narang, Wei Li, and Yanqi Zhou. 2019.
+\newblock Exploring the limits of transfer learning with a unified text-to-text transformer.
+
+\bibitem[{Robertson et~al.(2009)Robertson, Zaragoza et~al.}]{bm25}
+Stephen Robertson, Hugo Zaragoza, and 1 others. 2009.
+\newblock The probabilistic relevance framework: Bm25 and beyond.
+\newblock \emph{Foundations and Trends{\textregistered} in Information Retrieval}, 3(4):333--389.
+
+\bibitem[{Sahu et~al.(2023)Sahu, Vechtomova, Bahdanau, and Laradji}]{semaug2}
+Gaurav Sahu, Olga Vechtomova, Dzmitry Bahdanau, and Issam~H Laradji. 2023.
+\newblock Promptmix: A class boundary augmentation method for large language model distillation.
+\newblock \emph{arXiv preprint arXiv:2310.14192}.
+
+\bibitem[{Sennrich et~al.(2015)Sennrich, Haddow, and Birch}]{BT}
+Rico Sennrich, Barry Haddow, and Alexandra Birch. 2015.
+\newblock Improving neural machine translation models with monolingual data.
+\newblock \emph{arXiv preprint arXiv:1511.06709}.
+
+\bibitem[{Sharma et~al.(2020)Sharma, Abraham, Taneja, and Jyothi}]{sharma2020improving}
+Yash Sharma, Basil Abraham, Karan Taneja, and Preethi Jyothi. 2020.
+\newblock Improving low resource code-switched asr using augmented code-switched tts.
+\newblock \emph{arXiv preprint arXiv:2010.05549}.
+
+\bibitem[{Shen et~al.(2018)Shen, Pang, Weiss, Schuster, Jaitly, Yang, Chen, Zhang, Wang, Skerrv-Ryan et~al.}]{taco}
+Jonathan Shen, Ruoming Pang, Ron~J Weiss, Mike Schuster, Navdeep Jaitly, Zongheng Yang, Zhifeng Chen, Yu~Zhang, Yuxuan Wang, Rj~Skerrv-Ryan, and 1 others. 2018.
+\newblock Natural tts synthesis by conditioning wavenet on mel spectrogram predictions.
+\newblock In \emph{2018 IEEE international conference on acoustics, speech and signal processing (ICASSP)}, pages 4779--4783. IEEE.
+
+\bibitem[{Shon et~al.(2022)Shon, Pasad, Wu, Brusco, Artzi, Livescu, and Han}]{asapp}
+Suwon Shon, Ankita Pasad, Felix Wu, Pablo Brusco, Yoav Artzi, Karen Livescu, and Kyu~J Han. 2022.
+\newblock Slue: New benchmark tasks for spoken language understanding evaluation on natural speech.
+\newblock In \emph{ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pages 7927--7931. IEEE.
+
+\bibitem[{Soltau et~al.(2022)Soltau, Shafran, Wang, Rastogi, Zhao, Jia, Han, Cao, and Miranda}]{dstc11}
+Hagen Soltau, Izhak Shafran, Mingqiu Wang, Abhinav Rastogi, Jeffrey Zhao, Ye~Jia, Wei Han, Yuan Cao, and Aramys Miranda. 2022.
+\newblock Speech aware dialog system technology challenge (dstc11).
+\newblock \emph{arXiv preprint arXiv:2212.08704}.
+
+\bibitem[{Su et~al.(2021)Su, Shu, Mansimov, Gupta, Cai, Lai, and Zhang}]{pptod}
+Yixuan Su, Lei Shu, Elman Mansimov, Arshit Gupta, Deng Cai, Yi-An Lai, and Yi~Zhang. 2021.
+\newblock Multi-task pre-training for plug-and-play task-oriented dialogue system.
+\newblock \emph{arXiv preprint arXiv:2109.14739}.
+
+\bibitem[{Sun et~al.(2023)Sun, Tian, Zhou, Xu, Hu, Gupta, Wieting, Peng, and Ma}]{control1}
+Jiao Sun, Yufei Tian, Wangchunshu Zhou, Nan Xu, Qian Hu, Rahul Gupta, John~Frederick Wieting, Nanyun Peng, and Xuezhe Ma. 2023.
+\newblock Evaluating large language models on controlled generation tasks.
+\newblock \emph{arXiv preprint arXiv:2310.14542}.
+
+\bibitem[{Touvron et~al.(2023)Touvron, Martin, Stone, Albert, Almahairi, Babaei, Bashlykov, Batra, Bhargava, Bhosale, Bikel, Blecher, Ferrer, Chen, Cucurull, Esiobu, Fernandes, Fu, Fu, Fuller, Gao, Goswami, Goyal, Hartshorn, Hosseini, Hou, Inan, Kardas, Kerkez, Khabsa, Kloumann, Korenev, Koura, Lachaux, Lavril, Lee, Liskovich, Lu, Mao, Martinet, Mihaylov, Mishra, Molybog, Nie, Poulton, Reizenstein, Rungta, Saladi, Schelten, Silva, Smith, Subramanian, Tan, Tang, Taylor, Williams, Kuan, Xu, Yan, Zarov, Zhang, Fan, Kambadur, Narang, Rodriguez, Stojnic, Edunov, and Scialom}]{touvron2023llama}
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei, Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti Bhosale, Dan Bikel, Lukas Blecher, Cristian~Canton Ferrer, Moya Chen, Guillem Cucurull, David Esiobu, Jude Fernandes, Jeremy Fu, Wenyin Fu, and 49 others. 2023.
+\newblock \href {https://arxiv.org/abs/2307.09288} {Llama 2: Open foundation and fine-tuned chat models}.
+\newblock \emph{Preprint}, arXiv:2307.09288.
+
+\bibitem[{Wei and Zou(2019)}]{eda}
+Jason Wei and Kai Zou. 2019.
+\newblock Eda: Easy data augmentation techniques for boosting performance on text classification tasks.
+\newblock \emph{arXiv preprint arXiv:1901.11196}.
+
+\bibitem[{Whitehouse et~al.(2023)Whitehouse, Choudhury, and Aji}]{semaug1}
+Chenxi Whitehouse, Monojit Choudhury, and Alham~Fikri Aji. 2023.
+\newblock Llm-powered data augmentation for enhanced crosslingual performance.
+\newblock \emph{arXiv preprint arXiv:2305.14288}.
+
+\bibitem[{Yoon et~al.(2023)Yoon, Hwang, Han, Bang, and Kim}]{yoon2023adapting}
+Jaeseok Yoon, Seunghyun Hwang, Ran Han, Jeonguk Bang, and Kee-Eung Kim. 2023.
+\newblock Adapting text-based dialogue state tracker for spoken dialogues.
+\newblock \emph{arXiv preprint arXiv:2308.15053}.
+
+\bibitem[{Young et~al.(2013)Young, Ga{\v{s}}i{\'c}, Thomson, and Williams}]{young2013pomdp}
+Steve Young, Milica Ga{\v{s}}i{\'c}, Blaise Thomson, and Jason~D Williams. 2013.
+\newblock Pomdp-based statistical spoken dialog systems: A review.
+\newblock \emph{Proceedings of the IEEE}, 101(5):1160--1179.
+
+\bibitem[{Zhang et~al.(2021)Zhang, Yi, Tian, Bai, Tao, Liu, and Wen}]{sc-kfold}
+Shuai Zhang, Jiangyan Yi, Zhengkun Tian, Ye~Bai, Jianhua Tao, Xuefei Liu, and Zhengqi Wen. 2021.
+\newblock \href {https://doi.org/10.21437/Interspeech.2021-1242} {{End-to-End Spelling Correction Conditioned on Acoustic Feature for Code-Switching Speech Recognition}}.
+\newblock In \emph{Proc. Interspeech 2021}, pages 266--270.
+
+\bibitem[{Zhang et~al.(2022)Zhang, Roller, Goyal, Artetxe, Chen, Chen, Dewan, Diab, Li, Lin, Mihaylov, Ott, Shleifer, Shuster, Simig, Koura, Sridhar, Wang, and Zettlemoyer}]{zhang2022opt}
+Susan Zhang, Stephen Roller, Naman Goyal, Mikel Artetxe, Moya Chen, Shuohui Chen, Christopher Dewan, Mona Diab, Xian Li, Xi~Victoria Lin, Todor Mihaylov, Myle Ott, Sam Shleifer, Kurt Shuster, Daniel Simig, Punit~Singh Koura, Anjali Sridhar, Tianlu Wang, and Luke Zettlemoyer. 2022.
+\newblock \href {https://arxiv.org/abs/2205.01068} {Opt: Open pre-trained transformer language models}.
+\newblock \emph{Preprint}, arXiv:2205.01068.
+
+\end{thebibliography}

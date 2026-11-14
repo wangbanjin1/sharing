@@ -1,0 +1,40 @@
+% Track-changes macros for the CLEA camera-ready (copied from the VLM4RWD camera-ready).
+% Requires: xcolor, ulem (normalem). Loads changebar itself when tracking is on.
+% trackmode.tex (written by build_camera_ready.sh) holds \trackchangestrue or \trackchangesfalse.
+%
+% Usage in the body:
+%   \rev{new or rewritten text}   red + margin change bar
+%   \del{removed text}            red strikethrough (vanishes in clean mode)
+%   \revbar{changed formatting}   margin change bar only, colour unchanged (e.g. a re-typeset equation)
+%   \todo{open question}          yellow box (must be empty before submitting)
+%
+% For the arXiv port: \input this file and ship trackmode.tex with
+% \trackchangesfalse, and the body renders clean with no further edits.
+\newif\iftrackchanges
+\IfFileExists{trackmode.tex}{\input{trackmode}}{\trackchangesfalse}
+
+\iftrackchanges
+  \usepackage[xetex]{changebar}
+  \setlength{\changebarwidth}{2pt}
+  \setlength{\changebarsep}{6pt}
+  \cbcolor{red}
+  % Robust: these appear inside captions (moving arguments).
+  \DeclareRobustCommand{\rev}[1]{\cbstart{\color{red}\relax#1}\cbend\relax}
+  \DeclareRobustCommand{\del}[1]{\cbstart{\color{red}\relax\sout{#1}}\cbend\relax}
+  \DeclareRobustCommand{\revbar}[1]{\cbstart#1\cbend\relax}
+  \DeclareRobustCommand{\todo}[1]{\cbstart\fcolorbox{red}{yellow}{\parbox[t]{0.94\linewidth}{\scriptsize\textbf{TODO:} #1}}\cbend\relax}
+  \newcommand{\trackbanner}{%
+    \begin{center}
+    \fcolorbox{red}{red!8}{\parbox{0.93\linewidth}{\footnotesize\centering
+      \textbf{TRACKED-CHANGES COPY --- not for upload.}
+      Edits since the submitted version are \textcolor{red}{in red with a change bar in the margin};
+      deletions are \textcolor{red}{\sout{struck through}}; yellow boxes are open questions for the authors.
+      The clean PDF in the same folder is the upload candidate.}}
+    \end{center}\medskip}
+\else
+  \DeclareRobustCommand{\rev}[1]{#1}
+  \DeclareRobustCommand{\del}[1]{\ignorespaces}
+  \DeclareRobustCommand{\revbar}[1]{#1}
+  \DeclareRobustCommand{\todo}[1]{}
+  \newcommand{\trackbanner}{}
+\fi

@@ -1,0 +1,23 @@
+% Generated from data/recovery_overlap.json (exp_plan Task 2).
+\begin{table}[htbp]
+\centering
+\caption{Conversation-level overlap between History and Current Transcript rescues among Reference-success/Direct-failure conversations, pooled over the ten languages on the four-arm common set (Reference, Direct Audio, History, Current; complete per conversation and language). Exclusive is the share of recovered conversations (H only $+$ C only $+$ Both) rescued by exactly one substitution; Overlap is the share rescued by both.}
+\label{tab:recovery_overlap}
+\begingroup
+\fontsize{8.5}{10.5}\selectfont
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+\textbf{Model} & \textbf{Eligible} & \textbf{H only} & \textbf{C only} & \textbf{Both} & \textbf{Neither} & \textbf{Exclusive (\%)} & \textbf{Overlap (\%)} \\
+\midrule
+Qwen3.8 Omni & 374 & 60 & 69 & 128 & 117 & 50.2 & 49.8 \\
+Gemini 3.1 Pro & 530 & 167 & 62 & 177 & 124 & 56.4 & 43.6 \\
+Gemini 3.8 Flash & 513 & 129 & 82 & 142 & 160 & 59.8 & 40.2 \\
+Doubao Seed Lite & 491 & 115 & 63 & 130 & 183 & 57.8 & 42.2 \\
+Qwen3.5 Omni & 347 & 65 & 62 & 95 & 125 & 57.2 & 42.8 \\
+Muse-Spark 1.2 & 1270 & 523 & 151 & 285 & 311 & 70.3 & 29.7 \\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{table}

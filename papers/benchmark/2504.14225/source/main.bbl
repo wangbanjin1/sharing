@@ -1,0 +1,319 @@
+\begin{thebibliography}{59}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Afzoon et~al.(2024)Afzoon, Naseem, Beheshti, and Jamali]{afzoon2024persobench}
+Saleh Afzoon, Usman Naseem, Amin Beheshti, and Zahra Jamali.
+\newblock Persobench: Benchmarking personalized response generation in large language models.
+\newblock \emph{arXiv preprint arXiv:2410.03198}, 2024.
+
+\bibitem[Aggarwal et~al.(2023)Aggarwal, Tam, Wu, Li, and Qiao]{aggarwal2023artificial}
+Abhishek Aggarwal, Cheuk~Chi Tam, Dezhi Wu, Xiaoming Li, and Shan Qiao.
+\newblock Artificial intelligence--based chatbots for promoting health behavioral changes: systematic review.
+\newblock \emph{Journal of medical Internet research}, 25:\penalty0 e40789, 2023.
+
+\bibitem[Ait~Baha et~al.(2023)Ait~Baha, El~Hajji, Es-Saady, and Fadili]{ait2023power}
+Tarek Ait~Baha, Mohamed El~Hajji, Youssef Es-Saady, and Hammou Fadili.
+\newblock The power of personalization: A systematic review of personality-adaptive chatbots.
+\newblock \emph{SN Computer Science}, 4\penalty0 (5):\penalty0 661, 2023.
+
+\bibitem[Anthropic(2024)]{anthropic2024claude3}
+Anthropic.
+\newblock The claude 3 model family: Opus, sonnet, haiku.
+\newblock \url{https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf}, March 2024.
+\newblock Accessed: 2025-04-10.
+
+\bibitem[Bai et~al.(2024)Bai, Lv, Zhang, Lyu, Tang, Huang, Du, Liu, Zeng, Hou, Dong, Tang, and Li]{bai-etal-2024-longbench}
+Yushi Bai, Xin Lv, Jiajie Zhang, Hongchang Lyu, Jiankai Tang, Zhidian Huang, Zhengxiao Du, Xiao Liu, Aohan Zeng, Lei Hou, Yuxiao Dong, Jie Tang, and Juanzi Li.
+\newblock {L}ong{B}ench: A bilingual, multitask benchmark for long context understanding.
+\newblock In Lun-Wei Ku, Andre Martins, and Vivek Srikumar (eds.), \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  3119--3137, Bangkok, Thailand, August 2024. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2024.acl-long.172}.
+\newblock URL \url{https://aclanthology.org/2024.acl-long.172/}.
+
+\bibitem[Castillo-Bolado et~al.(2024)Castillo-Bolado, Davidson, Gray, and Rosa]{castillo2024beyond}
+David Castillo-Bolado, Joseph Davidson, Finlay Gray, and Marek Rosa.
+\newblock Beyond prompts: Dynamic conversational benchmarking of large language models.
+\newblock \emph{arXiv preprint arXiv:2409.20222}, 2024.
+
+\bibitem[Castricato et~al.(2024)Castricato, Lile, Rafailov, Fr{\"a}nken, and Finn]{castricato2024persona}
+Louis Castricato, Nathan Lile, Rafael Rafailov, Jan-Philipp Fr{\"a}nken, and Chelsea Finn.
+\newblock Persona: A reproducible testbed for pluralistic alignment.
+\newblock \emph{arXiv preprint arXiv:2407.17387}, 2024.
+
+\bibitem[Chen et~al.(2024)Chen, Xiao, Zhang, Luo, Lian, and Liu]{chen2024bge}
+Jianlv Chen, Shitao Xiao, Peitian Zhang, Kun Luo, Defu Lian, and Zheng Liu.
+\newblock Bge m3-embedding: Multi-lingual, multi-functionality, multi-granularity text embeddings through self-knowledge distillation.
+\newblock \emph{arXiv preprint arXiv:2402.03216}, 2024.
+
+\bibitem[Dean \& Morgenstern(2022)Dean and Morgenstern]{dean2022preference}
+Sarah Dean and Jamie Morgenstern.
+\newblock Preference dynamics under personalized recommendations.
+\newblock In \emph{Proceedings of the 23rd ACM Conference on Economics and Computation}, pp.\  795--816, 2022.
+
+\bibitem[Dong et~al.(2024)Dong, Hu, and Collier]{dong2024can}
+Yijiang~River Dong, Tiancheng Hu, and Nigel Collier.
+\newblock Can llm be a personalized judge?
+\newblock \emph{arXiv preprint arXiv:2406.11657}, 2024.
+
+\bibitem[Ge et~al.(2024)Ge, Chan, Wang, Yu, Mi, and Yu]{ge2024scaling}
+Tao Ge, Xin Chan, Xiaoyang Wang, Dian Yu, Haitao Mi, and Dong Yu.
+\newblock Scaling synthetic data creation with 1,000,000,000 personas.
+\newblock \emph{arXiv preprint arXiv:2406.20094}, 2024.
+
+\bibitem[Grattafiori et~al.(2024)Grattafiori, Dubey, Jauhri, Pandey, Kadian, Al-Dahle, Letman, Mathur, Schelten, Vaughan, et~al.]{grattafiori2024llama}
+Aaron Grattafiori, Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schelten, Alex Vaughan, et~al.
+\newblock The llama 3 herd of models.
+\newblock \emph{arXiv preprint arXiv:2407.21783}, 2024.
+
+\bibitem[Guo et~al.(2025)Guo, Yang, Zhang, Song, Zhang, Xu, Zhu, Ma, Wang, Bi, et~al.]{guo2025deepseek}
+Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu, Shirong Ma, Peiyi Wang, Xiao Bi, et~al.
+\newblock Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2501.12948}, 2025.
+
+\bibitem[Gwet(2008)]{gwet2008computing}
+Kilem~Li Gwet.
+\newblock Computing inter-rater reliability and its variance in the presence of high agreement.
+\newblock \emph{British Journal of Mathematical and Statistical Psychology}, 61\penalty0 (1):\penalty0 29--48, 2008.
+
+\bibitem[Hua et~al.(2023)Hua, Li, Xu, Chen, and Zhang]{hua2023tutorial}
+Wenyue Hua, Lei Li, Shuyuan Xu, Li~Chen, and Yongfeng Zhang.
+\newblock Tutorial on large language models for recommendation.
+\newblock In \emph{Proceedings of the 17th ACM Conference on Recommender Systems}, pp.\  1281--1283, 2023.
+
+\bibitem[Hurst et~al.(2024)Hurst, Lerer, Goucher, Perelman, Ramesh, Clark, Ostrow, Welihinda, Hayes, Radford, et~al.]{hurst2024gpt}
+Aaron Hurst, Adam Lerer, Adam~P Goucher, Adam Perelman, Aditya Ramesh, Aidan Clark, AJ~Ostrow, Akila Welihinda, Alan Hayes, Alec Radford, et~al.
+\newblock Gpt-4o system card.
+\newblock \emph{arXiv preprint arXiv:2410.21276}, 2024.
+
+\bibitem[Jiang et~al.(2024)Jiang, Xie, Hao, Wang, Mallick, Su, Taylor, and Roth]{jiang2024peek}
+Bowen Jiang, Yangxinyu Xie, Zhuoqun Hao, Xiaomeng Wang, Tanwi Mallick, Weijie~J Su, Camillo~J Taylor, and Dan Roth.
+\newblock A peek into token bias: Large language models are not yet genuine reasoners.
+\newblock \emph{arXiv preprint arXiv:2406.11050}, 2024.
+
+\bibitem[Jiang et~al.(2023)Jiang, Zhang, Cao, Breazeal, Roy, and Kabbara]{jiang2023personallm}
+Hang Jiang, Xiajie Zhang, Xubo Cao, Cynthia Breazeal, Deb Roy, and Jad Kabbara.
+\newblock Personallm: Investigating the ability of large language models to express personality traits.
+\newblock \emph{arXiv preprint arXiv:2305.02547}, 2023.
+
+\bibitem[Kim et~al.(2024)Kim, Chay, Hwang, Kyung, Chung, Cho, Jo, and Choi]{kim2024dialsim}
+Jiho Kim, Woosog Chay, Hyeonji Hwang, Daeun Kyung, Hyunseung Chung, Eunbyeol Cho, Yohan Jo, and Edward Choi.
+\newblock Dialsim: A real-time simulator for evaluating long-term dialogue understanding of conversational agents.
+\newblock \emph{arXiv preprint arXiv:2406.13144}, 2024.
+
+\bibitem[Kirk et~al.(2024)Kirk, Whitefield, R{\"o}ttger, Bean, Margatina, Ciro, Mosquera, Bartolo, Williams, He, et~al.]{kirk2024prism}
+Hannah~Rose Kirk, Alexander Whitefield, Paul R{\"o}ttger, Andrew Bean, Katerina Margatina, Juan Ciro, Rafael Mosquera, Max Bartolo, Adina Williams, He~He, et~al.
+\newblock The prism alignment project: What participatory, representative and individualised human feedback reveals about the subjective and multicultural alignment of large language models.
+\newblock \emph{arXiv preprint arXiv:2404.16019}, 2024.
+
+\bibitem[Kumar et~al.(2024)Kumar, Viswanathan, Yerra, Salemi, Rossi, Dernoncourt, Deilamsalehy, Chen, Zhang, Agarwal, et~al.]{kumar2024longlamp}
+Ishita Kumar, Snigdha Viswanathan, Sushrita Yerra, Alireza Salemi, Ryan~A Rossi, Franck Dernoncourt, Hanieh Deilamsalehy, Xiang Chen, Ruiyi Zhang, Shubham Agarwal, et~al.
+\newblock Longlamp: A benchmark for personalized long-form text generation.
+\newblock \emph{arXiv preprint arXiv:2407.11016}, 2024.
+
+\bibitem[Kuratov et~al.(2024)Kuratov, Bulatov, Anokhin, Sorokin, Sorokin, and Burtsev]{kuratov2024search}
+Yuri Kuratov, Aydar Bulatov, Petr Anokhin, Dmitry Sorokin, Artyom Sorokin, and Mikhail Burtsev.
+\newblock In search of needles in a 10m haystack: Recurrent memory finds what llms miss.
+\newblock \emph{arXiv preprint arXiv:2402.10790}, 2024.
+
+\bibitem[Lewis et~al.(2020)Lewis, Perez, Piktus, Petroni, Karpukhin, Goyal, K{\"u}ttler, Lewis, Yih, Rockt{\"a}schel, et~al.]{lewis2020retrieval}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich K{\"u}ttler, Mike Lewis, Wen-tau Yih, Tim Rockt{\"a}schel, et~al.
+\newblock Retrieval-augmented generation for knowledge-intensive nlp tasks.
+\newblock \emph{Advances in neural information processing systems}, 33:\penalty0 9459--9474, 2020.
+
+\bibitem[Li et~al.(2025)Li, Bantupalli, Dharmani, Zhang, and Shang]{li2025toward}
+Xintong Li, Jalend Bantupalli, Ria Dharmani, Yuwei Zhang, and Jingbo Shang.
+\newblock Toward multi-session personalized conversation: A large-scale dataset and hierarchical tree framework for implicit reasoning.
+\newblock \emph{arXiv preprint arXiv:2503.07018}, 2025.
+
+\bibitem[Lin et~al.(2024)Lin, Neville, Stokes, Yang, Safavi, Wan, Counts, Suri, Andersen, Xu, Gupta, Jauhar, Song, Buscher, Tiwary, Hecht, and Teevan]{lin-etal-2024-interpretable}
+Ying-Chun Lin, Jennifer Neville, Jack Stokes, Longqi Yang, Tara Safavi, Mengting Wan, Scott Counts, Siddharth Suri, Reid Andersen, Xiaofeng Xu, Deepak Gupta, Sujay~Kumar Jauhar, Xia Song, Georg Buscher, Saurabh Tiwary, Brent Hecht, and Jaime Teevan.
+\newblock Interpretable user satisfaction estimation for conversational systems with large language models.
+\newblock In Lun-Wei Ku, Andre Martins, and Vivek Srikumar (eds.), \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  11100--11115, Bangkok, Thailand, August 2024. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2024.acl-long.598}.
+\newblock URL \url{https://aclanthology.org/2024.acl-long.598/}.
+
+\bibitem[Liu et~al.(2024)Liu, Lin, Hewitt, Paranjape, Bevilacqua, Petroni, and Liang]{liu2024lost}
+Nelson~F Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, and Percy Liang.
+\newblock Lost in the middle: How language models use long contexts.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 12:\penalty0 157--173, 2024.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and Fang]{maharana2024evaluating}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco Barbieri, and Yuwei Fang.
+\newblock Evaluating very long-term conversational memory of llm agents.
+\newblock \emph{arXiv preprint arXiv:2402.17753}, 2024.
+
+\bibitem[Mem0(2024)]{mem0}
+Mem0.
+\newblock Mem0: An additional memory layer for language models.
+\newblock \url{https://mem0.ai}, 2024.
+\newblock Accessed: 2025-03-27.
+
+\bibitem[Mysore et~al.(2024)Mysore, Lu, Wan, Yang, Sarrafzadeh, Menezes, Baghaee, Gonzalez, Neville, and Safavi]{mysore-etal-2024-pearl}
+Sheshera Mysore, Zhuoran Lu, Mengting Wan, Longqi Yang, Bahareh Sarrafzadeh, Steve Menezes, Tina Baghaee, Emmanuel~Barajas Gonzalez, Jennifer Neville, and Tara Safavi.
+\newblock Pearl: Personalizing large language model writing assistants with generation-calibrated retrievers.
+\newblock In Sachin Kumar, Vidhisha Balachandran, Chan~Young Park, Weijia Shi, Shirley~Anugrah Hayati, Yulia Tsvetkov, Noah Smith, Hannaneh Hajishirzi, Dongyeop Kang, and David Jurgens (eds.), \emph{Proceedings of the 1st Workshop on Customizable NLP: Progress and Challenges in Customizing NLP for a Domain, Application, Group, or Individual (CustomNLP4U)}, pp.\  198--219, Miami, Florida, USA, November 2024. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2024.customnlp4u-1.16}.
+\newblock URL \url{https://aclanthology.org/2024.customnlp4u-1.16/}.
+
+\bibitem[Nelson et~al.(2024)Nelson, Kollias, Das, Chaudhury, and Dan]{nelson2024needle}
+Elliot Nelson, Georgios Kollias, Payel Das, Subhajit Chaudhury, and Soham Dan.
+\newblock Needle in the haystack for memory based large language models.
+\newblock \emph{arXiv preprint arXiv:2407.01437}, 2024.
+
+\bibitem[OpenAI(2024{\natexlab{a}})]{openai2024o1}
+OpenAI.
+\newblock Openai o1 system card, 2024{\natexlab{a}}.
+\newblock URL \url{https://cdn.openai.com/o1-system-card-20241205.pdf}.
+\newblock Accessed: 2025-03-27.
+
+\bibitem[OpenAI(2024{\natexlab{b}})]{openai2024o4mini}
+OpenAI.
+\newblock Openai o3 and o4-mini system card, 2024{\natexlab{b}}.
+\newblock URL \url{https://openai.com/index/o3-o4-mini-system-card/}.
+\newblock Accessed: 2025-04-18.
+
+\bibitem[OpenAI(2025{\natexlab{a}})]{openai2025gpt45}
+OpenAI.
+\newblock Openai gpt-4.5 system card, 2025{\natexlab{a}}.
+\newblock URL \url{https://cdn.openai.com/gpt-4-5-system-card-2272025.pdf}.
+\newblock Accessed: 2025-03-27.
+
+\bibitem[OpenAI(2025{\natexlab{b}})]{openai2025o3mini}
+OpenAI.
+\newblock Openai o3-mini system card, 2025{\natexlab{b}}.
+\newblock URL \url{https://cdn.openai.com/o3-mini-system-card-feb10.pdf}.
+\newblock Accessed: 2025-03-27.
+
+\bibitem[Pei et~al.(2022)Pei, Ananthasubramaniam, Wang, Zhou, Dedeloudis, Sargent, and Jurgens]{pei2022potato}
+Jiaxin Pei, Aparna Ananthasubramaniam, Xingyao Wang, Naitian Zhou, Apostolos Dedeloudis, Jackson Sargent, and David Jurgens.
+\newblock Potato: The portable text annotation tool.
+\newblock In \emph{Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing: System Demonstrations}, pp.\  327--337, 2022.
+
+\bibitem[Radlinski \& Craswell(2017)Radlinski and Craswell]{radlinski2017theoretical}
+Filip Radlinski and Nick Craswell.
+\newblock A theoretical framework for conversational search.
+\newblock In \emph{Proceedings of the 2017 conference on conference human information interaction and retrieval}, pp.\  117--126, 2017.
+
+\bibitem[Rein et~al.(2024)Rein, Hou, Stickland, Petty, Pang, Dirani, Michael, and Bowman]{rein2024gpqa}
+David Rein, Betty~Li Hou, Asa~Cooper Stickland, Jackson Petty, Richard~Yuanzhe Pang, Julien Dirani, Julian Michael, and Samuel~R Bowman.
+\newblock Gpqa: A graduate-level google-proof q\&a benchmark.
+\newblock In \emph{First Conference on Language Modeling}, 2024.
+
+\bibitem[Salemi et~al.(2023)Salemi, Mysore, Bendersky, and Zamani]{salemi2023lamp}
+Alireza Salemi, Sheshera Mysore, Michael Bendersky, and Hamed Zamani.
+\newblock Lamp: When large language models meet personalization.
+\newblock \emph{arXiv preprint arXiv:2304.11406}, 2023.
+
+\bibitem[Santurkar et~al.(2023)Santurkar, Durmus, Ladhak, Lee, Liang, and Hashimoto]{santurkar2023whose}
+Shibani Santurkar, Esin Durmus, Faisal Ladhak, Cinoo Lee, Percy Liang, and Tatsunori Hashimoto.
+\newblock Whose opinions do language models reflect?
+\newblock In \emph{International Conference on Machine Learning}, pp.\  29971--30004. PMLR, 2023.
+
+\bibitem[Shi et~al.(2024)Shi, Wang, Yang, Lin, He, Wan, Zhou, Jauhar, Chen, Xia, et~al.]{shi2024wildfeedback}
+Taiwei Shi, Zhuoer Wang, Longqi Yang, Ying-Chun Lin, Zexue He, Mengting Wan, Pei Zhou, Sujay Jauhar, Sihao Chen, Shan Xia, et~al.
+\newblock Wildfeedback: Aligning llms with in-situ user interactions and feedback.
+\newblock \emph{arXiv preprint arXiv:2408.15549}, 2024.
+
+\bibitem[Sorensen et~al.(2024)Sorensen, Moore, Fisher, Gordon, Mireshghallah, Rytting, Ye, Jiang, Lu, Dziri, et~al.]{sorensen2024position}
+Taylor Sorensen, Jared Moore, Jillian Fisher, Mitchell Gordon, Niloofar Mireshghallah, Christopher~Michael Rytting, Andre Ye, Liwei Jiang, Ximing Lu, Nouha Dziri, et~al.
+\newblock Position: a roadmap to pluralistic alignment.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, pp.\  46280--46302, 2024.
+
+\bibitem[Srivastava et~al.(2023)Srivastava, Rastogi, Rao, Shoeb, Abid, Fisch, Brown, Santoro, Gupta, Garriga-Alonso, et~al.]{srivastava2023beyond}
+Aarohi Srivastava, Abhinav Rastogi, Abhishek Rao, Abu Awal~Md Shoeb, Abubakar Abid, Adam Fisch, Adam~R Brown, Adam Santoro, Aditya Gupta, Adri{\`a} Garriga-Alonso, et~al.
+\newblock Beyond the imitation game: quantifying and extrapolating the capabilities of language models.
+\newblock \emph{Transactions on Machine Learning Research}, 2023\penalty0 (5):\penalty0 1--95, 2023.
+
+\bibitem[Tan et~al.(2025)Tan, Yang, Liu, Liu, Murthy, Awalgaonkar, Zhang, Yao, Zhu, Kokane, et~al.]{tan2025personabench}
+Juntao Tan, Liangwei Yang, Zuxin Liu, Zhiwei Liu, Rithesh Murthy, Tulika~Manoj Awalgaonkar, Jianguo Zhang, Weiran Yao, Ming Zhu, Shirley Kokane, et~al.
+\newblock Personabench: Evaluating ai models on understanding personal information through accessing (synthetic) private user data.
+\newblock \emph{arXiv preprint arXiv:2502.20616}, 2025.
+
+\bibitem[Team et~al.(2024)Team, Georgiev, Lei, Burnell, Bai, Gulati, Tanzer, Vincent, Pan, Wang, et~al.]{team2024gemini}
+Gemini Team, Petko Georgiev, Ving~Ian Lei, Ryan Burnell, Libin Bai, Anmol Gulati, Garrett Tanzer, Damien Vincent, Zhufeng Pan, Shibo Wang, et~al.
+\newblock Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context.
+\newblock \emph{arXiv preprint arXiv:2403.05530}, 2024.
+
+\bibitem[Tian et~al.(2024)Tian, Huang, Liu, Jiang, Spangher, Chen, May, and Peng]{tian-etal-2024-large-language}
+Yufei Tian, Tenghao Huang, Miri Liu, Derek Jiang, Alexander Spangher, Muhao Chen, Jonathan May, and Nanyun Peng.
+\newblock Are large language models capable of generating human-level narratives?
+\newblock In Yaser Al-Onaizan, Mohit Bansal, and Yun-Nung Chen (eds.), \emph{Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing}, pp.\  17659--17681, Miami, Florida, USA, November 2024. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2024.emnlp-main.978}.
+\newblock URL \url{https://aclanthology.org/2024.emnlp-main.978/}.
+
+\bibitem[Tseng et~al.(2024)Tseng, Huang, Hsiao, Hsu, Foo, Huang, and Chen]{tseng2024two}
+Yu-Min Tseng, Yu-Chao Huang, Teng-Yun Hsiao, Yu-Ching Hsu, Jia-Yin Foo, Chao-Wei Huang, and Yun-Nung Chen.
+\newblock Two tales of persona in llms: A survey of role-playing and personalization.
+\newblock \emph{arXiv preprint arXiv:2406.01171}, 2024.
+
+\bibitem[Wang et~al.(2023)Wang, Jiang, Zhang, Li, Liang, Mei, and Bendersky]{wang2023automated}
+Yaqing Wang, Jiepu Jiang, Mingyang Zhang, Cheng Li, Yi~Liang, Qiaozhu Mei, and Michael Bendersky.
+\newblock Automated evaluation of personalized text generation using large language models.
+\newblock \emph{arXiv preprint arXiv:2310.11593}, 2023.
+
+\bibitem[Wu et~al.(2024)Wu, Wang, Yu, Zhang, Chang, and Yu]{wu2024longmemeval}
+Di~Wu, Hongwei Wang, Wenhao Yu, Yuwei Zhang, Kai-Wei Chang, and Dong Yu.
+\newblock Longmemeval: Benchmarking chat assistants on long-term interactive memory.
+\newblock \emph{arXiv preprint arXiv:2410.10813}, 2024.
+
+\bibitem[Xie et~al.(2024{\natexlab{a}})Xie, Zhang, Chen, Zhu, Lou, Tian, Xiao, and Su]{xie2024travelplanner}
+Jian Xie, Kai Zhang, Jiangjie Chen, Tinghui Zhu, Renze Lou, Yuandong Tian, Yanghua Xiao, and Yu~Su.
+\newblock Travelplanner: a benchmark for real-world planning with language agents.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, pp.\  54590--54613, 2024{\natexlab{a}}.
+
+\bibitem[Xie et~al.(2024{\natexlab{b}})Xie, Jiang, Mallick, Bergerson, Hutchison, Verner, Branham, Alexander, Ross, Feng, et~al.]{xie2024wildfiregpt}
+Yangxinyu Xie, Bowen Jiang, Tanwi Mallick, Joshua~David Bergerson, John~K Hutchison, Duane~R Verner, Jordan Branham, M~Ross Alexander, Robert~B Ross, Yan Feng, et~al.
+\newblock Wildfiregpt: Tailored large language model for wildfire analysis.
+\newblock \emph{arXiv preprint arXiv:2402.07877}, 2024{\natexlab{b}}.
+
+\bibitem[Xu(2021)]{xu2021beyond}
+J~Xu.
+\newblock Beyond goldfish memory: Long-term open-domain conversation.
+\newblock \emph{arXiv preprint arXiv:2107.07567}, 2021.
+
+\bibitem[Xu et~al.(2024)Xu, Ye, and Ren]{xu2024stress}
+Xiaoyue Xu, Qinyuan Ye, and Xiang Ren.
+\newblock Stress-testing long-context language models with lifelong icl and task haystack.
+\newblock \emph{arXiv preprint arXiv:2407.16695}, 2024.
+
+\bibitem[Xu et~al.(2022)Xu, Gou, Wu, Niu, Wu, Wang, and Wang]{xu-etal-2022-long}
+Xinchao Xu, Zhibin Gou, Wenquan Wu, Zheng-Yu Niu, Hua Wu, Haifeng Wang, and Shihang Wang.
+\newblock Long time no see! open-domain conversation with long-term persona memory.
+\newblock In Smaranda Muresan, Preslav Nakov, and Aline Villavicencio (eds.), \emph{Findings of the Association for Computational Linguistics: ACL 2022}, pp.\  2639--2650, Dublin, Ireland, May 2022. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2022.findings-acl.207}.
+\newblock URL \url{https://aclanthology.org/2022.findings-acl.207/}.
+
+\bibitem[Yue et~al.(2024)Yue, Ni, Zhang, Zheng, Liu, Zhang, Stevens, Jiang, Ren, Sun, et~al.]{yue2024mmmu}
+Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge~Zhang, Samuel Stevens, Dongfu Jiang, Weiming Ren, Yuxuan Sun, et~al.
+\newblock Mmmu: A massive multi-discipline multimodal understanding and reasoning benchmark for expert agi.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  9556--9567, 2024.
+
+\bibitem[Zhang et~al.(2024)Zhang, Chen, Hu, Xu, Chen, Hao, Han, Thai, Wang, Liu, et~al.]{zhang2024bench}
+Xinrong Zhang, Yingfa Chen, Shengding Hu, Zihang Xu, Junhao Chen, Moo Hao, Xu~Han, Zhen Thai, Shuo Wang, Zhiyuan Liu, et~al.
+\newblock $\infty$ bench: Extending long context evaluation beyond 100k tokens.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  15262--15277, 2024.
+
+\bibitem[Zhao et~al.(2025)Zhao, Hong, Liu, Hazarika, and Lin]{zhao2025prefeval}
+Siyan Zhao, Mingyi Hong, Yang Liu, Devamanyu Hazarika, and Kaixiang Lin.
+\newblock Do llms recognize your preferences? evaluating personalized preference following in llms.
+\newblock In \emph{The thirteenth international conference on learning representations}, 2025.
+
+\bibitem[Zheng et~al.(2024)Zheng, Mishra, Zhang, Chen, Chen, Nova, Hou, Cheng, Le, Chi, et~al.]{zheng2024natural}
+Huaixiu~Steven Zheng, Swaroop Mishra, Hugh Zhang, Xinyun Chen, Minmin Chen, Azade Nova, Le~Hou, Heng-Tze Cheng, Quoc~V Le, Ed~H Chi, et~al.
+\newblock Natural plan: Benchmarking llms on natural language planning.
+\newblock \emph{arXiv preprint arXiv:2406.04520}, 2024.
+
+\bibitem[Zhou et~al.(2023)Zhou, Lu, Mishra, Brahma, Basu, Luan, Zhou, and Hou]{zhou2023instruction}
+Jeffrey Zhou, Tianjian Lu, Swaroop Mishra, Siddhartha Brahma, Sujoy Basu, Yi~Luan, Denny Zhou, and Le~Hou.
+\newblock Instruction-following evaluation for large language models.
+\newblock \emph{arXiv preprint arXiv:2311.07911}, 2023.
+
+\bibitem[Zollo et~al.(2024)Zollo, Siah, Ye, Li, and Namkoong]{zollo2024personalllm}
+Thomas~P Zollo, Andrew Wei~Tung Siah, Naimeng Ye, Ang Li, and Hongseok Namkoong.
+\newblock Personalllm: Tailoring llms to individual preferences.
+\newblock \emph{arXiv preprint arXiv:2409.20296}, 2024.
+
+\end{thebibliography}

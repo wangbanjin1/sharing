@@ -1,0 +1,56 @@
+
+\subsection{Robustness Improvement through EPA}
+
+\paragraph{EPA improves robustness. }The results in Table~\ref{tab:main} shows the effectiveness of EPA in  robustness to ASR errors. Remarkably, EPA outperformed existing text-based and audio-based augmentation, showing substantial improvement in JGA and named entity accuracy. It also surpassed the previous best-performing model, Olisia, particularly  in challenging environments.
+
+\paragraph{Effectiveness of keyword-specific error.} In Table~\ref{tab:main}, we present an ablation study to evaluate the effectiveness of keyword-level augmentation. We found that adding keyword-specific ASR errors improved DST performance across all environments and was particularly helpful in enhancing the robustness of named entity accuracy. Additional experiments, including generalization to other backbones and tasks, as well as statistical significance analysis, are provided in Appendix~\ref{app:exp_main}.
+
+
+\subsection{Comparison with Error Correction Models}
+\input{table/table_err_correction}
+In Table~\ref{tab:err_correction}, we compare our method with two ASR error correction approaches. For \textsc{Error Correction Model 1}, We fine-tuned a pre-trained on 300 hours of ASR-errored and gold transcription pairs (same as in Section~\ref{sec:method_step1}) in a seq2seq manner, minimizing \( L = - \sum_{i=1}^{N} \log P(g_i \mid e_i) \),
+where \(g_i\) and \(e_i\) denote the gold and errored transcriptions, respectively. 
+Training used early stopping (patience=3) with batch size 16.
+For \textsc{Error Correction Model 2}, we adopted an off-the-shelf\footnote{url{https://huggingface.co/oliverguhr/spelling-correction-english-base}} text correction model to revise typos and transcription errors. Each model corrected the test transcriptions from the weak, noised, and strong ASR systems before DST evaluation. 
+As in the table, \textsc{Correction model 1} underperforms the baseline, often altering named entities unnecessarily (e.g., "Grifon" $\rightarrow$ "Bristol"), likely due to limited training diversity. 
+\textsc{Correction model 2} yields minor improvements, while our EPA achieves the highest robustness across all ASR conditions.
+
+
+
+\subsection{Qualitative Assessment of EPA Method}
+\label{sec:quality}
+\input{table/table_quality}
+
+\paragraph{Automatic evaluation.} Although Table~\ref{tab:main} confirms EPA's effectiveness, it remains unclear whether the LLM-generated augmentations truly reflect diverse, keyword-focused ASR-style errors. To this end, we perform the quality analysis based on three metrics (Table~\ref{tab:quality}): the unique word increase rate, named entity change rate, and pronunciation similarity with original sentence. The results show that EPA achieves remarkable diversity in unique words (1.81×) and the highest named entity change rate (95.47\%), while maintaining high pronunciation similarity (91.57\%). Notably, keyword-level augmentation plays a key role in enhancing named entity variability, increasing the change rate from 68.81\% to 95.47\%.
+
+
+\paragraph{Comparison with Authentic ASR Errors.}
+\label{app:appendix-edit}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.95\columnwidth]{img/edit_2025.pdf}
+   \caption{Distribution of edit distance. The x-axis represents edit distances, and the y-axis represents the corresponding ratio.}
+   \label{fig:edit}
+\end{figure}
+\input{table_edit}
+
+In this analysis, we explored the similarity between simulated ASR errors and authentic ASR errors from the perspective of edit distance. Specifically, we examined the distribution of edit distances in simulated data and in errors produced by Whisper large/base models, considering both character- and phoneme-level representations (Figure~\ref{fig:edit}). To quantify the distributional differences, we computed the Jensen-Shannon Divergence (JSD), a symmetric variant of the Kullback-Leibler divergence (Table~\ref{tab:edit}).
+
+Our experiments yielded several noteworthy findings.
+Notably, the LLM-simulated errors closely matched the distribution of real ASR errors, particularly at the phoneme level.
+This suggests that LLMs can effectively capture pronunciation-level variations and generate realistic ASR-style distortions.
+In contrast, errors produced by TTS-based synthesis or ASR-translation models exhibited larger divergence from real ASR patterns, likely due to their tendency to generate more diverse but less phonetically grounded outputs.
+
+
+
+\paragraph{Human evaluation.} To further verify the quality of our EPA method, we conducted a human evaluation using 100 sentence pairs, each consisting of an original sentence and its augmented counterpart, with two human evaluators. Participants rated how likely the change resembled an ASR error on a 4-point Likert scale, where 1 indicated "not like an ASR error" and 4 indicated "clearly an ASR error." The average rating was 3.22 with moderate inter-rater agreement   (Gwet’s AC2 \cite{gwet} = 0.590), suggesting that most EPA-generated edits were perceived as realistic ASR errors. Details on the evaluation metric and human evaluation are provided in Appendix~\ref{app:quality}.
+
+
+\subsection{Error Analysis}
+
+
+We additionally analyze the impact of keyword augmentation by examining how it influences specific error types in DST predictions. Table~\ref{tab:err} presents the percentage reduction in error rates compared to the baseline. The results demonstrate that EPA is effective in "Wrong" and "Ignore" error types, and keyword augmentation highly contributed to this improvement by decreasing the error rate from 5.29\% to 8.19\%. Interestingly, while keyword augmentation led to substantial reductions in "Wrong" errors, it also caused a slight increase in "Spurious" errors. This may be because the model, after repeatedly seeing phonetic noise around slot values, becomes overly sensitive and starts hallucinating unmentioned slots. A potential mitigation is to introduce an additional loss term for slot presence prediction \cite{trippy,kim2019efficient} , helping the model better distinguish between mentioned and unmentioned slots.
+\input{table_err}
+
+
+

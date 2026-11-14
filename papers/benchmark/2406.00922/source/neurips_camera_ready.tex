@@ -1,0 +1,600 @@
+\documentclass{article}
+
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2024
+
+
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+\usepackage{url}
+\usepackage{tabularray}
+\UseTblrLibrary{booktabs}
+% \definecolor{darkblue}{rgb}{0, 0, 0.5}
+% \hypersetup{colorlinks=true, citecolor=darkblue, linkcolor=darkblue, urlcolor=darkblue}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+
+
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\renewcommand\arraystretch{0.95}
+\usepackage{wrapfig}
+\usepackage{xspace}
+\usepackage{arydshln}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{paralist}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, 
+    linkcolor=black,
+    citecolor=blue,
+    urlcolor=cyan,
+    }
+    
+\usepackage{tikz}
+% \usepackage[backend=biber, style=numeric]{biblatex}
+% \addbibresource{colm2024_conference.bib}
+
+\newcommand{\ExpertModel}{\includegraphics[scale=0.02]{figures/assistant_model.png}}%
+\newcommand{\PatientModel}{\includegraphics[scale=0.022]{figures/patient_model.png}}%
+\newcommand{\greencheck}{\includegraphics[scale=0.05]{figures/checkmark.png}\xspace}%
+\newcommand{\redcross}{\includegraphics[scale=0.05]{figures/cross.png}\xspace}%
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\definecolor{forestgrhl}{RGB}{84, 186, 111}
+\definecolor{darkgrhl}{RGB}{136, 219, 158}
+\definecolor{greenhl}{RGB}{201, 242, 212}
+\definecolor{faintgrhl}{RGB}{244, 255, 241}
+\definecolor{darkredhl}{RGB}{232, 173, 161}
+\definecolor{redhl}{RGB}{242, 208, 201}
+\definecolor{faintredhl}{RGB}{255, 244, 241}
+\definecolor{whitehl}{RGB}{255, 255, 255}
+\definecolor{yellowhl}{RGB}{255, 217, 164}
+\definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
+
+\newcommand{\pw}[1]{{\textcolor{forestgreen}{[PW: #1]}}}
+\newcommand{\yt}[1]{{\textcolor{blue}{[YT: #1]}}}
+\newcommand{\stella}[1]{{\textcolor{magenta}{[stella: #1]}}}
+\newcommand{\analysis}[1]{{\textcolor{teal}{#1}}}
+\newcommand{\Sref}[1]{\textsection~\ref{#1}}
+\newcommand{\Tref}[1]{Table~\ref{#1}}
+\newcommand{\Fref}[1]{Figure~\ref{#1}}
+\newcommand{\Eref}[1]{Eq.~\ref{#1}}
+
+
+% ready for submission
+% \usepackage{neurips_2024}
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+% \usepackage[preprint]{neurips_2024}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+\usepackage[final]{neurips_2024}
+
+
+\title{\textsc{MediQ}: Question-Asking LLMs and a Benchmark\\for Reliable Interactive Clinical Reasoning}
+% \title{\parbox{0.05\textwidth}{\includegraphics[width=\linewidth]{figures/assistant_model.png}}\hspace{0.5mm}\textsc{MediQ}: Question-Asking LLMs and a Benchmark for Reliable Interactive Clinical Reasoning}
+% \title{\parbox{0.05\textwidth}{\includegraphics[width=\linewidth]{figures/assistant_model.png}}\hspace{0.5mm}\textsc{MediQ}: Question-Asking Benchmark and LLMs\\for Reliable Interactive Clinical Reasoning}
+
+
+\author{Shuyue~Stella Li$^1$\hspace{3mm} Vidhisha Balachandran$^2$\hspace{3mm} Shangbin Feng$^1$\hspace{3mm} Jonathan S. Ilgen$^1$\\ \textbf{Emma Pierson}$^3$\hspace{3mm} \textbf{Pang Wei Koh}$^{1,4}$\hspace{3mm} \textbf{Yulia Tsvetkov}$^1$\\
+$^1$University of Washington\hspace{5mm}$^2$Carnegie Mellon University\hspace{5mm}$^3$Cornell Tech\\$^4$Allen Institute for AI\vspace{1mm}\\\texttt{\{stelli, yuliats\}@cs.washington.edu}\\
+\parbox{0.03\textwidth}{\includegraphics[width=\linewidth]{figures/github-mark.png}}\hspace{0.5mm}\href{https://github.com/stellalisy/mediQ}{\texttt{https://github.com/stellalisy/mediQ}}\\
+\parbox{0.033\textwidth}{\includegraphics[width=\linewidth]{figures/hf-logo.png}}\hspace{0.5mm}\href{https://huggingface.co/datasets/stellalisy/mediQ}{\texttt{https://huggingface.co/datasets/stellalisy/mediQ}}\vspace{-3mm}
+}
+
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+Users typically engage with LLMs interactively, yet most existing benchmarks evaluate them in a static, single-turn format, posing reliability concerns in interactive scenarios. 
+We identify a key obstacle towards reliability: LLMs are trained to answer any question, even with incomplete context or insufficient knowledge. 
+In this paper, we propose to change the static paradigm to an interactive one, develop systems that \emph{proactively ask questions} to gather more information and respond reliably, and introduce an benchmark---\textbf{\textsc{MediQ}}---to evaluate question-asking ability in LLMs. 
+\textsc{MediQ} simulates clinical interactions consisting of a Patient System and an adaptive Expert System; with potentially incomplete initial information, the Expert refrains from making diagnostic decisions when unconfident, and instead elicits missing details via follow-up questions. 
+We provide a pipeline to convert single-turn medical benchmarks into an interactive format.
+Our results show that directly prompting state-of-the-art LLMs to ask questions \emph{degrades} performance, indicating that adapting LLMs to proactive information-seeking settings is nontrivial. 
+We experiment with abstention strategies to better estimate model confidence and decide when to ask questions, improving diagnostic accuracy by 22.3\%;
+however, performance still lags compared to an (unrealistic in practice) 
+upper bound with complete information upfront. 
+Further analyses show improved interactive performance with filtering irrelevant contexts and reformatting conversations.
+Overall, we introduce a novel problem towards LLM reliability, an interactive \textsc{MediQ} benchmark and a novel question-asking system, and highlight directions to extend LLMs' information-seeking abilities in critical domains.
+
+
+\end{abstract}
+
+
+\section{Introduction}\label{sec:intro}
+
+General-purpose large language models (LLMs) are designed to serve a broad audience by following instructions and providing the most likely and general answers \citep{brown2020language,ouyang2022training}. 
+However, in high-stakes decision making scenarios such as clinical conversations, 
+LLM assistants can be harmful if they provide general responses instead of gathering missing information to make informed decisions. 
+As shown in \Fref{fig:task}, standard medical question-answering (QA) tasks are formulated in a single-turn setup where all necessary information is provided upfront, and the model is not expected to interact with users \citep{jin2021disease, pal2022medmcqa, jin2019pubmedqa, hendrycks2020measuring}.
+This QA paradigm diverges from real-world scenarios, where users may provide \textbf{incomplete information}, and effective decision-making often requires an \textbf{investigative process} involving follow-up questions to clarify and gather necessary details
+\citep{trimble2016thinking, bornstein2001rationality, masic2022medical}. 
+
+
+This gap between existing benchmarks and reality calls for a paradigm shift to designing systems adept at navigating high-stakes interactive scenarios. 
+Focusing on clinical interactions where context is often incomplete, we introduce \textbf{\textsc{MediQ}}, an interactive benchmark for \textbf{m}edical \textbf{e}valuation with \textbf{d}ynamic \textbf{i}nformation-seeking \textbf{q}uestions, to address limitations of static single-turn QA benchmarks (\Fref{fig:dynamed}). 
+Unlike conventional systems, which assume that all necessary information is readily available, \textsc{MediQ} acknowledges the inherent uncertainty in medical consultations where a typical patient does not have the expertise to distill all necessary and relevant information they need to provide.
+To achieve this, \textsc{MediQ} comprises two components: a \textbf{Patient system} that simulates a patient and responds to follow-up questions, and an \textbf{Expert system} that serves as a doctor's assistant and asks questions to the patient before making a medical decision.
+In this \textbf{interactive clinical reasoning task}, a successful information-seeking Expert 
+should decide, at each turn, whether it has enough information to provide a confident answer; if not, it should ask a follow-up question. 
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=\linewidth]{figures/task.jpg}\vspace{-2mm}
+    \end{center}
+    \caption{Information Seeking Task. In standard medical QA tasks (left), all necessary information is given to the assistant model at the same time. When given partial information, current LLMs only provides general responses (middle). In a more realistic scenario (right), the presentation of patient information relies on proactive elicitation from the doctor; our proposed \textsc{MediQ} framework operationalizes this scenario.
+    }\label{fig:task}\vspace{-5mm}
+\end{figure}
+
+We convert two medical QA datasets, \textsc{MedQA} \citep{jin2021disease} and \textsc{Craft-MD} \citep{johri2023testing, johri2024craftmd}, into an interactive benchmark by parsing the patient records to only provide partial information in the beginning. 
+We first develop and validate a Patient system that accurately answers Expert inquiries by retrieving the correct facts from the patient record.
+We then benchmark Expert systems based on state-of-the-art (SOTA) LLMs, including Llama-3 \citep{touvron2023llama}, GPT-3.5 \citep{brown2020language} and GPT-4 \citep{openai2024gpt4}, to evaluate their proactive information seeking ability. 
+It is striking that prompting these models to ask questions results in an 11.3\% accuracy drop 
+compared to starting with the same limited information and asking no questions, showing that adapting LLMs to interactive information-seeking settings is nontrivial. 
+A key challenge is deciding when to ask a follow-up question instead of directly providing an answer.
+With confidence estimation strategies such as rationale generation and self-consistency, we improve Expert performance by 22.3\%, although a 10.3\% gap remains compared to an upper bound when full information is presented at once.
+
+Our results show that while SOTA LLMs perform relatively well with complete information, they struggle to proactively seek missing information in a more realistic, interactive settings with incomplete initial information. 
+By providing a modular, interactive benchmark, we hope to facilitate the development of reliable LLM assistants for complex decision-making in healthcare and other high-stakes domains.
+Our main contributions are:
+\begin{enumerate}
+[itemsep=1pt,topsep=0pt,leftmargin=12pt] 
+    \item We identify the critical problem of \textbf{information-seeking questions} in reliable interactive LLM assistants. We propose a paradigm shift and a practical conversion pipeline from standard single-turn benchmarks into interactive settings with incomplete initial information. 
+    \item We develop the \textbf{\textsc{MediQ} Benchmark} to simulate more realistic clinical interactions between a Patient System and an Expert System. We rigorously develop and test the Patient System to benchmark any Expert's information-seeking and clinical decision-making abilities. 
+    \item We show that SOTA LLMs such as Llama-3-Instruct, GPT-3.5 and GPT-4 struggle at proactive information seeking, revealing a significant gap in this area.
+    \item We propose \textbf{\textsc{MediQ}-Expert}, our best Expert system with novel abstaining capabilities to reduce unconfident answers, to partially close the gap between the more realistic incomplete information setup and the existing full information setup.
+\end{enumerate}
+
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/framework.jpg}\vspace{-1mm}
+  \caption{The \textsc{MediQ} Benchmark. \textsc{MediQ} operationalizes a more realistic dynamic clinical interaction between a Patient system and an Expert system to evaluate info-seeking and question-asking. 
+  }\label{fig:dynamed}\vspace{-3mm}
+\end{figure*}
+
+\section{\textsc{MediQ}: Dynamic Medical Consultation Framework Overview}\label{sec:overview}\vspace{-2mm}
+
+\textbf{Task Definition}\hspace{3mm}
+The dynamic medical consultation task simulates the iterative nature of real-world clinical interactions. This task starts by providing an initial patient description $k_0$ of their conditions to the Expert system. The initial information typically contains the patient's age, gender, and chief complaint for the visit. 
+The Patient system has access to the entire patient record $\mathcal{K}=\{k_0, k_1, \ldots, k_n\}$, and the necessary information to answer the multiple choice question is $\mathcal{K}^*\subseteq\mathcal{K}$. 
+At the start of the $t$-th turn, the knowledge available to the Expert system is denoted as $\mathcal{K}_{t-1} = \{k_0,\ldots,k_i\}$. Given follow-up question $q_{t}$, the Patient system responds with $r_{t} = \{k|k\in \mathcal{K}\}$. The Expert knowledge is then updated as $\mathcal{K}_{t} = \mathcal{K}_{t-1}\cup r_{t}$. The \textbf{main challenge of the task} is for the Expert system to ask information-seeking questions to expand $\mathcal{K}_t$ until the knowledge gap is filled, i.e. $\mathcal{K}_t = \mathcal{K}^*$, at which point the Expert system is asked to make a final decision.
+
+\vspace{-0.5mm}
+\subsection{The Patient System}\label{sec:framework:patient}\vspace{-0.5mm}
+
+\textbf{Patient Task}\hspace{3mm}
+As part of the \textsc{MediQ} framework, the Patient system simulates a  human patient in clinical conversations. 
+The Patient system has access to the full patient record that is sufficient for the diagnosis, including symptoms, onset duration, medical history, family history, and/or relevant lifestyle factors. The Patient system uses the patient record and a single information-seeking question from the Expert system to produce a coherent response consistent with the given patient information as shown in  \Fref{fig:dynamed}.
+A reliable Patient system is critical to simulate a real and accurate medical consultation process. We propose that any Patient system should be evaluated on (1) \emph{Factuality} - measuring if a patient's responses are faithful to the patient's record and history and (2) \emph{Relevance} - measuring if the patient's response answers the expert's question. 
+% \textbf{Patient System Variants}
+Given the full patient record and the expert question, we propose and evaluate three Patient system variants: \textbf{Direct}, \textbf{Instruct}, and \textbf{Fact-Select}, to obtain the patient response. Exact prompts and examples are in Appendix \ref{app:patient_prompt}.
+
+\vspace{-0.5mm}
+\begin{enumerate}
+[noitemsep,topsep=0pt,leftmargin=12pt]
+\item[\textbf{1.}] \textbf{Direct:} Serving as a baseline, the Patient treats the response-generation as a reading comprehension task with no additional instruction. The prompt includes the patient's record followed by the Expert's question and asks the model to directly respond to the question using the given paragraph.%
+\item[\textbf{2.}] \textbf{Instruct:} The Patient is instructed to respond truthfully to the Expert's question using the patient record only. When the context does not contain an answer to the question, the Patient is instructed to refrain from answering.
+\item[\textbf{3.}] \textbf{Fact-Select:} 
+The Patient aims to improve the factuality of the response by decomposing the patient record into atomic facts and responds by selecting facts that are relevant to the Expert's question.
+\end{enumerate}
+
+\vspace{-0.5mm}
+\subsection{The Expert System}\label{sec:framework:expert}\vspace{-0.5mm}
+
+\textbf{Expert Task}\hspace{3mm}
+The Expert system simulates the medical decision-making process of experienced clinicians, who seek additional patient information and iteratively update their differential diagnosis. The Expert system is first presented with a medical question and limited patient information. 
+As each turn, it assesses whether the provided information is sufficient to answer the question. 
+If the Expert system is unconfident, it can elicit evidence with a follow-up information-seeking question; otherwise, the Expert system deems the acquired information sufficient and provides a final answer. 
+The performance of the Expert system is evaluated on the (1) \textit{efficiency} of the conversation (number of follow-up questions) and (2) the \textit{accuracy} of the final diagnosis. 
+
+
+
+\vspace{-0.5mm}
+\subsubsection{Expert System Breakdown}\label{sec:method:expert_steps}\vspace{-0.5mm}
+
+
+
+Medical decision making is a complex process involving clinical reasoning and proactive information-seeking \citep{bordage1999did, norman2005research, schmidt1990cognitive, boshuizen1992role, patel1994diagnostic}. We describe our proposed \textbf{\textsc{MediQ}-Expert}, which operationalizes the Expert system by breaking down the task into five medically-grounded steps: (1) initial assessment, (2) abstention, (3) question generation, (4) information integration, and (5) decision making (\Fref{fig:expert}). Each step is modular and easily modifiable.
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.33\linewidth]{figures/expert_system.jpg}\vspace{-2.5mm}
+  \caption{Expert system information flow breakdown.}\label{fig:expert}\vspace{-5mm}
+\end{figure}
+
+\textbf{Step 1. Initial Assessment Module}: 
+Given limited patient intake information and the multiple choice question (MCQ) as the input, the goal of this module is to provide an initial assessment of the patient. 
+The Expert system is asked to produce a paragraph that elaborates on the symptoms and options, and identifying potential knowledge gaps (e.g., additional symptoms, lab tests) missing for answering the question. This step is done only once at the beginning of the interaction, and we keep the output in the conversation thread for future turns to refer back to.%
+
+\textbf{Step 2. Abstention Module}:  When the model is not confident, it should \emph{abstain} from giving an answer and asks a information-seeking question instead. The goal of the Abstention Module is to evaluate the \textbf{confidence level} of the Expert system to make a decision given the available information. The input to this module is the MCQ and the patient information consisting of the initial presentation and a conversation log of follow-up questions and responses. We probe the confidence level of the model to reliably answer the question via prompting (\Sref{sec:method:expert:abstain}). The output of this module is a yes/no answer for whether to proceed to final answer. 
+If the model is confident, it skips to decision making; otherwise, it continues to question generation. %
+
+\textbf{Step 3. Question Generation Module}: 
+When more information is deemed necessary, the goal of the question generation module is to craft an information-seeking question to elicit additional medical evidence such as lifestyle factors and physical exam results. The input to this module is all previous reasoning steps, and the acquired patient information; the notion of atomic questions is defined with respect to the medical domain in the prompt, and the output is an atomic question to the patient.%
+
+\textbf{Step 4. Information Integration Module}: When a patient response is returned to the Expert system, the information integration module aggregates all gathered patient information up to this point to update the understanding of the patient condition. This step simply appends a question-answer pair to the end of an existing conversation log, which will then be passed to the Abstention Module.
+
+\textbf{Step 5. Decision Making Module}: When enough evidence is gathered, the Expert system leverages integrated patient information and medical knowledge to provide an accurate answer to the question. The input to this module is previous reasoning steps, the MCQ, and the gathered patient information, and the output is the chosen option. Exact prompts for all above sections are in Appendix \ref{app:expert_prompts}.
+
+
+
+\vspace{-0.5mm}
+\subsubsection{Expert System Variants with Different Abstention Strategies}
+\label{sec:method:expert:abstain}\vspace{-0.5mm}
+
+One component of active information-seeking is the ability to decide \emph{when} to ask questions, which we operationalize with the Abstention Module to either \emph{ask} or \emph{answer} at each turn. Abstention reduces LLM hallucinations in low-confidence scenarios \citep{umapathi2023med, rawte2023survey} and mitigates misleading or insufficiently substantiated conclusions \citep{feng2024dont}. We develop the following variants of the Abstention Module via different instructions to the LLM to probe its confidence in whether their parametric knowledge is sufficient to reliably answer the MCQ. Exact prompts are in Appendix \ref{app:expert_abstain}.\vspace{-0.5mm}
+
+\begin{enumerate}
+[noitemsep,topsep=0pt,leftmargin=12pt]
+\item[\textbf{0.}] \textbf{\textsc{Basic}:} As a baseline, the model is asked to implicitly indicate its abstain decision by either generating an atomic question or producing an answer to the MCQ.%
+
+\item[\textbf{1.}] \textbf{Numerical:} To get an explicit understanding of the model's confidence, we first prompt the model to generate a numerical confidence score between 0 and 1 following \citep{tian2023just}. 
+Then, an arbitrary threshold is set to either proceed with a final answer or ask a question.
+
+\item[\textbf{2.}] \textbf{Binary:} Previous work has shown that LLMs struggle at producing numerical confidence scores \citep{srivastava2022beyond, geng2023survey}. To address this, the Binary variant enables a simple classification of whether enough information is present. 
+This setup simplifies the decision process, but may lack the nuanced understanding of confidence levels.
+
+\item[\textbf{3.}] \textbf{Scale:} Binary classification does not provide granularity where the decision is ambiguous. Scale abstention solves this issue by combining direct quantification with a manageable set of discrete, interpretable options.
+The model is given definitions of confidence levels on a 5-point Likert scale (e.g., "\texttt{Very Confident}", "\texttt{Somewhat Confident}"), and is asked to select a rating to express its confidence. An arbitrary threshold is set to either proceed with a final answer or ask a question.
+
+\item[\textbf{4.}] \textbf{Rationale Generation (RG):} Model performance is shown to improve when prompted to generate a reasoning chain about the decision process \citep{wei2022chain, marasovic2021few}. This gives the model a longer context window for reasoning, allowing the final decision to be conditioned on previous generations. We attempt to generalize this finding to the more complex interactive medical information-seeking setup 
+by applying it to Numerical, Binary and Scale abstention prompts.
+
+\item[\textbf{5.}] \textbf{Self-Consistency (SC)}. To further improve the Expert system's abstaining decision, we apply Self-Consistency to the above variants. Self-consistency repeatedly prompts the LLM $n$ times and take the average (Numerical and Scale) or the mode (Binary) of the output as the final output, and is shown to improve model performance \citep{wang2022self}.
+\end{enumerate}
+
+
+
+\section{Experiments}\label{sec:experiments}\vspace{-0.5mm}
+We conduct experiments to validate each component of \textsc{MediQ}. 
+First, we evaluate the Patient system with \emph{factuality} and \emph{relevance} metrics (\Sref{sec:exp:patient_setup}). 
+Then, we establish the correlation between information availability and accuracy by studying model performance with varying levels of input information (\Sref{sec:exp:non_interactive}).  Finally, we improve the information-seeking ability of LLMs under \textsc{MediQ} (\Sref{sec:exp:interactive}).
+
+
+
+\textbf{Evaluation Dataset}\hspace{3mm}
+We convert \textsc{MedQA} (CC-BY 4.0) \citep{jin2021disease} and \textsc{Craft-MD} (CC-BY 4.0) \citep{johri2023testing, johri2024craftmd} into an interactive setup for our experiments. \textsc{MedQA} is a standard benchmark for medical question answering 
+with 10178/1272/1273 train/dev/test samples. Each sample contains a paragraph of patient record ending with a multiple choice question. 
+\textsc{Craft-MD} contains 140 dermatology patient records in a similar format, among which 100 are collected from an online question bank and 40 are created by expert clinicians.
+We parse each patient record into age, gender, the chief complaint (primary reason for the clinical visit), and additional evidence. Only the age, gender, and chief complaint are presented to the Expert system, from which it is expected to elicit missing information. The resulting tasks are called i\textsc{MedQA} and i\textsc{Craft-MD}, respectively. See Appendix \ref{app:model_details} for detail.
+
+
+\subsection{Patient System Reliability Evaluation}
+\label{sec:exp:patient_setup}\vspace{-0.5mm}
+
+We automate the evaluation of patient responses with factuality score and relevance score for the ease of scalability, and conduct manual annotations to validate our metrics (Appendix \ref{app:patient:human_eval}).
+
+\textbf{\emph{Factuality Score}} measures whether the Patient system's response is consistent with the patient record. Each Patient response is first decomposed into a list of atomic statements, then we compute the percentage of atomic statements that are supported by the information in the patient record. The factuality score is the percent of supported statements averaged over all patients.
+
+\textbf{\emph{Relevance Score}} measures whether the Patient system's response answers the Expert's question. 
+Since there is no oracle data on the correct answer for Expert follow-up questions, we construct a synthetic parallel %\pw{what does pseudo parallel mean? be more precise} 
+evaluation dataset of questions and responses to evaluate the relevance of Patient responses: given a patient record decomposed into atomic statements, we rephrase each statement into an atomic question, for which the statement is the ground truth answer. 
+Then, the Patient system produces a response using the patient record and the generated atomic question. The average embedding semantic similarity between the generated response and the ground truth statement over the evaluation dataset is the resulting relevance score. See Appendix \ref{app:patient:metrics} for more detail. 
+
+
+\textbf{Setup}\hspace{3mm} 
+We use GPT-3.5 as the base LLM for all three variants (Direct, Instruct, and Fact-Select) and compare the factuality and relevance scores. For factuality, we sample 1272 patient cases from \textsc{MediQ} interactions with follow-up questions generated by different Expert systems so the Patient system sees diverse Expert questions and compute the average across all generated questions. For relevance, we use all 1272 patient records from the development set of \textsc{MedQA}.
+
+
+\subsection{Expert System Experiments}\label{sec:exp:expert_setup}\vspace{-0.5mm}
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=\linewidth]{figures/expert_eval.jpg}
+    \end{center}\vspace{-3.5mm}
+    \caption{Non-interactive Expert system evaluation at various information availability levels. The question and options are provided to the Expert model in all three settings. 
+    }\label{fig:info_avail}\vspace{-3mm}
+\end{figure}
+
+\subsubsection{Benchmarking Existing LLMs in Incomplete Information Scenarios}\label{sec:exp:non_interactive}\vspace{-0.5mm}
+
+
+We evaluate the performance of non-interactive Expert systems with varying information availability levels to observe the relationship between information availability and accuracy and to establish baselines. The baselines are evaluated at three initial information availability levels (\Fref{fig:info_avail}): \textbf{Full}, \textbf{Initial}, and \textbf{None}. The \textbf{Full} setup is equivalent to the standard QA task, wherein all patient information is provided to the Expert system in the beginning; \textbf{Initial} only discloses the gender, age, and the chief complaint that leads to the clinical visit (e.g. fever, headache, etc.); \textbf{None} provides no patient information but only the MCQ to the Expert system. 
+
+
+
+
+\subsubsection{Interactive Expert Systems}\label{sec:exp:interactive}\vspace{-0.5mm}
+
+\textbf{Expert Variants}\hspace{3mm}
+Without explicitly providing the option to ask follow-up questions, vanilla LLMs always answer with incomplete information and \emph{never} ask for additional evidence. Therefore, we establish a question-asking Expert system baseline---\textbf{\textsc{Basic}}---by prompting the LLM to either ask a question or make a decision at each turn. To study abstention, we combine Numerical, Binary, and Scale abstention with rationale generation and self-consistency techniques described in \Sref{sec:method:expert:abstain}.
+
+\textbf{Expert System Setup}\hspace{3mm}
+We evaluate 
+Llama-3-Instruct (8B, 70B), GPT-3.5, and GPT-4 on i\textsc{MedQA} and i\textsc{Craft-MD} for both the non-interactive and interactive settings. 
+Analysis and ablations use GPT-3.5 results on i\textsc{MedQA} only. Details on model version and compute are in Appendix \ref{app:model_details}.
+
+\textbf{Expert System Evaluation Metric}\hspace{3mm}
+An ideal Expert system should be able to ask informative questions that allow it to arrive at accurate medical decisions efficiently.
+Since it is not trivial to measure the quality of medical information-seeking questions, we use the efficiency of the interaction (number of questions) and accuracy of the solution as proxies to evaluate the clinical reasoning capabilities. Accuracy is strongly dependent on the amount of information available to the model (\Sref{sec:exp:non_interactive}), so higher accuracy is correlated with stronger information-seeking ability of the LLM.
+
+
+
+
+\section{Results}
+
+
+\subsection{How reliable is the \textsc{MediQ} Patient system?}
+\label{sec:framework:patient_results}
+
+\begin{wrapfigure}{R}{0.33\textwidth}\vspace{-3.8mm}
+\setlength{\tabcolsep}{2pt}
+    \centering
+    \scalebox{0.88}{\begin{tabular}{ccccc}
+    \toprule
+\textbf{Model} & \textbf{Factuality} & \textbf{Relevance}\\\midrule
+\textbf{Direct} &  55.9  & 75.5 \\
+\textbf{Instruct} & 62.8  &   78.6  \\
+\textbf{Fact-Select} &  \textbf{89.1}  &  \textbf{79.9}  \\ 
+\bottomrule
+    \end{tabular}}
+    \vspace{-2.2mm}
+    \captionof{table}{Patient system reliability.}\label{tab:patient}\vspace{-3mm}
+\end{wrapfigure}
+
+
+Our results in \Tref{tab:patient} show that both the \textbf{Direct} and \textbf{Instruct} settings struggle with factuality.
+Qualitative analysis revealed that since the Direct setting did not receive any instructions on \emph{how} to respond to the follow-up question, it sometimes responds with "\texttt{Yes}" or "\texttt{No}" instead of the atomic statements that contain the requested information. In the Instruct setting, the Patient system sometimes provide inferences instead of reciting the facts from the patient record. Some example failure cases are shown in Appendix \ref{app:patient:fail}.
+On the other hand, the \textbf{Fact-Select} setting which generates the responses in a more controlled environment  increases factuality by 0.33 points and relevance by 0.04 points. 
+Overall, these results suggest that \emph{using atomic facts as units of information significantly reduces hallucination}, improving the reliability of the Patient system in providing accurate and relevant responses to expert questions. We use the Fact-Select setting for the Patient system in all subsequent experiments and shift our focus to evaluate the Expert variants introduced in \Sref{sec:exp:expert_setup}. 
+
+
+
+
+
+
+\begin{minipage}{\textwidth}
+    \begin{minipage}{0.615\textwidth}
+    \setlength{\tabcolsep}{2.8pt}
+        \centering
+        \scalebox{0.82}{\begin{tabular}{c@{\hskip -1mm}cccccc}
+        \toprule
+        \multirow{2}{*}{\textbf{Task}} & \multirow{2}{*}{\textbf{Model}} & \multicolumn{3}{c}{\textbf{Non-Interactive}} & \multicolumn{2}{c}{\textbf{Interactive}}\\
+        & & \textbf{Full} & \textbf{Initial} & \textbf{None} & \textbf{\textsc{Basic}} & \textbf{\textsc{Best}} \\ \midrule
+        \multirow{4}{*}{\textbf{i\textsc{MedQA}}} 
+        & \small\textbf{Llama-3-8b}\normalsize & 68.1\scriptsize$\pm$1.3\normalsize & 52.0\scriptsize$\pm$1.4\normalsize & 40.4\scriptsize$\pm$1.4\normalsize & 33.0\scriptsize$\pm$1.3\normalsize & 45.8\scriptsize$\pm$1.4\normalsize\\
+        & \small\textbf{Llama-3-70b}\normalsize& 84.7\scriptsize$\pm$1.0\normalsize & 58.5\scriptsize$\pm$1.4\normalsize & 46.3\scriptsize$\pm$1.4\normalsize & 55.1\scriptsize$\pm$1.3\normalsize & \textbf{60.9}\scriptsize$\pm$1.4\normalsize\\
+        & \small\textbf{GPT-3.5}\normalsize    & 55.8\scriptsize$\pm$1.4\normalsize & 45.6\scriptsize$\pm$1.4\normalsize & 36.7\scriptsize$\pm$1.4\normalsize & 42.2\scriptsize$\pm$1.3\normalsize & \textbf{50.2}\scriptsize$\pm$1.4\normalsize\\ 
+        & \small\textbf{GPT-4}\normalsize      & 79.7\scriptsize$\pm$1.1\normalsize & 54.5\scriptsize$\pm$1.4\normalsize & 42.2\scriptsize$\pm$1.4\normalsize & \textbf{55.4}\scriptsize$\pm$1.3\normalsize & \textbf{66.1}\scriptsize$\pm$1.3\normalsize\\  \midrule
+        \multirow{5}{*}{\textbf{i\textsc{Craft-MD}}} 
+        & \small\textbf{Llama-3-8b}\normalsize & 76.4\scriptsize$\pm$3.6\normalsize & 51.4\scriptsize$\pm$4.2\normalsize & 29.3\scriptsize$\pm$3.8\normalsize & 42.9\scriptsize$\pm$4.2\normalsize & 50.0\scriptsize$\pm$4.2\normalsize\\ 
+        & \small\textbf{Llama-3-70b}\normalsize& 82.1\scriptsize$\pm$3.2\normalsize & 60.7\scriptsize$\pm$4.1\normalsize & 52.9\scriptsize$\pm$4.2\normalsize & \textbf{62.1}\scriptsize$\pm$4.1\normalsize & \textbf{72.1}\scriptsize$\pm$3.8\normalsize\\
+        & \small\textbf{GPT-3.5}\normalsize    & 82.1\scriptsize$\pm$3.2\normalsize & 53.6\scriptsize$\pm$4.2\normalsize & 29.3\scriptsize$\pm$3.8\normalsize & 45.0\scriptsize$\pm$4.2\normalsize & \textbf{59.3}\scriptsize$\pm$4.2\normalsize\\ 
+        & \small\textbf{GPT-4}\normalsize      & 91.4\scriptsize$\pm$2.4\normalsize & 67.9\scriptsize$\pm$3.9\normalsize & 43.6\scriptsize$\pm$3.7\normalsize & \textbf{73.6}\scriptsize$\pm$3.7\normalsize & \textbf{84.3}\scriptsize$\pm$3.1\normalsize\\
+        \bottomrule
+        \end{tabular}}
+        \vspace{-1.9mm}\captionof{table}{Accuracy at varying information availabilities. \textsc{Basic} gives LLM the option to ask questions: with the same starting information, \textsc{Basic} performance degrades from non-interactive Initial. Bold entries surpass non-interactive Initial, but there is still a gap between Full (complete information upper bound) and interactive \textsc{Best}.
+        }\label{tab:baseline}\vspace{1mm}
+    \end{minipage}
+\hfill
+    \begin{minipage}{0.36\textwidth}\vspace{-3mm}
+      \hspace{-2mm}\includegraphics[width=1.05\linewidth]{figures/num_questions_asked_nollama2_tall.pdf}
+      \vspace{-7.2mm}\captionof{figure}{Frequency of conversation lengths in the \textsc{Basic} setting. %\pw{nit but generally for histograms we'd swap the x and y axis, so frequency is on the y-axis} 
+      Most models don't tend to ask follow-up questions. }
+      \label{fig:num_q_counter}
+    \end{minipage}\vspace{-2mm}
+\end{minipage}
+
+
+\subsection{How do existing Non-Interactive LLMs perform with Limited Information?}
+\label{sec:method:baseline_results}\vspace{-1mm}
+
+
+As shown in \Tref{tab:baseline}, with decreasing amounts of patient information provided to the model, there is a pronounced drop in performance from the \textbf{Full} to \textbf{Initial} to \textbf{None} information availability levels. 
+Shifting our attention to the \textbf{\textsc{Basic}} interactive setup, the final accuracy is even lower than its non-interactive counterpart (Initial) with the same initial information (a average of 11.310.3\%relative drop). 
+We analyze performance sensitivity to prompt variations to ensure a fair comparison and report results from additional LLMs in Appendix \ref{app:more_results}. 
+
+
+\Fref{fig:num_q_counter} shows the number of follow-up questions asked by the LLMs in the \textsc{Basic} interactive setup. 
+For majority of the samples, \emph{no} model chooses to ask any questions, showing the lack of ability in LLMs to proactively identify and elicit missing information. 
+Within each LLM family (Llama/GPT), there is a correlation between model size, number of questions asked and accuracy. 
+Overall, these results show a significant gap between model performance in idealized settings and realistic, information-limited scenarios. None of the examined models excel at proactive information seeking in an interactive environment, suggesting that it is nontrivial to integrate information gathered from continuous interactions. 
+Despite having some medical knowledge encoded during pretraining, LLMs struggle to compensate for the absence of detailed patient information, highlighting the need for advanced proactive information-seeking abilities in medical LLM applications.
+
+
+
+
+
+\subsection{How much of the performance gap can be closed by asking questions?}
+\label{sec:expert_results}\vspace{-1mm}
+
+
+In \Fref{fig:main_figure}, We present a summary of the information-seeking ability of \textsc{MediQ} Expert models with different abstain strategies by reporting the \emph{accuracy} and \emph{number of questions} (conversation efficiency). Recall that both the Numerical and Scale abstention methods require setting a confidence threshold, above which the Expert system will proceed to the final answer. We do a grid search for the threshold hyperparameter in Appendix \ref{app:abstain_results} and report the best performance for each setting. 
+Integrating a dedicated Abstention Module significantly enhances performance over the \textsc{Basic} setup which directly prompts for follow-up questions or diagnoses. 
+As the abstain strategies improve -- by expressing confidence on a scale, verbal reasoning, and adding self-consistency -- the expert model is able to better gauge the (lack of) patient information and continue the conversation by asking more questions and thereby improving the final accuracy. 
+
+
+Base abstention methods (Numerical, Binary, Scale) show little variance in effectiveness until combined with rationale generation, which consistently boosts performance across strategies, as supported by previous studies \citep{marasovic2021few, wei2022chain, feng2024dont}. Notably, self-consistency alone \emph{degrades} performance unless paired with rationale generation. Overall, the Scale Abstention (1-5 confidence rating) with Rationale Generation and a Self-Consistency factor of 3 achieves the best performance. Overall, Scale Abstention (1-5 confidence rating) with rationale generation and a self-consistency factor of 3 achieves the best performance, outperforming the \textsc{Basic} interactive setup by 22.3\% 
+and the non-interactive Initial setup by 12.1\%.
+In information-scarce scenarios, models tend to resort to the most common option instead of specializing to the patient, and interaction enhances specialization (Appendix \ref{app:generality}).
+
+This pattern is generalizable across different LLMs as shown in the \textsc{Best} column of \Tref{tab:baseline}.
+Note that model size plays a big factor in the performance of the interactive setting---models larger than 70B surpass the non-interactive Initial setup with the best abstention, but smaller models still struggle.
+
+\begin{minipage}{\textwidth}
+    \begin{minipage}{0.624\textwidth}
+        \centering
+        \hspace{-1mm}\includegraphics[width=1.02\linewidth]{figures/main.pdf}\hspace{2mm}\vspace{-6mm}
+        \captionof{figure}{Accuracy of different abstaining strategies (with \# follow-up questions noted in green). Self-consistency tend to improve performance only when combined with rationale generation.}
+        \label{fig:main_figure}
+    \end{minipage}
+\hfill
+    \begin{minipage}{0.36\textwidth}
+      \centering
+      \vspace{2mm}
+      \hspace{-2.8mm}\includegraphics[width=1.05\linewidth]{figures/baseline_accuracy_analysis_new.pdf}\vspace{-2mm}
+      \captionof{figure}{\textsc{Basic} error analysis. Removing irrelevant info and reformatting conversation improve accuracy.}
+      \label{fig:baseline_analysis}
+    \end{minipage}\vspace{3mm}
+\end{minipage}
+
+
+While informing LLMs \emph{when} to ask questions through abstention helps improve their decision-making with limited information, our best \textsc{MediQ} Expert system (Scale+RG+SC) still only closes 51.2\% of the gap between the \emph{Non-Interactive Initial} and the \emph{Full} information scenarios.
+This indicates plenty of room for improvement to further enhance the information-seeking ability of LLMs. 
+
+
+
+
+
+\vspace{-1mm}
+\section{Analysis}\vspace{-1mm}
+
+In this section, we further analyze the factors that impact the performance of the interactive Expert system. Since we observe similar trends across models and datasets, all analysis will be performed on the iMedQA dataset with GPT-3.5 due to cost and computation constraints.
+
+\vspace{-1mm}
+\subsection{Why does the \textsc{Basic} interactive setup fail to perform clinical reasoning?}\vspace{-1mm}
+Recall from \Sref{sec:method:baseline_results} that there is a striking 11.3\% relative drop in accuracy from \textsc{Basic} to the \emph{non-interactive} Initial information setting (NI-Initial) across all benchmarked LLMs (7.43\% for GPT-3.5 on i\textsc{MedQA}). In this section, we analyze failure modes of the \textsc{Basic} system, where the Expert is simply given the option to ask follow-up questions, to understand the performance drop. We show that the ability to ignore irrelevant context and extract useful information from conversation format affects model performance.%
+
+\textbf{Irrelevant Context}\hspace{3mm}
+There are two types of irrelevant context on model performance: \emph{unanswerable} and \emph{repeated} questions.
+As \textsc{MediQ} allows the Expert to ask any open-ended questions to the Patient to elicit information, some questions cannot be answered using the patient record.
+We filter out these unanswerable question-response pairs, keeping only record-based questions and responses to assess the effect of ignoring irrelevant questions (\textbf{Relevant}).
+Secondly, although the Expert is instructed to not repeat any questions, upon inspection of the interaction history, many questions are repetitive, especially when the answer is not in the patient record. We hypothesize that the repetition shifts the model's attention to certain questions and thus hinders the performance. We remove repetitive questions and only keep the unique questions (using fuzzy lexical matching) to verify this hypothesis (\textbf{Unique}). Finally, we remove both unanswerable and repeated questions (\textbf{Both}).%
+
+\textbf{Conversation Format}\hspace{3mm}
+We further hypothesize that the dialogue format, different from the typical document format seen during LLM pre-training, also affects performance. To control for this, we convert the conversation format into paragraph format by discarding the Expert questions and only keeping the patient response for answerable questions, and rewriting the unanswerable questions into statements (e.g., \texttt{The patient's vaccine record is unavailable.}) for each setting above.
+
+
+
+As shown in \Fref{fig:baseline_analysis}, Relevant and Unique both improve performance by 2 percentage points (pp), but the combined effect is indistinguishable from using either filter, which might be due to the fact that unanswerable questions tend to be repeated.
+Converting the conversations into paragraph format further improves the performance (Para).
+Removing repetitive questions and converting to paragraph format (Unique-Para) surpasses \textsc{Basic} by 5.7pp and NI-Initial by 2.3pp.
+This shows that, when given the option to ask follow-up questions, the information-seeking ability of the Expert system does help make more informed and accurate conclusions, but the model suffers from not being able to learn from realistic clinical dialogues.
+
+
+\subsection{How does abstention improve Expert system performance?}\label{sec:analysis:abstain}
+As we saw in \Sref{sec:expert_results}, the Abstention Module is effective in improving the performance of the Expert system. 
+We decompose the clinical reasoning process of the Expert into deciding \emph{when} to ask questions and \emph{what} question to ask, and show that both contribute to performance gains.%
+
+\vspace{3mm}
+\textbf{Abstain Threshold Affects Number of Questions and Accuracy}\hspace{3mm}
+In the Expert systems described in \Sref{sec:framework:expert}, 
+the question generation module takes the abstention response as part of the context to produce a follow-up question. We now investigate the effect of the abstention decision by removing the abstention response from the question generation module, which allows us to control for the same question generator and only vary the abstention module. We plot the Expert performance across various abstention strategies and confidence thresholds in \Fref{fig:analysis_all}(a). As the confidence threshold becomes higher (i.e., when the model becomes more cautious), the conversation length intuitively grows, and accuracy also increases. Notice that in the \textbf{Fixed} setting, the abstention decision is \textit{not} specialized to the current patient, but decided solely by the number of questions asked; this results in a drop in accuracy when the number of questions becomes too high. While all methods benefit from longer interactions, the accuracy still varies depending on the abstention strategy, suggesting that some abstention strategies are better at estimating model confidence. 
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth,height=40mm]{figures/analysis.pdf}
+    \caption{
+    Effect of the abstention module on Expert system performance (efficiency \& accuracy).
+    (a) Accuracy over the number questions when the abstention response is \textit{not} provided to the question generator \textbf{c}ontext (NC) to isolate the effect of confidence thresholds on model performance. Each line is a different abstain method with increasing confidence thresholds at each point. \textbf{Accuracy increases with \# Qs as threshold increases.} 
+    (b) Expert confidence estimation throughout the interaction with and without rationale generation (RG), averaged over self-consistency levels 1, 3, and 5. The expected calibration error (ECE) is shown in the legend. \textbf{RG leads to more conservative and accurate confidence estimates.}
+    (c) Accuracy of Expert system variants with abstention response available (solid marker) vs. not available (hollow marker) to the question generator module. \textbf{Including abstention response in question generator context improves accuracy, and is amplified with rationale generation (RG) and self-consistency (SC).}
+    }
+    \label{fig:analysis_all}
+\end{figure}
+
+
+\vspace{3mm}
+\textbf{Rationale Generation Influences Confidence and Performance}\hspace{3mm}
+To further investigate confidence estimation, \Fref{fig:analysis_all}(b) plots the intermediate confidence scores of the Scale-abstention Experts with and without rationale generation (RG) throughout the interaction, averaged over all threshold and self-consistency levels. We observe that RG leads to more conservative confidence estimates and lower expected calibration error (2.1 with RG vs. 2.9 without RG), which indicate that it enables more accurate identification of knowledge gaps via reasoning (\Fref{fig:rg_knowledge_gap}). 
+These findings suggest that better confidence estimation lead to better interactive Experts, encouraging future work to extend confidence calibration techniques to interactive settings \citep{xie2024calibrating, yang2024confidence}.
+Secondly, \Fref{fig:analysis_all}(c) shows that including the abstention module response---confidence estimation and rationale---in the context of the question generation module significantly improves performance. 
+Together, the results suggest that rationale generation doesn't differ from its no-rationale counterparts in terms of knowing when to ask questions (\Fref{fig:analysis_all}(a)), but contributes in asking better questions (\Fref{fig:analysis_all}(c)).
+This process essentially extracts the model's internal medical knowledge to integrate into subsequent responses, from which we conjecture that rationale generation can be further improved by integrating external specialized domain knowledge \citep{feng2023knowledge} or collaborative decision making with other models and/or humans \citep{talebirad2023multi}.
+Additionally, we show that the nature of the question (medical specialty and difficulty) impacts the Expert's interactive behavior in Appendix \ref{app:q_type}.
+
+
+\begin{figure}[h!]
+    \begin{center}
+    %\framebox[4.0in]{$\;$}
+    \includegraphics[width=\linewidth]{figures/rg_knowledge_gap.jpg}
+    \end{center}\vspace{-1.5mm}
+    \caption{Example of rationale generation helping identify knowledge gaps to ask better follow-up questions.}\label{fig:rg_knowledge_gap}\vspace{-2.5mm}
+\end{figure}
+
+
+
+
+
+
+\section{Related Work}\vspace{-0.5mm}
+
+\textbf{Medical Question Answering Systems}\hspace{2mm} Advancements in medical question answering (QA) systems have progressed from rule-based systems to LLM-powered agents. Notable medical QA benchmarks include MultiMedQA \citep{singhal2023large}, which contains both multiple-choice and open-ended questions collected from various sources. To customize or adapt a general-purpose LLM to the medical domain, prior work often finetune the model on medical knowledge data such as PubMed \citep{pubmedgpt, Yasunaga2022DeepBL, wu2023pmc, singhal2023large, singhal2023expertlevel}, or more recently on conversational medical datasets \citep{yunxiang2023chatdoctor, han2023medalpaca}. \citet{kim2024mdagentsadaptivecollaborationllms} further improves model performance on complex medical questions by dynamically forming multi-agent collaboration structures. Despite their proficiency in direct answer retrieval, the proactive information-seeking capability is not something these models are inherently designed to do. Our proposed methodological framework, \textsc{MediQ}, is designed to work as an overlay to these domain-specific models, enhancing them with the capability to actively seek additional information in a structured and clinically relevant manner.%
+
+\textbf{Interactive Models and Agents}\hspace{2mm}
+Interactive conversational models extend beyond the standard QA framework by engaging in a dialogue such as customer support and negotiation \citep{singh2022survey, chakrabarti2015artificial, he2018decoupling, abdelnabi2023llmdeliberation, ju2024globettglanguagedrivenguaranteed}, where iterative information gathering is crucial. \citet{li2023eliciting} and \citet{andukuri2024stargate} attempt to use LLMs to elicit more information-rich human preference examples in everyday tasks. 
+However, the application of these models in the medical domain remains limited \citep{li2021semi}. \citet{wu2023large} attempts to evaluate general-purpose LLMs and chain-of-thought reasoning on DDXPlus \citep{fansi2022ddxplus}, a rule-based synethtic patient dataset. \citet{hu2024uncertainty} navigates the information-seeking scenario as a search problem by developing a reward model guided by uncertainty and includes medical diagnosis as one of the tasks, but if limited to binary questions. \citet{johri2023testing} observed a similar phenomenon where LLM-doctors cannot elicit complete patient information, but do not focus on improving the information-seeking ability. The system proposed by \citep{tu2024conversational} performs a multitude of medical tasks but does not explore the crucial problem of abstention. 
+Lastly, multi-agent and human-AI collaboration frameworks have shown impressive interactive performance \citep{zhou2024sotopia, wu2024coworkers, wu2023autogen, deng2024humancentered, lin2024decisionoriented}, and can greatly benefit from our novel interactive abstention methods to seek additional information.
+Our work fills this gap via providing a benchmark, a dataset, and a framework to comprehensively studying information-seeking abilities in clinical decision-making, and most importantly, opens the door for future endeavors in this direction.
+
+
+\section{Conclusion}\label{sec:conclusion}\vspace{-0.5mm}
+In this paper, we identify a significant gap in current LLMs' capability to ask questions and proactively seek information in settings where personalization, precision, and reliability are critical. 
+We propose a paradigm shift to interactive benchmarks by simulating more realistic clinical interactions where only partial information is provided initially by introducing \textsc{MediQ}. 
+\textsc{MediQ} provides a benchmark to the community to evaluate the question-asking ability of LLMs, contributing towards developing reliable models.
+We showed that SOTA LLMs like Llama-3 and GPT-4 struggle to gather necessary information for accurate medical decisions. To address this problem, we presented \textsc{MediQ}-Expert---a novel Expert system with improved confidence judgment and medical expertise, substantially improving clinical reasoning performance. 
+\textsc{MediQ} operationalizes interactive and explicit clinical reasoning processes, with added interpretability in the reasoning flow of language models and decision making.
+We encourage future research to extend \textsc{MediQ} to more diverse Patient systems, expand medical knowledge integration, and customize the interactions to better serve the healthcare community.%
+
+\section*{Limitations}%\hspace{3mm}
+One limitation is the scarcity of datasets that contain detailed patient information sufficient for a medical diagnosis which, to the best of our knowledge, was only met by \textsc{MedQA} and \textsc{Craft-MD}. 
+The majority of available medical datasets are designed to test models' medical domain knowledge. %, as opposed to providing a medical diagnosis based on patient records. 
+Second, the Patient system in our benchmark relies on a paid API; future work should establish an open-source Patient.
+Lastly, our evaluation framework, while designed to be more realistic, is still limited to the multiple-choice format. However, the flexibility of \textsc{MediQ} allows easy extensions into open-ended settings with appropriate datasets and well-defined conversation-level metric. Future work can focus on collecting a rich dataset in open-ended medical consultations and expanding the \textsc{MediQ} framework.
+
+
+
+
+\section*{Ethics Statement}\label{sec:ethics}
+Along with many potential benefits of an ideal future variant of the \textsc{MediQ} framework (e.g., providing reliable and personalized medical consultation when access to medical experts is unavailable, or assisting medical experts in initial collection of information), it is important to emphasize multiple risks associated with mis-use of this framework. 
+
+First, \textsc{MediQ} is a carefully designed initial prototype, it is not meant to be deployed to interact with users; its intended use is to provide an experimental framework to test clinical reasoning abilities of LLMs which are currently extremely limited. 
+
+
+\textsc{MediQ} built on top of closed-source LLMs runs the risk of leaking confidential medical information, violating patient privacy. Future research expanding \textsc{MediQ} to new medical datasets should be aware of these risks, resorting to local securely stored LLMs or to reliable data anonymization methods.    
+
+
+There are many sources of potential biases in the framework, including social and cultural biases in LLMs, in the datasets, and possibly in prompts for LLM interactions and abstention that we designed. While outside the scope of this paper, in addition to utility metrics we proposed, future research could incorporate fairness-oriented evaluations, e.g., breaking down the evaluation by user demographics.  
+
+
+If a similar framework is used in real-world applications, users and clinicians should be trained to prevent the over-reliance on technology that is liable to make mistakes, and to understand its privacy and fairness risks. 
+
+\section*{Acknowledgements}
+We gratefully acknowledge support from the University of Washington Population Health Initiative. 
+SSL, SF, and YT are supported by the National Science Foundation under CAREER Grant No.~IIS2142739, NSF grants No.~IIS2125201, IIS2203097, and gift funding from Google, MSR, and OpenAI. 
+PWK is supported by the Singapore National Research Foundation and the National AI Group in the Singapore Ministry of Digital Development and Innovation under the AI Visiting Professorship Programme (award number AIVP-2024-001). EP was supported by a Google Research Scholar award, Optum, NSF CAREER
+\#2142419, a CIFAR Azrieli Global scholarship, a gift to the LinkedIn-Cornell Bowers CIS Strategic Partnership, and the Abby Joseph Cohen Faculty Fund. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{colm2024_conference}
+\bibliography{colm2024_conference}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+\newpage
+\input{appendix_arxiv}
+
+% \clearpage
+% \newpage
+% \input{Neurips_checklist}
+
+\end{document}

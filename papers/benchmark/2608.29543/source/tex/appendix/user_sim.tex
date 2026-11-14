@@ -1,0 +1,48 @@
+\section{User Simulator Details}
+\label{app:user-sim}
+
+\noindent\textbf{Two-stage design.} The simulator follows the function-driven design of  \citet{huo2026interact}. At each user turn responding to an agent  clarification, a Stage~1 router classifies the request into one of  three actions: \textsc{Amb} (resolve a pre-annotated ambiguity from  the sample's chain structure), \textsc{Loc} (answer a localizable SQL-level detail by inspecting the ground-truth SQL), or \textsc{Una} (refuse a request that the user cannot reasonably be expected to answer, such as questions about database-internal identifiers). Stage~2 then generates the natural-language response conditioned on the routed action and the relevant annotation field  for that sample.
+
+\namedpara{Adaptations for \textsc{TIDE-Bench}.} Three changes accommodate the two-layer chain structure 
+(\S\ref{subsec:chain}):
+\begin{itemize}[leftmargin=1.2em,itemsep=0.18em,topsep=0.25em]
+\item L2-targeted clarifications issued while L1 is still unresolved are routed as \textsc{Loc} rather than \textsc{Amb}, since the L2 annotation only becomes a valid \textsc{Amb} target after L1 has been explicitly chosen.
+
+\item AST traversal during Stage~2 generation is restricted to a single atomic node per response, preventing the simulator from volunteering information beyond what the agent asked for.
+
+\item A post-generation validator screens responses for out-of-scope SQL fragments or schema identifiers; offending responses are regenerated.
+\end{itemize}
+
+\namedpara{Configuration.}
+Both Stage~1 routing and Stage~2 generation use GPT-5.1 via API, with the same temperature and decoding settings as the agent harness (Appendix~\ref{app:evaluation-setup}) to ensure configuration consistency.
+
+\namedpara{Validation.}
+We evaluate the simulator on the USERSIM-GUARD diagnostic suite, which probes the three router actions on held-out queries. Per-split accuracy is reported in Table~\ref{tab:usersim-guard}. To verify behavior in full dialogues, the five annotators from \S\ref{sec:human-validation} additionally labeled a stratified random sample of agent--simulator traces (Fleiss' $\kappa = 0.802$).
+
+
+\begin{table}[!t]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+
+\begin{tabular*}{\linewidth}{
+@{\hspace{12pt}}
+c
+@{\extracolsep{\fill}}
+c
+@{\hspace{12pt}}
+}
+\toprule
+\textbf{Split}
+& \textbf{Accuracy (\%)} \\
+\midrule
+\textsc{Una} (refusal)   & 97.4 \\
+\textsc{Amb} (labeled)   & 94.3 \\
+\textsc{Loc} (unlabeled) & 93.0 \\
+\bottomrule
+\end{tabular*}
+\vspace{-1mm}
+\caption{Stage~1 router accuracy on the three \textsc{UserSim-Guard} splits. \textsc{Una} tests refusal decisions, \textsc{Amb} tests labeled ambiguity routing, and \textsc{Loc} tests unlabeled SQL-detail localization during interaction.}
+\label{tab:usersim-guard}
+\vspace{-5mm}
+\end{table}

@@ -1,0 +1,202 @@
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\section{LM-Based Workflow Induction}
+\label{app:lm-induction-details}
+
+As introduced in \S\ref{sec:3.3:atm}, one realization of our workflow induction module is to prompt LMs to generate abstract, sub-routine workflows from the given examples, \ie, experience. 
+In this section, we provide the detailed model prompt, exemplar workflows induced by models, and quality examination on these workflows.
+
+\subsection{Model Prompt}
+We provide the exact prompt inputted to the model for WebArena and Mind2Web experiments below. Experiments on both datasets use the same prompt.
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+Given a list of web navigation tasks, your task is to extract the common workflows.\\
+Each given task contains a natural language instruction, and a series of actions to solve the task. You need to find the repetitive subset of actions across multiple tasks, and extract each of them out as a workflow.\\
+Each workflow should be a commonly reused sub-routine of the tasks. Do not generate similar or overlapping workflows. Each workflow should have at least two steps. Represent the non-fixed elements (input text, button strings) with descriptive variable names as shown in the example.
+}
+}
+
+\subsection{Example Workflows}
+We present several exemplar workflows induced on WebArena and Mind2Web, to give a more concrete impression of workflows.
+
+
+\paragraph{WebArena Workflows}
+
+We show one example workflow on each website involved in WebArena. 
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\#\# shopping: Browse Products in a Specific Category\vspace{1mm}\\
+To browse products in a specific category, I need to navigate to the relevant main category. I will start by hovering over the main category menu item to reveal the subcategories.\\
+\texttt{hover('main\_category\_id')}\\
+To browse products in the specific subcategory, I need to click on the subcategory link.\\
+\texttt{click('subcategory\_id')}
+}}
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\#\# shopping admin: Edit and Save Changes\\
+This workflow is used to edit specific fields and save changes.\vspace{1mm}\\
+To edit a specific field, I need to locate the field and update its value.\\
+\texttt{clear('{field\_id}')}\\
+\texttt{fill('{field\_id}', '{new\_value}')} \\
+Next, I need to save the changes by clicking the "Save" button.\\
+\texttt{click('{save\_button\_id}')}
+}}
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\#\# reddit: Navigate to a forum section and select a specific forum\vspace{1mm}\\
+To navigate to a specific forum, I need to click on the "Forums" section.\\
+\texttt{click('42')}\\
+Now, I need to click on the specific forum link based on the forum name provided.\\
+\texttt{click('<forum\_link\_id>')}
+}}
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\#\# gitlab: Navigation to Repository and Contributors Section\\
+This workflow involves searching for a repository and navigating to its contributors to find detailed contribution data.\vspace{1mm}\\
+First, search for the specific repository to gather information.\\
+\texttt{fill('130', '\{RepositoryName\}')}\\
+\texttt{press('130', 'Enter')}\\
+Navigate to the ``Contributors'' section to view contribution details.\\
+\texttt{click('311') {\it ~~\# ``Contributors'' link}}\\
+Obtain and report the required contributor details.\\
+\texttt{send\_msg\_to\_user('\{ContributorDetails\}')}
+}}
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\#\# map: Calculate Travel Time and Distance\vspace{1mm}\\
+To calculate travel time and distance between two locations, I will use the directions feature. I will fill in the respective fields and select the mode of transportation.\\
+\texttt{fill('158', 'FROM\_LOCATION')}\\
+\texttt{fill('163', 'TO\_LOCATION')}\\
+\texttt{select\_option('166', 'MODE\_OF\_TRANSPORTATION')}\\
+\texttt{click('171')}\\
+I will use these details to provide the user with accurate travel time and distance information.\\
+\texttt{send\_msg\_to\_user('The distance between FROM\_LOCATION and TO\_LOCATION is DISTANCE and the estimated travel time is TIME.')}
+}}
+
+
+\paragraph{Mind2Web Workflows}
+
+We present one example workflow in each data domain in Mind2Web.
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\# travel: enter\_flight\_locations\\
+Given that you are on the flight booking page, this workflow enters the departure and destination city/airport for your flight.\vspace{1mm}\\
+\texttt{[link]}  From Departure Airport or City Your Origin $->$ CLICK\\
+\texttt{[textbox]}  Origin City or Airport $->$ TYPE: \{your-origin-city\}\\
+\texttt{[link]}  \{best-popup-option\} $->$ CLICK\\
+\texttt{[link]}  To Destination Airport or City Your Destination $->$ CLICK\\
+\texttt{[textbox]}  Destination City or Airport $->$ TYPE: \{your-destination-city\}\\
+\texttt{[link]}  \{best-popup-option\} $->$ CLICK
+}}
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\# shopping: search\_and\_sort\\
+Given that you are on the Amazon search results page, this workflow searches for a product and sorts the results.\vspace{1mm}\\
+\texttt{[textbox]} Search Amazon $->$ TYPE: \{search-term\}\\
+\texttt{[button]} Go $->$ CLICK\\
+\texttt{[span]} Sort by: $->$ CLICK\\
+\texttt{[option]} \{sort-option\} $->$ CLICK
+}}
+
+
+\noindent\fbox{
+\parbox{0.98\textwidth}{
+\# entertainment: search\_and\_select\\
+Given that you are on the IMDb homepage, this workflow searches for a term and selects the best match.\vspace{1mm}\\
+\texttt{[textbox]}  Search IMDb $->$ TYPE: \{search-term\}\\
+\texttt{[button]}  Submit Search $->$ CLICK\\
+\texttt{[button]}  \{best-match\} $->$ CLICK
+}}
+
+
+\subsection{Workflow Quality Analysis}
+
+To provide intermediate information beyond the end-to-end task success, we propose several metrics to verify the quality of the model-induced workflows. 
+(1) \textit{Number of workflows}: The number of workflows augmented to the memory, fewer workflows is better, whereas agents rely on fewer workflows to achieve satisfactory performance.
+(2) \textit{Coverage}: How many steps in the action trajectory are covered by the workflows, higher coverage presumably signals the general applicability of the concerned workflow. 
+(3) \textit{Function overlap}: How much functionality overlap exists between workflows, we measure this by counting the number of overlapping sub-trajectories ($\leq$ 2 steps) between each workflow pair for the same website. Less overlap indicates more maximized workflow management.
+(4) \textit{Utility rate}: How often are workflows used by test examples.
+
+We evaluate the workflows on WebArena test examples and Mind2Web cross-task test examples. We do not evaluate coverage on WebArena since it requires canonical trajectories, yet which are not available for WebArena.
+For Mind2Web, we do not evaluate on cross-website and cross-domain test examples since workflows induced from training examples do not have domain overlapping with these test examples, thus less applicable to them.
+
+\begin{table}[ht]
+\centering
+\small
+\vspace{-2mm}
+\caption{Quality evaluation of model-induced workflows on Mind2Web dataset.}
+\vspace{2mm}
+\label{tab:eval-workflow}
+%
+\begin{tabular}{c|cccc}
+\toprule
+{\bf Metric}& {\it \# Workflows} & {\it Coverage} & {\it Function Overlap} & {\it Utility Rate} \\
+\midrule
+{WebArena} & {7.4} & {-} & {0.08} & {0.94} \\
+{Mind2Web} & {7.3} & {0.40} & {0.20} & {0.91} \\
+\bottomrule
+\end{tabular}
+\vspace{-3mm}
+\end{table}
+
+
+As shown in \autoref{tab:eval-workflow}, neural-based induction produces $7.3$--$7.4$ workflows per example, which is efficient and do not add too much content to the memory. 
+On WebArena, the induced workflows are used by $0.94$ of the test examples, indicating its wide applicability among varied tasks. Further, only $0.08$ of the steps between workflows overlap, demonstrating the efficiency of workflows in solving respective tasks.
+Workflows on Mind2Web, although used similarly frequently as indicated by the high $0.91$ utility rate, have slightly more functional overlap, and only achieve a $0.40$ coverage over test examples. However, as the training examples used to induce workflows have substantial task distribution variances with the cross-task test examples, this relatively low coverage is reasonable.
+
+
+
+\section{Rule-Based Workflow Induction}
+\label{app:rule-induction}
+
+Beyond LM-based workflow induction, we also explored a rule-based workflow induction method. 
+Our rule-based workflow induction module consists of two steps: (i) experience deduplication, and (2) invalid action filtering.
+
+For deduplication, we extract the action sequence of the experience, \eg, extracting \texttt{CLICK} $\rightarrow$ \texttt{CLICK} $\rightarrow$ \texttt{TYPE} from the trajectory \texttt{CLICK('12')} $\rightarrow$ \texttt{CLICK('30')} $\rightarrow$ \texttt{TYPE('44', "cat")}. We group experiences by their action sequence and randomly select $n$ ($n=1$ by default) experiences from each group. Specifically on WebArena, where the task template for each experience is available. We conduct another round of deduplication by grouping experiences by their task template, and randomly selecting $n$ ($n=1$ by default) experiences from each group.
+This process yields diverse experiences from the given set of experiences.
+
+Next, for each unique experience, we remove the invalid steps in its action trajectory. Invalid actions means actions that cannot be successfully executed on the environment, because the input arguments do not meet the requirement of the action function. Specifically, we have one rule of determining invalid actions for \texttt{CLICK} and \texttt{TYPE}, that requires the first argument to be a string-formatted integer (which refers to the id of an element in the environment). We remove \texttt{CLICK} and \texttt{TYPE} steps if they do not meet this requirement. For example, an experience with trajectory \texttt{CLICK(12)} $\rightarrow$ \texttt{CLICK('12')} $\rightarrow$ \texttt{CLICK('30')} $\rightarrow$ \texttt{TYPE(44, "cat")} $\rightarrow$ \texttt{TYPE('44', "cat")} will yield \texttt{CLICK('12')} $\rightarrow$ \texttt{CLICK('30')} $\rightarrow$ \texttt{TYPE('44', "cat")}.
+We conduct this invalid action filtering for each unique experience, and take the resulting experiences as rule-based workflows.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Detailed Workflow Ablations}
+
+% \begin{wraptable}{r}{0.58\textwidth}
+% \small
+% \vspace{-8mm}
+% \caption{Mind2Web cross-task results with \awm and ablate it by replacing (i) abstracted by concrete contexts, and (ii) sub-routines with full trajectories.}
+% \vspace{1mm}
+% \label{tab:format-ablation}
+% \begin{tabular}{l|cccc}
+% \toprule
+% \multicolumn{1}{c}{\bf Method} & {\bf Elem Acc} & {\bf Action F$_{1}$} & {\bf Step SR} & {\bf SR} \\
+% \midrule
+% {MindAct} & {41.6} & {\bf 60.6} & {36.2} & {2.0} \\
+% \midrule
+% \awm & {50.6} & {57.3} & {45.1} & {\bf 4.8} \\
+% \midrule
+% \dlrow \multicolumn{5}{c}{\it main component ablation} \\
+% {$-$ abstract} & {49.6} & {57.4} & {44.1} & {2.8} \\
+% {$-$ sub-routine} & {49.5} & {57.0} & {43.4} & {2.0} \\
+% \midrule
+% \dlrow \multicolumn{5}{c}{\it text vs. code format} \\
+% \textsc{AWM$_{\it text}$} & {\bf 51.2} & {57.4} & {\bf 45.4} & {3.6} \\
+% \bottomrule
+% \end{tabular}
+% \vspace{-2mm}
+% \end{wraptable}
+
+% Agents benefits from abstract, sub-routine workflows, we further ablate the contribution of each component.
+% As presented in \autoref{tab:format-ablation}, removing the abstractions of example-specific contexts reduces the step success rate by $1.0$, and more substantially reduces the task success rate by $2.0$ absolute points, signifying that both components are helpful in Mind2Web.
+% Further removing the sub-routine feature from workflows, and instead using entire example trajectories to the memory brings about another $0.8$ decrease in success rates. 
+% Both ablation experiments demonstrate the importance of sub-routine, context-abstraction design choices in the workflows when applying to Mind2Web tasks.

@@ -1,0 +1,71 @@
+
+% error type
+\begin{table}[t]
+\centering
+\resizebox{0.95\columnwidth}{!}{%
+\footnotesize{
+\begin{tabular}{lccc}
+\hline
+\multicolumn{1}{l|}{\multirow{2}{*}{Method}} &
+  \multicolumn{3}{c}{Error Type} \\ \cline{2-4} 
+\multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{Wrong} &
+  \multicolumn{1}{l|}{Ignore} &
+  \multicolumn{1}{l}{Spurious} \\ \hline
+
+  \multicolumn{4}{c}{Noised Audio} \\ \hline
+\multicolumn{1}{l|}{Baseline} &
+  \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(6237)}\end{tabular}} &
+  \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(3654)}\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(2027)}\end{tabular} \\ \hline
+\multicolumn{1}{l|}{EPA w/o Key-aug} &
+  \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}5.29\%\\ \scriptsize{(5907)}\end{tabular}} &
+  \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}3.72\%\\ \scriptsize{(3518)}\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}\textbf{6.31}\%\\ \scriptsize{(1899)}\end{tabular} \\ \hline
+\multicolumn{1}{l|}{EPA} &
+  \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}\textbf{8.19}\%\\ \scriptsize{(5726)}\end{tabular}} &
+  \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}\textbf{7.25}\%\\ \scriptsize{(3389)}\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}1.33\%\\ \scriptsize{(2000)}\end{tabular} \\ \hline
+
+
+
+  
+% \multicolumn{4}{c}{High-acc ASR (WER<0.03)} \\ \hline
+% \multicolumn{1}{l|}{Baseline} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}
+%   {\color{blue}$\triangledown$}0\%\\ \scriptsize{(4844)}\end{tabular}} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(3493)}\end{tabular}} &
+%   \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(1862)}\end{tabular} \\ \hline
+% \multicolumn{1}{l|}{EPA w/o Key-aug} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}1.57\%\\ \scriptsize{(4769)}\end{tabular}} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}\textbf{3.34}\%\\ \scriptsize{(3380)}\end{tabular}} &
+%   \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}\textbf{6.52}\%\\ \scriptsize{(1748)}\end{tabular} \\ \hline
+% \multicolumn{1}{l|}{EPA} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}\textbf{7.16}\%\\ \scriptsize{(4497)}\end{tabular}} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}2.43\%\\ \scriptsize{(3408)}\end{tabular}} &
+%   \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0.75\%\\ \scriptsize{(1848)}\end{tabular} \\ \hline
+
+% \multicolumn{4}{c}{High-acc ASR (WER\textless0.2)} \\ \hline
+% \multicolumn{1}{l|}{baseline} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(4844)}\end{tabular}} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(3493)}\end{tabular}} &
+%   \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0\%\\ \scriptsize{(1862)}\end{tabular} \\ \hline
+% \multicolumn{1}{l|}{EPA w/o Keyword} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}1.55\%\\ \scriptsize{(4769)}\end{tabular}} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}3.24\%\\ \scriptsize{(3380)}\end{tabular}} &
+%   \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}6.12\%\\ \scriptsize{(1748)}\end{tabular} \\ \hline
+% \multicolumn{1}{l|}{EPA} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}7.16\%\\ \scriptsize{(4497)}\end{tabular}} &
+%   \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}2.43\%\\ \scriptsize{(3408)}\end{tabular}} &
+%   \begin{tabular}[c]{@{}c@{}}{\color{blue}$\triangledown$}0.75\%\\ \scriptsize{(1848)}\end{tabular} \\ \hline
+\end{tabular}
+}
+}
+\caption{Ablation study with error analysis. \textbf{Wrong} indicates the model predicts incorrect values, \textbf{Ignore} refers to ignored mentioned slots, and \textbf{Spurious} denotes predicting values for unmentioned slots.  Actual error numbers are in parentheses.}
+\label{tab:err}
+\vspace{-14pt}
+\end{table}
+
+
+
+%  The analysis was conducted under the noised audio condition.

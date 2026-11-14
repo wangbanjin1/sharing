@@ -1,0 +1,19 @@
+\begin{algorithm}[tb]
+\caption{CICC algorithm}
+\label{alg:cicc}
+\begin{flushleft}
+\textbf{Input}: utterance $X$, classifier $\hat{f}$, chat/voice-bot $c$, calibration set $D$, generative LM $g$ \\
+\textbf{Parameters}: error rate $\alpha$, threshold $th$, ambiguity response $a$         \\
+\textbf{Output}: response $R$
+\end{flushleft}
+\begin{algorithmic}[1] %[1] enables line numbers
+\STATE set $\gets$ conformal prediction$\left(\hat{f}(X), D, \alpha\right)$
+\IF{$|$set$| == 1$}
+\STATE $R \gets c($set.get()$)$.  \hfill \COMMENT{bot response}
+\ELSIF{$|$set$| > th$}
+\STATE $R \gets a$. \hfill \COMMENT{input too ambiguous}
+\ELSE
+\STATE $R \gets g($set$, X)$ \hfill\COMMENT{clarification question}
+\ENDIF  
+\end{algorithmic}
+\end{algorithm}

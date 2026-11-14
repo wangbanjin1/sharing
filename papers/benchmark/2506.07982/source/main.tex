@@ -1,0 +1,71 @@
+\documentclass{article}
+
+
+
+
+\usepackage[preprint]{neurips_2025}
+
+\usepackage{preamble}
+\input{math_commands.tex}
+
+
+
+
+
+
+
+
+\title{\Bench: Evaluating Conversational Agents in a Dual-Control Environment}
+
+
+\author{%
+  Victor Barres \footnotemark[1]%
+  \\
+  Sierra \\
+  \texttt{victor@sierra.ai} \\
+  \And
+  Honghua Dong \footnotemark[1]~~\footnotemark[2]%
+  \\
+  Sierra \& University of Toronto \& Vector Institute \\
+  \texttt{honghuad@cs.toronto.edu} \\
+  \And
+  Soham Ray \\
+  Sierra \\
+  \texttt{soham@sierra.ai} \\
+  \And
+  Xujie Si\\
+  University of Toronto \& Vector Institute \\
+  \texttt{six@cs.toronto.edu} \\
+  \And
+  Karthik Narasimhan \\
+  Sierra \\
+  \texttt{karthik@sierra.ai} \\
+}
+
+
+\begin{document}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\maketitle
+\footnotetext[1]{Equal contribution.}
+\footnotetext[2]{Work done during internship.}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\input{contents/abstract}
+\input{contents/intro}
+\input{contents/related}
+\input{contents/methods/index}
+
+\input{contents/exps}
+\input{contents/conclusion}
+\input{contents/ack}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\clearpage
+\appendix
+\input{contents/appendix/index}
+
+
+\end{document}

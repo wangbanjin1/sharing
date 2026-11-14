@@ -1,0 +1,121 @@
+\section{Construction Pipeline Details}
+\label{app:pipeline}
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{1.50}
+\begin{tabularx}{\linewidth}{@{}p{0.25\linewidth} X@{}}
+\toprule
+\textbf{Criterion} & \textbf{Requirement} \\
+\midrule
+Plausibility
+& L1 and L2 options are plausible and distinct, with no strawmen or rewordings. \\
+Re-ask
+& Each layer adds a dimension absent from the initial question. \\
+Counterfactuality
+& L1 must eliminate or transform the core of L2, rather than leave it invariant. \\
+\bottomrule
+\end{tabularx}
+\vspace{-2mm}
+\caption{LLM judging rubric for chain injection. Both judges must pass three criteria for benchmark inclusion.}
+\label{tab:chain-judge-rubric}
+\vspace{-6mm}
+\end{table}
+
+This appendix expands the construction pipeline summarized in \S\ref{sec:construction}. For added clarity, We detail anchor selection, chain injection, drift injection, and evidence rewriting in order, specifying how candidates are selected, generated, filtered, and verified before their inclusion in \textsc{TIDE-Bench}.
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.60}
+\begin{tabularx}{\linewidth}{@{}c p{0.15\linewidth} X p{0.22\linewidth}@{}}
+\toprule
+\textbf{Step} & \textbf{Check} & \textbf{Pass condition} & \textbf{Failure signal} \\
+\midrule
+1 & Output schema
+& Required JSON fields are present.
+& \texttt{json\_format} \\
+2 & SQL parsing
+& \texttt{post\_drift\_sql} parses and yields extractable commitments.
+& \texttt{sql\_parse} \\
+3 & SQL execution
+& \texttt{post\_drift\_sql} executes on the target database.
+& \texttt{sql\_execute} \\
+4 & Non-empty result
+& The post-drift query returns at least one row.
+& \texttt{empty\_result} \\
+5 & Observable effect
+& Pre- and post-drift result sets differ.
+& \texttt{identical\_result} \\
+6 & Non-monotonicity
+& The commitment diff satisfies $S_{\mathrm{pre}} \nsubseteq S_{\mathrm{post}}$.
+& \texttt{no\_change}; \texttt{monotonic} \\
+7 & Subtype match
+& The realized drift subtype matches the assigned subtype.
+& \texttt{subtype\_mismatch} \\
+8 & Subtype detail
+& For projection-level samples, the fine-grained subtype matches.
+& \texttt{fine\_subtype} \\
+\bottomrule
+\end{tabularx}
+\vspace{-0.5mm}
+\caption{Sequential AST-level checks for validating drift candidates. Checks are applied in order; the final column reports the rejection signal emitted upon failure, and only candidates passing all checks undergo LLM judging.}
+\label{tab:drift-ast}
+\vspace{-4mm}
+\end{table*}
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{1.60}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Cond. & Evidence & Question & Dialogue & Acc. & $\Delta$\\
+\midrule
+\textbf{A} & orig. & orig.     & ---        & 51.2 & ---    \\
+\textbf{B} & rew.  & ambiguous & \checkmark & 50.4 & $-0.8$ \\
+\textbf{C} & rew.  & ambiguous & ---        & 31.2 & $-20.0$ \\
+\bottomrule
+\end{tabular}
+\vspace{-0.5mm}
+\caption{Reconstructability of rewritten evidence under three input settings ($n=695$). ``orig.''~/~``rew.'' denote original~/~rewritten BIRD evidence; \checkmark marks dialogue input; $\Delta$ is the overall accuracy change (pp) from A.}
+\label{tab:evidence-ablation}
+\vspace{-5mm}
+\end{table}
+
+\subsection{Chain Injection}
+\label{app:pipeline-chain}
+\noindent\textbf{Generation.}
+We use GPT-5.1 to generate the chain candidates. For each BIRD entry, the model produces a JSON object with the initial question and the L1/L2 clarification pairs. The full prompt template and output schema are both shown in Figure~\ref{fig:chain-prompt}.
+
+\namedpara{Judging.}
+We score each candidate with two LLM judges, GPT-5.3-Codex and DeepSeek-V4-Pro. Each judge applies the three criteria in Table~\ref{tab:chain-judge-rubric}, in priority order. A candidate is accepted only if both judges pass all three criteria. The judges agree on 94.7\%, and 695/830 candidates pass (83.7\%).
+
+\subsection{Drift Injection}
+\label{app:pipeline-drift}
+
+\noindent\textbf{Generation.}
+We use GPT-5.1 to generate drift candidates. For each chain-validated anchor, the model receives a drift subtype: value-, constraint-, or projection-level. It returns a JSON object with the drift utterance and post-drift SQL. The prompt template and output schema are shown in Figure~\ref{fig:drift-prompt}.
+
+\namedpara{AST-level validation.}
+Each candidate is checked by a rule-based validator before LLM judging. The validator tests the operational definition of \S\ref{subsec:drift} and the scope constraints of the assigned subtype, as summarized in Table~\ref{tab:drift-ast}. The validation reuses the AST procedure from Appendix~\ref{app:commitment-extractor}; 554 of 695 validated chain candidates pass this stage (79.7\%).
+
+\namedpara{Cross-validation.}
+AST-passing candidates are scored by two LLM judges, Claude-Sonnet-4.6 and DeepSeek-V4-Pro. The judges receive the anchor SQL, drift utterance, and post-drift SQL. They apply two criteria in priority order: (i) \textbf{Drift fit}, requiring the post-drift SQL to match the assigned subtype and user drift; and (ii) \textbf{Stability}, requiring untouched units to remain unchanged. A candidate is accepted only if both judges pass both criteria, requiring agreement on validity. The judges agree on 96.6\%, and 514/554 candidates pass (92.8\%).
+
+\subsection{Evidence Rewriting}
+\label{app:pipeline-evidence}
+
+\noindent\textbf{Motivation.}
+BIRD's \texttt{evidence} field can reveal terms that should stay ambiguous in \textsc{TIDE-Bench}. For example, it may map ``top clients'' to ``clients ranked by spend,'' fixing the L1 choice ahead of dialogue. This early cue weakens the chain ambiguity we aim to test. The rewrite removes such cues while preserving schema-essential mappings.
+
+\namedpara{Protocol.}
+For each sample, GPT-5.1 rewrites the evidence using the source evidence, anchor SQL, and generated L1/L2 clarifications. The rewrite removes cues that resolve the ambiguity while retaining mappings needed for SQL interpretation.
+
+\namedpara{Reconstructability.}
+We test whether the rewritten evidence preserves schema-essential information without itself revealing the L1/L2 resolution. For 695 candidates, we evaluate Gemini-3-Flash under three settings in Table~\ref{tab:evidence-ablation}: the original question and evidence (A), the ambiguous question and rewritten evidence with dialogue (B), and the same inputs without dialogue (C). The small A--B gap of 0.8 pp shows that the rewritten evidence preserves what is needed for reconstruction when paired with dialogue. The large B--C gap of 19.2 pp shows that the rewritten evidence alone does not leak resolution.
+

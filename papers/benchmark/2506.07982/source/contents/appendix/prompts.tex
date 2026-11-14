@@ -1,0 +1,75 @@
+\section{Prompts}
+\label{app:prompts}
+
+\subsection{Agent system prompt}
+\label{app:agent-prompt}
+
+\paragraph{Agent system prompt template}
+\begin{minted}[escapeinside=||, fontsize=\small, breaklines, breaksymbol=, breaksymbolleft=, breaksymbolright=, breakanywhere, bgcolor=gray!10]{markdown}
+<instructions>
+You are a customer service agent that helps the user according to the <policy> provided below.
+In each turn you can either:
+- Send a message to the user.
+- Make a tool call.
+You cannot do both at the same time.
+
+Try to be helpful and always follow the policy. Always make sure you generate valid JSON only.
+</instructions>
+<policy>
+{domain_policy}
+</policy>
+\end{minted}
+
+The policies for the domains are provided in the \Cref{app:domain-policies} section.
+\subsection{User system prompt}
+\label{app:user-prompt}
+Here is the user prompt template for the user simulation task. Mention of the tools is ommited if the environment does not provide any user actions.
+
+\paragraph{User system prompt template}
+\inputminted[escapeinside=||, fontsize=\small, breaklines, breaksymbol=, breaksymbolleft=, breaksymbolright=, breakanywhere, bgcolor=gray!10]{markdown}{codes/user_simulation_guideline.md}
+
+\paragraph{Example of a task instruction}
+Here are examples of task instructions that will be included for a given task.
+
+\begin{minted}[escapeinside=||, fontsize=\small, breaklines, breaksymbol=, breaksymbolleft=, breaksymbolright=, breakanywhere, bgcolor=gray!10]{markdown}
+Domain: airline
+Reason for call:
+    You want to book a one-way flight from ORD to PHL on May 26.
+Known info:
+    Your name is Sophia Silva.
+    Your user id is sophia_silva_7557.
+Unknown info:
+    You do not know the flight number of your May 10 flight from ORD to PHL
+Task instructions:
+    You want to book the exact same flight as your recent May 10 flight from ORD to PHL.
+    You do not want any other flight. 
+    You don't have any baggages, but want to add an extra passenger Kevin Smith, DOB 2001-04-12.
+    You are ok with economy and want aisle and a middle seat together. You are willing to pay up to $500 for the purchase.
+    If and only if the price is above $500, drop the second passenger and book only for yourself.
+    If the agent asks, you only want a one-way ticket, not roundtrip.
+    You don't need any travel insurance.
+    You want to pay using only one of your certificates.
+    You do not accept any other mode of payment.
+\end{minted}
+
+\begin{minted}[escapeinside=||, fontsize=\small, breaklines, breaksymbol=, breaksymbolleft=, breaksymbolright=, breakanywhere, bgcolor=gray!10]{markdown}
+Domain: retail
+Reason for call:
+    You want to know the delivery status of your order W4284542. If it has not shipped, you want to cancel the air purifier from the order. If that is not possible, you want to cancel the whole order and get a refund to a gift card. If refunding to a gift card is not possible, you do not want to cancel.
+Known info:
+    You are Ivan Hernandez. Your user id is ivan_hernandez_6923. You live in San Diego, 92133.
+Unknown info:
+    You do not know the current shipping status of your order. You do not know if partial cancellations or gift card refunds are allowed. You do not remember your email address.
+Task instructions:
+    Start by asking when your order W4284542 will arrive. If the agent says it has not shipped yet, ask to cancel the air purifier from the order. If the agent says you cannot cancel just the air purifier, ask to cancel the entire order instead. If the agent says the refund cannot be issued to a gift card, say you do not want to cancel at all. Remain polite, brief, and firm throughout the conversation.
+\end{minted}
+
+\begin{minted}[escapeinside=||, fontsize=\small, breaklines, breaksymbol=, breaksymbolleft=, breaksymbolright=, breakanywhere, bgcolor=gray!10]{markdown}
+Domain: telecom
+Reason for call:
+    You mobile data is not working properly. It either stops working or is very slow. You want to fix it and get excellent internet speed on your phone. You do not have access to wifi.
+Known info:
+    You are John Smith with phone number 555-123-2002. You are currently at home in the United States.
+Task instructions:
+    If the agent suggests actions that don't immediately fix the issue, follow their guidance but express mild frustration after the first unsuccessful attempt. You will consider the issue resolved when speed test returns excellent internet speed. You are willing to refuel 2.0 GB of data if necessary, but you do not want to change your mobile data plan.
+\end{minted}

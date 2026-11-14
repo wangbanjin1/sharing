@@ -1,0 +1,89 @@
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{graphicx}       % for including images
+\usepackage{subcaption}     % for subfigures
+\usepackage{appendix}
+
+% added
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{makecell}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{xspace}
+\usepackage{adjustbox}
+\usepackage{wrapfig}
+\tcbuselibrary{listings, most}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{etoolbox}
+\usepackage{cleveref}
+\usepackage[frozencache]{minted}     % for syntax highlighting
+
+\setlist{leftmargin=1em}
+
+\newcommand{\bench}{$\tau^2$-bench\xspace}
+\newcommand{\Bench}{$\tau^2$-Bench\xspace}
+\newcommand{\taubench}{$\tau$-bench\xspace}
+\newcommand{\dualform}{Dual\xspace}
+\newcommand{\pomdp}{POMDP\xspace}
+\newcommand{\decpomdp}{Dec-POMDP\xspace}
+\newcommand{\Agent}{Agent\xspace}
+\newcommand{\agent}{agent\xspace}
+\newcommand{\User}{User\xspace}
+\newcommand{\user}{user\xspace}
+
+\newcommand{\passk}{\texttt{pass}~$\hat{}$~\texttt{k}\xspace}
+\newcommand{\passone}{\texttt{pass}~$\hat{}$~\texttt{1}\xspace}
+
+\newcommand{\retail}{\texttt{retail}\xspace}
+\newcommand{\airline}{\texttt{airline}\xspace}
+\newcommand{\telecom}{\texttt{telecom}\xspace}
+
+\newcommand{\serviceissue}{\texttt{service\_issue}\xspace}
+\newcommand{\mobiledataissue}{\texttt{mobile\_data\_issue}\xspace}
+\newcommand{\mmsissue}{\texttt{mms\_issue}\xspace}
+
+\newcommand{\basemode}{\texttt{Default}\xspace}
+\newcommand{\solomode}{\texttt{No-User}\xspace}
+\newcommand{\gtmode}{\texttt{Oracle Plan}\xspace}
+\newcommand{\gtsolomode}{\texttt{No-User+Oracle}\xspace}
+
+\newcommand{\gptmodel}{\texttt{gpt-4.1-2025-04-14}\xspace}
+\newcommand{\ofourmodel}{\texttt{o4-mini-2025-04-16}\xspace}
+\newcommand{\gptmodelshort}{\texttt{gpt-4.1}\xspace}
+\newcommand{\ofourmodelshort}{\texttt{o4-mini}\xspace}
+\newcommand{\gptmini}{\texttt{gpt-4.1-mini-2025-04-14}\xspace}
+\newcommand{\gptminishort}{\texttt{gpt-4.1-mini}\xspace}
+\newcommand{\claudesonnet}{\texttt{claude-3-7-sonnet-20250219}\xspace}
+\newcommand{\claudesonnetshort}{\texttt{claude-3.7-sonnet}\xspace}
+
+\newcommand{\tocite}{{\textbf{\color{orange}[TO CITE]}}}
+\newcommand{\todo}[1]{{\textbf{\color{orange}[TODO: #1]}}}
+\newcommand{\placeholder}[1]{{\textbf{\color{magenta}[Placeholder: #1]}}}
+\newcommand{\honghua}[1]{{\textbf{\color{cyan}[Honghua: #1]}}}
+\newcommand{\victor}[1]{{\textbf{\color{red}[Victor: #1]}}}
+\newcommand{\karthik}[1]{{\textbf{\color{brown}[Karthik: #1]}}}
+\newcommand{\soham}[1]{{\textbf{\color{green}[Soham: #1]}}}
+\newcommand{\cyan}[1]{{{\color{cyan}#1}}}
+
+% Appendix cref
+\appto\appendix{%
+  \crefalias{section}{appendix}%
+  \crefalias{subsection}{appendix}%
+  \crefalias{subsubsection}{appendix}%
+  \crefalias{subsubsubsection}{appendix}%
+  \crefname{appendix}{appendix}{appendices}%
+  \Crefname{appendix}{Appendix}{Appendices}%
+}

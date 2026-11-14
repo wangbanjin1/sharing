@@ -1,0 +1,235 @@
+\begin{thebibliography}{32}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Altman and Taylor(1973)}]{altman-taylor-1973}
+Altman, I.; and Taylor, D.~A. 1973.
+\newblock \emph{Social Penetration: The Development of Interpersonal
+  Relationships}.
+\newblock New York: Holt, Rinehart and Winston.
+\newblock ISBN 0-03-076635-4.
+
+\bibitem[{Balog and Zhai(2024)}]{balogzhai}
+Balog, K.; and Zhai, C. 2024.
+\newblock User Simulation for Evaluating Information Access Systems.
+\newblock \emph{Foundations and Trends in Information Retrieval}, 18(1--2):
+  1--261.
+
+\bibitem[{Chen et~al.(2026)Chen, Jin, Bao, Wang, Kraut, Wu, and Zhu}]{avp}
+Chen, A.; Jin, S.; Bao, C.; Wang, C.; Kraut, R.~E.; Wu, T.; and Zhu, H. 2026.
+\newblock The Empirically Grounded Adaptive Virtual Patient for Psychotherapy
+  Training: Disclosure That Responds to Therapist Micro-Skills.
+\newblock arXiv:2606.10051.
+
+\bibitem[{Chen(2026)}]{walkaway}
+Chen, L. 2026.
+\newblock Simulated Customers Never Walk Away: Decision Fidelity of {LLM} User
+  Simulators Measured Against Real Purchase Outcomes.
+\newblock arXiv:2606.20708.
+
+\bibitem[{Chopra et~al.(2026)Chopra, Ghate, Caliskan, Kohno, Shah, and
+  Jaques}]{ppol}
+Chopra, H.; Ghate, K.; Caliskan, A.; Kohno, T.; Shah, C.; and Jaques, N. 2026.
+\newblock Beyond Cooperative Simulators: Generating Realistic User Personas for
+  Robust Evaluation of {LLM} Agents.
+\newblock arXiv:2605.12894.
+
+\bibitem[{Dou et~al.(2025)Dou, Galley, Peng, Kedzie, Cai, Ritter, Quirk, Xu,
+  and Gao}]{simulatorarena}
+Dou, Y.; Galley, M.; Peng, B.; Kedzie, C.; Cai, W.; Ritter, A.; Quirk, C.; Xu,
+  W.; and Gao, J. 2025.
+\newblock {SimulatorArena}: Are User Simulators Reliable Proxies for Multi-Turn
+  Evaluation of {AI} Assistants?
+\newblock In \emph{Proceedings of the 2025 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}.
+
+\bibitem[{Dou et~al.(2024)Dou, Krsek, Naous, Kabra, Das, Ritter, and
+  Xu}]{douself}
+Dou, Y.; Krsek, I.; Naous, T.; Kabra, A.; Das, S.; Ritter, A.; and Xu, W. 2024.
+\newblock Reducing Privacy Risks in Online Self-Disclosures with Language
+  Models.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, 13732--13754.
+
+\bibitem[{Han et~al.(2026)Han, Chan, Chen, Ai, Du, and Guo}]{medconceal}
+Han, Y.; Chan, J.; Chen, J.; Ai, M.; Du, S.; and Guo, Y. 2026.
+\newblock {MedConceal}: A Benchmark for Clinical Hidden-Concern Reasoning Under
+  Partial Observability.
+\newblock arXiv:2604.08788.
+
+\bibitem[{Hoang et~al.(2026)Hoang, Mehri, Hsu, Sun, Truong, Doan, and
+  Hakkani-T{\"u}r}]{psibench}
+Hoang, N.~K.; Mehri, S.; Hsu, T.-A.; Sun, Y.-J.; Truong, Q. X.~N.; Doan, K.~D.;
+  and Hakkani-T{\"u}r, D. 2026.
+\newblock {PSI-Bench}: Towards Clinically Grounded and Interpretable Evaluation
+  of Depression Patient Simulators.
+\newblock Spotlight at the Second Workshop on Social Simulation with LLMs
+  (Social Sim'26), COLM 2026, arXiv:2604.25840.
+
+\bibitem[{Holm(1979)}]{holm1979}
+Holm, S. 1979.
+\newblock A Simple Sequentially Rejective Multiple Test Procedure.
+\newblock \emph{Scandinavian Journal of Statistics}, 6(2): 65--70.
+
+\bibitem[{Jones and Bergen(2026)}]{jonesbergen}
+Jones, C.~R.; and Bergen, B.~K. 2026.
+\newblock Large language models pass a standard three-party {Turing} test.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 123(21):
+  e2524472123.
+\newblock Preprint version: arXiv:2503.23674.
+
+\bibitem[{Jourard(1971)}]{jourard-1971}
+Jourard, S.~M. 1971.
+\newblock \emph{Self-Disclosure: An Experimental Analysis of the Transparent
+  Self}.
+\newblock New York: Wiley-Interscience.
+\newblock ISBN 0-471-45150-9.
+
+\bibitem[{Lakens(2017)}]{lakens2017}
+Lakens, D. 2017.
+\newblock Equivalence Tests: A Practical Primer for $t$ Tests, Correlations,
+  and Meta-Analyses.
+\newblock \emph{Social Psychological and Personality Science}, 8(4): 355--362.
+
+\bibitem[{Lin et~al.(2023)Lin, Feng, Geishauser, Lubis, van Niekerk, Heck,
+  Ruppik, Vukovic, and Ga{\v{s}}i{\'c}}]{emous}
+Lin, H.-C.; Feng, S.; Geishauser, C.; Lubis, N.; van Niekerk, C.; Heck, M.;
+  Ruppik, B.; Vukovic, R.; and Ga{\v{s}}i{\'c}, M. 2023.
+\newblock {EmoUS}: Simulating User Emotions in Task-Oriented Dialogues.
+\newblock In \emph{Proceedings of the 46th International ACM SIGIR Conference
+  on Research and Development in Information Retrieval (SIGIR '23)},
+  2526--2531.
+
+\bibitem[{Liu et~al.(2026)Liu, Chai, Huang, Huang, Wang, and
+  Wan}]{companionbench}
+Liu, Y.; Chai, G.; Huang, Y.; Huang, J.; Wang, L.; and Wan, J. 2026.
+\newblock {CompanionBench}: A Theory-Anchored, Real-World-Grounded Benchmark
+  for {AI} Emotional Companionship.
+\newblock arXiv:2608.02046.
+
+\bibitem[{Madaan et~al.(2024)Madaan, Singh, Schaeffer, Poulton, Koyejo,
+  Stenetorp, Narang, and Hupkes}]{variance}
+Madaan, L.; Singh, A.~K.; Schaeffer, R.; Poulton, A.; Koyejo, S.; Stenetorp,
+  P.; Narang, S.; and Hupkes, D. 2024.
+\newblock Quantifying Variance in Evaluation Benchmarks.
+\newblock arXiv:2406.10229.
+
+\bibitem[{Naous et~al.(2026)Naous, Laban, Xu, and Neville}]{userlm}
+Naous, T.; Laban, P.; Xu, W.; and Neville, J. 2026.
+\newblock Flipping the Dialogue: Training and Evaluating User Language Models.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}.
+
+\bibitem[{Nathani et~al.(2026)Nathani, Zhang, Huan, Shan, Yang, Patel, Gan,
+  Wang, Saxon, and Wang}]{pare}
+Nathani, D.; Zhang, C.; Huan, C.; Shan, J.; Yang, Y.; Patel, A.; Gan, Z.; Wang,
+  W.~Y.; Saxon, M.; and Wang, X.~E. 2026.
+\newblock Proactive Agent Research Environment: Simulating Active Users to
+  Evaluate Proactive Assistants.
+\newblock arXiv:2604.00842.
+
+\bibitem[{Ojala and Garriga(2010)}]{ojala2010}
+Ojala, M.; and Garriga, G.~C. 2010.
+\newblock Permutation Tests for Studying Classifier Performance.
+\newblock \emph{Journal of Machine Learning Research}, 11: 1833--1863.
+
+\bibitem[{Sabour et~al.(2026)Sabour, NG, Chen, Bi, Zhao, and
+  Huang}]{patientact}
+Sabour, S.; NG, T.; Chen, Y.; Bi, G.; Zhao, J.; and Huang, M. 2026.
+\newblock {PatientAct}: Theory-Grounded Mental Health Client Simulation.
+\newblock In \emph{Findings of the Association for Computational Linguistics:
+  EMNLP 2026}.
+
+\bibitem[{Safran and Muran(2000)}]{safran-muran-2000}
+Safran, J.~D.; and Muran, J.~C. 2000.
+\newblock \emph{Negotiating the Therapeutic Alliance: A Relational Treatment
+  Guide}.
+\newblock New York: Guilford Press.
+\newblock ISBN 978-1-57230-512-0.
+
+\bibitem[{Schatzmann and Young(2009)}]{schatzmann2009}
+Schatzmann, J.; and Young, S. 2009.
+\newblock The Hidden Agenda User Simulation Model.
+\newblock \emph{IEEE Transactions on Audio, Speech, and Language Processing},
+  17(4): 733--747.
+
+\bibitem[{Seshadri et~al.(2026)Seshadri, Cahyawijaya, Odumakinde, Singh, and
+  Goldfarb-Tarrant}]{lostinsim}
+Seshadri, P.; Cahyawijaya, S.; Odumakinde, A.; Singh, S.; and Goldfarb-Tarrant,
+  S. 2026.
+\newblock Lost in Simulation: {LLM}-Simulated Users are Unreliable Proxies for
+  Human Users in Agentic Evaluations.
+\newblock In \emph{Proceedings of the 64th Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, 47423--47439.
+
+\bibitem[{Spiliopoulou et~al.(2025)Spiliopoulou, Fogliato, Burnsky, Soliman,
+  Ma, Horwood, and Ballesteros}]{playfavorites}
+Spiliopoulou, E.; Fogliato, R.; Burnsky, H.; Soliman, T.; Ma, J.; Horwood, G.;
+  and Ballesteros, M. 2025.
+\newblock Play Favorites: A Statistical Method to Measure Self-Bias in
+  {LLM}-as-a-Judge.
+\newblock arXiv:2508.06709.
+
+\bibitem[{Thibaut and Kelley(1959)}]{thibaut-kelley-1959}
+Thibaut, J.~W.; and Kelley, H.~H. 1959.
+\newblock \emph{The Social Psychology of Groups}.
+\newblock New York: John Wiley \& Sons.
+
+\bibitem[{Wu et~al.(2026{\natexlab{a}})Wu, Han, Zhang, Li, Jiang, Lu, Zhang,
+  Xu, Ming, Wang, and Wen}]{aisp}
+Wu, P.; Han, Y.; Zhang, J.; Li, Y.; Jiang, M.; Lu, X.; Zhang, H.; Xu, D.; Ming,
+  H.; Wang, L.; and Wen, Q. 2026{\natexlab{a}}.
+\newblock From simulation to pedagogy: structured {AI} standardized patients
+  for clinical communication training validated through multi-model and
+  randomized evaluation.
+\newblock medRxiv 2026.04.26.26351793.
+
+\bibitem[{Wu et~al.(2026{\natexlab{b}})Wu, Choi, Khatua, Wang, He-Yueya,
+  Weerasooriya, Wei, Yang, Leskovec, and Zou}]{humanlm}
+Wu, S.; Choi, E.; Khatua, A.; Wang, Z.; He-Yueya, J.; Weerasooriya, T.~C.; Wei,
+  W.; Yang, D.; Leskovec, J.; and Zou, J. 2026{\natexlab{b}}.
+\newblock {HumanLM}: Simulating Users with State Alignment Beats Response
+  Imitation.
+\newblock In \emph{Proceedings of the 43rd International Conference on Machine
+  Learning (ICML 2026)}, volume 306 of \emph{Proceedings of Machine Learning
+  Research}.
+\newblock ArXiv:2603.03303.
+
+\bibitem[{Yang et~al.(2025)Yang, Achananuparp, Huang, Jiang, Lim, Ern, Ling,
+  Xiuhui, Pinto, and Lim}]{miconsistent}
+Yang, Y.; Achananuparp, P.; Huang, H.; Jiang, J.; Lim, N.~G.; Ern, C. T.~S.;
+  Ling, K.~P.; Xiuhui, J.~G.; Pinto, J.; and Lim, E. 2025.
+\newblock Consistent Client Simulation for Motivational Interviewing-based
+  Counseling.
+\newblock In \emph{Proceedings of the 63rd Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, 20959--20998.
+
+\bibitem[{Zerhoudi(2026)}]{simevalir}
+Zerhoudi, S. 2026.
+\newblock {SimEval-IR}: A Unified Toolkit and Benchmark Suite for Evaluating
+  User Simulators and Search Sessions.
+\newblock In \emph{Proceedings of the 49th International ACM SIGIR Conference
+  on Research and Development in Information Retrieval (SIGIR '26)}.
+
+\bibitem[{Zhang and Balog(2020)}]{zhangbalog2020}
+Zhang, S.; and Balog, K. 2020.
+\newblock Evaluating Conversational Recommender Systems via User Simulation.
+\newblock In \emph{Proceedings of the 26th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining (KDD '20)}.
+
+\bibitem[{Zheng et~al.(2023)Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li,
+  Li, Xing, Zhang, Gonzalez, and Stoica}]{zheng2023judging}
+Zheng, L.; Chiang, W.-L.; Sheng, Y.; Zhuang, S.; Wu, Z.; Zhuang, Y.; Lin, Z.;
+  Li, Z.; Li, D.; Xing, E.~P.; Zhang, H.; Gonzalez, J.~E.; and Stoica, I. 2023.
+\newblock Judging {LLM}-as-a-Judge with {MT}-Bench and Chatbot Arena.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~36.
+
+\bibitem[{Zhou et~al.(2026)Zhou, Sun, Ma, Xie, Liu, Du, Welleck, Yang, Neubig,
+  Wu, and Sap}]{sim2real}
+Zhou, X.; Sun, W.; Ma, Q.; Xie, Y.; Liu, J.; Du, W.; Welleck, S.; Yang, Y.;
+  Neubig, G.; Wu, S.~T.; and Sap, M. 2026.
+\newblock Mind the {Sim2Real} Gap in User Simulation for Agentic Tasks.
+\newblock In \emph{Conference on Language Modeling (COLM)}.
+\newblock ArXiv:2603.11245v2.
+
+\end{thebibliography}

@@ -1,0 +1,180 @@
+\begin{thebibliography}{31}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bowers et~al.(2023)Bowers, Olausson, Wong, Grand, Tenenbaum, Ellis, and Solar-Lezama]{bowers2023top}
+Matthew Bowers, Theo~X. Olausson, Lionel Wong, Gabriel Grand, Joshua~B. Tenenbaum, Kevin Ellis, and Armando Solar-Lezama.
+\newblock Top-down synthesis for library learning.
+\newblock \emph{Proc. ACM Program. Lang.}, 7\penalty0 (POPL), jan 2023.
+\newblock \doi{10.1145/3571234}.
+\newblock URL \url{https://doi.org/10.1145/3571234}.
+
+\bibitem[Cai et~al.(2023)Cai, Wang, Ma, Chen, and Zhou]{cai2023large}
+Tianle Cai, Xuezhi Wang, Tengyu Ma, Xinyun Chen, and Denny Zhou.
+\newblock Large language models as tool makers.
+\newblock \emph{arXiv preprint arXiv:2305.17126}, 2023.
+\newblock URL \url{https://arxiv.org/pdf/2305.17126}.
+
+\bibitem[Chi et~al.(1981)Chi, Feltovich, and Glaser]{chi1981categorization}
+Michelene~TH Chi, Paul~J Feltovich, and Robert Glaser.
+\newblock Categorization and representation of physics problems by experts and novices.
+\newblock \emph{Cognitive science}, 5\penalty0 (2):\penalty0 121--152, 1981.
+
+\bibitem[Chi et~al.(2014)Chi, Glaser, and Farr]{chi2014nature}
+Michelene~TH Chi, Robert Glaser, and Marshall~J Farr.
+\newblock \emph{The nature of expertise}.
+\newblock Psychology Press, 2014.
+
+\bibitem[Deng et~al.(2023)Deng, Gu, Zheng, Chen, Stevens, Wang, Sun, and Su]{deng2023mindweb}
+Xiang Deng, Yu~Gu, Boyuan Zheng, Shijie Chen, Samuel Stevens, Boshi Wang, Huan Sun, and Yu~Su.
+\newblock Mind2web: Towards a generalist agent for the web.
+\newblock In \emph{Thirty-seventh Conference on Neural Information Processing Systems Datasets and Benchmarks Track}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=kiYqbO3wqw}.
+
+\bibitem[Drouin et~al.(2024)Drouin, Gasse, Caccia, Laradji, Del~Verme, Marty, Boisvert, Thakkar, Cappart, Vazquez, et~al.]{drouin2024workarena}
+Alexandre Drouin, Maxime Gasse, Massimo Caccia, Issam~H Laradji, Manuel Del~Verme, Tom Marty, L{\'e}o Boisvert, Megh Thakkar, Quentin Cappart, David Vazquez, et~al.
+\newblock Workarena: How capable are web agents at solving common knowledge work tasks?
+\newblock \emph{arXiv preprint arXiv:2403.07718}, 2024.
+
+\bibitem[Ellis et~al.(2023)Ellis, Wong, Nye, Sable-Meyer, Cary, Anaya~Pozo, Hewitt, Solar-Lezama, and Tenenbaum]{ellis2023dreamcoder}
+Kevin Ellis, Lionel Wong, Maxwell Nye, Mathias Sable-Meyer, Luc Cary, Lore Anaya~Pozo, Luke Hewitt, Armando Solar-Lezama, and Joshua~B Tenenbaum.
+\newblock Dreamcoder: growing generalizable, interpretable knowledge with wake--sleep bayesian program learning.
+\newblock \emph{Philosophical Transactions of the Royal Society A}, 381\penalty0 (2251):\penalty0 20220050, 2023.
+
+\bibitem[Fu et~al.(2024)Fu, Kim, Kim, Sohn, Logeswaran, Bae, and Lee]{fu2024autoguide}
+Yao Fu, Dong-Ki Kim, Jaekyeom Kim, Sungryull Sohn, Lajanugen Logeswaran, Kyunghoon Bae, and Honglak Lee.
+\newblock Autoguide: Automated generation and selection of state-aware guidelines for large language model agents.
+\newblock \emph{arXiv preprint arXiv:2403.08978}, 2024.
+
+\bibitem[Grand et~al.(2023)Grand, Wong, Bowers, Olausson, Liu, Tenenbaum, and Andreas]{grand2023lilo}
+Gabriel Grand, Lionel Wong, Matthew Bowers, Theo~X Olausson, Muxin Liu, Joshua~B Tenenbaum, and Jacob Andreas.
+\newblock Lilo: Learning interpretable libraries by compressing and documenting code.
+\newblock \emph{arXiv preprint arXiv:2310.19791}, 2023.
+
+\bibitem[Haluptzok et~al.(2023)Haluptzok, Bowers, and Kalai]{haluptzok2023language}
+Patrick Haluptzok, Matthew Bowers, and Adam~Tauman Kalai.
+\newblock Language models can teach themselves to program better.
+\newblock In \emph{The Eleventh International Conference on Learning Representations}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=SaRj2ka1XZ3}.
+
+\bibitem[Koh et~al.(2024)Koh, Lo, Jang, Duvvur, Lim, Huang, Neubig, Zhou, Salakhutdinov, and Fried]{koh2024visualwebarena}
+Jing~Yu Koh, Robert Lo, Lawrence Jang, Vikram Duvvur, Ming~Chong Lim, Po-Yu Huang, Graham Neubig, Shuyan Zhou, Ruslan Salakhutdinov, and Daniel Fried.
+\newblock Visualwebarena: Evaluating multimodal agents on realistic visual web tasks.
+\newblock In \emph{ICLR 2024 Workshop on Large Language Model (LLM) Agents}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=RPKxrKTJbj}.
+
+\bibitem[Liang et~al.(2023)Liang, Huang, Xia, Xu, Hausman, Ichter, Florence, and Zeng]{liang2023code}
+Jacky Liang, Wenlong Huang, Fei Xia, Peng Xu, Karol Hausman, Brian Ichter, Pete Florence, and Andy Zeng.
+\newblock Code as policies: Language model programs for embodied control.
+\newblock In \emph{2023 IEEE International Conference on Robotics and Automation (ICRA)}, pp.\  9493--9500. IEEE, 2023.
+
+\bibitem[Liu et~al.(2018)Liu, Guu, Pasupat, and Liang]{zheran2018reinforcement}
+Evan~Zheran Liu, Kelvin Guu, Panupong Pasupat, and Percy Liang.
+\newblock Reinforcement learning on web interfaces using workflow-guided exploration.
+\newblock In \emph{International Conference on Learning Representations}, 2018.
+\newblock URL \url{https://openreview.net/forum?id=ryTp3f-0-}.
+
+\bibitem[Majumder et~al.(2023)Majumder, Mishra, Jansen, Tafjord, Tandon, Zhang, Callison-Burch, and Clark]{majumder2023clin}
+Bodhisattwa~Prasad Majumder, Bhavana~Dalvi Mishra, Peter Jansen, Oyvind Tafjord, Niket Tandon, Li~Zhang, Chris Callison-Burch, and Peter Clark.
+\newblock Clin: A continually learning language agent for rapid task adaptation and generalization.
+\newblock \emph{arXiv preprint arXiv:2310.10134}, 2023.
+
+\bibitem[Mao et~al.(2023)Mao, Lozano-P{\'e}rez, Tenenbaum, and Kaelbling]{mao2023learning}
+Jiayuan Mao, Tom{\'a}s Lozano-P{\'e}rez, Joshua~B Tenenbaum, and Leslie~Pack Kaelbling.
+\newblock Learning reusable manipulation strategies.
+\newblock In \emph{Conference on Robot Learning}, pp.\  1467--1483. PMLR, 2023.
+
+\bibitem[Murty et~al.(2024)Murty, Manning, Shaw, Joshi, and Lee]{murty2024bagel}
+Shikhar Murty, Christopher Manning, Peter Shaw, Mandar Joshi, and Kenton Lee.
+\newblock Bagel: Bootstrapping agents by guiding exploration with language.
+\newblock \emph{arXiv preprint arXiv:2403.08140}, 2024.
+
+\bibitem[Oh et~al.(2017)Oh, Singh, Lee, and Kohli]{oh2017zero}
+Junhyuk Oh, Satinder Singh, Honglak Lee, and Pushmeet Kohli.
+\newblock Zero-shot task generalization with multi-task deep reinforcement learning.
+\newblock In \emph{International Conference on Machine Learning}, pp.\  2661--2670. PMLR, 2017.
+
+\bibitem[Pan et~al.(2024)Pan, Zhang, Tomlin, Zhou, Levine, and Suhr]{pan2024autonomous}
+Jiayi Pan, Yichi Zhang, Nicholas Tomlin, Yifei Zhou, Sergey Levine, and Alane Suhr.
+\newblock Autonomous evaluation and refinement of digital agents.
+\newblock \emph{arXiv preprint arXiv:2404.06474}, 2024.
+
+\bibitem[Rawles et~al.(2023)Rawles, Li, Rodriguez, Riva, and Lillicrap]{rawles2023androidinthewild}
+Christopher Rawles, Alice Li, Daniel Rodriguez, Oriana Riva, and Timothy~P Lillicrap.
+\newblock Androidinthewild: A large-scale dataset for android device control.
+\newblock In \emph{Thirty-seventh Conference on Neural Information Processing Systems Datasets and Benchmarks Track}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=j4b3l5kOil}.
+
+\bibitem[Rawles et~al.(2024)Rawles, Clinckemaillie, Chang, Waltz, Lau, Fair, Li, Bishop, Li, Campbell-Ajala, et~al.]{rawles2024androidworld}
+Christopher Rawles, Sarah Clinckemaillie, Yifan Chang, Jonathan Waltz, Gabrielle Lau, Marybeth Fair, Alice Li, William Bishop, Wei Li, Folawiyo Campbell-Ajala, et~al.
+\newblock Androidworld: A dynamic benchmarking environment for autonomous agents.
+\newblock \emph{arXiv preprint arXiv:2405.14573}, 2024.
+
+\bibitem[Shi et~al.(2017)Shi, Karpathy, Fan, Hernandez, and Liang]{shi2017world}
+Tianlin Shi, Andrej Karpathy, Linxi Fan, Jonathan Hernandez, and Percy Liang.
+\newblock World of bits: An open-domain platform for web-based agents.
+\newblock In Doina Precup and Yee~Whye Teh (eds.), \emph{Proceedings of the 34th International Conference on Machine Learning}, volume~70 of \emph{Proceedings of Machine Learning Research}, pp.\  3135--3144. PMLR, 06--11 Aug 2017.
+\newblock URL \url{https://proceedings.mlr.press/v70/shi17a.html}.
+
+\bibitem[Sodhi et~al.(2023)Sodhi, Branavan, and McDonald]{sodhi2023heap}
+Paloma Sodhi, SRK Branavan, and Ryan McDonald.
+\newblock Heap: Hierarchical policies for web actions using llms.
+\newblock \emph{arXiv preprint arXiv:2310.03720}, 2023.
+
+\bibitem[Sun et~al.(2023)Sun, Zhuang, Kong, Dai, and Zhang]{sun2023adaplanner}
+Haotian Sun, Yuchen Zhuang, Lingkai Kong, Bo~Dai, and Chao Zhang.
+\newblock Adaplanner: Adaptive planning from feedback with language models.
+\newblock In \emph{Thirty-seventh Conference on Neural Information Processing Systems}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=rnKgbKmelt}.
+
+\bibitem[Wang et~al.(2024{\natexlab{a}})Wang, Xie, Jiang, Mandlekar, Xiao, Zhu, Fan, and Anandkumar]{wang2024voyager}
+Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke Zhu, Linxi Fan, and Anima Anandkumar.
+\newblock Voyager: An open-ended embodied agent with large language models.
+\newblock \emph{Transactions on Machine Learning Research}, 2024{\natexlab{a}}.
+\newblock ISSN 2835-8856.
+\newblock URL \url{https://openreview.net/forum?id=ehfRiF0R3a}.
+
+\bibitem[Wang et~al.(2024{\natexlab{b}})Wang, Cheng, Zhu, Fried, and Neubig]{wang2024what}
+Zhiruo Wang, Zhoujun Cheng, Hao Zhu, Daniel Fried, and Graham Neubig.
+\newblock What are tools anyway? a survey from the language model perspective.
+\newblock In \emph{First Conference on Language Modeling}, 2024{\natexlab{b}}.
+\newblock URL \url{https://openreview.net/forum?id=Xh1B90iBSR}.
+
+\bibitem[Wang et~al.(2024{\natexlab{c}})Wang, Neubig, and Fried]{wang2024trove}
+Zhiruo Wang, Graham Neubig, and Daniel Fried.
+\newblock Tro{VE}: Inducing verifiable and efficient toolboxes for solving programmatic tasks.
+\newblock In \emph{Forty-first International Conference on Machine Learning}, 2024{\natexlab{c}}.
+\newblock URL \url{https://openreview.net/forum?id=DCNCwaMJjI}.
+
+\bibitem[Yao et~al.(2022)Yao, Chen, Yang, and Narasimhan]{yao2022webshop}
+Shunyu Yao, Howard Chen, John Yang, and Karthik Narasimhan.
+\newblock Webshop: Towards scalable real-world web interaction with grounded language agents.
+\newblock In S.~Koyejo, S.~Mohamed, A.~Agarwal, D.~Belgrave, K.~Cho, and A.~Oh (eds.), \emph{Advances in Neural Information Processing Systems}, volume~35, pp.\  20744--20757. Curran Associates, Inc., 2022.
+\newblock URL \url{https://proceedings.neurips.cc/paper_files/paper/2022/file/82ad13ec01f9fe44c01cb91814fd7b8c-Paper-Conference.pdf}.
+
+\bibitem[Yoran et~al.(2024)Yoran, Amouyal, Malaviya, Bogin, Press, and Berant]{yoran2024assistantbench}
+Ori Yoran, Samuel~Joseph Amouyal, Chaitanya Malaviya, Ben Bogin, Ofir Press, and Jonathan Berant.
+\newblock Assistantbench: Can web agents solve realistic and time-consuming tasks?
+\newblock \emph{arXiv preprint arXiv:2407.15711}, 2024.
+
+\bibitem[Yu et~al.(2023)Yu, Gileadi, Fu, Kirmani, Lee, Arenas, Chiang, Erez, Hasenclever, Humplik, et~al.]{yu2023language}
+Wenhao Yu, Nimrod Gileadi, Chuyuan Fu, Sean Kirmani, Kuang-Huei Lee, Montse~Gonzalez Arenas, Hao-Tien~Lewis Chiang, Tom Erez, Leonard Hasenclever, Jan Humplik, et~al.
+\newblock Language to rewards for robotic skill synthesis.
+\newblock \emph{arXiv preprint arXiv:2306.08647}, 2023.
+
+\bibitem[Zheng et~al.(2024)Zheng, Wang, Wang, and An]{zheng2024synapse}
+Longtao Zheng, Rundong Wang, Xinrun Wang, and Bo~An.
+\newblock Synapse: Trajectory-as-exemplar prompting with memory for computer control.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=Pc8AU1aF5e}.
+
+\bibitem[Zhou et~al.(2024)Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Ou, Bisk, Fried, Alon, and Neubig]{zhou2024webarena}
+Shuyan Zhou, Frank~F. Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar, Xianyi Cheng, Tianyue Ou, Yonatan Bisk, Daniel Fried, Uri Alon, and Graham Neubig.
+\newblock Webarena: A realistic web environment for building autonomous agents.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=oKn9c6ytLx}.
+
+\end{thebibliography}

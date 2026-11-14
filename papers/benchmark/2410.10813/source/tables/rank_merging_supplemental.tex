@@ -1,0 +1,40 @@
+\setlength{\tabcolsep}{3.5pt}
+\begin{table}[t]
+\caption{Retrieval and end-to-end QA performance on \BENCHMARK\textsubscript{\textsc{M}} with different key designs for indexing. L3.1 = Llama 3.1 Instruct. RM = Rank Merging and KM = Key Merging.}
+\centering
+\resizebox{0.9\linewidth}{!}{
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|cc cc | cc  cc  cc}
+\hline
+\multirow{4}{*}{\textbf{Key Design}} & \multicolumn{4}{c|}{\textbf{Retrieval}} & \multicolumn{6}{c}{\textbf{End-to-End QA}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-11}
+ & \multicolumn{2}{c}{\textbf{Metrics@5}}  & \multicolumn{2}{c|}{\textbf{Metrics@10}} & \multicolumn{2}{c}{\textbf{GPT-4o}} & \multicolumn{2}{c}{\textbf{L3.1 70B}} & \multicolumn{2}{c}{\textbf{L3.1 8B}} \\
+ & \textbf{Recall} & \textbf{NDCG} & \textbf{Recall} & \textbf{NDCG} & \textbf{Top-5} & \textbf{Top-10} & \textbf{Top-5} & \textbf{Top-10} & \textbf{Top-5} & \textbf{Top-10} \\ 
+ \hline
+\rowcolor{gray!20} \multicolumn{11}{c}{\textbf{Value = Round}} \\
+\hline
+K = V & 0.582 & 0.481 & 0.692 & 0.512 & 0.615 & 0.670 & 0.600 & 0.624 & 0.518 & 0.534 \\
+\hdashline
+K = V + fact (RM) & 0.478 & 0.372 & 0.568 & 0.403 & 0.558 & 0.596 & 0.536 & 0.586 & 0.458 & 0.482 \\
+K = V + keyphrase (RM) & 0.386 & 0.376 & 0.536 & 0.329 & 0.485 & 0.590 & 0.460 & 0.558 & 0.426 & 0.466 \\
+\hdashline
+K = V + fact  (KM) & \textbf{0.644} & \textbf{0.498} & \textbf{0.784} & \textbf{0.536} & \textbf{0.657} & \textbf{0.720} & \textbf{0.638} & \textbf{0.682} & \textbf{0.566} & \textbf{0.572} \\
+K = V + keyphrase (KM)  & 0.478 & 0.359 & 0.636 & 0.410 & 0.541 & 0.652 & 0.538 & 0.620 & 0.472 & 0.524 \\
+\hline
+\rowcolor{gray!20} \multicolumn{11}{c}{\textbf{Value = Session}} \\
+\hline
+K = V & 0.706 & 0.617 & 0.783 & 0.638 & 0.670 & 0.676 & 0.592 & 0.570 & 0.524 & 0.464 \\
+\hdashline
+K = V + summary (RM) & 0.608 & 0.488 & 0.684 & 0.511 & 0.600 & 0.620 & 0.510 & 0.544 & 0.468 & 0.466 \\
+K = V + fact (RM) & 0.618 & 0.511 & 0.754 & 0.548 & 0.622 & 0.688 & 0.574 & 0.574 & 0.468 & 0.466 \\
+K = V + keyphrase (RM) & 0.550 & 0.435 & 0.650 & 0.466 & 0.560 & 0.620 & 0.454 & 0.506 & 0.492 & 0.482 \\
+\hdashline
+K = V + summary (KM) & 0.689 & 0.608 & 0.749 & 0.624 & 0.658 & 0.666 & 0.568 & 0.560 & 0.518 & 0.494 \\
+K = V + fact  (KM) & \textbf{0.732} & \textbf{0.620} & \textbf{0.862} & \textbf{0.652} & \textbf{0.714} & \textbf{0.700} & 0.588 & \textbf{0.584} & \textbf{0.530} & 0.490 \\
+K = V + keyphrase  (KM) & 0.710 & 0.587 & 0.768 & 0.602 & 0.665 & 0.672 & \textbf{0.590} & 0.566 & 0.526 & \textbf{0.508} \\
+\hline
+\end{tabular}
+}
+\vspace{-3mm}
+\label{tab:rank-merging-eval}
+\end{table}

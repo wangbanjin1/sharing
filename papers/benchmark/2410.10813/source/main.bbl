@@ -1,0 +1,342 @@
+\begin{thebibliography}{53}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Abdin et~al.(2024{\natexlab{a}})Abdin, Jacobs, Awan, Aneja, Awadallah, Awadalla, Bach, Bahree, Bakhtiari, Behl, Benhaim, Bilenko, Bjorck, Bubeck, Cai, Mendes, Chen, Chaudhary, Chopra, Giorno, de~Rosa, Dixon, Eldan, Iter, Garg, Goswami, Gunasekar, Haider, Hao, Hewett, Huynh, Javaheripi, Jin, Kauffmann, Karampatziakis, Kim, Khademi, Kurilenko, Lee, Lee, Li, Liang, Liu, Lin, Lin, Madan, Mitra, Modi, Nguyen, Norick, Patra, Perez{-}Becker, Portet, Pryzant, Qin, Radmilac, Rosset, Roy, Ruwase, Saarikivi, Saied, Salim, Santacroce, Shah, Shang, Sharma, Song, Tanaka, Wang, Ward, Wang, Witte, Wyatt, Xu, Xu, Yadav, Yang, Yang, Yu, Zhang, Zhang, Zhang, Zhang, Zhang, Zhang, Zhang, and Zhou]{phi-3-technical-report}
+Marah~I Abdin, Sam~Ade Jacobs, Ammar~Ahmad Awan, Jyoti Aneja, Ahmed Awadallah, Hany Awadalla, Nguyen Bach, Amit Bahree, Arash Bakhtiari, Harkirat~S. Behl, Alon Benhaim, Misha Bilenko, Johan Bjorck, S{\'{e}}bastien Bubeck, Martin Cai, Caio C{\'{e}}sar~Teodoro Mendes, Weizhu Chen, Vishrav Chaudhary, Parul Chopra, Allie~Del Giorno, Gustavo de~Rosa, Matthew Dixon, Ronen Eldan, Dan Iter, Amit Garg, Abhishek Goswami, Suriya Gunasekar, Emman Haider, Junheng Hao, Russell~J. Hewett, Jamie Huynh, Mojan Javaheripi, Xin Jin, Piero Kauffmann, Nikos Karampatziakis, Dongwoo Kim, Mahoud Khademi, Lev Kurilenko, James~R. Lee, Yin~Tat Lee, Yuanzhi Li, Chen Liang, Weishung Liu, Eric Lin, Zeqi Lin, Piyush Madan, Arindam Mitra, Hardik Modi, Anh Nguyen, Brandon Norick, Barun Patra, Daniel Perez{-}Becker, Thomas Portet, Reid Pryzant, Heyang Qin, Marko Radmilac, Corby Rosset, Sambudha Roy, Olatunji Ruwase, Olli Saarikivi, Amin Saied, Adil Salim, Michael Santacroce, Shital Shah, Ning Shang, Hiteshi Sharma, Xia Song, Masahiro Tanaka,
+  Xin Wang, Rachel Ward, Guanhua Wang, Philipp Witte, Michael Wyatt, Can Xu, Jiahang Xu, Sonali Yadav, Fan Yang, Ziyi Yang, Donghan Yu, Chengruidong Zhang, Cyril Zhang, Jianwen Zhang, Li~Lyna Zhang, Yi~Zhang, Yue Zhang, Yunan Zhang, and Xiren Zhou.
+\newblock Phi-3 technical report: {A} highly capable language model locally on your phone.
+\newblock \emph{CoRR}, abs/2404.14219, 2024{\natexlab{a}}.
+\newblock \doi{10.48550/ARXIV.2404.14219}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2404.14219}.
+
+\bibitem[Abdin et~al.(2024{\natexlab{b}})Abdin, Jacobs, Awan, Aneja, Awadallah, Awadalla, Bach, Bahree, Bakhtiari, Behl, Benhaim, Bilenko, Bjorck, Bubeck, Cai, Mendes, Chen, Chaudhary, Chopra, Giorno, de~Rosa, Dixon, Eldan, Iter, Garg, Goswami, Gunasekar, Haider, Hao, Hewett, Huynh, Javaheripi, Jin, Kauffmann, Karampatziakis, Kim, Khademi, Kurilenko, Lee, Lee, Li, Liang, Liu, Lin, Lin, Madan, Mitra, Modi, Nguyen, Norick, Patra, Perez{-}Becker, Portet, Pryzant, Qin, Radmilac, Rosset, Roy, Ruwase, Saarikivi, Saied, Salim, Santacroce, Shah, Shang, Sharma, Song, Tanaka, Wang, Ward, Wang, Witte, Wyatt, Xu, Xu, Yadav, Yang, Yang, Yu, Zhang, Zhang, Zhang, Zhang, Zhang, Zhang, Zhang, and Zhou]{DBLP:journals/corr/abs-2404-14219}
+Marah~I Abdin, Sam~Ade Jacobs, Ammar~Ahmad Awan, Jyoti Aneja, Ahmed Awadallah, Hany Awadalla, Nguyen Bach, Amit Bahree, Arash Bakhtiari, Harkirat~S. Behl, Alon Benhaim, Misha Bilenko, Johan Bjorck, S{\'{e}}bastien Bubeck, Martin Cai, Caio C{\'{e}}sar~Teodoro Mendes, Weizhu Chen, Vishrav Chaudhary, Parul Chopra, Allie~Del Giorno, Gustavo de~Rosa, Matthew Dixon, Ronen Eldan, Dan Iter, Amit Garg, Abhishek Goswami, Suriya Gunasekar, Emman Haider, Junheng Hao, Russell~J. Hewett, Jamie Huynh, Mojan Javaheripi, Xin Jin, Piero Kauffmann, Nikos Karampatziakis, Dongwoo Kim, Mahoud Khademi, Lev Kurilenko, James~R. Lee, Yin~Tat Lee, Yuanzhi Li, Chen Liang, Weishung Liu, Eric Lin, Zeqi Lin, Piyush Madan, Arindam Mitra, Hardik Modi, Anh Nguyen, Brandon Norick, Barun Patra, Daniel Perez{-}Becker, Thomas Portet, Reid Pryzant, Heyang Qin, Marko Radmilac, Corby Rosset, Sambudha Roy, Olatunji Ruwase, Olli Saarikivi, Amin Saied, Adil Salim, Michael Santacroce, Shital Shah, Ning Shang, Hiteshi Sharma, Xia Song, Masahiro Tanaka,
+  Xin Wang, Rachel Ward, Guanhua Wang, Philipp Witte, Michael Wyatt, Can Xu, Jiahang Xu, Sonali Yadav, Fan Yang, Ziyi Yang, Donghan Yu, Chengruidong Zhang, Cyril Zhang, Jianwen Zhang, Li~Lyna Zhang, Yi~Zhang, Yue Zhang, Yunan Zhang, and Xiren Zhou.
+\newblock Phi-3 technical report: {A} highly capable language model locally on your phone.
+\newblock \emph{CoRR}, abs/2404.14219, 2024{\natexlab{b}}.
+\newblock \doi{10.48550/ARXIV.2404.14219}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2404.14219}.
+
+\bibitem[An et~al.(2024)An, Ma, Lin, Zheng, and Lou]{DBLP:journals/corr/abs-2404-16811}
+Shengnan An, Zexiong Ma, Zeqi Lin, Nanning Zheng, and Jian{-}Guang Lou.
+\newblock Make your {LLM} fully utilize the context.
+\newblock \emph{CoRR}, abs/2404.16811, 2024.
+\newblock \doi{10.48550/ARXIV.2404.16811}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2404.16811}.
+
+\bibitem[Beltagy et~al.(2020)Beltagy, Peters, and Cohan]{Beltagy2020Longformer}
+Iz~Beltagy, Matthew~E. Peters, and Arman Cohan.
+\newblock Longformer: The long-document transformer.
+\newblock \emph{arXiv:2004.05150}, 2020.
+
+\bibitem[Budzianowski et~al.(2018)Budzianowski, Wen, Tseng, Casanueva, Ultes, Ramadan, and Ga{\v{s}}i{\'c}]{budzianowski-etal-2018-multiwoz}
+Pawe{\l} Budzianowski, Tsung-Hsien Wen, Bo-Hsiang Tseng, I{\~n}igo Casanueva, Stefan Ultes, Osman Ramadan, and Milica Ga{\v{s}}i{\'c}.
+\newblock {M}ulti{WOZ} - a large-scale multi-domain {W}izard-of-{O}z dataset for task-oriented dialogue modelling.
+\newblock In Ellen Riloff, David Chiang, Julia Hockenmaier, and Jun{'}ichi Tsujii (eds.), \emph{Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing}, pp.\  5016--5026, Brussels, Belgium, October-November 2018. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/D18-1547}.
+\newblock URL \url{https://aclanthology.org/D18-1547/}.
+
+\bibitem[Chen et~al.(2023{\natexlab{a}})Chen, Pasunuru, Weston, and Celikyilmaz]{DBLP:journals/corr/abs-2310-05029}
+Howard Chen, Ramakanth Pasunuru, Jason Weston, and Asli Celikyilmaz.
+\newblock Walking down the memory maze: Beyond context limit through interactive reading.
+\newblock \emph{CoRR}, abs/2310.05029, 2023{\natexlab{a}}.
+\newblock \doi{10.48550/ARXIV.2310.05029}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2310.05029}.
+
+\bibitem[Chen et~al.(2023{\natexlab{b}})Chen, Wang, Chen, Yu, Ma, Zhao, Zhang, and Yu]{DBLP:journals/corr/abs-2312-06648}
+Tong Chen, Hongwei Wang, Sihao Chen, Wenhao Yu, Kaixin Ma, Xinran Zhao, Hongming Zhang, and Dong Yu.
+\newblock Dense {X} retrieval: What retrieval granularity should we use?
+\newblock \emph{CoRR}, abs/2312.06648, 2023{\natexlab{b}}.
+\newblock \doi{10.48550/ARXIV.2312.06648}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2312.06648}.
+
+\bibitem[Chevalier et~al.(2023)Chevalier, Wettig, Ajith, and Chen]{DBLP:conf/emnlp/ChevalierWAC23}
+Alexis Chevalier, Alexander Wettig, Anirudh Ajith, and Danqi Chen.
+\newblock Adapting language models to compress contexts.
+\newblock In Houda Bouamor, Juan Pino, and Kalika Bali (eds.), \emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing, {EMNLP} 2023, Singapore, December 6-10, 2023}, pp.\  3829--3846. Association for Computational Linguistics, 2023.
+\newblock \doi{10.18653/V1/2023.EMNLP-MAIN.232}.
+\newblock URL \url{https://doi.org/10.18653/v1/2023.emnlp-main.232}.
+
+\bibitem[{Coze}(2024)]{coze_memory_2024}
+{Coze}.
+\newblock Memory overview guide.
+\newblock \url{https://www.coze.com/docs/guides/memory_overview?_lang=en}, 2024.
+\newblock Accessed: September 15, 2024.
+
+\bibitem[Ding et~al.(2023)Ding, Chen, Xu, Qin, Zheng, Hu, Liu, Sun, and Zhou]{ding2023enhancing}
+Ning Ding, Yulin Chen, Bokai Xu, Yujia Qin, Zhi Zheng, Shengding Hu, Zhiyuan Liu, Maosong Sun, and Bowen Zhou.
+\newblock Enhancing chat language models by scaling high-quality instructional conversations.
+\newblock \emph{arXiv preprint arXiv:2305.14233}, 2023.
+
+\bibitem[Du et~al.(2024)Du, Wang, Zhao, Liang, Wang, Zhong, Wang, and Wong]{du-etal-2024-perltqa}
+Yiming Du, Hongru Wang, Zhengyi Zhao, Bin Liang, Baojun Wang, Wanjun Zhong, Zezhong Wang, and Kam-Fai Wong.
+\newblock {P}er{LTQA}: A personal long-term memory dataset for memory classification, retrieval, and fusion in question answering.
+\newblock In Kam-Fai Wong, Min Zhang, Ruifeng Xu, Jing Li, Zhongyu Wei, Lin Gui, Bin Liang, and Runcong Zhao (eds.), \emph{Proceedings of the 10th SIGHAN Workshop on Chinese Language Processing (SIGHAN-10)}, pp.\  152--164, Bangkok, Thailand, August 2024. Association for Computational Linguistics.
+\newblock URL \url{https://aclanthology.org/2024.sighan-1.18/}.
+
+\bibitem[Dubey et~al.(2024)Dubey, Jauhri, Pandey, Kadian, Al-Dahle, Letman, Mathur, Schelten, Yang, Fan, et~al.]{dubey2024llama}
+Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schelten, Amy Yang, Angela Fan, et~al.
+\newblock The llama 3 herd of models.
+\newblock \emph{arXiv preprint arXiv:2407.21783}, 2024.
+
+\bibitem[Efron et~al.(2012)Efron, Organisciak, and Fenlon]{DBLP:conf/sigir/EfronOF12}
+Miles Efron, Peter Organisciak, and Katrina Fenlon.
+\newblock Improving retrieval of short texts through document expansion.
+\newblock In William~R. Hersh, Jamie Callan, Yoelle Maarek, and Mark Sanderson (eds.), \emph{The 35th International {ACM} {SIGIR} conference on research and development in Information Retrieval, {SIGIR} '12, Portland, OR, USA, August 12-16, 2012}, pp.\  911--920. {ACM}, 2012.
+\newblock \doi{10.1145/2348283.2348405}.
+\newblock URL \url{https://doi.org/10.1145/2348283.2348405}.
+
+\bibitem[Fu et~al.(2024)Fu, Panda, Niu, Yue, Hajishirzi, Kim, and Peng]{DBLP:conf/icml/FuPNYHK024}
+Yao Fu, Rameswar Panda, Xinyao Niu, Xiang Yue, Hannaneh Hajishirzi, Yoon Kim, and Hao Peng.
+\newblock Data engineering for scaling language models to 128k context.
+\newblock In \emph{Forty-first International Conference on Machine Learning, {ICML} 2024, Vienna, Austria, July 21-27, 2024}. OpenReview.net, 2024.
+\newblock URL \url{https://openreview.net/forum?id=TaAqeo7lUh}.
+
+\bibitem[Guti{\'{e}}rrez et~al.(2024)Guti{\'{e}}rrez, Shu, Gu, Yasunaga, and Su]{DBLP:journals/corr/abs-2405-14831}
+Bernal~Jim{\'{e}}nez Guti{\'{e}}rrez, Yiheng Shu, Yu~Gu, Michihiro Yasunaga, and Yu~Su.
+\newblock Hipporag: Neurobiologically inspired long-term memory for large language models.
+\newblock \emph{CoRR}, abs/2405.14831, 2024.
+\newblock \doi{10.48550/ARXIV.2405.14831}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2405.14831}.
+
+\bibitem[Izacard et~al.(2022)Izacard, Caron, Hosseini, Riedel, Bojanowski, Joulin, and Grave]{DBLP:journals/tmlr/IzacardCHRBJG22}
+Gautier Izacard, Mathilde Caron, Lucas Hosseini, Sebastian Riedel, Piotr Bojanowski, Armand Joulin, and Edouard Grave.
+\newblock Unsupervised dense information retrieval with contrastive learning.
+\newblock \emph{Trans. Mach. Learn. Res.}, 2022, 2022.
+\newblock URL \url{https://openreview.net/forum?id=jKN1pXi7b0}.
+
+\bibitem[Jiang et~al.(2023)Jiang, Wu, Lin, Yang, and Qiu]{DBLP:conf/emnlp/JiangWLYQ23}
+Huiqiang Jiang, Qianhui Wu, Chin{-}Yew Lin, Yuqing Yang, and Lili Qiu.
+\newblock Llmlingua: Compressing prompts for accelerated inference of large language models.
+\newblock In Houda Bouamor, Juan Pino, and Kalika Bali (eds.), \emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing, {EMNLP} 2023, Singapore, December 6-10, 2023}, pp.\  13358--13376. Association for Computational Linguistics, 2023.
+\newblock \doi{10.18653/V1/2023.EMNLP-MAIN.825}.
+\newblock URL \url{https://doi.org/10.18653/v1/2023.emnlp-main.825}.
+
+\bibitem[Kamradt(2023)]{kamradt2023needle}
+Gregory Kamradt.
+\newblock Needle in a haystack - pressure testing llms.
+\newblock GitHub, 2023.
+\newblock URL \url{https://github.com/gkamradt/LLMTest_NeedleInAHaystack}.
+
+\bibitem[Kim et~al.(2024)Kim, Chay, Hwang, Kyung, Chung, Cho, Jo, and Choi]{kim2024dialsimrealtimesimulatorevaluating}
+Jiho Kim, Woosog Chay, Hyeonji Hwang, Daeun Kyung, Hyunseung Chung, Eunbyeol Cho, Yohan Jo, and Edward Choi.
+\newblock Dialsim: A real-time simulator for evaluating long-term dialogue understanding of conversational agents, 2024.
+\newblock URL \url{https://arxiv.org/abs/2406.13144}.
+
+\bibitem[Kitaev et~al.(2020)Kitaev, Kaiser, and Levskaya]{kitaev2020reformer}
+Nikita Kitaev, {\L}ukasz Kaiser, and Anselm Levskaya.
+\newblock Reformer: The efficient transformer.
+\newblock \emph{arXiv preprint arXiv:2001.04451}, 2020.
+
+\bibitem[Li et~al.(2024)Li, Yang, Zhang, Deng, Wang, and Chua]{DBLP:journals/corr/abs-2406-05925}
+Hao Li, Chenghao Yang, An~Zhang, Yang Deng, Xiang Wang, and Tat{-}Seng Chua.
+\newblock Hello again! llm-powered personalized agent for long-term dialogue.
+\newblock \emph{CoRR}, abs/2406.05925, 2024.
+\newblock \doi{10.48550/ARXIV.2406.05925}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2406.05925}.
+
+\bibitem[Liu et~al.(2024)Liu, Lin, Hewitt, Paranjape, Bevilacqua, Petroni, and Liang]{DBLP:journals/tacl/LiuLHPBPL24}
+Nelson~F. Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, and Percy Liang.
+\newblock Lost in the middle: How language models use long contexts.
+\newblock \emph{Trans. Assoc. Comput. Linguistics}, 12:\penalty0 157--173, 2024.
+\newblock \doi{10.1162/TACL\_A\_00638}.
+\newblock URL \url{https://doi.org/10.1162/tacl\_a\_00638}.
+
+\bibitem[Liu et~al.(2023)Liu, Iter, Xu, Wang, Xu, and Zhu]{liu-etal-2023-g}
+Yang Liu, Dan Iter, Yichong Xu, Shuohang Wang, Ruochen Xu, and Chenguang Zhu.
+\newblock {G}-eval: {NLG} evaluation using gpt-4 with better human alignment.
+\newblock In Houda Bouamor, Juan Pino, and Kalika Bali (eds.), \emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing}, pp.\  2511--2522, Singapore, December 2023. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2023.emnlp-main.153}.
+\newblock URL \url{https://aclanthology.org/2023.emnlp-main.153/}.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and Fang]{maharana-etal-2024-evaluating}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco Barbieri, and Yuwei Fang.
+\newblock Evaluating very long-term conversational memory of {LLM} agents.
+\newblock In Lun-Wei Ku, Andre Martins, and Vivek Srikumar (eds.), \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  13851--13870, Bangkok, Thailand, August 2024. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2024.acl-long.747}.
+\newblock URL \url{https://aclanthology.org/2024.acl-long.747/}.
+
+\bibitem[Microsoft(2023)]{microsoft2023copilot}
+Microsoft.
+\newblock Announcing microsoft copilot, your everyday ai companion, 2023.
+\newblock URL \url{https://blogs.microsoft.com/blog/2023/09/21/announcing-microsoft-copilot-your-everyday-ai-companion/}.
+\newblock Accessed: September 15, 2024.
+
+\bibitem[{Mistral AI Team}(2024)]{mistral2024nemo}
+{Mistral AI Team}.
+\newblock Mistral nemo: Our new best small model.
+\newblock \emph{Mistral AI}, July 2024.
+\newblock URL \url{https://mistral.ai/news/mistral-nemo}.
+
+\bibitem[Mu et~al.(2023)Mu, Li, and Goodman]{DBLP:conf/nips/Mu0G23}
+Jesse Mu, Xiang Li, and Noah~D. Goodman.
+\newblock Learning to compress prompts with gist tokens.
+\newblock In Alice Oh, Tristan Naumann, Amir Globerson, Kate Saenko, Moritz Hardt, and Sergey Levine (eds.), \emph{Advances in Neural Information Processing Systems 36: Annual Conference on Neural Information Processing Systems 2023, NeurIPS 2023, New Orleans, LA, USA, December 10 - 16, 2023}, 2023.
+\newblock URL \url{http://papers.nips.cc/paper\_files/paper/2023/hash/3d77c6dcc7f143aa2154e7f4d5e22d68-Abstract-Conference.html}.
+
+\bibitem[Muennighoff et~al.(2023)Muennighoff, Tazi, Magne, and Reimers]{muennighoff-etal-2023-mteb}
+Niklas Muennighoff, Nouamane Tazi, Loic Magne, and Nils Reimers.
+\newblock {MTEB}: Massive text embedding benchmark.
+\newblock In Andreas Vlachos and Isabelle Augenstein (eds.), \emph{Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics}, pp.\  2014--2037, Dubrovnik, Croatia, May 2023. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2023.eacl-main.148}.
+\newblock URL \url{https://aclanthology.org/2023.eacl-main.148/}.
+
+\bibitem[OpenAI(2022)]{openai2022chatgpt}
+OpenAI.
+\newblock Chatgpt, 2022.
+\newblock URL \url{https://chat.openai.com/chat}.
+\newblock Accessed: September 15, 2024.
+
+\bibitem[{OpenAI}(2024)]{openai_memory_2024}
+{OpenAI}.
+\newblock Memory and new controls for chatgpt.
+\newblock \url{https://openai.com/index/memory-and-new-controls-for-chatgpt/}, 2024.
+\newblock Accessed: September 15, 2024.
+
+\bibitem[Reddy et~al.(2019)Reddy, Chen, and Manning]{reddy-etal-2019-coqa}
+Siva Reddy, Danqi Chen, and Christopher~D. Manning.
+\newblock {C}o{QA}: A conversational question answering challenge.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 7:\penalty0 249--266, 2019.
+\newblock \doi{10.1162/tacl_a_00266}.
+\newblock URL \url{https://aclanthology.org/Q19-1016/}.
+
+\bibitem[Robertson \& Zaragoza(2009)Robertson and Zaragoza]{DBLP:journals/ftir/RobertsonZ09}
+Stephen~E. Robertson and Hugo Zaragoza.
+\newblock The probabilistic relevance framework: {BM25} and beyond.
+\newblock \emph{Found. Trends Inf. Retr.}, 3\penalty0 (4):\penalty0 333--389, 2009.
+\newblock \doi{10.1561/1500000019}.
+\newblock URL \url{https://doi.org/10.1561/1500000019}.
+
+\bibitem[Sarthi et~al.(2024)Sarthi, Abdullah, Tuli, Khanna, Goldie, and Manning]{DBLP:conf/iclr/SarthiATKGM24}
+Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh Khanna, Anna Goldie, and Christopher~D. Manning.
+\newblock {RAPTOR:} recursive abstractive processing for tree-organized retrieval.
+\newblock In \emph{The Twelfth International Conference on Learning Representations, {ICLR} 2024, Vienna, Austria, May 7-11, 2024}. OpenReview.net, 2024.
+\newblock URL \url{https://openreview.net/forum?id=GN921JHCRw}.
+
+\bibitem[Shi et~al.(2023)Shi, Chen, Misra, Scales, Dohan, Chi, Sch{\"{a}}rli, and Zhou]{DBLP:conf/icml/ShiCMSDCSZ23}
+Freda Shi, Xinyun Chen, Kanishka Misra, Nathan Scales, David Dohan, Ed~H. Chi, Nathanael Sch{\"{a}}rli, and Denny Zhou.
+\newblock Large language models can be easily distracted by irrelevant context.
+\newblock In Andreas Krause, Emma Brunskill, Kyunghyun Cho, Barbara Engelhardt, Sivan Sabato, and Jonathan Scarlett (eds.), \emph{International Conference on Machine Learning, {ICML} 2023, 23-29 July 2023, Honolulu, Hawaii, {USA}}, volume 202 of \emph{Proceedings of Machine Learning Research}, pp.\  31210--31227. {PMLR}, 2023.
+\newblock URL \url{https://proceedings.mlr.press/v202/shi23a.html}.
+
+\bibitem[Shi et~al.(2024)Shi, Min, Yasunaga, Seo, James, Lewis, Zettlemoyer, and Yih]{shi-etal-2024-replug}
+Weijia Shi, Sewon Min, Michihiro Yasunaga, Minjoon Seo, Richard James, Mike Lewis, Luke Zettlemoyer, and Wen-tau Yih.
+\newblock {REPLUG}: Retrieval-augmented black-box language models.
+\newblock In Kevin Duh, Helena Gomez, and Steven Bethard (eds.), \emph{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)}, pp.\  8371--8384, Mexico City, Mexico, June 2024. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2024.naacl-long.463}.
+\newblock URL \url{https://aclanthology.org/2024.naacl-long.463/}.
+
+\bibitem[Tao et~al.(2006)Tao, Wang, Mei, and Zhai]{tao-etal-2006-language}
+Tao Tao, Xuanhui Wang, Qiaozhu Mei, and ChengXiang Zhai.
+\newblock Language model information retrieval with document expansion.
+\newblock In Robert~C. Moore, Jeff Bilmes, Jennifer Chu-Carroll, and Mark Sanderson (eds.), \emph{Proceedings of the Human Language Technology Conference of the {NAACL}, Main Conference}, pp.\  407--414, New York City, USA, June 2006. Association for Computational Linguistics.
+\newblock URL \url{https://aclanthology.org/N06-1052/}.
+
+\bibitem[Team(2024)]{qwen2.5}
+Qwen Team.
+\newblock Qwen2.5: A party of foundation models, September 2024.
+\newblock URL \url{https://qwenlm.github.io/blog/qwen2.5/}.
+
+\bibitem[Wang et~al.(2023)Wang, Dong, Cheng, Liu, Yan, Gao, and Wei]{DBLP:conf/nips/Wang0CLYGW23}
+Weizhi Wang, Li~Dong, Hao Cheng, Xiaodong Liu, Xifeng Yan, Jianfeng Gao, and Furu Wei.
+\newblock Augmenting language models with long-term memory.
+\newblock In Alice Oh, Tristan Naumann, Amir Globerson, Kate Saenko, Moritz Hardt, and Sergey Levine (eds.), \emph{Advances in Neural Information Processing Systems 36: Annual Conference on Neural Information Processing Systems 2023, NeurIPS 2023, New Orleans, LA, USA, December 10 - 16, 2023}, 2023.
+\newblock URL \url{http://papers.nips.cc/paper\_files/paper/2023/hash/ebd82705f44793b6f9ade5a669d0f0bf-Abstract-Conference.html}.
+
+\bibitem[Wei et~al.(2018)Wei, Le, Dai, and Li]{wei-etal-2018-airdialogue}
+Wei Wei, Quoc Le, Andrew Dai, and Jia Li.
+\newblock {A}ir{D}ialogue: An environment for goal-oriented dialogue research.
+\newblock In Ellen Riloff, David Chiang, Julia Hockenmaier, and Jun{'}ichi Tsujii (eds.), \emph{Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing}, pp.\  3844--3854, Brussels, Belgium, October-November 2018. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/D18-1419}.
+\newblock URL \url{https://aclanthology.org/D18-1419/}.
+
+\bibitem[Weston et~al.(2014)Weston, Chopra, and Bordes]{weston2014memory}
+Jason Weston, Sumit Chopra, and Antoine Bordes.
+\newblock Memory networks.
+\newblock \emph{arXiv preprint arXiv:1410.3916}, 2014.
+
+\bibitem[Wu et~al.(2022)Wu, Rabe, Hutchins, and Szegedy]{wu2022memorizing}
+Yuhuai Wu, Markus~N Rabe, DeLesley Hutchins, and Christian Szegedy.
+\newblock Memorizing transformers.
+\newblock \emph{arXiv preprint arXiv:2203.08913}, 2022.
+
+\bibitem[Xu et~al.(2023)Xu, Guo, Duan, and McAuley]{xu-etal-2023-baize}
+Canwen Xu, Daya Guo, Nan Duan, and Julian McAuley.
+\newblock Baize: An open-source chat model with parameter-efficient tuning on self-chat data.
+\newblock In Houda Bouamor, Juan Pino, and Kalika Bali (eds.), \emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing}, pp.\  6268--6278, Singapore, December 2023. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2023.emnlp-main.385}.
+\newblock URL \url{https://aclanthology.org/2023.emnlp-main.385/}.
+
+\bibitem[Xu et~al.(2024)Xu, Shi, and Choi]{DBLP:conf/iclr/XuSC24}
+Fangyuan Xu, Weijia Shi, and Eunsol Choi.
+\newblock {RECOMP:} improving retrieval-augmented lms with context compression and selective augmentation.
+\newblock In \emph{The Twelfth International Conference on Learning Representations, {ICLR} 2024, Vienna, Austria, May 7-11, 2024}. OpenReview.net, 2024.
+\newblock URL \url{https://openreview.net/forum?id=mlJLVigNHp}.
+
+\bibitem[Xu et~al.(2022{\natexlab{a}})Xu, Szlam, and Weston]{xu-etal-2022-beyond}
+Jing Xu, Arthur Szlam, and Jason Weston.
+\newblock Beyond goldfish memory: Long-term open-domain conversation.
+\newblock In Smaranda Muresan, Preslav Nakov, and Aline Villavicencio (eds.), \emph{Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  5180--5197, Dublin, Ireland, May 2022{\natexlab{a}}. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2022.acl-long.356}.
+\newblock URL \url{https://aclanthology.org/2022.acl-long.356/}.
+
+\bibitem[Xu et~al.(2022{\natexlab{b}})Xu, Gou, Wu, Niu, Wu, Wang, and Wang]{xu-etal-2022-long}
+Xinchao Xu, Zhibin Gou, Wenquan Wu, Zheng-Yu Niu, Hua Wu, Haifeng Wang, and Shihang Wang.
+\newblock Long time no see! open-domain conversation with long-term persona memory.
+\newblock In Smaranda Muresan, Preslav Nakov, and Aline Villavicencio (eds.), \emph{Findings of the Association for Computational Linguistics: ACL 2022}, pp.\  2639--2650, Dublin, Ireland, May 2022{\natexlab{b}}. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2022.findings-acl.207}.
+\newblock URL \url{https://aclanthology.org/2022.findings-acl.207/}.
+
+\bibitem[Yin et~al.(2023)Yin, Vig, Laban, Joty, Xiong, and Wu]{yin-etal-2023-read}
+Fan Yin, Jesse Vig, Philippe Laban, Shafiq Joty, Caiming Xiong, and Chien-Sheng Wu.
+\newblock Did you read the instructions? rethinking the effectiveness of task definitions in instruction learning.
+\newblock In Anna Rogers, Jordan Boyd-Graber, and Naoaki Okazaki (eds.), \emph{Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  3063--3079, Toronto, Canada, July 2023. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2023.acl-long.172}.
+\newblock URL \url{https://aclanthology.org/2023.acl-long.172/}.
+
+\bibitem[Yu et~al.(2023)Yu, Zhang, Pan, Ma, Wang, and Yu]{yu2023chain}
+Wenhao Yu, Hongming Zhang, Xiaoman Pan, Kaixin Ma, Hongwei Wang, and Dong Yu.
+\newblock Chain-of-note: Enhancing robustness in retrieval-augmented language models.
+\newblock \emph{arXiv preprint arXiv:2311.09210}, 2023.
+
+\bibitem[Zhang(2023)]{zhang_stella_en_1.5B_v5}
+Dun Zhang.
+\newblock {STELLA EN 1.5B v5}.
+\newblock \url{https://huggingface.co/dunzhang/stella_en_1.5B_v5}, 2023.
+\newblock Accessed: September 15, 2024.
+
+\bibitem[Zhang et~al.(2024)Zhang, Pan, Wang, Ma, Yu, and Yu]{zhang2024cognitivekernelopensourceagent}
+Hongming Zhang, Xiaoman Pan, Hongwei Wang, Kaixin Ma, Wenhao Yu, and Dong Yu.
+\newblock Cognitive kernel: An open-source agent system towards generalist autopilots, 2024.
+\newblock URL \url{https://arxiv.org/abs/2409.10277}.
+
+\bibitem[Zhang \& Choi(2021)Zhang and Choi]{zhang-choi-2021-situatedqa}
+Michael Zhang and Eunsol Choi.
+\newblock {S}ituated{QA}: Incorporating extra-linguistic contexts into {QA}.
+\newblock In Marie-Francine Moens, Xuanjing Huang, Lucia Specia, and Scott Wen-tau Yih (eds.), \emph{Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing}, pp.\  7371--7387, Online and Punta Cana, Dominican Republic, November 2021. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2021.emnlp-main.586}.
+\newblock URL \url{https://aclanthology.org/2021.emnlp-main.586/}.
+
+\bibitem[Zheng et~al.(2023)Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li, Li, Xing, Zhang, Gonzalez, and Stoica]{zheng2023judging}
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi~Lin, Zhuohan Li, Dacheng Li, Eric.~P Xing, Hao Zhang, Joseph~E. Gonzalez, and Ion Stoica.
+\newblock Judging llm-as-a-judge with mt-bench and chatbot arena, 2023.
+
+\bibitem[Zhong et~al.(2024)Zhong, Guo, Gao, Ye, and Wang]{zhong2024memorybank}
+Wanjun Zhong, Lianghong Guo, Qiqi Gao, He~Ye, and Yanlin Wang.
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock In Michael~J. Wooldridge, Jennifer~G. Dy, and Sriraam Natarajan (eds.), \emph{Thirty-Eighth {AAAI} Conference on Artificial Intelligence, {AAAI} 2024, Thirty-Sixth Conference on Innovative Applications of Artificial Intelligence, {IAAI} 2024, Fourteenth Symposium on Educational Advances in Artificial Intelligence, {EAAI} 2014, February 20-27, 2024, Vancouver, Canada}, pp.\  19724--19731. {AAAI} Press, 2024.
+\newblock \doi{10.1609/AAAI.V38I17.29946}.
+\newblock URL \url{https://doi.org/10.1609/aaai.v38i17.29946}.
+
+\bibitem[Zhong et~al.(2022)Zhong, Lei, and Chen]{zhong-etal-2022-training}
+Zexuan Zhong, Tao Lei, and Danqi Chen.
+\newblock Training language models with memory augmentation.
+\newblock In Yoav Goldberg, Zornitsa Kozareva, and Yue Zhang (eds.), \emph{Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing}, pp.\  5657--5673, Abu Dhabi, United Arab Emirates, December 2022. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2022.emnlp-main.382}.
+\newblock URL \url{https://aclanthology.org/2022.emnlp-main.382/}.
+
+\end{thebibliography}

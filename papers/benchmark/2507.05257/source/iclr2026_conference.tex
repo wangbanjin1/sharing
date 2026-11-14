@@ -1,0 +1,117 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{iclr2026_conference,times}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx,adjustbox}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage[most]{tcolorbox}
+\usepackage{pifont}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+
+\newcommand{\ours}{MemoryAgentBench\xspace}
+
+% Define custom colors
+\definecolor{cream}{RGB}{255, 251, 234}
+\definecolor{goldenstar}{RGB}{255, 204, 0}
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\definecolor{deepgreen}{HTML}{0aa344}
+\definecolor{deeppurple}{HTML}{7030a0}
+\definecolor{deepblue}{HTML}{171d91}
+\definecolor{brown}{HTML}{843c0c}
+\definecolor{shadered}{HTML}{ffe5e5}
+\definecolor{shadegreen}{HTML}{e5f7ed}
+\definecolor{msftBlack}{RGB}{0,0,0}
+\definecolor{lightred}{RGB}{255,163,163}
+\definecolor{deepred}{RGB}{146,0,0}
+\definecolor{headergray}{RGB}{240,240,240}
+\definecolor{groupblue}{RGB}{220,235,250}
+\definecolor{groupgreen}{RGB}{220,250,220}
+\definecolor{grouppink}{RGB}{250,230,240}
+\definecolor{groupyellow}{RGB}{255,250,205}
+\definecolor{groupgray}{RGB}{245,245,245}
+% Define custom colors for the average columns
+\definecolor{avgcolor}{RGB}{255, 245, 220} % Light yellow/cream color
+\definecolor{overallcolor}{RGB}{255, 235, 205} % Slightly darker for overall
+
+
+\newcommand{\wy}[1]{{\color{purple}{#1}}}
+\newcommand{\yuanzhe}[1]{{\color{blue}{#1}}}
+
+\title{Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions}
+
+% Authors must not appear in the submitted version. They should be hidden
+% as long as the \iclrfinalcopy macro remains commented out below.
+% Non-anonymous submissions will be rejected without review.
+
+\author{
+Yuanzhe Hu\thanks{These authors contributed equally to this work.}\thanks{Joint corresponding authors.}*†, Yu Wang*†, Julian McAuley \\
+University of California, San Diego \\
+\texttt{\{yuh127, yuw164, jmcauley\}@ucsd.edu}
+\\
+\\
+\raisebox{-0.25em}{
+  \includegraphics[width=0.033\linewidth]{figures/hf-logo.pdf}%
+} \href{https://huggingface.co/datasets/ai-hyz/MemoryAgentBench}{Datasets}\quad
+\raisebox{-0.1em}{%
+  \includegraphics[width=0.025\linewidth]{figures/github-mark.pdf}%
+} \href{https://github.com/HUST-AI-HYZ/MemoryAgentBench}{Source Code}
+\vspace{-0.5cm}
+}
+
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+Recent benchmarks for Large Language Model (LLM) agents primarily focus on evaluating reasoning, planning, and execution capabilities, while another critical component—memory, encompassing how agents memorize, update, and retrieve long-term information—is under-evaluated due to the lack of benchmarks. We term agents with memory mechanisms as \textbf{memory agents}. 
+In this paper, based on classic theories from memory science and cognitive science, we identify four core competencies essential for memory agents: accurate retrieval, test-time learning, long-range understanding, and selective forgetting. Existing benchmarks either rely on limited context lengths or are tailored for static, long-context settings like book-based QA, which do not reflect the interactive, multi-turn nature of memory agents that incrementally accumulate information. Moreover, no existing benchmarks
+cover all four competencies. 
+We introduce \textbf{\ours}, a new benchmark specifically designed for memory agents. Our benchmark transforms existing long-context datasets and incorporates newly constructed datasets into a multi-turn format, effectively simulating the incremental information processing characteristic of memory agents. By carefully selecting and curating datasets, our benchmark provides comprehensive coverage of the four core memory competencies outlined above, thereby offering a systematic and challenging testbed for assessing memory quality. 
+We evaluate a diverse set of memory agents, ranging from simple context-based and retrieval-augmented generation (RAG) systems to advanced agents with external memory modules and tool integration. Empirical results reveal that current methods fall short of mastering all four competencies, underscoring the need for further research into comprehensive memory mechanisms for LLM agents.
+\end{abstract}
+
+
+\input{sections/introduction}
+\input{sections/related_work}
+\input{sections/method}
+\input{sections/experiments}
+\input{sections/conclusion}
+\newpage
+\input{sections/statement}
+
+\bibliography{iclr2026_conference}
+\bibliographystyle{iclr2026_conference}
+
+\newpage
+
+\appendix
+\input{sections/appendix}
+
+\end{document}

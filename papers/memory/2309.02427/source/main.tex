@@ -1,0 +1,616 @@
+\documentclass[10pt]{article} %
+\usepackage[accepted]{tmlr}
+
+\input{math_commands.tex}
+
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}     %
+\usepackage{forest}
+\usepackage{qtree}
+\usepackage{hyperref}    %
+\usepackage{url}      %
+\usepackage{booktabs}    %
+\usepackage{amsfonts}    %
+\usepackage{nicefrac}    %
+\usepackage{microtype}   %
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{soul}
+\usepackage{capt-of}
+\usepackage[shortlabels]{enumitem}
+\usepackage{dsfont}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{dashrule}
+\usepackage{tablefootnote}
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{tabularx}
+
+
+\DeclareFontFamily{U} {MnSymbolC}{}
+
+\DeclareFontShape{U}{MnSymbolC}{m}{n}{
+ <-6> MnSymbolC5
+ <6-7> MnSymbolC6
+ <7-8> MnSymbolC7
+ <8-9> MnSymbolC8
+ <9-10> MnSymbolC9
+ <10-12> MnSymbolC10
+ <12-> MnSymbolC12}{}
+\DeclareFontShape{U}{MnSymbolC}{b}{n}{
+ <-6> MnSymbolC-Bold5
+ <6-7> MnSymbolC-Bold6
+ <7-8> MnSymbolC-Bold7
+ <8-9> MnSymbolC-Bold8
+ <9-10> MnSymbolC-Bold9
+ <10-12> MnSymbolC-Bold10
+ <12-> MnSymbolC-Bold12}{}
+
+\DeclareSymbolFont{MnSyC} {U} {MnSymbolC}{m}{n}
+
+\DeclareMathSymbol{\MNrhd}{\mathbin}{MnSyC}{76}
+\DeclareMathSymbol{\MNlhd}{\mathbin}{MnSyC}{78}
+\DeclareFontFamily{U} {MnSymbolD}{}
+
+\DeclareFontShape{U}{MnSymbolD}{m}{n}{
+ <-6> MnSymbolD5
+ <6-7> MnSymbolD6
+ <7-8> MnSymbolD7
+ <8-9> MnSymbolD8
+ <9-10> MnSymbolD9
+ <10-12> MnSymbolD10
+ <12-> MnSymbolD12}{}
+\DeclareFontShape{U}{MnSymbolD}{b}{n}{
+ <-6> MnSymbolD-Bold5
+ <6-7> MnSymbolD-Bold6
+ <7-8> MnSymbolD-Bold7
+ <8-9> MnSymbolD-Bold8
+ <9-10> MnSymbolD-Bold9
+ <10-12> MnSymbolD-Bold10
+ <12-> MnSymbolD-Bold12}{}
+
+\DeclareSymbolFont{MnSyD} {U} {MnSymbolD}{m}{n}
+\DeclareMathSymbol{\MNsim}{\mathbin}{MnSyD}{2}
+\usepackage{amssymb,amsmath,stackengine}
+\stackMath
+\usepackage{ifthen}
+
+\newcommand{\squig}{{\MNsim\mkern-3.6mu}}
+\newcommand{\lsquigend}{{\MNlhd\mkern-4.3mu}}
+\newcommand{\rsquigend}{{\mkern-1.2mu\MNrhd}}
+\newcounter{sqindex}
+\newcommand\squigs[1]{%
+ \setcounter{sqindex}{0}%
+ \whiledo {\value{sqindex}< #1}{\addtocounter{sqindex}{1}\squig}%
+}
+\newcommand\rsquigarrow[2]{%
+ \mathbin{\stackon[1pt]{\squigs{#2}\rsquigend}{\scriptscriptstyle\text{\!\!#1}}}%
+}
+\newcommand\lsquigarrow[2]{%
+ \mathbin{\stackon[1pt]{\lsquigend\squigs{#2}}{\scriptscriptstyle\text{#1\!\!}}}%
+}
+
+\definecolor{MyDarkBlue}{rgb}{0,0.08,1}
+\definecolor{MyDarkGreen}{rgb}{0.02,0.6,0.02}
+\definecolor{MyDarkRed}{rgb}{0.8,0.02,0.02}
+\definecolor{MyDarkOrange}{rgb}{0.40,0.2,0.02}
+\definecolor{MyPurple}{RGB}{111,0,255}
+\definecolor{MyRed}{rgb}{1.0,0.0,0.0}
+\definecolor{MyGold}{rgb}{0.75,0.6,0.12}
+\definecolor{MyDarkgray}{rgb}{0.66, 0.66, 0.66}
+
+\definecolor{MyYellow}{rgb}{254, 246, 170}
+\definecolor{MyBlue}{rgb}{170, 217, 251}
+
+
+\newcommand{\html}{\texttt{HTML}}
+\newcommand{\clean}{\texttt{simple}}
+\newcommand{\search}[1]{\texttt{search[}{#1}\texttt{]}}
+\newcommand{\click}[1]{\texttt{choose[}{#1}\texttt{]}}
+\newcommand{\choice}{\texttt{Choice}}
+\newcommand{\methodname}{\texttt{TBD}}
+
+\definecolor{mellowred}{HTML}{CB4042}
+\definecolor{mellowblue}{HTML}{0089A7}
+
+\DeclareRobustCommand{\hlyellow}[1]{{\sethlcolor{yellow}\hl{#1}}}
+
+\title{Cognitive Architectures for Language Agents}
+
+
+
+
+\author{\name Theodore R. Sumers\footnotemark[1] \quad Shunyu Yao\footnotemark[1] \quad Karthik Narasimhan \quad Thomas L. Griffiths \\
+\addr Princeton University \\
+\email \{sumers, shunyuy, karthikn, tomg\}@princeton.edu
+}
+
+\def\month{02}  %
+\def\year{2024} %
+\def\openreview{\url{https://openreview.net/forum?id=1i6ZCvflQJ}} %
+
+
+\begin{document}
+
+
+\maketitle
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\footnotetext[1]{Equal contribution, order decided by coin flip. Each person reserves the right to list their name first. A CoALA-based repo of recent work on language agents: \url{https://github.com/ysymyth/awesome-language-agents}.}
+
+\begin{abstract}
+Recent efforts have augmented large language models (LLMs) with external resources (e.g., the Internet) or internal control flows (e.g., prompt chaining) for tasks requiring grounding or reasoning, leading to a new class of \emph{language agents}. While these agents have achieved substantial empirical success, we lack a framework to organize existing agents and plan future developments. 
+In this paper, we draw on the rich history of cognitive science and symbolic artificial intelligence to propose Cognitive Architectures for Language Agents (CoALA). CoALA describes a language agent with modular memory components, a structured action space to interact with internal memory and external environments, and a generalized decision-making process to choose actions.
+We use CoALA to \emph{retrospectively} survey and organize a large body of recent work, and \emph{prospectively} identify actionable directions towards more capable agents. 
+Taken together, CoALA contextualizes today's language agents within the broader history of AI and outlines a path towards language-based general intelligence. 
+\end{abstract}
+
+
+\section{Introduction}
+
+\emph{Language agents}~\citep{weng2023prompt, wang2023survey, xi2023rise, yao2023impact} are an emerging class of artifical intelligence (AI) systems that use large language models~\citep[LLMs;][]{vaswani2017attention, brown2020language, devlin2019bert,OpenAI2023GPT4TR} to interact with the world.
+They apply the latest advances in LLMs to the existing field of agent design~\citep{russel2013artificial}.
+Intriguingly, this synthesis offers benefits for both fields. On one hand, LLMs possess limited knowledge and reasoning capabilities. Language agents mitigate these issues by connecting LLMs to internal memory and environments, grounding them to existing knowledge or external observations.
+On the other hand, traditional agents often require handcrafted rules~\citep{wilkins2014practical} or reinforcement learning~\citep{sutton2018reinforcement}, making generalization to new environments challenging~\citep{lake2016building}.
+Language agents leverage commonsense priors present in LLMs to adapt to novel tasks, reducing the dependence on human annotation or trial-and-error learning.
+
+While the earliest agents used LLMs to directly select or generate actions~\citep[Figure~\ref{fig:language-agents-intro}B;][]{ahn2022can, huang2022language}, more recent agents additionally use them to reason~\citep{yao2022react}, plan~\citep{hao2023reasoning, yao2023tree}, and manage long-term memory~\citep{park2023generative, wang2023voyager} to improve decision-making. This latest generation of \emph{cognitive} language agents use remarkably sophisticated internal processes (Figure~\ref{fig:language-agents-intro}C). Today, however, individual works use custom terminology to describe these processes (such as `tool use', `grounding', `actions'), making it difficult to compare different agents, understand how they are evolving over time, or build new agents with clean and consistent abstractions. 
+
+In order to establish a conceptual framework organizing these efforts, we draw parallels with two ideas from the history of computing and artificial intelligence (AI): {\em production systems} and {\em cognitive architectures}. Production systems generate a set of outcomes by iteratively applying rules~\citep{newell1972human}. They originated as string manipulation systems -- an analog of the problem that LLMs solve -- and were subsequently adopted by the AI community to define systems capable of complex, hierarchically structured behaviors~\citep{newell1989symbolic}. 
+To do so, they were incorporated into cognitive architectures that specified control flow for selecting, applying, and even generating new productions~\citep{laird1987soar, laird2022, kotseruba202040}. 
+We suggest a meaningful analogy between production systems and LLMs: just as productions indicate possible ways to modify strings, LLMs define a distribution over changes or additions to text. This further suggests that controls from cognitive architectures used with production systems might be equally applicable to transform LLMs into language agents.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=.8\textwidth]{figures/fig1-lang-agent.pdf}
+  \caption{Different uses of large language models (LLMs). \textbf{A}: In natural language processing (NLP), an LLM takes text as input and outputs text. \textbf{B}:~\emph{Language agents}~\citep{ahn2022can, inner2022huang} place the LLM in a direct feedback loop with the external environment by transforming observations into text and using the LLM to choose actions. \textbf{C}:~\emph{Cognitive} language agents~\citep{yao2022react, shinn2023reflexion, wang2023voyager} additionally use the LLM to manage the agent's internal state via processes such as learning and reasoning. In this work, we propose a blueprint to structure such agents.}
+  \label{fig:language-agents-intro}
+  \vspace{-12pt}
+\end{figure}
+
+Thus, we propose \textbf{Co}gnitive \textbf{A}rchitectures for \textbf{L}anguage \textbf{A}gents (CoALA), a conceptual framework to characterize and design general purpose language agents.
+CoALA organizes agents along three key dimensions: their \textit{information storage} (divided into working and long-term memories); their \textit{action space} (divided into internal and external actions); and their \textit{decision-making procedure} (which is structured as an interactive loop with planning and execution). Through these three concepts (memory, action, and decision-making), we show CoALA can neatly express a large body of existing agents and identify underexplored directions to develop new ones.
+Notably, while several recent papers propose conceptual architectures for general intelligence~\citep{lecun2022path, mcclelland2019extending} or empirically survey language models and agents~\citep{mialon2023augmented, weng2023prompt, wang2023survey}, this paper combines elements of both: we propose a theoretical framework \emph{and} use it to organize diverse empirical work. This grounds our theory to existing practices and allows us to identify both short-term and long-term directions for future work.
+
+The plan for the rest of the paper is as follows. We first introduce production systems and cognitive architectures (Section~\ref{sec:background}) and show how these recent developments in LLMs and language agents recapitulate these historical ideas (Section~\ref{sec:analogy}). Motivated by these parallels, Section~\ref{sec:coala} introduces the CoALA framework and uses it to survey existing language agents. 
+Section~\ref{sec:cases} provides a deeper case study of several prominent agents. Section~\ref{sec:directions} suggests actionable steps to construct future language agents, while Section~\ref{sec:questions} highlights open questions in the broader arc of cognitive science and AI. Finally, Section~\ref{sec:conclusion} concludes. Readers interested in applied agent design may prioritize Sections 4-6. 
+
+
+
+
+\section{Background: From Strings to Symbolic AGI}
+\label{sec:background}
+We first introduce production systems and cognitive architectures, providing a historical perspective on cognitive science and artificial intelligence: beginning with theories of logic and computation~\citep{post1943formal}, and ending with attempts to build symbolic artificial general intelligence~\citep{newell1989symbolic}. We then briefly introduce language models and language agents. Section \ref{sec:analogy} will connect these ideas, drawing parallels between production systems and language models.
+
+\subsection{Production systems for string manipulation}
+In the first half of the twentieth century, a significant line of intellectual work led to the reduction of mathematics~\citep{whitehead1997principia} and computation~\citep{church1932set, turing1936computable} to symbolic manipulation.
+Production systems are one such formalism. Intuitively, production systems consist of a set of rules, each specifying a precondition and an action. When the precondition is met, the action can be taken. The idea originates in efforts to characterize the limits of computation. \cite{post1943formal} proposed thinking about arbitrary logical systems in these terms, where formulas are expressed as strings and the conclusions they license are identified by production rules (as one string ``produces'' another). This formulation was subsequently shown to be equivalent to a simpler string rewriting system. In such a system, we specify rules of the form
+\[
+X \, Y \, Z \rightarrow X \, W \, Z
+\]
+indicating that the string $XYZ$ can be rewritten to the string $XWZ$. String rewriting plays a significant role in the theory of formal languages, in the form of Chomsky's phrase structure grammar~\citep{chomsky1956three}.
+
+\subsection{Control flow: From strings to algorithms}
+
+By itself, a production system simply characterizes the set of strings that can be generated from a starting point. However, they can be used to specify algorithms if we impose \emph{control flow} to determine which productions are executed. For example, Markov algorithms are production systems with a priority ordering~\citep{markov1954theory}. The following algorithm implements division-with-remainder by converting a number written as strokes $|$ into the form $Q*R$, where $Q$ is the quotient of division by 5 and $R$ is the remainder:
+\begin{eqnarray*}
+  *||||| &\rightarrow& |* \\
+  * &\xrightarrow{\bullet}& * \\
+  & \rightarrow& * 
+\end{eqnarray*}
+where the priority order runs from top to bottom, productions are applied to the first substring matching their preconditions when moving from left to right (including the empty substring, in the last production), and $\xrightarrow{\bullet}$ indicates the algorithm halts after executing the rule. The first rule effectively ``subtracts'' five if possible; the second handles the termination condition when no more subtraction is possible; and the third handles the empty substring input case. For example, given the input 11, this would yield the sequence of productions $*||||||||||| \rightarrow |*|||||| \rightarrow ||*| \xrightarrow{\bullet} ||*|$ which is interpreted as 2 remainder 1. Simple productions can result in complex behavior -- Markov algorithms can be shown to be Turing complete. 
+
+\subsection{Cognitive architectures: From algorithms to agents}
+\label{sec:soar}
+
+Production systems were popularized in the AI community by Allen Newell, who was looking for a formalism to capture human problem solving~\citep{newell1967studies, newell1972human}. Productions were generalized beyond string rewriting to logical operations: \emph{preconditions} that could be checked against the agent's goals and world state, and \emph{actions} that should be taken if the preconditions were satisfied. In their landmark book {\em Human Problem Solving}~\citep{newell1972human}, Allen Newell and Herbert Simon gave the example of a simple production system implementing a thermostat agent:
+\begin{eqnarray*}
+(\mbox{temperature} > 70^{\circ})\wedge (\mbox{temperature} < 72^{\circ}) &\rightarrow& \mbox{stop}\\
+\mbox{temperature} < 32^{\circ} &\rightarrow& \mbox{call for repairs; turn on electric heater} \\
+(\mbox{temperature} < 70^{\circ}) \wedge \mbox{(furnace off)} &\rightarrow& \mbox{turn on furnace}\\
+(\mbox{temperature} > 72^{\circ}) \wedge \mbox{(furnace on)} &\rightarrow& \mbox{turn off furnace}
+\end{eqnarray*}
+
+Following this work, production systems were adopted by the AI community.
+The resulting agents contained large production systems connected to external sensors, actuators, and knowledge bases -- requiring correspondingly sophisticated control flow. AI researchers defined ``cognitive architectures'' that mimicked human cognition -- explicitly instantiating processes such as perception, memory, and planning~\citep{adams2012mapping} to achieve flexible, rational, real-time behaviors~\citep{sun2004desiderata, newell1980physical, newell1992precis, anderson2003newell}. This led to applications from psychological modeling to robotics, with hundreds of architectures and thousands of publications (see~\cite{kotseruba202040} for a recent survey).
+
+A canonical example is the Soar architecture (Fig.~\ref{fig:SOAR}A). Soar stores productions in long-term memory and executes them based on how well their preconditions match working memory (Fig.~\ref{fig:SOAR}B). These productions specify actions that modify the contents of working and long-term memory. We next provide a brief overview of Soar and refer readers to \citet{laird2022, laird2019soar} for deeper introductions.
+
+\textbf{Memory.} Building on psychological theories, Soar uses several types of memory to track the agent's state~\citep{atkinson1968human}. \emph{Working memory}~\citep{baddeley1974working} reflects the agent's current circumstances: it stores the agent's recent perceptual input, goals, and results from intermediate, internal reasoning. \emph{Long term memory} is divided into three distinct types. \emph{Procedural} memory stores the production system itself: the set of rules that can be applied to working memory to determine the agent's behavior. 
+\emph{Semantic} memory stores facts about the world~\citep{lindes2016toward}, while \emph{episodic} memory stores sequences of the agent's past behaviors~\citep{nuxoll2007extending}.
+
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=.9\textwidth]{figures/fig2-SOAR.pdf}
+  \caption{Cognitive architectures augment a production system with sensory groundings, long-term memory, and a decision procedure for selecting actions. \textbf{A}: The Soar architecture, reproduced with permission from \citet{laird2022}. \textbf{B}: Soar's decision procedure uses productions to select and implement actions. These actions may be \emph{internal} (such as modifying the agent's memory) or \emph{external} (such as a motor command).}
+  \label{fig:SOAR}
+\end{figure}
+
+
+\textbf{Grounding.} Soar can be instantiated in simulations~\citep{tambe1995intelligent, jones1999automated} or real-world robotic systems~\citep{laird2012cognitive}. In embodied contexts, a variety of sensors stream perceptual input into working memory, where it is available for decision-making. Soar agents can also be equipped with actuators, allowing for physical actions and interactive learning via language~\citep{mohan2012acquiring, mohan2014learning, kirk2014rosie}.
+
+\textbf{Decision making.} Soar implements a decision loop that evaluates productions and applies the one that matches best (Fig.~\ref{fig:SOAR}B). Productions are stored in long-term procedural memory. During each decision cycle, their preconditions are checked against the agent's working memory. In the \emph{proposal and evaluation} phase, a set of productions is used to generate and rank a candidate set of possible actions.\footnote{In more detail, Soar divides productions into two types: ``operators,'' which we refer to as actions, and ``rules'' which are used to propose, evaluate, and execute operators.} The best action is then chosen.\footnote{If no actions are valid, or multiple actions tie, then an \emph{impasse} occurs. Soar creates a subgoal to resolve the impasse, resulting in hierarchical task decomposition. We refer the reader to \citet{laird2022} for a more detailed discussion.} Another set of productions is then used to implement the action -- for example, modifying the contents of working memory or issuing a motor command.
+
+\textbf{Learning.} Soar supports multiple modes of learning. First, new information can be stored directly in long-term memory: facts can be written to semantic memory, while experiences can be written to episodic memory~\citep{derbinsky2012multi}. This information can later be retrieved back into working memory when needed for decision-making. Second, behaviors can be modified. Reinforcement learning~\citep{sutton2018reinforcement} can be used to up-weight productions that have yielded good outcomes, allowing the agent to learn from experience~\citep{nason2005soar}. Most remarkably, Soar is also capable of writing new productions into its procedural memory~\citep{laird1986chunking} -- effectively updating its source code.
+
+Cognitive architectures were used broadly across psychology and computer science, with applications including robotics~\citep{laird2012cognitive}, military simulations~\citep{jones1999automated, tambe1995intelligent}, and intelligent tutoring~\citep{koedinger1997intelligent}. 
+Yet they have become less popular in the AI community over the last few decades. This decrease in popularity reflects two of the challenges involved in such systems: they are limited to domains that can be described by logical predicates and require many pre-specified rules to function. 
+
+Intriguingly, LLMs appear well-posed to meet these challenges. First, they operate over arbitrary text, making them more flexible than logic-based systems. Second, rather than requiring the user to specify productions, they learn a distribution over productions via pre-training on an internet corpus. Recognizing this, researchers have begun to use LLMs within cognitive architectures, leveraging their implicit world knowledge~\citep{wray2021language} to augment traditional symbolic approaches~\citep{kirk2023improving, romero2023synergistic}.
+Here, we instead import principles from cognitive architecture to guide the design of LLM-based agents.
+
+\subsection{Language models and agents}
+Language modeling is a decades-old endeavor in the NLP and AI communities, aiming to develop systems that can generate text given some context~\citep{jurafsky2000speech}. Formally, language models learn a distribution $P(w_i | w_{<i})$, where each $w$ is an individual token (word). This model can then generate text by sampling from the distribution, one token at a time. At its core, a language model is a probabilistic input-output system, since there are inherently several ways to continue a text (e.g., ``I went to the'' $\rightarrow$ ``market'' | ``beach'' | ...). While earlier attempts at modeling language (e.g., n-grams) faced challenges in generalization and scaling, there has been a recent resurgence of the area due to the rise of Transformer-based~\citep{vaswani2017attention} LLMs with a large number (billions) of parameters~\citep[e.g., GPT-4;][]{OpenAI2023GPT4TR} and smart tokenization schemes. Modern LLMs are trained on enormous amounts of data, which helps them accumulate knowledge from a large number of input-output combinations and successfully generate human-like text~\citep{andreas2022language}. 
+
+Unexpectedly, training these models on internet-scale text also made them useful for many tasks beyond generating text, such as writing code~\citep{Li2022CompetitionlevelCG,Rozire2023CodeLO,Li2023StarCoderMT}, modeling proteins~\citep{Meier2021LanguageME}, and acting in interactive environments~\citep{yao2022react, nakano2021webgpt}. The latter has led to the rise of ``language agents'' -- systems that use LLMs as a core computation unit to reason, plan, and act -- with applications in areas such as robotics~\citep{ahn2022can}, manufacturing~\citep{xia2023towards}, web manipulation~\citep{yao2022webshop,deng2023mind2web}, puzzle solving~\citep{yao2023tree,hao2023reasoning} and interactive code generation~\citep{yang2023intercode}. The combination of language understanding and decision-making capabilities is an exciting and emerging direction that promises to bring these agents closer to human-like intelligence. 
+
+
+\section{Connections between Language Models and Production Systems}
+\label{sec:analogy}
+
+Based on their common origins in processing strings, there is a natural analogy between production systems and language models. We develop this analogy, then show that prompting methods recapitulate the algorithms and agents based on production systems. The correspondence between production systems and language models motivates our use of cognitive architectures to build language agents, which we introduce in Section~\ref{sec:coala}.
+
+\subsection{Language models as probabilistic production systems}
+
+In their original instantiation, production systems specified the set of strings that could be generated from a starting point, breaking this process down into a series of string rewriting operations. Language models also define a possible set of expansions or modifications of a string -- the prompt provided to the model.\footnote{In this work, we focus on autoregressive LLMs which are typically used for language agents. However, bidirectional LLMs such as BERT~\citep{devlin2019bert} can be seen in a similar light: they define a distribution over \emph{in-filling} productions.}  
+
+For example, we can formulate the problem of completing a piece of text as a production. If $X$ is the prompt and $Y$ the continuation, then we can write this as the production $X \rightarrow X \,\, Y$.\footnote{Alternatively, we can treat the prompt as input and take the output of the LLM as the next state, represented by the production $X \rightarrow Y$ -- a more literal form of rewriting.} We might want to allow multiple possible continuations, in which case we have $X \rightarrow X \,\, Y_i$ for some set of $Y_i$. LLMs assign a \emph{probability} to each of these completions. 
+Viewed from this perspective, the LLM defines a probability distribution over \emph{which productions to select} when presented with input $X$, yielding a distribution $P(Y_i|X)$ over possible completions~\citep{dohan2022languagemodelcascades}. LLMs can thus be viewed as probabilistic production systems that sample a possible completion each time they are called, e.g., $X\mathbin{\squig\squig\rsquigend} X\,Y$.
+
+This probabilistic form offers both advantages and disadvantages compared to traditional production systems. The primary disadvantage of LLMs is their inherent opaqueness: while production systems are defined by discrete and human-legible rules, LLMs consist of billions of uninterpretable parameters. This opaqueness -- coupled with inherent randomness from their probabilistic formulation -- makes it challenging to analyze or control their behaviors \citep{romero2023synergistic, valmeekam2022large}. Nonetheless, their scale and pre-training provide massive advantages over traditional production systems. LLMs pre-trained on large-scale internet data learn a remarkably effective prior over string completions, allowing them to solve a wide range of tasks out of the box~\citep{huang2022language}. 
+
+
+\subsection{Prompt engineering as control flow}
+The weights of an LLM define a prioritization over output strings (completions), conditioned by the input string (the prompt). The resulting distribution can be interpreted as a task-specific prioritization of productions -- in other words, a simple control flow. Tasks such as question answering can be formulated directly as an input string (the question), yielding conditional distributions over completions (possible answers).  
+
+\begin{table}[t]
+\centering
+{\renewcommand{\arraystretch}{1.8}%
+\begin{tabular}{ll}
+\hline
+Prompting Method & Production Sequence \\ \hline
+
+Zero-shot & $Q 
+\rsquigarrow{LLM}{4} Q\;A$ \\
+
+Few-shot & $Q \longrightarrow Q_1\;A_1\;Q_2\;A_2\;Q \rsquigarrow{LLM}{4} Q_1\;A_1\;Q_2\;A_2\;Q\;A$ \\
+
+Retrieval Augmented Generation & $Q \xrightarrow{\text{Wiki}} Q\,O \rsquigarrow{LLM}{4} Q\,O\,A$ \\
+
+Socratic Models & $Q
+\rsquigarrow{VLM}{4} 
+Q\,O \rsquigarrow{LLM}{4} Q\,O\,A$ \\
+
+Self-Critique & $Q 
+\rsquigarrow{LLM}{4}
+Q\,A 
+\rsquigarrow{LLM}{4}
+Q\,A\,C \rsquigarrow{LLM}{4} Q\,A\,C\,A$\\
+
+\end{tabular}}
+\vspace{.1cm}
+\caption{Conceptual diagram illustrating how prompting methods manipulate the input string before generating completions. $Q$ = question, $A$ = answer, $O$ = observation, $C$ = critique, and $\mathbin{\squig\squig\squig\rsquigend}$ denotes sampling from a stochastic production. These pre-processing manipulations -- which can employ other models such as vision-language models (VLMs), or even the LLM itself -- can be seen as productions. Prompting methods thus define a \emph{sequence} of productions.}
+\label{tab:simple-production-chains}
+\end{table}
+
+Early work on few-shot learning~\citep{brown2020language} and prompt engineering~\citep{wei2022chain, kojima2022large, xu2023expertprompting} found that the LLM could be further biased towards high-quality productions by pre-processing the input string. These simple manipulations -- typically concatenating additional text to the input -- can themselves be seen as productions, meaning that these methods define a sequence of productions (Table~\ref{tab:simple-production-chains}). Later work extended these approaches to dynamic, context-sensitive prompts: for example, selecting few-shot examples that are maximally relevant to the input~\citep{liu2021makes} or populating a template with external observations from video~\citep{zeng2022socratic} or databases~\citep{lewis2020retrieval}. For a survey of such prompting techniques, see \citet{liu2023pretrainpromptpredict}.
+
+Subsequent work used the LLM itself as a pre-processing step, eliciting targeted reasoning to foreground a particular aspect of the problem~\citep{bai2022constitutional, jin2022when, ganguli2023capacitymoralcorrection, madaan2023selfrefine, saunders2022selfcritique, kim2023language, kirk2023improving} or generate intermediate reasoning steps~\citep{tafjord2021proofwriter, creswell2023selectioninference, yao2023tree} before returning an answer. \emph{Chaining} multiple calls to an LLM~\citep{wu2022promptchainer, wu2022aichains, dohan2022languagemodelcascades} allows for increasingly complicated algorithms (Fig.~\ref{fig:prompt-chains-and-agents}). 
+
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=.8\textwidth]{figures/fig3-prompt-chains.pdf}
+  \caption{From language models to language agents. 
+  \textbf{A}:~Basic structure of an LLM call. Prompt construction selects a template and populates it with variables from working memory. After calling the LLM, the string output is parsed into an action space and executed. An LLM call may result in one or more actions -- for example, returning an answer, calling a function, or issuing motor commands.   \textbf{B}:~\emph{Prompt chaining} techniques such as Self-Critique~\citep{wang2022self} or Selection-Inference~\citep{creswell2023selectioninference} use a pre-defined sequence of LLM calls to generate an output. \textbf{C}:~\emph{Language agents} such as Inner Monologue~\citep{inner2022huang} and ReAct~\citep{yao2022react} instead use an interactive feedback loop with the external environment. Vision-language models (VLMs) can be used to translate perceptual data into text for the LLM to process.}
+  \label{fig:prompt-chains-and-agents}
+\end{figure}
+
+
+\subsection{Towards cognitive language agents}
+
+\emph{Language agents} move beyond pre-defined prompt chains and instead place the LLM in a feedback loop with the external environment (Fig.~\ref{fig:language-agents-intro}B). These approaches first transform multimodal input into text and pass it to the LLM. The LLM's output is then parsed and used to determine an external action (Fig.~\ref{fig:prompt-chains-and-agents}C). Early agents interfaced the LLM directly with the external environment, using it to produce high-level instructions based on the agent's state~\citep{ahn2022can, inner2022huang, dasgupta2022collaborating}. Later work developed more sophisticated language agents that use the LLM to perform intermediate reasoning before selecting an action~\citep{yao2022react}. The most recent agents incorporate sophisticated learning strategies such as reflecting on episodic memory to generate new semantic inferences~\citep{shinn2023reflexion} or modifying their program code to generate procedural knowledge~\citep{wang2023voyager}, using their previous experience to adapt their future behaviors.
+
+These \emph{cognitive} language agents employ nontrivial LLM-based reasoning and learning (Fig.~\ref{fig:language-agents-intro}C). Just as cognitive architectures were used to structure production systems' interactions with agents' internal state and external environments, we suggest that they can help design LLM-based cognitive agents. In the remainder of the paper, we use this perspective to organize existing approaches and highlight promising extensions.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=.9\textwidth]{figures/fig4-cognitive-architectures-for-llms-final-icons.pdf}
+  \caption{Cognitive architectures for language agents (CoALA). \textbf{A}: CoALA defines a set of interacting modules and processes. The \textbf{decision procedure} executes the agent's source code. This source code consists of procedures to interact with the LLM (prompt templates and parsers), internal memories (retrieval and learning), and the external environment (grounding). \textbf{B}:~Temporally, the agent's decision procedure executes a \textbf{decision cycle} in a loop with the external environment. During each cycle, the agent uses \textbf{retrieval} and \textbf{reasoning} to plan by proposing and evaluating candidate \textbf{learning} or \textbf{grounding} actions. The best action is then selected and executed. An observation may be made, and the cycle begins again.}
+  \label{fig:cog-arch-overview}
+\end{figure}
+
+\section{Cognitive Architectures for Language Agents (CoALA): A Conceptual Framework}
+\label{sec:coala}
+
+We present Cognitive Architectures for Language Agents (CoALA) as a framework to organize existing language agents and guide the development of new ones. 
+CoALA positions the LLM as the core component of a larger cognitive architecture (Figure~\ref{fig:cog-arch-overview}). Under CoALA, a language agent stores information in \textbf{memory} modules (Section~\ref{sec:memory}), and acts in an action space structured into external and internal parts (Figure~\ref{fig:LM-action-space}):
+\begin{itemize}
+  \item \textbf{External actions} interact with external environments (e.g., control a robot, communicate with a human, navigate a website) through \textbf{grounding} (Section~\ref{sec:grounding}).
+  \item \textbf{Internal actions} interact with internal memories. Depending on which memory gets accessed and whether the access is read or write, internal actions can be further decomposed into three kinds:  \textbf{retrieval} (read from long-term memory; Section~\ref{sec:retrieval}), \textbf{reasoning} (update the short-term working memory with LLM; Section~\ref{sec:reasoning}), and \textbf{learning} (write to long-term memory; Section~\ref{sec:learning}).
+\end{itemize} 
+Language agents choose actions via \textbf{decision-making}, which follows a repeated cycle (Section~\ref{sec:decision}, Figure~\ref{fig:cog-arch-overview}B). In each cycle, the agent can use reasoning and retrieval actions to plan. This planning subprocess selects a grounding or learning action, which is executed to affect the outside world or the agent's long-term memory. CoALA's decision cycle is analogous to a program's ``main'' \emph{procedure} (a \emph{method} without return values, as opposed to \emph{functions}) that runs in loops continuously, accepting new perceptual input and calling various action \emph{procedures} in response.
+
+CoALA (Figure~\ref{fig:cog-arch-overview}) is inspired by the decades of research in cognitive architectures (Section~\ref{sec:soar}), leveraging key concepts such as memory, grounding, learning, and decision-making. Yet the incorporation of an LLM leads to the addition of ``reasoning'' actions, which can flexibly produce new knowledge and heuristics for various purposes -- replacing hand-written rules in traditional cognitive architectures. 
+It also makes text the \emph{de facto} internal representation, streamlining agents' memory modules. Finally, recent advances in vision-language models \cite[VLMs;][]{alayrac2022flamingo} can simplify grounding by providing a straightforward translation of perceptual data into text~\citep{zeng2022socratic}. 
+
+The rest of this section details key concepts in CoALA: memory, actions (grounding, reasoning, retrieval, and learning), and decision-making. For each concept, we use existing language agents (or relevant NLP/RL methods) as examples -- or note gaps in the literature for future directions. 
+
+
+
+
+
+\subsection{Memory} \label{sec:memory}
+Language models are \emph{stateless}: they do not persist information across calls. In contrast, language agents may store and maintain information internally for multi-step interaction with the world. Under the CoALA framework, language agents explicitly organize information (mainly textural, but other modalities also allowed) into multiple memory {modules}, each containing a different form of information. These include short-term working memory and several long-term memories: episodic, semantic, and procedural.
+
+\textbf{Working memory}. Working memory maintains active and readily available information as symbolic variables for the current decision cycle (Section~\ref{sec:decision}). This includes perceptual inputs, active knowledge (generated by reasoning or retrieved from long-term memory), and other core information carried over from the previous decision cycle (e.g., agent's active goals). Previous methods encourage the LLM to generate intermediate reasoning~\citep{wei2022chain, nye2021show}, using the LLM's own context as a form of working memory. CoALA's notion of working memory is more general: it is a data structure that persists across LLM calls. On each LLM call, the LLM input is synthesized from a subset of working memory (e.g., a prompt template and relevant variables). The LLM output is then parsed back into other variables (e.g., an action name and arguments) which are stored back in working memory and used to execute the corresponding action (Figure~\ref{fig:prompt-chains-and-agents}A).
+Besides the LLM, the working memory also interacts with long-term memories and grounding interfaces. It thus serves as the central hub connecting different components of a language agent.
+
+\begin{figure}[t]
+  \centering
+    \includegraphics[width=.5\textwidth]{figures/fig5-llm-action-space-external.pdf}
+  \caption{Agents' action spaces can be divided into \textbf{internal} memory accesses and \textbf{external} interactions with the world. \textbf{Reasoning} and \textbf{retrieval} actions are used to support planning. }
+  \label{fig:LM-action-space}
+\end{figure}
+
+
+\textbf{Episodic memory}. Episodic memory stores experience from earlier decision cycles. This can consist of training input-output pairs~\citep{rubin2021learning}, history event flows~\citep{weston2014memory, park2023generative}, game trajectories from previous episodes~\citep{yao2020keep, tuyls2022multi}, or other representations of the agent's experiences. During the planning stage of a decision cycle, these episodes may be retrieved into working memory to support reasoning. An agent can also write new experiences from working to episodic memory as a form of learning (Section~\ref{sec:learning}).
+
+\textbf{Semantic memory}. Semantic memory stores an agent's knowledge about the world and itself.
+Traditional NLP or RL approaches that leverage retrieval for reasoning or decision-making initialize semantic memory from an external database for knowledge support. 
+For example, retrieval-augmented methods in NLP~\citep{lewis2020retrieval,borgeaud2022improving, chen2017reading} can be viewed as retrieving from a semantic memory of unstructured text (e.g., Wikipedia). 
+In RL, ``reading to learn'' approaches~\citep{branavan2012learning, narasimhan2018deep, wang2021grounding, zhong2021silg} leverage game manuals and facts as a semantic memory to affect the policy. 
+While these examples essentially employ a fixed, read-only semantic memory, language agents may also write new knowledge obtained from LLM reasoning into semantic memory as a form of learning (Section~\ref{sec:learning}) to incrementally build up world knowledge from experience.
+
+
+\textbf{Procedural memory}. Language agents contain two forms of procedural memory: \emph{implicit} knowledge stored in the LLM weights, and \emph{explicit} knowledge written in the agent's code. The agent's code can be further divided into two types: procedures that implement actions (reasoning, retrieval, grounding, and learning procedures), and procedures that implement decision-making itself (Section \ref{sec:decision}). During a decision cycle, the LLM can be accessed via reasoning actions, and various code-based procedures can be retrieved and executed. Unlike episodic or semantic memory that may be initially empty or even absent, procedural memory must be initialized by the designer with proper code to bootstrap the agent. Finally, while learning new actions by writing to procedural memory is possible (Section~\ref{sec:learning}), it is significantly riskier than writing to episodic or semantic memory, as it can easily introduce bugs or allow an agent to subvert its designers' intentions.
+
+\subsection{Grounding actions} \label{sec:grounding}
+Grounding procedures execute external actions and process environmental feedback into working memory as text. This effectively simplifies the agent's interaction with the outside world as a ``text game'' with textual observations and actions. We categorize three kinds of external environments:
+
+\textbf{Physical environments}. Physical embodiment is the oldest instantiation envisioned for AI agents~\citep{Nilsson1984ShakeyTR}. It involves processing perceptual inputs (visual, audio, tactile) into textual observations (e.g., via pre-trained captioning models), and affecting the physical environments via robotic planners that take language-based commands. Recent advances in LLMs have led to numerous robotic projects~\citep{ahn2022can, liang2023code, singh2023progprompt, palo2023towards, ren2023robots} that leverage LLMs as a ``brain'' for robots to generate actions or plans in the physical world. For perceptual input, vision-language models are typically used 
+to convert images to text~\citep{alayrac2022flamingo, sumers2023distilling} providing additional context for the LLM~\citep{driess2023palm, huang2023instruct2act, brohan2022rt, brohan2023rt}.
+
+\textbf{Dialogue with humans or other agents}. Classic linguistic interactions allow the agent to accept instructions~\citep{winograd1972understanding, tellex2011understanding, chen2011learning, bisk2016towards} or learn from people~\citep{nguyen2021interactive, sumers2022talk, sumers2021learning, wang2016learning}. Agents capable of \emph{generating} language may ask for help~\citep{ren2023robots, nguyen2022framework, nguyen2019vision, nguyen2019help} or clarification~\citep{biyik2019asking, sadigh2017active, padmakumar2022teach, thomason2020vision, narayanchen2019collaborative} -- or entertain or emotionally help people~\citep{zhang2020dialogpt, zhou2018emotional, pataranutaporn2021ai, hasan2023sapien, ma2023understanding}. Recent work also investigates interaction among multiple language agents for social simulation~\citep{park2023generative, jinxin2023cgmi, gao2023s}, debate~\citep{chan2023chateval, liang2023encouraging, du2023improving}, improved safety~\citep{irving2018ai}, or collabrative task solving~\citep{qian2023communicative, wu2023autogen, hong2023metagpt, dong2023self}.
+
+\textbf{Digital environments}. This includes interacting with games~\citep{hausknecht2020interactive, cote2019textworld, shridhar2020alfworld, wang2022scienceworld, liu2023minds}, APIs~\citep{schick2023toolformer,yao2022react, parisi2022talm, tang2023toolalpaca}, and websites~\citep{shi2017world,nakano2021webgpt,yao2022webshop,zhou2023webarena, gur2023real, deng2023mind2web} as well as general code execution~\citep{yang2023intercode, le2022coderl, ni2023lever}. Such digital grounding is cheaper and faster than physical or human interaction. It is thus a convenient testbed for language agents and has been studied with increasing intensity in recent years. In particular, for NLP tasks that require augmentation of external knowledge or computation, stateless digital APIs (e.g., search, calculator, translator) are often packaged as ``\textbf{tools}''~\citep{parisi2022talm, schick2023toolformer, xu2023gentopia, tang2023toolalpaca, qin2023toolllm}, which can be viewed as special ``single-use'' digital environments.
+
+\subsection{Retrieval actions} \label{sec:retrieval}
+In CoALA, a retrieval procedure~\citep{li2022survey, gu2018search} reads information from long-term memories into working memory. 
+Depending on the information and memory type, it could be implemented in various ways, e.g., rule-based, sparse, or dense retrieval. 
+For example, Voyager~\citep{wang2023voyager} loads code-based skills from a skill library via dense retrieval to interact with the Minecraft world -- effectively retrieving grounding procedures from a procedural memory. Generative Agents~\citep{park2023generative} retrieves relevant events from episodic memory via a combination of recency (rule-based), importance (reasoning-based), and relevance (embedding-based) scores. DocPrompting~\citep{zhou2022docprompting} proposes to leverage library documents to assist code generation, which can be seen as retrieving knowledge from semantic memory. While retrieval plays a key role in human decision-making~\citep{zhou2023episodic, zhao2022process}, adaptive and context-specific recall remains understudied in language agents. In Section~\ref{sec:directions}, we suggest a principled integration of decision-making and retrieval as an important future direction.
+
+
+\subsection{Reasoning actions} \label{sec:reasoning}
+
+Reasoning allows language agents to process the contents of working memory to generate new information. Unlike retrieval (which reads from long-term memory into working memory), reasoning reads from \emph{and} writes to working memory. This allows the agent to summarize and distill insights about the most recent observation~\citep{yao2022react, peng2023language}, the most recent trajectory~\citep{shinn2023reflexion}, or information retrieved from long-term memory~\citep{park2023generative}. Reasoning can be used to support learning (by writing the results into long-term memory) or decision-making (by using the results as additional context for subsequent LLM calls). 
+
+
+\subsection{Learning actions} \label{sec:learning}
+
+Learning occurs by writing information to long-term memory, which includes a spectrum of diverse procedures.
+
+
+\textbf{Updating episodic memory with experience.} It is common practice for RL agents to store episodic trajectories to update a parametric policy~\citep{blundell2016model, pritzel2017neural} or establish a non-parametric policy~\citep{ecoffet2019go, tuyls2022multi}. For language agents, added experiences in episodic memory may be retrieved later as examples and bases for reasoning or decision-making~\citep{weston2014memory, rubin2021learning, park2023generative}. 
+
+\textbf{Updating semantic memory with knowledge.} 
+ Recent work~\citep{shinn2023reflexion, park2023generative} has applied LLMs to reason about raw experiences and store the resulting inferences in semantic memory. For example, Reflexion~\citep{shinn2023reflexion} uses an LLM to reflect on failed episodes and stores the results (e.g., ``there is no dishwasher in kitchen'') as semantic knowledge to be attached to LLM context for solving later episodes. Finally, work in robotics~\citep{chen2023open} uses vision-language models to build a semantic map of the environment, which can later be queried to execute instructions.
+
+\textbf{Updating LLM parameters (procedural memory).} The LLM weights represent implicit procedural knowledge. These can be adjusted to an agent's domain by fine-tuning during the agent's lifetime. Such fine-tuning can be accomplished via supervised~\citep{liu2023languages, zhang2023wisdom} or imitation learning~\citep{hussein2017imitation}, reinforcement learning (RL) from environment feedback~\citep{sutton2018reinforcement}, human feedback~\citep[RLHF;][]{christiano2017deep, ouyang2022training, nakano2021webgpt}, or AI feedback~\citep{bai2022constitutional, liu2023training}. Classic LLM self-improvement methods~\citep{huang2022large, zelikman2022star} use an external measure such as consistency~\cite{wang2022self} to select generations to fine-tune on. In reinforcement learning settings, this can be extended to use environmental feedback instead: for example, XTX~\citep{tuyls2022multi} periodically fine-tunes a small language model on high-scoring trajectories stored in episodic memory, which serves as a robust ``exploitation'' policy to reach exploration frontiers in the face of stochasity. Fine-tuning the agent's LLM is a costly form of learning; thus, present studies specify learning schedules. However, as training becomes more efficient -- or if agents utilize smaller subtask-specific LLMs -- it may be possible to allow language agents to autonomously determine when and how to fine-tune their LLMs.
+
+\textbf{Updating agent code (procedural memory).} CoALA allows agents to update their source code, thus modifying the implementation of various procedures. These can be broken down as follows:
+\begin{itemize}
+
+\item
+\textbf{Updating reasoning}~\citep[e.g., prompt templates;][]{gao2020making, zhou2022large}. For example, APE~\citep{zhou2022large} infers prompt instructions from input-output examples, then uses these instructions as part of the LLM prompt to assist task solving. Such a prompt update can be seen as a form of learning to reason.
+
+\item 
+\textbf{Updating grounding}~\citep[e.g., code-based skills;][]{liang2023code, ellis2021dreamcoder, wang2023voyager}. 
+For example, Voyager~\citep{wang2023voyager} maintains a curriculum library. 
+Notably, current methods are limited to creating new code skills to interact with external environments. 
+
+
+\item 
+\textbf{Updating retrieval}. To our knowledge, these learning options are not studied in recent language agents. Retrieval is usually considered a basic action designed with some fixed implementation (e.g., BM25 or dense retrieval), but research in query/document expansion~\citep{nogueira2019document, wang2023query2doc, tang2023referral} or retrieval distillion~\citep{izacard2021unsupervised} may be helpful for language agents to learn better retrieval procedures. 
+
+\item 
+\textbf{Updating learning or decision-making}. 
+Finally, it is theoretically possible for CoALA agents to learn new procedures for learning or decision-making, thus providing significant adaptability. In general, however, updates to these procedures are risky both for the agent's functionality and alignment. At present, we are not aware of any language agents that implement this form of learning; we discuss such possibilities more in Section~\ref{sec:directions}.
+
+\end{itemize}
+
+While RL agents usually fix one way of learning (e.g., Q-learning, PPO, or A3C) and learn by updating model parameters, language agents can select from a diversity of learning procedures. This allows them to learn rapidly by storing task-relevant language (cheaper and quicker than parameter updates), and leverage multiple forms of learning to compound their self-improvement (e.g., Generative Agents discussed in Section~\ref{sec:cases}). 
+
+Finally, while our discussion has mostly focused on \textbf{adding} to memory, \textbf{modifying} and \textbf{deleting} (a case of ``unlearning'') are understudied in recent language agents. We address these areas more in Section~\ref{sec:directions}. 
+
+\subsection{Decision making}
+\label{sec:decision}
+
+With various actions (grounding, learning, reasoning, retrieval) in the action space, how should a language agent choose which action to apply?
+This is handled by the decision-making procedure, which is effectively the top-level or ``main'' agent program. CoALA structures this top-level program into decision cycles (Figure~\ref{fig:cog-arch-overview}B) which yield an external \emph{grounding} action (Section~\ref{sec:grounding}) or internal \emph{learning} action (Section~\ref{sec:learning}). In each cycle, program code defines a sequence of reasoning and retrieval actions to propose and evaluate alternatives (\textbf{planning stage}), then executes the selected action (\textbf{execution stage}) -- then the cycle loops again.
+
+
+\textbf{Planning stage}. During planning, reasoning and retrieval can be flexibly applied to propose, evaluate, and select actions, and these sub-stages could interleave or iterate to build up multi-step simulations~\citep{tamari2020language} before taking an external action~\citep{yao2023tree, hao2023reasoning}. It also enables agents to iteratively improve candidate solutions -- for example, by using the LLM to simulate them, identifying defects, and proposing modifications that address those defects~\citep{kirk2023improving, shinn2023reflexion}.
+
+
+\begin{itemize}
+\item \textbf{Proposal}. The proposal sub-stage generates one or more action candidates. The usual approach is to use \textbf{reasoning} (and optionally retrieval) to sample one~\citep{inner2022huang} or more~\citep{chen2021evaluating, wang2022self} external grounding actions from the LLM. For simple domains with limited actions, the proposal stage might simply include all actions (e.g., SayCan in Section~\ref{sec:cases}). More sophisticated agents use if-else or while-if code structures~\citep{wang2023voyager, park2023generative}; while agents deployed in well-defined domains may utilize structured simulators~\citep{haslum2019introduction} to generate plausible rollouts~\citep{liu2023llm+, dagan2023dynamic}.
+
+\item \textbf{Evaluation}. If multiple actions are proposed, the evaluation sub-stage assigns a value to each. This may use heuristic rules, LLM (perplexity) values~\citep{ahn2022can}, learned values~\citep{yao2020keep}, LLM reasoning~\citep{yao2023tree, hao2023reasoning}, or some combination. Particularly, LLM reasoning can help evaluate actions by internally simulating their grounding feedback from the external world~\citep{hao2023reasoning, yang2023intercode}. 
+
+\item \textbf{Selection}. Given a set of actions and their values, the selection step either selects one to execute or rejects them and loops back to the proposal step. Depending on the form of action values, selection may occur via argmax, softmax, or an alternative such as majority vote~\citep{wang2022self}.
+\end{itemize}
+
+\textbf{Execution}. The selected action is applied by executing the relevant procedures from the agent's source code. Depending on the agent implementation, this might be an external \emph{grounding} action (e.g., an API call; Section~\ref{sec:grounding}) or an internal \emph{learning} action (e.g., a write to episodic memory; Section~\ref{sec:learning}). An observation can be made from the environment, providing feedback from the agent's action, and the cycle loops again. 
+
+
+
+
+Empirically, many early language agents simply use LLMs to propose an action~\citep{schick2023toolformer}, a sequence of actions~\citep{huang2022language}, or evaluate a fixed set of actions~\citep{ahn2022can} without intermediate reasoning or retrieval. 
+Followup work~\citep{yao2022react, shinn2023reflexion, xu2023rewoo, lin2023swiftsage, wang2023voyager, park2023generative} has exploited intermediate reasoning and retrieval to analyze the situation, make and maintain action plans, refine the previous action given the environmental feedback, and leveraged a more complex procedure to propose a single action.
+Most recently, research has started to investigate more complex decision-making employing iterative proposal and evaluation to consider multiple actions. These procedures are modeled after classical planning algorithms: for example, Tree of Thoughts~\citep{yao2023tree} and RAP~\citep{hao2023reasoning} use LLMs to implement BFS/DFS and Monte Carlo Tree Search~\citep[MCTS;][]{browne2012survey} respectively. LLMs are used to generate proposals (i.e., to simulate rollouts conditioned on an action) and evaluate them (i.e., to value the outcome of the proposed action).
+
+
+\section{Case Studies} \label{sec:cases}
+With variations and ablations of the memory modules, action space, and decision-making procedures, CoALA can express a wide spectrum of language agents. Table~\ref{tab:cases} lists some popular recent methods across diverse domains --- from Minecraft to robotics, from pure reasoning to social simulacra. CoALA helps characterize their internal mechanisms and reveal their similarities and differences in a simple and structured way. 
+
+
+
+
+\textbf{SayCan}~\citep{ahn2022can} grounds a language model to robotic interactions in a kitchen to satisfy user commands (e.g., ``I just worked out, can you bring me a drink and a snack to recover?''). Its long-term memory is procedural only (an LLM and a learned value function). The action space is external only -- a fixed set of 551 grounding skills (e.g., ``find the apple'', ``go to the table''), with no internal actions of reasoning, retrieval, or learning. During decision-making, SayCan evaluates each action using a combination of LLM and learned values, which balance a skill's usefulness and groundedness. SayCan therefore employs the LLM (in conjunction with the learned value function) as a single-step planner. 
+
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lllll}
+\hline
+        & Long-term  & External & Internal                         & Decision \\ 
+        & Memory\tablefootnote{All agents contain some procedural memory (agent code and LLM weights), so here we only list writable procedural memory.}   & Grounding & Actions                        & Making \\ \hline
+
+SayCan{\tiny~\citep{ahn2022can}}     & -        & physical  & -                    & evaluate    \\
+ReAct{\tiny~\citep{yao2022react}}      & -       & digital   & reason               & propose     \\
+Voyager{\tiny~\citep{wang2023voyager}}     & procedural & digital   & reason/retrieve/learn    &  propose   \\
+Generative Agents{\tiny~\citep{park2023generative}} & episodic/semantic & digital/agent & reason/retrieve/learn & propose \\
+Tree of Thoughts{\tiny~\citep{yao2023tree}} & - & digital\tablefootnote{Special digital grounding with the only external action being submitting a final answer.} & reason & propose, evaluate, select
+\end{tabular}
+\caption{Some recent language agents cast into the CoALA framework.}
+\label{tab:cases}
+\end{table}
+
+\textbf{ReAct}~\citep{yao2022react} is a language agent grounded to various digital environments (e.g., Wikipedia API, text game, website). Like SayCan, it lacks semantic or episodic memory and therefore has no retrieval or learning actions. Its action space consists of (internal) reasoning and (external) grounding. Its decision cycle is fixed to use a single reasoning action to analyze the situation and (re)make action plans, then generates a grounding action without evaluation or selection stages. ReAct can be considered the simplest language agent that leverages both internal and external actions, and is the initial work that demonstrates their synergizing effects: reasoning helps guide acting, while acting provides environmental feedback to support reasoning.
+
+\textbf{Voyager}~\citep{wang2023voyager} is a language agent grounded to the Minecraft API. Unlike SayCan, which grounds to perception via the learned value function, Voyager's grounding is text-only. It has a long-term procedural memory that stores a library of code-based grounding procedures a.k.a.\,skills (e.g., ``combatZombie'', ``craftStoneSword''). This library is hierarchical: complex skills can use simpler skills as sub-procedures (e.g., ``combatZombie'' may call ``craftStoneSword'' if no sword is in inventory). Most impressively, its action space has all four kinds of actions: grounding, reasoning, retrieval, and learning (by adding new grounding procedures). 
+During a decision cycle, Voyager first reasons to propose a new task objective if it is missing in the working memory, then reasons to propose a code-based grounding procedure to solve the task. In the next decision cycle, Voyager reasons over the environmental feedback to determine task completion. If successful, Voyager selects a learning action adding the grounding procedure to procedural memory; otherwise, it uses reasoning to refine the code and re-executes it.
+The importance of long-term memory and procedural learning is empirically verified by comparing to baselines like ReAct and AutoGPT and ablations without the procedural memory. Voyager is shown to better explore areas, master the tech tree, and zero-shot generalize to unseen tasks.
+
+\textbf{Generative Agents}~\citep{park2023generative} are language agents grounded to a sandbox game affording interaction with the environment and other agents. Its action space also has all four kinds of actions: grounding, reasoning, retrieval, and learning. Each agent has a long-term episodic memory that stores events in a list. These agents use retrieval and reasoning to generate reflections on their episodic memory (e.g., ``I like to ski now.'') which are then written to long-term semantic memory. During decision-making, it retrieves relevant reflections from semantic memory, then reasons to make a high-level plan of the day. While executing the plan, the agent receives a stream of grounding observations; it can reason over these to maintain or adjust the plan. 
+
+\textbf{Tree of Thoughts (ToT)}~\citep{yao2023tree} can be seen as a special kind of language agent with only one external action: submitting a final solution to a reasoning problem (game of 24, creative writing, crosswords puzzle). It has no long-term memory, and only reasoning in its internal action space, but differs from all previous agents in its deliberate decision-making. During planning, ToT iteratively proposes, evaluates, and selects ``thoughts'' (reasoning actions) based on LLM reasoning, and maintains them via a tree search algorithm to enable global exploration as well as local backtrack and foresight. 
+
+\section{Actionable Insights} \label{sec:directions}
+Compared to some recent empirical surveys around language agents~\citep{mialon2023augmented, weng2023prompt, wang2023survey},
+CoALA offers a theoretical framework grounded in the well-established research of cognitive architectures.
+This leads to a unique and complementary set of actionable insights.
+
+\textbf{Modular agents: thinking beyond monoliths.} Perhaps our most important suggestion is that \emph{agents should be structured and modular}. Practically, just as standardized software is used across robotics platforms~\citep{quigley2009ros, macenski2022ros}, a framework for language agents would consolidate technical investment and improve compatibility. 
+\begin{itemize}
+    \item \textbf{In academic research}, standardized terms allow conceptual comparisons across works (Table~\ref{tab:cases}), and open-source implementations would further facilitate modular plug-and-play and re-use. For example, the theoretical framework of Markov Decision Processes~\citep{puterman2014markov} provides a standardized set of concepts and terminology (e.g., state, action, reward, transition) for reinforcement learning~\citep{sutton2018reinforcement}. Correspondingly, empirical frameworks like OpenAI Gym~\citep{openaigym} provided standardized abstractions (e.g., \texttt{obs, reward, done, info = env.step(action)}) that facilitate empirical RL work. Thus, it would be timely and impactful to also implement useful abstractions (e.g., \texttt{Memory}, \texttt{Action}, \texttt{Agent} classes) for language agents, and cast simpler agents into such an empirical CoALA framework as examples for building more complex agents.
+    \item \textbf{In industry applications}, maintaining a single company-wide ``language agent library'' would reduce technical debt \citep{sculley2014highinterest, lwakatare2020large} by facilitating testing and component re-use across individual agent deployments. It could also standardize the customer experience: rather than interacting with a hodgepodge of language agents developed by individual teams, end users would experience a context-specific instantiation of the same base agent.
+    \item \textbf{LLMs vs.\,code in agent design}. CoALA agents possess two forms of procedural memory: agent code (deterministic rules) and LLM parameters (a large, stochastic production system). Agent code is interpretable and extensible, but often brittle in face of stochasticity and limited to address situations the designer anticipates. In contrast, LLM parameters are hard to interpret, but offer significant zero-shot flexibility in new contexts~\citep{huang2022language}. CoALA thus suggests using code sparingly to implement generic algorithms that complement LLM limitations, e.g., implementing tree search to mitigate myopia induced by autoregressive generation~\citep{yao2023tree, hao2023reasoning}.
+\end{itemize}
+
+\textbf{Agent design: thinking beyond simple reasoning.} CoALA defines agents over three distinct concepts: (i) internal memory, (ii) a set of possible internal and external actions, and (iii) a decision making procedure over those actions. Using CoALA to develop an application-specific agent consists of specifying implementations for each of these components in turn. We assume that the agent's environment and external action space are given, and show how CoALA can be used to determine an appropriate high-level architecture. For example, we can imagine designing a personalized retail assistant~\citep{yao2022webshop} that helps users find relevant items based on their queries and purchasing history. In this case, the external actions would consist of dialogue or returning search results to the user.
+
+\begin{itemize}
+\item \textbf{Determine what memory modules are necessary.} In our retail assistant example, it would be helpful for the agent to have semantic memory containing the set of items for sale, as well as episodic memory about each customer's previous purchases and interactions. It will need procedural memory defining functions to query these datastores, as well as working memory to track the dialogue state.
+
+\item \textbf{Define the agent's internal action space.} This consists primarily of defining read and write access to each of the agent's memory modules. In our example, the agent should have read and write access to episodic memory (so it can store new interactions with customers), but read-only access to semantic and procedural memory (since it should not update the inventory or its own code).
+
+\item \textbf{Define the decision-making procedure.} This step specifies how reasoning and retrieval actions are taken in order to choose an external or learning action. In general, this requires a tradeoff between performance and generalization: more complex procedures can better fit to a particular problem (e.g., Voyager~\citep{wang2023voyager} for Minecraft) while simpler ones are more domain-agnostic and generalizable (e.g., ReAct~\citep{yao2022react}). For our retail assistant, we may want to encourage retrieval of episodic memory of interactions with a user to provide a prior over their search intent, as well as an explicit evaluation step reasoning about whether a particular set of search results will satisfy that intent. We can simplify the decision procedure by deferring learning to the end of the interaction~\citep{shinn2023reflexion, park2023generative}, summarizing the episode prior to storing it in episodic memory.
+\end{itemize}
+
+\textbf{Structured reasoning: thinking beyond prompt engineering.} Early work on prompt engineering manipulated the LLM's input and output via low-level string operations. CoALA suggests a more structured reasoning procedure to update working memory variables.
+\begin{itemize}
+\item \textbf{Prompting frameworks} like LangChain~\citep{langchain} and LlamaIndex~\citep{LlamaIndex} can be used to define higher-level sequences of reasoning steps, reducing the burden of reasoning per LLM call and the low-level prompt crafting efforts. \textbf{Structural output parsing solutions} such as Guidance~\citep{Guidance} and OpenAI function calling~\citep{functioncalls} can help update working memory variables. Defining and building good working memory modules will also be an important direction of future research. Such modules may be especially important for industry solutions where LLM reasoning needs to seamlessly integrate with large-scale code infrastructure. 
+
+
+\item \textbf{Reasoning usecases in agents can inform and reshape LLM training} in terms of the types (e.g., reasoning for self-evaluation, reflection, action generation, etc.) and formats (e.g., CoT~\citep{wei2022chain}, ReAct~\citep{yao2022react}, Reflexion~\citep{shinn2023reflexion}) of training instances. By default, existing LLMs are trained and optimized for NLP tasks, but agent applications have explored new modes of LLM reasoning (e.g., self-evaluation) that have proven broadly useful. LLMs trained or finetuned towards these capabilities will more likely be the backbones of future agents.  
+\end{itemize}
+
+\textbf{Long-term memory: thinking beyond retrieval augmentation}. While traditional retrieval-augmented language models~\citep{guu2020retrieval, lewis2020retrieval, borgeaud2022improving} only read from human-written corpora, memory-augmented language agents can both read and write self-generated content autonomously. This opens up numerous possibilities for efficient lifelong learning.
+\begin{itemize}
+    \item \textbf{Combining existing human knowledge with new experience and skills} can help agents bootstrap to learn efficiently. For example, a code-writing agent could be endowed with semantic programming knowledge in the form of manuals or textbooks. It could then generate its own episodic knowledge from experience; reflect on these experiences to generate new semantic knowledge; and gradually create procedural knowledge in the form of a code library storing useful methods. 
+    \item \textbf{Integrating retrieval and reasoning} can help to better ground planning. Recent computational psychological models implicate an integrated process of memory recall and decision-making~\citep{zhou2023episodic, zhao2022process} -- suggesting that adaptive mechanisms interleaving memory search and forward simulation will allow agents to make the most of their knowledge.
+\end{itemize} 
+
+\textbf{Learning: thinking beyond in-context learning or finetuning}. CoALA's definition of ``learning'' encompasses these methods, but extends further to storing new experience or knowledge, or writing new agent code (Section~\ref{sec:learning}). Important future directions include:
+\begin{itemize}
+    \item \textbf{Meta-learning by modifying agent code} would allow agents to learn more effectively. For example, learning better retrieval procedures could enable agents to make better use of their experience. Recent expansion-based techniques~\citep{nogueira2019document, wang2023query2doc, tang2023referral} could allow agents to reason about when certain knowledge would be useful, and store this as metadata to facilitate later recall. These forms of meta-learning would enable agents to go beyond human-written code, yet are understudied due to their difficulty and risk. 
+    \item \textbf{New forms of learning (and unlearning)} could include fine-tuning smaller models for specific reasoning sub-tasks~\citep{zelikman2022star, huang2022large, ahn2022can}, deleting unneeded memory items for ``unlearning''~\citep{nguyen2022survey}, and studying the interaction effects between multiple forms of learning~\citep{tuyls2022multi, park2023generative, xie2023olagpt, khattab2022demonstrate}. 
+    
+\end{itemize}
+
+\textbf{Action space: thinking beyond external tools or actions}. Although ``action space'' is a standard term in reinforcement learning, it has been used sparingly with language agents.
+CoALA argues for defining a clear and task-suitable action space with both internal (reasoning, retrieval, learning) and external (grounding) actions, which will help systematize and inform the agent design.
+
+\begin{itemize}
+    \item \textbf{Size of the action space.} More capable agents (e.g., Voyager, Generative Agents) have larger action spaces -- which in turn means they face a more complex decision-making problem. 
+    As a result, these agents rely on more customized or hand-crafted decision procedures.  
+    The tradeoff of the action space vs.\,decision-making complexities is a basic problem to be considered before agent development, and taking the minimal action space necessary to solve a given task might be preferred.
+    \item \textbf{Safety of the action space.} Some parts of the action space are inherently riskier.  ``Learning'' actions (especially procedural deletion and modification) could cause internal harm, while ``grounding'' actions (e.g., ``rm'' in bash terminal, harmful speech in human dialog, holding a knife in physical environments) could cause external harm. Today, safety measures are typically task-specific heuristics (e.g., remove ``os'' operations in Python~\citep{chen2021evaluating}, filter keywords in dialog~\citep{chowdhery2022palm, driess2023palm}, limit robots to controlled environments~\citep{ahn2022can}). However, as agents are grounded to more complex environments with richer internal mechanisms, it may be necessary to specify and ablate the agent's action space for worst-case scenario prediction and prevention~\citep{yao2023impact}. 
+\end{itemize}
+
+\textbf{Decision making: thinking beyond action generation}. We believe one of the most exciting future directions for language agents is decision-making: as detailed in Section~\ref{sec:decision}, most works are still confined to proposing (or directly generating) a single action. Present agents have just scratched the surface of more deliberate, propose-evaluate-select decision-making procedures. 
+\begin{itemize}
+    \item \textbf{Mixing language-based reasoning and code-based planning} may offer the best of both worlds. Existing approaches either plan directly in natural language~\citep{inner2022huang, ahn2022can} or use LLMs to translate from natural language to structured world models~\citep{wong2023word, liu2023llm+, zhang2023grounded, li2023lampp, guan2023leveraging, silver2022fmdmpddl, silver2023generalized}. Future work could integrate these: just as Soar incorporates a simulator for physical reasoning~\citep{laird2022}, agents may write and execute simulation code on the fly to evaluate the consequences of plans. See Section~\ref{sec:questions} for more discussion.
+    \item \textbf{Extending deliberative reasoning to real-world settings}. Initial works have implemented classical planning and tree search~\citep{yao2023tree, hao2023reasoning, liu2023llm+, dagan2023dynamic}, using toy tasks such as game of 24 or block building. Extending these schemes to more complicated tasks with grounding~\citep{qin2023toolllm} and long-term memory is an exciting direction.
+    \item \textbf{Metareasoning to improve efficiency.} LLM calls are both slow and computationally intensive. Using LLMs for decision-making entails a balance between their computational cost and the utility of the resulting improved plan. Most LLM reasoning methods fix a search budget by specifying a depth of reasoning~\citep{yao2023tree}, but humans appear to adaptively allocate computation~\citep{russek2022time, lieder2020resource, callaway2022rational, gershman2015computational}. Future work should develop mechanisms to estimate the utility of planning~\citep{laidlaw2023bridging} and modify the decision procedure accordingly, either via amortization \citep[fine-tuning the LLM based on the results of previous actions, e.g.][]{nguyen2023language, hamrick2019combining}, routing among several decision sub-procedures (e.g., ReAct~\citep{yao2022react} investigated backing off to CoT~\citep{wei2022chain} and vice versa), or updates to the decision-making procedure.
+    \item \textbf{Calibration and alignment.} More complex decision-making is currently bottlenecked by issues such as over-confidence and miscalibration~\citep{jiang2021can, braverman2020calibration, chen2022close}, misalignment with human values or bias~\citep{liang2021towards, feng2023pretraining}, hallucinations in self-evaluation~\citep{shinn2023reflexion}, and lack of human-in-the-loop mechanisms in face of uncertainties~\citep{nguyen2022hari, ren2023robots}. Solving these issues will significantly improve LLMs' utilities as agent backbones.
+\end{itemize}
+
+
+
+
+\section{Discussion}
+\label{sec:questions}
+In addition to the practical insights presented above, CoALA raises a number of open conceptual questions. We briefly highlight the most interesting as important directions for future research and debate.
+
+\textbf{LLMs vs VLMs: should reasoning be language-only or multimodal?} Most language agents use language-only models for decision-making~\citep{yao2022react, wang2023voyager, yao2023tree}, employing a separate captioning model to convert environment observations to text when necessary~\citep{ahn2022can, zeng2022socratic}. However, the latest generation of language models are multimodal, allowing interleaved image and text input~\citep{OpenAI2023GPT4TR, alayrac2022flamingo, team2023gemini, li2023multimodal}. Language agents built on such multimodal models natively reason over both image and text input~\citep{fuyu-8b, persimmon-8b, liu2023llava, hong2023cogagent, driess2023palm}, allowing them to ingest perceptual data and directly produce actions. This bypasses the lossy image-to-text conversion; however, it also tightly couples the reasoning and planning process to the model's input modalities.
+
+At a high level, the two approaches can be seen as different tokenization schemes to convert non-linguistic modalities into the core reasoning model's language domain. The modular approach uses a separate image-to-text model to convert perceptual data into language~\citep{ahn2022can, zeng2022socratic}, while the integrated approach projects images directly into the language model's representation space~\citep{fuyu-8b, persimmon-8b, liu2023llava}. Integrated, multimodal reasoning may allow for more human-like behaviors: a VLM-based agent could ``see'' a webpage, whereas a LLM-based agent would more likely be given raw HTML. However, coupling the agent's perception and reasoning systems makes the agent more domain-specific and difficult to update. In either case, the basic architectural principles described by CoALA --- internal memories, a structured action space, and generalized decision-making --- can be used to guide agent design.
+
+
+
+\textbf{Internal vs.\;external: what is the boundary between an agent and its environment?} While humans or robots are clearly distinct from their embodied environment, digital language agents have less clear boundaries. For example, is a Wikipedia database an internal semantic memory or an external digital environment~\citep{yao2022react}? If an agent iteratively executes and improves code before submitting an answer~\citep{shinn2023reflexion, yang2023intercode}, is the code execution internal or external? If a method consists of proposal and evaluation prompts~\citep{yao2023tree}, should it be considered a single agent or two collaborating simpler agents (proposer and evaluator)? 
+
+We suggest the boundary question can be answered in terms of \emph{controllability} and \emph{coupling}.
+For example, Wikipedia is not \emph{controllable}: it is an external environment that may be unexpectedly modified by other users. However, an offline version that only the agent may write to \emph{is} controllable, and thus can be considered an internal memory. Similarly, code execution on a internal virtual environment should be considered an internal reasoning action, whereas code execution on an external machine (which may possess security vulnerabilities) should be considered an external grounding action. Lastly, if aspects of the agent -- such as proposal and evaluation prompts -- are designed for and dependent on each other, then they are \emph{tightly coupled} and best conceptualized as components in an individual agent. In contrast, if the steps are independently useful, a multi-agent perspective may be more appropriate.                                                   
+While these dilemmas are primarily conceptual, such understanding can support agent design and help the field align on shared terminology. Practioners may also just choose their preferred framing, as long as it is consistent and useful for their own work.
+
+\textbf{Physical vs.\,digital: what differences beget attention?} While animals only live once in the physical world, digital environments (e.g., the Internet) often allow sequential (via resets) and parallel trials. This means digital agents can more boldly explore (e.g., open a million webpages) and self-clone for parallel task solving (e.g., a million web agents try different web paths), which may result in decision-making procedures different from current ones inspired by human cognition~\citep{griffiths2020understanding}. 
+
+\textbf{Learning vs.\;acting: how should agents continuously and autonomously learn?} In the CoALA framework, learning is a result action of a decision-making cycle just like grounding: the agent deliberately chooses to commit information to long-term memory. This is in contrast to most agents, which simply fix a learning schedule and only use decison making for external actions. Biological agents, however, do not have this luxury: they must balance learning against external actions in their lifetime, choosing when and what to learn~\citep{mattar2018prioritized}. More flexible language agents~\citep{wang2023voyager, park2023generative} would follow a similar design and treat learning on par with external actions. Learning could be proposed as a possible action during regular decision-making, allowing the agent to ``defer'' it until the appropriate time. 
+
+\textbf{GPT-4 vs GPT-N: how would agent design change with more powerful LLMs?} Agent design is a moving target as new LLM capabilities emerge with scale~\citep{wei2022emergent}.
+For example, earlier language models such as GPT-2~\citep{radford2019language} would not support LLM agents --- indeed, work at that time needed to combine GPT-2 with reinforcement learning for action generation~\citep{yao2020keep}; GPT-3~\citep{brown2020language} unlocked flexible few-shot and zero-shot reasoning for NLP tasks; while only GPT-4~\citep{OpenAI2023GPT4TR} starts to afford more reliable self-evaluation~\citep{saunders2022selfcritique, shinn2023reflexion, yao2023tree} and self-refinement~\citep{madaan2023selfrefine, chen2023teaching}. 
+Will future LLMs further reduce the need for coded rules and extra-learned models? Will this necessitate changes to the CoALA framework?
+As a thought experiment, imagine GPT-N could ``simulate'' memory, grounding, learning, and decision-making in context: list all the possible actions, simulate and evaluate each one, and maintain its entire long-term memory explicitly in a very long context. Or even more boldly: perhaps GPT-N+1 succeeds at generating the next action by simulating these implicitly in neurons, without any intermediate reasoning in context. While these extreme cases seem unlikely in the immediate future, incremental improvements may alter the importance of different CoALA components. For example, a longer context window could reduce the importance of long-term memory, while more powerful reasoning for internal evaluation and simulation could allow longer-horizon planning. In general, LLMs are not subject to biological limitations~\citep{griffiths2020understanding}, and their emergent properties have been difficult to predict. Nonetheless, CoALA -- and cognitive science more generally -- may still help organize tasks where language agents succeed or fail, and suggest code-based procedures to complement a given LLM on a given task. Even in the most extreme case, where GPT implements all of CoALA's mechanisms in neurons, it may be helpful to leverage CoALA as a conceptual guide to discover and interpret those implicit circuits. 
+Of course, as discussed in Section~\ref{sec:directions}, agent usecases will also help discover, define and shape LLM capabilities. Similar to how chips and computer architectures have co-evolved, language model and agent design should also develop a reciprocal path forward.
+
+
+
+
+
+
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We proposed Cognitive Architectures for Language Agents (CoALA), a conceptual framework to describe and build language agents. Our framework draws inspiration from the rich history of symbolic artificial intelligence and cognitive science, connecting decades-old insights to frontier research on large language models. We believe this approach provides a path towards developing more general and more human-like artificial intelligence.
+
+
+
+\section*{Acknowledgements}
+We thank Harrison Chase, Baian Chen, Khanh Nguyen, Ofir Press, Noah Shinn, Jens Tuyls for proofreading and valuable feedback, and members from the Princeton NLP Group and Princeton Computational Cognitive Science Lab for helpful discussions. Finally, we thank our anonymous reviewers for insightful comments and suggestions.
+SY and KN acknowledge support from an Oracle Collaborative Research award and the National Science Foundation under Grant No. 2239363. Any opinions, findings, conclusions, or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation. SY is also supported by the Harold W. Dodds Fellowship from Princeton. TS is supported by the National Defense Science and Engineering (NDSEG) Graduate Fellowship Program.
+
+\bibliography{main}
+\bibliographystyle{abbrvnat}
+
+
+
+
+
+
+
+\end{document}
+

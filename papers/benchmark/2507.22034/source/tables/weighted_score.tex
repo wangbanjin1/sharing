@@ -1,0 +1,28 @@
+\begin{table}[!t]
+\begin{center}
+\small
+\tabcolsep=0.005\linewidth
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lccc}
+\toprule
+\textbf{Model Name} & \textbf{\makecell{First Index$^{\downarrow}$}} & \textbf{\makecell{Weighted Score$^{\uparrow}$}} & \textbf{\makecell{Correct Exists Rate$^{\uparrow}$}} \\
+\midrule
+GPT-4o & 3.846 & \textbf{0.054} & \textbf{0.361} \\
+Gemini-2.5-Pro & 4.476 & 0.044 & 0.328 \\
+Qwen3-8B & 2.005 & 0.039 & 0.186 \\
+Qwen3-32B & 2.739 & 0.039 & 0.211 \\
+Claude-4-Sonnet & 5.018 & 0.038 & 0.318 \\
+Deepseek-V3 & 2.740 & 0.037 & 0.218 \\
+Qwen3-14B & 2.650 & 0.035 & 0.197 \\
+Llama-3.3-70B & 2.776 & 0.032 & 0.209 \\
+Llama-3.1-8B & 1.884 & 0.028 & 0.171 \\
+GPT-4o-mini & 2.185 & 0.028 & 0.173 \\
+Gemini-2.5-Flash & \textbf{0.927} & 0.014 & 0.080 \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+\vspace{-3mm}
+\caption{\textbf{Weighted Timing Analysis}: Models evaluated by timing of highest scores and coverage. Weight function $w(i) = 1/(i+1)$ penalizes later discoveries of correct or best user-aligned answer options. Coverage is the micro-average of aspects with valid answers.}
+\label{tab:weighted_timing_analysis}
+\end{table}

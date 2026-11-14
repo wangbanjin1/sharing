@@ -1,0 +1,270 @@
+\begin{thebibliography}{31}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Anderson(1993)]{anderson1993}
+John~R. Anderson.
+\newblock \emph{Rules of the Mind}.
+\newblock Lawrence Erlbaum Associates, 1993.
+
+\bibitem[ang Gao et~al.(2025)ang Gao, Geng, Hua, Hu, Juan, Liu, Liu, Qiu, Qi,
+  Wu, Wang, Xiao, Zhou, Zhang, Zhang, Xiang, Fang, Zhao, Liu, Ren, Qian, Wang,
+  Hu, Wang, Wu, Ji, and Wang]{selfevolving}
+Huan ang Gao, Jiayi Geng, Wenyue Hua, Mengkang Hu, Xinzhe Juan, Hongzhang Liu,
+  Shilong Liu, Jiahao Qiu, Xuan Qi, Yiran Wu, Hongru Wang, Han Xiao, Yuhang
+  Zhou, Shaokun Zhang, Jiayi Zhang, Jinyu Xiang, Yixiong Fang, Qiwen Zhao,
+  Dongrui Liu, Qihan Ren, Cheng Qian, Zhenhailong Wang, Minda Hu, Huazheng
+  Wang, Qingyun Wu, Heng Ji, and Mengdi Wang.
+\newblock A survey of self-evolving agents: What, when, how, and where to
+  evolve on the path to artificial super intelligence.
+\newblock \emph{arXiv preprint arXiv:2507.21046}, 2025.
+\newblock \doi{10.48550/arXiv.2507.21046}.
+\newblock URL \url{https://arxiv.org/abs/2507.21046}.
+
+\bibitem[{Anthropic}(2026)]{claudeopus46}
+{Anthropic}.
+\newblock Claude opus 4.6 system card.
+\newblock \url{https://www.anthropic.com/claude-opus-4-6-system-card}, February
+  2026.
+
+\bibitem[Barres et~al.(2025)Barres, Dong, Ray, Si, and Narasimhan]{tau2bench}
+Victor Barres, Honghua Dong, Soham Ray, Xujie Si, and Karthik Narasimhan.
+\newblock {$\tau^2$-Bench}: Evaluating conversational agents in a dual-control
+  environment.
+\newblock \emph{arXiv preprint arXiv:2506.07982}, 2025.
+\newblock \doi{10.48550/arXiv.2506.07982}.
+\newblock URL \url{https://arxiv.org/abs/2506.07982}.
+
+\bibitem[Chen et~al.(2024)Chen, Li, Yang, Yu, Lin, and He]{automanual}
+Minghao Chen, Yihang Li, Yanting Yang, Shiyu Yu, Binbin Lin, and Xiaofei He.
+\newblock Automanual: Constructing instruction manuals by llm agents via
+  interactive environmental learning.
+\newblock \emph{arXiv preprint arXiv:2405.16247}, 2024.
+\newblock \doi{10.48550/arXiv.2405.16247}.
+\newblock URL \url{https://arxiv.org/abs/2405.16247}.
+
+\bibitem[Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and Yadav]{mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock {Mem0}: Building production-ready {AI} agents with scalable long-term
+  memory.
+\newblock \emph{arXiv preprint arXiv:2504.19413}, 2025.
+\newblock \doi{10.48550/arXiv.2504.19413}.
+\newblock URL \url{https://arxiv.org/abs/2504.19413}.
+
+\bibitem[Cohen \& Squire(1980)Cohen and Squire]{cohen1980}
+Neal~J. Cohen and Larry~R. Squire.
+\newblock Preserved learning and retention of pattern-analyzing skill in
+  amnesia: Dissociation of knowing how and knowing that.
+\newblock \emph{Science}, 210\penalty0 (4466):\penalty0 207--210, 1980.
+
+\bibitem[Du et~al.(2025)Du, Huang, Zheng, Wang, Montella, Lapata, Wong, and
+  Pan]{memsurvey}
+Yiming Du, Wenyu Huang, Danna Zheng, Zhaowei Wang, Sebastien Montella, Mirella
+  Lapata, Kam-Fai Wong, and Jeff~Z. Pan.
+\newblock Rethinking memory in llm based agents: Representations, operations,
+  and emerging topics.
+\newblock \emph{arXiv preprint arXiv:2505.00675}, 2025.
+\newblock \doi{10.48550/arXiv.2505.00675}.
+\newblock URL \url{https://arxiv.org/abs/2505.00675}.
+
+\bibitem[Fang et~al.(2025)Fang, Liang, Wang, Wu, Qiao, Xie, Huang, Chen, and
+  Zhang]{memp}
+Runnan Fang, Yuan Liang, Xiaobin Wang, Jialong Wu, Shuofei Qiao, Pengjun Xie,
+  Fei Huang, Huajun Chen, and Ningyu Zhang.
+\newblock Memp: Exploring agent procedural memory.
+\newblock \emph{arXiv preprint arXiv:2508.06433}, 2025.
+\newblock \doi{10.48550/arXiv.2508.06433}.
+\newblock URL \url{https://arxiv.org/abs/2508.06433}.
+\newblock Published at ACL 2026 Findings.
+
+\bibitem[Ferguson(1989)]{ferguson1989secretary}
+Thomas~S. Ferguson.
+\newblock Who solved the secretary problem?
+\newblock \emph{Statistical Science}, 4\penalty0 (3):\penalty0 282--289, 1989.
+\newblock \doi{10.1214/ss/1177012493}.
+
+\bibitem[Fu et~al.(2024)Fu, Kim, Kim, Sohn, Logeswaran, Bae, and
+  Lee]{autoguide}
+Yao Fu, Dong-Ki Kim, Jaekyeom Kim, Sungryull Sohn, Lajanugen Logeswaran,
+  Kyunghoon Bae, and Honglak Lee.
+\newblock Autoguide: Automated generation and selection of context-aware
+  guidelines for large language model agents.
+\newblock \emph{arXiv preprint arXiv:2403.08978}, 2024.
+\newblock \doi{10.48550/arXiv.2403.08978}.
+\newblock URL \url{https://arxiv.org/abs/2403.08978}.
+\newblock Published at NeurIPS 2024.
+
+\bibitem[{GLM-5 Team}(2026)]{glm5}
+{GLM-5 Team}.
+\newblock {GLM-5}: from vibe coding to agentic engineering.
+\newblock \emph{arXiv preprint arXiv:2602.15763}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.15763}.
+
+\bibitem[Hendrycks et~al.(2021)Hendrycks, Burns, Kadavath, Arora, Basart, Tang,
+  Song, and Steinhardt]{mathdataset}
+Dan Hendrycks, Collin Burns, Saurav Kadavath, Akul Arora, Steven Basart, Eric
+  Tang, Dawn Song, and Jacob Steinhardt.
+\newblock Measuring mathematical problem solving with the {MATH} dataset.
+\newblock \emph{arXiv preprint arXiv:2103.03874}, 2021.
+\newblock \doi{10.48550/arXiv.2103.03874}.
+\newblock URL \url{https://arxiv.org/abs/2103.03874}.
+\newblock Published at NeurIPS 2021 Datasets and Benchmarks Track.
+
+\bibitem[Hu et~al.(2026)Hu, Long, and Wang]{insights}
+Qisheng Hu, Quanyu Long, and Wenya Wang.
+\newblock When continual learning moves to memory: A study of experience reuse
+  in llm agents.
+\newblock \emph{arXiv preprint arXiv:2604.27003}, 2026.
+\newblock \doi{10.48550/arXiv.2604.27003}.
+\newblock URL \url{https://arxiv.org/abs/2604.27003}.
+
+\bibitem[Jimenez et~al.(2023)Jimenez, Yang, Wettig, Yao, Pei, Press, and
+  Narasimhan]{swebench}
+Carlos~E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir
+  Press, and Karthik Narasimhan.
+\newblock {SWE-bench}: Can language models resolve real-world {GitHub} issues?
+\newblock \emph{arXiv preprint arXiv:2310.06770}, 2023.
+\newblock \doi{10.48550/arXiv.2310.06770}.
+\newblock URL \url{https://arxiv.org/abs/2310.06770}.
+\newblock Published at ICLR 2024.
+
+\bibitem[Karpathy(2026)]{karpathy2026llmwiki}
+Andrej Karpathy.
+\newblock Llm wiki.
+\newblock GitHub Gist, April 2026.
+\newblock URL
+  \url{https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f}.
+
+\bibitem[{OpenAI}(2026)]{gpt54}
+{OpenAI}.
+\newblock Gpt-5.4 thinking system card.
+\newblock \url{https://openai.com/index/gpt-5-4-thinking-system-card/}, March
+  2026.
+
+\bibitem[Ouyang et~al.(2025)Ouyang, Yan, Hsu, Chen, Jiang, Wang, Han, Le,
+  Daruki, Tang, Tirumalashetty, Lee, Rofouei, Lin, Han, Lee, and
+  Pfister]{reasoningbank}
+Siru Ouyang, Jun Yan, I-Hung Hsu, Yanfei Chen, Ke~Jiang, Zifeng Wang, Rujun
+  Han, Long~T. Le, Samira Daruki, Xiangru Tang, Vishy Tirumalashetty, George
+  Lee, Mahsan Rofouei, Hangfei Lin, Jiawei Han, Chen-Yu Lee, and Tomas Pfister.
+\newblock Reasoningbank: Scaling agent self-evolving with reasoning memory.
+\newblock \emph{arXiv preprint arXiv:2509.25140}, 2025.
+\newblock \doi{10.48550/arXiv.2509.25140}.
+\newblock URL \url{https://arxiv.org/abs/2509.25140}.
+
+\bibitem[Packer et~al.(2023)Packer, Wooders, Lin, Fang, Patil, Stoica, and
+  Gonzalez]{memgpt}
+Charles Packer, Sarah Wooders, Kevin Lin, Vivian Fang, Shishir~G. Patil, Ion
+  Stoica, and Joseph~E. Gonzalez.
+\newblock Memgpt: Towards llms as operating systems.
+\newblock \emph{arXiv preprint arXiv:2310.08560}, 2023.
+\newblock \doi{10.48550/arXiv.2310.08560}.
+\newblock URL \url{https://arxiv.org/abs/2310.08560}.
+
+\bibitem[Shi et~al.(2026)Shi, Li, Ma, Tu, Wu, Xu, Yang, Wu, Xie, Wu, Zeng,
+  Heinrich, Zhang, Chen, Li, and Chang]{saasbench}
+Kean Shi, Zihang Li, Tianyi Ma, Zengji Tu, Jialong Wu, Xinbo Xu, Qingyao Yang,
+  Ruoyu Wu, Weichu Xie, Ming Wu, Jason Zeng, Michael Heinrich, Elvis Zhang,
+  Liang Chen, Kuan Li, and Baobao Chang.
+\newblock {SaaS-Bench}: Can computer-use agents leverage real-world {SaaS} to
+  solve professional workflows?
+\newblock \emph{arXiv preprint arXiv:2605.15777}, 2026.
+\newblock \doi{10.48550/arXiv.2605.15777}.
+\newblock URL \url{https://arxiv.org/abs/2605.15777}.
+
+\bibitem[Shinn et~al.(2023)Shinn, Cassano, Berman, Gopinath, Narasimhan, and
+  Yao]{reflexion}
+Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik
+  Narasimhan, and Shunyu Yao.
+\newblock Reflexion: Language agents with verbal reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2303.11366}, 2023.
+\newblock \doi{10.48550/arXiv.2303.11366}.
+\newblock URL \url{https://arxiv.org/abs/2303.11366}.
+
+\bibitem[Squire(1992)]{squire1992}
+Larry~R. Squire.
+\newblock Declarative and nondeclarative memory: Multiple brain systems
+  supporting learning and memory.
+\newblock \emph{Journal of Cognitive Neuroscience}, 4\penalty0 (3):\penalty0
+  232--243, 1992.
+
+\bibitem[Sumers et~al.(2023)Sumers, Yao, Narasimhan, and Griffiths]{coala}
+Theodore~R. Sumers, Shunyu Yao, Karthik Narasimhan, and Thomas~L. Griffiths.
+\newblock Cognitive architectures for language agents.
+\newblock \emph{arXiv preprint arXiv:2309.02427}, 2023.
+\newblock \doi{10.48550/arXiv.2309.02427}.
+\newblock URL \url{https://arxiv.org/abs/2309.02427}.
+
+\bibitem[Tulving(1972)]{tulving1972}
+Endel Tulving.
+\newblock Episodic and semantic memory.
+\newblock In Endel Tulving and Wayne Donaldson (eds.), \emph{Organization of
+  Memory}, pp.\  381--403. Academic Press, 1972.
+
+\bibitem[Wang et~al.(2026)Wang, Yu, Xie, Yao, Fang, Qiao, Cao, Zheng, Qi,
+  Zhang, and Deng]{skillx}
+Chenxi Wang, Zhuoyun Yu, Xin Xie, Wuguannan Yao, Runnan Fang, Shuofei Qiao,
+  Kexin Cao, Guozhou Zheng, Xiang Qi, Peng Zhang, and Shumin Deng.
+\newblock Skillx: Automatically constructing skill knowledge bases for agents.
+\newblock \emph{arXiv preprint arXiv:2604.04804}, 2026.
+\newblock \doi{10.48550/arXiv.2604.04804}.
+\newblock URL \url{https://arxiv.org/abs/2604.04804}.
+
+\bibitem[Wang et~al.(2023)Wang, Xie, Jiang, Mandlekar, Xiao, Zhu, Fan, and
+  Anandkumar]{voyager}
+Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke Zhu,
+  Linxi Fan, and Anima Anandkumar.
+\newblock Voyager: An open-ended embodied agent with large language models.
+\newblock \emph{arXiv preprint arXiv:2305.16291}, 2023.
+\newblock \doi{10.48550/arXiv.2305.16291}.
+\newblock URL \url{https://arxiv.org/abs/2305.16291}.
+
+\bibitem[Wang et~al.(2024)Wang, Mao, Fried, and Neubig]{awm}
+Zora~Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig.
+\newblock Agent workflow memory.
+\newblock \emph{arXiv preprint arXiv:2409.07429}, 2024.
+\newblock \doi{10.48550/arXiv.2409.07429}.
+\newblock URL \url{https://arxiv.org/abs/2409.07429}.
+
+\bibitem[Xu et~al.(2024)Xu, Song, Li, Tang, Jain, Bao, Wang, Zhou, Guo, Cao,
+  Yang, Lu, Martin, Su, Maben, Mehta, Chi, Jang, Xie, Zhou, and
+  Neubig]{theagentcompany}
+Frank~F. Xu, Yufan Song, Boxuan Li, Yuxuan Tang, Kritanjali Jain, Mengxue Bao,
+  Zora~Z. Wang, Xuhui Zhou, Zhitong Guo, Murong Cao, Mingyang Yang, Hao~Yang
+  Lu, Amaad Martin, Zhe Su, Leander Maben, Raj Mehta, Wayne Chi, Lawrence Jang,
+  Yiqing Xie, Shuyan Zhou, and Graham Neubig.
+\newblock Theagentcompany: Benchmarking llm agents on consequential real world
+  tasks.
+\newblock \emph{arXiv preprint arXiv:2412.14161}, 2024.
+\newblock \doi{10.48550/arXiv.2412.14161}.
+\newblock URL \url{https://arxiv.org/abs/2412.14161}.
+
+\bibitem[Xu et~al.(2025)Xu, Liang, Mei, Gao, Tan, and Zhang]{amem}
+Wujiang Xu, Zujie Liang, Kai Mei, Hang Gao, Juntao Tan, and Yongfeng Zhang.
+\newblock A-mem: Agentic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2502.12110}, 2025.
+\newblock \doi{10.48550/arXiv.2502.12110}.
+\newblock URL \url{https://arxiv.org/abs/2502.12110}.
+
+\bibitem[Zhao et~al.(2023)Zhao, Huang, Xu, Lin, Liu, and Huang]{expel}
+Andrew Zhao, Daniel Huang, Quentin Xu, Matthieu Lin, Yong-Jin Liu, and Gao
+  Huang.
+\newblock Expel: Llm agents are experiential learners.
+\newblock \emph{arXiv preprint arXiv:2308.10144}, 2023.
+\newblock \doi{10.48550/arXiv.2308.10144}.
+\newblock URL \url{https://arxiv.org/abs/2308.10144}.
+\newblock Published at AAAI 2024.
+
+\bibitem[Zhou et~al.(2025)Zhou, Chen, Guo, Yan, Lee, Wang, Lee, Zhang, Shao,
+  Yang, and Wang]{memento}
+Huichi Zhou, Yihang Chen, Siyuan Guo, Xue Yan, Kin~Hei Lee, Zihan Wang, Ka~Yiu
+  Lee, Guchun Zhang, Kun Shao, Linyi Yang, and Jun Wang.
+\newblock Memento: Fine-tuning llm agents without fine-tuning llms.
+\newblock \emph{arXiv preprint arXiv:2508.16153}, 2025.
+\newblock \doi{10.48550/arXiv.2508.16153}.
+\newblock URL \url{https://arxiv.org/abs/2508.16153}.
+
+\end{thebibliography}

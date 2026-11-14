@@ -1,0 +1,48 @@
+\begin{table*}
+    \scriptsize
+    \centering
+    \extrarowheight=\aboverulesep
+    \addtolength{\extrarowheight}{\belowrulesep}
+    \aboverulesep=0pt
+    \belowrulesep=0pt
+        \begin{tabular}{l a a c c a a c c}
+        \toprule
+            \multirow{2}{*}{\shortstack[c]{\textbf{Metric}}} & \multicolumn{2}{a}{\textbf{SNIPS}} & \multicolumn{2}{c}{\textbf{ATIS}} & \multicolumn{2}{a}{\textbf{Banking77}} & \multicolumn{2}{c}{\textbf{CLINC150}} \\
+            & \textbf{Random} & \textbf{Sim.} & \textbf{Random} & \textbf{Sim.} & \textbf{Random} & \textbf{Sim.} & \textbf{Random} & \textbf{Sim.} \\
+        \midrule
+            Cosine sim. & 0.105 & 0.746 & 0.214 & 0.758 & 0.212 & 0.748 & 0.093 & 0.749   \\
+            Error rate $(\downarrow)$ & 16\% & \textbf{14\%} & 41\% & \textbf{10\%} & 22\% & \textbf{9\%} & 19\% & \textbf{13\%} \\
+        \midrule
+            $\mathrm{W}(utt, 2) (\uparrow)$   & 27.38\% & \textbf{44.87}\% & 10.17\% & \textbf{27.78}\% & \textbf{34.62\%} & 30.77\% & 30.86\% & \textbf{31.03\%}  \\
+            $\mathrm{C}(utt, 2) (\uparrow)$ & \textbf{8.33\%} & 1.28\% & 3.39\% & \textbf{4.44\%} & \textbf{28.21\%} & 15.38\% & \textbf{25.93\%} & 3.45\% \\
+            $\mathrm{P}(utt, 2) (\uparrow)$ & 3.57\% & \textbf{10.26\%} & 1.69\% & \textbf{12.22\%} & 10.26\% & \textbf{20.88\%} & 3.70\% & \textbf{14.94\%} \\
+        \bottomrule
+        \end{tabular}
+    \caption{
+    Comparison of Random and Similarity-Based (Sim.) utterance selection across datasets when applied to ChatGPT.
+    We find that Sim. leads to a reduced error rate in ChatGPT's data generation.}
+    \centering
+    \label{table:selection_metric_table}
+\end{table*}
+
+\subsection{Utterance Selection}
+\label{subsec:utterance_selection}
+In the original MixX setting, source utterances for concatenation are randomly chosen without specific criteria. 
+Our study introduces an additional selection approach rooted in utterance embedding similarity. 
+For a given pair of utterances, we employ SBERT \cite{reimers-gurevych-2019-sentence} to compute the cosine similarity of their sentence embeddings (i.e., the \texttt{[CLS]} token embeddings). 
+We only include the sentence pair in data construction only if their score exceeds a certain threshold $\tau$.\footnote{$\tau$ is empirically set to 0.7. 
+For some cases, we set it to 0.4 to achieve the proper training-dev-test split ratio. 
+Table \ref{table:selection_metric_table} ensures that we use semantically similar utterances rather than random samples even when $\tau$=0.4.}
+When combining three utterances into one, we choose the set where all possible pairs surpass the threshold.
+
+Consequently, we propose using the two following methods for utterance selection. 
+\begin{enumerate}
+    \item \textbf{Random Selection:}
+    As in MixX, utterances are randomly chosen without any specific rule.
+    Random Selection accounts for the potential scenarios in spoken language, where inputs are often noisy or ungrammatical.
+    \item \textbf{Similarity-Based Selection:}
+    Utterance pairs are selected based on their similarity scores.
+\end{enumerate}
+We utilize Random Selection for the Na\"ive and Manual Approach, while the Gerative Approach is combined with the Similarity-Based Selection.\footnote{
+Prior experiments suggest the Manual Approach is not significantly impacted by utterance selection.}
+To justify our approach, Table \ref{table:selection_metric_table} presents an experiment for demonstrating the effectiveness of Similarity-Based Selection when integrated with ChatGPT.

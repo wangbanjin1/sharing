@@ -1,0 +1,140 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[11pt]{article}
+\usepackage{acl}
+
+\definecolor{tableheader}{RGB}{235,241,248}
+\definecolor{tableoverall}{RGB}{218,231,245}
+\definecolor{tablebest}{RGB}{205,222,243}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{microtype}
+\usepackage{inconsolata}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{pifont}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{array}
+
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\usepackage{dblfloatfix}
+
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage[most]{tcolorbox}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{caption}
+\captionsetup[algorithm]{
+    font=footnotesize,
+    labelfont=bf,
+    textfont=normalfont,
+    labelsep=colon,
+    skip=3pt
+}
+
+\usepackage{listings}
+\lstdefinestyle{sqls}{
+    language=SQL,
+    basicstyle=\ttfamily,
+    keywordstyle=\ttfamily,
+    stringstyle=\ttfamily,
+    commentstyle=\ttfamily\itshape,
+    showstringspaces=false,
+    breaklines=true,
+    frame=none,
+    numbers=none,
+    escapeinside={(*@}{@*)},
+    morekeywords={SELECT, FROM, WHERE, JOIN, ON, GROUP, BY, ORDER, HAVING,
+        DISTINCT, AS, AND, OR, NOT, NULL, IS, IN, LIKE, BETWEEN, LIMIT, OFFSET,
+        INNER, LEFT, RIGHT, OUTER, UNION, INTERSECT, EXCEPT, COUNT, SUM, AVG,
+        MAX, MIN, ROUND, CAST}
+}
+\newcommand{\sql}[1]{\lstinline[style=sqls]|#1|}
+\newcommand{\sqlkw}[1]{\texttt{#1}}
+\newcommand{\namedpara}[1]{%
+  \par\vspace{1.4ex}%
+  \noindent\textbf{#1}\hspace{0.35em}\ignorespaces
+}
+
+\newcommand{\casehead}[1]{{\small\bfseries[#1]}}
+
+\newcommand{\sqlbox}[2]{%
+  \begingroup
+  \setlength{\fboxsep}{3pt}%
+  \setlength{\fboxrule}{0.25pt}%
+  \noindent\fcolorbox{black!15}{black!4}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+      \raggedright
+      \scriptsize
+      \textbf{\color{black!82}#1}\enspace
+      {\ttfamily\color{black!70}#2}%
+    }%
+  }%
+  \endgroup
+}
+
+\usepackage{lipsum}
+
+\title{Evaluating LLMs on Conversational Text-to-SQL under \\ Chain Ambiguity and Intent Drift}
+
+\author{
+Yujia Liu\textsuperscript{1*}, 
+Jiayan Lin\textsuperscript{1*}, 
+Zijin Hong\textsuperscript{2*\dag}, 
+Zheng Yuan\textsuperscript{2}, 
+Shengyuan Chen\textsuperscript{2}, 
+Hao Chen\textsuperscript{3}\\
+{\bf Qinggang Zhang\textsuperscript{4}, Xiao Huang\textsuperscript{2}, Feiran Huang\textsuperscript{5}\footnotemark[2]}\\ 
+\textsuperscript{1}Jinan University \textsuperscript{2}The Hong Kong Polytechnic University \\
+\textsuperscript{3}City University of Macau
+\textsuperscript{4}Jilin University
+\textsuperscript{5}Beihang University
+\\ 
+\texttt{yujialiu@stu2023.jnu.edu.cn}; \texttt{ljiayan@stu2023.jnu.edu.cn}\\ \texttt{zijin.hong@connect.polyu.hk}; 
+\texttt{xiao.huang@polyu.edu.hk};
+\texttt{huangfr@buaa.edu.cn}
+}
+
+\begin{document}
+\maketitle
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\footnotetext[1]{All authors contributed equally to this research.}
+\footnotetext[2]{Corresponding author.}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\input{tex/abstract}
+\input{tex/introduction}
+\input{tex/problem_formalization}
+\input{tex/construction}
+\input{tex/protocol}
+\input{tex/experiment}
+\input{tex/case}
+\input{tex/related_work}
+\input{tex/conclusion}
+\input{tex/limitations}
+\input{tex/acknowledgments}
+\nocite{*}
+\bibliography{custom}
+
+\clearpage
+\appendix
+
+\input{tex/appendix/commitment_extractor}
+\input{tex/appendix/pipeline}
+\input{tex/appendix/validation}
+\input{tex/appendix/evaluation_setup}
+\input{tex/appendix/user_sim}
+\input{tex/appendix/chain_id}
+\input{tex/appendix/complexity}
+\end{document}

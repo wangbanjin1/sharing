@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[round]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xspace}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+\newcommand{\veracium}{Veracium\xspace}
+\newcommand{\sys}[1]{\textsc{#1}}
+
+\title{Ground Truth First: A Longitudinal Evaluation Instrument for Agent
+Memory, and the Tenure Crossover in Memory-Architecture Rankings}
+
+\author{Quentin Spencer\\
+Independent Researcher\\
+\texttt{ORCID 0009-0004-7318-2650}}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Benchmarks for LLM-agent memory typically generate conversations first and
+extract answer keys from them afterwards --- a pipeline with documented
+label-error and contamination problems --- and they overwhelmingly measure
+short interaction histories. We invert that pipeline: a deterministic, seeded
+life-script sampler emits facts --- with validity intervals, volatility
+classes, and source channels --- before any text exists; an LLM renderer
+writes chat and email from per-event fact manifests; a fidelity verifier
+confirms every planted fact; and questions are instantiated mechanically from
+the script, so gold answers are script-valid by construction and separately
+validated for answerability in the rendered corpus. The fully synthetic,
+fictionalized corpus ($\sim$380 validated questions, 15 question types)
+embeds features absent from the benchmarks we survey: per-fact validity
+intervals, sent/received trust distinctions, injection probes inside a benign
+harness, and as-of-date question sets. Benchmarking five memory architectures
+against a no-memory control under a controlled protocol (fixed answerer,
+versioned LLM judge, three stochastic replicates, two horizons), we find backend rankings
+invert with history length: the budgeted curated-map memory that leads at
+three weeks of history loses recall of evicted content by nine weeks
+(96\%$\rightarrow$72\%), while a provenance-typed graph rises to 90\% ---
+short-horizon benchmarks can mis-rank the very systems a long-lived assistant
+needs. A full-rendered-history baseline sharpens the point: in this corpus
+it tied or exceeded the tested memory systems at the short horizon ---
+small-history evaluations may fail to distinguish memory architecture from
+simply reading everything --- while at nine weeks no judge-independent
+accuracy winner emerged between the layered system and reading the entire
+raw transcript, at roughly half the read cost for the layered system. The
+crossover itself is judge-robust: under complete re-judging by a
+cross-family judge, the ranking inversion is positive for all six users
+(exact $p=0.031$); not every pairwise margin survives the same test. Two further results: write-stage quality is a strong correlate of
+downstream quality (questions backed by weakly written facts failed 24\%
+vs.\ 2\% on clean writes); and injection resistance tracked the
+preservation of provenance boundaries: the provenance-typed graph produced
+zero unsupported assertions across all planted, non-adaptive injection
+probes (14 unique questions, 42 answer trials) --- as did a raw transcript
+that preserves source framing --- while flattened assertional memory
+stores failed on a subset. A layered architecture --- unbounded
+provenance-preserving store, LLM-curated budgeted view, focused
+per-question retrieval --- performed best among the memory architectures in
+both regimes (96.8\% short-horizon) and is released as \veracium, an
+open-source library
+(\texttt{pip install veracium}), together with the corpus generator and
+evaluation harness.
+\end{abstract}
+
+\input{01_intro}
+\input{02_related}
+\input{03_method}
+\input{05_results}
+\input{06_back}
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\input{07_appendix}
+
+\end{document}

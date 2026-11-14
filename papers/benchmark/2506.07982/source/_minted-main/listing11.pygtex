@@ -1,0 +1,208 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{g+gh}{\PYGZsh{} Introduction}
+This document serves as a comprehensive guide for technical support agents. It provides detailed procedures and troubleshooting steps to assist users experiencing common issues with their phone\PYGZsq{}s cellular service, mobile data connectivity, and Multimedia Messaging Service (MMS). The manual is structured to help agents efficiently diagnose and resolve problems by outlining how these services work, common issues, and the tools available for resolution.
+
+The main sections covered are:
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Understanding and Troubleshooting Your Phone\PYGZsq{}s Cellular Service**}: Addresses issues related to network connection, signal strength, and SIM card problems.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Understanding and Troubleshooting Your Phone\PYGZsq{}s Mobile Data**}: Focuses on problems with internet access via the cellular network, including speed and connectivity.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Understanding and Troubleshooting MMS (Picture/Video Messaging)**}: Covers issues related to sending and receiving multimedia messages.
+
+Make sure you try all the possible ways to resolve the user\PYGZsq{}s issue before transferring to a human agent.
+
+\PYG{g+gh}{\PYGZsh{} What the user can do on their device}
+Here are the actions a user is able to take on their device.
+You must understand those well since as part of technical support you will have to help the customer perform series of actions
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Diagnostic Actions (Read\PYGZhy{}only)}
+\PYG{k}{1.} \PYG{g+gs}{**check\PYGZus{}status\PYGZus{}bar**} \PYGZhy{} Shows what icons are currently visible in your phone\PYGZsq{}s status bar (the area at the top of the screen). 
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Airplane mode status (\PYGZdq{}Airplane Mode\PYGZdq{} when enabled)
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Network signal strength (\PYGZdq{}No Signal\PYGZdq{}, \PYGZdq{}Poor\PYGZdq{}, \PYGZdq{}Fair\PYGZdq{}, \PYGZdq{}Good\PYGZdq{}, \PYGZdq{}Excellent\PYGZdq{})
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Network technology (e.g., \PYGZdq{}5G\PYGZdq{}, \PYGZdq{}4G\PYGZdq{}, etc.)
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Mobile data status (\PYGZdq{}Data Enabled\PYGZdq{} or \PYGZdq{}Data Disabled\PYGZdq{})
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Data saver status (\PYGZdq{}Data Saver\PYGZdq{} when enabled)
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Wi\PYGZhy{}Fi status (\PYGZdq{}Connected to [SSID]\PYGZdq{} or \PYGZdq{}Enabled\PYGZdq{})
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }VPN status (\PYGZdq{}VPN Connected\PYGZdq{} when connected)
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Battery level (\PYGZdq{}[percentage]\PYGZpc{}\PYGZdq{})
+\PYG{k}{2.} \PYG{g+gs}{**check\PYGZus{}network\PYGZus{}status**} \PYGZhy{} Checks your phone\PYGZsq{}s connection status to cellular networks and Wi\PYGZhy{}Fi. Shows airplane mode status, signal strength, network type, whether mobile data is enabled, and whether data roaming is enabled. Signal strength can be \PYGZdq{}none\PYGZdq{}, \PYGZdq{}poor\PYGZdq{} (1bar), \PYGZdq{}fair\PYGZdq{} (2 bars), \PYGZdq{}good\PYGZdq{} (3 bars), \PYGZdq{}excellent\PYGZdq{} (4+ bars).
+\PYG{k}{3.} \PYG{g+gs}{**check\PYGZus{}network\PYGZus{}mode\PYGZus{}preference**} \PYGZhy{} Checks your phone\PYGZsq{}s network mode preference. Shows the type of cellular network your phone prefers to connect to (e.g., 5G, 4G, 3G, 2G).
+\PYG{k}{4.} \PYG{g+gs}{**check\PYGZus{}sim\PYGZus{}status**} \PYGZhy{} Checks if your SIM card is working correctly and displays its current status. Shows if the SIM is active, missing, or locked with a PIN or PUK code.
+\PYG{k}{5.} \PYG{g+gs}{**check\PYGZus{}data\PYGZus{}restriction\PYGZus{}status**} \PYGZhy{} Checks if your phone has any data\PYGZhy{}limiting features active. Shows if Data Saver mode is on and whether background data usage is restricted globally.
+\PYG{k}{6.} \PYG{g+gs}{**check\PYGZus{}apn\PYGZus{}settings**} \PYGZhy{} Checks the technical APN settings your phone uses to connect to your carrier\PYGZsq{}s mobile data network. Shows current APN name and MMSC URL for picture messaging.
+\PYG{k}{7.} \PYG{g+gs}{**check\PYGZus{}wifi\PYGZus{}status**} \PYGZhy{} Checks your Wi\PYGZhy{}Fi connection status. Shows if Wi\PYGZhy{}Fi is turned on, which network you\PYGZsq{}re connected to (if any), and the signal strength.
+\PYG{k}{8.} \PYG{g+gs}{**check\PYGZus{}wifi\PYGZus{}calling\PYGZus{}status**} \PYGZhy{} Checks if Wi\PYGZhy{}Fi Calling is enabled on your device. This feature allows you to make and receive calls over a Wi\PYGZhy{}Fi network instead of using the cellular network.
+\PYG{k}{9.} \PYG{g+gs}{**check\PYGZus{}vpn\PYGZus{}status**} \PYGZhy{} Checks if you\PYGZsq{}re using a VPN (Virtual Private Network) connection. Shows if a VPN is active, connected, and displays any available connection details.
+\PYG{k}{10.} \PYG{g+gs}{**check\PYGZus{}installed\PYGZus{}apps**} \PYGZhy{} Returns the name of all installed apps on the phone.
+\PYG{k}{11.} \PYG{g+gs}{**check\PYGZus{}app\PYGZus{}status**} \PYGZhy{} Checks detailed information about a specific app. Shows its permissions and background data usage settings.
+\PYG{k}{12.} \PYG{g+gs}{**check\PYGZus{}app\PYGZus{}permissions**} \PYGZhy{} Checks what permissions a specific app currently has. Shows if the app has access to features like storage, camera, location, etc.
+\PYG{k}{13.} \PYG{g+gs}{**run\PYGZus{}speed\PYGZus{}test**} \PYGZhy{} Measures your current internet connection speed (download speed). Provides information about connection quality and what activities it can support. Download speed can be \PYGZdq{}unknown\PYGZdq{}, \PYGZdq{}very poor\PYGZdq{}, \PYGZdq{}poor\PYGZdq{}, \PYGZdq{}fair\PYGZdq{}, \PYGZdq{}good\PYGZdq{}, or \PYGZdq{}excellent\PYGZdq{}.
+\PYG{k}{14.} \PYG{g+gs}{**can\PYGZus{}send\PYGZus{}mms**} \PYGZhy{} Checks if the messaging app can send MMS messages.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Fix Actions (Write/Modify)}
+\PYG{k}{1.} \PYG{g+gs}{**set\PYGZus{}network\PYGZus{}mode\PYGZus{}preference**} \PYGZhy{} Changes the type of cellular network your phone prefers to connect to (e.g., 5G, 4G, 3G). Higher\PYGZhy{}speed networks (5G, 4G) provide faster data but may use more battery.
+\PYG{k}{2.} \PYG{g+gs}{**toggle\PYGZus{}airplane\PYGZus{}mode**} \PYGZhy{} Turns Airplane Mode ON or OFF. When ON, it disconnects all wireless communications including cellular, Wi\PYGZhy{}Fi, and Bluetooth.
+\PYG{k}{3.} \PYG{g+gs}{**reseat\PYGZus{}sim\PYGZus{}card**} \PYGZhy{} Simulates removing and reinserting your SIM card. This can help resolve recognition issues.
+\PYG{k}{4.} \PYG{g+gs}{**toggle\PYGZus{}data**} \PYGZhy{} Turns your phone\PYGZsq{}s mobile data connection ON or OFF. Controls whether your phone can use cellular data for internet access when Wi\PYGZhy{}Fi is unavailable.
+\PYG{k}{5.} \PYG{g+gs}{**toggle\PYGZus{}roaming**} \PYGZhy{} Turns Data Roaming ON or OFF. When ON, roaming is enabled and your phone can use data networks in areas outside your carrier\PYGZsq{}s coverage.
+\PYG{k}{6.} \PYG{g+gs}{**toggle\PYGZus{}data\PYGZus{}saver\PYGZus{}mode**} \PYGZhy{} Turns Data Saver mode ON or OFF. When ON, it reduces data usage, which may affect data speed.
+\PYG{k}{7.} \PYG{g+gs}{**set\PYGZus{}apn\PYGZus{}settings**} \PYGZhy{} Sets the APN settings for the phone.
+\PYG{k}{8.} \PYG{g+gs}{**reset\PYGZus{}apn\PYGZus{}settings**} \PYGZhy{} Resets your APN settings to the default settings.
+\PYG{k}{9.} \PYG{g+gs}{**toggle\PYGZus{}wifi**} \PYGZhy{} Turns your phone\PYGZsq{}s Wi\PYGZhy{}Fi radio ON or OFF. Controls whether your phone can discover and connect to wireless networks for internet access.
+\PYG{k}{10.} \PYG{g+gs}{**toggle\PYGZus{}wifi\PYGZus{}calling**} \PYGZhy{} Turns Wi\PYGZhy{}Fi Calling ON or OFF. This feature allows you to make and receive calls over Wi\PYGZhy{}Fi instead of the cellular network, which can help in areas with weak cellular signal.
+\PYG{k}{11.} \PYG{g+gs}{**connect\PYGZus{}vpn**} \PYGZhy{} Connects to your VPN (Virtual Private Network).
+\PYG{k}{12.} \PYG{g+gs}{**disconnect\PYGZus{}vpn**} \PYGZhy{} Disconnects any active VPN (Virtual Private Network) connection. Stops routing your internet traffic through a VPN server, which might affect connection speed or access to content.
+\PYG{k}{13.} \PYG{g+gs}{**grant\PYGZus{}app\PYGZus{}permission**} \PYGZhy{} Gives a specific permission to an app (like access to storage, camera, or location). Required for some app functions to work properly.
+\PYG{k}{14.} \PYG{g+gs}{**reboot\PYGZus{}device**} \PYGZhy{} Restarts your phone completely. This can help resolve many temporary software glitches by refreshing all running services and connections.
+
+\PYG{g+gh}{\PYGZsh{} Understanding and Troubleshooting Your Phone\PYGZsq{}s Cellular Service}
+This section details for agents how a user\PYGZsq{}s phone connects to the cellular network (often referred to as \PYGZdq{}service\PYGZdq{}) and provides procedures to troubleshoot common issues. Good cellular service is required for calls, texts, and mobile data.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Common Service Issues and Their Causes}
+If the user is experiencing service problems, here are some common causes:
+
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Airplane Mode is ON**}: This disables all wireless radios, including cellular.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**SIM Card Problems**}:
+\PYG{+w}{    }\PYG{k}{*}\PYG{+w}{ }  Not inserted or improperly seated.
+\PYG{+w}{    }\PYG{k}{*}\PYG{+w}{ }  Locked due to incorrect PIN/PUK entries.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Incorrect Network Settings**}: APN settings might be incorrect resulting in a loss of service.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Carrier Issues**}: Your line might be inactive due to billing problems.
+
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Diagnosing Service Issues}
+\PYG{l+s+sb}{`check\PYGZus{}status\PYGZus{}bar()`} can be used to check if the user is facing a service issue.
+If there is cellular service, the status bar will return a signal strength indicator.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Troubleshooting Service Problems}
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Airplane Mode}
+Airplane Mode is a feature that disables all wireless radios, including cellular. If it is enabled, it will prevent any cellular connection.
+You can check if Airplane Mode is ON by using \PYG{l+s+sb}{`check\PYGZus{}status\PYGZus{}bar()`} or \PYG{l+s+sb}{`check\PYGZus{}network\PYGZus{}status()`}.
+If it is ON, guide the user to use \PYG{l+s+sb}{`toggle\PYGZus{}airplane\PYGZus{}mode()`} to turn it OFF.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} SIM Card Issues}
+The SIM card is the physical card that contains the user\PYGZsq{}s information and allows the phone to connect to the cellular network.
+Problems with the SIM card can lead to a complete loss of service.
+The most common issue is that the SIM card is not properly seated or the user has entered the wrong PIN or PUK code.
+Use \PYG{l+s+sb}{`check\PYGZus{}sim\PYGZus{}status()`} to check the status of the SIM card.
+If it shows \PYGZdq{}Missing\PYGZdq{}, guide the user to use \PYG{l+s+sb}{`reseat\PYGZus{}sim\PYGZus{}card()`} to ensure the SIM card is correctly inserted.
+If it shows \PYGZdq{}Locked\PYGZdq{} (due to incorrect PIN or PUK entries), \PYG{g+gs}{**escalate to technical support for assistance with SIM security**}.
+If it shows \PYGZdq{}Active\PYGZdq{}, the SIM itself is likely okay.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Incorrect APN Settings}
+Access Point Name (APN) settings are crucial for network connectivity.
+If \PYG{l+s+sb}{`check\PYGZus{}apn\PYGZus{}settings()`} shows \PYGZdq{}Incorrect\PYGZdq{}, guide the user to use \PYG{l+s+sb}{`reset\PYGZus{}apn\PYGZus{}settings()`} to reset the APN settings.
+After resetting the APN settings, the user must be instructed to use \PYG{l+s+sb}{`reboot\PYGZus{}device()`} for the changes to apply.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Line Suspension}
+If the line is suspended, the user will not have cellular service.
+Investigate if the line is suspended. Refer to the general agent policy for guidelines on handling line suspensions.
+\PYG{k}{*}\PYG{+w}{ }  If the line is suspended and the agent can lift the suspension (per general policy), verify if service is restored.
+\PYG{k}{*}\PYG{+w}{ }  If the suspension cannot be lifted by the agent (e.g., due to contract end date as mentioned in general policy, or other reasons not resolvable by the agent), \PYG{g+gs}{**escalate to technical support**}.
+
+
+\PYG{g+gh}{\PYGZsh{} Understanding and Troubleshooting Your Phone\PYGZsq{}s Mobile Data}
+This section explains for agents how a user\PYGZsq{}s phone uses mobile data for internet access when Wi\PYGZhy{}Fi is unavailable, and details troubleshooting for common connectivity and speed issues.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} What is Mobile Data?}
+Mobile data allows the phone to connect to the internet using the carrier\PYGZsq{}s cellular network. This enables browsing websites, using apps, streaming video, and sending/receiving emails when not connected to Wi\PYGZhy{}Fi. The status bar usually shows icons like \PYGZdq{}5G\PYGZdq{}, \PYGZdq{}LTE\PYGZdq{}, \PYGZdq{}4G\PYGZdq{}, \PYGZdq{}3G\PYGZdq{}, \PYGZdq{}H+\PYGZdq{}, or \PYGZdq{}E\PYGZdq{} to indicate an active mobile data connection and its type.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Prerequisites for Mobile Data}
+For mobile data to work, the user must first have \PYG{g+gs}{**cellular service**}. Refer to the \PYGZdq{}Understanding and Troubleshooting Your Phone\PYGZsq{}s Cellular Service\PYGZdq{} guide if the user does not have service.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Common Mobile Data Issues and Causes}
+Even with cellular service, mobile data problems might occur. Common reasons include:
+
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Airplane Mode is ON**}: Disables all wireless connections, including mobile data.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Mobile Data is Turned OFF**}: The main switch for mobile data might be disabled in the phone\PYGZsq{}s settings.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Roaming Issues (When User is Abroad)**}:
+\PYG{+w}{    }\PYG{k}{*}\PYG{+w}{ }  Data Roaming is turned OFF on the phone.
+\PYG{+w}{    }\PYG{k}{*}\PYG{+w}{ }  The line is not roaming enabled.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Data Plan Limits Reached**}: The user may have used up their monthly data allowance, and the carrier has slowed down or cut off data.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Data Saver Mode is ON**}: This feature restricts background data usage and can make some apps or services seem slow or unresponsive to save data.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**VPN Issues**}: An active VPN connection might be slow or misconfigured, affecting data speeds or connectivity.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Bad Network Preferences**}: The phone is set to an older network technology like 2G/3G.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Diagnosing Mobile Data Issues}
+\PYG{l+s+sb}{`run\PYGZus{}speed\PYGZus{}test()`} can be used to check for potential issues with mobile data.
+When mobile data is unavailable a speed test should return \PYGZsq{}no connection\PYGZsq{}.
+If data is available, a speed test will also return the data speed.
+Any speed below \PYGZsq{}Excellent\PYGZsq{} is considered slow.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Troubleshooting Mobile Data Problems}
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Airplane Mode}
+Refer to the \PYGZdq{}Understanding and Troubleshooting Your Phone\PYGZsq{}s Cellular Service\PYGZdq{} section for instructions on how to check and turn off Airplane Mode.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Mobile Data Disabled}
+Mobile data switch allows the phone to connect to the internet using the carrier\PYGZsq{}s cellular network.
+If \PYG{l+s+sb}{`check\PYGZus{}network\PYGZus{}status()`} shows mobile data is disabled, guide the user to use \PYG{l+s+sb}{`toggle\PYGZus{}data()`} to turn mobile data ON.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Addressing Data Roaming Problems}
+Data roaming allows the user to use their phone\PYGZsq{}s data connection in areas outside their home network (e.g. when traveling abroad).
+If the user is outside their carrier\PYGZsq{}s primary coverage area (roaming) and mobile data isn\PYGZsq{}t working, guide them to use \PYG{l+s+sb}{`toggle\PYGZus{}roaming()`} to ensure Data Roaming is ON.
+You should check that the line associated with the phone number the user provided is roaming enabled. If it is not, the user will not be able to use their phone\PYGZsq{}s data connection in areas outside their home network.
+Refer to the general policy for guidelines on enabling roaming.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Data Saver Mode}
+Data Saver mode is a feature that restricts background data usage and can affect data speeds.
+If \PYG{l+s+sb}{`check\PYGZus{}data\PYGZus{}restriction\PYGZus{}status()`} shows \PYGZdq{}Data Saver mode is ON\PYGZdq{}, guide the user to use \PYG{l+s+sb}{`toggle\PYGZus{}data\PYGZus{}saver\PYGZus{}mode()`} to turn it OFF.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} VPN Connection Issues}
+VPN (Virtual Private Network) is a feature that encrypts internet traffic and can help improve data speeds and security.
+However in some cases, a VPN can cause speed to drop significantly.
+If \PYG{l+s+sb}{`check\PYGZus{}vpn\PYGZus{}status()`} shows \PYGZdq{}VPN is ON and connected\PYGZdq{} and performance level is \PYGZdq{}Poor\PYGZdq{}, guide the user to use \PYG{l+s+sb}{`disconnect\PYGZus{}vpn()`} to disconnect the VPN.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Data Plan Limits Reached}
+Each plan specify the maxium data usage per month.
+If the user\PYGZsq{}s data usage for a line associated with the phone number the user provided exceeds the plan\PYGZsq{}s data limit, data connectivity will be lost.
+The user has 2 options:
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Change to a plan with more data.
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }Add more data to the line by \PYGZdq{}refueling\PYGZdq{} data at a price per GB specified by the plan. 
+Refer to the general policy for guidelines on those options.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Optimizing Network Mode Preferences}
+Network mode preferences are the settings that determine the type of cellular network the phone will connect to.
+Using older modes like 2G/3G can significantly limit speed.
+If \PYG{l+s+sb}{`check\PYGZus{}network\PYGZus{}mode\PYGZus{}preference()`} shows \PYGZdq{}2G\PYGZdq{} or \PYGZdq{}3G\PYGZdq{}, guide the user to use \PYG{l+s+sb}{`set\PYGZus{}network\PYGZus{}mode\PYGZus{}preference(mode: str)`} with the mode \PYG{l+s+sb}{`\PYGZdq{}4g\PYGZus{}5g\PYGZus{}preferred\PYGZdq{}`} to allow the phone to connect to 5G.
+
+\PYG{g+gh}{\PYGZsh{} Understanding and Troubleshooting MMS (Picture/Video Messaging)}
+This section explains for agents how to troubleshoot Multimedia Messaging Service (MMS), which allows users to send and receive messages containing pictures, videos, or audio.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} What is MMS?}
+MMS is an extension of SMS (text messaging) that allows for multimedia content. When a user sends a photo to a friend via their messaging app, they\PYGZsq{}re typically using MMS.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Prerequisites for MMS}
+For MMS to work, the user must have cellular service and mobile data (any speed).
+Refer to the \PYGZdq{}Understanding and Troubleshooting Your Phone\PYGZsq{}s Cellular Service\PYGZdq{} and \PYGZdq{}Understanding and Troubleshooting Your Phone\PYGZsq{}s Mobile Data\PYGZdq{} sections for more information.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Common MMS Issues and Causes}
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**No Cellular Service or Mobile Data Off/Not Working**}: The most common reasons. MMS relies on these.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Incorrect APN Settings**}: Specifically, a missing or incorrect MMSC URL.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Connected to 2G Network**}: 2G networks are generally not suitable for MMS.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**Wi\PYGZhy{}Fi Calling Configuration**}: In some cases, how Wi\PYGZhy{}Fi Calling is configured can affect MMS, especially if your carrier doesn\PYGZsq{}t support MMS over Wi\PYGZhy{}Fi.
+\PYG{k}{*}\PYG{+w}{ }  \PYG{g+gs}{**App Permissions**}: The messaging app needs permission to access storage (for the media files) and usually SMS functionalities.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Diagnosing MMS Issues}
+\PYG{l+s+sb}{`can\PYGZus{}send\PYGZus{}mms()`} tool on the user\PYGZsq{}s phone can be used to check if the user is facing an MMS issue.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Troubleshooting MMS Problems}
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Ensuring Basic Connectivity for MMS}
+Successful MMS messaging relies on fundamental service and data connectivity. This section covers verifying these prerequisites.
+First, ensure the user can make calls and that their mobile data is working for other apps (e.g., browsing the web). Refer to the \PYGZdq{}Understanding and Troubleshooting Your Phone\PYGZsq{}s Cellular Service\PYGZdq{} and \PYGZdq{}Understanding and Troubleshooting Your Phone\PYGZsq{}s Mobile Data\PYGZdq{} sections if needed.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Unsuitable Network Technology for MMS}
+MMS has specific network requirements; older technologies like 2G are insufficient. This section explains how to check the network type and change it if necessary.
+MMS requires at least a 3G network connection; 2G networks are generally not suitable.
+If \PYG{l+s+sb}{`check\PYGZus{}network\PYGZus{}status()`} shows \PYGZdq{}2G\PYGZdq{}, guide the user to use \PYG{l+s+sb}{`set\PYGZus{}network\PYGZus{}mode\PYGZus{}preference(mode: str)`} to switch to a network mode that includes 3G, 4G, or 5G (e.g., \PYG{l+s+sb}{`\PYGZdq{}4g\PYGZus{}5g\PYGZus{}preferred\PYGZdq{}`} or \PYG{l+s+sb}{`\PYGZdq{}4g\PYGZus{}only\PYGZdq{}`}).
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Verifying APN (MMSC URL) for MMS}
+MMSC is the Multimedia Messaging Service Center. It is the server that handles MMS messages. Without a correct MMSC URL, the user will not be able to send or receive MMS messages.
+Those are specified as part of the APN settings. Incorrect MMSC URL, are a very common cause of MMS issues.
+If \PYG{l+s+sb}{`check\PYGZus{}apn\PYGZus{}settings()`} shows MMSC URL is not set, guide the user to use \PYG{l+s+sb}{`reset\PYGZus{}apn\PYGZus{}settings()`} to reset the APN settings.
+After resetting the APN settings, the user must be instructed to use \PYG{l+s+sb}{`reboot\PYGZus{}device()`} for the changes to apply.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Investigating Wi\PYGZhy{}Fi Calling Interference with MMS}
+Wi\PYGZhy{}Fi Calling settings can sometimes conflict with MMS functionality.
+If \PYG{l+s+sb}{`check\PYGZus{}wifi\PYGZus{}calling\PYGZus{}status()`} shows \PYGZdq{}Wi\PYGZhy{}Fi Calling is ON\PYGZdq{}, guide the user to use \PYG{l+s+sb}{`toggle\PYGZus{}wifi\PYGZus{}calling()`} to turn it OFF.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Messaging App Lacks Necessary Permissions}
+The messaging app needs specific permissions to handle media and send messages.
+If \PYG{l+s+sb}{`check\PYGZus{}app\PYGZus{}permissions(app\PYGZus{}name=\PYGZdq{}messaging\PYGZdq{})`} shows \PYGZdq{}storage\PYGZdq{} and \PYGZdq{}sms\PYGZdq{} permissions are not listed as granted, guide the user to use \PYG{l+s+sb}{`grant\PYGZus{}app\PYGZus{}permission(app\PYGZus{}name=\PYGZdq{}messaging\PYGZdq{}, permission=\PYGZdq{}storage\PYGZdq{})`} and \PYG{l+s+sb}{`grant\PYGZus{}app\PYGZus{}permission(app\PYGZus{}name=\PYGZdq{}messaging\PYGZdq{}, permission=\PYGZdq{}sms\PYGZdq{})`} to grant the necessary permissions.
+\end{Verbatim}

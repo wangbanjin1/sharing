@@ -1,0 +1,523 @@
+\begin{thebibliography}{100}
+
+\bibitem{memory3_Yang_2024}
+Hongkang Yang, Zehao Lin, Wenjin Wang, Hao Wu, Zhiyu Li, Bo~Tang, Wenqiang Wei, Jinbo Wang, Zeyun Tang, Shichao Song, Chenyang Xi, Yu~Yu, Kai Chen, Feiyu Xiong, Linpeng Tang, and Weinan E.
+\newblock Memory$^3$: Language modeling with explicit memory.
+\newblock {\em Journal of Machine Learning}, 3(3):300--346, January 2024.
+
+\bibitem{zhao2023survey}
+Wayne~Xin Zhao, Kun Zhou, Junyi Li, Tianyi Tang, Xiaolei Wang, Yupeng Hou, Yingqian Min, Beichen Zhang, Junjie Zhang, Zican Dong, et~al.
+\newblock A survey of large language models.
+\newblock {\em arXiv preprint arXiv:2303.18223}, 1(2), 2023.
+
+\bibitem{wang2023codet5}
+Yue Wang, Hung Le, Akhilesh~Deepak Gotmare, Nghi~DQ Bui, Junnan Li, and Steven~CH Hoi.
+\newblock Codet5+: Open code large language models for code understanding and generation.
+\newblock {\em arXiv preprint arXiv:2305.07922}, 2023.
+
+\bibitem{qian2024linguistic}
+Shengsheng Qian, Zuyi Zhou, Dizhan Xue, Bing Wang, and Changsheng Xu.
+\newblock From linguistic giants to sensory maestros: A survey on cross-modal reasoning with large language models.
+\newblock {\em arXiv preprint arXiv:2409.18996}, 2024.
+
+\bibitem{DBLP:journals/corr/abs-2402-19473}
+Penghao Zhao, Hailin Zhang, Qinhan Yu, Zhengren Wang, Yunteng Geng, Fangcheng Fu, Ling Yang, Wentao Zhang, and Bin Cui.
+\newblock Retrieval-augmented generation for ai-generated content: {A} survey.
+\newblock {\em CoRR}, abs/2402.19473, 2024.
+
+\bibitem{DBLP:journals/corr/abs-2312-10997}
+Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang Jia, Jinliu Pan, Yuxi Bi, Yi~Dai, Jiawei Sun, Qianyu Guo, Meng Wang, and Haofen Wang.
+\newblock Retrieval-augmented generation for large language models: {A} survey.
+\newblock {\em CoRR}, abs/2312.10997, 2023.
+
+\bibitem{DBLP:journals/corr/abs-2501-13958}
+Qinggang Zhang, Shengyuan Chen, Yuanchen Bei, Zheng Yuan, Huachi Zhou, Zijin Hong, Junnan Dong, Hao Chen, Yi~Chang, and Xiao Huang.
+\newblock A survey of graph retrieval-augmented generation for customized large language models.
+\newblock {\em CoRR}, abs/2501.13958, 2025.
+
+\bibitem{DBLP:journals/corr/abs-2502-06872}
+Bo~Ni, Zheyuan Liu, Leyao Wang, Yongjia Lei, Yuying Zhao, Xueqi Cheng, Qingkai Zeng, Luna Dong, Yinglong Xia, Krishnaram Kenthapadi, Ryan~A. Rossi, Franck Dernoncourt, Md.~Mehrab Tanjim, Nesreen~K. Ahmed, Xiaorui Liu, Wenqi Fan, Erik Blasch, Yu~Wang, Meng Jiang, and Tyler Derr.
+\newblock Towards trustworthy retrieval augmented generation for large language models: {A} survey.
+\newblock {\em CoRR}, abs/2502.06872, 2025.
+
+\bibitem{DBLP:journals/corr/abs-2310-05029}
+Howard Chen, Ramakanth Pasunuru, Jason Weston, and Asli Celikyilmaz.
+\newblock Walking down the memory maze: Beyond context limit through interactive reading.
+\newblock {\em CoRR}, abs/2310.05029, 2023.
+
+\bibitem{DBLP:journals/corr/abs-2404-16130}
+Darren Edge, Ha~Trinh, Newman Cheng, Joshua Bradley, Alex Chao, Apurva Mody, Steven Truitt, and Jonathan Larson.
+\newblock From local to global: {A} graph {RAG} approach to query-focused summarization.
+\newblock {\em CoRR}, abs/2404.16130, 2024.
+
+\bibitem{DBLP:journals/corr/abs-2410-05779}
+Zirui Guo, Lianghao Xia, Yanhua Yu, Tu~Ao, and Chao Huang.
+\newblock Lightrag: Simple and fast retrieval-augmented generation.
+\newblock {\em CoRR}, abs/2410.05779, 2024.
+
+\bibitem{rag_for_copilots}
+Microsoft.
+\newblock Retrieval augmented generation (rag) in azure ai search, 2025.
+
+\bibitem{vertex_AI_search}
+Google.
+\newblock Vertex ai search, 2025.
+
+\bibitem{build_innovative_AI_search_experiences}
+Elastic.
+\newblock Build innovative ai search experiences, 2025.
+
+\bibitem{Agentic_RAG_as_a_Service_company}
+Nuclia.
+\newblock Agentic rag-as-a-service company, 2025.
+
+\bibitem{vu_freshllms_arxiv23}
+Tu~Vu, Mohit Iyyer, Xuezhi Wang, Noah Constant, Jerry Wei, Jason Wei, Chris Tar, Yun-Hsuan Sung, Denny Zhou, Quoc Le, and Thang Luong.
+\newblock Freshllms: Refreshing large language models with search engine augmentation, 2023.
+
+\bibitem{achiam_2023_gpt4}
+Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia~Leoni Aleman, Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et~al.
+\newblock Gpt-4 technical report.
+\newblock {\em arXiv preprint arXiv:2303.08774}, 2023.
+
+\bibitem{noauthor_cursor_nodate}
+Cursor - {The} {AI} {Code} {Editor}.
+
+\bibitem{du_cuhkSurvey_2025}
+Yiming Du, Wenyu Huang, Danna Zheng, Zhaowei Wang, Sebastien Montella, Mirella Lapata, Kam-Fai Wong, and Jeff~Z. Pan.
+\newblock Rethinking {Memory} in {AI}: {Taxonomy}, {Operations}, {Topics}, and {Future} {Directions}, May 2025.
+\newblock arXiv:2505.00675 [cs].
+
+\bibitem{wu_huaweiSurvey_2025}
+Yaxiong Wu, Sheng Liang, Chen Zhang, Yichao Wang, Yongyue Zhang, Huifeng Guo, Ruiming Tang, and Yong Liu.
+\newblock From {Human} {Memory} to {AI} {Memory}: {A} {Survey} on {Memory} {Mechanisms} in the {Era} of {LLMs}, April 2025.
+\newblock arXiv:2504.15965 [cs].
+
+\bibitem{shan_LiAutoSurvey_2025}
+Lianlei Shan, Shixian Luo, Zezhou Zhu, Yu~Yuan, and Yong Wu.
+\newblock Cognitive {Memory} in {Large} {Language} {Models}, April 2025.
+\newblock arXiv:2504.02441 [cs].
+
+\bibitem{radford_gpt2_nodate}
+Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and Ilya Sutskever.
+\newblock Language {Models} are {Unsupervised} {Multitask} {Learners}.
+
+\bibitem{brown_gpt3_2020}
+Tom~B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, Sandhini Agarwal, Ariel Herbert-Voss, Gretchen Krueger, Tom Henighan, Rewon Child, Aditya Ramesh, Daniel~M. Ziegler, Jeffrey Wu, Clemens Winter, Christopher Hesse, Mark Chen, Eric Sigler, Mateusz Litwin, Scott Gray, Benjamin Chess, Jack Clark, Christopher Berner, Sam McCandlish, Alec Radford, Ilya Sutskever, and Dario Amodei.
+\newblock Language {Models} are {Few}-{Shot} {Learners}, July 2020.
+\newblock arXiv:2005.14165 [cs].
+
+\bibitem{li_prefix-tuning_2021}
+Xiang~Lisa Li and Percy Liang.
+\newblock Prefix-{Tuning}: {Optimizing} {Continuous} {Prompts} for {Generation}.
+\newblock In {\em Proceedings of the 59th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} and the 11th {International} {Joint} {Conference} on {Natural} {Language} {Processing} ({Volume} 1: {Long} {Papers})}, pages 4582--4597, Online, 2021. Association for Computational Linguistics.
+
+\bibitem{lester_prompt-tuning_2021}
+Brian Lester, Rami Al-Rfou, and Noah Constant.
+\newblock The {Power} of {Scale} for {Parameter}-{Efficient} {Prompt} {Tuning}.
+\newblock In {\em Proceedings of the 2021 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing}}, pages 3045--3059, Online and Punta Cana, Dominican Republic, 2021. Association for Computational Linguistics.
+
+\bibitem{liu_ptuning_2023}
+Xiao Liu, Yanan Zheng, Zhengxiao Du, Ming Ding, Yujie Qian, Zhilin Yang, and Jie Tang.
+\newblock {GPT} {Understands}, {Too}, October 2023.
+\newblock arXiv:2103.10385 [cs].
+
+\bibitem{liu_ptuningv2_2022}
+Xiao Liu, Kaixuan Ji, Yicheng Fu, Weng Tam, Zhengxiao Du, Zhilin Yang, and Jie Tang.
+\newblock P-{Tuning}: {Prompt} {Tuning} {Can} {Be} {Comparable} to {Fine}-tuning {Across} {Scales} and {Tasks}.
+\newblock In {\em Proceedings of the 60th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 2: {Short} {Papers})}, pages 61--68, Dublin, Ireland, 2022. Association for Computational Linguistics.
+
+\bibitem{ouyang_instructgpt_2022}
+Long Ouyang, Jeff Wu, Xu~Jiang, Diogo Almeida, Carroll~L. Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, John Schulman, Jacob Hilton, Fraser Kelton, Luke Miller, Maddie Simens, Amanda Askell, Peter Welinder, Paul Christiano, Jan Leike, and Ryan Lowe.
+\newblock Training language models to follow instructions with human feedback, March 2022.
+\newblock arXiv:2203.02155 [cs].
+
+\bibitem{kwon_vLLM_2023}
+Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody~Hao Yu, Joseph Gonzalez, Hao Zhang, and Ion Stoica.
+\newblock Efficient {Memory} {Management} for {Large} {Language} {Model} {Serving} with {PagedAttention}.
+\newblock In {\em Proceedings of the 29th {Symposium} on {Operating} {Systems} {Principles}}, pages 611--626, Koblenz Germany, October 2023. ACM.
+
+\bibitem{xiao_streamingllm_2023}
+Guangxuan Xiao, Yuandong Tian, Beidi Chen, Song Han, and Mike Lewis.
+\newblock Efficient {Streaming} {Language} {Models} with {Attention} {Sinks}.
+\newblock October 2023.
+
+\bibitem{zhang_h2o_2023}
+Zhenyu Zhang, Ying Sheng, Tianyi Zhou, Tianlong Chen, Lianmin Zheng, Ruisi Cai, Zhao Song, Yuandong Tian, Christopher Ré, Clark Barrett, Zhangyang~"Atlas" Wang, and Beidi Chen.
+\newblock {H2O}: {Heavy}-{Hitter} {Oracle} for {Efficient} {Generative} {Inference} of {Large} {Language} {Models}.
+\newblock {\em Advances in Neural Information Processing Systems}, 36:34661--34710, December 2023.
+
+\bibitem{dong_less_2024}
+Harry Dong, Xinyu Yang, Zhenyu Zhang, Zhangyang Wang, Yuejie Chi, and Beidi Chen.
+\newblock Get {More} with {LESS}: {Synthesizing} {Recurrence} with {KV} {Cache} {Compression} for {Efficient} {LLM} {Inference}.
+\newblock June 2024.
+
+\bibitem{hooper_kvquant_2024}
+Coleman Hooper, Sehoon Kim, Hiva Mohammadzadeh, Michael~W. Mahoney, Yakun~S. Shao, Kurt Keutzer, and Amir Gholami.
+\newblock {KVQuant}: {Towards} 10 {Million} {Context} {Length} {LLM} {Inference} with {KV} {Cache} {Quantization}.
+\newblock {\em Advances in Neural Information Processing Systems}, 37:1270--1303, December 2024.
+
+\bibitem{liu_retrievalattention_2024}
+Di~Liu, Meng Chen, Baotong Lu, Huiqiang Jiang, Zhenhua Han, Qianxi Zhang, Qi~Chen, Chengruidong Zhang, Bailu Ding, Kai Zhang, Chen Chen, Fan Yang, Yuqing Yang, and Lili Qiu.
+\newblock {RetrievalAttention}: {Accelerating} {Long}-{Context} {LLM} {Inference} via {Vector} {Retrieval}, December 2024.
+\newblock arXiv:2409.10516 [cs].
+
+\bibitem{subramani_steerno1_2022}
+Nishant Subramani, Nivedita Suresh, and Matthew Peters.
+\newblock Extracting {Latent} {Steering} {Vectors} from {Pretrained} {Language} {Models}.
+\newblock In {\em Findings of the {Association} for {Computational} {Linguistics}: {ACL} 2022}, pages 566--581, Dublin, Ireland, 2022. Association for Computational Linguistics.
+
+\bibitem{liu_ICV_2024}
+Sheng Liu, Haotian Ye, Lei Xing, and James Zou.
+\newblock In-context {Vectors}: {Making} {In} {Context} {Learning} {More} {Effective} and {Controllable} {Through} {Latent} {Space} {Steering}, February 2024.
+\newblock arXiv:2311.06668 [cs].
+
+\bibitem{turner_ActAdd_2024}
+Alexander~Matt Turner, Lisa Thiergart, Gavin Leech, David Udell, Juan~J. Vazquez, Ulisse Mini, and Monte MacDiarmid.
+\newblock Steering {Language} {Models} {With} {Activation} {Engineering}, October 2024.
+\newblock arXiv:2308.10248 [cs].
+
+\bibitem{konen_stylevec_2024}
+Kai Konen, Sophie Jentzsch, Diaoul{\'e} Diallo, Peer Sch{\"u}tt, Oliver Bensch, Roxanne El~Baff, Dominik Opitz, and Tobias Hecking.
+\newblock Style vectors for steering generative large language models.
+\newblock In Yvette Graham and Matthew Purver, editors, {\em Findings of the Association for Computational Linguistics: EACL 2024}, pages 782--802, St. Julian{'}s, Malta, March 2024. Association for Computational Linguistics.
+
+\bibitem{rimsky_CAA_2024}
+Nina Rimsky, Nick Gabrieli, Julian Schulz, Meg Tong, Evan Hubinger, and Alexander Turner.
+\newblock Steering {Llama} 2 via {Contrastive} {Activation} {Addition}.
+\newblock In Lun-Wei Ku, Andre Martins, and Vivek Srikumar, editors, {\em Proceedings of the 62nd {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 15504--15522, Bangkok, Thailand, August 2024. Association for Computational Linguistics.
+
+\bibitem{feng_freectrl_2024}
+Zijian Feng, Hanzhang Zhou, Kezhi Mao, and Zixiao Zhu.
+\newblock {FreeCtrl}: {Constructing} {Control} {Centers} with {Feedforward} {Layers} for {Learning}-{Free} {Controllable} {Text} {Generation}.
+\newblock In {\em Proceedings of the 62nd {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 7627--7640, Bangkok, Thailand, 2024. Association for Computational Linguistics.
+
+\bibitem{xu_easyedit2_2025}
+Ziwen Xu, Shuxun Wang, Kewei Xu, Haoming Xu, Mengru Wang, Xinle Deng, Yunzhi Yao, Guozhou Zheng, Huajun Chen, and Ningyu Zhang.
+\newblock {EasyEdit2}: {An} {Easy}-to-use {Steering} {Framework} for {Editing} {Large} {Language} {Models}, April 2025.
+\newblock arXiv:2504.15133 [cs].
+
+\bibitem{xiao_sac_2024}
+Yuxin Xiao, Chaoqun Wan, Yonggang Zhang, Wenxiao Wang, Binbin Lin, Xiaofei He, Xu~Shen, and Jieping Ye.
+\newblock Enhancing {Multiple} {Dimensions} of {Trustworthiness} in {LLMs} via {Sparse} {Activation} {Control}.
+\newblock November 2024.
+
+\bibitem{li_destein_2024}
+Yu~Li, Han Jiang, Chuanyang Gong, and Zhihua Wei.
+\newblock {DESTEIN}: {Navigating} {Detoxification} of {Language} {Models} via {Universal} {Steering} {Pairs} and {Head}-wise {Activation} {Fusion}, August 2024.
+\newblock arXiv:2404.10464 [cs].
+
+\bibitem{han_lmsteer_2024}
+Chi Han, Jialiang Xu, Manling Li, Yi~Fung, Chenkai Sun, Nan Jiang, Tarek Abdelzaher, and Heng Ji.
+\newblock Word {Embeddings} {Are} {Steers} for {Language} {Models}.
+\newblock In Lun-Wei Ku, Andre Martins, and Vivek Srikumar, editors, {\em Proceedings of the 62nd {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 16410--16430, Bangkok, Thailand, August 2024. Association for Computational Linguistics.
+
+\bibitem{khandelwal_knnlm_2019}
+Urvashi Khandelwal, Omer Levy, Dan Jurafsky, Luke Zettlemoyer, and Mike Lewis.
+\newblock Generalization through {Memorization}: {Nearest} {Neighbor} {Language} {Models}.
+\newblock September 2019.
+
+\bibitem{pozzobon_goodtriever_2023}
+Luiza Pozzobon, Beyza Ermis, Patrick Lewis, and Sara Hooker.
+\newblock Goodtriever: {Adaptive} {Toxicity} {Mitigation} with {Retrieval}-augmented {Models}.
+\newblock In {\em Findings of the {Association} for {Computational} {Linguistics}: {EMNLP} 2023}, pages 5108--5125, Singapore, 2023. Association for Computational Linguistics.
+
+\bibitem{xu2025noderagstructuringgraphbasedrag}
+Tianyang Xu, Haojie Zheng, Chengze Li, Haoxiang Chen, Yixin Liu, Ruoxi Chen, and Lichao Sun.
+\newblock Noderag: Structuring graph-based rag with heterogeneous nodes, 2025.
+
+\bibitem{yang2025heteragheterogeneousretrievalaugmentedgeneration}
+Peiru Yang, Xintian Li, Zhiyang Hu, Jiapeng Wang, Jinhua Yin, Huili Wang, Lizhi He, Shuai Yang, Shangguang Wang, Yongfeng Huang, and Tao Qi.
+\newblock Heterag: A heterogeneous retrieval-augmented generation framework with decoupled knowledge representations, 2025.
+
+\bibitem{DBLP:journals/corr/abs-2503-21322}
+Haoran Luo, Haihong E, Guanting Chen, Yandan Zheng, Xiaobao Wu, Yikai Guo, Qika Lin, Yu~Feng, Ze{-}min Kuang, Meina Song, Yifan Zhu, and Luu~Anh Tuan.
+\newblock Hypergraphrag: Retrieval-augmented generation with hypergraph-structured knowledge representation.
+\newblock {\em CoRR}, abs/2503.21322, 2025.
+
+\bibitem{DBLP:conf/nips/GutierrezS0Y024}
+Bernal~Jimenez Gutierrez, Yiheng Shu, Yu~Gu, Michihiro Yasunaga, and Yu~Su.
+\newblock Hipporag: Neurobiologically inspired long-term memory for large language models.
+\newblock In Amir Globersons, Lester Mackey, Danielle Belgrave, Angela Fan, Ulrich Paquet, Jakub~M. Tomczak, and Cheng Zhang, editors, {\em Advances in Neural Information Processing Systems 38: Annual Conference on Neural Information Processing Systems 2024, NeurIPS 2024, Vancouver, BC, Canada, December 10 - 15, 2024}, 2024.
+
+\bibitem{DBLP:journals/corr/abs-2502-14802}
+Bernal~Jim{\'{e}}nez Guti{\'{e}}rrez, Yiheng Shu, Weijian Qi, Sizhe Zhou, and Yu~Su.
+\newblock From {RAG} to memory: Non-parametric continual learning for large language models.
+\newblock {\em CoRR}, abs/2502.14802, 2025.
+
+\bibitem{DBLP:journals/corr/abs-2405-16933}
+Xiang Liang, Simin Niu, Zhiyu Li, Sensen Zhang, Shichao Song, Hanyu Wang, Jiawei Yang, Feiyu Xiong, Bo~Tang, and Chenyang Xi.
+\newblock Empowering large language models to set up a knowledge retrieval indexer via self-learning.
+\newblock {\em CoRR}, abs/2405.16933, 2024.
+
+\bibitem{DBLP:journals/corr/abs-2501-13956}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel Chalef.
+\newblock Zep: {A} temporal knowledge graph architecture for agent memory.
+\newblock {\em CoRR}, abs/2501.13956, 2025.
+
+\bibitem{DBLP:journals/corr/abs-2502-12110}
+Wujiang Xu, Zujie Liang, Kai Mei, Hang Gao, Juntao Tan, and Yongfeng Zhang.
+\newblock {A-MEM:} agentic memory for {LLM} agents.
+\newblock {\em CoRR}, abs/2502.12110, 2025.
+
+\bibitem{chhikara2025mem0buildingproductionreadyai}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock Mem0: Building production-ready ai agents with scalable long-term memory, 2025.
+
+\bibitem{devlin_bert_2019}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT}: {Pre}-training of {Deep} {Bidirectional} {Transformers} for {Language} {Understanding}.
+\newblock In Jill Burstein, Christy Doran, and Thamar Solorio, editors, {\em Proceedings of the 2019 {Conference} of the {North} {American} {Chapter} of the {Association} for {Computational} {Linguistics}: {Human} {Language} {Technologies}, {Volume} 1 ({Long} and {Short} {Papers})}, pages 4171--4186, Minneapolis, Minnesota, June 2019. Association for Computational Linguistics.
+
+\bibitem{bai_rlhf_2022}
+Yuntao Bai, Andy Jones, Kamal Ndousse, Amanda Askell, Anna Chen, Nova DasSarma, Dawn Drain, Stanislav Fort, Deep Ganguli, Tom Henighan, Nicholas Joseph, Saurav Kadavath, Jackson Kernion, Tom Conerly, Sheer El-Showk, Nelson Elhage, Zac Hatfield-Dodds, Danny Hernandez, Tristan Hume, Scott Johnston, Shauna Kravec, Liane Lovitt, Neel Nanda, Catherine Olsson, Dario Amodei, Tom Brown, Jack Clark, Sam McCandlish, Chris Olah, Ben Mann, and Jared Kaplan.
+\newblock Training a {Helpful} and {Harmless} {Assistant} with {Reinforcement} {Learning} from {Human} {Feedback}, April 2022.
+\newblock arXiv:2204.05862 [cs].
+
+\bibitem{keskar_ctrl_2019}
+Nitish~Shirish Keskar, Bryan McCann, Lav~R. Varshney, Caiming Xiong, and Richard Socher.
+\newblock {CTRL}: {A} {Conditional} {Transformer} {Language} {Model} for {Controllable} {Generation}, September 2019.
+\newblock arXiv:1909.05858 [cs].
+
+\bibitem{chen_slayer_2024}
+Tianxiang Chen, Zhentao Tan, Tao Gong, Yue Wu, Qi~Chu, Bin Liu, Jieping Ye, and Nenghai Yu.
+\newblock Llama {SLayer} {8B}: {Shallow} {Layers} {Hold} the {Key} to {Knowledge} {Injection}.
+\newblock In {\em Findings of the {Association} for {Computational} {Linguistics}: {EMNLP} 2024}, pages 5991--6002, Miami, Florida, USA, 2024. Association for Computational Linguistics.
+
+\bibitem{hu_lora_2021}
+Edward~J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu~Wang, and Weizhu Chen.
+\newblock {LoRA}: {Low}-{Rank} {Adaptation} of {Large} {Language} {Models}, October 2021.
+\newblock arXiv:2106.09685 [cs].
+
+\bibitem{su_PRAG_2025}
+Weihang Su, Yichen Tang, Qingyao Ai, Junxi Yan, Changyue Wang, Hongning Wang, Ziyi Ye, Yujia Zhou, and Yiqun Liu.
+\newblock Parametric {Retrieval} {Augmented} {Generation}, January 2025.
+\newblock arXiv:2501.15915 [cs].
+
+\bibitem{tan_DyPRAG_2025}
+Yuqiao Tan, Shizhu He, Huanxuan Liao, Jun Zhao, and Kang Liu.
+\newblock Better wit than wealth: {Dynamic} {Parametric} {Retrieval} {Augmented} {Generation} for {Test}-time {Knowledge} {Enhancement}, March 2025.
+\newblock arXiv:2503.23895 [cs].
+
+\bibitem{mitchell_serac_2022}
+Eric Mitchell, Charles Lin, Antoine Bosselut, Christopher~D. Manning, and Chelsea Finn.
+\newblock Memory-{Based} {Model} {Editing} at {Scale}.
+\newblock In {\em Proceedings of the 39th {International} {Conference} on {Machine} {Learning}}, pages 15817--15831. PMLR, June 2022.
+\newblock ISSN: 2640-3498.
+
+\bibitem{dong_CaliNet_2022}
+Qingxiu Dong, Damai Dai, Yifan Song, Jingjing Xu, Zhifang Sui, and Lei Li.
+\newblock Calibrating {Factual} {Knowledge} in {Pretrained} {Language} {Models}.
+\newblock In {\em Findings of the {Association} for {Computational} {Linguistics}: {EMNLP} 2022}, pages 5937--5947, Abu Dhabi, United Arab Emirates, 2022. Association for Computational Linguistics.
+
+\bibitem{cheng_DPM_2023}
+Xin Cheng, Yankai Lin, Xiuying Chen, Dongyan Zhao, and Rui Yan.
+\newblock Decouple knowledge from paramters for plug-and-play language modeling.
+\newblock In {\em Findings of the {Association} for {Computational} {Linguistics}: {ACL} 2023}, pages 14288--14308, Toronto, Canada, 2023. Association for Computational Linguistics.
+
+\bibitem{hartvigsen_grace_2023}
+Thomas Hartvigsen, Swami Sankaranarayanan, Hamid Palangi, Yoon Kim, and Marzyeh Ghassemi.
+\newblock Aging with {GRACE}: {Lifelong} {Model} {Editing} with {Discrete} {Key}-{Value} {Adaptors}, October 2023.
+\newblock arXiv:2211.11031 [cs].
+
+\bibitem{meng_rome_2023}
+Kevin Meng, David Bau, Alex Andonian, and Yonatan Belinkov.
+\newblock Locating and {Editing} {Factual} {Associations} in {GPT}, January 2023.
+\newblock arXiv:2202.05262 [cs].
+
+\bibitem{meng_memit_2023}
+Kevin Meng, Arnab~Sen Sharma, Alex Andonian, Yonatan Belinkov, and David Bau.
+\newblock Mass-{Editing} {Memory} in a {Transformer}, August 2023.
+\newblock arXiv:2210.07229 [cs].
+
+\bibitem{fang_alphaedit_2025}
+Junfeng Fang, Houcheng Jiang, Kun Wang, Yunshan Ma, Shi Jie, Xiang Wang, Xiangnan He, and Tat-seng Chua.
+\newblock {AlphaEdit}: {Null}-{Space} {Constrained} {Knowledge} {Editing} for {Language} {Models}, March 2025.
+\newblock arXiv:2410.02355 [cs].
+
+\bibitem{jiang_anyedit_2025}
+Houcheng Jiang, Junfeng Fang, Ningyu Zhang, Guojun Ma, Mingyang Wan, Xiang Wang, Xiangnan He, and Tat-seng Chua.
+\newblock {AnyEdit}: {Edit} {Any} {Knowledge} {Encoded} in {Language} {Models}, February 2025.
+\newblock arXiv:2502.05628 [cs].
+
+\bibitem{zhang_easyedit_2024}
+Ningyu Zhang, Yunzhi Yao, Bozhong Tian, Peng Wang, Shumin Deng, Mengru Wang, Zekun Xi, Shengyu Mao, Jintian Zhang, Yuansheng Ni, Siyuan Cheng, Ziwen Xu, Xin Xu, Jia-Chen Gu, Yong Jiang, Pengjun Xie, Fei Huang, Lei Liang, Zhiqiang Zhang, Xiaowei Zhu, Jun Zhou, and Huajun Chen.
+\newblock A {Comprehensive} {Study} of {Knowledge} {Editing} for {Large} {Language} {Models}, November 2024.
+\newblock arXiv:2401.01286 [cs].
+
+\bibitem{li_AdaPLE_2024}
+Qi~Li and Xiaowen Chu.
+\newblock Can {We} {Continually} {Edit} {Language} {Models}? {On} the {Knowledge} {Attenuation} in {Sequential} {Model} {Editing}.
+\newblock In Lun-Wei Ku, Andre Martins, and Vivek Srikumar, editors, {\em Findings of the {Association} for {Computational} {Linguistics}: {ACL} 2024}, pages 5438--5455, Bangkok, Thailand, August 2024. Association for Computational Linguistics.
+
+\bibitem{tamayo_memat_2024}
+Daniel Tamayo, Aitor Gonzalez-Agirre, Javier Hernando, and Marta Villegas.
+\newblock Mass-{Editing} {Memory} with {Attention} in {Transformers}: {A} cross-lingual exploration of knowledge.
+\newblock In {\em Findings of the {Association} for {Computational} {Linguistics} {ACL} 2024}, pages 5831--5847, 2024.
+\newblock arXiv:2502.02173 [cs].
+
+\bibitem{jin_MemandReason_2024}
+Mingyu Jin, Weidi Luo, Sitao Cheng, Xinyi Wang, Wenyue Hua, Ruixiang Tang, William~Yang Wang, and Yongfeng Zhang.
+\newblock Disentangling {Memory} and {Reasoning} {Ability} in {Large} {Language} {Models}, November 2024.
+\newblock arXiv:2411.13504 [cs].
+
+\bibitem{DBLP:journals/corr/abs-2501-00663}
+Ali Behrouz, Peilin Zhong, and Vahab Mirrokni.
+\newblock Titans: Learning to memorize at test time.
+\newblock {\em CoRR}, abs/2501.00663, 2025.
+
+\bibitem{yao_KESurvey_2023}
+Yunzhi Yao, Peng Wang, Bozhong Tian, Siyuan Cheng, Zhoubo Li, Shumin Deng, Huajun Chen, and Ningyu Zhang.
+\newblock Editing {Large} {Language} {Models}: {Problems}, {Methods}, and {Opportunities}, November 2023.
+\newblock arXiv:2305.13172 [cs].
+
+\bibitem{xu_biasedit_2025}
+Xin Xu, Wei Xu, Ningyu Zhang, and Julian McAuley.
+\newblock {BiasEdit}: {Debiasing} {Stereotyped} {Language} {Models} via {Model} {Editing}, March 2025.
+\newblock arXiv:2503.08588 [cs].
+
+\bibitem{cao_KnowledgeEditor_2021}
+Nicola~De Cao, Wilker Aziz, and Ivan Titov.
+\newblock Editing {Factual} {Knowledge} in {Language} {Models}, September 2021.
+\newblock arXiv:2104.08164 [cs].
+
+\bibitem{mitchell_mend_2021}
+Eric Mitchell, Charles Lin, Antoine Bosselut, Chelsea Finn, and Christopher~D. Manning.
+\newblock Fast {Model} {Editing} at {Scale}.
+\newblock October 2021.
+
+\bibitem{tan_malmen_2023}
+Chenmien Tan, Ge~Zhang, and Jie Fu.
+\newblock Massive {Editing} for {Large} {Language} {Models} via {Meta} {Learning}.
+\newblock October 2023.
+
+\bibitem{tang_quest_2024}
+Jiaming Tang, Yilong Zhao, Kan Zhu, Guangxuan Xiao, Baris Kasikci, and Song Han.
+\newblock {QUEST}: {Query}-{Aware} {Sparsity} for {Efficient} {Long}-{Context} {LLM} {Inference}.
+\newblock June 2024.
+
+\bibitem{leong_selfdetoxifying_2023}
+Chak Leong, Yi~Cheng, Jiashuo Wang, Jian Wang, and Wenjie Li.
+\newblock Self-{Detoxifying} {Language} {Models} via {Toxification} {Reversal}.
+\newblock In {\em Proceedings of the 2023 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing}}, pages 4433--4449, Singapore, 2023. Association for Computational Linguistics.
+
+\bibitem{wang_ACT_2025}
+Tianlong Wang, Xianfeng Jiao, Yinghao Zhu, Zhongzhi Chen, Yifan He, Xu~Chu, Junyi Gao, Yasha Wang, and Liantao Ma.
+\newblock Adaptive {Activation} {Steering}: {A} {Tuning}-{Free} {LLM} {Truthfulness} {Improvement} {Method} for {Diverse} {Hallucinations} {Categories}.
+\newblock In {\em Proceedings of the {ACM} on {Web} {Conference} 2025}, {WWW} '25, pages 2562--2578, New York, NY, USA, April 2025. Association for Computing Machinery.
+
+\bibitem{li_ITI_2023}
+Kenneth Li, Oam Patel, Fernanda Viégas, Hanspeter Pfister, and Martin Wattenberg.
+\newblock Inference-{Time} {Intervention}: {Eliciting} {Truthful} {Answers} from a {Language} {Model}.
+\newblock {\em Advances in Neural Information Processing Systems}, 36:41451--41530, December 2023.
+
+\bibitem{wang_inferaligner_2024}
+Pengyu Wang, Dong Zhang, Linyang Li, Chenkun Tan, Xinghao Wang, Mozhi Zhang, Ke~Ren, Botian Jiang, and Xipeng Qiu.
+\newblock {InferAligner}: {Inference}-{Time} {Alignment} for {Harmlessness} through {Cross}-{Model} {Guidance}.
+\newblock pages 10460--10479, November 2024.
+
+\bibitem{stolfo_IFS_2025}
+Alessandro Stolfo, Vidhisha Balachandran, Safoora Yousefi, Eric Horvitz, and Besmira Nushi.
+\newblock Improving {Instruction}-{Following} in {Language} {Models} through {Activation} {Steering}, April 2025.
+\newblock arXiv:2410.12877 [cs].
+
+\bibitem{touvron_llama_2023}
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux, Timothée Lacroix, Baptiste Rozière, Naman Goyal, Eric Hambro, Faisal Azhar, Aurelien Rodriguez, Armand Joulin, Edouard Grave, and Guillaume Lample.
+\newblock {LLaMA}: {Open} and {Efficient} {Foundation} {Language} {Models}, February 2023.
+\newblock arXiv:2302.13971 [cs].
+
+\bibitem{touvron_llama2_2023}
+Hugo Touvron, Louis Martin, Kevin Stone, et~al.
+\newblock Llama 2: {Open} {Foundation} and {Fine}-{Tuned} {Chat} {Models}, July 2023.
+\newblock arXiv:2307.09288 [cs].
+
+\bibitem{ye_chatgpt_2023}
+Junjie Ye, Xuanting Chen, Nuo Xu, Can Zu, Zekai Shao, Shichun Liu, Yuhan Cui, Zeyang Zhou, Chao Gong, Yang Shen, Jie Zhou, Siming Chen, Tao Gui, Qi~Zhang, and Xuanjing Huang.
+\newblock A {Comprehensive} {Capability} {Analysis} of {GPT}-3 and {GPT}-3.5 {Series} {Models}, December 2023.
+\newblock arXiv:2303.10420 [cs].
+
+\bibitem{liu_lost_2024}
+Nelson~F. Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, and Percy Liang.
+\newblock Lost in the {Middle}: {How} {Language} {Models} {Use} {Long} {Contexts}.
+\newblock {\em Transactions of the Association for Computational Linguistics}, 12:157--173, 2024.
+\newblock Place: Cambridge, MA Publisher: MIT Press.
+
+\bibitem{dong_longsurvey_2024}
+Qingxiu Dong, Lei Li, Damai Dai, Ce~Zheng, Jingyuan Ma, Rui Li, Heming Xia, Jingjing Xu, Zhiyong Wu, Baobao Chang, Xu~Sun, Lei Li, and Zhifang Sui.
+\newblock A {Survey} on {In}-context {Learning}.
+\newblock In Yaser Al-Onaizan, Mohit Bansal, and Yun-Nung Chen, editors, {\em Proceedings of the 2024 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing}}, pages 1107--1128, Miami, Florida, USA, November 2024. Association for Computational Linguistics.
+
+\bibitem{DBLP:journals/ftir/RobertsonZ09}
+Stephen~E. Robertson and Hugo Zaragoza.
+\newblock The probabilistic relevance framework: {BM25} and beyond.
+\newblock {\em Found. Trends Inf. Retr.}, 3(4):333--389, 2009.
+
+\bibitem{DBLP:conf/emnlp/ReimersG19}
+Nils Reimers and Iryna Gurevych.
+\newblock Sentence-bert: Sentence embeddings using siamese bert-networks.
+\newblock In {\em Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing}, pages 3980--3990, 2019.
+
+\bibitem{Ensemble-Retriever}
+Langchaln.
+\newblock Ensemble retriever.
+\newblock \url{https://python.langchain.com/v0.1/docs/modules/data_connection/retrievers/ensemble}.
+
+\bibitem{wei2025ainativememory20second}
+Jiale Wei, Xiang Ying, Tao Gao, Fangyi Bao, Felix Tao, and Jingbo Shang.
+\newblock Ai-native memory 2.0: Second me, 2025.
+
+\bibitem{DBLP:journals/corr/abs-2308-08155}
+Qingyun Wu, Gagan Bansal, Jieyu Zhang, Yiran Wu, Shaokun Zhang, Erkang Zhu, Beibin Li, Li~Jiang, Xiaoyun Zhang, and Chi Wang.
+\newblock Autogen: Enabling next-gen {LLM} applications via multi-agent conversation framework.
+\newblock {\em CoRR}, abs/2308.08155, 2023.
+
+\bibitem{chhikara_mem0_2025}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock Mem0: {Building} {Production}-{Ready} {AI} {Agents} with {Scalable} {Long}-{Term} {Memory}, April 2025.
+\newblock arXiv:2504.19413 [cs].
+
+\bibitem{packer_memgpt_2024}
+Charles Packer, Sarah Wooders, Kevin Lin, Vivian Fang, Shishir~G. Patil, Ion Stoica, and Joseph~E. Gonzalez.
+\newblock {MemGPT}: {Towards} {LLMs} as {Operating} {Systems}, February 2024.
+\newblock arXiv:2310.08560 [cs].
+
+\bibitem{zhou_lima_arxiv23}
+Chunting Zhou, Pengfei Liu, Puxin Xu, Srini Iyer, Jiao Sun, Yuning Mao, Xuezhe Ma, Avia Efrat, Ping Yu, Lili Yu, Susan Zhang, Gargi Ghosh, Mike Lewis, Luke Zettlemoyer, and Omer Levy.
+\newblock Lima: Less is more for alignment, 2023.
+
+\bibitem{maharana2024evaluating}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco Barbieri, and Yuwei Fang.
+\newblock Evaluating very long-term conversational memory of llm agents.
+\newblock {\em arXiv preprint arXiv:2402.17753}, 2024.
+
+\bibitem{wu2024longmemeval}
+Di~Wu, Hongwei Wang, Wenhao Yu, Yuwei Zhang, Kai-Wei Chang, and Dong Yu.
+\newblock Longmemeval: Benchmarking chat assistants on long-term interactive memory.
+\newblock {\em arXiv preprint arXiv:2410.10813}, 2024.
+
+\bibitem{zhao2025llms}
+Siyan Zhao, Mingyi Hong, Yang Liu, Devamanyu Hazarika, and Kaixiang Lin.
+\newblock Do llms recognize your preferences? evaluating personalized preference following in llms.
+\newblock {\em arXiv preprint arXiv:2502.09597}, 2025.
+
+\bibitem{jiang2025know}
+Bowen Jiang, Zhuoqun Hao, Young-Min Cho, Bryan Li, Yuan Yuan, Sihao Chen, Lyle Ungar, Camillo~J Taylor, and Dan Roth.
+\newblock Know me, respond to me: Benchmarking llms for dynamic user profiling and personalized responses at scale.
+\newblock {\em arXiv preprint arXiv:2504.14225}, 2025.
+
+\bibitem{wang2025mirix}
+Yu~Wang and Xi~Chen.
+\newblock Mirix: Multi-agent memory system for llm-based agents.
+\newblock {\em arXiv preprint arXiv:2507.07957}, 2025.
+
+\bibitem{chhikara2025mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock Mem0: Building production-ready ai agents with scalable long-term memory.
+\newblock {\em arXiv preprint arXiv:2504.19413}, 2025.
+
+\bibitem{rasmussen2025zep}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel Chalef.
+\newblock Zep: a temporal knowledge graph architecture for agent memory.
+\newblock {\em arXiv preprint arXiv:2501.13956}, 2025.
+
+\end{thebibliography}

@@ -1,0 +1,159 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Anthropic(2025)]{anthropic2023modelcard}
+Anthropic.
+\newblock Model card and evaluations for claude models.
+\newblock Technical report, Anthropic, February 2025.
+\newblock URL \url{https://www.anthropic.com/news/claude-3-7-sonnet}.
+
+\bibitem[Assmann(2011)]{assmann2011communicative}
+Jan Assmann.
+\newblock Communicative and cultural memory.
+\newblock In \emph{Cultural memories: The geographical point of view}, pages 15--27. Springer, 2011.
+
+\bibitem[Bulatov et~al.(2022)Bulatov, Kuratov, and Burtsev]{bulatov2022recurrent}
+Aydar Bulatov, Yury Kuratov, and Mikhail Burtsev.
+\newblock Recurrent memory transformer.
+\newblock \emph{Advances in Neural Information Processing Systems}, 35:\penalty0 11079--11091, 2022.
+
+\bibitem[Chhikara et~al.(2023)Chhikara, Zhang, Ilievski, Francis, and Ma]{chhikara2023knowledge}
+Prateek Chhikara, Jiarui Zhang, Filip Ilievski, Jonathan Francis, and Kaixin Ma.
+\newblock Knowledge-enhanced agents for interactive text games.
+\newblock In \emph{Proceedings of the 12th Knowledge Capture Conference 2023}, pages 157--165, 2023.
+
+\bibitem[Craik and Jennings(1992)]{craik1992human}
+Fergus~IM Craik and Janine~M Jennings.
+\newblock Human memory.
+\newblock 1992.
+
+\bibitem[Goswami(2025)]{goswami2025dissecting}
+Gaurav Goswami.
+\newblock Dissecting the metrics: How different evaluation approaches yield diverse results for conversational ai.
+\newblock \emph{Authorea Preprints}, 2025.
+
+\bibitem[Guo et~al.(2024)Guo, Pai, Bai, Jiao, Jordan, and Mei]{guo2024active}
+Tianyu Guo, Druv Pai, Yu~Bai, Jiantao Jiao, Michael Jordan, and Song Mei.
+\newblock Active-dormant attention heads: Mechanistically demystifying extreme-token phenomena in llms.
+\newblock In \emph{NeurIPS 2024 Workshop on Mathematics of Modern Machine Learning}, 2024.
+
+\bibitem[Hatalis et~al.(2023)Hatalis, Christou, Myers, Jones, Lambert, Amos-Binks, Dannenhauer, and Dannenhauer]{hatalis2023memory}
+Kostas Hatalis, Despina Christou, Joshua Myers, Steven Jones, Keith Lambert, Adam Amos-Binks, Zohreh Dannenhauer, and Dustin Dannenhauer.
+\newblock Memory matters: The need to improve long-term memory in llm-agents.
+\newblock In \emph{Proceedings of the AAAI Symposium Series}, volume~2, pages 277--280, 2023.
+
+\bibitem[He et~al.(2024)He, Lin, Zheng, Zhang, Jones, Aitchison, Xu, Liu, Kristensson, and Shen]{he2024human}
+Zihong He, Weizhe Lin, Hao Zheng, Fan Zhang, Matt~W Jones, Laurence Aitchison, Xuhai Xu, Miao Liu, Per~Ola Kristensson, and Junxiao Shen.
+\newblock Human-inspired perspectives: A survey on ai long-term memory.
+\newblock \emph{arXiv preprint arXiv:2411.00489}, 2024.
+
+\bibitem[Hurst et~al.(2024)Hurst, Lerer, Goucher, Perelman, Ramesh, Clark, Ostrow, Welihinda, Hayes, Radford, et~al.]{hurst2024gpt}
+Aaron Hurst, Adam Lerer, Adam~P Goucher, Adam Perelman, Aditya Ramesh, Aidan Clark, AJ~Ostrow, Akila Welihinda, Alan Hayes, Alec Radford, et~al.
+\newblock Gpt-4o system card.
+\newblock \emph{arXiv preprint arXiv:2410.21276}, 2024.
+
+\bibitem[Jaech et~al.(2024)Jaech, Kalai, Lerer, Richardson, El-Kishky, Low, Helyar, Madry, Beutel, Carney, et~al.]{jaech2024openai}
+Aaron Jaech, Adam Kalai, Adam Lerer, Adam Richardson, Ahmed El-Kishky, Aiden Low, Alec Helyar, Aleksander Madry, Alex Beutel, Alex Carney, et~al.
+\newblock Openai o1 system card.
+\newblock \emph{arXiv preprint arXiv:2412.16720}, 2024.
+
+\bibitem[Lee et~al.(2024)Lee, Chen, Furuta, Canny, and Fischer]{lee2024human}
+Kuang-Huei Lee, Xinyun Chen, Hiroki Furuta, John Canny, and Ian Fischer.
+\newblock A human-inspired reading agent with gist memory of very long contexts.
+\newblock In \emph{International Conference on Machine Learning}, pages 26396--26415. PMLR, 2024.
+
+\bibitem[Liu et~al.(2023)Liu, Yang, Shen, Hu, Zhang, Gu, and Zhang]{liu2023think}
+Lei Liu, Xiaoyan Yang, Yue Shen, Binbin Hu, Zhiqiang Zhang, Jinjie Gu, and Guannan Zhang.
+\newblock Think-in-memory: Recalling and post-thinking enable llms with long-term memory.
+\newblock \emph{arXiv preprint arXiv:2311.08719}, 2023.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and Fang]{maharana2024evaluating}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco Barbieri, and Yuwei Fang.
+\newblock Evaluating very long-term conversational memory of llm agents.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 13851--13870, 2024.
+
+\bibitem[Majumder et~al.()Majumder, Mishra, Jansen, Tafjord, Tandon, Zhang, Callison-Burch, and Clark]{majumderclin}
+Bodhisattwa~Prasad Majumder, Bhavana~Dalvi Mishra, Peter Jansen, Oyvind Tafjord, Niket Tandon, Li~Zhang, Chris Callison-Burch, and Peter Clark.
+\newblock Clin: A continually learning language agent for rapid task adaptation and generalization.
+\newblock In \emph{First Conference on Language Modeling}.
+
+\bibitem[Nelson et~al.(2024)Nelson, Kollias, Das, Chaudhury, and Dan]{nelson2024needle}
+Elliot Nelson, Georgios Kollias, Payel Das, Subhajit Chaudhury, and Soham Dan.
+\newblock Needle in the haystack for memory based large language models.
+\newblock \emph{arXiv preprint arXiv:2407.01437}, 2024.
+
+\bibitem[Packer et~al.(2023)Packer, Fang, Patil, Lin, Wooders, and Gonzalez]{packer2023memgpt}
+Charles Packer, Vivian Fang, Shishir\_G Patil, Kevin Lin, Sarah Wooders, and Joseph\_E Gonzalez.
+\newblock Memgpt: Towards llms as operating systems.
+\newblock 2023.
+
+\bibitem[Rasmussen et~al.(2025)Rasmussen, Paliychuk, Beauvais, Ryan, and Chalef]{rasmussen2025zep}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel Chalef.
+\newblock Zep: A temporal knowledge graph architecture for agent memory.
+\newblock \emph{arXiv preprint arXiv:2501.13956}, 2025.
+
+\bibitem[Sarthi et~al.(2024)Sarthi, Abdullah, Tuli, Khanna, Goldie, and Manning]{sarthi2024raptor}
+Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh Khanna, Anna Goldie, and Christopher~D Manning.
+\newblock Raptor: Recursive abstractive processing for tree-organized retrieval.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}, 2024.
+
+\bibitem[Shinn et~al.(2023)Shinn, Cassano, Gopinath, Narasimhan, and Yao]{shinn2023reflexion}
+Noah Shinn, Federico Cassano, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao.
+\newblock Reflexion: Language agents with verbal reinforcement learning.
+\newblock \emph{Advances in Neural Information Processing Systems}, 36:\penalty0 8634--8652, 2023.
+
+\bibitem[Singh et~al.(2020)Singh, Chhikara, and Singh]{singh2020ensemble}
+Prabhjot Singh, Prateek Chhikara, and Jasmeet Singh.
+\newblock An ensemble approach for extractive text summarization.
+\newblock In \emph{2020 International Conference on Emerging Trends in Information Technology and Engineering (ic-ETITE)}, pages 1--7. IEEE, 2020.
+
+\bibitem[Soni et~al.(2024)Soni, Arora, Kumar, and Panwar]{soni2024evaluating}
+Arpita Soni, Rajeev Arora, Anoop Kumar, and Dheerendra Panwar.
+\newblock Evaluating domain coverage in low-resource generative chatbots: A comparative study of open-domain and closed-domain approaches using bleu scores.
+\newblock In \emph{2024 International Conference on Electrical Electronics and Computing Technologies (ICEECT)}, volume~1, pages 1--6. IEEE, 2024.
+
+\bibitem[Team et~al.(2024)Team, Georgiev, Lei, Burnell, Bai, Gulati, Tanzer, Vincent, Pan, Wang, et~al.]{team2024gemini}
+Gemini Team, Petko Georgiev, Ving~Ian Lei, Ryan Burnell, Libin Bai, Anmol Gulati, Garrett Tanzer, Damien Vincent, Zhufeng Pan, Shibo Wang, et~al.
+\newblock Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context.
+\newblock \emph{arXiv preprint arXiv:2403.05530}, 2024.
+
+\bibitem[Timoneda and Vera(2025)]{timoneda2025memory}
+Joan~C Timoneda and Sebasti{\'a}n~Vallejo Vera.
+\newblock Memory is all you need: Testing how model memory affects llm performance in annotation tasks.
+\newblock \emph{arXiv preprint arXiv:2503.04874}, 2025.
+
+\bibitem[Xu et~al.(2025)Xu, Liang, Mei, Gao, Tan, and Zhang]{xu2025mem}
+Wujiang Xu, Zujie Liang, Kai Mei, Hang Gao, Juntao Tan, and Yongfeng Zhang.
+\newblock A-mem: Agentic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2502.12110}, 2025.
+
+\bibitem[Yu et~al.(2024)Yu, Li, Chen, Jiang, Li, Zhang, Liu, Suchow, and Khashanah]{yu2024finmem}
+Yangyang Yu, Haohang Li, Zhi Chen, Yuechen Jiang, Yang Li, Denghui Zhang, Rong Liu, Jordan~W Suchow, and Khaldoun Khashanah.
+\newblock Finmem: A performance-enhanced llm trading agent with layered memory and character design.
+\newblock In \emph{Proceedings of the AAAI Symposium Series}, volume~3, pages 595--597, 2024.
+
+\bibitem[Zhang(2024)]{zhang2024guided}
+Jiarui Zhang.
+\newblock Guided profile generation improves personalization with large language models.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2024}, pages 4005--4016, 2024.
+
+\bibitem[Zhang et~al.(2022)Zhang, Ilievski, Ma, Francis, and Oltramari]{zhang2022study}
+Jiarui Zhang, Filip Ilievski, Kaixin Ma, Jonathan Francis, and Alessandro Oltramari.
+\newblock A study of zero-shot adaptation with commonsense knowledge.
+\newblock In \emph{AKBC}, 2022.
+
+\bibitem[Zhang et~al.(2024)Zhang, Bo, Ma, Li, Chen, Dai, Zhu, Dong, and Wen]{zhang2024survey}
+Zeyu Zhang, Xiaohe Bo, Chen Ma, Rui Li, Xu~Chen, Quanyu Dai, Jieming Zhu, Zhenhua Dong, and Ji-Rong Wen.
+\newblock A survey on the memory mechanism of large language model based agents.
+\newblock \emph{arXiv preprint arXiv:2404.13501}, 2024.
+
+\bibitem[Zhong et~al.(2024)Zhong, Guo, Gao, Ye, and Wang]{zhong2024memorybank}
+Wanjun Zhong, Lianghong Guo, Qiqi Gao, He~Ye, and Yanlin Wang.
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~38, pages 19724--19731, 2024.
+
+\end{thebibliography}

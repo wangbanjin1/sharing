@@ -1,0 +1,32 @@
+\begin{table}[t]
+\caption{A comparison between three retrievers under different key-value indexing settings.}
+\centering
+\resizebox{0.9\textwidth}{!}{%
+\begin{tabular}{l|c|cccc|cccc}
+\toprule
+\multirow{3}{*}{\textbf{Key Design}} & \multirow{3}{*}{\textbf{Retriever}} & \multicolumn{4}{c|}{\textbf{Value = session}} & \multicolumn{4}{c}{\textbf{Value = round}} \\
+\cmidrule(lr){3-6} \cmidrule(lr){7-10}
+& & \multicolumn{2}{c}{Metric@5} & \multicolumn{2}{c|}{Metric@10} & \multicolumn{2}{c}{Metric@5} & \multicolumn{2}{c}{Metric@10} \\
+\cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8} \cmidrule(lr){9-10}
+& & Recall & NDCG & Recall & NDCG & Recall & NDCG & Recall & NDCG \\
+\midrule
+\multirow{3}{*}{K = V} & BM25 & 0.634 & 0.516 & 0.710 & 0.540 & 0.472 & 0.352 & 0.538 & 0.372 \\
+& Contriever & 0.723 & 0.634 & 0.823 & 0.663 & 0.589 & 0.454 & 0.747 & 0.495 \\
+& Stella V5 1.5B & 0.720 & 0.594 & 0.794 & 0.615 & 0.660 & 0.498 & 0.784 & 0.528 \\
+\midrule
+\multirow{3}{*}{K = V + summary} & BM25 & 0.626 & 0.544 & 0.694 & 0.565 & - & - & - & - \\
+& Contriever & 0.732 & 0.632 & 0.823 & 0.657 & - & - & - & - \\
+& Stella V5 1.5B & 0.689 & 0.608 & 0.749 & 0.624 & - & - & - & - \\
+\midrule
+\multirow{3}{*}{K = V + fact} & BM25 & 0.683 & 0.560 & 0.757 & 0.582 & 0.554 & 0.454 & 0.608 & 0.473 \\
+& Contriever & 0.762 & 0.632 & 0.862 & 0.658 & 0.612 & 0.489 & 0.756 & 0.530 \\
+& Stella V5 1.5B & 0.732 & 0.520 & 0.862 & 0.552 & 0.644 & 0.498 & 0.784 & 0.536 \\
+\midrule
+\multirow{3}{*}{K = V + keyphrases} & BM25 & 0.632 & 0.546 & 0.711 & 0.569 & 0.453 & 0.391 & 0.538 & 0.416 \\
+& Contriever & 0.740 & 0.638 & 0.849 & 0.668 & 0.546 & 0.450 & 0.672 & 0.489 \\
+& Stella V5 1.5B & 0.710 & 0.587 & 0.768 & 0.602 & 0.478 & 0.359 & 0.636 & 0.410 \\
+\bottomrule
+\end{tabular}
+}
+\label{tab:key-results-full-appendix}
+\end{table}

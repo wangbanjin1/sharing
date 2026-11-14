@@ -1,0 +1,175 @@
+%%%%%%%% MIRIX-2.0 ARXIV PREPRINT (META FAIR TEMPLATE) %%%%%%%%%%%%%%%%%
+%
+% fairmeta.cls is the Meta FAIR preprint class, taken from the arXiv source of
+% ANTE (arXiv:2610.15368) with the MIRIX logo in place of the AWS logo.
+% Earlier layouts of this paper: industry tech-report style (git commit
+% 2f3c82a), NeurIPS 2026 preprint (ae8e066), and the ACL style for the
+% NAACL 2027 demo track (38a82b2).
+
+% The class loads cleveref itself, so pass our extra option before it does.
+\PassOptionsToPackage{capitalize}{cleveref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass{fairmeta}
+
+% fairmeta.cls already loads geometry, microtype, placeins, parskip, graphicx,
+% subcaption, booktabs, multirow, tcolorbox, xcolor, amsthm, hyperref,
+% cleveref, natbib (author-year), caption, T1 fontenc and helvet.
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage{url}
+\usepackage{adjustbox}      % shrink wide tables to the text width
+\usepackage{wrapfig}        % half-width figures beside the text
+
+% For theorems and such
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{xspace}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+% noend still leaves an empty line at every block end (algorithmicx notes it as a bug); drop it
+\makeatletter
+\patchcmd{\ALG@doentity}{\item[]\nointerlineskip}{}{}{\PackageWarning{main}{algpseudocode noend patch failed}}
+\makeatother
+\usetikzlibrary{shapes.multipart, arrows.meta, positioning}
+
+% Bold run-in paragraph headings with tighter spacing, as in the ANTE paper
+\makeatletter
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{0.6ex plus 0.3ex minus .2ex}{-1em}{\normalsize\bfseries}}
+\makeatother
+
+% Let TeX loosen a line rather than push a long citation into the margin
+% Tighter reference entries (natbib takes parskip otherwise) and float separations
+\setlength{\bibsep}{2pt plus 0.5pt}
+\setlength{\textfloatsep}{14pt plus 2pt minus 4pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\captionsetup{skip=6pt}
+\captionsetup[table]{position=top}
+% At most one float at the top and one at the bottom of a page, so that text
+% always separates two floats
+\setcounter{topnumber}{1}
+\setcounter{bottomnumber}{1}
+\setcounter{totalnumber}{2}
+\setlength{\emergencystretch}{1em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Todonotes is useful during development; simply uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[textsize=tiny]{todonotes}
+
+\newcommand{\ours}{\texorpdfstring{\mbox{MIRIX-2.0}}{MIRIX-2.0}\xspace}
+% \newcommand{\ours}{\textsc{SuMem}\xspace}
+
+\newcommand{\mem}{\texttt{Mem0}}
+\newcommand{\memp}{$\texttt{Mem0}^{\tiny g}$}
+\newcommand{\Fone}{F\textsubscript{1}}
+\newcommand{\Bone}{B\textsubscript{1}}
+\newcommand{\Judge}{J}
+\newcommand{\wy}[1]{{\color{blue}{#1}}}
+\providecommand{\ours}{MIRIX-2.0}
+% Flush floats that are still waiting for a place, but do not force a page break
+% for a float already placed on the current page (that break can leave a page
+% with a single line on it).
+\makeatletter
+\newcommand{\DeferredFloatBarrier}{\par\ifx\@deferlist\@empty\else\FloatBarrier\fi}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE BOX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\ours: Multi-Agent Memory System}
+
+% \author[<affiliation numbers>]{Name}; mark the corresponding author with
+% \author[1,\dagger]{...} and \contribution[\dagger]{Corresponding author}.
+
+\author[*]{Wei-Chieh~Huang}
+\author[*,\dagger]{Weizhi~Zhang}
+\author[*]{Jiayan Nan}
+\author[*]{Peng~Xia}
+\author[*,\dagger]{Yu~Wang}
+
+\affiliation{MIRIX AI}
+
+\contribution[*]{Equal contribution}
+\contribution[\dagger]{Corresponding author}
+% \author[]{Julian~McAuley}
+% \affiliation[]{UC San Diego}
+
+\abstract{
+Long-term memory lets LLM agents personalize, stay consistent, and reuse what
+worked before. Parametric memories need training, consolidation can lose details
+for good, and keeping every record leaves a growing store to search. We present
+\ours, a multi-agent memory system designed to be practical, accurate, and
+efficient at once. It is the most accurate of the compared systems on four of five QA benchmarks.
+It reaches 91.4\% on LoCoMo and 72.6\% on LongMemEval-S, where it leads the
+strongest baseline by 14.3 points, and with AutoDream disabled it gains 31.0
+and 22.0 points over HyperMem on single-hop and multi-hop document QA. As procedural memory, it yields the
+highest mean success among the compared memory methods on ALFWorld and WebShop
+and reaches 49.2\% on MetaClaw-Bench, against 44.0\% for MetaClaw's skill
+library. Six typed memory agents keep complete records as the system of record,
+and a provenance hypergraph indexes episodic and semantic records with n-ary
+frames that cite their rows. Retrieval runs under explicit budgets, so the
+evidence a question inspects does not grow with the history. AutoDream merges
+duplicate anchors outside the write path without rewriting any record, and it
+distills task sessions into skills. With AutoDream disabled, \ours answers
+faster than HyperMem on all five timed benchmarks. It needs no fine-tuning, runs
+with closed and open models, and its code is public.
+}
+
+\authoremails{\email{\{whuang80,wzhan42\}@uic.edu}, 
+\email{njy@tongji.edu},
+\email{pxia@cs.unc.edu},
+\email{yuw164@ucsd.edu}}
+\metadata[Website]{\url{https://mirix.io/}}
+\metadata[GitHub]{\url{https://github.com/Mirix-AI/MIRIX}}
+
+
+\begin{document}
+
+\maketitle
+
+% Keep the overview figure below the title box on the first page.
+\suppressfloats[t]
+
+\input{1_introduction}
+% \input{9_usecase}
+\input{3_method}
+\FloatBarrier
+\input{4_experiments}
+\DeferredFloatBarrier
+\input{2_related_work}
+\input{5_conclusion}
+
+\input{7_statement}
+
+% \section*{Acknowledgments}
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{ref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+\input{6_appendix}
+
+
+\end{document}

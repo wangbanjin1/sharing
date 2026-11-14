@@ -1,0 +1,162 @@
+\section{The instrument}
+\label{sec:instrument}
+
+\subsection{Design principle: ground truth first}
+
+Benchmarks for conversational and agent memory are typically built
+conversation-first: dialogues are generated (or collected), and answer keys
+are then extracted from them. This pipeline has two documented failure
+modes. First, extracted keys are wrong at material rates --- an independent
+audit of LoCoMo \citep{maharana2024locomo} found 6.4\% of its answer key
+score-corrupting (99/1{,}540 questions), with an LLM judge that accepted up
+to 63\% of deliberately wrong answers \citep{penfield2026locomoaudit};
+label-error rates of this order are consistent with peer-reviewed audits
+across ML test sets \citep[avg.\ 3.3\%;][]{northcutt2021labelerrors}.
+Second, when benchmark entities are real, frontier models answer substantial
+fractions of ``memory'' questions from pretraining alone --- MemGym measures
+70--85\% on its diagnostic without fictionalization \citep{xu2026memgym} ---
+so a memory score partly measures the model's priors, not its memory
+\citep{xu2024contamination}.
+
+Our instrument inverts the pipeline: \textbf{ground truth exists before any
+text.} A deterministic, seeded life-script sampler emits a timeline of facts
+for a fictional user --- each fact carrying a \emph{validity interval} (when
+it is true), a \emph{volatility class} (permanent $\rightarrow$ durable
+$\rightarrow$ slow-changing $\rightarrow$ transient $\rightarrow$
+ephemeral), and a \emph{channel} (stated in chat; or arriving by email, with
+sent vs.\ received distinguished --- received mail is third-party-authored
+content and therefore both a lower-trust evidence class and an injection
+surface). An LLM renderer --- Amazon Nova Pro, deliberately a different
+model family from the answerer and judge --- turns each scripted event into
+a chat session or an email against a per-event \emph{fact manifest}. A
+fidelity verifier then checks that every planted fact actually appears in
+the rendered text (regenerate on miss; ship-with-warning after retries).
+Questions are instantiated mechanically from the script, never from the
+rendered text, so gold answers are \emph{script-valid by construction};
+whether the rendered corpus actually supports each answer is separately
+validated (\S 3.3). The fidelity verifier checks planted-fact
+\emph{presence}, not renderer additions. The answerability audit is a
+partial backstop --- it exposed one case of renderer-invented content in
+practice --- but an open-book oracle can succeed despite unsupported
+additions or accidental shortcuts, so it is not a comprehensive audit of
+renderer precision; a two-sided renderer audit (planted-fact recall
+\emph{and} unsupported-fact precision) remains future work
+(\S\ref{sec:threats}).
+
+Because the corpus is fully synthetic and fictionalized, it contains no real
+personal data (an ethics asset), and entity-specific gold facts are
+fictionalized and unavailable from public factual priors by design
+\citep[a validity asset; cf.][]{xu2026memgym}.
+
+\subsection{Corpus}
+
+Two corpora share the generator:
+\begin{itemize}
+\item \textbf{Short horizon:} 14 users, 275 validated questions, dual
+  chat/email channels, planted injection probes and staleness traps.
+\item \textbf{Long horizon (tenure):} 6 users with nine-week histories, 108
+  questions instantiated as \emph{as-of-date} sets at three checkpoints
+  (weeks 3, 6, 9; 324 judged answers per backend per checkpoint), including
+  early-chapter probes that specifically target the oldest material.
+\end{itemize}
+
+Total: 383 validated questions across 15 question types (three types add
+\texttt{-early} variants in the tenure corpus): single-fact,
+inference-only, episodic, temporal, multi-session, knowledge-update
+(current and past), preference (current and application), expired-state,
+conflict-resolution, work-memory, abstention, abstention-false-premise, and
+injection-probe.
+
+The corpus embeds features that we did not find in the memory benchmarks
+and released artifacts we surveyed as of July 2026
+(Table~\ref{tab:gap}): per-fact validity intervals; a
+sent/received trust distinction on the email channel; injection probes
+embedded in a benign harness rather than an adversarial one; transient
+states with ground-truth end dates; and as-of-date question sets enabling
+tenure curves.
+
+\subsection{Answerability audit}
+
+Following MemGym's protocol, a final validation stage gives an oracle the
+\emph{complete} rendered corpus open-book and requires it to answer every
+generated question; the standard judge scores the attempt, and failures are
+excluded from the harness. 215/220 generated questions validated (97.7\%).
+The five exclusions were not noise: they trace to a single named tension ---
+a well-behaved oracle \emph{declines to assert} facts whose only evidence is
+third-party-authored (a relative's email), which is precisely the behavior
+that defeats injection. We return to this trust/recall trade-off in
+\S\ref{sec:security}; the instrument surfaced it before any memory system
+existed.
+
+\subsection{Harness and judge}
+\label{sec:harness}
+
+All backend comparisons hold the answering model fixed
+(\texttt{claude-haiku-4-5-20251001}) and include a no-memory ablation
+control. The judge (\texttt{claude-sonnet-5}, versioned rubric) is treated
+as \emph{part of the benchmark definition}; the renderer is
+\texttt{amazon.nova-pro-v1:0} and the cross-family judge
+\texttt{deepseek.v3.2} (both via Bedrock), with Titan-v2 embeddings for the
+vector backend. All calls used provider-default decoding at run time
+(July 2026; Bedrock region \texttt{us-east-1}; up to 2--3 retries on
+transient failures and parse errors, recorded per call); every call is
+logged (model, tag, token counts) and the logs are released. Provider
+defaults are not archived by the providers, which we flag as a
+reproducibility limitation. Rubric changes are versioned like code; the
+judge is held fixed across backends so that shared error cancels in
+differential claims \citep{zheng2023judging,wang2024notfair}; and the
+corpus generator is a different model family from the answerer and judge.
+Holding the judge fixed does not make \emph{all} its error common-mode ---
+error that interacts with answer style is backend-correlated --- which
+\S\ref{sec:threats} addresses. Every run is repeated as three independent
+stochastic replicates (repeated API runs --- the providers expose no
+random-seed control, so these are replicates, not seeded runs);
+stochasticity in a single run masked entire defect classes in early
+iterations. The corpus \emph{generator} is genuinely seeded and
+deterministic; only the LLM calls are stochastic. Content-level
+replication comes
+from the users themselves: each user --- short-horizon and tenure alike ---
+is an independent generator draw (persona, preference chain, fact values),
+with tenure users of the same archetype sharing only a chapter-index
+work-fact skeleton (\S\ref{sec:threats}). Per-cell model configurations are
+recorded and released.
+
+The original study logged 34{,}076 LLM calls end to end, with judging
+consuming more calls than answering (15.0k vs.\ 12.7k) --- half the
+instrument's spend is measurement, which we report as the honest price of
+a judged benchmark. Review-driven validation added a further 18{,}721
+calls (the history baselines and the complete cross-family re-judging,
+including the vector follow-up), for 52{,}797 in the released logs.
+
+\section{Study design}
+\label{sec:design}
+
+We benchmark five memory architectures plus the no-memory control under the
+\S\ref{sec:harness} protocol. The bake-off backends consume one shared
+distillation pass, but the complete systems differ together in write
+procedure, representation, retrieval, and token spend
+(\S\ref{sec:writequality}, \S\ref{sec:cost}): the experiment compares
+\emph{complete memory-system implementations} under a shared corpus,
+answerer, and evaluation protocol --- not isolated components.
+
+\begin{enumerate}
+\item \textbf{Curated map} --- a budgeted Markdown context map maintained by
+  an LLM curator \citep[the PEEK shape;][]{gu2026peek}: distill
+  $\rightarrow$ cartograph $\rightarrow$ evict under budget.
+\item \textbf{Vector} --- Titan-v2 embeddings, top-$K$ retrieval over
+  unbounded records.
+\item \textbf{Graph} --- a typed labeled-property graph; entities,
+  relations, and provenance-typed edges; entity-matched subgraph retrieval.
+  Third-party claims exist only as \texttt{third\_party\_claim} edges with
+  the claimant as source.
+\item \textbf{Hybrid v1} --- a deterministic graph$\rightarrow$map
+  compilation (negative result, \S\ref{sec:hybrid1}).
+\item \textbf{Hybrid v2 (layered)} --- the graph's typed edges plus the
+  distiller's episode records (each store's cleaner half), compiled once per
+  user by an LLM cartographer into a budgeted wiki, supplemented by
+  per-question subgraph retrieval.
+\end{enumerate}
+
+Questions are scored by the versioned judge; we report totals, per-category
+splits, and --- for the tenure corpus --- per-checkpoint accuracy on
+as-of-date question sets.

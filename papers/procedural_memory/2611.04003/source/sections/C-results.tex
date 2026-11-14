@@ -1,0 +1,261 @@
+\section{Complete Cross-Model Results}
+\label{app:results}
+
+Tables~\ref{tab:exp1-full} to~\ref{tab:pooled-full} report the exact result
+variants underlying the main-text ranges and figures. Within each model
+block, bold marks the best value in each column, where best means the lowest
+value for store size and cost. Shading marks the strongest configuration in the
+block. Table~\ref{tab:exp4-weak} has none, because there no single round is
+strongest on every model.
+
+\subsection{Experiment 1: Consolidation Method}
+
+\begin{table}[p]
+\caption{\textbf{Complete Experiment 1 results.} $\Delta$ is checkpoint-pass
+improvement over \cond{No Memory} for the same model. Cost covers consolidation API
+calls only.}
+\label{tab:exp1-full}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccccc}
+\toprule
+Model & Method & Checkpoint pass & $\Delta$ (pp) &
+Fully passed & Store (KB) & Consol.\ cost \\
+\midrule
+Claude Opus 4.6 & No Memory & 317/542 (58.5\%) & n/a & 46/127 (36.2\%) & n/a & n/a \\
+& No Consolidation & 332/542 (61.3\%) & +2.8 & 51/127 (40.2\%) & 7{,}979 & n/a \\
+& SkillX & 354/542 (65.3\%) & +6.8 & 58/127 (45.7\%) & 1{,}125 & \$173 \\
+& Insights & 356/542 (65.7\%) & +7.2 & 58/127 (45.7\%) & 396 & \textbf{\$148} \\
+& Schema Form-ED & 356/542 (65.7\%) & +7.2 & 57/127 (44.9\%) & 789 & \$380 \\
+& Schema Form & 359/542 (66.2\%) & +7.7 & \textbf{62/127 (48.8\%)} & 565 & \$230 \\
+\rowcolor{OurRow}
+& \textbf{Free Form} & \textbf{392/542 (72.3\%)} &
+\textbf{+13.8} & 61/127 (48.0\%) & \textbf{234} & \$198 \\
+\midrule
+GPT-5.4 & No Memory & 325/542 (60.0\%) & n/a & 51/127 (40.2\%) & n/a & n/a \\
+& No Consolidation & 339/542 (62.5\%) & +2.5 & 54/127 (42.5\%) & 8{,}208 & n/a \\
+& SkillX & 364/542 (67.2\%) & +7.2 & 64/127 (50.4\%) & 1{,}161 & \$171 \\
+& Insights & 359/542 (66.2\%) & +6.2 & 62/127 (48.8\%) & 399 & \textbf{\$146} \\
+& Schema Form-ED & 363/542 (67.0\%) & +7.0 & 63/127 (49.6\%) & 808 & \$370 \\
+& Schema Form & 368/542 (67.9\%) & +7.9 & 64/127 (50.4\%) & 592 & \$229 \\
+\rowcolor{OurRow}
+& \textbf{Free Form} & \textbf{393/542 (72.5\%)} &
+\textbf{+12.5} & \textbf{66/127 (52.0\%)} & \textbf{233} & \$202 \\
+\midrule
+GLM-5 & No Memory & 319/542 (58.9\%) & n/a & 49/127 (38.6\%) & n/a & n/a \\
+& No Consolidation & 335/542 (61.8\%) & +2.9 & 52/127 (40.9\%) & 8{,}480 & n/a \\
+& SkillX & 356/542 (65.7\%) & +6.8 & 59/127 (46.5\%) & 1{,}187 & \textbf{\$79} \\
+& Insights & 357/542 (65.9\%) & +7.0 & 60/127 (47.2\%) & 441 & \$87 \\
+& Schema Form-ED & 356/542 (65.7\%) & +6.8 & 59/127 (46.5\%) & 838 & \$197 \\
+& Schema Form & 361/542 (66.6\%) & +7.7 & 64/127 (50.4\%) & 599 & \$117 \\
+\rowcolor{OurRow}
+& \textbf{Free Form} & \textbf{393/542 (72.5\%)} &
+\textbf{+13.6} & \textbf{66/127 (52.0\%)} & \textbf{255} & \$118 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Experiment 2: Feedback Type}
+
+\begin{table}[p]
+\caption{\textbf{Complete Experiment 2 results.} $\Delta$ is relative to
+\cond{Self-Judge} for the same model.}
+\label{tab:exp2-full}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccccc}
+\toprule
+Model & Feedback & Checkpoint pass & $\Delta$ (pp) &
+Fully passed & Store (KB) & Consol.\ cost \\
+\midrule
+Claude Opus 4.6 & Self-Judge & 352/542 (64.9\%) & 0.0 & 59/127 (46.5\%) & 212 & \$174 \\
+& Task-binary & 391/542 (72.1\%) & +7.2 & 64/127 (50.4\%) & 237 & \$205 \\
+& Checkpoint-binary & 392/542 (72.3\%) & +7.4 & 61/127 (48.0\%) & 234 & \$198 \\
+\rowcolor{OurRow}
+& \textbf{Checkpoint-binary + Human} &
+\textbf{411/542 (75.8\%)} & \textbf{+10.9} &
+\textbf{71/127 (55.9\%)} & 328 & \$196 \\
+\midrule
+GPT-5.4 & Self-Judge & 352/542 (64.9\%) & 0.0 & 56/127 (44.1\%) & 200 & \$156 \\
+& Task-binary & 384/542 (70.8\%) & +5.9 & 66/127 (52.0\%) & 224 & \$186 \\
+& Checkpoint-binary & 393/542 (72.5\%) & +7.6 & 66/127 (52.0\%) & 233 & \$202 \\
+\rowcolor{OurRow}
+& \textbf{Checkpoint-binary + Human} &
+\textbf{418/542 (77.1\%)} & \textbf{+12.2} &
+\textbf{78/127 (61.4\%)} & 335 & \$201 \\
+\midrule
+GLM-5 & Self-Judge & 349/542 (64.4\%) & 0.0 & 56/127 (44.1\%) & 235 & \$97 \\
+& Task-binary & 388/542 (71.6\%) & +7.2 & 64/127 (50.4\%) & 256 & \$106 \\
+& Checkpoint-binary & 393/542 (72.5\%) & +8.1 & 66/127 (52.0\%) & 255 & \$118 \\
+\rowcolor{OurRow}
+& \textbf{Checkpoint-binary + Human} &
+\textbf{414/542 (76.4\%)} & \textbf{+12.0} &
+\textbf{72/127 (56.7\%)} & 343 & \$103 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Experiment 3: Ingestion Scope}
+
+\begin{table}[p]
+\caption{\textbf{Complete Experiment 3 results.} $\Delta$ is relative to
+\cond{Success-only} under the same model and feedback type.
+CP-binary + Human abbreviates \cond{Checkpoint-binary + Human}.}
+\label{tab:exp3-full}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllccccc}
+\toprule
+Model & Feedback & Scope & Checkpoint pass & $\Delta$ (pp) &
+Fully passed & Store (KB) & Consol.\ cost \\
+\midrule
+Claude Opus 4.6 & CP-binary + Human & Success-only &
+359/542 (66.2\%) & 0.0 & 53/127 (41.7\%) & 119 & \$180 \\
+\rowcolor{OurRow}
+& \textbf{CP-binary + Human} & \textbf{Both} &
+\textbf{411/542 (75.8\%)} & \textbf{+9.6} &
+\textbf{71/127 (55.9\%)} & 328 & \$196 \\
+& Self-Judge & Success-only &
+351/542 (64.8\%) & 0.0 & 54/127 (42.5\%) & 193 & \$180 \\
+& Self-Judge & Both &
+352/542 (64.9\%) & +0.1 & 59/127 (46.5\%) & 212 & \$174 \\
+\midrule
+GPT-5.4 & CP-binary + Human & Success-only &
+361/542 (66.6\%) & 0.0 & 60/127 (47.2\%) & 135 & \$170 \\
+\rowcolor{OurRow}
+& \textbf{CP-binary + Human} & \textbf{Both} &
+\textbf{418/542 (77.1\%)} & \textbf{+10.5} &
+\textbf{78/127 (61.4\%)} & 335 & \$201 \\
+& Self-Judge & Success-only &
+356/542 (65.7\%) & 0.0 & 58/127 (45.7\%) & 211 & \$173 \\
+& Self-Judge & Both &
+352/542 (64.9\%) & $-$0.8 & 56/127 (44.1\%) & 200 & \$156 \\
+\midrule
+GLM-5 & CP-binary + Human & Success-only &
+362/542 (66.8\%) & 0.0 & 55/127 (43.3\%) & 140 & \$100 \\
+\rowcolor{OurRow}
+& \textbf{CP-binary + Human} & \textbf{Both} &
+\textbf{414/542 (76.4\%)} & \textbf{+9.6} &
+\textbf{72/127 (56.7\%)} & 343 & \$103 \\
+& Self-Judge & Success-only &
+351/542 (64.8\%) & 0.0 & 56/127 (44.1\%) & 212 & \$91 \\
+& Self-Judge & Both &
+349/542 (64.4\%) & -0.4 & 56/127 (44.1\%) & 235 & \$97 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Experiment 4: Rounds}
+
+\begin{table}[p]
+\caption{\textbf{Experiment 4 with rich feedback.} $\Delta$ is relative to
+R0. Marginal gain is relative to the preceding round.}
+\label{tab:exp4-rich}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llcccccc}
+\toprule
+Model & Round & Checkpoint pass & $\Delta$ (pp) & Marginal (pp) &
+Fully passed & Store (KB) & Consol.\ cost \\
+\midrule
+Claude Opus 4.6 & R0 & 317/542 (58.5\%) & 0.0 & n/a & 46/127 (36.2\%) & n/a & n/a \\
+& R1 & 411/542 (75.8\%) & +17.3 & +17.3 & 71/127 (55.9\%) & 328 & \$196 \\
+& R2 & 430/542 (79.3\%) & +20.8 & +3.5 & 79/127 (62.2\%) & 460 & \$171 \\
+& R3 & 446/542 (82.3\%) & +23.8 & +3.0 & 86/127 (67.7\%) & 492 & \$180 \\
+\rowcolor{OurRow}
+& \textbf{R4} & \textbf{464/542 (85.6\%)} &
+\textbf{+27.1} & +3.3 & \textbf{92/127 (72.4\%)} & 583 & \$179 \\
+\midrule
+GPT-5.4 & R0 & 325/542 (60.0\%) & 0.0 & n/a & 51/127 (40.2\%) & n/a & n/a \\
+& R1 & 418/542 (77.1\%) & +17.1 & +17.1 & 78/127 (61.4\%) & 335 & \$201 \\
+& R2 & 438/542 (80.8\%) & +20.8 & +3.7 & 86/127 (67.7\%) & 465 & \$165 \\
+& R3 & 449/542 (82.8\%) & +22.8 & +2.0 & 91/127 (71.7\%) & 505 & \$178 \\
+\rowcolor{OurRow}
+& \textbf{R4} & \textbf{470/542 (86.7\%)} &
+\textbf{+26.7} & +3.9 & \textbf{99/127 (78.0\%)} & 575 & \$170 \\
+\midrule
+GLM-5 & R0 & 319/542 (58.9\%) & 0.0 & n/a & 49/127 (38.6\%) & n/a & n/a \\
+& R1 & 414/542 (76.4\%) & +17.5 & +17.5 & 72/127 (56.7\%) & 343 & \$103 \\
+& R2 & 433/542 (79.9\%) & +21.0 & +3.5 & 82/127 (64.6\%) & 486 & \$92 \\
+& R3 & 451/542 (83.2\%) & +24.3 & +3.3 & 87/127 (68.5\%) & 499 & \$104 \\
+\rowcolor{OurRow}
+& \textbf{R4} & \textbf{468/542 (86.3\%)} &
+\textbf{+27.4} & +3.1 & \textbf{94/127 (74.0\%)} & 603 & \$96 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[p]
+\caption{\textbf{Experiment 4 with weak feedback.} $\Delta$ is relative to R0
+for the same model.}
+\label{tab:exp4-weak}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccccc}
+\toprule
+Model & Round & Checkpoint pass & $\Delta$ (pp) &
+Fully passed & Store (KB) & Consol.\ cost \\
+\midrule
+Claude Opus 4.6 & R0 & 317/542 (58.5\%) & 0.0 & 46/127 (36.2\%) & n/a & n/a \\
+& R1 & 352/542 (64.9\%) & +6.4 & 59/127 (46.5\%) & 212 & \$174 \\
+& R2 & 349/542 (64.4\%) & +5.9 & 52/127 (40.9\%) & 297 & \$141 \\
+& R3 & 362/542 (66.8\%) & +8.3 & 56/127 (44.1\%) & 273 & \$136 \\
+& \textbf{R4} & \textbf{373/542 (68.8\%)} & \textbf{+10.3} &
+\textbf{60/127 (47.2\%)} & 291 & \$135 \\
+\midrule
+GPT-5.4 & R0 & 325/542 (60.0\%) & 0.0 & 51/127 (40.2\%) & n/a & n/a \\
+& R1 & 352/542 (64.9\%) & +4.9 & 56/127 (44.1\%) & 200 & \$156 \\
+& R2 & 358/542 (66.1\%) & +6.1 & 58/127 (45.7\%) & 262 & \$133 \\
+& \textbf{R3} & \textbf{364/542 (67.2\%)} & \textbf{+7.2} & \textbf{62/127 (48.8\%)} & 267 & \$133 \\
+& R4 & 363/542 (67.0\%) & +7.0 &
+62/127 (48.8\%) & 285 & \$144 \\
+\midrule
+GLM-5 & R0 & 319/542 (58.9\%) & 0.0 & 49/127 (38.6\%) & n/a & n/a \\
+& R1 & 349/542 (64.4\%) & +5.5 & 56/127 (44.1\%) & 235 & \$97 \\
+& R2 & 347/542 (64.0\%) & +5.1 & 55/127 (43.3\%) & 255 & \$62 \\
+& R3 & 345/542 (63.7\%) & +4.8 & 55/127 (43.3\%) & 262 & \$71 \\
+& \textbf{R4} & \textbf{355/542 (65.5\%)} & \textbf{+6.6} &
+\textbf{57/127 (44.9\%)} & 282 & \$97 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[p]
+\caption{\textbf{Rollout-volume control.} The pooled methods consume 635
+rollouts from rounds R0 to R4, more than the 508 the evaluated \cond{Free Form}
+R4 store was built from, and process them in a single non-incremental pass while
+\cond{Free Form} consolidates one batch at a time. $\Delta$ is relative to
+\cond{No Memory} for the same model in Table~\ref{tab:exp1-full}.}
+\label{tab:pooled-full}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccc}
+\toprule
+Model & Condition & Checkpoint pass & $\Delta$ (pp) & Fully passed \\
+\midrule
+Claude Opus 4.6 & Pooled R0 to R4, No Consolidation &
+408/542 (75.3\%) & +16.8 & 70/127 (55.1\%) \\
+& Pooled R0 to R4, Insights & 431/542 (79.5\%) & +21.0 & 78/127 (61.4\%) \\
+& Free Form, R2 & 430/542 (79.3\%) & +20.8 & 79/127 (62.2\%) \\
+\rowcolor{OurRow}
+& \textbf{Free Form, R4} & \textbf{464/542 (85.6\%)} &
+\textbf{+27.1} & \textbf{92/127 (72.4\%)} \\
+\midrule
+GPT-5.4 & Pooled R0 to R4, No Consolidation &
+412/542 (76.0\%) & +16.0 & 77/127 (60.6\%) \\
+& Pooled R0 to R4, Insights & 433/542 (79.9\%) & +19.9 & 84/127 (66.1\%) \\
+& Free Form, R2 & 438/542 (80.8\%) & +20.8 & 86/127 (67.7\%) \\
+\rowcolor{OurRow}
+& \textbf{Free Form, R4} & \textbf{470/542 (86.7\%)} &
+\textbf{+26.7} & \textbf{99/127 (78.0\%)} \\
+\midrule
+GLM-5 & Pooled R0 to R4, No Consolidation &
+406/542 (74.9\%) & +16.0 & 74/127 (58.3\%) \\
+& Pooled R0 to R4, Insights & 429/542 (79.2\%) & +20.3 & 81/127 (63.8\%) \\
+& Free Form, R2 & 433/542 (79.9\%) & +21.0 & 82/127 (64.6\%) \\
+\rowcolor{OurRow}
+& \textbf{Free Form, R4} & \textbf{468/542 (86.3\%)} &
+\textbf{+27.4} & \textbf{94/127 (74.0\%)} \\
+\bottomrule
+\end{tabular}}
+\end{table}

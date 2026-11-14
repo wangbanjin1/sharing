@@ -1,0 +1,135 @@
+\documentclass{article}
+\PassOptionsToPackage{table}{xcolor}
+\input{preamble.tex}
+
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{xspace}
+
+\usepackage{xcolor}
+\usepackage[normalem]{ulem} % normalem: keep \emph italic, not underlined
+
+
+\newcommand{\posgain}[1]{%
+  \,{\scriptsize\color{gray}(+#1)}%
+}
+
+\newcommand{\geshi}[1]{{\color{blue}#1}}
+\newcommand{\christos}[1]{{\color{green}(CF:) #1}}
+
+\newcommand{\method}{{\em WASP-Mem}\xspace}
+
+\newcommand{\cond}[1]{\uline{#1}}
+
+\graphicspath{{figures/}}
+
+\definecolor{OurRow}{HTML}{FFF0E8}
+\definecolor{ModelRow}{HTML}{EEF2F6}
+
+\newtcolorbox{promptwrapper}[1]{
+  enhanced,
+  breakable,
+  colback=gray!5,
+  colframe=black!60,
+  boxrule=0.6pt,
+  arc=3pt,
+  left=5pt,
+  right=5pt,
+  top=3pt,
+  bottom=3pt,
+  title=#1,
+  coltitle=white,
+  colbacktitle=black!75,
+  fonttitle=\bfseries,
+  attach boxed title to top left={yshift=-2mm, xshift=3mm},
+  boxed title style={
+    boxrule=0pt,
+    arc=3pt,
+    outer arc=3pt
+  }
+}
+
+\title{\method: Let Agent Organize Procedural Memory. Human Spend Effort on Diagnosis}
+
+\author{%
+Peizhi Niu$^{1}$\thanks{Equal contribution.} \quad
+Ge Shi$^{2}$\footnotemark[1] \quad
+Vaibhav Gorde$^{2}$ \quad
+Sarthak Ghosh$^{2}$ \quad
+Christos Faloutsos$^{2}$ \\
+Min Cheng$^{2}$ \quad
+Kevin Chen$^{2}$ \\[4pt]
+$^{1}$University of Illinois Urbana-Champaign \quad $^{2}$Amazon \\
+\texttt{peizhin2@illinois.edu}, \\
+\texttt{\{gegshi, gordev, ghossart, faloutso, mmcheng, kevnchen\}@amazon.com}
+}
+
+\begin{document}
+
+\maketitle
+\lhead{Preprint} % arXiv preprint: replaces the ICLR "Published as..." running header
+
+\input{sections/abstract}
+
+\input{sections/01-introduction}
+\input{sections/02-related-work}
+\input{sections/03-method}
+\input{sections/04-experiments}
+\input{sections/05-discussion}
+\input{sections/06-conclusion}
+
+\newpage
+
+
+\section*{AI Use Statement}
+Generative AI is both the object of study in this work and a tool we used to
+carry it out. As the object of study, large language models execute the
+benchmark tasks, perform consolidation, and supply \cond{Self-Judge} feedback
+in the corresponding condition, as described in Section~\ref{sec:method} and
+Appendix~\ref{app:methods}. As a tool, we used an LLM-based assistant to give
+feedback on experimental design, help interpret results, implement analysis and
+plotting scripts, draft and edit the manuscript, and identify and format
+related work. We did not use it to generate data or produce any reported number
+outside the experimental runs themselves. All AI-generated or AI-assisted
+outputs were reviewed and verified by the authors, who take full responsibility
+for the paper's content, claims, results, and artifacts.
+
+\section*{Ethics Statement}
+We identify no ethical concerns with this work. It involves no human-subjects
+research and releases no personal data. Every experiment ran against
+self-hosted instances of GitLab, RocketChat, OwnCloud, and Plane populated
+with the benchmark's synthetic content; no production system or real user data
+was accessed. The \cond{Checkpoint-binary + Human} condition required a
+qualified annotator to describe each failed checkpoint; that annotator produced
+labels for the study rather than being a subject of it.
+
+\section*{Reproducibility Statement}
+Section~\ref{sec:method} defines the consolidation cycle and the four
+dimensions we vary; Section~\ref{sec:setup} states the benchmarks, models,
+harness, metrics, and controls held fixed. Appendix~\ref{app:methods} provides
+per-method consolidation recipes, representation-specific retrieval adapters,
+feedback definitions, and the complete experimental matrix.
+Appendix~\ref{app:results} reports every per-model result behind the ranges
+quoted in the main text. Appendix~\ref{app:reproducibility} records the
+environment, model versions, retrieval configuration, compute, wall-clock
+time, per-batch API cost, round procedure, and experiment code. Every
+configuration was run once; Appendix~\ref{app:limitations} states which
+differences we therefore treat as unresolved.
+
+\clearpage
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+\newpage
+\appendix
+
+\input{sections/A-formalization}
+\input{sections/B-methods}
+\input{sections/C-results}
+\input{sections/D-analysis}
+\input{sections/E-reproducibility}
+\input{sections/F-limitations}
+
+\end{document}

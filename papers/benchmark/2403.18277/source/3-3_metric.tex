@@ -1,0 +1,125 @@
+\begin{table*}
+    \scriptsize
+    \centering
+    \extrarowheight=\aboverulesep
+    \addtolength{\extrarowheight}{\belowrulesep}
+    \aboverulesep=0pt
+    \belowrulesep=0pt
+    \begin{tabular}{l b c c c}
+        \toprule
+            \textbf{Utterance 1} & \multicolumn{4}{b}{play my 88 keys playlist (\texttt{PlayMusic})} \\
+            \textbf{Utterance 2} & \multicolumn{4}{b}{add another song to my 88 keys playlist (\texttt{AddToPlaylist})} \\ 
+        \bottomrule
+        \toprule
+            \textbf{Strategies }& \textbf{Concatenation Results} & $\mathrm{W}(utt, 2)$ & $\mathrm{C}(utt, 2)$ & $\mathrm{P}(utt, 2)$ \\
+        \midrule
+            \textbf{Explicit Concatenation} & play my 88 keys playlist \textbf{and also} add another song to my 88 keys playlist & 0 & 0 & 0 \\
+        \midrule
+            \textbf{Implicit Concatenation} & & & & \\ 
+            Inherent Ambiguities & play my 88 keys playlist add another song to my 88 keys playlist & 1 & 1 & 0 \\ 
+            Gerund Phrases & add another song to my 88 keys playlist playing it  & 1 & 1 & 1 \\ 
+            Omissions & play my 88 keys playlist and add another song & 1 & 0 & 0 \\ 
+            Coreferences & play my 88 keys playlist and add another song to it & 1 & 0 & 1 \\ 
+        \bottomrule
+    \end{tabular}
+    \caption{Various concatenation classes, accompanied by their examples and respective metric values.}
+    \centering
+    \label{table:concat_and_metrics}
+\end{table*}
+
+\subsection{Three Custom Metrics} \label{subsec:metric}
+Beyond formulating the data construction process for MID, our goal also includes developing a method to quantitatively assess the quality of the generated datasets.
+To achieve this, we introduce three custom metrics, based on the hypothesis that the complexity and diversity of merged instances can be measured by analyzing variances in word count, conjunction usage, and pronoun frequency before and after concatenation.
+
+For instance, consider a scenario in which the utterances in Table \ref{table:concat_and_metrics}, \texttt{`play my 88 keys playlist'} and \texttt{`add another song to my 88 keys playlist'} are merged to form \texttt{`add another song to my 88 keys playlist playing it'}(Gerund Phrase). 
+The number of words of the two original utterances are 5 and 8, respectively.
+After concatenation, the number becomes 10.
+We can apply the same calculation for conjunctions and pronouns, realizing the fact that the concatenated utterance has three fewer words, no conjunctions, one more pronoun than the original utterances.
+This example provides insight into numerically estimating the degree of linguistic transformations resulting from concatenation.
+
+Suppose a merged utterance $utt$, which is the concatenation of $n$ utterances out of a total of $m$ candidate utterances, denoted as $utt_1, utt_2, \cdots, utt_m$, where each individual utterance $utt_i$ is labeled with an intent $intent_i$. 
+Let $|utt|_{x}$ be a function which counts the number of $x$ in $utt$. 
+The element $x$ can represent any linguistic feature within the utterance, such as words, conjunctions, or pronouns, depending on the context.
+Here, $n$ represents the number of utterances that were actually concatenated to form $utt$, and $m$ represents the total number of candidate utterances available for concatenation.
+
+Let $\mathrm{W}(utt, n)$ be a function to count and subtract the number of words in $utt$ after and before concatenation, and indicate if the value is less than 1 or not.
+The exact definition of $\mathrm{W}(utt, n)$ is as follows: 
+\begin{equation}
+\mathrm{W}(utt, n)\\
+\overset{\underset{\mathrm{def}}{}}{=}\mathbf{1}_{\mathbb{Z}-\mathbb{N}}\Bigl(|utt|_{word}-\sum_{i=1}^n |utt_i|_{word}\Bigr).    
+\end{equation}
+
+$\mathrm{C}(utt, n)$ is similar to $\mathrm{W}(utt, n)$, but it counts conjunctions instead:
+\begin{equation}
+\mathrm{C}(utt, n)\\
+\overset{\underset{\mathrm{def}}{}}{=}\mathbf{1}_{\mathbb{Z}-\mathbb{N}}\Bigl(|utt|_{conj}-\sum_{i=1}^n |utt_i|_{conj}\Bigr).
+\end{equation}
+
+$\mathrm{P}(utt, n)$ counts and subtracts the number of pronouns in $utt$ after and before concatenation, and indicates if the value is more than 0 or not:
+\begin{equation}
+\mathrm{P}(utt, n)\\
+\overset{\underset{\mathrm{def}}{}}{=}\mathbf{1}_{\mathbb{N}}\Bigl(|utt|_{pron}-\sum_{i=1}^n |utt_i|_{pron}\Bigr).
+\end{equation}
+
+These metrics help us identify patterns in the integrated utterances, offering insights into the complexity of the concatenation procedure. 
+If each metric becomes 1, it indicates an omission of some words, the inclusion of conjunctions, and the presence of pronouns.
+As such, we expect that in an ideal scenario, all metrics would converge to one.
+
+While our metrics can serve as indicators of the complexity inherent in a concatenation process, they are not perfect; they cannot ensure a fully accurate and complete concatenation that adheres to both semantic and syntactic norms.
+Still, we claim that the proposed metrics can effectively serve as a proxy for measuring the quality of the merging process, as evidenced in the following sections.
+
+\begin{table*}
+    \scriptsize
+    \centering
+    % \setlength{\tabcolsep}{2pt}
+    \extrarowheight=\aboverulesep
+    \addtolength{\extrarowheight}{\belowrulesep}
+    \aboverulesep=0pt
+    \belowrulesep=0pt
+    \setlength{\tabcolsep}{0.5em}
+    \begin{tabular}{l a a a c c c a a a c c c}
+    \toprule
+        \multirow{2}{*}{\shortstack[c]{\textbf{Metric}}} & \multicolumn{3}{a}{\textbf{SNIPS}} & \multicolumn{3}{c}{\textbf{ATIS}} & \multicolumn{3}{a}{\textbf{Banking77}} & \multicolumn{3}{c}{\textbf{CLINC150}} \\
+        & \textbf{Na\"ive} & \textbf{Manual} & \textbf{Generative} & \textbf{Na\"ive} & \textbf{Manual} & \textbf{Generative} & \textbf{Na\"ive} & \textbf{Manual} & \textbf{Generative} & \textbf{Na\"ive} & \textbf{Manual} & \textbf{Generative} \\
+    \midrule
+        $\mathrm{W}(utt, 2) (\uparrow)$  & 0\% & \textbf{37\%} & 29\% & 0\% & \textbf{36\%} & 18\% & 0\% & \textbf{46\%} & 37\% & 0\% & \textbf{48\%} & 28\% \\
+        $\mathrm{C}(utt, 2) (\uparrow)$ & 0\% & \textbf{56\%} & 10\% & 0\% & \textbf{52\%} & 15\% & 0\% & \textbf{50\%} & 27\% & 0\% & \textbf{56\%} & 32\% \\
+        $\mathrm{P}(utt, 2) (\uparrow)$ & 0\% & 0\% & \textbf{7\%} & 0\% & 0\% & \textbf{8\%} & 0\% & 0\% & \textbf{13\%} & 0\% & 0\% & \textbf{6\%} \\
+    \bottomrule
+    \end{tabular}
+\caption{
+Comparative analysis of the three concatenation approaches: Na\"ive, Manual, and Generative. 
+Notably, the Manual method demonstrates pronounced efficiency in reducing utterance length.}
+\centering
+\label{table:concatenation_metric_table}
+\end{table*}
+
+\paragraph{Analysis of utterance selection with ChatGPT} 
+Let us first revisit the prior experiment associated with Table \ref{table:selection_metric_table}.
+We select 100 pairs of utterances using each utterance selection strategy, resulting in a notable disparity in the average cosine similarities, as shown in the first row of Table \ref{table:selection_metric_table}.
+The \textbf{Error Rate} correlates with the concept of \textit{intent distortion}, which refers to the occurrence of either removal or alteration of the original intentions during the merging process. 
+This rate is calculated by taking the number of merged utterances that have \textit{intent distortion} and dividing it by the total number of utterances that were reviewed.
+The row for Error Rate in the table indicates that, when combined with Similarity-Based Selection, ChatGPT makes significantly fewer errors (ranging from 2\% to 31\%) in merging two given sentences.
+
+Again in Table \ref{table:selection_metric_table}, we provide analysis with our novel metrics. 
+When comparing the results of Similarity-Based Selection with those of Random Selection, we note an increase in the usage frequency of pronouns across datasets. Conversely, there is a decline in utterance word count for all datasets, except Banking77.\footnote{
+Banking77's longer, multi-sentence utterances led ChatGPT to often use simple \texttt{`and'} for concatenation.}
+These findings imply that Similarity-Based Selection results in more omissions and coreferences which are desirable.
+
+Notably, utterances that feature omissions or coreferences tend to be more ambiguous. 
+As such, the use of conjunctions, including \texttt{`and'}, becomes essential to maintain semantic clarity. 
+Consequently, it is expected that the percentage of $\mathrm{C}(utt,2)$ will decrease more with Similarity-Based Selection than with Random Selection.
+Note that higher values for all metrics are indicative of a higher likelihood of achieving a desirable merging process.
+Indeed, for connections of greater complexity, it is anticipated that all metrics will exhibit increased values. 
+The sole exception to this rule is in instances of coreference or omission, where the value may decrease to $\mathrm{C}(utt,2)$.
+
+\paragraph{Analysis of concatenation approaches} 
+Finally, we compare the effectiveness of three concatenation techniques, i.e., {Na\"ive, Manual, and Generative, with the new metrics.
+For evaluation, we produce 100 instances using each approach.
+Results are listed in Table \ref{table:concat_and_metrics}.
+We discover that only the Manual and Generative methods enable implicit concatenation. Additionally, we find that Naïve concatenation, unsurprisingly, does not result in shorter concatenated utterances; it neither introduces pronouns nor omits conjunctions. 
+As shown in Table \ref{table:concatenation_metric_table}, Manual demonstrates its effectiveness, consistently reducing the length of concatenated utterances by 1.2 to 2 times compared to ChatGPT. 
+Furthermore, Manual tends to use fewer conjunctions. 
+Surprisingly, we observe that ChatGPT favors more conjunctions than expected. 
+Upon examining metric $\mathrm{C}(utt, 2)$ in the table,  it is evident that ChatGPT employs the conjunction \texttt{`and'} in 40\% to 72\% of its concatenations, indicating a possible bias towards simpler concatenation strategies. 
+Interestingly, even when explicitly instructed to avoid using \texttt{`and'}, as detailed in Appendix \ref{subsec:prompt_concat}, ChatGPT often disregards this directive.

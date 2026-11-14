@@ -1,0 +1,39 @@
+\section{Conclusion}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{l *{4}{>{\raggedright\arraybackslash}X}}
+\toprule
+& \textbf{LOCOMO} & \textbf{LongMemEval} & \textbf{PrevEval} & \textbf{PersonaMem} \\
+\midrule
+\textbf{Focused Tasks} & Long-term memory & Long-term memory & User preferences & Fine-grained personalized responses \\
+\midrule
+\textbf{Avg.\ Single Session Len} & 477 tokens & 3k tokens & No info & 6k tokens \\
+\midrule
+\textbf{Max Context Len} & 9k tokens & 1.5M tokens & 100k tokens & 1M tokens \\
+\midrule
+\textbf{Data Sources} & MSC \& own & ShareGPT \& UltraChat \& own & LMSYS-Chat-1M & PersonaHub \& own \\
+\midrule
+\textbf{Query Perspective} & third-person & first-person & first-person & first-person \\
+\midrule
+\textbf{Max \# Knowledge Updates} & No update & 1 & No update & 3 \\
+\midrule
+\textbf{Multi-Session Reasoning} & Yes & Yes & No & Yes \\
+\midrule
+\textbf{\# LLMs Evaluated} & 4 & 5 & 6 & 15 \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of related benchmarks, including LOCOMO~\citep{maharana2024evaluating}, LongMemEval~\citep{wu2024longmemeval}, and PrefEval~\citep{zhao2025prefeval}. LOCOMO and LongMemEval focus on general long-term memory tasks. In contrast, PersonaMem centers on personalization beyond memory retrieval, with all conversations in our benchmark are built around a coherent user persona with evolving preferences, mimicking more realistic user-chatbot conversations. PrefEval, which focuses on personalization too, but by first generating user preferences and then inserting them into randomly sampled contexts.}
+\label{tab:benchmarks_compare}
+\end{table}
+\vspace{-2mm}
+
+
+In this paper, we introduce the \datasetnameemoji~benchmark, featuring scalable and persona-oriented multi-session user-LLM interaction histories, as well as fine-grained \emph{in-situ} user query types designed to evaluate LLM capabilities in memorizing, tracking, and incorporating users' dynamic profiles into personalized responses. Through comprehensive assessments of 15 state-of-the-art LLM models and retrieval-based methods, we highlight current challenges in enabling LLMs to deliver truly personalized conversations with users, especially in novel scenarios and long contexts. We hope that our benchmark opens new avenues for future exploration and advancement in personalized LLM chatbot development.
+
+
+\section{Acknowledgment}
+This work was supported by the National Science Foundation (NSF) under Grant CCF-2112665 (TILOS) and the Research Discretionary Fund from Camillo J. Taylor, and by the Office of Naval Research (ONR) MSU grant from Dan Roth.

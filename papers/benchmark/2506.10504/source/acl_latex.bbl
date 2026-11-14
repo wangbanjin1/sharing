@@ -1,0 +1,134 @@
+\begin{thebibliography}{26}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Achiam et~al.(2023)Achiam, Adler, Agarwal, Ahmad, Akkaya, Aleman, Almeida, Altenschmidt, Altman, Anadkat et~al.}]{achiam2023gpt}
+Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia~Leoni Aleman, Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et~al. 2023.
+\newblock \href {https://arxiv.org/abs/2303.08774} {Gpt-4 technical report}.
+\newblock \emph{arXiv preprint arXiv:2303.08774}.
+
+\bibitem[{{Anthropic}(2024)}]{anthropic2024claude35sonnet}
+{Anthropic}. 2024.
+\newblock \href {https://www.anthropic.com/news/claude-3-5-sonnet} {Introducing claude 3.5 sonnet}.
+\newblock Accessed: 2025-02-08.
+
+\bibitem[{Austin(1975)}]{austin1975things}
+John~Langshaw Austin. 1975.
+\newblock \href {https://www.hup.harvard.edu/books/9780674411524} {\emph{How to do things with words}}.
+\newblock Harvard University Press.
+
+\bibitem[{Bach and Harnish(1979)}]{bach1979linguistic}
+Kent Bach and Robert~M. Harnish. 1979.
+\newblock \href {https://mitpress.mit.edu/9780262520782/linguistic-communication-and-speech-acts/} {\emph{Linguistic Communication and Speech Acts}}.
+\newblock MIT Press.
+
+\bibitem[{Brown et~al.(2020)Brown, Mann, Ryder, Subbiah, Kaplan, Dhariwal, Neelakantan, Shyam, Sastry, Askell et~al.}]{brown2020language}
+Tom Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared~D Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, et~al. 2020.
+\newblock \href {https://proceedings.neurips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html} {Language models are few-shot learners}.
+\newblock In \emph{Proceedings of NeurIPS}, pages 1877--1901.
+
+\bibitem[{Budzianowski et~al.(2018)Budzianowski, Wen, Tseng, Casanueva, Ultes, Ramadan, and Gasic}]{budzianowski2018multiwoz}
+Pawe{\l} Budzianowski, Tsung-Hsien Wen, Bo-Hsiang Tseng, I{\~n}igo Casanueva, Stefan Ultes, Osman Ramadan, and Milica Gasic. 2018.
+\newblock \href {https://aclanthology.org/D18-1547/} {Multiwoz-a large-scale multi-domain wizard-of-oz dataset for task-oriented dialogue modelling}.
+\newblock In \emph{Proceedings of EMNLP}, pages 5016--5026.
+
+\bibitem[{Campagna et~al.(2020)Campagna, Foryciarz, Moradshahi, and Lam}]{campagna2020zero}
+Giovanni Campagna, Agata Foryciarz, Mehrad Moradshahi, and Monica Lam. 2020.
+\newblock \href {https://aclanthology.org/2020.acl-main.12/} {Zero-shot transfer learning with synthesized data for multi-domain dialogue state tracking}.
+\newblock In \emph{Proceedings of ACL}, pages 122--132.
+
+\bibitem[{Choi et~al.(2024)Choi, Yun, Jin, and Kim}]{choi2024multi}
+Juhwan Choi, Jungmin Yun, Kyohoon Jin, and YoungBin Kim. 2024.
+\newblock Multi-news+: Cost-efficient dataset cleansing via llm-based data annotation.
+\newblock In \emph{Proceedings of EMNLP}, pages 15--29.
+
+\bibitem[{Dey et~al.(2022)Dey, Kummara, and Desarkar}]{dey2022towards}
+Suvodip Dey, Ramamohan Kummara, and Maunendra Desarkar. 2022.
+\newblock \href {https://aclanthology.org/2022.acl-short.35/} {Towards fair evaluation of dialogue state tracking by flexible incorporation of turn-level performances}.
+\newblock In \emph{Proceedings of ACL}, pages 318--324.
+
+\bibitem[{Dubey et~al.(2024)Dubey, Jauhri, Pandey, Kadian, Al-Dahle, Letman, Mathur, Schelten, Yang, Fan et~al.}]{dubey2024llama}
+Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schelten, Amy Yang, Angela Fan, et~al. 2024.
+\newblock \href {https://arxiv.org/abs/2407.21783} {The llama 3 herd of models}.
+\newblock \emph{arXiv preprint arXiv:2407.21783}.
+
+\bibitem[{Eric et~al.(2020)Eric, Goel, Paul, Sethi, Agarwal, Gao, Kumar, Goyal, Ku, and Hakkani-Tur}]{eric2020multiwoz}
+Mihail Eric, Rahul Goel, Shachi Paul, Abhishek Sethi, Sanchit Agarwal, Shuyang Gao, Adarsh Kumar, Anuj Goyal, Peter Ku, and Dilek Hakkani-Tur. 2020.
+\newblock \href {https://aclanthology.org/2020.lrec-1.53/} {Multiwoz 2.1: A consolidated multi-domain dialogue dataset with state corrections and state tracking baselines}.
+\newblock In \emph{Proceedings of LREC}, pages 422--428.
+
+\bibitem[{Feng et~al.(2023)Feng, Lu, Liu, Zhan, and Wu}]{feng2023towards}
+Yujie Feng, Zexin Lu, Bo~Liu, Liming Zhan, and Xiao-Ming Wu. 2023.
+\newblock \href {https://aclanthology.org/2023.emnlp-main.48/} {Towards llm-driven dialogue state tracking}.
+\newblock In \emph{Proceedings of EMNLP}, pages 739--755.
+
+\bibitem[{Heck et~al.(2023)Heck, Lubis, Ruppik, Vukovic, Feng, Geishauser, Lin, van Niekerk, and Gasic}]{heck2023chatgpt}
+Michael Heck, Nurul Lubis, Benjamin Ruppik, Renato Vukovic, Shutong Feng, Christian Geishauser, Hsien-Chin Lin, Carel van Niekerk, and Milica Gasic. 2023.
+\newblock \href {https://aclanthology.org/2023.acl-short.81/} {Chatgpt for zero-shot dialogue state tracking: A solution or an opportunity?}
+\newblock In \emph{Proceedings of ACL}, pages 936--950.
+
+\bibitem[{Heck et~al.(2020)Heck, van Niekerk, Lubis, Geishauser, Lin, Moresi, and Gasic}]{heck2020trippy}
+Michael Heck, Carel van Niekerk, Nurul Lubis, Christian Geishauser, Hsien-Chin Lin, Marco Moresi, and Milica Gasic. 2020.
+\newblock \href {https://aclanthology.org/2020.sigdial-1.4/} {Trippy: A triple copy strategy for value independent neural dialog state tracking}.
+\newblock In \emph{Proceedings of SIGDIAL}, pages 35--44.
+
+\bibitem[{Henderson et~al.(2014)Henderson, Thomson, and Williams}]{henderson2014second}
+Matthew Henderson, Blaise Thomson, and Jason~D Williams. 2014.
+\newblock \href {https://aclanthology.org/W14-4337/} {The second dialog state tracking challenge}.
+\newblock In \emph{Proceedings of SIGDIAL}, pages 263--272.
+
+\bibitem[{Hurst et~al.(2024)Hurst, Lerer, Goucher, Perelman, Ramesh, Clark, Ostrow, Welihinda, Hayes, Radford et~al.}]{hurst2024gpt}
+Aaron Hurst, Adam Lerer, Adam~P Goucher, Adam Perelman, Aditya Ramesh, Aidan Clark, AJ~Ostrow, Akila Welihinda, Alan Hayes, Alec Radford, et~al. 2024.
+\newblock \href {https://arxiv.org/abs/2410.21276} {Gpt-4o system card}.
+\newblock \emph{arXiv preprint arXiv:2410.21276}.
+
+\bibitem[{Jacqmin et~al.(2022)Jacqmin, Barahona, and Favre}]{jacqmin2022you}
+L{\'e}o Jacqmin, Lina M~Rojas Barahona, and Benoit Favre. 2022.
+\newblock \href {https://aclanthology.org/2022.sigdial-1.33/} {“do you follow me?”: A survey of recent approaches in dialogue state tracking}.
+\newblock In \emph{Proceedings of SIGDIAL}, pages 336--350.
+
+\bibitem[{Li et~al.(2021)Li, Cao, Sridhar, Zhu, Li, Hamza, and McAuley}]{li2021zero}
+Shuyang Li, Jin Cao, Mukund Sridhar, Henghui Zhu, Shang-Wen Li, Wael Hamza, and Julian McAuley. 2021.
+\newblock \href {https://aclanthology.org/2021.eacl-main.91/} {Zero-shot generalization in dialog state tracking through generative question answering}.
+\newblock In \emph{Proceedings of EACL}, pages 1063--1074.
+
+\bibitem[{Lu et~al.(2022)Lu, Bartolo, Moore, Riedel, and Stenetorp}]{lu2022fantastically}
+Yao Lu, Max Bartolo, Alastair Moore, Sebastian Riedel, and Pontus Stenetorp. 2022.
+\newblock \href {https://aclanthology.org/2022.acl-long.556/} {Fantastically ordered prompts and where to find them: Overcoming few-shot prompt order sensitivity}.
+\newblock In \emph{Proceedings of ACL}, pages 8086--8098.
+
+\bibitem[{Luo et~al.(2024)Luo, Tang, Wang, and Zhang}]{luo2024zero}
+Xiang Luo, Zhiwen Tang, Jin Wang, and Xuejie Zhang. 2024.
+\newblock \href {https://aclanthology.org/2024.acl-long.312/} {Zero-shot cross-domain dialogue state tracking via dual low-rank adaptation}.
+\newblock In \emph{Proceedings of ACL}, pages 5746--5765.
+
+\bibitem[{Pichai et~al.(2024)Pichai, Hassabis, and Kavukcuoglu}]{pichai2024gemini}
+Sundar Pichai, Demis Hassabis, and Koray Kavukcuoglu. 2024.
+\newblock \href {https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/} {Introducing gemini 2.0: our new ai model for the agentic era}.
+\newblock Accessed: 2025-02-08.
+
+\bibitem[{Tan et~al.(2024)Tan, Li, Wang, Beigi, Jiang, Bhattacharjee, Karami, Li, Cheng, and Liu}]{tan2024large}
+Zhen Tan, Dawei Li, Song Wang, Alimohammad Beigi, Bohan Jiang, Amrita Bhattacharjee, Mansooreh Karami, Jundong Li, Lu~Cheng, and Huan Liu. 2024.
+\newblock Large language models for data annotation and synthesis: A survey.
+\newblock In \emph{Proceedings of EMNLP}, pages 930--957.
+
+\bibitem[{Team et~al.(2024)Team, Riviere, Pathak, Sessa, Hardin, Bhupatiraju, Hussenot, Mesnard, Shahriari, Ram{\'e} et~al.}]{team2024gemma}
+Gemma Team, Morgane Riviere, Shreya Pathak, Pier~Giuseppe Sessa, Cassidy Hardin, Surya Bhupatiraju, L{\'e}onard Hussenot, Thomas Mesnard, Bobak Shahriari, Alexandre Ram{\'e}, et~al. 2024.
+\newblock \href {https://arxiv.org/abs/2408.00118} {Gemma 2: Improving open language models at a practical size}.
+\newblock \emph{arXiv preprint arXiv:2408.00118}.
+
+\bibitem[{Wang and Xin(2022)}]{wang2022stop}
+Haoming Wang and Wang Xin. 2022.
+\newblock \href {https://aclanthology.org/2022.findings-emnlp.521/} {How to stop an avalanche? jodem: Joint decision making through compare and contrast for dialog state tracking}.
+\newblock In \emph{Findings of EMNLP}, pages 7030--7041.
+
+\bibitem[{Wu et~al.(2019)Wu, Madotto, Hosseini-Asl, Xiong, Socher, and Fung}]{wu2019transferable}
+Chien-Sheng Wu, Andrea Madotto, Ehsan Hosseini-Asl, Caiming Xiong, Richard Socher, and Pascale Fung. 2019.
+\newblock \href {https://aclanthology.org/P19-1078/} {Transferable multi-domain state generator for task-oriented dialogue systems}.
+\newblock In \emph{Proceedings of ACL}, pages 808--819.
+
+\bibitem[{Yang et~al.(2023)Yang, Li, Li, and Shinozaki}]{yang2023multi}
+Longfei Yang, Jiyi Li, Sheng Li, and Takahiro Shinozaki. 2023.
+\newblock \href {https://aclanthology.org/2023.findings-acl.304/} {Multi-domain dialogue state tracking with disentangled domain-slot attention}.
+\newblock In \emph{Findings of ACL}, pages 4928--4938.
+
+\end{thebibliography}

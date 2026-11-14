@@ -1,0 +1,47 @@
+\begin{table}[h!]
+\centering
+\footnotesize{
+\setlength\tabcolsep{2pt}
+\begin{tabular}{lccr|cccc}
+\toprule
+Setting & $1-\alpha$ & $th$ &    & Cov$\uparrow$ & Single$\uparrow$ & $|\text{CQ}|\downarrow$ & Amb \\ \midrule
+\midrule
+ACID & .99 & 7   &  CICC & \underline{1} & \textbf{.77} & \textbf{3.00} & .10 \\
+& & &  B1 & .98 & .85 & 5 & 0 \\
+& & &  B2 & .95 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{.99} & 0 & 5 & 0 \\
+\midrule
+ATIS & .99 & 7  &  CICC & \underline{.99} & \textbf{.98} & \textbf{2.54} & 0 \\
+& & &  B1 & \underline{.99} & .73 & 5 & 0 \\
+& & &  B2 & .98 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{1} & 0 & 5 & 0 \\
+\midrule
+B77/BERT & .99 & 7  &  CICC & \underline{.98} & \textbf{.79} & \textbf{2.90} & .04 \\
+& & &  B1 & .97& .90 & 5 & 0 \\
+& & &  B2 & .93 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{.99} & 0 & 5 & 0 \\
+\midrule
+B77/DFCX & .99 & 4  &  CICC & .97 & 0 & 5 & 1 \\
+& & &  B1 & .97 & .05 & 5 & .95 \\
+& & &  B2 & .90 & 1 & $-$ & 0 \\
+& & &  B3 & .97 & 0 & 5 & 1 \\
+\midrule
+C150 & .99 & 7  &  CICC & \underline{.99} & \textbf{.97} & \textbf{2.66} & 0 \\
+& & &  B1 & \underline{.99} & .82 & 5 & 0 \\
+& & &  B2 & .98 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{1} & 0 & 5 & 0 \\
+\midrule
+HWU64 & .99 & 7  &  CICC & \underline{.99} & \textbf{.25} & \textbf{3.39} & .28 \\
+& & &  B1 & .98 & .05 & 5 & 0 \\
+& & &  B2 & .90 & 1 & $-$ & 0 \\
+& & &  B3 & .98 & 0 & 5 & 0 \\
+\midrule
+MTOD & .99 & 7  &  CICC & \underline{.99} & \textbf{1} & $-$ & 0 \\
+& & &  B1 & \underline{1} & .98 & 5 & 0 \\
+& & &  B2 & \underline{.99} & \textbf{1} & $-$ & 0 \\
+& & &  B3 & \underline{1} & 0 & 5 & 0 \\
+\bottomrule
+\end{tabular}}
+    \caption{Test set results for $1-\alpha=.99$ where \underline{underline} indicates meeting coverage requirement. \textbf{Bold} denotes best when meeting this requirement, omitted for last column due to missing ground truth for ambiguous.}
+    \label{tab:results_unoptimized2}
+\end{table}

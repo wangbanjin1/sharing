@@ -1,0 +1,40 @@
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{l|cc|cc|cc}
+\hline
+\multicolumn{1}{c|}{\multirow{2}{*}{Method}} &
+  \multicolumn{2}{c|}{Low-acc ASR} &
+  \multicolumn{2}{c|}{Noised Aud.} &
+  \multicolumn{2}{c|}{Paraphrased} \\\cline{2-7} 
+\multicolumn{1}{c|}{} & JGA   & N-acc & JGA   & N-acc & JGA   & N-acc  \\ \hline
+Baseline              &29.9 & 45.82 & 27.25 & 41.81 & 25.81 & 44.51 \\ 
+% \quad + EPA (Step1)               & 12.68 & 81.85 & 12.94 & 81.97 & 13.05 & 77.13 \\ 
+\quad + EPA             &30.63 & 48.54 & 27.5 & 46.52 & 27.65 & 47.96 \\ \hline
+\end{tabular}%
+}
+\caption{Experiment with GPT-2 model as baseline.}
+\label{tab:gpt2}
+\end{table}
+
+
+
+
+
+% \begin{table}[t]
+% \centering
+% \resizebox{\columnwidth}{!}{%
+% \begin{tabular}{lcccc}
+% \hline
+% & \textbf{Low-acc ASR} & \textbf{Noised Aud.} & \textbf{Paraphrased} & \textbf{High-acc ASR} \\
+% \hline
+% Baseline & 12.68 & 12.45 & 13.05 & 12.82 \\
+% + EPA    & 15.90 & 15.29 & 15.07 & 16.62 \\
+% \hline
+% \end{tabular}
+% }
+% \caption{Experiment with GPT-2 model as baseline. JGA is reported.}
+% \label{tab:gpt2}
+% \end{table}
+
+

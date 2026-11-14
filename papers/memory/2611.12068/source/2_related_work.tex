@@ -1,0 +1,77 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Memory systems for LLM agents.}
+Memory systems for LLM agents keep past interactions outside the model and
+retrieve them when they become
+relevant~\citep{agentmemorysurvey,zhang2024memorysurvey,lscs,guo2026multimodalmemory}.
+Early designs rank or decay a memory stream~\citep{park2023generative,MemoryBank}
+or manage memory the way an operating system manages
+storage~\citep{memgpt,memoryos,li2025memos}. Later systems extract and update
+salient facts~\citep{mem0}, link notes into an evolving network~\citep{amem},
+compress what they store~\citep{fang2026lightmem,liu2026simplemem}, or learn
+memory construction with reinforcement
+learning~\citep{wang2025memalpha,yan2026memoryr1}. Graph memories organize
+content around entities and their
+relations~\citep{bei2025graphsagents,zep,gutierrez2024hipporag,gutierrez2025hipporag2,edge2024graphrag,wu2026gam},
+and hypergraph memories keep n-ary facts
+together~\citep{luo2025hypergraphrag,hypermem}. Typed designs split memory by
+function, following cognitive accounts of episodic and semantic
+memory~\citep{tulving1985memory,episodic_memory_missing_piece}.
+MIRIX~\citep{mirix} assigns six memory types to dedicated agents, and
+PersonaAgent~\citep{zhang2026personaagent} pairs episodic and semantic memory
+for personalization. Memory stored in model parameters or latent
+states~\citep{memoryllm,mplus,self-param,behrouz2024titans} requires training
+and cannot be used with closed models. Evaluation has moved from recall over
+long conversations~\citep{locomo,longmemeval} to multi-session agentic
+tasks~\citep{memoryagentbench,he2026memoryarena}, evolving
+environments~\citep{ji2026clawarena}, lifelong
+personalization~\citep{memorycd}, memory audits~\citep{ma2026memaudit}, and
+comparisons of memory substrates~\citep{harnessmemory}. \ours combines the
+typed and the graph directions. Complete typed records remain the system of
+record, a provenance hypergraph serves only as their index, and every graph
+fact cites its source records.
+
+\paragraph{Multi-agent systems.}
+Multi-agent systems divide a task among LLM agents that take different
+roles~\citep{guo2024masurvey,luo2025agentsurvey}, from role-playing and
+conversable agents~\citep{li2023camel,wu2024autogen} to software teams and
+groups of experts~\citep{hong2024metagpt,qian2024chatdev,chen2024agentverse}.
+Agents can debate~\citep{du2024debate,liang2024debate,huang2026madiave},
+optimize their workflow~\citep{zhuge2024gptswarm,zhang2025aflow}, or
+communicate through latent representations~\citep{yang2026xbridge}. They also
+fail in new ways~\citep{cemri2025mas,huang2026believed}, and one response keeps
+humans in the loop as
+collaborators~\citep{zou2026hasurvey,zou2025collabintel,wu2026hasbench}. Memory
+in these systems mostly serves the collaboration, through shared pools, graphs
+of team trajectories, and sharing across users under access
+control~\citep{memory_sharing,zhang2025gmemory,rezazadeh2025collabmemory}.
+\ours applies the multi-agent design to memory itself. A Meta Memory Manager
+routes each input to the agents of the six memory types, and each agent writes
+only the records of its own type.
+
+\paragraph{Self-reflection and memory consolidation.}
+Self-reflection lets an agent improve from feedback on its own behavior without
+updating its
+weights~\citep{shinn2023reflexion,madaan2023selfrefine,park2023generative,zhao2025marco}.
+Experience-driven methods turn such feedback into reusable knowledge, including
+insights~\citep{zhao2024expel}, executable skills~\citep{wang2024voyager},
+workflows~\citep{wang2025awm}, reasoning
+strategies~\citep{ouyang2026reasoningbank}, and evolving playbooks and case
+banks~\citep{suzgun2025cheatsheet,zhang2026ace,fang2026memp,zhou2025memento}.
+Skills can co-evolve with the policy~\citep{xia2026skillrl,xia2026metaclaw}, be
+verified and optimized as
+artifacts~\citep{zhang2026coevoskills,ma2026skillneo}, or form a
+hypergraph~\citep{xu2026hyperskill}, and agents, their harnesses, and their
+memory architectures can improve
+themselves~\citep{xia2026agent0,xia2026rrsi,liu2026evolvemem,gao2026selfevolving,fang2025selfevolving}.
+Consolidation can also run offline, before queries arrive or while the user is
+inactive~\citep{lin2025sleeptime,fang2026lightmem,xia2026metaclaw,ye2026autodreamer}.
+Rewriting memory carries risks. Consolidated memories can become
+faulty~\citep{zhang2026faultymemories}, and a defective skill can contaminate
+the skills distilled after it~\citep{shang2026backfires}. AutoDream also
+consolidates outside the write path, but it limits what consolidation may
+change. On semantic memory it merges only anchors that denote the same entity
+and never rewrites stored records. On procedural memory it keeps a judged
+outcome, and each experience a skill edit cites, only after checking the
+quoted text.

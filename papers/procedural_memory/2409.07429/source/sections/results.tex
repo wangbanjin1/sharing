@@ -1,0 +1,42 @@
+\section{Experiments}
+\label{sec:4:experiments}
+
+In this section, we experiment on two major web navigation benchmarks -- WebArena (\S\ref{sec:4.1:webarena}) and Mind2Web (\S\ref{sec:4.2:mind2web}). For each benchmark, we first introduce the benchmark and top-performing baseline methods, then present our \awm approach and showcase its ability to achieve superior task success and generalization across varied setups.
+
+For both benchmarks, we conduct \awm on a website basis. In other words, we group examples by their associated websites, and respectively run \awm on each group. This mechanism maintains an small collection of workflows that are nonetheless relevent to the test tasks.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{WebArena}
+\label{sec:4.1:webarena}
+
+% \subsubsection{Benchmark and Baselines}
+% dataset
+WebArena \citep{zhou2024webarena} provides 812 web navigation tasks on five websites that cover four common application domains: e-commerce, social forum discussions, collaborative software development, and content management. Most importantly, WebArena supports rigorous evaluation on the functional correctness of agent trajectories. 
+
+% sota method
+We adopt the current state-of-the-art method without human-annotated site-specific knowledge, BrowserGym \citep{drouin2024workarena}, which altered the agent default action space. We adopt the BrowserGym framework and its default action space, and represent webpages using accessibility trees, following the environment representation in \citet{zhou2024webarena}. Because BrowserGym inputs both webpage HTML and accessibility tree representations, to keep a fair comparison with our method, we also run the BrowserGym version with only accessibility tree webpage representations, denoted as BrowserGym$_{\it ax-tree}$.
+%
+We also compare to the SteP method~\citep{sodhi2023heap}, which uses 14 human expert written workflows tailored to solving WebArena. Our method, in contrast, uses no human supervision and is not tailored to the WebArena setting.
+% --- despite this, we will find that \awm obtains comparable or superior results to SteP.
+
+
+% atm setup
+Following baseline approaches, we use GPT-4 (\texttt{gpt-4-0613}) with a temperature of $0.0$ to ensure mostly stable model outputs.
+Because WebArena only has test examples and no additional high-quality, domain-aligned examples exist, we only conduct \awm in the online setting as in \S\ref{sec:3.3:atm}.
+
+\input{sections/results/webarena}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mind2Web}
+\label{sec:4.2:mind2web}
+
+% \subsubsection{Benchmark and Baselines}
+Mind2Web \citep{deng2023mindweb} features web navigation in cross-task, website, and domain settings, stressing the generality of agents on versatile operations and environments. 
+Each task in Mind2Web has a fixed number of steps; at each step, the agent needs to predict an action, which is evaluated by: (1) \textit{element accuracy}: to check if the correct page element is selected, (2) \textit{action F$_1$} to check if the action taken on the element is correct, and aggregating (1) and (2) yields (3) \textit{step success rate} which checks that both element and action selection are correct at the current step. Lastly, after completing every step in the given task, the last metric (4) task-level \textit{success rate} measures if all intermediate steps are successfully conducted for this task, \ie, all steps for this task score 1 under metric (3).
+
+Because Mind2Web provides a training set covering part of the tested websites (cross-task split), we explore both the \textit{offline} setting that induces workflows from the training set and applies to test sets, and the \textit{online} setting, where we stream workflow induction and inference on test queries (\S\ref{sec:3.3:atm}).
+
+Since we focus on LM-based agents that only take textual inputs, we compare \awm to two state-of-the-art methods, MindAct \citep{deng2023mindweb} and Synapse \citep{zheng2024synapse}. MindAct introduces webpage element filtering and multi-choice task format to ease observation processing, and Synapse changes the format to a trajectory style and augments retrieved relevant examples. We integrate the element filtering adopted in both methods, and added workflows instead of retrieved examples in Synapse, to verify the superiority of reusable workflows over concrete examples. To fairly compare with all baseline methods, we run \awm with both \texttt{gpt-3.5-turbo} and \texttt{gpt-4} models with temperature $0.0$. We use the same model for neural workflow induction and agent action generation.
+
+
+\input{sections/results/mind2web}

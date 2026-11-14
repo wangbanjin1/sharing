@@ -1,0 +1,116 @@
+\section{Human Validation Details}
+\label{app:validation}
+
+This appendix supplements \S\ref{sec:human-validation} with the annotator protocol, the full checklist, the adjudication rules, and the raw counts behind the item-level statistics.
+
+\subsection{Annotator Recruitment and Protocol}
+\label{app:validation-annotators}
+
+The audit is performed by five annotators: three NLP PhD students with text-to-SQL research experience, and two recruited annotators with production SQL backgrounds. The two external annotators are compensated at hourly rates commensurate with local expectations for technical annotation work. Before annotating the audit set, all five annotators completed a one-hour calibration round on a held-out set of ten triplets, drawn independently from the audit sample. The calibration
+round aligned checklist-item interpretation; calibration triplets are excluded from all reported statistics.
+
+Each of the 250 audit triplets is assigned to all five annotators, and each annotator works independently. Annotators see only the sample contents---initial question, clarification structure, drift utterance (if applicable), and ground-truth SQL---and are blind to all automated verdicts produced during construction, as well as to any model evaluation results. The annotation interface presents one sample at a time, with the checklist items relevant to that sample's type. Items that are not applicable to a given sample type (e.g., joint-boundary items on a \textsc{Chain-only} sample) are simply not shown there.
+
+\subsection{Full Checklist}
+\label{app:validation-checklist}
+
+Each annotator answers yes/no on the following items. The four chain criteria apply to \textsc{Chain-only} and \textsc{Joint} samples; the three drift criteria apply to \textsc{Drift-only} and \textsc{Joint} samples; the joint criterion applies only to \textsc{Joint} samples, where both patterns co-occur within the same dialogue.
+
+\paragraph{Chain items.}
+
+\begin{itemize}[
+  topsep=0.15em,
+  itemsep=0.05em,
+  parsep=0pt,
+  partopsep=0pt
+]
+\item[\textbf{1.}] Is the initial user utterance genuinely underspecified with respect to the business concept clarified at $L_1$?
+\item[\textbf{2.}] Are both $L_1$ options plausible interpretations of that concept that a real user might intend?
+\item[\textbf{3.}] Are both $L_2$ options plausible interpretations of the concept clarified at $L_2$?
+\item[\textbf{4.}] Under the $L_1$ alternative, is the core of $L_2$ eliminated or transformed, rather than simply remaining unchanged in that context?
+\end{itemize}
+
+\vspace{-0.6mm}
+
+\paragraph{Drift items.}
+\begin{itemize}[
+  topsep=0.15em,
+  itemsep=0.05em,
+  parsep=0pt,
+  partopsep=0pt
+]
+\item[\textbf{1.}] Does the drift utterance retract or replace at least one commitment from the pre-drift turn, rather than only extending it?
+\item[\textbf{2.}] Does the post-drift SQL correctly implement what the drift utterance asks for?
+\item[\textbf{3.}] Does the post-drift SQL leave every commitment not targeted by the drift unchanged?
+\end{itemize}
+
+\vspace{-0.6mm}
+
+\paragraph{Joint item.}
+\begin{itemize}[
+  topsep=0.15em,
+  itemsep=0.05em,
+  parsep=0pt,
+  partopsep=0pt
+]
+\item[\textbf{1.}] Does the dialogue read coherently across the chain-to-drift boundary, with no abrupt topic shift and no contradiction between turns?
+\end{itemize}
+
+\subsection{Adjudication Rules}
+\label{app:validation-adjudication}
+
+A sample is accepted under \emph{majority acceptance} iff at least three of the five annotators answer yes on every applicable item; it is accepted under \emph{strict acceptance} iff all five annotators answer yes on every applicable item. Items that are not applicable to a sample's type are excluded from both the numerator and the denominator for that sample only.
+
+Fleiss' $\kappa$ in Table~\ref{tab:human-validation} is computed over binary per-annotator accept/reject verdict at the sample level, where a verdict is yes iff that annotator answered yes on every applicable item. The item-level $\kappa$ values below are computed analogously over binary per-annotator verdicts for every checklist item.
+
+\subsection{Item-Level Statistics}
+\label{app:validation-item-level}
+
+Table~\ref{tab:human-validation} reports sample-level acceptance after aggregating all applicable checklist criteria. To identify where rejection and disagreement arise, Table~\ref{tab:item-level-app} reports majority pass rates and Fleiss' $\kappa$ for three core criteria: counterfactual dependency, non-monotonic retraction, and joint transition coherence. A criterion passes for a given sample iff at least three of the five annotators mark it as satisfied.
+
+All three item-level $\kappa$ values lie between $0.71$ and $0.83$, indicating substantial to almost-perfect agreement. The lowest value ($\kappa = 0.71$, on joint transition coherence) is consistent with the more pragmatic nature of that judgment, while the two formal criteria show higher agreement overall.
+
+\begin{table}[!t]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.45}
+
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}ccc@{}}
+\toprule
+\textbf{Item}
+& \textbf{Pass Rate}
+& \textbf{Fleiss' $\boldsymbol{\kappa}$} \\
+\midrule
+Counterfactual dependency
+& 93.4\%
+& 0.79 \\
+
+Non-monotonic retraction
+& 94.8\%
+& 0.83 \\
+
+Joint transition coherence
+& 91.6\%
+& 0.71 \\
+\bottomrule
+\end{tabular*}
+\vspace{-2mm}
+\caption{Majority pass rates and annotator agreement for three core validation criteria. A criterion passes when at least three of five annotators mark it as satisfied; Fleiss' $\kappa$ uses binary criterion-level verdicts across annotators.}
+\label{tab:item-level-app}
+\vspace{-3mm}
+\end{table}
+
+\subsection{Dominant Failure Modes}
+\label{app:validation-failures}
+
+We summarize the dominant reasons for rejection under majority acceptance for each sample type:
+
+\namedpara{Chain-only.}
+Of the 17 rejected samples, the most common failure concerns counterfactual dependency. The remaining rejections involve the plausibility of the $L_1$ or $L_2$ options, while initial under-specification rarely emerges as a rejection reason.
+
+\namedpara{Drift-only.}
+Of the 11 rejected samples, the most common failure concerns post-drift SQL fidelity to the drift utterance. Fewer failures involve the preservation of non-targeted commitments, while non-monotonic retraction itself is rarely flagged.
+
+\namedpara{Joint.}
+The 29 rejected samples most often fail on counterfactual dependency, non-monotonic retraction, or chain-to-drift boundary coherence. The remaining rejections reflect less frequent failures on other checklist items across the full audit set.

@@ -1,0 +1,52 @@
+\begin{thebibliography}{9}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Bastianelli et~al.(2020)Bastianelli, Vanzo, Swietojanski, and Rieser}]{bastianelli-etal-2020-slurp}
+Bastianelli, Emanuele and Vanzo, Andrea and Swietojanski, Pawel and Rieser, Verena. 2020.
+\newblock \href {https://aclanthology.org/2020.emnlp-main.588} {\emph{{SLURP}: A Spoken Language Understanding Resource Package}}.
+\newblock PID \href{https://github.com/pswietojanski/slurp}{https://github.com/pswietojanski/slurp}.
+
+\bibitem[{Casanueva et~al.(2020)Casanueva, Temcinas, Gerz, Henderson, and Vulic}]{casanueva-etal-2020-efficient}
+I{\~{n}}igo Casanueva and Tadas Temcinas and Daniela Gerz and Matthew Henderson and Ivan Vulic. 2020.
+\newblock \href {https://arxiv.org/abs/2003.04807} {\emph{Efficient Intent Detection with Dual Sentence Encoders}}.
+\newblock PID \href{https://github.com/PolyAI-LDN/task-specific-datasets/tree/master/banking\_data}{https://github.com/PolyAI-LDN/task-specific-datasets/tree/master/banking\_data}.
+
+\bibitem[{Coucke et~al.(2018)Coucke, Saade, Ball, Bluche, Caulier, Leroy, Doumouro, Gisselbrecht, Caltagirone, Lavril, Primet, and Dureau}]{coucke2018snips}
+Coucke, Alice and Saade, Alaa and Ball, Adrien and Bluche, Théodore and Caulier, Alexandre and Leroy, David and Doumouro, Clément and Gisselbrecht, Thibault and Caltagirone, Francesco and Lavril, Thibaut and Primet, Maël and Dureau, Joseph. 2018.
+\newblock \href {http://arxiv.org/abs/1805.10190} {\emph{Snips Voice Platform: an embedded Spoken Language Understanding system for private-by-design voice interfaces}}.
+\newblock PID \href{https://github.com/snipsco/snips-nlu}{https://github.com/snipsco/snips-nlu}.
+
+\bibitem[{Larson and Leach(2022)}]{larson2022redwood}
+Larson, Stefan and Leach, Kevin. 2022.
+\newblock \href {https://aclanthology.org/2022.sigdial-1.45} {\emph{Redwood: Using Collision Detection to Grow a Large-Scale Intent Classification Dataset}}.
+\newblock Association for Computational Linguistics.
+\newblock PID \href{https://github.com/gxlarson/redwood}{https://github.com/gxlarson/redwood}.
+
+\bibitem[{Larson et~al.(2019)Larson, Mahendran, Peper, Clarke, Lee, Hill, Kummerfeld, Leach, Laurenzano, Tang, and Mars}]{larson-etal-2019-evaluation}
+Larson, Stefan and Mahendran, Anish and Peper, Joseph J. and Clarke, Christopher and Lee, Andrew and Hill, Parker and Kummerfeld, Jonathan K. and Leach, Kevin and Laurenzano, Michael A. and Tang, Lingjia and Mars, Jason. 2019.
+\newblock \href {https://doi.org/10.18653/v1/D19-1131} {\emph{An Evaluation Dataset for Intent Classification and Out-of-Scope Prediction}}.
+\newblock Association for Computational Linguistics.
+\newblock PID \href{https://github.com/clinc/oos-eval}{https://github.com/clinc/oos-eval}.
+
+\bibitem[{Liu et~al.(2019)Liu, Eshghi, Swietojanski, and Rieser}]{liu2019benchmarking}
+Liu, Xingkun and Eshghi, Arash and Swietojanski, Pawel and Rieser, Verena. 2019.
+\newblock \emph{Benchmarking Natural Language Understanding Services for building Conversational Agents}.
+\newblock Springer.
+\newblock PID \href{https://github.com/xliuhw/NLU-Evaluation-Data}{https://github.com/xliuhw/NLU-Evaluation-Data}.
+
+\bibitem[{Mansour and Haider(2021)}]{mansour2021atis}
+Mansour, Saab and Haider, Batool. 2021.
+\newblock \href {https://doi.org/10.35111/g9h5-0p74} {\emph{ATIS - Seven Languages}}.
+\newblock Linguistic Data Consortium, ISLRN \href{https://www.islrn.org/resources/713-838-074-718-6}{713-838-074-718-6}.
+\newblock PID \href{https://catalog.ldc.upenn.edu/LDC2021T04}{https://catalog.ldc.upenn.edu/LDC2021T04}.
+
+\bibitem[{Meng et~al.(2022)Meng, Xin, Liu, Wang, Feng, Lin, Zhao, Cao, and Sui}]{meng-etal-2022-dialogusr}
+Meng, Haoran and Xin, Zheng and Liu, Tianyu and Wang, Zizhen and Feng, He and Lin, Binghuai and Zhao, Xuemin and Cao, Yunbo and Sui, Zhifang. 2022.
+\newblock \href {https://aclanthology.org/2022.findings-emnlp.234} {\emph{{D}ialog{USR}: Complex Dialogue Utterance Splitting and Reformulation for Multiple Intent Detection}}.
+
+\bibitem[{Qin et~al.(2020)Qin, Xu, Che, and Liu}]{qin-etal-2020-agif}
+Qin, Libo and Xu, Xiao and Che, Wanxiang and Liu, Ting. 2020.
+\newblock \href {https://aclanthology.org/2020.findings-emnlp.163} {\emph{{AGIF}: An Adaptive Graph-Interactive Framework for Joint Multiple Intent Detection and Slot Filling}}.
+\newblock PID \href{https://github.com/LooperXX/AGIF}{https://github.com/LooperXX/AGIF}.
+
+\end{thebibliography}

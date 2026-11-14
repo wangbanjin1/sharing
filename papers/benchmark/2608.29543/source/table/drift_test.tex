@@ -1,0 +1,137 @@
+
+\begin{algorithm}[t]
+
+\caption{User Intent Drift Operationalization}
+\label{alg:drift-test}
+\small
+\renewcommand{\arraystretch}{1.10}
+
+\begin{tabularx}{\linewidth}{
+    @{}r@{\hspace{0.75em}}
+    >{\raggedright\arraybackslash}X@{}
+}
+
+\multicolumn{2}{@{}l}{
+    \textbf{Require:} Queries
+    $y_{\mathrm{pre}}$ and $y_{\mathrm{post}}$
+} \\
+
+\multicolumn{2}{@{}l}{
+    \textbf{Ensure:} Drift status or subtype
+} \\[2pt]
+
+\multicolumn{2}{@{}l}{
+    \textbf{Notation:}
+} \\[0pt]
+
+&
+$\mathcal{W}(y)$: filtering commitments in $y$
+\\
+
+&
+$\mathcal{O}(y)=S(y)\setminus\mathcal{W}(y)$:
+output-side commitments in $y$
+\\
+
+&
+$\operatorname{LitReplace}
+(\mathcal{W}_{\mathrm{pre}},\mathcal{W}_{\mathrm{post}})$:
+one predicate literal changes; its structure and all other filters
+remain fixed
+\\[2pt]
+
+&
+\textcolor{gray}{\itshape\% Extract commitments}
+\\[0pt]
+
+1: &
+$S_{\mathrm{pre}}\gets S(y_{\mathrm{pre}})$;
+$S_{\mathrm{post}}\gets S(y_{\mathrm{post}})$
+\\
+
+2: &
+Set $\mathcal{W}_t\gets\mathcal{W}(y_t)$ and
+$\mathcal{O}_t\gets\mathcal{O}(y_t)$ for
+$t\in\{\mathrm{pre},\mathrm{post}\}$
+\\[2pt]
+
+&
+\textcolor{gray}{\itshape\% Test non-monotonicity}
+\\[0pt]
+
+3: &
+\textbf{if} $S_{\mathrm{pre}}\subseteq S_{\mathrm{post}}$
+\textbf{then}
+\\
+
+4: &
+\hspace*{1.2em}\textbf{return} \textsc{Not Drift}
+\\
+
+5: &
+\textbf{end if}
+\\[2pt]
+
+&
+\textcolor{gray}{\itshape\% Assign drift subtype}
+\\[0pt]
+
+6: &
+\textbf{if}
+$\mathcal{O}_{\mathrm{pre}}=\mathcal{O}_{\mathrm{post}}$
+and
+$\operatorname{LitReplace}
+(\mathcal{W}_{\mathrm{pre}},\mathcal{W}_{\mathrm{post}})$
+\textbf{then}
+\\
+
+7: &
+\hspace*{1.2em}\textbf{return} \textsc{Value-level}
+\\
+
+8: &
+\textbf{end if}
+\\
+
+9: &
+\textbf{if}
+$\mathcal{O}_{\mathrm{pre}}=\mathcal{O}_{\mathrm{post}}$
+and
+$\mathcal{W}_{\mathrm{post}}
+\subsetneq\mathcal{W}_{\mathrm{pre}}$
+\textbf{then}
+\\
+
+10: &
+\hspace*{1.2em}\textbf{return} \textsc{Constraint-level}
+\\
+
+11: &
+\textbf{end if}
+\\
+
+12: &
+\textbf{if}
+$\mathcal{W}_{\mathrm{pre}}=\mathcal{W}_{\mathrm{post}}$
+and
+$\mathcal{O}_{\mathrm{pre}}
+\nsubseteq\mathcal{O}_{\mathrm{post}}$
+\textbf{then}
+\\
+
+13: &
+\hspace*{1.2em}\textbf{return} \textsc{Projection-level}
+\\
+
+14: &
+\textbf{end if}
+\\
+
+15: &
+\textbf{return} \textsc{Reject}
+\\
+
+\end{tabularx}
+
+\end{algorithm}
+

@@ -1,0 +1,45 @@
+
+\section{Discussion}
+\label{sec:discussion}
+
+Our study answers the three questions posed in the introduction and turns them
+into a design principle for agentic continual learning.
+
+\paragraph{How should experience be consolidated?}
+Experience should be transformed into shared, revisable procedural memory
+rather than accumulated as independent traces or abstractions. By organizing
+interlinked pages, \method{} can merge and correct knowledge across sessions
+while preserving useful relationships at different granularities. Free Form
+\method{} improves over No Memory by 10.9--14.5 pp across all six
+model--benchmark settings with 92--255 KB stores---two orders of magnitude
+smaller than raw-trace retrieval. The value of memory lies in selective
+consolidation, not volume.
+
+\paragraph{Which feedback, ingestion, and refinement choices matter?}
+Failure traces are useful primarily when feedback makes them interpretable.
+Execution-grounded outcomes localize failures, diagnosis explains the required
+correction, and iterative refinement turns newly exposed gaps into durable
+knowledge. One diagnostically supervised round outperforms four Self-Judge
+rounds by 7.0--10.9 pp: feedback quality matters more than rollout volume.
+
+\paragraph{Where should human effort be spent?}
+General system design remains necessary: memory needs persistence, retrieval,
+update operations, navigation, and quality checks. Domain-specific
+organization, however, should be left to the agent rather than prescribed
+before the knowledge gap is observed. Human effort is better spent reactively
+diagnosing failures. Additional constraints should address demonstrated memory
+failures, not anticipated ones.
+
+\method{} therefore contributes both a training-free mechanism for acquiring
+proprietary procedural knowledge and a practical principle: let the agent
+organize memory, and spend human effort on diagnosis.
+
+\paragraph{Limitations.}
+Our controlled study uses two benchmarks, three models, and single-run
+configurations; variance across seeds remains unquantified
+(Appendix~\ref{app:limitations}). More broadly, enterprise procedural
+automation remains less studied than code, mathematics, or personal assistants,
+and no available open benchmark combines stateful environments, proprietary
+procedures, and execution-grounded feedback at scale. Longer-term memory
+stability, broader enterprise environments, replication, and scalable automated
+diagnosis remain important directions for future work.

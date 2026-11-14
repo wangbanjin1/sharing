@@ -1,0 +1,146 @@
+\appendix
+
+\section{Per-user and per-replicate distributions}
+\label{app:distributions}
+
+Pooled percentages compress the variation reviewers need to assess
+clustering; Tables~\ref{tab:peruser} and~\ref{tab:tenureuser} report the
+underlying distributions. Per-replicate short-horizon totals are stable (none
+15.3/15.3/14.9\%; map 93.8/94.2/94.5\%; vector 89.5/91.6/92.0\%; graph
+92.0/92.4/95.3\%; hybrid v1 87.6/88.7/92.0\%; hybrid v2
+96.7/98.5/95.3\%).
+
+\begin{table}[h]
+\centering
+\small
+\caption{Short-horizon accuracy (\%) per user, pooled over 3 replicates
+($n{=}57$--60 judged answers per cell; dov/mara/renata have hand-built
+question sets, g1--g11 the generated 20-question set).}
+\label{tab:peruser}
+\begin{tabular}{lrrrrrr}
+\toprule
+User & none & map & vector & graph & hyb.\ v1 & hyb.\ v2 \\
+\midrule
+dov    & 15 & 83  & 88 & 82  & 80 & \textbf{98} \\
+g1     & 15 & \textbf{95} & 88 & 87  & 82 & 92 \\
+g2     & 16 & 93  & 91 & 93  & 91 & \textbf{95} \\
+g3     & 16 & 91  & 91 & 98  & 96 & \textbf{100} \\
+g4     & 15 & 92  & \textbf{95} & 92  & 88 & \textbf{95} \\
+g5     & 16 & 93  & 96 & 93  & 93 & \textbf{100} \\
+g6     & 16 & 98  & 96 & 96  & 89 & \textbf{100} \\
+g7     & 15 & 93  & 88 & \textbf{98} & \textbf{98} & 97 \\
+g8     & 16 & 95  & 93 & \textbf{100} & 93 & 98 \\
+g9     & 13 & \textbf{98} & 87 & 92  & 90 & 95 \\
+g10    & 15 & \textbf{100} & 88 & 93  & 92 & 97 \\
+g11    & 15 & \textbf{98} & 95 & 93  & 93 & \textbf{98} \\
+mara   & 15 & \textbf{100} & 90 & 98  & 93 & 98 \\
+renata & 15 & 88  & 87 & 90  & 73 & \textbf{93} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Tenure accuracy (\%) per user and checkpoint, pooled over 3 replicates
+($n{=}54$/cell). Cell format: map\,/\,vector\,/\,graph\,/\,hybrid v2.}
+\label{tab:tenureuser}
+\begin{tabular}{lccc}
+\toprule
+User & week 3 & week 6 & week 9 \\
+\midrule
+L101 & 81/70/72/78 & 76/57/83/85 & 72/69/100/98 \\
+L102 & 87/80/78/87 & 83/74/80/87 & 76/76/83/83 \\
+L103 & 83/78/85/83 & 85/80/80/87 & 74/76/85/87 \\
+L104 & 76/70/78/83 & 69/59/81/89 & 80/61/81/93 \\
+L105 & 85/81/78/76 & 85/80/78/85 & 85/81/98/100 \\
+L106 & 74/72/65/74 & 80/63/72/81 & 83/85/94/98 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\small
+\caption{History-baseline tenure accuracy (\%) per user (\S\ref{sec:cost}),
+pooled over 3 replicates. Cell format: full history\,/\,recency window.
+Per-user week-9 hybrid v2 $-$ full history effects: $+3.7, -1.9, +7.4,
++5.6, +7.4, +3.7$ pp (L101--L106); five of six positive, exact six-user
+sign-flip $p=0.063$.}
+\label{tab:baselineuser}
+\begin{tabular}{lccc}
+\toprule
+User & week 3 & week 6 & week 9 \\
+\midrule
+L101 & 81/56 & 87/46 & 94/69 \\
+L102 & 89/48 & 93/43 & 85/65 \\
+L103 & 85/52 & 87/37 & 80/65 \\
+L104 & 80/39 & 81/43 & 87/65 \\
+L105 & 83/50 & 89/41 & 93/67 \\
+L106 & 76/52 & 78/48 & 94/69 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Short-horizon per-user baselines (full history\,/\,window, \%): dov 98/80,
+g1 98/73, g2 96/70, g3 98/65, g4 100/68, g5 91/68, g6 100/65, g7 98/75,
+g8 100/74, g9 97/75, g10 98/62, g11 97/73, mara 98/90, renata 100/82.
+
+\section{Cross-family judge: agreement and aggregates}
+\label{app:crossjudge}
+
+Confusion over all 8{,}985 re-judged answers --- five backends
+$\times$ 1{,}797 (Sonnet $\times$ DeepSeek): both-correct 6{,}827;
+Sonnet-correct/DeepSeek-wrong 1{,}029; DeepSeek-correct/Sonnet-wrong 54;
+both-wrong 1{,}075. Observed agreement 87.9\%; Cohen's $\kappa=0.600$.
+Agreement conditioned on the primary verdict: 86.9\% among Sonnet-correct
+answers, 95.2\% among Sonnet-wrong --- the second judge rarely rescues an
+answer the primary judge rejected, and its disagreements are concentrated
+in added strictness. (The four-backend subset of the first pass alone:
+agreement 88.1\%, $\kappa=0.574$.)
+
+\begin{table}[h]
+\centering
+\small
+\caption{Aggregate accuracy (\%) under each judge (same answers, both
+corpora), with per-backend confusion counts (both corpora pooled,
+$n{=}1{,}797$/backend): BC = both-correct, SO = Sonnet-only correct,
+DO = DeepSeek-only correct, BW = both-wrong.}
+\label{tab:crossjudgeagg}
+\begin{tabular}{lcccccccc}
+\toprule
+ & \multicolumn{2}{c}{short (825)} & \multicolumn{2}{c}{tenure (972)} &
+ \multicolumn{4}{c}{confusion} \\
+Backend & Son. & DS & Son. & DS & BC & SO & DO & BW \\
+\midrule
+curated map  & 94.2 & 82.2 & 79.7 & 67.2 & 1322 & 230 &  9 & 236 \\
+vector       & 91.0 & 78.8 & 72.9 & 61.8 & 1241 & 219 & 10 & 327 \\
+graph        & 93.2 & 81.2 & 81.8 & 70.6 & 1353 & 211 &  3 & 230 \\
+hybrid v2    & 96.8 & 84.5 & 86.4 & 72.4 & 1392 & 247 &  9 & 149 \\
+full history & 97.9 & 93.0 & 85.7 & 79.7 & 1519 & 122 & 23 & 133 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Abstention classifier.} The abstention/wrong-specific split
+uses a deterministic regular expression over the answer text, applied only
+to answers the judge marked wrong:
+\texttt{don't have | no (information|record|mention|notes) | don't know |
+not in (my|the) notes | no such | unable to} (case-insensitive). An answer
+matching anywhere is classified as an abstention, otherwise as a wrong
+specific --- so a hedged answer that both abstains and asserts counts as
+an abstention, and partial answers are classified by the presence of any
+disclaimer phrase, a known coarseness. The classifier is reproducible but
+has not been validated against human labels; the planned blinded
+adjudication uses a three-way rubric (correct / wrong-specific /
+abstention) partly to measure this classifier's agreement with human
+judgment.
+
+Confabulation metrics under both judges (tenure; wrong-set defined by each
+judge): conditional confident-error share --- vector 62.7\% (Sonnet) /
+62.5\% (DeepSeek); map 72.1 / 69.3; graph 83.6 / 78.0; hybrid v2 93.9 /
+85.4. Unconditional wrong-specific rate --- vector 17.0 / 23.9; map 14.6 /
+22.7; graph 15.2 / 22.9; hybrid v2 12.8 / 23.6; full history (DeepSeek)
+18.1. The conditional ordering (hybrid v2 most confident when wrong,
+vector most abstaining) is stable across judges; the unconditional
+ordering is judge-sensitive.

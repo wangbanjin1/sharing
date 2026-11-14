@@ -1,0 +1,22 @@
+\begin{table}[h!]
+\centering
+% \footnotesize{
+\setlength\tabcolsep{2pt}
+\begin{tabular}{ll|cc}
+\toprule
+Dataset         &  Algorithm                & F1$\uparrow$    & Accuracy$\uparrow$ \\
+\midrule
+C150            &   CICC-OOS                    & .91   & .68 \\ 
+                &   \citet{zhan2021out} 25\%   & .81   & .88 \\
+                &   \citet{zhan2021out} 50\%   & .87   & .88 \\
+                &   \citet{zhan2021out} 75\%   & .89   & .88 \\
+                &   \citet{cavalin2020improving}& .76  & .73 \\ \midrule
+B77             &   CICC-OOS                    & .90   & .89 \\
+                &   \citet{zhan2021out} 25\%   & .74   & .70 \\
+                &   \citet{zhan2021out} 50\%   & .80   & .73 \\
+                &   \citet{zhan2021out} 75\%   & .87   & .81 \\
+\bottomrule
+\end{tabular}
+    \caption{Results for the OOS detection task.}
+    \label{tab:ood_results_app}
+\end{table}

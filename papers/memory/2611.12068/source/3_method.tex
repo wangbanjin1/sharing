@@ -1,0 +1,420 @@
+\providecommand{\method}{\ours}
+
+\section{Methodology}
+\label{sec:method}
+
+\method is designed to be practical, accurate, and efficient. It has to run
+with the models a team already uses and leave stored records intact, it has to
+keep a name, a date, a count, or the distinction between two events recoverable
+after writing and after consolidation, and it has to answer from a bounded
+evidence set however long the history grows. This section describes the
+layered design that delivers the three.
+
+\method separates storage from indexing (\Cref{fig:mirix-overview}). A \emph{typed evidence plane} stores complete
+memories and is the system of record (\Cref{sec:typed-evidence}). A
+\emph{provenance hypergraph} indexes the entities, events, relations, roles, and
+times in those memories, and every fact in it cites the records it came from
+(\Cref{sec:hypergraph}). Three paths operate on the two layers, and
+\Cref{alg:mirix} states each of them in pseudocode. The write path stores a
+memory and then indexes it. The read path plans a query, traverses the
+graph, and dereferences only the records it selects (\Cref{sec:retrieval}).
+AutoDream, the third path, runs outside the other two (\Cref{sec:autodream}). On semantic memory it
+merges duplicate anchors in the hypergraph and returns the evidence store
+unchanged, so semantic consolidation changes how evidence is connected, never
+what evidence exists. On procedural
+memory, AutoDream instead distills task sessions into skills that cite the
+experiences behind them. \Cref{app:method-invariants} collects the properties that hold regardless of
+how the language models behave.
+
+\subsection{Problem setup}
+\label{sec:method-setup}
+
+For a user \(u\), the system observes a stream
+\(\mathcal X_u=(x_1,\ldots,x_T)\) of conversational or multimodal inputs. When it
+writes \(x_t\), future queries are unknown, so the writer must produce a
+persistent state
+\begin{equation}
+    \mathcal S_u^t=(P_u^t,G_u^t)
+\end{equation}
+from which a later query \(q\) can be answered with a bounded evidence set
+\(\mathcal R(q;\mathcal S_u^t)\). The evidence store \(P_u\) collects the typed
+stores, among them the episodic store \(P_u^E\), the semantic store \(P_u^S\),
+and the procedural store \(P_u^P\). We seek high answer utility under three
+technical requirements.
+\begin{enumerate}[leftmargin=*,nosep]
+    \item \textbf{Source fidelity.} Concrete evidence remains recoverable after
+    writing and after consolidation.
+    \item \textbf{Bounded access.} A query inspects a small graph neighborhood
+    and a bounded set of cited rows instead of scanning the full history.
+    \item \textbf{Temporal identity.} Repeated descriptions of one event may
+    share evidence, but distinct occurrences must not collapse merely because
+    they are worded alike.
+\end{enumerate}
+Source fidelity and temporal identity are what make the system accurate and
+its answers traceable, and bounded access is what keeps it efficient. The rest
+of this section shows how the two layers meet these requirements.
+Each subsection explains a block of \Cref{alg:mirix}, and the numbers on its right
+point to the equations that define each step.
+
+\begin{algorithm}[t]
+\caption{\method for one user \(u\). Calls marked \(\star\) use a language model.}
+\label{alg:mirix}
+\small
+\algrenewcommand{\algorithmiccomment}[1]{\hfill#1}
+\begin{minipage}[t]{0.485\textwidth}
+\begin{algorithmic}[1]
+\Procedure{Write}{$x_t$}
+  \For{\(k\in R_\theta^\star(x_t)\)}\label{alg:route}
+    \State \(m\gets W_k^\star(x_t,P_u)\), \(\textsc{Commit}(P_u,m)\)\Comment{\eqref{eq:memory-record}}\label{alg:commit}
+    \If{\(k\in\{\mathrm{episodic},\mathrm{semantic}\}\)}
+      \State \(\Phi\gets\textsc{Extract}^\star(m)\cup\textsc{Repair}^\star(m)\)\Comment{\eqref{eq:frame}}\label{alg:extract}
+      \State \(A_m\gets\textsc{Admit}(\textsc{Canon}^\star(\Phi))\)
+      \State \(I_a\gets I_a\cup\{i_m\}\) for \(a\in A_m\)
+      \For{\(f\in\Phi\) with \(|A_f|\ge 2\)}
+        \State \(\textsc{Upsert}(G_u,\operatorname{id}(f),f)\)\Comment{\eqref{eq:semantic-frame-id}, \eqref{eq:episodic-frame-id}}\label{alg:upsert}
+        \State \(C_f\gets C_f\cup\{i_m\}\)
+      \EndFor
+    \EndIf
+  \EndFor
+\EndProcedure
+\Procedure{Read}{$q$}
+  \State \(\Pi\gets\textsc{Plan}(q)\)\Comment{\eqref{eq:query-plan}}\label{alg:plan}
+  \State \(A_q\gets\textsc{Top}(\textsc{Recall}(q),\,s_A,\,K_A)\)\Comment{\eqref{eq:anchor-score}}
+  \State \(F_q\gets\textsc{Top}(\textsc{Adj}(A_q,\mathcal P_q),\,s_F,\,B_q^R)\)\Comment{\eqref{eq:fact-score}}
+  \State \Return \(F_q\), \(\textsc{Fuse}(\textsc{Rows}(A_q),\,\bigcup_{f\in F_q}C_f;\,B_q^B,B_q^R)\)
+\EndProcedure
+\algstore{mirixalg}
+\end{algorithmic}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\begin{algorithmic}[1]
+\algrestore{mirixalg}
+\Procedure{Answer}{$q$}
+  \State \(\hat y\gets\textsc{Agent}^\star(q)\) with at most five \textsc{Read} calls
+  \If{\(\textsc{Check}(\hat y)\)}
+    \State \(\hat y\gets\textsc{Rewrite}^\star(\hat y,\textsc{Read}(q'))\)\label{alg:retry}
+  \EndIf
+  \State \Return \(\hat y\)
+\EndProcedure
+\Procedure{SemanticDream}{$\Delta_u$}\Comment{\eqref{eq:dream-contract}}
+  \For{\((a,b)\in\mathcal C_\Delta\setminus\mathcal N\)}\Comment{\eqref{eq:dream-candidates}}\label{alg:dream-pairs}
+    \If{\(\textsc{Same}^\star(a,b)\)}
+      \State \(\textsc{Merge}(a\to b)\)
+    \Else
+      \State \(\mathcal N\gets\mathcal N\cup\{(a,b)\}\)
+    \EndIf
+  \EndFor
+\EndProcedure
+\Procedure{ProceduralDream}{$S_u$}
+  \State \(e_{1:m}\gets\textsc{Distill}^\star(S_u)\)
+  \State \(P_u^P\gets\textsc{Curate}^\star(P_u^P,e_{1:m})\)\label{alg:procedural}
+\EndProcedure
+\end{algorithmic}
+\end{minipage}
+\end{algorithm}
+
+\subsection{Typed evidence plane}
+\label{sec:typed-evidence}
+
+\paragraph{Multi-agent routing.}
+A Meta Memory Manager routes each input \(x_t\) to the subset
+\(\mathcal K_t=R_\theta(x_t)\) of memory types it updates (\Cref{alg:mirix},
+line~\ref{alg:route}). Each of the six types, Core, Episodic, Semantic,
+Procedural, Resource, and Knowledge Vault, has its own writer, and the writer
+of a selected type \(k\) produces the record \(m_t^{(k)}=W_k(x_t,P_u^{t-1})\)
+and owns the schema and update operations of that type. Only episodic and
+semantic records are indexed by the hypergraph. \Cref{app:method-routing} gives
+the roles of the six types and the reason for this split.
+
+\paragraph{Evidence records.}
+Each of the six memory types keeps its records in its own schema. The hypergraph
+indexes the episodic and semantic records, and each of them is represented as
+\begin{equation}
+    m=(i,k,y,\tau_e,\tau_m,\rho,\mathbf z),
+    \label{eq:memory-record}
+\end{equation}
+where \(i\) is an immutable row identifier,
+\(k\in\{\mathrm{episodic},\mathrm{semantic}\}\) is its memory type, \(y\) is the
+stored text, \(\tau_e\) is the event time when one applies, \(\tau_m\) is the
+mention or write time, \(\rho\) records source and chunk provenance, and
+\(\mathbf z\) holds the search embeddings. Full summaries and details remain in
+the vector database. The graph stores only identifiers and compact structural metadata.
+
+Writers keep concrete details such as names, counts, and dates in each record,
+and a record is committed to the vector database before graph construction
+begins (line~\ref{alg:commit}), so a failed graph write never rolls back a
+stored memory (\Cref{app:method-routing}).
+
+\subsection{A provenance-preserving n-ary hypergraph}
+\label{sec:hypergraph}
+
+The second half of the write path turns each episodic or semantic record into
+graph structure (\Cref{alg:mirix}, lines~\ref{alg:extract}--\ref{alg:upsert}).
+For each user, \method maintains a hypergraph
+\begin{equation}
+    G_u=(\mathcal A_u,\mathcal F_u,\mathcal E_u)
+\end{equation}
+with entity or concept anchors \(\mathcal A_u\), reified fact frames
+\(\mathcal F_u\), and role-typed incidence edges \(\mathcal E_u\).
+\Cref{app:method-implementation} shows the hypergraph \method builds for one LoCoMo conversation.
+
+\paragraph{Anchors.}
+An anchor
+\begin{equation}
+    a=(i_a,n_a,t_a,\mathbf e_a,I_a^E,I_a^S)
+\end{equation}
+stores a canonical name \(n_a\), an entity type \(t_a\), a name embedding
+\(\mathbf e_a\), and the identifiers \(I_a^E\) and \(I_a^S\) of the episodic and
+semantic rows that mention it. A deterministic key \(\kappa(n)\) normalizes
+case, punctuation, function words, word order, and singular and plural variants
+of a name while keeping numbers, and a deterministic admission gate rejects
+generic filing terms and dialogue-role pseudo-entities and caps the anchors
+admitted from one record (\Cref{app:method-graph}).
+
+\paragraph{Registry-guided canonicalization.}
+Surface normalization cannot decide whether two semantically close names denote
+the same entity. For every extracted entity, approximate nearest-neighbor search
+therefore retrieves a few existing anchors of the user above a similarity
+threshold, and one language-model call per record makes a conservative
+same-entity decision for all of its entities. A rename is accepted only when it
+selects a retrieved candidate, so embeddings propose comparisons but never
+authorize a merge on their own. The neighbor count and the threshold, with their relation to the vector-index score, are in \Cref{app:method-graph}.
+
+\paragraph{N-ary frames.}
+For each episodic or semantic record, an extractor produces a set of frames
+\begin{equation}
+    f=
+    \left(
+        p,\,
+        \{(r_j,a_j)\}_{j=1}^{d_f},\,
+        \ell_f,\,
+        \tau_e,\tau_m,\,
+        C_f
+    \right),
+    \label{eq:frame}
+\end{equation}
+where \(p\) is a canonical predicate, \(r_j\) is the open-vocabulary role of
+anchor \(a_j\), \(\ell_f\) maps literal attributes to their values, and \(C_f\)
+is the set of identifiers of the vector-database records the frame cites. A flight, for example,
+becomes one frame with agent, origin, destination, carrier, and companion arms
+instead of several disconnected triples, and owns(Mia, Suica card) in
+\Cref{fig:mirix-user-centric} is a frame that cites the May 2 record. The extractor is instructed to keep dates, prices, counts, durations, and
+measurements as literals on the frame rather than as anchors, so that a value
+stays attached to the assertion it qualifies. A frame is materialized only if
+its arguments resolve to at least two distinct anchors of the user. When a deterministic audit finds that
+the extraction misses high-signal source details, one bounded repair call may
+add frames that the source supports, and it cannot remove anything the primary
+extraction produced. \Cref{app:method-graph} describes the audit.
+
+\paragraph{Occurrence identity.}
+Semantic claims and episodic occurrences follow different identity rules. Let
+\(\sigma(f)\) be the sorted set of role and anchor keys
+\(\{r_j:\kappa(n_{a_j})\}\). A semantic frame is identified by
+\begin{equation}
+    \operatorname{id}_S(f)
+    =H(u,p,\sigma(f)),
+    \label{eq:semantic-frame-id}
+\end{equation}
+so repeated support for the same durable claim accumulates citations on one
+node. An episodic frame adds an occurrence key,
+\begin{align}
+    \operatorname{id}_E(f)
+        &=H(u,p,\sigma(f),\chi(f)), \label{eq:episodic-frame-id}\\
+    \chi(f)
+        &=
+        \begin{cases}
+        \text{explicit event time}, & \text{if extracted},\\
+        \text{immutable memory id}, & \text{otherwise}.
+        \end{cases}
+\end{align}
+Two mentions of the same dated event therefore share one frame, while two undated
+events with similar wording, such as two runs on different days, stay separate. A
+frame keeps the time of the event apart from the time it was mentioned, and whether
+the event is planned or done does not change its identity.
+
+\subsection{Graph-owned evidence retrieval}
+\label{sec:retrieval}
+
+\method treats retrieval as the construction of a bounded evidence set rather
+than as open-ended similarity search. Episodic and semantic candidates must
+enter through the graph, and the vector database dereferences and reranks only the
+identifiers that graph traversal selects. This boundary keeps a hidden
+full-table search from doing the work attributed to the graph. Only a graph
+read that raises an error falls back to direct evidence retrieval. A query passes
+through planning, anchor entry, expansion along two evidence lanes, and fusion,
+and a verifier then checks the answer
+(\Cref{alg:mirix}, lines~\ref{alg:plan}--\ref{alg:retry}). For the question in
+\Cref{fig:mirix-user-centric}, the planner chooses the single operator, enters
+the graph at Mia and Tokyo transit, and returns three facts with five rows.
+
+\paragraph{Query plan.}
+A deterministic planner maps a query to
+\begin{equation}
+    \Pi(q)=
+    \left(
+        o_q,\mathcal P_q,\mathcal C_q,\mathcal Y_q,\mathcal T_q,
+        B_q^B,B_q^R
+    \right),
+    \label{eq:query-plan}
+\end{equation}
+where the operator \(o_q\) is single, temporal, intersection, list-union, or
+count, \(\mathcal P_q\) holds canonical relation families and their surface
+forms, \(\mathcal C_q\) holds non-relational constraints, \(\mathcal Y_q\) holds
+expected answer types, and \(\mathcal T_q\) holds date and temporal-order
+constraints. The two budgets cap the base-recall rows and the relation-cited
+rows, and \(B_q^R\) also caps the graph facts that the relation lane renders.
+The budgets grow with the operator, from 6 base rows and 4 cited rows for a
+single-value lookup to 8 and 12 for a count, since counting and set
+construction need broader evidence.
+\Cref{tab:lane-budgets} in \Cref{app:method-retrieval} lists all five
+operators.
+
+\paragraph{Anchor entry.}
+The query embedding first recalls fifteen anchors by name. A relation query adds
+the anchors that the question names exactly, and the union is scored by
+\begin{equation}
+    s_A(a,q)=s_{\mathrm{vec}}+s_{\mathrm{exact}}+
+    s_{\mathrm{lex}}+s_{\mathrm{pred}}+s_{\mathrm{spec}}
+    -s_{\mathrm{hub}}.
+    \label{eq:anchor-score}
+\end{equation}
+The vector score dominates. Exact mention, token overlap, predicate
+compatibility, and multi-token specificity break close ties, and a logarithmic
+degree penalty suppresses generic hubs. The top fifteen anchors are kept, which
+is the cap \(K_A\) of \Cref{alg:mirix}. The cap on exactly named anchors and the hub and predicate rules are in \Cref{app:method-retrieval}.
+
+\paragraph{Two evidence lanes.}
+The selected anchors open two bounded lanes. In the base-recall lane, anchors
+yield the episodic and semantic identifiers directly associated with them, and
+traversing an incident n-ary frame adds the frame's cited memories and a bounded
+set of memories associated with its co-participants. In the relation-citation
+lane, which opens when the query plan contains a relation, the exactly named anchors seed an indexed adjacency lookup over their incident
+frames. Predicate filtering applies before a cap of 240 frames, the fact score
+below ranks the rest, and at most \(B_q^R\) of them are rendered as explicit
+graph facts that contribute their exact citations into the vector database. The provenance
+recomputation of the base lane and the object filter of the relation lane are
+in \Cref{app:method-retrieval}.
+
+\paragraph{Fact scoring.}
+Each relation-lane frame receives the additive score
+\begin{align}
+    s_F(f,q)={}&
+    s_{\mathrm{rel}}+s_{\mathrm{entity}}+s_{\mathrm{constraint}}
+    +s_{\mathrm{type}} \notag\\
+    &+s_{\mathrm{time}}+s_{\mathrm{intersection}}
+    +s_{\mathrm{specificity}} \notag\\
+    &+s_{\mathrm{role}}+s_{\mathrm{state}}.
+    \label{eq:fact-score}
+\end{align}
+The first seven terms score relation, named-entity, literal, answer-type, and
+temporal compatibility, a shared object for intersection questions, and the
+number of arguments a frame binds. The role term \(s_{\mathrm{role}}\) rewards agreement
+between the argument direction implied by the question and the frame's typed
+roles, and it penalizes incompatible roles. The state term \(s_{\mathrm{state}}\)
+rewards an event time that matches a requested date and penalizes planned
+occurrences in count, list-union, and temporal questions.
+\Cref{app:method-retrieval} describes its fallback and the treatment of intersection questions.
+
+\paragraph{Citation-balanced fusion.}
+Rows in each lane are reranked, and fusion takes up to \(B_q^R\) cited rows,
+then up to \(B_q^B\) base rows, and fills the remaining capacity from the rest
+of either lane without duplicating row identifiers. The returned evidence
+therefore contains both the graph facts and the source rows that justify them.
+The reranking prior, the per-type split, and the rule for near-duplicate paraphrases are also in \Cref{app:method-retrieval}.
+
+\paragraph{Answer-time verification.}
+In our harness, the answering agent may call the retriever up to five times.
+After it drafts an answer, a rule-based check requests one more search and one
+rewrite by the answering model when the draft shows explicit uncertainty, lacks a value the question asks for,
+or disagrees with the evidence ledger, for example a count without a number or a
+month that neither the evidence nor the question contains. It also fires on
+every intersection question (line~\ref{alg:retry}). The check runs in the answering agent rather than in
+the memory server, and it never inspects a reference answer.
+\Cref{app:method-verification} lists every trigger and the query of the extra
+search.
+
+\subsection{AutoDream: consolidation outside the write path}
+\label{sec:autodream}
+
+AutoDream runs outside the critical write path
+(\Cref{alg:mirix}, lines~\ref{alg:dream-pairs}--\ref{alg:procedural}). It treats
+the two kinds of memory it consolidates in opposite ways. On semantic memory it
+is an explicit service call that never schedules itself, and it refines
+identities under the contract
+\begin{equation}
+    \operatorname{Dream}(P_u,G_u;\Delta_u)
+    = (P_u,\widetilde G_u),
+    \label{eq:dream-contract}
+\end{equation}
+where \(\Delta_u\) is the newly written semantic frontier and \(\widetilde G_u\)
+is the consolidated hypergraph. The evidence store \(P_u\) is returned
+unchanged. On procedural memory it starts in the background once five task
+sessions are pending, and it turns them into skills.
+
+\paragraph{Semantic frontier.}
+Each call receives the exact source-chunk identifiers of the batch just
+written, which resolve to the newly written semantic rows. These rows define a
+small frontier \(\Delta_u\), so the cost of consolidation depends on new
+activity rather than on the total size of memory. The invocation schedule of our protocol is in \Cref{app:method-autodream}.
+
+\paragraph{Candidate generation.}
+Only anchors that are backed by semantic rows and belong to an identity-stable
+type \(t\in\mathcal T_{\mathrm{safe}}=\{\text{person, organization, location,
+object, concept}\}\) are eligible. For each eligible anchor \(a\in\mathcal A_\Delta\) backed by a frontier row, AutoDream takes the four nearest entries of the name index, which include \(a\) itself,
+and forms the candidate pairs
+\begin{equation}
+    \mathcal C_\Delta=
+    \left\{
+    (a,b):
+    \begin{array}{l}
+    a\in\mathcal A_\Delta,\;
+    b\in\operatorname{NN}_4(a)\setminus\{a\},\\
+    \cos(\mathbf e_a,\mathbf e_b)\ge 0.86,\\
+    t_a=t_b\in\mathcal T_{\mathrm{safe}}
+    \end{array}
+    \right\}.
+    \label{eq:dream-candidates}
+\end{equation}
+Episodic-only anchors are excluded by construction. An LLM decides whether each
+pair denotes the same entity and, if it does, chooses one of the two existing
+names as the canonical representative. Its output is constrained to the
+submitted pair, and invented representatives are rejected. In
+\Cref{fig:mirix-agent-centric}, \emph{steel bottle} and \emph{stainless steel
+bottle} form such a pair.
+
+\paragraph{Bounded schedule.}
+Every Dream round verifies at most a fixed number of unseen pairs, and the
+final round also considers the eligible anchors that no earlier round used as a
+source. Explicit negative decisions are cached as the set \(\mathcal N\) of
+\Cref{alg:mirix}, so later cycles do not pay again to reconsider the same pair.
+\Cref{app:method-autodream} states the caps of the intermediate, final, and
+repair rounds and the cache key.
+
+\paragraph{Lossless structural merge.}
+For a confirmed merge \(a\rightarrow b\), the system unions the episodic and
+semantic row identifiers, keeps aliases, sums mention counts, keeps the maximum
+admission score, and rewires every role-typed frame arm to \(b\). Union, sum, and maximum are commutative and
+associative, so the order of repeated merges does not change the reachable
+evidence. The dropped anchor is removed only after its values and edges have
+been transferred.
+
+Semantic Dream never rewrites the memories in the vector database, and it consolidates neither
+episodic-only anchors nor fact nodes. The asymmetry is deliberate. Semantic
+identity can be refined incrementally, whereas event occurrences and their
+citations are kept as observations. AutoDream therefore makes the graph less
+fragmented without creating a textual summary whose embedding could hide the
+details of its inputs.
+
+\paragraph{Procedural refinement.}
+For procedural memory, AutoDream refines instead of merging. A distiller judges
+the outcome of each pending session from quotes in its transcript and distills
+experiences \(e_1,\ldots,e_m\), each marked as a lesson worth reusing or a
+mistake worth avoiding. A curator~\citep{zhang2026ace} turns these experiences
+into skills in the procedural store \(P_u^P\), and it can create, edit, or
+delete a skill. An edit can cite the experiences behind it with a quote of the
+text it adds, and a citation is recorded only when that quote checks out, so a
+cited step of a skill can be traced through its experiences to the quoted
+sessions they came from. In \Cref{fig:mirix-agent-centric}, one failed purchase
+yields an experience to avoid and one to reuse, and the curator adds two steps
+to the shopping routine that cite the first and keeps a step that the second
+supports. The distiller's unclear verdict and the curator's non-edit verdicts are in \Cref{app:method-autodream}.

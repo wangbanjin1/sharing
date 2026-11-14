@@ -1,0 +1,32 @@
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Mapping of Traditional OS Components to MemOS Modules}
+\label{table:mapping}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{llll}
+\toprule
+Layer & OS Component & MemOS Module & Role \\
+\midrule
+\multicolumn{4}{c}{\textit{Core Operation Layer}} \\
+\midrule
+Parameter Memory  & Registers / Microcode & Parameter Memory & Long-term ability \\
+Activation Memory & Cache                 & Activation Memory & Fast working state \\
+Plaintext Memory  & I/O Buffer            & Plaintext Memory  & External episodes \\
+\midrule
+\multicolumn{4}{c}{\textit{Management Layer}} \\
+\midrule
+Scheduling        & Scheduler      & MemScheduler         & Prioritise ops \\
+Persistent Store  & File System    & MemVault             & Versioned store \\
+System Interface  & System Call    & Memory API           & Unified access \\
+Backend Driver    & Device Driver  & MemLoader / Dumper   & Move memories \\
+Package Deploy    & Package Manager& MemStore             & Share bundles \\
+\midrule
+\multicolumn{4}{c}{\textit{Governance \& Observability}} \\
+\midrule
+Auth / ACLs       & Auth Module, ACLs & MemGovernance      & Access control \\
+Logging           & Syslog            & Audit Log          & Audit trail \\
+Fault Handling    & Excp. Handler     & Error Recovery     & Error recover \\
+\bottomrule
+\end{tabular}}
+\end{table}

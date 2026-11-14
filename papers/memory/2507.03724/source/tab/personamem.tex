@@ -1,0 +1,20 @@
+\begin{table}[ht]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.1}
+\caption{
+We evaluated our \textsc{MemOS-1031} model against various baselines on the PersonaMem~\cite{jiang2025know} benchmark, 
+all built upon the same GPT-4o-mini\cite{achiam_2023_gpt4} foundation LLM. 
+We report the precision of the chosen one-in-four along with the context tokens used by each method. 
+As the results show, \textsc{MemOS-1031} achieved the best precision while maintaining acceptable context length control.
+}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|cccccc>{\columncolor[HTML]{EFEFEF}}c}
+\hline
+Method          & MIRIX     & Mem0  & Zep   & Memobase  &  MemU & Supermemory   & \textsc{MemOS-1031} \\ \hline
+Precision(1 in 4)$\uparrow$       & 38.4      & 43.1  & 57.8  & 58.9      & 56.8  & 53.9          & \textbf{61.2} \\
+context tokens  &  -        & 140   & 1657  & 2092      & 496   & 204           & 1424 \\ \hline
+\end{tabular}
+}
+\label{tab:personamem}
+\end{table}

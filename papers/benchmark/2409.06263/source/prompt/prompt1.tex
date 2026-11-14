@@ -1,0 +1,25 @@
+
+\begin{prompt}[colback=black!0!white, colframe=black!98!black]
+{Step 1 Prompt}{\textcolor{myBlue}{Generate ASR error augmented text with similar pronunciation but different words based on the given gold text examples.}\\
+Apply character and word substitutions, additions, or deletions while maintaining the overall pronunciation and context. \\
+Error rate should be high 
+\par            % ← end the paragraph
+\noindent\dotfill\par 
+\textbf{Example 1}\\
+Original: they have a single naupliar eye  \\
+ASR-errored: they have a single nor pure eye \\
+
+\textbf{Example 2}\\
+Original: i must have saint louis then huzza  \\
+ASR-errored: i must have st louis then hazard \\
+
+\textbf{Example 3}\\
+Original: i wonder uncle did not have her come  \\
+ASR-errored: i wonder uncle did not have a problem 
+\par            % ← end the paragraph
+\noindent\dotfill\par 
+\textcolor{myBlue}{Now, following the above examples, generate an ASR-errored version of the following sentence:\\}
+Original: \textcolor{myOrange}{[Target utterance]} \\
+ASR-errored: 
+}
+\end{prompt}

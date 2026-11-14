@@ -1,0 +1,45 @@
+{
+   "sources" : [
+      {
+         "usage" : "toplevel",
+         "filename" : "AnonymousSubmission2027.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "AnonymousSubmission2027.bbl"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "Figures/Case.pdf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "Figures/cold-start.pdf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "aaai2027.bbl"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "aaai2027.bib"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "aaai2027.bst"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "appendix.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "table/backbone.tex"
+      }
+   ],
+   "spec_version" : 1,
+   "texlive_version" : "2025",
+   "process" : {
+      "compiler" : "pdflatex"
+   }
+}

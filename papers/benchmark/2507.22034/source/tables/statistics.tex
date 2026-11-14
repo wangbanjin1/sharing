@@ -1,0 +1,22 @@
+\begin{table*}[!t]
+\begin{center}
+\small
+\tabcolsep=0.015\linewidth
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lccll|lll|lcc}
+\toprule
+\textbf{Difficulty Tier} & \textbf{\# Test} & \textbf{\# Train} & \textbf{Composition} & & \multicolumn{2}{c}{\textbf{Global Dataset Metadata}} & & \textbf{Travel Aspect} & \textbf{\# Scenarios} & \textbf{Preferences} \\
+\midrule
+Easy   & 118 & 666 & Travel-22, 2222   & & Travel Aspects       & 5   &                         & Hotel       & 187 (39.7\%) & 15 \\
+Medium & 201 & 1130 & Travel-33, 233, 333   & & Pref. Categories     & 24  &                         & Restaurant  & 298 (63.3\%) & 19 \\
+Hard   & 152 & 855 & Travel-44, 334, 444 & & Total Prefs.         & 82  &                         & Flight      & 275 (58.4\%) & 16 \\
+\multicolumn{4}{l}{-----------------------------------------------------------------------------} & & Elicitation Ways     & 902 &                         & Rental Car  & 243 (51.6\%) & 14 \\
+\textbf{Total} & \textbf{471} & 2651 & \textbf{{\gymname} Test} / Train &  & Options (B/C/W/N)     & 1/3/10/5 &                   & Apartment    & 172 (36.5\%) & 18 \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+\vspace{-3mm}
+\caption{\textbf{{\gymname} Statistics:} Difficulty-tiered statistics (left), global configuration metadata (middle), and travel aspect coverage (right). \textit{Pref.} denotes preference; \textit{B/C/W/N} stands for Best, Correct, Wrong, and Noise options respectively; \textit{\# Scenarios} indicates the number of data scenarios in which each travel aspect appears.}
+\label{tab:statistics}
+\end{table*}

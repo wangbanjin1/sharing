@@ -1,0 +1,21 @@
+
+\begin{table}[t]
+\centering
+\resizebox{.9\columnwidth}{!}{%
+\begin{tabular}{l|rr|rr}
+\toprule
+\multirow{2}{*}{Method} & \multicolumn{2}{c|}{Text Dist.($\downarrow$)}                     & \multicolumn{2}{c}{Phoneme Dist.($\downarrow$)}                  \\\cline{2-5}
+                        & \multicolumn{1}{c}{ASR-L} & \multicolumn{1}{c|}{ASR-B} & \multicolumn{1}{c}{ASR-L} & \multicolumn{1}{c}{ASR-B} \\\hline
+TTS-ASR \small{(Whisper-B)}  & 0.030  & 0.048 & 0.056          & 0.061        \\
+TTS-ASR \small{(Whisper-S)} & 0.030  & 0.048 & 0.070           & 0.077          \\
+ASR trans. \small{(T5-base)}            & \textbf{0.025} & 0.039 & 0.104          & 0.116          \\ \hline
+EPA \small{(Llama2 7B)}    & 0.218 & 0.123 & 0.204          & 0.256          \\
+EPA \small{(OPT 6.7B)}      & 0.115 & 0.106 &  0.071  &  0.091    \\
+EPA \small{(GPT 3.5)}      & 0.033 & \textbf{0.010}  & \textbf{0.009} & \textbf{0.007} \\ 
+
+\toprule
+\end{tabular}%
+}
+\caption{Distribution distance (JSD) between Whisper Large/Base model and simulation dataset. (ASR‑L=Whisper Large, ASR‑B=Whisper Base). }
+\label{tab:edit}
+\end{table}

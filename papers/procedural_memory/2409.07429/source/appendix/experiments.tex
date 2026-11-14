@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integrating \awm Offline and Online}
+\label{app:mind2web-offline-online}
+
+We compared \textsc{AWM}$_{\it offline}$ and \textsc{AWM}$_{\it online}$ in \S\ref{sec:4.2:mind2web}, that adopts workflows induced separately from training or on-the-fly during testing, respectively. In this section, we explore an integration of both sets of workflows, \textsc{AWM$_\mathit{off+on}$}, that injects relevant training workflows to warm start task-solving, but also aggregates increasingly more online-induced workflows to better adapt to test distributions.
+
+
+\begin{table}[ht]
+\vspace{-2mm}
+\small
+\centering
+\caption{Success rate on Mind2Web cross-task, cross-website, and cross-domain generalization test, using \texttt{gpt-4} model. EA is short for element accuracy and AF$_1$ is short for action F$_1$.}
+\vspace{1mm}
+\label{tab:mind2web-offline-online}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|cccc|cccc|cccc}
+\toprule
+\multirow{2}{*}{\bf Method} & \multicolumn{4}{c|}{\it Cross-Task} & \multicolumn{4}{c|}{\it Cross-Website} & \multicolumn{4}{c}{\it Cross-Domain} \\
+{} & {EA} & {AF$_{1}$} & {Step SR} & {SR} & {EA} & {AF$_{1}$} & {Step SR} & {SR} & {EA} & {AF$_{1}$} & {Step SR} & {SR} \\
+\midrule
+MindAct* & {41.6} & {\bf 60.6} & {36.2} & {2.0} & {35.8} & {\bf 51.1} & {30.1} & {2.0} & {21.6} & {\bf 52.8} & {18.6} & {1.0} \\
+\midrule
+\textsc{AWM$_\mathit{offline}$} & {\bf 50.6} & {57.3} & {\bf 45.1} & {\bf 4.8} & {41.4} & {46.2} & {33.7} & {\bf 2.3} & {36.4} & {41.6} & {32.6} & {0.7} \\
+\textsc{AWM$_\mathit{online}$} & {50.0} & {56.4} & {43.6} & {4.0} & {\bf 42.1} & {45.1} & {\bf 33.9} & {1.6} & {\bf 40.9} & {46.3} & {\bf 35.5} & {\bf 1.7} \\
+\textsc{AWM$_\mathit{off+on}$} & {50.0} & {57.0} & {44.5} & {1.6} & {41.8} & {45.5} & {33.3} & {1.1} & {39.3} & {44.3} & {34.1} & {1.5} \\
+\bottomrule
+\end{tabular}
+}
+% \vspace{-3mm}
+\end{table}
+
+From \autoref{tab:mind2web-offline-online}, \textsc{AWM$_\mathit{off+on}$} scores between AWM$_\mathit{offline}$ and AWM$_\mathit{online}$ across three test splits. Rather than an additive effect, workflows induced offline and online are not fully compatible with each other, particularly, the offline workflows seem to impair the generative quality and utility efficacy of online workflows, therefore resulting in medium results overall.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Examining Workflow Quality}
+% \label{app:workflow-quality}
+

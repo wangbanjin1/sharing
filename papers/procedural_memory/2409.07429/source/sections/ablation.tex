@@ -1,0 +1,132 @@
+\section{Exploring Optimal Workflow Representations}
+\label{sec:6:alternative-workflows}
+% \vspace{-1mm}
+
+In this section, we experiment with other possible alternatives to better represent the workflows. Specifically, we ablate workflows in sub-routine, abstract formats (\S\ref{sec:6.1:format-ablation}), explore workflows in descriptive texts (\S\ref{sec:6.2:text-workflow}), and lastly, beyond the default workflows that describe environment state in NL, we compare strengthened observations with website HTML within workflow steps (\S\ref{sec:6.3:env-in-workflow}).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{How much does the sub-routine, abstract format contribute?}
+\label{sec:6.1:format-ablation}
+
+In this section, we compare our abstract, sub-routine-based induction method using LMs to a rule-based method without context and sub-routine abstraction.
+
+Specifically, our rule-based induction $I_{\it rule}$ first extracts the action sequence (e.g., \texttt{CLICK} → \texttt{CLICK} → \texttt{TYPE}) of each experience and deduplicates experiences by their action sequence. In each unique experience, we then remove the steps whose action cannot be executed on the environment. We take these unique, validated experiences as workflows. Find more detailed descriptions in \S\ref{app:rule-induction}.
+
+
+\begin{wraptable}[8]{r}{0.35\textwidth}
+\small
+\vspace{-7mm}
+\caption{\awm success rate on WebArena using \texttt{gpt-4}, with rule- and lm-based induction.}
+\vspace{2mm}
+\label{tab:webarena-rule-lm}
+%
+\begin{tabular}{l|cc}
+\toprule
+\multicolumn{1}{c|}{\bf Method} & {\bf Total SR} & {\bf \# Steps} \\
+\midrule
+\textsc{AWM$_{\it rule}$} & {\bf 35.6} & {~~6.3} \\
+\textsc{AWM$_{\it lm}$} & {35.5} & {\bf ~~5.9} \\
+\bottomrule
+\end{tabular}
+\vspace{-3mm}
+\end{wraptable}
+%
+\paragraph{WebArena Results}
+As shown in \autoref{tab:webarena-rule-lm}, using rule- and LM-based workflow induction performs comparably, with a small $0.1$ gap in success rate; the LM-based method appears more efficient and uses $0.4$ fewer steps. 
+Our manual analysis found workflows produced by the LM-based induction module $I_{\it lm}$ are finer-grained, preventing agents from following unnecessary steps that sometimes appear in rule-induced workflows, hence making the task-solving process slightly more efficient.
+
+
+
+\paragraph{Mind2Web Results}
+As shown in \autoref{tab:mind2web-rule-lm}, compared to \textsc{AWM$_{rule}$}, \textsc{AWM}$_{lm}$ improves by a $2.8$ margin.
+While augmenting concrete, full examples may bias agents to select elements similar to those presented in the given examples, \awm$_{\it lm}$ introduces less bias on element selection via its abstract representation of example-specific contexts in workflows.
+
+\begin{wraptable}[7]{r}{0.55\textwidth}
+\small
+\vspace{-4mm}
+\caption{\awm results with different workflow induction methods on Mind2Web cross-task dataset.}
+\vspace{1mm}
+\label{tab:mind2web-rule-lm}
+\resizebox{0.55\textwidth}{!}{
+\begin{tabular}{l|cccc}
+\toprule
+\multicolumn{1}{c|}{\bf Method} & {\bf Elem Acc} & {\bf Action F$_{1}$} & {\bf Step SR} & {\bf SR} \\
+\midrule
+MindAct$_{4}$ & {41.6} & {\bf 60.6} & {36.2} & {2.0} \\
+\textsc{AWM$_{4, rule}$} & {49.5} & {57.0} & {43.4} & {2.0} \\
+\textsc{AWM$_{4, lm}$} & {\bf 50.6} & {57.3} & {\bf 45.1} & {\bf 4.8} \\
+\bottomrule
+\end{tabular}
+}
+\vspace{-2mm}
+\end{wraptable}
+%
+
+Further, \awm$_{\it lm}$ uses frequently-used sub-routines, which can be more flexibly and readily utilized across test examples, compared to the full example trajectories induced by \awm$_{\it rule}$, which are less likely to appear multiple times.
+In general, our results indicate that the abstract, reusable nature of workflows contributes to the efficacy of \awm$_{\it lm}$ method.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Workflows in Descriptive Texts}
+\label{sec:6.2:text-workflow}
+
+
+\awm represents workflow steps in a program format. In this section, we compare with a textual format for workflows,
+to understand whether text or code serves as a better format for agent memory.
+%
+More concretely, we prompt \texttt{gpt-3.5-turbo} to verbalize the action trajectory in the workflows induced in earlier experiments. 
+For example, from an action \texttt{CLICK(\{submit-id\})}, its verbalized NL representation reads similar to ``\texttt{CLICK} the submit button''. We use the same textual observation and thoughts from code actions as observation and thoughts in these text actions.
+
+\begin{wraptable}[8]{r}{0.55\textwidth}
+\small
+\vspace{-7mm}
+\caption{Mind2Web cross-task results with \awm using code and text workflows.}
+\vspace{1mm}
+\label{tab:format-ablation}
+\begin{tabular}{l|cccc}
+\toprule
+\multicolumn{1}{c}{\bf Method} & {\bf Elem Acc} & {\bf Action F$_{1}$} & {\bf Step SR} & {\bf SR} \\
+\midrule
+{MindAct} & {41.6} & {\bf 60.6} & {36.2} & {2.0} \\
+\midrule
+\awm & {50.6} & {57.3} & {45.1} & {\bf 4.8} \\
+\textsc{AWM$_{\it text}$} & {\bf 51.2} & {57.4} & {\bf 45.4} & {3.6} \\
+\bottomrule
+\end{tabular}
+\vspace{-2mm}
+\end{wraptable}
+
+From the results in \autoref{tab:format-ablation}, \textsc{AWM$_{\it text}$} achieves slightly higher element selection accuracy and step success rate, by $0.6$ and $0.3$ points, respectively, yet degrades $1.2$ in task success rate. Overall, we do not find substantial performance variance between workflows represented in text and code formats, indicating that both forms can bring effective augmentations to agent memory.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Environment Abstraction in Workflows}
+\label{sec:6.3:env-in-workflow}
+
+\awm describes intermediate webpage states using NL, yet showing concrete states may be helpful to better ground agents on the environment. 
+Since a webpage's full HTML can be overly long, we filter the webpage representation using the relevance predictor of \citet{deng2023mindweb}, and augment each workflow step with this shortened HTML that only has elements predicted as relevant. We run \texttt{gpt-3.5-turbo} with only descriptions, only HTML, and both types of content.
+
+\begin{wraptable}{r}{0.58\textwidth}
+\small
+\vspace{-7mm}
+\caption{Mind2Web results using GPT-3.5-turbo with different environment representations.}
+\vspace{1mm}
+\label{tab:mind2web-state-repr}
+\begin{tabular}{cc|cccc}
+\toprule
+{\bf Desc.} & \multicolumn{1}{c|}{\bf HTML} & {\bf Elem Acc} & {\bf Act F$_{1}$} & {\bf Step SR} & {\bf SR} \\
+\midrule
+\textsc{\cmark} & {\xmark} & {\bf 39.0} & {52.8} & {\bf 34.6} & {\bf 2.8} \\
+\textsc{\xmark} & {\cmark} & {38.1} & {\bf 54.0} & {33.8} & {\bf 2.8} \\
+\textsc{\cmark} & {\cmark} & {37.1} & {51.3} & {32.9} & {2.0} \\
+\bottomrule
+\end{tabular}
+\vspace{-2mm}
+\end{wraptable}
+
+As shown in \autoref{tab:mind2web-state-repr}, NL description of states is more useful than HTML, as replacing NL with HTML leads to a slight $0.8$ drop in step success rate. 
+Interestingly, using both NL and filtered HTML leads to worse results. We conjecture the reason to be two-fold. First, adding NL and HTML substantially increases the context length, thus making it harder for models to handle things correctly. Second, the filtered HTML has a substantial number of irrelevant items (missing all correct elements 47\% of the time) thus potentially contradicting NL descriptions and impairing agent abilities.

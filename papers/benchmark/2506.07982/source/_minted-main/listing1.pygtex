@@ -1,0 +1,61 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{g+gh}{\PYGZsh{} Task Details}
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} ID}
+[service\PYGZus{}issue]airplane\PYGZus{}mode\PYGZus{}on\PYG{err}{|}unseat\PYGZus{}sim\PYGZus{}card
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Description}
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Purpose**}: Test resolution path: No Service/Connection Issues.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} User Scenario}
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Instructions**}:
+\PYG{+w}{  }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Domain**}: telecom
+\PYG{+w}{  }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Reason for call**}: Your phone has been showing \PYGZsq{}No Service\PYGZsq{} for the past few hours.
+\PYG{+w}{  }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Known info**}: You are John Smith with phone number 555\PYGZhy{}123\PYGZhy{}2002.
+\PYG{+w}{  }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Unknown info**}: null
+\PYG{+w}{  }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Task instructions**}: If the agent suggests actions that don\PYGZsq{}t immediately fix the issue,
+    follow their guidance but express mild frustration after the first unsuccessful attempt.
+    You will consider the issue resolved when the status bar shows that you have signal.
+    If the tool call does not return updated status information, you might need to perform
+    another tool call to get the updated status.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Ticket}
+The user is experiencing issues with their phone service. They are unable to make or receive
+calls, and the status bar shows \PYGZsq{}No Service\PYGZsq{}. Customer name: John Smith, phone number:
+555\PYGZhy{}123\PYGZhy{}2002. They will consider the issue resolved when the status bar shows that they have
+signal.
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Initial State}
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Initialization Data**}: null
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Initialization Actions**}:
+\PYG{+w}{  }\PYG{k}{1.} \PYG{g+gs}{**Action**}: set\PYGZus{}user\PYGZus{}info
+\PYG{+w}{     }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Env Type**}: user
+\PYG{+w}{     }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Arguments**}:
+\PYG{+w}{       }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }name: John Smith
+\PYG{+w}{       }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }phone\PYGZus{}number: 555\PYGZhy{}123\PYGZhy{}2002
+\PYG{+w}{  }\PYG{k}{2.} \PYG{g+gs}{**Action**}: turn\PYGZus{}airplane\PYGZus{}mode\PYGZus{}on
+\PYG{+w}{     }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Env Type**}: user
+\PYG{+w}{     }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Arguments**}: \PYGZob{}\PYGZcb{}
+\PYG{+w}{  }\PYG{k}{3.} \PYG{g+gs}{**Action**}: unseat\PYGZus{}sim\PYGZus{}card
+\PYG{+w}{     }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Env Type**}: user
+\PYG{+w}{     }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Arguments**}: \PYGZob{}\PYGZcb{}
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{} Evaluation Criteria}
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Actions}
+\PYG{k}{1.} \PYG{g+gs}{**Action ID**}: toggle\PYGZus{}airplane\PYGZus{}mode\PYGZus{}0
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Requestor**}: user
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Name**}: toggle\PYGZus{}airplane\PYGZus{}mode
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Arguments**}: \PYGZob{}\PYGZcb{}
+
+\PYG{k}{2.} \PYG{g+gs}{**Action ID**}: reseat\PYGZus{}sim\PYGZus{}card\PYGZus{}1
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Requestor**}: user
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Name**}: reseat\PYGZus{}sim\PYGZus{}card
+\PYG{+w}{   }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Arguments**}: \PYGZob{}\PYGZcb{}
+
+\PYG{g+gu}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Environment Assertions}
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Env Type**}: user
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Function**}: assert\PYGZus{}service\PYGZus{}status
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Arguments**}:
+\PYG{+w}{  }\PYG{k}{\PYGZhy{}}\PYG{+w}{ }expected\PYGZus{}status: connected
+\PYG{k}{\PYGZhy{}}\PYG{+w}{ }\PYG{g+gs}{**Assert Value**}: true
+\end{Verbatim}

@@ -1,0 +1,214 @@
+\begin{thebibliography}{42}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Barres et~al.(2025)Barres, Dong, Ray, Si, and Narasimhan}]{barres2025tau}
+Victor Barres, Honghua Dong, Soham Ray, Xujie Si, and Karthik Narasimhan. 2025.
+\newblock tau2-bench: Evaluating conversational agents in a dual-control environment.
+\newblock \emph{arXiv preprint arXiv:2506.07982}.
+
+\bibitem[{Cai et~al.(2024)Cai, Wang, Ma, Chen, and Zhou}]{cai2023large}
+Tianle Cai, Xuezhi Wang, Tengyu Ma, Xinyun Chen, and Denny Zhou. 2024.
+\newblock \href {https://openreview.net/forum?id=qV83K9d5WB} {Large language models as tool makers}.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}.
+
+\bibitem[{Chen et~al.(2025)Chen, Sun, Pfister, and Arik}]{chen2025act}
+Maximillian Chen, Ruoxi Sun, Tomas Pfister, and Sercan~O Arik. 2025.
+\newblock Learning to clarify: Multi-turn conversations with action-based contrastive self-training.
+\newblock In \emph{Proceedings of ICLR}.
+
+\bibitem[{Clark(1996)}]{clark1996using}
+H.H. Clark. 1996.
+\newblock \emph{Using Language}.
+\newblock ACLS Humanities E-Book. Cambridge University Press.
+
+\bibitem[{Deng et~al.(2024)Deng, Gu, Zheng, Chen, Stevens, Wang, Sun, and Su}]{deng2024mind2web}
+Xiang Deng, Yu~Gu, Boyuan Zheng, Shijie Chen, Sam Stevens, Boshi Wang, Huan Sun, and Yu~Su. 2024.
+\newblock Mind2web: Towards a generalist agent for the web.
+\newblock \emph{Advances in Neural Information Processing Systems}, 36.
+
+\bibitem[{Farn and Shin(2023)}]{farn2023tooltalk}
+Nicholas Farn and Richard Shin. 2023.
+\newblock Tooltalk: Evaluating tool-usage in a conversational setting.
+\newblock \emph{arXiv preprint arXiv:2311.10775}.
+
+\bibitem[{Gao et~al.(2024)Gao, Taymanov, Salinas, Mineiro, and Misra}]{gao2024prelude}
+Ge~Gao, Alexey Taymanov, Eduardo Salinas, Paul Mineiro, and Dipendra Misra. 2024.
+\newblock Aligning llm agents by learning latent preference from user edits.
+\newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)}.
+
+\bibitem[{Guo et~al.(2025)Guo, Yang, Zhang, Song, Zhang, Xu, Zhu, Ma, Wang, Bi et~al.}]{guo2025deepseek}
+Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu, Shirong Ma, Peiyi Wang, Xiao Bi, et~al. 2025.
+\newblock Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2501.12948}.
+
+\bibitem[{Guo et~al.(2024)Guo, Zhu, Yang, Xie, Dong, Zhang, Chen, Bi, Wu, Li et~al.}]{guo2024deepseek}
+Daya Guo, Qihao Zhu, Dejian Yang, Zhenda Xie, Kai Dong, Wentao Zhang, Guanting Chen, Xiao Bi, Yu~Wu, YK~Li, et~al. 2024.
+\newblock Deepseek-coder: When the large language model meets programming--the rise of code intelligence.
+\newblock \emph{arXiv preprint arXiv:2401.14196}.
+
+\bibitem[{Huang et~al.(2023)Huang, Shi, Li, Fan, Wu, Zhang, Liu, Zhou, Wan, Gong et~al.}]{huang2023metatool}
+Yue Huang, Jiawen Shi, Yuan Li, Chenrui Fan, Siyuan Wu, Qihui Zhang, Yixin Liu, Pan Zhou, Yao Wan, Neil~Zhenqiang Gong, et~al. 2023.
+\newblock Metatool benchmark for large language models: Deciding whether to use tools and which to use.
+\newblock \emph{arXiv preprint arXiv:2310.03128}.
+
+\bibitem[{Hui et~al.(2024)Hui, Yang, Cui, Yang, Liu, Zhang, Liu, Zhang, Yu, Lu et~al.}]{hui2024qwen2}
+Binyuan Hui, Jian Yang, Zeyu Cui, Jiaxi Yang, Dayiheng Liu, Lei Zhang, Tianyu Liu, Jiajun Zhang, Bowen Yu, Keming Lu, et~al. 2024.
+\newblock Qwen2. 5-coder technical report.
+\newblock \emph{arXiv preprint arXiv:2409.12186}.
+
+\bibitem[{Jaech et~al.(2024)Jaech, Kalai, Lerer, Richardson, El-Kishky, Low, Helyar, Madry, Beutel, Carney et~al.}]{jaech2024openai}
+Aaron Jaech, Adam Kalai, Adam Lerer, Adam Richardson, Ahmed El-Kishky, Aiden Low, Alec Helyar, Aleksander Madry, Alex Beutel, Alex Carney, et~al. 2024.
+\newblock Openai o1 system card.
+\newblock \emph{arXiv preprint arXiv:2412.16720}.
+
+\bibitem[{Jin et~al.(2025)Jin, Zeng, Yue, Wang, Zamani, and Han}]{jin2025search}
+Bowen Jin, Hansi Zeng, Zhenrui Yue, Dong Wang, Hamed Zamani, and Jiawei Han. 2025.
+\newblock Search-r1: Training llms to reason and leverage search engines with reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2503.09516}.
+
+\bibitem[{Li et~al.(2023)Li, Zhao, Yu, Song, Li, Yu, Li, Huang, and Li}]{li2023apibank}
+Minghao Li, Yingxiu Zhao, Bowen Yu, Feifan Song, Hangyu Li, Haiyang Yu, Zhoujun Li, Fei Huang, and Yongbin Li. 2023.
+\newblock Api-bank: A comprehensive benchmark for tool-augmented llms.
+\newblock In \emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing}, pages 3102--3116.
+
+\bibitem[{Li et~al.(2025)Li, Zou, and Liu}]{li2025torl}
+Xuefeng Li, Haoyang Zou, and Pengfei Liu. 2025.
+\newblock Torl: Scaling tool-integrated rl.
+\newblock \emph{arXiv preprint arXiv:2503.23383}.
+
+\bibitem[{Lin et~al.(2024)Lin, Deng, Chandu, Brahman, Ravichander, Pyatkin, Dziri, Le~Bras, and Choi}]{lin2024wildbench}
+Bill~Yuchen Lin, Yuntian Deng, Khyathi~R Chandu, Faeze Brahman, Abhilasha Ravichander, Valentina Pyatkin, Nouha Dziri, Ronan Le~Bras, and Yejin Choi. 2024.
+\newblock Wildbench: Benchmarking llms with challenging tasks from real users in the wild.
+\newblock \emph{arXiv preprint arXiv:2406.04770}.
+
+\bibitem[{Liu et~al.(2023)Liu, Wu, Michael, Suhr, West, Koller, Swayamdipta, Smith, and Choi}]{liu2023we}
+Alisa Liu, Zhaofeng Wu, Julian Michael, Alane Suhr, Peter West, Alexander Koller, Swabha Swayamdipta, Noah~A Smith, and Yejin Choi. 2023.
+\newblock We're afraid language models aren't modeling ambiguity.
+\newblock In \emph{The 2023 Conference on Empirical Methods in Natural Language Processing}.
+
+\bibitem[{Liu et~al.(2024)Liu, Hoang, Zhang, Zhu, Lan, Tan, Yao, Liu, Feng, RN et~al.}]{liu2024apigen}
+Zuxin Liu, Thai Hoang, Jianguo Zhang, Ming Zhu, Tian Lan, Juntao Tan, Weiran Yao, Zhiwei Liu, Yihao Feng, Rithesh RN, et~al. 2024.
+\newblock Apigen: Automated pipeline for generating verifiable and diverse function-calling datasets.
+\newblock \emph{Advances in Neural Information Processing Systems}, 37:54463--54482.
+
+\bibitem[{Lu and et~al.(2024)}]{lu2024toolsandbox}
+Jiarui Lu and et~al. 2024.
+\newblock Toolsandbox: A stateful, conversational, interactive evaluation benchmark for llm tool use capabilities.
+\newblock \emph{arXiv preprint arXiv:2408.04682}.
+
+\bibitem[{Lu et~al.(2025)Lu, Yang, Qian, Chen, Luo, Wu, Wang, Cong, Zhang, Lin et~al.}]{lu2025proactive}
+Yaxi Lu, Shenzhi Yang, Cheng Qian, Guirong Chen, Qinyu Luo, Yesai Wu, Huadong Wang, Xin Cong, Zhong Zhang, Yankai Lin, et~al. 2025.
+\newblock Proactive agent: Shifting llm agents from reactive responses to active assistance.
+\newblock In \emph{The Thirteenth International Conference on Learning Representations}.
+
+\bibitem[{Prabhakar et~al.(2025)Prabhakar, Liu, Zhu, Zhang, Awalgaonkar, Wang, Liu, Chen, Hoang, Niebles et~al.}]{prabhakar2025apigen}
+Akshara Prabhakar, Zuxin Liu, Ming Zhu, Jianguo Zhang, Tulika Awalgaonkar, Shiyu Wang, Zhiwei Liu, Haolin Chen, Thai Hoang, Juan~Carlos Niebles, et~al. 2025.
+\newblock Apigen-mt: Agentic pipeline for multi-turn data generation via simulated agent-human interplay.
+\newblock \emph{arXiv preprint arXiv:2504.03601}.
+
+\bibitem[{Qian et~al.(2025{\natexlab{a}})Qian, Acikgoz, He, Wang, Chen, Hakkani-T{\"u}r, Tur, and Ji}]{qian2025toolrl}
+Cheng Qian, Emre~Can Acikgoz, Qi~He, Hongru Wang, Xiusi Chen, Dilek Hakkani-T{\"u}r, Gokhan Tur, and Heng Ji. 2025{\natexlab{a}}.
+\newblock Toolrl: Reward is all tool learning needs.
+\newblock \emph{arXiv preprint arXiv:2504.13958}.
+
+\bibitem[{Qian et~al.(2025{\natexlab{b}})Qian, Acikgoz, Wang, Chen, Sil, Hakkani-T{\"u}r, Tur, and Ji}]{qian2025smart}
+Cheng Qian, Emre~Can Acikgoz, Hongru Wang, Xiusi Chen, Avirup Sil, Dilek Hakkani-T{\"u}r, Gokhan Tur, and Heng Ji. 2025{\natexlab{b}}.
+\newblock Smart: Self-aware agent for tool overuse mitigation.
+\newblock \emph{arXiv preprint arXiv:2502.11435}.
+
+\bibitem[{Qian et~al.(2025{\natexlab{c}})Qian, Du, Wang, Chen, Zhang, Sil, Zhai, McKeown, and Ji}]{qian2025modelingagent}
+Cheng Qian, Hongyi Du, Hongru Wang, Xiusi Chen, Yuji Zhang, Avirup Sil, Chengxiang Zhai, Kathleen McKeown, and Heng Ji. 2025{\natexlab{c}}.
+\newblock Modelingagent: Bridging llms and mathematical modeling for real-world challenges.
+\newblock \emph{arXiv preprint arXiv:2505.15068}.
+
+\bibitem[{Qian et~al.(2023)Qian, Han, Fung, Qin, Liu, and Ji}]{qian2023creator}
+Cheng Qian, Chi Han, Yi~Fung, Yujia Qin, Zhiyuan Liu, and Heng Ji. 2023.
+\newblock Creator: Tool creation for disentangling abstract and concrete reasoning of large language models.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2023}, pages 6922--6939.
+
+\bibitem[{Qian et~al.(2024{\natexlab{a}})Qian, Han, Luo, He, Chen, Zhang, Du, Yao, Yang, Zhang et~al.}]{qian2024escapebench}
+Cheng Qian, Peixuan Han, Qinyu Luo, Bingxiang He, Xiusi Chen, Yuji Zhang, Hongyi Du, Jiarui Yao, Xiaocheng Yang, Denghui Zhang, et~al. 2024{\natexlab{a}}.
+\newblock Escapebench: Pushing language models to think outside the box.
+\newblock \emph{arXiv preprint arXiv:2412.13549}.
+
+\bibitem[{Qian et~al.(2024{\natexlab{b}})Qian, He, Zhuang, Deng, Qin, Cong, Zhang, Zhou, Lin, Liu et~al.}]{qian2024tell}
+Cheng Qian, Bingxiang He, Zhong Zhuang, Jia Deng, Yujia Qin, Xin Cong, Zhong Zhang, Jie Zhou, Yankai Lin, Zhiyuan Liu, et~al. 2024{\natexlab{b}}.
+\newblock Tell me more! towards implicit user intention understanding of language model driven agents.
+\newblock \emph{arXiv preprint arXiv:2402.09205}.
+
+\bibitem[{Qian et~al.(2024{\natexlab{c}})Qian, Liang, Qin, Ye, Cong, Lin, Wu, Liu, and Sun}]{qian2024investigate}
+Cheng Qian, Shihao Liang, Yujia Qin, Yining Ye, Xin Cong, Yankai Lin, Yesai Wu, Zhiyuan Liu, and Maosong Sun. 2024{\natexlab{c}}.
+\newblock Investigate-consolidate-exploit: A general strategy for inter-task agent self-evolution.
+\newblock \emph{arXiv preprint arXiv:2401.13996}.
+
+\bibitem[{Qian et~al.(2024{\natexlab{d}})Qian, Xiong, Liu, and Liu}]{qian2024toolink}
+Cheng Qian, Chenyan Xiong, Zhenghao Liu, and Zhiyuan Liu. 2024{\natexlab{d}}.
+\newblock Toolink: Linking toolkit creation and using through chain-of-solving on open-source model.
+\newblock In \emph{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)}, pages 831--854.
+
+\bibitem[{Shao et~al.(2024)Shao, Wang, Zhu, Xu, Song, Bi, Zhang, Zhang, Li, Wu et~al.}]{shao2024deepseekmath}
+Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, Mingchuan Zhang, YK~Li, Yang Wu, et~al. 2024.
+\newblock Deepseekmath: Pushing the limits of mathematical reasoning in open language models.
+\newblock \emph{arXiv preprint arXiv:2402.03300}.
+
+\bibitem[{Singh et~al.(2024)Singh, Verma, Wang, Bharadwaj, Fashandi, Ferreira, and Lee}]{singh2024personal}
+Harmanpreet Singh, Nikhil Verma, Yixiao Wang, Manasa Bharadwaj, Homa Fashandi, Kevin Ferreira, and Chul Lee. 2024.
+\newblock Personal large language model agents: A case study on tailored travel planning.
+\newblock In \emph{Proceedings of EMNLP (Industry Track)}.
+
+\bibitem[{Wang et~al.(2025)Wang, Qian, Zhong, Chen, Qiu, Huang, Jin, Wang, Wong, and Ji}]{wang2025acting}
+Hongru Wang, Cheng Qian, Wanjun Zhong, Xiusi Chen, Jiahao Qiu, Shijue Huang, Bowen Jin, Mengdi Wang, Kam-Fai Wong, and Heng Ji. 2025.
+\newblock Acting less is reasoning more! teaching model to act efficiently.
+\newblock \emph{arXiv preprint arXiv:2504.14870}.
+
+\bibitem[{Wang et~al.(2024{\natexlab{a}})Wang, Mo, Ma, Sun, Zhang, and Nie}]{wang2024user}
+Jiayin Wang, Fengran Mo, Weizhi Ma, Peijie Sun, Min Zhang, and Jian-Yun Nie. 2024{\natexlab{a}}.
+\newblock A user-centric multi-intent benchmark for evaluating large language models.
+\newblock In \emph{Proceedings of EMNLP}.
+
+\bibitem[{Wang et~al.(2024{\natexlab{b}})Wang, Wang, Liu, Chen, Yuan, Peng, and Ji}]{wang2024mint}
+Xingyao Wang, Zihan Wang, Jiateng Liu, Yangyi Chen, Lifan Yuan, Hao Peng, and Heng Ji. 2024{\natexlab{b}}.
+\newblock Mint: Evaluating llms in multi-turn interaction with tools and language feedback.
+\newblock In \emph{Proceedings of ICLR}.
+
+\bibitem[{Yang et~al.(2024)Yang, Zhang, Hui, Gao, Yu, Li, Liu, Tu, Zhou, Lin et~al.}]{yang2024qwen2}
+An~Yang, Beichen Zhang, Binyuan Hui, Bofei Gao, Bowen Yu, Chengpeng Li, Dayiheng Liu, Jianhong Tu, Jingren Zhou, Junyang Lin, et~al. 2024.
+\newblock Qwen2. 5-math technical report: Toward mathematical expert model via self-improvement.
+\newblock \emph{arXiv preprint arXiv:2409.12122}.
+
+\bibitem[{Yao et~al.(2024)Yao, Shinn, Razavi, and Narasimhan}]{yao2024tau}
+Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan. 2024.
+\newblock tau-bench: A benchmark for tool-agent-user interaction in real-world domains.
+\newblock \emph{arXiv preprint arXiv:2406.12045}.
+
+\bibitem[{Yuan et~al.(2024)Yuan, Chen, Wang, Fung, Peng, and Ji}]{yuan2024craft}
+Lifan Yuan, Yangyi Chen, Xingyao Wang, Yi~R. Fung, Hao Peng, and Heng Ji. 2024.
+\newblock Craft: Customizing llms by creating and retrieving from specialized toolsets.
+\newblock In \emph{Proc. The Twelfth International Conference on Learning Representations (ICLR2024)}.
+
+\bibitem[{Zhang et~al.(2024{\natexlab{a}})Zhang, Lan, Zhu, Liu, Hoang, Kokane, Yao, Tan, Prabhakar, Chen et~al.}]{zhang2024xlam}
+Jianguo Zhang, Tian Lan, Ming Zhu, Zuxin Liu, Thai Hoang, Shirley Kokane, Weiran Yao, Juntao Tan, Akshara Prabhakar, Haolin Chen, et~al. 2024{\natexlab{a}}.
+\newblock xlam: A family of large action models to empower ai agent systems.
+\newblock \emph{arXiv preprint arXiv:2409.03215}.
+
+\bibitem[{Zhang et~al.(2024{\natexlab{b}})Zhang, Yao, Liu, Feng, Liu, Murthy, Lan, Li, Lou, Xu et~al.}]{zhang2024diversity}
+Kexun Zhang, Weiran Yao, Zuxin Liu, Yihao Feng, Zhiwei Liu, Rithesh Murthy, Tian Lan, Lei Li, Renze Lou, Jiacheng Xu, et~al. 2024{\natexlab{b}}.
+\newblock Diversity empowers intelligence: Integrating expertise of software engineering agents.
+\newblock \emph{arXiv preprint arXiv:2408.07060}.
+
+\bibitem[{Zhang et~al.(2024{\natexlab{c}})Zhang, Knox, and Choi}]{zhang2024clarify}
+Michael~JQ Zhang, WB~Knox, and Eunsol Choi. 2024{\natexlab{c}}.
+\newblock Modeling future conversation turns to teach llms to ask clarifying questions.
+\newblock \emph{arXiv preprint arXiv:2410.13788}.
+
+\bibitem[{Zhao et~al.(2025)Zhao, Hong, Liu, Hazarika, and Lin}]{zhao2025prefeval}
+Siyan Zhao, Mingyi Hong, Yang Liu, Devamanyu Hazarika, and Kaixiang Lin. 2025.
+\newblock Do llms recognize your preferences? evaluating personalized preference following in llms.
+\newblock In \emph{Proceedings of ICLR}.
+
+\bibitem[{Zhu et~al.(2025)Zhu, Du, Hong, Yang, Guo, Wang, Wang, Qian, Tang, Ji et~al.}]{zhu2025multiagentbench}
+Kunlun Zhu, Hongyi Du, Zhaochen Hong, Xiaocheng Yang, Shuyi Guo, Zhe Wang, Zhenhailong Wang, Cheng Qian, Xiangru Tang, Heng Ji, et~al. 2025.
+\newblock Multiagentbench: Evaluating the collaboration and competition of llm agents.
+\newblock \emph{arXiv preprint arXiv:2503.01935}.
+
+\end{thebibliography}

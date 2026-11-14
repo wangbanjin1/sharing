@@ -1,0 +1,85 @@
+\section{Related Work}
+
+\subsection{Benchmarks on Long-Context and Memory} 
+
+In this section, we review prior work on evaluation benchmarks, categorizing them into three domains: long-context understanding, retrieval-augmented generation, and memory agents. 
+
+\vspace{-10pt}
+
+\paragraph{Benchmarks for Long-Context LLMs.} Early benchmarks designed for long-context evaluation include LongBench\citep{longbench} and LooGLE\citep{LooGLE}, with average input lengths of approximately 20k and 24k tokens, respectively. More recent benchmarks—such as $\infty$-Bench~\citep{infinitebench}, HELMET\citep{HELMET}, RULER\citep{RULER}, NOCHA\citep{nocha}, NoLiMa~\citep{nolima} and LongBench V2\citep{longbenchv2}—extend context lengths to over 100k tokens. While these benchmarks effectively assess the model's ability to process extensive information in a single pass, they are primarily intended for static long-context reading comprehension and do not reflect the incremental, multi-turn nature of memory agents.
+
+
+\paragraph{Benchmarks for Retrieval-Augmented Generation.}
+Beyond pure long-context evaluation, a line of benchmarks targets retrieval-augmented generation (RAG) for knowledge-intensive tasks such as open-domain QA, fact checking, and document ranking over fixed corpora, e.g., KILT~\citep{kilt} and BEIR~\citep{beir}. 
+More recent work explicitly evaluates end-to-end RAG systems under long-context or application-specific scenarios, including LaRA~\citep{lara}, LONG$^2$RAG~\citep{LONG2RAG}, FRAMES~\citep{FRAMES}, and CRUD-RAG~\citep{Crud-rag}. Large-scale benchmarks such as RAGBench~\citep{ragbench}, RAGTruth~\citep{ragtruth}, FreshLLM~\citep{freshllms}, and $T^2$-RAGBench~\citep{t2ragbench} further extend the evaluation space to industrial manuals, hallucination detection, time-sensitive web QA, and text-and-table financial reports, respectively.
+However, existing RAG benchmarks typically assume a static or slowly changing knowledge base and short-lived interactions, emphasizing retrieval accuracy and grounding over the continual updating and selective forgetting of information that is central to memory agents. 
+
+
+\paragraph{Benchmarks for Memory Agents}
+
+More recently, benchmarks such as LOCOMO~\citep{locomo}, LongMemEval~\citep{longmemeval}, RealTalk~\citep{Realtalk} and StoryBench~\citep{StoryBench} have been proposed specifically for evaluating memory agents. While promising, LOCOMO still features relatively short conversations ($\sim$9k), and LongMemEval uses synthetic conversations with limited topical diversity, making the dialogues less realistic and potentially less representative of real-world memory use cases. Meanwhile, the evaluation scope of the above benchmarks is not sufficient to comprehensively assess the four core competencies—Accurate Retrieval, Test-Time Learning, Long-Range Understanding, and Selective Forgetting—that are essential for robust memory agents.
+
+
+
+
+
+
+
+
+
+
+\begin{table}[!t]
+\centering
+\caption{A comparison between \ours and existing long-term memory QA benchmarks. \#Q denote the total number of questions. Context depth is defined as the number of tokens in the history. *Not reported in the paper, based on our approximation. The context depth of StoryBench is not reported in paper. We compare these datasets in terms of their ability to \textbf{comprehensively and effectively evaluate} the each capability dimension that we propose. We also compare prior work in terms of their evaluation coverage of memory agents—specifically, whether they provide comprehensive assessments across different categories of memory methods: Long-Context Agents (LCA), RAG Agents, and Agentic Memory (AM). }
+
+\resizebox{0.96\linewidth}{!}{
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+\hline
+\multirow{2}{*}{\textbf{Benchmark}}   & \multirow{2}{*}{\textbf{\#Q}} & \multirow{2}{*}{\textbf{Context Depth}} & \multicolumn{4}{c|}{\textbf{Core Memory Competencies}} & \multicolumn{3}{c}{\textbf{Evaluation Coverage}} \\ 
+             &  &  & \multicolumn{1}{c}{\textbf{AR}} & \multicolumn{1}{c}{\textbf{TTL}} & \multicolumn{1}{c}{\textbf{LRU}} & \multicolumn{1}{c|}{\textbf{SF}} & \multicolumn{1}{c}{\textbf{LCA}} & \multicolumn{1}{c}{\textbf{RAG}} & \multicolumn{1}{c}{\textbf{AM}}  \\
+\hline
+MemoryBank ~\citep{MemoryBank}   & 194 &  5k             & \checkmark & \checkmark  & \ding{55} & \ding{55} & \checkmark & \ding{55} & \checkmark  \\
+LoCoMo ~\citep{locomo}     & 7512 &  10k  & \checkmark & \ding{55} & \ding{55} & \ding{55} & \checkmark & \checkmark & \ding{55}   \\
+PerLTQA~\citep{perltqa}    & 8593 & 1M* & \checkmark & \ding{55} & \ding{55} & \ding{55} & \checkmark & \checkmark & \ding{55}   \\
+RealTalk ~\citep{Realtalk}   & 728 &  375k* & \checkmark & \ding{55} & \checkmark  & \ding{55} & \checkmark & \ding{55} & \ding{55}   \\
+LongMemEval ~\citep{longmemeval}        & 500 &  115k,  1.5M   & \checkmark & \ding{55} & \ding{55} & \ding{55} & \checkmark & \checkmark & \ding{55}   \\
+StoryBench ~\citep{StoryBench}    & 86 &  -  & \checkmark & \ding{55} & \checkmark & \ding{55} & \checkmark  & \ding{55} & \ding{55}   \\
+\ours        & 2071 &  103k-1.44M   & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark   \\
+
+\hline
+\end{tabular}
+}
+
+\label{tab:benchmark-comparison}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Agents with Memory Mechanisms}
+\label{sub:agents_with_memory_mechanisms}
+Memory mechanisms are attracting more and more attention lately~\citep{lscs}.
+Recent advancements in LLMs have demonstrated the capability to process extended context lengths, ranging from 100K to over 1 million tokens. For instance, models such as GPT-4o~\citep{openai2025gpt4o} and Claude 3.7~\citep{anthropic2025claude37} can handle inputs of approximately 100K to 200K tokens, while models like Gemini 2.0 Pro~\citep{deepmind2025gemini} and the GPT-4.1 series extend this capacity beyond 1 million tokens. These strong long-context capabilities enable a simple yet effective form of memory: storing information directly within the context window. However, this approach is inherently constrained by a hard limit—once the context window is exceeded, earlier information must be discarded.
+
+In parallel, RAG continues to serve as a dominant paradigm for managing excessive context. By retrieving relevant information from earlier context and feeding it to the LLM, RAG allows systems to overcome context length limitations. For example, OpenAI’s recent memory functionality\footnote{\url{https://openai.com/index/memory-and-new-controls-for-chatgpt/}} combines explicit user preference tracking with retrieval-based methods that reference prior interactions. RAG methods can be broadly classified into three categories:
+\textbf{Simple RAG}: These methods rely on string-matching techniques such as TF-IDF, BM25~\citep{bm25}, and BMX~\citep{BMX}, which are entirely non-neural and operate on string-level similarity.
+\textbf{Embedding-based RAG}: This class leverages neural encoders, primarily transformers, to map text into dense vector representations~\citep{wu2022pcl}. Early methods like DPR~\citep{karpukhin2020dense} and Contriever~\citep{contriever} are based on BERT~\citep{bert}, while more recent models such as Qwen3-Embedding~\citep{qwen3_embedding} achieve significantly improved retrieval performance.
+\textbf{Structure-Augmented RAG}: These approaches enhance retrieval with structural representations such as graphs or trees. Representative systems include GraphRAG~\citep{graphrag}, RAPTOR~\citep{sarthi2024raptor}, HippoRAG-V2~\citep{hipporag-v2}, Cognee, Zep~\citep{Zep}, MemoRAG~\citep{memorag}, Mem0~\citep{Mem0}, MemoryOS~\citep{memoryos}, Memary~\citep{memary} and Memobase~\citep{memobase}. Despite their effectiveness, RAG-based methods face challenges with ambiguous queries, multi-hop reasoning, and long-range comprehension. When questions require integrating knowledge across an entire session or learning from long, skill-encoding inputs, the retrieval mechanism—limited to the top-k most relevant passages—may fail to surface the necessary information. 
+To address these limitations, \textbf{Agentic Memory Agents} introduce an iterative, decision-driven framework. Rather than relying on a single-pass retrieval, these agents dynamically process the query, retrieve evidence, reflect, and iterate through multiple retrieval and reasoning cycles. Examples include MemGPT~\citep{MemGPT}, Self-RAG~\citep{self-rag}, Auto-RAG~\citep{auto-rag}, A-MEM~\citep{a-mem}, Mem1~\citep{mem1}, MemAgent~\citep{MemAgent}, and MIRIX~\citep{mirix}. This agentic design is particularly effective for resolving ambiguous or multi-step queries. Nonetheless, these methods remain fundamentally constrained by the limitations of RAG—namely, the inability to fully understand or learn from long-range context that is inaccessible via retrieval alone.
+\vspace{-6pt}
+
+
+
+

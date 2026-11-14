@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{l|cc|cc|cc|cc}
+\hline
+\multicolumn{1}{c|}{\multirow{2}{*}{Method}} &
+  \multicolumn{2}{c|}{Low-acc ASR} &
+  \multicolumn{2}{c|}{Noised Aud.} &
+  \multicolumn{2}{c|}{Paraphrased} &
+  \multicolumn{2}{c}{High-acc ASR} \\ \cline{2-9} 
+\multicolumn{1}{c|}{} & JGA   & N-acc & JGA   & N-acc & JGA   & N-acc & JGA   & N-acc \\ \hline
+Baseline              & --    & --    & --    & --    & --    & --    & --    & --    \\ \hline
+AEDA                  & ns    & ns    & ns    & ns    & ns    & ns    & ns    & ns    \\
+EDA                   & *     & *     & **    & **    & ns    & **    & **    & **    \\
+BT                    & **    & **    & **    & **    & *     & **    & **    & *     \\
+TTS-ASR               & ns    & ns    & ns    & ns    & ns    & ns    & ns    & ns    \\
+ASR trans.                   & ns    & *     & ns    & ns    & ns    & *     & *     & *     \\
+EPA (GPT-3.5)         & ***   & **    & ***   & ***   & **    & **    & *     & **    \\
+\hline
+\end{tabular}%
+}
+\caption{Statistical significance results compared to the Baseline using paired \textit{t}-tests across three random seeds. Stars indicate significance levels: * for $p<0.05$, ** for $p<0.01$, *** for $p<0.001$, and \textit{ns} for non-significant differences.}
+\label{tab:significance}
+\end{table}

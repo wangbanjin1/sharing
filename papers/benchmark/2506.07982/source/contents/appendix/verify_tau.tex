@@ -1,0 +1,16 @@
+\section{Verifying Original \bench}
+\label{app:verify_tau}
+
+\subsection{Verifying Implementation}
+
+To minimize implementation errors, we (1) provide a unified tool formalism across all domains, ensuring consistency in how agent capabilities are represented, (2) we ensure that each domain environment specifies a data model, and (3) introduced a mock domain specifically designed for unit testing, allowing for isolated verification of core benchmark functionalities.
+
+\subsection{Verifying Tasks}
+
+Task clarity and correctness are crucial for meaningful evaluation. We improved task specifications through several measures:
+\begin{itemize}
+    \item \textbf{Structured Task Data:} We enriched task descriptions with metadata detailing the \textbf{purpose} of each task (i.e., the specific capabilities being tested). User instructions were structured along dimensions such as intent, specific instructions, and known/unknown information. \textbf{Initialization options} were introduced to allow finer control over starting states while maintaining the option to build each task on top of the common data base state.
+    \item \textbf{Categorized Evaluation:} Task evaluation criteria were augmented and split into distinct categories: \textbf{environment assertions} (e.g., database state checks), \textbf{communication assertions} (verifying information conveyed by the agent), \textbf{natural language assertions} (allowing fine-grained checks specified in natural language for easier debugging), and \textbf{action assertions} (confirming required agent actions).
+    \item \textbf{Iterative Review Process:} We implemented an iterative review process anchored in simulation results. For each task, a simulation is run. Reviewers can intervene to fix transient agent or user simulator errors that might otherwise halt the simulation prematurely, allowing for a complete exploration of the task. The simulation results are then reviewed to check for issues such as \textbf{underspecification}, \textbf{overspecification}, or \textbf{non-unique solutions}. Based on the review, task instructions are refined.
+    \item \textbf{Programmatic Task Generation:} For our newly introduced domain, we employ \textbf{programmatic task generation} coupled with \textbf{automatic verification}, ensuring correctness by design.
+\end{itemize}

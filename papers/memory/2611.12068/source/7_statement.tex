@@ -1,0 +1,24 @@
+\section*{Ethics and Broader Impact Statement}
+
+\ours lets assistants and task agents carry what users told them, and what the
+agents learned, from one session to the next. Every graph fact cites the records it was
+extracted from, so an answer can be traced to stored evidence.
+It is intended for assistants that users knowingly choose to use and should
+not be used to build profiles of people without their consent. A user-centric
+memory accumulates personal and possibly sensitive information. \ours keeps
+sensitive verbatim values in a Knowledge Vault that the hypergraph does not
+index, but this does not replace consent and access control. A deployment
+should let users view, correct, and delete their memories, confine each memory
+to its user~\citep{rezazadeh2025collabmemory}, and use model providers or local
+models that meet its privacy requirements, because stored content is sent to
+the model. Memory can also make mistakes
+persistent~\citep{zhang2026faultymemories,shang2026backfires}, and content
+injected into a conversation can be stored and later retrieved as if it were
+trusted. A wrong merge
+changes only the index, and a procedural edit keeps a citation only after its
+quote is checked, but in high-stakes settings learned skills and merged
+identities should still be reviewed by a person and stored memories audited
+periodically~\citep{ma2026memaudit}. All experiments use publicly released
+benchmarks under their licenses. We collected no new data and ran no study with human participants.
+MemoryCD is built from public Amazon product reviews, and we use it as
+released without attempting to identify the reviewers. 

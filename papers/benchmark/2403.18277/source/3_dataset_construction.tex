@@ -1,0 +1,13 @@
+\section{Dataset Construction}
+\label{sec:dataset_construction}
+
+We introduce a framework to construct a novel suite of datasets tailored for multi-intent detection, termed \textbf{BlendX}, as illustrated in Figure \ref{fig:overall}. 
+Inspired by MixX \citeplanguageresource{qin-etal-2020-agif}, our approach merges utterances from single-intent datasets. 
+We broaden the research scope by incorporating datasets such as Banking77 and CLINC150 and by utilizing diverse conjunctions. 
+Furthermore, we explore methods to connect utterances, including rule-based ones plus generative models, i.e., ChatGPT.
+We also propose simple but effective metrics to validate the quality of the generated datasets.
+
+\input{3-1_concatenation}
+\input{3-2_utterance_selection}
+\input{3-3_metric}
+\input{3-4_releasing_dataset}

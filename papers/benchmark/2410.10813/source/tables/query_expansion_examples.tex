@@ -1,0 +1,36 @@
+\begin{table}[h]
+    \centering
+    \caption{Example of time span extraction outputs from GPT-4o and Llama 3.1 8B Instruct.}
+    \resizebox{\linewidth}{!}{
+\begin{tabular}{p{\textwidth}}
+    \toprule
+    \textbf{Example 1} \\
+    Question Date: 2023/05/28 \\
+    Question: How long had I been taking guitar lessons when I bought the new guitar amp? \\
+    Predicted time range (GPT-4o): No date extracted \textcolor{orange}{\textbf{[correct]}} \\
+    Predicted time range (Llama 3.1 8B Instruct): 2023/05/01$\sim$2023/05/28 \textcolor{red}{\textbf{[false positive]}}\\
+    \midrule
+    \textbf{Example 2} \\
+    Question Date: 2023/04/27 \\
+    Question: Which airline did I fly with the most in March and April? \\
+    Predicted time range (GPT-4o): 2023/03/01$\sim$2023/04/30 \textcolor{orange}{\textbf{[correct]}} \\
+    Predicted time range (Llama 3.1 8B Instruct): 2023/03/01$\sim$2023/04/30 \textcolor{orange}{\textbf{[correct]}} \\
+    \midrule
+    \textbf{Example 3} \\
+    Question Date: 2023/06/28 \\
+    Question: How many days before the 'Rack Fest' did I participate in the 'Turbocharged Tuesdays' event? \\
+    Predicted time range (GPT-4o): No date extracted \textcolor{orange}{\textbf{[correct]}} \\
+    Predicted time range (Llama 3.1 8B Instruct): 2023/06/21$\sim$2023/06/28 \textcolor{red}{\textbf{[false positive]}} \\
+    \midrule
+    \textbf{Example 4} \\
+    Question Date: 2023/03/10 \\
+    Question: Which seeds were started first, the tomatoes or the marigolds? \\
+    Predicted time range (GPT-4o): No date extracted \textcolor{orange}{\textbf{[correct]}} \\
+    Predicted time range (Llama 3.1 8B Instruct): 2023/03/01$\sim$2023/03/10 \textcolor{red}{\textbf{[false positive]}} \\
+    \bottomrule
+\end{tabular}
+}
+\label{tab:query-expansion-examples}
+\end{table}
+
+

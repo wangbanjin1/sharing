@@ -1,0 +1,31 @@
+
+
+
+% Below is an example for generatig target utterance with <hl> tag. \\ 
+% Original: \\
+% \hspace*{1em} Hi, I need to go to Green Day hotel, then book a table at the Grill House. \\
+% Dialogue State: \\
+% \hspace*{1em} \texttt{\{"hotel-name" : "Green Day", "restaurant-name" : "Grill House"\}}
+% With \texttt{<hl>} tags: \\
+% \hspace*{1em} Hi, I need to go to \texttt{<hl>}Green Day\texttt{</hl>} hotel, then book a table at the \texttt{<hl>}Grill House\texttt{</hl>}.
+
+
+
+
+\begin{table}[h!]
+\small
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{p{0.2\columnwidth} p{0.8\columnwidth}}
+\toprule
+\multicolumn{2}{l}{\textbf{Example of adding <hl> tag}} \\
+\midrule
+Original & Hi, I need to go to Green Day hotel, then book a table at the Grill House. \\
+Dialogue State & hotel-name: \textcolor{myGreen}{Green Day}, restaurant-name:\textcolor{myBlue}{Grill House} \\
+\cdashline{1-2}
+With \texttt{<hl>} tags & Hi, I need to go to \texttt{<hl>}\textcolor{myGreen}{Green Day}\texttt{</hl>} hotel, then book a table at the \texttt{<hl>}\textcolor{myBlue}{Grill House}\texttt{</hl>}. \\
+\bottomrule
+\end{tabular}
+}
+\caption{Example of keyword highlighting using \texttt{<hl>} tags based on dialogue state annotations.}
+\label{tab:hl_example}
+\end{table}

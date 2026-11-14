@@ -1,0 +1,150 @@
+\begin{quote}
+\noindent\textbf{Assistant:} \textit{[System retrieves customer information]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: get\_customer\_by\_phone(phone\_number: "555-123-2002")]}
+
+\begin{verbatim}
+{
+    "customer_id": "C1001",
+    "full_name": "John Smith",
+    "date_of_birth": "1985-06-15",
+    "email": "john.smith@example.com",
+    "phone_number": "555-123-2002",
+    "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "zip_code": "90210"
+    },
+    "account_status": "Active",
+    "payment_methods": [{
+        "method_type": "Credit Card",
+        "account_number_last_4": "1235",
+        "expiration_date": "12/2026"
+    }],
+    "line_ids": ["L1001", "L1002", "L1003"],
+    "bill_ids": ["B1001", "B1002", "B1003"],
+    "created_at": "2025-01-15 10:30:00",
+    "last_extension_date": null,
+    "goodwill_credit_used_this_year": 25.0
+}
+\end{verbatim}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[System retrieves line details]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: get\_details\_by\_id(id: "L1001")]}
+
+\begin{verbatim}
+{
+    "line_id": "L1001",
+    "phone_number": "555-123-2001",
+    "status": "Active",
+    "plan_id": "P1001",
+    "device_id": "D1001",
+    "data_used_gb": 3.2,
+    "data_refueling_gb": 0.0,
+    "roaming_enabled": false,
+    "contract_end_date": "2026-12-31",
+    "last_plan_change_date": "2025-01-10",
+    "last_sim_replacement_date": null,
+    "suspension_start_date": null
+}
+\end{verbatim}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[System retrieves additional line details]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: get\_details\_by\_id(id: "L1002")]}
+
+\begin{verbatim}
+{
+    "line_id": "L1002",
+    "phone_number": "555-123-2002",
+    "status": "Active",
+    "plan_id": "P1002",
+    "device_id": "D1002",
+    "data_used_gb": 8.7,
+    "data_refueling_gb": 0.0,
+    "roaming_enabled": true,
+    "contract_end_date": "2026-12-31",
+    "last_plan_change_date": "2024-12-15",
+    "last_sim_replacement_date": "2025-01-20",
+    "suspension_start_date": null
+}
+\end{verbatim}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[System retrieves device details]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: get\_details\_by\_id(id: "D1002")]}
+
+\begin{verbatim}
+{
+    "device_id": "D1002",
+    "device_type": "phone",
+    "model": "Smartphone Pro Max",
+    "imei": "234567890123456",
+    "is_esim_capable": true,
+    "activated": true,
+    "activation_date": "2025-02-15 11:45:00",
+    "last_esim_transfer_date": "2025-01-20 09:30:00"
+}
+\end{verbatim}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[System checks network status]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: get\_network\_status()]}
+
+\begin{verbatim}
+Airplane Mode: ON
+SIM Card Status: invalid
+Cellular Connection: no_service
+Cellular Signal: none
+Cellular Network Type: none
+Mobile Data Allowed: Yes
+Roaming: No
+Data Roaming Allowed: No
+Wi-Fi Radio: OFF
+Wi-Fi Connected: No
+\end{verbatim}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[System toggles airplane mode]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: toggle\_airplane\_mode()]}
+
+\begin{verbatim}
+Airplane Mode is now OFF.
+Status Bar: [No Signal] | [Battery 80%
+\end{verbatim}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[System checks SIM status]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: get\_sim\_status()]}
+
+\textit{The SIM card is invalid or not recognized.}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[System reseats SIM card]}
+
+\vspace{0.5em}
+\noindent\textbf{Tool:} \texttt{[Tool call: reseat\_sim\_card()]}
+
+\begin{verbatim}
+SIM card re-seated successfully.
+Status Bar: [Signal 4] Excellent | 5G | [Data] Enabled | [Battery 80%
+\end{verbatim}
+
+\vspace{0.5em}
+\noindent\textbf{Assistant:} \textit{[STOP]}
+\end{quote}

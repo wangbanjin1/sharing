@@ -1,0 +1,40 @@
+\section{Full Experimental Results with Different Runs}
+\label{sec:full_experimental_results}
+
+We run \ours and Full-Context with \texttt{gpt-4.1-mini} three times and we report the full results in Table \ref{tab:full_locomo}. There are variations across different runs, while \ours consistently achieves state-of-the-art results. Full predicted results and LLM-Judge scores are provided in the folder \url{https://github.com/Mirix-AI/MIRIX/tree/public_evaluation/public_evaluations/evaluation_metrics}.
+
+\begin{table*}[h!]
+\centering
+% \resizebox{\linewidth}{!}{%
+\begin{tabular}{p{0.5cm}l|cccc|c}   % ← added a 1.5 cm column on the left
+\toprule
+& \textbf{Method} & \textbf{Single Hop} & \textbf{Multi-Hop} & \textbf{Open Domain} & \textbf{Temporal} & \textbf{Overall} \\
+\midrule
+\multirow{8}{*}{\rotatebox[origin=c]{90}{\textbf{gpt-4o-mini}}}
+  & A-Mem      & 39.79 & 18.85 & 54.05 & 49.91 & 48.38 \\
+& LangMem     & 62.23 & 47.92 & 71.12 & 23.43 & 58.10 \\
+& OpenAI      & 63.79 & 42.92 & 62.29 & 21.71 & 52.90 \\
+& Mem0        & 67.13 & 51.15 & 72.93 & 55.51 & 66.88 \\
+& Mem0$^g$       & 65.71 & 47.19 & \textbf{75.71} & 58.13 & 68.44 \\
+& Memobase    & 63.83 & 52.08 & 71.82 & 80.37 & 70.91 \\
+& Zep         & 74.11 & 66.04 & 67.71 & 79.76 & 75.14\\
+\cmidrule{2-7}
+& Full-Context & 80.14 & 46.89 & 58.33 & 90.49 & 77.51 \\
+\midrule
+\multirow{9}{*}{\rotatebox[origin=c]{90}{\textbf{gpt-4.1-mini}}}
+  & LangMem & 76.24 & 63.24 & 63.54 & 88.11 & 79.22 \\
+& RAG-500 & 37.94 & 37.69 & 48.96 & 61.83 & 51.62 \\
+& Mem0    & 62.41 & 57.32 & 44.79 & 66.47 & 62.47 \\
+\cmidrule{2-7}
+& \textbf{\ours-Run1}   & 85.46 & 80.06 & 64.58 & 87.16 & 83.98 \\
+& \textbf{\ours-Run2}   & 85.46 & 85.36 & 64.58 & 91.32 & 87.34 \\
+& \textbf{\ours-Run3}   & 84.40 & 85.67 & 67.71 & 86.68 & 84.82 \\
+\cmidrule{2-7}
+& Full-Context-Run1 & 88.30 & 71.74 & 72.92 & 92.98 & 86.43 \\
+& Full-Context-Run2 & 88.29 & 81.31 & 71.88 & 92.50 & 88.13 \\
+& Full-Context-Run3 & 89.01 & 80.06 & 70.83 & 92.63 & 88.00 \\
+\bottomrule
+\end{tabular}%}
+\caption{LLM-as-a-Judge scores (\%, higher is better) for each question type in the \texttt{LOCOMO} dataset. As mentioned in Mem0~\citep{mem0}, as the average length in this dataset is only 9k, Full-Context is almost the upper-bound. Thus recovering the performance of Full-Context shows the advancements of \ours. For Zep, we only achieve 49.09 overall score with \texttt{gpt-4.1-mini} using the implementation from mem0, we are afraid there might be errors in their implementation, so we skip the results here.}
+\label{tab:full_locomo}
+\end{table*}

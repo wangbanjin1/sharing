@@ -1,0 +1,94 @@
+\subsubsection{Main results}
+% \label{sec:4.3:mind2web-results}
+
+\begin{wraptable}[14]{r}{0.55\textwidth}
+\small
+\vspace{-8mm}
+\caption{\awm offline results on Mind2Web cross-task dataset. Elem Acc and SR are short for element accuracy and success rate. We footnote the GPT variant used by each method, \texttt{3.5} and \texttt{4} stands for \texttt{gpt-3.5-turbo} and \texttt{gpt-4}, respectively. We highlight the best result within the same model variant.}
+\vspace{1mm}
+\label{tab:mind2web-results}
+\resizebox{0.55\textwidth}{!}{
+\begin{tabular}{l|cccc}
+\toprule
+\multicolumn{1}{c|}{\bf Method} & {\bf Elem Acc} & {\bf Action F$_{1}$} & {\bf Step SR} & {\bf SR} \\
+\midrule
+MindAct$_{3.5}$ & {20.3} & {\bf 56.6} & {17.4} & {0.8} \\
+CogAgent$_{3.5}$ & {-} & {-} & {18.6} & {-} \\
+Synapse$_{3.5}$ & {34.0} & {-} & {30.6} & {2.4} \\
+\textsc{AWM$_{3.5}$} & {\bf 39.0} & {52.8} & {\bf 34.6} & {\bf 2.8} \\
+\midrule
+MindAct$_{4}$ & {41.6} & {\bf 60.6} & {36.2} & {2.0} \\
+% \textsc{AWM$_{4, rule}$} & {49.5} & {57.0} & {43.4} & {2.0} \\
+\textsc{AWM$_{4}$} & {\bf 50.6} & {57.3} & {\bf 45.1} & {\bf 4.8} \\
+\bottomrule
+\end{tabular}
+}
+\vspace{-4mm}
+\end{wraptable}
+
+We first run with \awm offline using both GPT variants, and find that \awm consistently obtains the highest success rate in both step and task levels, leading to $4.0$--$8.9$\% relative and $0.4$--$2.8$ absolute points increases in step-wise and task-wise success rates than the baselines --- Synapse with \texttt{gpt-3.5-turbo} and MindAct with \texttt{gpt-4}. 
+%
+Decomposing the step success rate by element and action selection and accuracy, we notice the increases mainly come from more accurate element selection, as indicated by the $5.0$--$9.0$ element accuracy increase in \autoref{tab:mind2web-results}. 
+
+% \noindent \textbf{Abstract sub-routines vs. concrete experiences} \quad
+\paragraph{Abstract sub-routines vs. concrete experiences}
+More specifically, compared to the Synapse \citep{zheng2024synapse} method that retrieves the most relevant training examples, \awm achieves a $+5.0$ element accuracy and leads to a $+4.0$ increase in step success rate.
+While augmenting concrete, full examples may bias agents to select elements similar to those presented in the given examples, \awm introduces less bias on element selection via its abstract representation of example-specific contexts in workflows, and therefore enables higher step success rates.
+
+Furthermore, \awm integrates frequently-used sub-routines, which can be more flexibly and readily leveraged across test examples, compared to the full example trajectories used by Synapse, which are less likely to appear multiple times.
+In general, our results indicate that the abstract, reusable nature of workflows contributes to the superiority of the \awm method.
+
+% \noindent \textbf{Learn to diverge from workflow guidelines} \quad
+\paragraph{Learn to diverge from workflow guidelines}
+Despite more accurate element selection, \awm gets slightly lower action F$_1$ scores than MindAct, possibly because the augmented workflows may guide the agent to take certain actions aligning to the workflows, which are not always relevant to the particular environment state at hand. While following the workflows generally results in more successful task trajectories, agents still encounter some challenges in identifying places to diverge from the workflow guidelines.
+
+
+\subsubsection{Online \awm Enables Generalization}
+
+Beyond the offline induction setting, we further explore the \awm in the online setting, similar to the WebArena experiment setup in \S\ref{sec:4.1:webarena}, where no additional training examples are needed besides test queries. This naturally facilitates cross-website and cross-domain generalization, which we examine on the two other splits provided by the Mind2Web dataset: cross-website and cross-domain tests. 
+
+In addition to the MindAct baseline, we additionally set bars with our \textsc{AWM$_{\it offline}$} setup, by randomly selecting workflows induced from the training set as memory augmentations. Specifically, for cross-website examples, we select workflows from the same domain; for the cross-domain setting, we randomly select workflows from all domains.
+We conduct \textsc{AWM$_{\it online}$} by iteratively inducing, integrating, and utilizing workflows over test inferences. We also explore \textsc{AWM}$_{\it offline+online}$ in \S\ref{app:mind2web-offline-online}.
+
+As shown in \autoref{tab:mind2web-generalize}, both \textsc{AWM$_{\it online}$} and \textsc{AWM$_{\it offline}$} surpass the MindAct baseline by a large margin, resulting in $7.4$--$8.9$, $3.6$--$3.8$, and $14.0$--$16.9$ absolute point improvements in step success rates, in cross-task, cross-website, and cross-domain scenarios.
+
+
+\begin{table}[t!]
+\vspace{-4mm}
+\small
+\centering
+\caption{Success rate on Mind2Web cross-task, cross-website, and cross-domain generalization test, using \texttt{gpt-4} model. EA is short for element accuracy and AF$_1$ is short for action F$_1$.}
+\vspace{1mm}
+\label{tab:mind2web-generalize}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|cccc|cccc|cccc}
+\toprule
+\multirow{2}{*}{\bf Method} & \multicolumn{4}{c|}{\it Cross-Task} & \multicolumn{4}{c|}{\it Cross-Website} & \multicolumn{4}{c}{\it Cross-Domain} \\
+{} & {EA} & {AF$_{1}$} & {Step SR} & {SR} & {EA} & {AF$_{1}$} & {Step SR} & {SR} & {EA} & {AF$_{1}$} & {Step SR} & {SR} \\
+\midrule
+MindAct* & {41.6} & {\bf 60.6} & {36.2} & {2.0} & {35.8} & {\bf 51.1} & {30.1} & {2.0} & {21.6} & {\bf 52.8} & {18.6} & {1.0} \\
+\midrule
+\textsc{AWM$_\mathit{offline}$} & {\bf 50.6} & {57.3} & {\bf 45.1} & {\bf 4.8} & {41.4} & {46.2} & {33.7} & {\bf 2.3} & {36.4} & {41.6} & {32.6} & {0.7} \\
+\textsc{AWM$_\mathit{online}$} & {50.0} & {56.4} & {43.6} & {4.0} & {\bf 42.1} & {45.1} & {\bf 33.9} & {1.6} & {\bf 40.9} & {46.3} & {\bf 35.5} & {\bf 1.7} \\
+\bottomrule
+\end{tabular}
+}
+\vspace{-4mm}
+\end{table}
+
+%%%%%%%%%%
+% \vspace{-1mm}
+\paragraph{In-domain, cross-task scenario}
+When tested in-domain, \textsc{AWM$_{\it online}$} and \textsc{AWM$_{\it offline}$} perform comparably to each other. When inspecting the model behaviors in detail, we notice the pros and cons of each method.
+%
+\textsc{AWM$_{\it online}$} induces workflows from model-predicted trajectories that are not always correct, thus can lead to incorrect workflows that degrade model performance.
+%
+On the other hand, the training and test examples on some websites vary in task distributions (\eg, training examples cover how to buy items on Amazon, test examples ask for job applications to Amazon careers.).
+\textsc{AWM$_{\it online}$} naturally resolves this train-test gap because its operating process only involves test queries and environments, therefore yields workflows that are presumably more targeted toward the test distribution, which in turn, leads to higher success rates overall. Nonetheless, if distribution-matching, high-quality training examples are available, \textsc{AWM$_{\it offline}$} could bring more benefit by alleviating the gap issue, as the slightly higher cross-tasks scores of \textsc{AWM$_{\it offline}$} in \autoref{tab:mind2web-generalize}.
+
+%%%%%%%%%%%
+% \vspace{-1mm}
+\paragraph{Extending to unseen websites and domains}
+When applied on unseen websites or domains, \textsc{AWM$_\mathit{online}$} demonstrates greater generalization abilities, compared to \textsc{AWM$_\mathit{offline}$}. 
+The performance margin of \textsc{AWM$_\mathit{online}$} (over \textsc{AWM$_\mathit{offline}$}) widens as the domain gaps between training and testing data widen from different websites (e.g., \textit{apple} to \textit{bestbuy}) to different domains (e.g., \textit{macys} in shopping domain to \textit{reddit} in social media domain). Because \textsc{AWM$_\mathit{online}$} does not require nor rely on information from the training data, it is not affected by any domain gaps.
+Nonetheless, as demonstrated by the substantial improvements of \textsc{AWM$_\mathit{offline}$} over the MindAct baseline, \textsc{AWM$_\mathit{offline}$} still demonstrates that models can benefit from mechanistically similar workflows from the previously induced workflow repository.

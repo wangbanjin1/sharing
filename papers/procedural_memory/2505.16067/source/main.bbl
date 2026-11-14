@@ -1,0 +1,178 @@
+\begin{thebibliography}{35}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Anokhin et~al.(2024)Anokhin, Semenov, Sorokin, Evseev, Burtsev, and Burnaev}]{anokhin2024arigraph}
+Petr Anokhin, Nikita Semenov, Artyom Sorokin, Dmitry Evseev, Mikhail Burtsev, and Evgeny Burnaev. 2024.
+\newblock Arigraph: Learning knowledge graph world models with episodic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2407.04363}.
+
+\bibitem[{Beaunieux et~al.(2006)Beaunieux, Hubert, Witkowski, Pitel, Rossi, Danion, Desgranges, and Eustache}]{proceduralmemory}
+H~Beaunieux, V~Hubert, T~Witkowski, AL~Pitel, S~Rossi, JM~Danion, B~Desgranges, and F~Eustache. 2006.
+\newblock Which processes are involved in cognitive procedural learning?
+\newblock \emph{Memory. 2006 Jul;14(5):521-39. doi: 10.1080/09658210500477766. PMID: 16754239.}
+
+\bibitem[{Caesar et~al.(2020)Caesar, Bankiti, Lang, Vora, Liong, Xu, Krishnan, Pan, Baldan, and Beijbom}]{caesar2020nuscenes}
+Holger Caesar, Varun Bankiti, Alex~H Lang, Sourabh Vora, Venice~Erin Liong, Qiang Xu, Anush Krishnan, Yu~Pan, Giancarlo Baldan, and Oscar Beijbom. 2020.
+\newblock nuscenes: A multimodal dataset for autonomous driving.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}, pages 11621--11631.
+
+\bibitem[{Hou et~al.(2024)Hou, Tamoto, and Miyashita}]{hou2024my}
+Yuki Hou, Haruki Tamoto, and Homei Miyashita. 2024.
+\newblock " my agent understands me better": Integrating dynamic human-like memory recall and consolidation in llm-based agents.
+\newblock In \emph{Extended Abstracts of the CHI Conference on Human Factors in Computing Systems}, pages 1--7.
+
+\bibitem[{Hu et~al.(2024)Hu, Chen, Chen, Mu, Shao, and Luo}]{hu2024hiagent}
+Mengkang Hu, Tianxing Chen, Qiguang Chen, Yao Mu, Wenqi Shao, and Ping Luo. 2024.
+\newblock Hiagent: Hierarchical working memory management for solving long-horizon agent tasks with large language model.
+\newblock \emph{arXiv preprint arXiv:2408.09559}.
+
+\bibitem[{{Johnson} et~al.(2016){Johnson}, {Pollard}, {Shen}, {Lehman}, {Feng}, {Ghassemi}, {Moody}, {Szolovits}, {Anthony Celi}, and {Mark}}]{2016NatSD...360035J}
+Alistair E.~W. {Johnson}, Tom~J. {Pollard}, Lu~{Shen}, Li-Wei~H. {Lehman}, Mengling {Feng}, Mohammad {Ghassemi}, Benjamin {Moody}, Peter {Szolovits}, Leo {Anthony Celi}, and Roger~G. {Mark}. 2016.
+\newblock \href {https://doi.org/10.1038/sdata.2016.35} {{MIMIC-III, a freely accessible critical care database}}.
+\newblock \emph{Scientific Data}, 3:160035.
+
+\bibitem[{Kumar(2020)}]{Kumar2020SemanticMA}
+Abhilasha~Ashok Kumar. 2020.
+\newblock \href {https://api.semanticscholar.org/CorpusID:221495897} {Semantic memory: A review of methods, models, and current challenges}.
+\newblock \emph{Psychonomic Bulletin \& Review}, 28:40 -- 80.
+
+\bibitem[{Kusupati et~al.(2022)Kusupati, Bhatt, Rege, Wallingford, Sinha, Ramanujan, Howard-Snyder, Chen, Kakade, Jain et~al.}]{kusupati2022matryoshka}
+Aditya Kusupati, Gantavya Bhatt, Aniket Rege, Matthew Wallingford, Aditya Sinha, Vivek Ramanujan, William Howard-Snyder, Kaifeng Chen, Sham Kakade, Prateek Jain, and 1 others. 2022.
+\newblock Matryoshka representation learning.
+\newblock \emph{Advances in Neural Information Processing Systems}, 35:30233--30249.
+
+\bibitem[{Lampinen et~al.(2025)Lampinen, Engelcke, Li, Chaudhry, and McClelland}]{lampinen2025latentlearningepisodicmemory}
+Andrew~Kyle Lampinen, Martin Engelcke, Yuxuan Li, Arslan Chaudhry, and James~L. McClelland. 2025.
+\newblock \href {https://arxiv.org/abs/2509.16189} {Latent learning: episodic memory complements parametric learning by enabling flexible reuse of experiences}.
+
+\bibitem[{Li et~al.(2023)Li, Yu, Li, Chen, and Khashanah}]{li2023tradinggpt}
+Yang Li, Yangyang Yu, Haohang Li, Zhi Chen, and Khaldoun Khashanah. 2023.
+\newblock Tradinggpt: Multi-agent system with layered memory and distinct characters for enhanced financial trading performance.
+\newblock \emph{arXiv preprint arXiv:2309.03736}.
+
+\bibitem[{Liang et~al.(2024)Liang, He, Xia, Song, Wang, Tao, Sun, Yuan, Su, Li et~al.}]{liang2024self}
+Xuechen Liang, Yangfan He, Yinghui Xia, Xinyuan Song, Jianhui Wang, Meiling Tao, Li~Sun, Xinhang Yuan, Jiayi Su, Keqin Li, and 1 others. 2024.
+\newblock Self-evolving agents with reflective and memory-augmented abilities.
+\newblock \emph{arXiv preprint arXiv:2409.00872}.
+
+\bibitem[{Liu et~al.(2023)Liu, Yang, Shen, Hu, Zhang, Gu, and Zhang}]{liu2023think}
+Lei Liu, Xiaoyan Yang, Yue Shen, Binbin Hu, Zhiqiang Zhang, Jinjie Gu, and Guannan Zhang. 2023.
+\newblock Think-in-memory: Recalling and post-thinking enable llms with long-term memory.
+\newblock \emph{arXiv preprint arXiv:2311.08719}.
+
+\bibitem[{Luo et~al.(2024)Luo, Xu, Liu, Pasupat, and Kazemi}]{luo2024context}
+Man Luo, Xin Xu, Yue Liu, Panupong Pasupat, and Mehran Kazemi. 2024.
+\newblock In-context learning with retrieved demonstrations for language models: A survey.
+\newblock \emph{arXiv preprint arXiv:2401.11624}.
+
+\bibitem[{Mao et~al.(2024)Mao, Ye, Qian, Pavone, and Wang}]{mao2023language}
+Jiageng Mao, Junjie Ye, Yuxi Qian, Marco Pavone, and Yue Wang. 2024.
+\newblock \href {https://openreview.net/forum?id=UPE6WYE8vg} {A language agent for autonomous driving}.
+\newblock In \emph{First Conference on Language Modeling}.
+
+\bibitem[{Neto et~al.(2023)Neto, Dadkhah, Ferreira, Zohourian, Lu, and Ghorbani}]{ciciot}
+Euclides Carlos~Pinto Neto, Sajjad Dadkhah, Raphael Ferreira, Alireza Zohourian, Rongxing Lu, and Ali~A. Ghorbani. 2023.
+\newblock \href {https://doi.org/10.3390/s23135941} {Ciciot2023: A real-time dataset and benchmark for large-scale attacks in iot environment}.
+\newblock \emph{Sensors}, 23(13).
+
+\bibitem[{Nuxoll and Laird(2007)}]{Nuxoll2007ExtendingCA}
+Andrew Nuxoll and John~E. Laird. 2007.
+\newblock \href {https://api.semanticscholar.org/CorpusID:7897551} {Extending cognitive architecture with episodic memory}.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}.
+
+\bibitem[{Pan et~al.(2024)Pan, Zhang, Tomlin, Zhou, Levine, and Suhr}]{pan2024autonomous}
+Jiayi Pan, Yichi Zhang, Nicholas Tomlin, Yifei Zhou, Sergey Levine, and Alane Suhr. 2024.
+\newblock Autonomous evaluation and refinement of digital agents.
+\newblock \emph{arXiv preprint arXiv:2404.06474}.
+
+\bibitem[{Pan et~al.(2025)Pan, Wu, Jiang, Luo, Cheng, Li, Yang, Lin, Zhao, Qiu et~al.}]{pan2025memory}
+Zhuoshi Pan, Qianhui Wu, Huiqiang Jiang, Xufang Luo, Hao Cheng, Dongsheng Li, Yuqing Yang, Chin-Yew Lin, H~Vicky Zhao, Lili Qiu, and 1 others. 2025.
+\newblock On memory construction and retrieval for personalized conversational agents.
+\newblock \emph{arXiv preprint arXiv:2502.05589}.
+
+\bibitem[{Park et~al.(2023)Park, O'Brien, Cai, Morris, Liang, and Bernstein}]{park2023generative}
+Joon~Sung Park, Joseph O'Brien, Carrie~Jun Cai, Meredith~Ringel Morris, Percy Liang, and Michael~S Bernstein. 2023.
+\newblock Generative agents: Interactive simulacra of human behavior.
+\newblock In \emph{Proceedings of the 36th annual acm symposium on user interface software and technology}, pages 1--22.
+
+\bibitem[{Shi et~al.(2024)Shi, Xu, Zhuang, Yu, Zhang, Wu, Zhu, Ho, Yang, and Wang}]{shi2024ehragent}
+Wenqi Shi, Ran Xu, Yuchen Zhuang, Yue Yu, Jieyu Zhang, Hang Wu, Yuanda Zhu, Joyce Ho, Carl Yang, and May~D Wang. 2024.
+\newblock Ehragent: Code empowers large language models for complex tabular reasoning on electronic health records.
+\newblock \emph{arXiv preprint arXiv:2401.07128}.
+
+\bibitem[{Shinn et~al.(2024)Shinn, Cassano, Gopinath, Narasimhan, and Yao}]{shinn2024reflexion}
+Noah Shinn, Federico Cassano, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. 2024.
+\newblock Reflexion: Language agents with verbal reinforcement learning.
+\newblock \emph{Advances in Neural Information Processing Systems}, 36.
+
+\bibitem[{Sumers et~al.(2023)Sumers, Yao, Narasimhan, and Griffiths}]{sumers2023cognitive}
+Theodore~R Sumers, Shunyu Yao, Karthik Narasimhan, and Thomas~L Griffiths. 2023.
+\newblock Cognitive architectures for language agents.
+\newblock \emph{arXiv preprint arXiv:2309.02427}.
+
+\bibitem[{Wang et~al.(2023)Wang, Xie, Jiang, Mandlekar, Xiao, Zhu, Fan, and Anandkumar}]{wang2023voyager}
+Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke Zhu, Linxi Fan, and Anima Anandkumar. 2023.
+\newblock Voyager: An open-ended embodied agent with large language models.
+\newblock \emph{arXiv preprint arXiv:2305.16291}.
+
+\bibitem[{Wang et~al.(2024{\natexlab{a}})Wang, Ma, Feng, Zhang, Yang, Zhang, Chen, Tang, Chen, Lin et~al.}]{wang2024survey}
+Lei Wang, Chen Ma, Xueyang Feng, Zeyu Zhang, Hao Yang, Jingsen Zhang, Zhiyuan Chen, Jiakai Tang, Xu~Chen, Yankai Lin, and 1 others. 2024{\natexlab{a}}.
+\newblock A survey on large language model based autonomous agents.
+\newblock \emph{Frontiers of Computer Science}, 18(6):186345.
+
+\bibitem[{Wang et~al.(2024{\natexlab{b}})Wang, Fried, and Neubig}]{wang2024trove}
+Zhiruo Wang, Daniel Fried, and Graham Neubig. 2024{\natexlab{b}}.
+\newblock Trove: Inducing verifiable and efficient toolboxes for solving programmatic tasks.
+\newblock \emph{arXiv preprint arXiv:2401.12869}.
+
+\bibitem[{Wang et~al.(2025)Wang, Mao, Fried, and Neubig}]{wang2024agent}
+Zora~Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig. 2025.
+\newblock \href {https://openreview.net/forum?id=NTAhi2JEEE} {Agent workflow memory}.
+\newblock In \emph{Forty-second International Conference on Machine Learning}.
+
+\bibitem[{Xiang et~al.(2024)Xiang, Zheng, Li, Hong, Li, Xie, Zhang, Xiong, Xie, Yang et~al.}]{xiang2024guardagent}
+Zhen Xiang, Linzhi Zheng, Yanjie Li, Junyuan Hong, Qinbin Li, Han Xie, Jiawei Zhang, Zidi Xiong, Chulin Xie, Carl Yang, and 1 others. 2024.
+\newblock Guardagent: Safeguard llm agents by a guard agent via knowledge-enabled reasoning.
+\newblock \emph{arXiv preprint arXiv:2406.09187}.
+
+\bibitem[{Xu et~al.(2025)Xu, Mei, Gao, Tan, Liang, and Zhang}]{xu2025mem}
+Wujiang Xu, Kai Mei, Hang Gao, Juntao Tan, Zujie Liang, and Yongfeng Zhang. 2025.
+\newblock A-mem: Agentic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2502.12110}.
+
+\bibitem[{Yin et~al.(2024)Yin, Sun, Guo, Zeng, Cheng, Qiu, and Huang}]{yin2024explicit}
+Zhangyue Yin, Qiushi Sun, Qipeng Guo, Zhiyuan Zeng, Qinyuan Cheng, Xipeng Qiu, and Xuan-Jing Huang. 2024.
+\newblock Explicit memory learning with expectation maximization.
+\newblock In \emph{Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing}, pages 16618--16635.
+
+\bibitem[{Zeng et~al.(2024)Zeng, Fang, Liu, and Meng}]{zeng2024structural}
+Ruihong Zeng, Jinyuan Fang, Siwei Liu, and Zaiqiao Meng. 2024.
+\newblock On the structural memory of llm agents.
+\newblock \emph{arXiv preprint arXiv:2412.15266}.
+
+\bibitem[{Zhang et~al.(2024)Zhang, Bo, Ma, Li, Chen, Dai, Zhu, Dong, and Wen}]{zhang2024survey}
+Zeyu Zhang, Xiaohe Bo, Chen Ma, Rui Li, Xu~Chen, Quanyu Dai, Jieming Zhu, Zhenhua Dong, and Ji-Rong Wen. 2024.
+\newblock A survey on the memory mechanism of large language model based agents.
+\newblock \emph{arXiv preprint arXiv:2404.13501}.
+
+\bibitem[{Zhao et~al.(2024)Zhao, Huang, Xu, Lin, Liu, and Huang}]{zhao2024expel}
+Andrew Zhao, Daniel Huang, Quentin Xu, Matthieu Lin, Yong-Jin Liu, and Gao Huang. 2024.
+\newblock Expel: Llm agents are experiential learners.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~38, pages 19632--19642.
+
+\bibitem[{Zheng et~al.(2024)Zheng, Wang, Wang, and An}]{zheng2023synapse}
+Longtao Zheng, Rundong Wang, Xinrun Wang, and Bo~An. 2024.
+\newblock \href {https://openreview.net/forum?id=Pc8AU1aF5e} {Synapse: Trajectory-as-exemplar prompting with memory for computer control}.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}.
+
+\bibitem[{Zhong et~al.(2024)Zhong, Guo, Gao, Ye, and Wang}]{zhong2024memorybank}
+Wanjun Zhong, Lianghong Guo, Qiqi Gao, He~Ye, and Yanlin Wang. 2024.
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~38, pages 19724--19731.
+
+\bibitem[{Zhou et~al.(2025)Zhou, Chen, Guo, Yan, Lee, Wang, Lee, Zhang, Shao, Yang et~al.}]{zhou2025agentfly}
+Huichi Zhou, Yihang Chen, Siyuan Guo, Xue Yan, Kin~Hei Lee, Zihan Wang, Ka~Yiu Lee, Guchun Zhang, Kun Shao, Linyi Yang, and 1 others. 2025.
+\newblock Agentfly: Fine-tuning llm agents without fine-tuning llms.
+\newblock \emph{arXiv preprint arXiv:2508.16153}.
+
+\end{thebibliography}

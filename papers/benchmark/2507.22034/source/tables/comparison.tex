@@ -1,0 +1,122 @@
+\begin{table*}[!t]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lccccccccc}
+\toprule
+\textbf{Benchmark} 
+& \textbf{\makecell{Multi-turn\\Interaction}} 
+& \textbf{\makecell{Goal\\Ambiguity}} 
+& \textbf{\makecell{Tool\\Use}} 
+& \textbf{\makecell{Dynamic\\State}} 
+& \textbf{\makecell{Multi-Aspect\\Reasoning}} 
+& \textbf{\makecell{User\\Simulation}} 
+& \textbf{\makecell{Domain\\Diversity}} 
+& \textbf{\makecell{Custom-\\izable}} 
+& \textbf{\makecell{Scal-\\able}} \\
+\midrule
+\textit{$\tau^2$-Bench\citep{barres2025tau}}          
+& \cmark  % dual-control dialogue
+& \xmark  % goals are defined
+& \cmark  % tool calls in telecom
+& \cmark  % world state updates
+& \xmark  % single domain (telecom)
+& \cmark  % user acts in environment
+& \xmark  % one domain
+& \gmark  % partially configurable
+& \gmark  % task generation is scalable
+\\
+\textit{$\tau$-Bench\citep{yao2024tau}}                
+& \cmark  % multi-turn with simulated user
+& \xmark  % goal is clearly specified
+& \cmark  % tool usage required
+& \cmark  % DB state changes
+& \gmark  % multiple goals per domain
+& \cmark  % simulated user
+& \gmark  % across two real-world domains
+& \gmark  % domain-specific but modular
+& \gmark  % simulation allows scaling
+\\
+\textit{ToolSandbox\citep{lu2024toolsandbox}}              
+& \cmark  % multi-turn with tool use
+& \gmark  % includes insufficient info cases
+& \cmark  % simulated tools
+& \cmark  % state transitions via tools
+& \gmark  % multi-tool, but still atomic tasks
+& \cmark  % scripted simulated user
+& \gmark  % across several plugins/tools
+& \gmark  % API + plug-in design is modular
+& \gmark  % framework allows scaling
+\\
+\textit{MINT\citep{wang2024mint}}                           
+& \cmark  % iterative feedback loop
+& \gmark  % open-ended tasks
+& \cmark  % Python exec tool
+& \cmark  % partial feedback changes state
+& \gmark  % code, math, etc.
+& \cmark  % simulated feedback agent
+& \gmark  % math, code, reasoning
+& \gmark  % tunable reward & feedback
+& \gmark  % task remixing enabled
+\\
+\textit{IN3\citep{qian2024tell}}  
+& \cmark  % multi-turn clarifications
+& \cmark  % vague goals, implicit intent
+& \xmark  % no tool use
+& \xmark  % no changing state
+& \xmark  % single goal types
+& \cmark  % simulated users
+& \gmark  % some variation in scenarios
+& \xmark  % not modular/extensible
+& \xmark  % curated, not scalable
+\\
+\textit{ToolTalk\citep{farn2023tooltalk}}                   
+& \gmark  % mostly one-shot, but tools require inner planning
+& \xmark  % user intent is clear
+& \cmark  % broad tool use
+& \xmark  % no evolving state
+& \xmark  % usually one goal per task
+& \xmark  % static user query
+& \gmark  % multiple domains/tools
+& \xmark  % no exposed framework
+& \xmark  % small curated benchmark
+\\
+\textit{API-Bank\citep{li2023apibank}}                      
+& \xmark  % single-turn prompts
+& \xmark  % explicit goals
+& \cmark  % tool (API) calling required
+& \xmark  % no persistent state
+& \xmark  % single-step planning
+& \xmark  % no interaction
+& \gmark  % many APIs/tasks
+& \gmark  % released training + eval sets
+& \gmark  % scalable data generation
+\\
+\textit{MetaTool\citep{huang2023metatool}}                  
+& \xmark  % single prompt
+& \xmark  % clear instructions
+& \cmark  % tool use selection tested
+& \xmark  % no evolving state
+& \xmark  % no subtask coordination
+& \xmark  % no user responses
+& \gmark  % many tools/domains
+& \gmark  % clean task schema
+& \gmark  % 21k+ prompts generated
+\\
+\midrule
+\textbf{{\gymname} (Ours)}              
+& \cmark  % dialogue with vague user
+& \cmark  % implicit, evolving intent
+& \cmark  % tool-backed search
+& \cmark  % stateful interaction
+& \cmark  % multi-aspect: flight + hotel + etc.
+& \cmark  % simulated user w/ heuristics
+& \cmark  % various goals/preferences
+& \cmark  % modular Gym API
+& \cmark  % auto data generation + tiers
+\\
+\bottomrule
+\end{tabular}
+}
+\caption{For each existing benchmark, the table indicates whether the corresponding trait is fully addressed (\cmark), partially addressed (\gmark), or not addressed (\xmark). We provide detailed explanation for each trait being compared in \Cref{sec:apdx_comparison}.}
+\label{tab:comparison}
+\end{table*}

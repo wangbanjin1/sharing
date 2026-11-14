@@ -1,0 +1,27 @@
+\setlength{\tabcolsep}{3.3pt}
+\begin{table}[t!]{
+\centering
+\vspace{-2mm}
+\caption{A comparison between \BENCHMARK{} and existing long-term memory benchmarks. We use different colors to denote \textcolor{teal}{human-human} and \textcolor{violet}{human-AI} dialogue. \#Sess and \#Q denote the total number of sessions and questions. Context depth is defined as the number of tokens in the history. Finally, we compare the coverage of five core abilities: information extraction (IE), multi-session reasoning (MR), knowledge update (KU), temporal reasoning (TR), and abstaining on unanswerable questions (ABS). $^{*}$Not reported in the paper, based on our approximation.  $^{**}$at most 2 sessions.}
+\vspace{-2mm}
+\resizebox{0.92\linewidth}{!}{
+\centering
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c}
+\hline
+\multirow{2}{*}{\textbf{Benchmark}} & \multirow{2}{*}{\textbf{Domain}} & \multirow{2}{*}{\textbf{\#Sess}} & \multirow{2}{*}{\textbf{\#Q}} & \multirow{2}{*}{\textbf{Context Depth}} & \multicolumn{5}{c}{\textbf{Core Memory Abilities}} \\ 
+% \cline{6-10}
+ &  &  &  &  & \multicolumn{1}{c}{\textbf{IE}} & \multicolumn{1}{c}{\textbf{MR}} & \multicolumn{1}{c}{\textbf{KU}} & \multicolumn{1}{c}{\textbf{TR}} & \multicolumn{1}{c}{\textbf{ABS}} \\ 
+\hline
+MSC \citep{xu-etal-2022-beyond} & \textcolor{teal}{Open-Domain} &  5k & - &  1k & \ding{55} & \ding{55} & \ding{55} & \ding{55} & \ding{55} \\
+DuLeMon \citep{xu-etal-2022-long} & \textcolor{violet}{Open-Domain} &  30k & - &  1k & \ding{55} & \ding{55} & \ding{55} & \ding{55} & \ding{55} \\
+MemoryBank \citep{zhong2024memorybank} & \textcolor{violet}{Personal} & 300 & 194 &  5k & \checkmark & \ding{55} & \ding{55} & \checkmark & \ding{55} \\
+PerLTQA \citep{du-etal-2024-perltqa}& \textcolor{violet}{Personal} &  4k & 8593 &  1M$^*$ & \checkmark & \ding{55} & \ding{55} & \ding{55} & \checkmark \\
+LoCoMo \citep{maharana-etal-2024-evaluating} & \textcolor{teal}{Personal} &  1k & 7512 &  10k & \checkmark & \checkmark & \ding{55} & \checkmark & \checkmark \\
+DialSim \citep{kim2024dialsimrealtimesimulatorevaluating} & \textcolor{teal}{TV Shows} & 1k–2k &  1M &  350k & \checkmark & \checkmark$^{**}$ & \ding{55} & \checkmark & \checkmark \\
+\BENCHMARK{} (this work) & \textcolor{violet}{Personal} &  50k & 500 &  115k,  1.5M & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\hline
+\end{tabular}
+}
+\label{tab:benchmark-comparison}
+}
+\end{table}

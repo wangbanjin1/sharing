@@ -1,0 +1,303 @@
+\section{\datasetnameemoji~Benchmark: Overview}\label{sec:overview}
+We present an overview of the \datasetname~benchmark in Figure \ref{fig:overview}. 
+Each instance in the benchmark dataset features a \textit{user profile or persona}, which includes basic demographic information (such as name, age, gender, and occupation), as well as \textit{dynamic} user characteristics such as user traits, preferences, and events happening in the user's life.  The dynamic user characteristics change over time as different events happen to the user that will lead to changes in users' traits and preferences specific to each task scenario. 
+
+At different points in time of a user's profile evolution, the user engages in multi-turn conversations with LLM and seeks help or suggestions from LLM on one of the task scenarios. In each task scenario, the user would ask for the LLM's suggestions given the user's need and current situation. The conversation sessions across different tasks are interleaved by the temporal order in which the sessions happen.
+
+To understand how well LLM chatbots can track the evolution in a user's profile from the conversation histories, we evaluate LLMs by whether they can provide the most suitable response to \emph{in-situ} user queries, where the user issues the query to LLM in a new conversation session from the first-person perspective. Depending on the time of the \emph{in-situ} query, the expected response from the model will differ. We cast the problem as a multiple-choice selection, where LLM needs to identify the correct response out of four choices, where the incorrect choices are based on either outdated or irrelevant information with respect to the current state of the user's profile. 
+
+\paragraph{Types of skills evaluated.}
+To evaluate LLMs' ability to (1) memorize the user profile, (2) track how the user profile evolve over time, and (3) generate personalized responses accordingly in new scenarios, we design the following 7 types of \emph{in-situ} user queries in the \datasetname~benchmark. We include examples for each type of user queries in \autoref{tab:qa_types}. 
+
+\begin{enumerate}[left=0pt, itemsep=2pt]
+    \item \textbf{Recall user-shared facts.} We evaluate whether a personalized chatbot can recall static events, activities, or interests the user has shared in previous interactions, and incorporate the information in its responses.
+    \item \textbf{Suggest new ideas.} We evaluate whether a chatbot can suggest new items or activities that have not been mentioned in the interaction history, when users explicitly request so, e.g. ``\textit{suggest new restaurants I haven't ordered from before}''.
+    \item \textbf{Acknowledge latest user preferences.} We evaluate whether a chatbot can recognize the latest preference expressed by the user in the interaction history.
+    \item \textbf{Track full preference evolution.} We evaluate whether a chatbot can keep track of how users' preferences shift by time.
+    \item \textbf{Revisit reasons behind preference updates.} We evaluate whether a chatbot can recall the reason(s) or event(s) leading to the preference change from a user.  
+    \item \textbf{Provide preference-aligned recommendations.} We test whether a chatbot can proactively offer new recommendations
+    that aligns with the user's current preferences.
+    \item \textbf{Generalize to new scenarios.} We evaluate whether a chatbot can transfer what it learns about the user from other task scenarios to a new task.  
+\end{enumerate}
+
+\paragraph{Benchmark data statistics.}
+\datasetnameemoji~features 20 personas, with over 180 interaction histories. Each interaction history contains 10, 20, or 60 sessions, where we dynamically adjust the total length of the history to approximately 32$k$, 128$k$, and 1$M$ tokens, respectively. Each session consists of 15–30 conversation turns between a user and an LLM chatbot. The user-LLM conversations span across 15 diverse topics, ranging from therapy and legal advice to recommendations on books, music, movies, and food; personal matters such as family, dating, health, and finance; and practical tasks like travel planning, online shopping, studying tips, and home decoration. In total, the benchmark features around 6$k$ \emph{in-situ} user query and LLM response pairs across the 7 query types. Detailed dataset breakdown is discussed in Appendix~\ref{app:breakdown}. The size of our benchmark is not limited by the scalability of the synthetic data pipeline but to make the evaluation cost reasonable.
+
+% these configurations are not the upper limit of our benchmark's scalability, but are chosen for evaluation efficiency and limited by the maximum context window of current LLMs.
+\begin{table}[htbp]
+\centering \normalsize
+\resizebox{0.9\textwidth}{!}{%
+\begin{tabular}{p{0.22\linewidth} p{0.72\linewidth}}
+\toprule
+\textbf{Query type} & \textbf{Examples of \textit{in-situ} user queries and chatbot responses} \\
+\midrule
+\textbfblue{[1] Recall user-shared facts} & \textit{"User: I shared my \raisebox{0pt}[0.8\height][0.8\depth]{\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut playlist}} with my friends and they loved it. ...... (later) User: What are some creative ways to share music? --- Chatbot: Curating personalized {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut playlists}} can be fun."}\\
+\midrule
+\textbfblue{[2] Suggest new ideas} & \textit{"User: ...... (later) User: Suggest new restaurant I {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut haven't}} ordered before."} \\
+\midrule
+\textbfblue{[3] Acknowledge latest user preferences} & \textit{"User: I am a big fan of {\setlength{\fboxsep}{0pt}\colorbox[rgb]{1.000,0.639,0.608}{\strut Italian}} food. ...... (later) User: I prefer {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} cuisine now. ... (later) User: I went to an Italian restaurant yesterday --- Chatbot: Nice to hear! Though I thought you prefer {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} food now."} \\
+\midrule
+\textbfblue{[4] Track full preference evolution} & \textit{"User: ...... (later) User: I am thinking about attending a cooking class. --- Chatbot: I understand your perspective on cooking classes has evolved. Initially, you expressed a {\setlength{\fboxsep}{0pt}\colorbox[rgb]{1.000,0.639,0.608}{\strut dislike}}, but later you mentioned your {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut interest}} in them."} \\
+\midrule
+\textbfblue{[5] Revisit reasons behind preference updates} & \textit{"User: I am a big fan of Italian food. ...... (later) User: I recently found I'm {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut allergic to gluten}}, so I've shifted to other dishes. ... (later) User: I went to an Italian restaurant yesterday --- Chatbot: How's your {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut allergy}} been? I guess they must have a {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut gluten-free}} pizza."} \\
+\midrule
+\textbfblue{[6] Provide preference aligned recommendations} & \textit{User: I prefer {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} seafood now. ...... (later) User: How can I make impactful lifestyle changes? --- Chatbot: How about diving into the {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} diet plan?"} \\
+\midrule
+\textbfblue{[7] Generalize to new scenarios} & \textit{"User: I prefer my yoga class because of its {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{fixed weekly schedule}}. ...... (later) User: I recently haven’t had time to cook. --- Chatbot: Since you seem to love {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{routine}} would you be interested in weekly scheduled bento-box deliveries?"} \\
+\bottomrule
+\end{tabular}
+}
+\caption{Examples of the 7 types of \emph{in-situ} user queries and expected chatbot response in the \datasetnameemoji~benchmark. We highlight words that signal the user's facts or preferences.}
+\label{tab:qa_types}
+\vspace{-2mm}
+\end{table}
+
+
+% \subsection{Design Principles and Challenges}
+% We present an overview of our benchmark in Figure \ref{fig:overview}. The \datasetname~ benchmark suite consists of two key components: (1) a collection of tasks designed to embody personalization challenges through user-chatbot interactions. (2) a scalable pipeline for generating large-scale persona-oriented multi-session conversations ([TODO: add ref to 3.2]). 
+
+% As illustrated in Figure \ref{fig:overview}, our comprehensive interaction history between users and LLM chatbots contains static user profile information, such as demographic and professional details. Additionally, these conversations capture dynamic user traits and preferences, tracking their evolution over time. This design equips LLM chatbots with rich contextual information, enabling them to dynamically profile users.
+
+% To evaluate the capability of LLM chatbots in utilizing the aforementioned conversation histories to generate personalized responses, we propose a series of fine-grained personalization challenges and assess chatbot performance on these tasks. Figure \ref{fig:overview} demonstrates one example of evaluating the ability of LLM chatbots to generate personalized \textit{recommendations} aligned with users' evolving preferences. Furthermore, we create additional task types that probe the LLMs' abilities to recognize and understand the evolution of user information and the underlying reasons driving these changes. Additionally, we examine whether LLMs can integrate this user knowledge effectively to provide personalized responses and generalize this understanding to novel scenarios. We posit that a truly personalized LLM chatbot should proficiently exhibit these capabilities.
+
+% \subsection{Multi-Session Conversation Data Overview}
+% We define a \textit{session} as consecutive multi-turn conversations within a specific time frame. \datasetname\ features synthetic multi-session user-chatbot interactions \textit{centered around user personas}, minimizing irrelevant or randomly injected context. 
+% It includes over 180 interaction histories and 20 personas, each constructed with 10, 20, or 60 conversation sessions—corresponding to approximately 32$k$, 128$k$, and 1$M$ tokens, respectively, and around 6$k$ question-answer pairs in total. Each context involves a single user. These configurations are not the upper limit of our benchmark's scalability, but are chosen for evaluation efficiency and limited by the maximum context window of current LLMs.
+
+% We cover 15 diverse topics, ranging from therapy and legal advice to recommendations on books, music, movies, and food; personal matters such as family, dating, health, and finance; and practical tasks like travel planning, online shopping, studying tips, and home decoration. Each session consists of 15–30 rounds of user-model interactions.
+% % creative writing, email composition, and code programming. 
+
+% % Each topic comprises multiple conversation sessions arranged chronologically, with around 20 events per session. Each event includes a timestamp and may involve preference updates occurring across sessions under the same topic. Each session consists of 15–30 rounds of user-model interactions.
+
+% % \datasetname\ includes over 180 interaction histories and 20 personas, each constructed with 10, 20, or 60 conversation sessions—corresponding to approximately 32$k$, 128$k$, and 1$M$ tokens, respectively, and around 6$k$ question-answer pairs in total. These configurations are not the upper limit of our benchmark's scalability, but are chosen for evaluation efficiency and limited by the maximum context window of current LLMs.
+
+
+% Unlike questions framed from a third-person perspective, \datasetname\ simulates a more realistic scenario in which each question is posed directly by the user during multi-turn interactions. During evaluation, the model receives the relevant context available at the cutoff point where the user asks a question or sends a message and expects a model response.
+
+
+% Each session contains approximately 20 events related to the topic and marked with their timestamps, with some events shared across sessions under the same topic, reflecting changes in user preferences over time. The development of these events throughout the user-model conversations forms event sequences, which serve as memory points for evaluation. 
+% For conversational data under each persona, different topics are independent of one another, except for their shared seeding persona. Sessions range from TODO to TODO interaction rounds, with each round consisting of TODO to TODO sentences. The total context length of TODO–TODO($>$ 400k) tokens.
+
+
+% This benchmark consists of synthetic multi-turn and multi-session conversation data, each centered around a unique persona expanded from the samples in \personahub~\citep{ge2024scaling}. Each conversation session takes place between a single user and the model, and we include TODO distinct personas.
+
+% We cover 10 conversation topics, including therapy consultation, legal consultation, dating consultation, food recommendation, study consultation, travel planning, online shopping, creative writing, email writing, and code programming. Among these, creative writing, email writing, and code programming consist of single-session conversations, while the other topics span four conversation sessions occurring at different time points: from about 10 years ago to the present, from now to next week, from next week to next month, and from next month to next year.
+
+% Each session contains approximately TODO–TODO(Around 20) events related to the topic and marked with their timestamps, with some events shared across sessions under the same topic, reflecting changes in user preferences over time. The development of these events throughout the user-model conversations forms event sequences, which serve as memory points for evaluation. 
+% For conversational data under each persona, different topics are independent of one another, except for their shared seeding persona. Sessions range from TODO to TODO interaction rounds, with each round consisting of TODO to TODO sentences. The total context length of TODO–TODO($>$ 400k) tokens.
+
+
+% \subsection{Overview of the Question Answering Tasks}
+% \subsection{Evaluating Personalized Generation: Challenges}
+% \subsection{Evaluating Personalized Generation: Tasks}
+% \label{sec:tasks}
+% Personalization is a fine-grained task that requires the model to generate responses tailored to each specific user, leveraging the memory and understanding of user profiling from user-model interactions, rather than merely providing a generally correct response. We identify seven fine-grained but important challenges included in \datasetname.
+% Therefore, \datasetname\ presents the following question-answering tasks at varying levels of granularity, each of which focuses on different detailed aspects of memory and personalization.
+
+
+
+% \begin{enumerate}[label=\textbf{(\alph*)}]
+%     \item \textbf{Internalize the user’s inherent traits and preferences.} Sec.%~\ref{sec:challenge1}
+%     \begin{enumerate}
+%         \item[(a.1)] Incorporating User-Shared Facts. 
+%     \end{enumerate}
+    
+%     \item \textbf{Track how the user profiling and preference evolve over time.} %Sec.~\ref{sec:challenge2}
+%     \begin{enumerate}
+%         \item[(b.1)] Acknowledging Latest Preferences.
+%         \item[(b.2)] Tracking Full Preference Evolution.
+%         \item[(a.3)] Revisiting Reasons behind Preferences.
+%     \end{enumerate}
+
+%     \item \textbf{Generate personalized responses accordingly in new scenarios.} %Sec.~\ref{sec:challenge3}
+%     \begin{enumerate}
+%         \item[(c.1)] Identifying New Facts Not Shared Before. 
+%         \item[(c.2)] Generalizing Reason to New Scenarios.
+%         \item[(c.3)] Preference-Aligned Recommendations.
+%     \end{enumerate}
+% \end{enumerate}
+
+
+% \begin{enumerate}[label=\textbf{(\alph*)}]
+%     \item \textbf{Personalizing with User-Shared Facts} Sec.~\ref{sec:challenge1}
+%     \begin{enumerate}
+%         \item[(a.1)] Incorporating User-Shared Facts. %\textit{Fact Incorporation:} Incorporating facts previously shared by the user.
+%         \item[(a.2)] Identifying New Facts Not Shared Before. % \textit{Novel Facts:} Identifying new things not mentioned by the user.
+%     \end{enumerate}
+    
+%     \item \textbf{Personalizing with User Preferences} Sec.~\ref{sec:challenge2}
+%     \begin{enumerate}
+%         \item[(b.1)] Incorporating Latest Preference. %\textit{Latest Preference:} Adapting to the latest user preferences.
+%         \item[(b.2)] Tracking Full Preference Evolution.  % \textit{Full Evolution:} Tracking the full evolution of preference updates.
+%     \end{enumerate}
+
+%     \item \textbf{Understanding Reasons behind Preference Updates} Sec.~\ref{sec:challenge3}
+%     \begin{enumerate}
+%         \item[(c.1)] Revisiting Previous Reasons. %\textit{Reason Recall:} Revisiting reasons behind previous updates.
+%         \item[(c.2)] Generalizing Reason to New Scenarios. %\textit{Reason Generalization:} Generalizing past reasons to new scenarios.
+%     \end{enumerate}
+    
+%     \item \textbf{Providing Personalized Recommendations} Sec.~\ref{sec:challenge4}
+%     \begin{enumerate}
+%         \item[(d.1)] Preference-Aligned Recommendations. %\textit{Recommendations:} Crafting recommendations aligned with latest preferences.
+%         % \item[(d.2)] Crafting new samples aligned with the user’s style.
+%     \end{enumerate}
+% \end{enumerate}
+
+
+
+
+% \begin{table}[t]
+% \centering
+% \begin{tabularx}{\textwidth}{ll}
+% \toprule
+% \textbf{Detailed Question Type} & \textbf{Research Question(s)} \\
+% \midrule
+% \textbf{(a.1) Incorporate shared facts} & RQ1: Internalize user traits \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Question:} "Suggest engaging activities for a fun-filled game night."} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Answer(s):} Correct Answer: "Based on your interest in board games, I suggest a themed board game night with friends." --- Incorrect Answer: "I recommend a solo crossword puzzle."} \\
+% % \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Explanation:} Incorporate shared facts from previous interactions (e.g., user’s favorite activities) to tailor responses that feel personally relevant.} \\
+% \midrule
+% \textbf{(a.2) Identify new facts} & RQ1: Internalize user traits \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Question:} "Suggest a new restaurant I haven’t tried."} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Answer(s):} Correct Answer: "Since you enjoyed Italian food before, consider trying the new Japanese restaurant downtown." --- Incorrect Answer: "You should revisit that same Italian restaurant."} \\
+% % \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Explanation:} Identify and integrate new, unmentioned facts to avoid repetition and promote novelty in recommendations.} \\
+% \midrule
+% \textbf{(b.1) Incorporate latest preference} & RQ2: Track evolving preferences \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Question:} "I saw a cultural festival in town yesterday."} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Answer(s):} Correct Answer: "It sounds like you enjoyed the festival; perhaps you would also appreciate the upcoming art exhibit with similar themes." --- Incorrect Answer: "Maybe you should try a sports event next time."} \\
+% % \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Explanation:} Leverage the user’s most recent expressed preferences to generate contextually updated responses.} \\
+% \midrule
+% \textbf{(b.2) Track full evolution} & RQ2: Track evolving preferences \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Question:} (Example omitted)} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Answer(s):} Correct Answer: "Considering your journey from quiet cafes to lively concerts, I recommend an eclectic music café that blends both atmospheres." --- Incorrect Answer: "I suggest a generic fast food chain."} \\
+% % \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Explanation:} Track how user preferences shift across interactions, ensuring consistency over time.} \\
+% \midrule
+% \textbf{(c.1) Revisit previous reasons} & RQ2 \& RQ3: Track evolution \& generate responses \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Question:} "Did you change your stance on authentic flavor?"} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Answer(s):} Correct Answer: "Yes, after mentioning your positive experience at the classic bistro, it seems your preference has shifted towards traditional flavors." --- Incorrect Answer: "No, your taste appears inconsistent."} \\
+% % \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Explanation:} Revisit earlier justifications for preference changes to ground follow-up suggestions or inquiries.} \\
+% \midrule
+% \textbf{(c.2) Generalize reasons} & RQ2 \& RQ3: Track evolution \& generate responses \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Question:} (Example omitted)} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Answer(s):} Correct Answer: "Given your preference for routines due to a busy schedule, a weekly meal kit service might suit your needs." --- Incorrect Answer: "Maybe try something random like an all-you-can-eat buffet."} \\
+% % \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Explanation:} Generalize previously stated reasoning to new, related scenarios or decisions.} \\
+% \midrule
+% \textbf{(d.1) Provide recommendations} & RQ3: Generate personalized responses \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Question:} "Suggest a new restaurant I haven’t tried before."} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Example Answer(s):} Correct Answer: "I recommend the new fusion restaurant downtown, which aligns with your evolving taste for innovative cuisines." --- Incorrect Answer: "How about the old chain restaurant you always visit?"} \\
+% % \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep\relax}}{\textbf{Explanation:} Offer proactive suggestions aligned with the evolving user profile, anticipating user needs even when not restated.} \\
+% \bottomrule
+% \end{tabularx}
+% \caption{TODO}
+% \label{tab:qa_types}
+% \end{table}
+
+
+% \begingroup
+% \setstretch{1.2}
+% \begin{table}[t]
+% \centering
+% \small
+% \begin{tabularx}{\textwidth}{X >{\raggedleft\arraybackslash}p{5cm}}
+% \toprule
+% \textbf{Question Types in \datasetname} & \textbf{Research Question(s)} \\
+% \midrule
+% \textbf{Static Information} \\
+% \midrule
+% \textbfblue{[1] Incorporate User-Shared Facts} & RQ1 \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Explanation:} A personalized chatbot should be able to internalize static events, activities, or interests the user has shared in previous interactions in its responses.} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Example} \textit{"User: I shared my \raisebox{0pt}[0.8\height][0.8\depth]{\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut playlist}} with my friends and they loved it. ...... (later) User: What are some creative ways to share music? --- Chatbot: Curating personalized {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut playlists}} can be fun."}} \\
+% \midrule
+% \textbfblue{[2] Identify New Facts Not Shared Before} & RQ1 \& RQ3 \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Explanation:} A personalized chatbot should be able to recall relevant details from its internal user-model interaction history and identity items or activities novel to the user.} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Example} \textit{"User: ...... (later) User: Suggest new restaurant I {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut haven't}} ordered before.}} \\
+% \midrule
+% \textbf{Dynamic Information} \\
+% \midrule
+% \textbfblue{[3] Acknowledging Latest User Preferences} & RQ1 \& RQ2 \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Explanation:} A personalized chatbot should be able to internalize user preferences in its responses and understand the latest one from preference evolution over time} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Example} \textit{"User: I am a big fan of {\setlength{\fboxsep}{0pt}\colorbox[rgb]{1.000,0.639,0.608}{\strut Italian}} food. ...... (later) User: I prefer {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} seafood now. ... (later) User: I went to an Italian restaurant yesterday --- Chatbot: Nice to hear! Though I thought you prefer {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} food now.}} \\
+% \midrule
+% \textbf{[4] Track Full Preference Evolution} & RQ1 \& RQ2 \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Explanation:} A personalized chatbot should be able to track how user preferences shift across interactions over time.} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Example} \textit{"User: ...... (later) User: I am thinking about attending a cooking class. --- Chatbot: I understand your perspective on cooking classes has evolved. Initially, you expressed a {\setlength{\fboxsep}{0pt}\colorbox[rgb]{1.000,0.639,0.608}{\strut dislike}}, but later you mentioned a {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut preference}} for them.}} \\
+% \midrule
+% \textbf{Dynamic Information in New Scenarios} \\
+% \midrule
+% \textbfblue{[5] Revisit Reasons Behind Preference Updates} & RQ1, RQ2, \& RQ3 \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Explanation:} A personalized chatbot should be able to remember why a user's preferences changed and revisit those reasons if they shift again in new scenarios.} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Example} \textit{"User: I am a big fan of Italian food. ...... (later) User: I recently found I'm {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut allergic to gluten}}, so I've shifted to other dishes. ... (later) User: I went to an Italian restaurant yesterday --- Chatbot: How's your {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut allergy}} been? I guess they must have a {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut gluten-free}} pizza.}} \\
+% \midrule
+% \textbfblue{[6] Provide Preference-Aligned Recommendations} & RQ1, RQ2, \& RQ3 \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Explanation:} A personalized chatbot should be able to proactively offer new recommendations that aligns with the user profiling and preferences.} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Example} \textit{User: I prefer {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} seafood now. ...... (later) User: How can I make impactful lifestyle changes? --- Chatbot: How about diving into the {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{\strut Mediterranean}} diet plan?}} \\
+% \midrule
+% \textbfblue{[7] Generalize Reasons to New Scenarios} & RQ1, RQ2, \& RQ3 \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Explanation:} A personalized chatbot should be able to generalize reasons behind preferences to new scenarios by identifying relevant patterns.} \\
+% \multicolumn{2}{p{\dimexpr\textwidth-2\tabcolsep}}{\textbf{Example} \textit{"User: I prefer my yoga class because of its {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{fixed weekly schedule}}. ...... (later) User: I recently haven’t had time to cook. --- Chatbot: Since you seem to love {\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.737,0.890,0.580}{routine}} would you be interested in weekly scheduled bento-box deliveries?}} \\
+% \bottomrule
+% \end{tabularx}
+% \caption{Description of the 7 question types in \datasetname. For each type, we provide an explanation of the personalization challenge it addresses, an example of its application, and the relevant research questions. The highlighted texts TODO}
+% \label{tab:qa_types}
+% \end{table}
+% \endgroup
+
+
+
+
+% At the time of each questioning, the model has access to the full conversation history \textit{up to} the moment the user asks that question, ensuring the causality of the context. The full benchmark includes TODO question-answer pairs, and the distance between each question and the relevant reference information needed to answer it within the whole context spans TODO-TODO sessions and TODO–TODO tokens.
+
+
+% \subsubsection{Personalizing with User-Shared Facts}\label{sec:challenge1}
+% \subsubsection{Incorporating User-Shared Facts} Personalization requires incorporating factual details the user has shared in previous interactions—such as their favorite cuisines, preferred travel destinations, or types of pets they own. 
+% % In real-world scenarios, users often phrase their queries naturally and conversationally, without explicitly referencing prior interactions or speaking in the third person. 
+% For instance, a user might ask, \textit{"What are some engaging activities you would suggest for a fun-filled game night with friends?"} 
+% % rather than \textit{"Which activity does this user like to do with friends?"}. 
+% A personalized model should respond according to the user's previously mentioned activities or interests. % whereas other responses may include activities irrelevant to the current user.
+
+% \subsubsection{Revisiting Reasons behind Preferences} Every preference update is grounded in some reasons. A personalized model should not only track how a user's preferences evolve but also remember and understand the underlying motivations behind those changes. 
+% For example, suppose a user previously shifted their preference toward more traditional cuisine, saying, \textit{"I realized that classic restaurant is a better choice now since it preserves the authentic flavor."} Later, they mention, \textit{"I went to a new Japanese-French fusion bar."} A personalized model could follow up by revisiting the previous reasons, \textit{"Nice to hear! Though I’m curious—did you change your stance on authentic flavor?"} 
+
+% \subsubsection{Acknowledging Latest Preference} Beyond factual information itself, a personalized model should also understand the user's preferences toward them. For instance, when a user says, \textit{"I saw a cultural festival in town yesterday."} the model should be able to reference the user’s prior preference for cultural festivals to craft a personalized response—whether it’s \textit{"I know how much you love these cultural festivals,"} or \textit{"I remember you were not really enjoying these festivals before."} More importantly, user profiling and preferences are dynamic and can evolve over time. A personalized model should accurately follow the user’s most recent preferences to give responses, rather than outdated ones. 
+
+% % Traditional factual questioning on memory typically prompt the model to recall information from a third-person perspective, such as asking, \textit{"Which activity does this user like?"} However, in real-world interactions, users may casually post queries that lack explicit reference to previous conversations. In such cases, a personalized model should inherently recognize relevant past events or details this user has shared before and leverage that memory to provide informed responses. In contrast, non-personalized answers may either still be generally accurate answers but fail to incorporate past facts the user has discussed in the past, or incorporate incorrect facts of this user.
+
+% % As two sides of the same coin, this type of question-answering also involves mimicking a user’s natural way of exploring new ideas—asking for something new without explicitly restating past experiences. A personalized model should be capable of recalling relevant details from the user’s entire conversation history, acknowledging what this user has and hasn't told it before, and automatically generating novel suggestions for this specific user.
+
+% % \subsubsection{Personalizing with User Preferences}\label{sec:challenge2}
+
+% \subsubsection{Tracking Full Evolution} To further challenge a model's capabilities, we evaluate whether it can track the entire evolution of user preference throughout the interaction history.
+
+
+
+% % Beyond recalling factual information such as past events, activities, or other details, a personalized model should also take into account the user’s preferences toward them. More importantly, user preferences may evolve over time across conversation sessions. As a result, when the user mentions again something they have discussed before, we evaluate whether a model can not only memorize past preferences but also adapt its memory to changes, ensuring that it accurately follows the user's most recent preferences, rather than failing to distinguish them from outdated ones. To push the model to its limits, we also test whether it can recall the full sequence of the user's preference changes in the entire context, rather than just the final state. In both cases, we require the model to demonstrate its memory of the user's preferences in its responses.
+
+% % \subsubsection{Understanding Reasons behind Preference Updates}\label{sec:challenge3}
+
+% \subsubsection{Identifying Facts Not Shared Before} As two sides of the same coin, the user can also seek new experiences without explicitly restating their past ones, such as \textit{"Suggest new restaurant I haven’t ordered before."} A personalized model should recall relevant details from the user’s interaction history, understand what the user has and hasn’t previously mentioned, and generate novel suggestions instead of repeating existing ones.
+
+
+% \subsubsection{Generalizing Reason to New Scenarios} Understanding the reasons is valuable for models to handle new scenarios. When the user brings up something new, a personalized model should recognize underlying similarities with related preferences. For example, if a user previously expressed a preference for yoga classes due to their fixed weekly schedule, the model could generalize this reason to suggest weekly scheduled bento-box deliveries, anticipating that the user may value routine.
+
+% % Every preference update has a reason, and our data curation pipeline ensures that the user has mentioned the reason somewhere within the overall conversation. A personalized model should not only track changes in preference but also memorize and understand the reasons behind those changes. 
+
+% % Our benchmark evaluates two ways in which the model can leverage such memory. First, if the user revisits a previously discussed topic but expresses a change in preference once again, we test whether the model can correctly inquire about what happened to the original reason. Second, if the user briefly introduces something new while discussing reasons similar to a past reason, we assess whether the model can recognize the similarity, generalize its memorized reasons to new scenarios, and proactively discuss whether the user would like or dislike the new item or activity.
+
+% % \subsubsection{Providing Personalized Recommendations}\label{sec:challenge4}
+% \subsubsection{Preference-Aligned Recommendations} A personalized model should proactively offer new recommendations or content that aligns with the user's evolving profiling and preferences. In real-world interactions, users naturally won’t restate their identity or reiterate all previously discussed preferences each time they seek suggestions. Instead, the model must leverage accumulated knowledge from past interactions to anticipate needs and deliver preference-aligned recommendations. 
+
+% Writing tasks often require a high degree of personalization, including creative writing, email composition, and code programming. Users may engage with the model to revise or refine pieces of writing or code and offer feedback. When the same user later requests a new email or Python function, a personalized model should adapt to this user’s preferred style, tone, and formatting automatically, while avoiding elements they’ve previously expressed dissatisfaction with to ensure a more seamless user experience.
+
+
+% The generation tasks in this section refer to creating novel content for the user, requiring the model to have more advanced memory capabilities to accurately understand and reflect the user's persona and preferences. 
+
+% We provide two types of tasks. Firstly, in real-world scenarios, when users seek suggestions or recommendations, they typically do not restate who they are or reiterate all their previously discussed preferences. The challenge for the model is to accurately retrieve relevant memories and provide personalized recommendations, rather than offering generic suggestions that may fail to engage the specific user or even contradict their inherent preferences. Meanwhile, if there is a history of preference updates, the recommendation must align with the user's most recent preferences. 
+% Additionally, we also include stereotypical answers based on racial and gender identities as incorrect options in this recommendation task, which are irrelevant to the user's actual interaction history.
+
+% Secondly, we find writing tasks often require a high degree of personalization, including creative writing, email writing, and code programming. Users may engage in discussions with the model to rewrite or refine pieces of writing or code, providing feedback on whether they like or dislike certain revisions the model suggests. Given this interaction history in memory, when the same user later on requests a new email or Python function, for example, a personalized model should adapt to the user’s preferred style and formatting while avoiding elements they dislike, ensuring a more seamless interaction.
+
+
+
+% We employ multiple-choice questions in both discriminative and generative settings to evaluate the model’s performance. In the \textbf{discriminative setting}, the model is provided with the question, four answer options with (a), (b), (c), and (d), and the full multi-session conversation history up to where this question is asked as the context. The model is prompted to select the best option for the user. In the \textbf{generative setting}, the model receives the same inputs but is evaluated based on its conditional probability of generating each of the four options, respectively. This is done by autoregressively appending each token from an option to the model's output and collecting the corresponding logit probabilities. The final answer will be the one with the highest joint probability over all tokens in its answer. %(TODO: we might add some formulas here)
+

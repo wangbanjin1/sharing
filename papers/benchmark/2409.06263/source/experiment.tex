@@ -1,0 +1,26 @@
+\vspace{-2pt}
+\section{Experiments}
+\vspace{-3pt}
+\input{table/table_main}
+\subsection{Experimental Setup}
+\noindent
+\textbf{Dataset.}  The DSTC11 dataset \cite{dstc11}, an audio version of MultiWOZ 2.1 \cite{woz2.1}, comprises 8,000 dialogues for training, 1,000 for validation, and 1,000 for testing. To enhance generalization, we conducted experiments across four distinct ASR environments, characterized by Word Error Rate (WER) and noise levels: (1) a low accuracy ASR model (WER > 0.03), (2) a café and traffic noised audio, (3) a paraphrased setting where users naturally paraphrased the transcriptions, and (4) a high accuracy ASR model.
+% \footnote{B} 
+
+\noindent
+\textbf{Metrics.} For overall performance evaluation, we used joint goal accuracy (JGA), which requires all slot-value pairs to match the gold label. We also reported named entity accuracy (N-acc), the average accuracy across named entity slots.
+
+\noindent
+\textbf{Compared methods.}
+We compared our method with two established approaches: text-based augmentations, \textbf{AEDA} \cite{aeda}, \textbf{EDA} \cite{eda}, and Back Translation (\textbf{BT}) \cite{BT}, and audio-aware augmentation methods, using synthesized audio (\textbf{TTS-ASR}) and translation model structure (\textbf{ASR-translation}). Lastly, we included \textbf{Olisia} \cite{jacqmin2023olisia}, the top-ranked method in the DSTC11 competition.
+
+
+\noindent
+\textbf{Models.} For performing EPA, we used diverse types of LLMs, including GPT-3.5\cite{openai}, \textsc{LLaMA2-7B}\cite{touvron2023llama} and OPT-6.7B\cite{zhang2022opt}.
+For the DST task, we fine-tuned a T5-base\cite{t5} model. Further details about the experimental settings are provided in Appendix~\ref{app:exp_setting}.
+
+% We also implement different retrieving method with LLMs (results are in Appendix~\ref{sec:appendix-result-with-DiffRetrMethod}).
+
+
+
+%~\ref{sec:appendix-experiment-compared-methods}  for details.

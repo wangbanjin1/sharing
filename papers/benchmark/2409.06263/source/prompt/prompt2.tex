@@ -1,0 +1,48 @@
+
+\begin{prompt}[colback=black!0!white, colframe=black!98!black]
+{Step 2 Prompt}{\textcolor{myBlue}{Change the key words in <hl> tag, to having a ASR error.
+ASR error has similar pronounciation with the correct word, but different charater. }\\
+Here is some example.
+\par            % ← end the paragraph
+\noindent\dotfill\par 
+\textbf{Example 1}\\
+Original: I want to buy a book about <hl>luwombo best</hl> restaurant. \\
+Keywords : luwombo best \\
+Result: I want to buy a book about luwambo vest restaurant.  \\\\
+\textbf{Example 2}\\
+Original: hi, i'm looking for a bus that is depart from <hl>eliot<hl/> and arriving to <hl>holiday inn williamsport<hl/>? \\
+Keywords : eliot, holiday inn williamsport \\
+Result:  hi, i'm looking for a bus that is depart from Ellyot and arriving to holliday inn william's port \\\\
+\textbf{Example 3}\\
+Original: the <hl>chabuton ramen<hl/> is a restaurant on the east. \\
+Keywords : chabuton ramen \\
+Result: the shabuton raymond is a restaurant on the east.\\ 
+\par            % ← end the paragraph
+\noindent\dotfill\par 
+\textcolor{myBlue}{Now, following the above examples, generate an ASR-errored version of the following sentence:\\}
+Original: \textcolor{myOrange}{[Target utterance with <hl> tag]} \\
+ASR-errored: 
+}
+\end{prompt}
+
+
+% \normalsize
+% \textbf{Step 2 Prompt Example} \\
+% \small{\texttt{Change the key words in <hl> tag, to having a ASR error.
+% ASR error has similar pronounciation with the correct word, but different charater. \\
+% Here is some example \\
+% \{Example 1\}\\
+% Original: I want to buy a book about <hl>luwombo best</hl> restaurant. Keywords : luwombo best \\
+% Result: I want to buy a book about luwambo vest restaurant.  \\
+% \{Example 2\}\\
+% Original: hi, i'm looking for a bus that is depart from <hl>eliot<hl/> and arriving to <hl>holiday inn williamsport<hl/>? Keywords : eliot, holiday inn williamsport \\
+% Result:  hi, i'm looking for a bus that is depart from Ellyot and arriving to holliday inn william's port \\
+% \{Example 3\}\\
+% Original: the <hl>chabuton ramen<hl/> is a restaurant on the east. Keywords : chabuton ramen \\
+% Result: the shabuton raymond is a restaurant on the east.\\ 
+% \{Example 4\}\\
+% Original: i was hoping to see local faces while in cambridge. some <hl>entertainment</hl> would grate. Keywords: entertainment \\
+% Result: 
+% }}
+% \\
+% \noindent

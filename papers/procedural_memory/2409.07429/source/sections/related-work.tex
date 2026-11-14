@@ -1,0 +1,27 @@
+% \vspace{-1mm}
+\section{Related Work}
+\vspace{-1mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Web Agent Benchmarks}
+The first modern and widely used web agent benchmark is \citet{shi2017world}'s MiniWob, which evaluates across various scenarios such as flight booking. \citep{zheran2018reinforcement} then created MiniWob++ with extra challenges.
+More recently, WebShop \citep{yao2022webshop} features a simulated e-commerce website and crowd-sourced text instructions. WebArena \citep{zhou2024webarena} integrates four more websites and enables realistic execution-based evaluations, and VisualWebArena \citep{koh2024visualwebarena} extends with tasks that necessitate visual inputs.
+Mind2Web \citep{deng2023mindweb} proposes versatile tasks and stresses agent generalization across websites and domains.
+% % android tasks
+% Beyond agent tasks on browser environments, some benchmarks ground on android smartphone interfaces. Android-in-the-Wild \citep{rawles2023androidinthewild} that tests UI understanding, AndroidWorld \citep{rawles2024androidworld} containing various tasks on 20 apps with sandboxed evaluations, and AndroidControl \citep{li2024effects} that collects 15$k$ demonstrations on 833 apps. 
+% our method
+We use WebArena and Mind2Web to evaluate our method's task success and generality.
+
+\vspace{-1mm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Enhancing Agents for Complex Tasks}
+Many works improve agents by modifying their action space, such as constraining its action search space \citep{zheran2018reinforcement}, enabling LM self-feedback to refine predicted actions  \citep{sun2023adaplanner}, or incorporating human-designed actions to certain tasks \citep{sodhi2023heap}. 
+Other works explore ways to augment agent memory, such as adding example demonstrations in context \citep{haluptzok2023language,zheng2024synapse,fu2024autoguide}. However, high-quality examples are not always available or easy to collect. 
+Our \awm can flexibly operate even when auxiliary examples are non-existent and only test queries are available.
+% (i) with auxiliary examples to grasp canonical workflows, and (ii) online from self-predictions when only test queries are available.
+% 
+% Furthermore, some works have studied to use concrete, raw examples \citep{zheng2024synapse} as exemplar contexts, yet they are dependent on example-specific contexts and face challenges in extrapolating to other tasks or domains \citep{majumder2023clin}. In comparison, we identify the context-abstracted, common sub-routines (\ie, workflows) to be more reusable by and helpful to agents, in the meantime facilitating easy generalization to varied tasks, websites, and domains.
+
+\vspace{-1mm}
+\paragraph{Learning Common Procedures from Experiences}
+Some works use full examples \citep{zheng2024synapse} as context for an agent, yet they entangle with example-specific contexts and face challenges in extrapolating to other tasks or domains \citep{majumder2023clin}. Many works propose to extract frequently reused sub-routines from experiences with rule-based \citep{ellis2023dreamcoder,bowers2023top,grand2023lilo} or LM-based methods \citep{cai2023large,wang2024trove,wang2024voyager} methods, and use them as auxiliary skills to ease future task-solving \citep{oh2017zero,liang2023code,yu2023language,mao2023learning}. We explored both rule- and LM-based methods to induce reusable workflows, and use them flexibly as context guidance that are free of environment grounding issues.

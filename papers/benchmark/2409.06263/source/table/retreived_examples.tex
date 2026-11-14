@@ -1,0 +1,57 @@
+
+\begin{table*}[h!]
+\small
+\resizebox{\textwidth}{!}{
+\begin{tabular}{p{0.2\textwidth}p{0.8\textwidth}}
+
+
+\toprule
+\multicolumn{2}{l}{Example 1}     \\ \toprule
+                                            
+Target & \textcolor{myOrange}{can you tell} me the address to the \textcolor{myRed}{police station} \textcolor{myGreen}{in point pleasant?}  \\ \cdashline{1-2}
+
+Retrieved 1 &  \textcolor{myRed}{frayser station} was not the depot \textcolor{myGreen}{on the point}      \\
+\quad \small{+ ASR} & freya station was not the deep watch on the point   \\
+
+Retrieved 2&  \textcolor{myOrange}{can you get me} the maldeamores saga    \\
+\quad \small{+ ASR} & can you get me the melamorphos     \\
+Retrieved 3               &  \textcolor{myOrange}{cannot you tell} her whom i am eh joseph\\
+\quad \small{+ ASR} & cannot you tell her whom i am    \\
+
+\toprule
+\multicolumn{2}{l}{Example 2}     \\ \toprule
+                                            
+Target & no, i just \textcolor{myBlue}{need} to make \textcolor{myGreen}{sure} it's cheap. oh, and i need parking. \\ \cdashline{1-2}
+
+Retrieved 1 &  i \textcolor{myBlue}{need} fifty ten foot long \textcolor{myGreen}{segments} of wire    \\
+\quad \small{+ ASR} & i need fifty ten foot long signals of my life   \\
+
+Retrieved 2&  a drive with a different encoding mechanism would \textcolor{myBlue}{need} different patterns  \\
+\quad \small{+ ASR} & and drive was a different building recognition would need different patterns    \\
+Retrieved 3               &  to  \textcolor{myBlue}{reach} to calcutta you  \textcolor{myBlue}{need} less time to reach dhaka   \\
+\quad \small{+ ASR} & to reach tukaukara you need last time to reach daka    \\
+
+
+
+
+\toprule
+\multicolumn{2}{l}{Example 3}     \\ \toprule
+                                            
+Target & i'm \textcolor{myBlue}{open to} any \textcolor{myOrange}{kind of} food. i'm looking for something in the \textcolor{myGreen}{centre} and on the expensive side. \\ \cdashline{1-2}
+
+Retrieved 1 &  \textcolor{myOrange}{kokai} means \textcolor{myBlue}{open to} the public or laid \textcolor{myBlue}{open}      \\
+\quad \small{+ ASR} & cook eye means open to the public all laid open  \\
+
+Retrieved 2&   the town of beauharnois was the major \textcolor{myGreen}{centre}    \\
+\quad \small{+ ASR} & the town of bo hanwa was the major center    \\
+Retrieved 3               &  the gate is \textcolor{myBlue}{open} at eleven    \\
+\quad \small{+ ASR} & the gate is open at 11   \\
+\bottomrule
+\end{tabular}
+}
+\caption{In-context examples retrieved based on phoneme-level similarity.
+For each target utterance (top row), we retrieve three ($g$, $e$) example pairs from the database using phonetic similarity between the target and $g$.  Colored segments highlight phonetically similar phrases between the target and retrieved examples.}
+\label{tab:retreive_example}
+\end{table*}
+
+

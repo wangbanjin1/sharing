@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+Domain: telecom
+Reason for call:
+    You mobile data is not working properly. It either stops working or is very slow. You want to fix it and get excellent internet speed on your phone. You do not have access to wifi.
+Known info:
+    You are John Smith with phone number 555\PYGZhy{}123\PYGZhy{}2002. You are currently at home in the United States.
+Task instructions:
+    If the agent suggests actions that don\PYGZsq{}t immediately fix the issue, follow their guidance but express mild frustration after the first unsuccessful attempt. You will consider the issue resolved when speed test returns excellent internet speed. You are willing to refuel 2.0 GB of data if necessary, but you do not want to change your mobile data plan.
+\end{Verbatim}

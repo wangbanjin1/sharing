@@ -1,0 +1,177 @@
+\begin{thebibliography}{36}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Bendale and Boult(2016)}]{Bendale2016TowardsOS}
+Abhijit Bendale and Terrance~E. Boult. 2016.
+\newblock Towards open set deep networks.
+\newblock \emph{2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 1563--1572.
+
+\bibitem[{Casanueva et~al.(2020)Casanueva, Tem{\v{c}}inas, Gerz, Henderson, and Vuli{\'c}}]{casanueva2020efficient}
+I{\~n}igo Casanueva, Tadas Tem{\v{c}}inas, Daniela Gerz, Matthew Henderson, and Ivan Vuli{\'c}. 2020.
+\newblock Efficient intent detection with dual sentence encoders.
+\newblock \emph{arXiv preprint arXiv:2003.04807}.
+
+\bibitem[{Castor and Pollux(1992)}]{CastorPollux-92}
+A.~Castor and L.~E. Pollux. 1992.
+\newblock The use of user modelling to guide inference and learning.
+\newblock \emph{Applied Intelligence}, 2(1):37--53.
+
+\bibitem[{Chen et~al.(2019)Chen, Zhuo, and Wang}]{chen2019bert}
+Qian Chen, Zhu Zhuo, and Wen Wang. 2019.
+\newblock Bert for joint intent classification and slot filling.
+\newblock \emph{arXiv preprint arXiv:1902.10909}.
+
+\bibitem[{Cho et~al.(2023)Cho, Park, Kim, Kim, Yoo, and goo Lee}]{cho2023probing}
+Hyunsoo Cho, Choonghyun Park, Junyeop Kim, Hyuhng~Joon Kim, Kang~Min Yoo, and Sang goo Lee. 2023.
+\newblock \href {http://arxiv.org/abs/2301.11660} {Probing out-of-distribution robustness of language models with parameter-efficient transfer learning}.
+
+\bibitem[{Dong et~al.(2022)Dong, Li, Dai, Zheng, Wu, Chang, Sun, Xu, and Sui}]{dong2022survey}
+Qingxiu Dong, Lei Li, Damai Dai, Ce~Zheng, Zhiyong Wu, Baobao Chang, Xu~Sun, Jingjing Xu, and Zhifang Sui. 2022.
+\newblock A survey for in-context learning.
+\newblock \emph{arXiv preprint arXiv:2301.00234}.
+
+\bibitem[{Fei and Liu(2016)}]{Fei2016BreakingTC}
+Geli Fei and Bing Liu. 2016.
+\newblock Breaking the closed world assumption in text classification.
+\newblock In \emph{Proceedings of the 2016 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies}, pages 506--514.
+
+\bibitem[{Hendrycks and Gimpel(2017)}]{Hendrycks2017ABF}
+Dan Hendrycks and Kevin Gimpel. 2017.
+\newblock A baseline for detecting misclassified and out-of-distribution examples in neural networks.
+\newblock \emph{ArXiv}, abs/1610.02136.
+
+\bibitem[{Jiao et~al.(2023)Jiao, Wang, tse Huang, Wang, and Tu}]{jiao2023chatgpt}
+Wenxiang Jiao, Wenxuan Wang, Jen tse Huang, Xing Wang, and Zhaopeng Tu. 2023.
+\newblock \href {http://arxiv.org/abs/2301.08745} {Is chatgpt a good translator? yes with gpt-4 as the engine}.
+
+\bibitem[{Kim and Kim(2018)}]{Kim2018JointLO}
+Joo-Kyung Kim and Young-Bum Kim. 2018.
+\newblock Joint learning of domain classification and out-of-domain detection with dynamic class weighting for satisficing false acceptance rates.
+\newblock \emph{ArXiv}, abs/1807.00072.
+
+\bibitem[{Larson et~al.(2019)Larson, Mahendran, Peper, Clarke, Lee, Hill, Kummerfeld, Leach, Laurenzano, Tang, and Mars}]{Larson2019AnED}
+Stefan Larson, Anish Mahendran, Joseph Peper, Christopher Clarke, Andrew Lee, Parker Hill, Jonathan~K. Kummerfeld, Kevin Leach, Michael Laurenzano, Lingjia Tang, and Jason Mars. 2019.
+\newblock An evaluation dataset for intent classification and out-of-scope prediction.
+\newblock In \emph{EMNLP/IJCNLP}.
+
+\bibitem[{Lee et~al.(2018)Lee, Lee, Lee, and Shin}]{Lee2018ASU}
+Kimin Lee, Kibok Lee, Honglak Lee, and Jinwoo Shin. 2018.
+\newblock A simple unified framework for detecting out-of-distribution samples and adversarial attacks.
+\newblock \emph{ArXiv}, abs/1807.03888.
+
+\bibitem[{Lin and Xu(2019)}]{Lin2019DeepUI}
+Ting-En Lin and Hua Xu. 2019.
+\newblock Deep unknown intent detection with margin loss.
+\newblock In \emph{Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics}, pages 5491--5496.
+
+\bibitem[{Mou et~al.(2023)Mou, Song, He, Zeng, Wang, Wang, Xian, and Xu}]{mou-etal-2023-decoupling}
+Yutao Mou, Xiaoshuai Song, Keqing He, Chen Zeng, Pei Wang, Jingang Wang, Yunsen Xian, and Weiran Xu. 2023.
+\newblock \href {https://doi.org/10.18653/v1/2023.acl-long.538} {Decoupling pseudo label disambiguation and representation learning for generalized intent discovery}.
+\newblock In \emph{Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 9661--9675, Toronto, Canada. Association for Computational Linguistics.
+
+\bibitem[{Mou et~al.(2022)Mou, Wang, He, Wu, Wang, Wu, and Xu}]{Mou2022UniNLAR}
+Yutao Mou, Pei Wang, Keqing He, Yanan Wu, Jingang Wang, Wei Wu, and Weiran Xu. 2022.
+\newblock Uninl: Aligning representation learning with scoring function for ood detection via unified neighborhood learning.
+\newblock \emph{ArXiv}, abs/2210.10722.
+
+\bibitem[{Ouyang et~al.(2022)Ouyang, Wu, Jiang, Almeida, Wainwright, Mishkin, Zhang, Agarwal, Slama, Ray, Schulman, Hilton, Kelton, Miller, Simens, Askell, Welinder, Christiano, Leike, and Lowe}]{Ouyang2022TrainingLM}
+Long Ouyang, Jeff Wu, Xu~Jiang, Diogo Almeida, Carroll~L. Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, John Schulman, Jacob Hilton, Fraser Kelton, Luke~E. Miller, Maddie Simens, Amanda Askell, Peter Welinder, Paul~Francis Christiano, Jan Leike, and Ryan~J. Lowe. 2022.
+\newblock Training language models to follow instructions with human feedback.
+\newblock \emph{ArXiv}, abs/2203.02155.
+
+\bibitem[{Pan et~al.(2023)Pan, Chen, Xu, Che, and Qin}]{pan2023preliminary}
+Wenbo Pan, Qiguang Chen, Xiao Xu, Wanxiang Che, and Libo Qin. 2023.
+\newblock \href {http://arxiv.org/abs/2304.04256} {A preliminary evaluation of chatgpt for zero-shot dialogue understanding}.
+
+\bibitem[{Ren et~al.(2019)Ren, Liu, Fertig, Snoek, Poplin, DePristo, Dillon, and Lakshminarayanan}]{Ren2019LikelihoodRF}
+Jie Ren, Peter~J. Liu, Emily Fertig, Jasper Snoek, Ryan Poplin, Mark~A. DePristo, Joshua~V. Dillon, and Balaji Lakshminarayanan. 2019.
+\newblock Likelihood ratios for out-of-distribution detection.
+\newblock \emph{ArXiv}, abs/1906.02845.
+
+\bibitem[{Shu et~al.(2017)Shu, Xu, and Liu}]{Shu2017DOCDO}
+Lei Shu, Hu~Xu, and Bing Liu. 2017.
+\newblock \href {https://doi.org/10.18653/v1/D17-1314} {Doc: Deep open classification of text documents}.
+\newblock In \emph{Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing}, pages 2911--2916.
+
+\bibitem[{Song et~al.(2023{\natexlab{a}})Song, He, Wang, Dong, Mou, Wang, Xian, Cai, and Xu}]{song-etal-2023-large}
+Xiaoshuai Song, Keqing He, Pei Wang, Guanting Dong, Yutao Mou, Jingang Wang, Yunsen Xian, Xunliang Cai, and Weiran Xu. 2023{\natexlab{a}}.
+\newblock \href {https://doi.org/10.18653/v1/2023.emnlp-main.636} {Large language models meet open-world intent discovery and recognition: An evaluation of {C}hat{GPT}}.
+\newblock In \emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing}, pages 10291--10304, Singapore. Association for Computational Linguistics.
+
+\bibitem[{Song et~al.(2023{\natexlab{b}})Song, Mou, He, Qiu, Zhao, Wang, and Xu}]{song-etal-2023-continual}
+Xiaoshuai Song, Yutao Mou, Keqing He, Yueyan Qiu, Jinxu Zhao, Pei Wang, and Weiran Xu. 2023{\natexlab{b}}.
+\newblock \href {https://doi.org/10.18653/v1/2023.findings-emnlp.289} {Continual generalized intent discovery: Marching towards dynamic and open-world intent recognition}.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2023}, pages 4370--4382, Singapore. Association for Computational Linguistics.
+
+\bibitem[{Touvron et~al.(2023)Touvron, Lavril, Izacard, Martinet, Lachaux, Lacroix, Rozi{\`e}re, Goyal, Hambro, Azhar, Rodriguez, Joulin, Grave, and Lample}]{Touvron2023LLaMAOA}
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux, Timoth{\'e}e Lacroix, Baptiste Rozi{\`e}re, Naman Goyal, Eric Hambro, Faisal Azhar, Aur'elien Rodriguez, Armand Joulin, Edouard Grave, and Guillaume Lample. 2023.
+\newblock Llama: Open and efficient foundation language models.
+\newblock \emph{ArXiv}, abs/2302.13971.
+
+\bibitem[{Tulshan and Dhage(2018)}]{Tulshan2018SurveyOV}
+Amrita~S Tulshan and Sudhir~Namdeorao Dhage. 2018.
+\newblock Survey on virtual assistant: Google assistant, siri, cortana, alexa.
+\newblock In \emph{International symposium on signal processing and intelligent recognition systems}, pages 190--201.
+
+\bibitem[{Wang et~al.(2023{\natexlab{a}})Wang, Hu, Hou, Chen, Zheng, Wang, Yang, Huang, Ye, Geng, Jiao, Zhang, and Xie}]{wang2023robustness}
+Jindong Wang, Xixu Hu, Wenxin Hou, Hao Chen, Runkai Zheng, Yidong Wang, Linyi Yang, Haojun Huang, Wei Ye, Xiubo Geng, Binxin Jiao, Yue Zhang, and Xing Xie. 2023{\natexlab{a}}.
+\newblock \href {http://arxiv.org/abs/2302.12095} {On the robustness of chatgpt: An adversarial and out-of-distribution perspective}.
+
+\bibitem[{Wang et~al.(2023{\natexlab{b}})Wang, He, Mou, Song, Wu, Wang, Xian, Cai, and Xu}]{wang-etal-2023-app}
+Pei Wang, Keqing He, Yutao Mou, Xiaoshuai Song, Yanan Wu, Jingang Wang, Yunsen Xian, Xunliang Cai, and Weiran Xu. 2023{\natexlab{b}}.
+\newblock \href {https://doi.org/10.18653/v1/2023.findings-emnlp.258} {{APP}: Adaptive prototypical pseudo-labeling for few-shot {OOD} detection}.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2023}, pages 3926--3939, Singapore. Association for Computational Linguistics.
+
+\bibitem[{Wei et~al.(2023)Wei, Cui, Cheng, Wang, Zhang, Huang, Xie, Xu, Chen, Zhang, Jiang, and Han}]{wei2023zeroshot}
+Xiang Wei, Xingyu Cui, Ning Cheng, Xiaobin Wang, Xin Zhang, Shen Huang, Pengjun Xie, Jinan Xu, Yufeng Chen, Meishan Zhang, Yong Jiang, and Wenjuan Han. 2023.
+\newblock \href {http://arxiv.org/abs/2302.10205} {Zero-shot information extraction via chatting with chatgpt}.
+
+\bibitem[{Wu et~al.(2022{\natexlab{a}})Wu, He, Yan, Gao, Zeng, Zheng, Zhao, Jiang, Wu, and Xu}]{Wu2022RevisitOF}
+Yanan Wu, Keqing He, Yuanmeng Yan, QiXiang Gao, Zhiyuan Zeng, Fujia Zheng, Lulu Zhao, Huixing Jiang, Wei Wu, and Weiran Xu. 2022{\natexlab{a}}.
+\newblock Revisit overconfidence for ood detection: Reassigned contrastive learning with adaptive class-dependent threshold.
+\newblock In \emph{NAACL}.
+
+\bibitem[{Wu et~al.(2022{\natexlab{b}})Wu, Zeng, He, Mou, Wang, and Xu}]{Wu2022DistributionCF}
+Yanan Wu, Zhiyuan Zeng, Keqing He, Yutao Mou, Pei Wang, and Weiran Xu. 2022{\natexlab{b}}.
+\newblock Distribution calibration for out-of-domain detection with bayesian approximation.
+\newblock In \emph{International Conference on Computational Linguistics}.
+
+\bibitem[{Xu et~al.(2020)Xu, He, Yan, Liu, Liu, and Xu}]{xu-etal-2020-deep}
+Hong Xu, Keqing He, Yuanmeng Yan, Sihong Liu, Zijun Liu, and Weiran Xu. 2020.
+\newblock \href {https://doi.org/10.18653/v1/2020.coling-main.125} {A deep generative distance-based classifier for out-of-domain detection with mahalanobis space}.
+\newblock In \emph{Proceedings of the 28th International Conference on Computational Linguistics}, pages 1452--1460, Barcelona, Spain (Online). International Committee on Computational Linguistics.
+
+\bibitem[{Xuan-Quy et~al.(2023)Xuan-Quy, Ngoc-Bich, Xuan-Dung, Bac-Bien, and The-Duy}]{xuanquy2023evaluation}
+Dao Xuan-Quy, Le~Ngoc-Bich, Phan Xuan-Dung, Ngo Bac-Bien, and Vo~The-Duy. 2023.
+\newblock \href {http://arxiv.org/abs/2306.04538} {Evaluation of chatgpt and microsoft bing ai chat performances on physics exams of vietnamese national high school graduation examination}.
+
+\bibitem[{Yang et~al.(2021)Yang, Zhou, Li, and Liu}]{yang2021generalized}
+Jingkang Yang, Kaiyang Zhou, Yixuan Li, and Ziwei Liu. 2021.
+\newblock Generalized out-of-distribution detection: A survey.
+\newblock \emph{arXiv preprint arXiv:2110.11334}.
+
+\bibitem[{Yang et~al.(2023)Yang, Li, Zhang, Chen, and Cheng}]{yang2023exploring}
+Xianjun Yang, Yan Li, Xinlu Zhang, Haifeng Chen, and Wei Cheng. 2023.
+\newblock \href {http://arxiv.org/abs/2302.08081} {Exploring the limits of chatgpt for query or aspect-based text summarization}.
+
+\bibitem[{Zeng et~al.(2022)Zeng, He, Wang, Fu, Dong, Geng, Wang, Wang, Sun, Wu, and Xu}]{zeng-etal-2022-semi}
+Weihao Zeng, Keqing He, Zechen Wang, Dayuan Fu, Guanting Dong, Ruotong Geng, Pei Wang, Jingang Wang, Chaobo Sun, Wei Wu, and Weiran Xu. 2022.
+\newblock \href {https://doi.org/10.18653/v1/2022.seretod-1.6} {Semi-supervised knowledge-grounded pre-training for task-oriented dialog systems}.
+\newblock In \emph{Proceedings of the Towards Semi-Supervised and Reinforced Task-Oriented Dialog Systems (SereTOD)}, pages 39--47, Abu Dhabi, Beijing (Hybrid). Association for Computational Linguistics.
+
+\bibitem[{Zeng et~al.(2021)Zeng, He, Yan, Liu, Wu, Xu, Jiang, and Xu}]{zeng-etal-2021-modeling}
+Zhiyuan Zeng, Keqing He, Yuanmeng Yan, Zijun Liu, Yanan Wu, Hong Xu, Huixing Jiang, and Weiran Xu. 2021.
+\newblock \href {https://doi.org/10.18653/v1/2021.acl-short.110} {Modeling discriminative representations for out-of-domain detection with supervised contrastive learning}.
+\newblock In \emph{Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 2: Short Papers)}, pages 870--878, Online. Association for Computational Linguistics.
+
+\bibitem[{Zheng et~al.(2020)Zheng, Chen, and Huang}]{Zheng2020OutofDomainDF}
+Yinhe Zheng, Guanyi Chen, and Minlie Huang. 2020.
+\newblock Out-of-domain detection for natural language understanding in dialog systems.
+\newblock \emph{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, 28:1198--1209.
+
+\bibitem[{Zhou et~al.(2022)Zhou, Liu, and Qiu}]{zhou-etal-2022-knn}
+Yunhua Zhou, Peiju Liu, and Xipeng Qiu. 2022.
+\newblock \href {https://doi.org/10.18653/v1/2022.acl-long.352} {{KNN}-contrastive learning for out-of-domain intent classification}.
+\newblock In \emph{Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 5129--5141, Dublin, Ireland. Association for Computational Linguistics.
+
+\end{thebibliography}

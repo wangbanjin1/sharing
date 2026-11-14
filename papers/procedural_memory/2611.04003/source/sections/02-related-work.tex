@@ -1,0 +1,24 @@
+\section{Related Work}
+\label{sec:related}
+
+
+\paragraph{Procedural memory for continual learning.}
+Many long-term agent-memory systems focus on episodic or semantic memories and are evaluated through conversational or question-answering recall
+\citep{memgpt,mem0,amem,coala,memsurvey}, rather than reusable procedural
+knowledge. Procedural approaches broadly follow three patterns. Case-based
+methods retain and retrieve trajectories or task-local reflections
+\citep{reflexion,memento}; these preserve exact evidence but are
+case-specific, sensitive data leakage risky and accumulate redundancy without cross-session consolidation. Abstractive methods distill traces into reusable
+insights \citep{expel,autoguide,insights} but processes rollouts independently, without cross-session deduplication or verification. Skill-based methods induce workflows, scripts, or hierarchical routines \citep{voyager,awm,memp,skillx}, yet reusable components can be duplicated across skills and conflicts may go unresolved. In contrast, for \method, agent synthesizes interlinked procedural pages at different granularities, and contextually deduplicates and reconciles knowledge. The resulting memory is compact navigable, and readable by both agents and humans.
+
+\paragraph{Benchmarks for enterprise procedural learning.}
+Suitable benchmarks are scarce because they must expose proprietary-knowledge
+gaps, target enterprise automation rather than coding or mathematics, provide
+stateful tools, include enough related tasks for procedural transfer, and offer execution annotations finer than task-level success.
+TheAgentCompany provides multi-service professional workflows and
+checkpoint-level grading \citep{theagentcompany}, while $\tau^2$-Bench  provides domain policies, tool APIs, verifiable state transitions, and customer-support tasks \citep{tau2bench}.
+SaaS-Bench broadens the setting to larger scale but its strongest reported agent completes fewer
+than 4\% of tasks end-to-end \citep{saasbench} and package was also unavailable during our experiments. We adopt TheAgentCompany and $\tau^2$-Bench: agents generate rollouts and feedback on training tasks, each method consolidates them into memory, and the agent with frozen store is evaluated on held-out test tasks. We judge memory methods by downstream
+checkpoint and task completion, rather than recall of stored experience.
+
+

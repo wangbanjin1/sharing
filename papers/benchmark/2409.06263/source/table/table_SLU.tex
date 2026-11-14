@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\hline
+\textbf{Method} & \textbf{Low-acc ASR} & \textbf{Noised Audio} & \textbf{High-acc ASR} \\
+\hline
+Baseline             & 55.25 & 63.23 & 64.32 \\
++ OPT 6.7B           & 56.97 & 64.94 & 66.10 \\
++ LLaMA 7B           & 57.24 & 64.26 & 65.56 \\
++ GPT-3.5 (125B)     & 58.78 & 66.16 & 67.49 \\
+\hline
+\end{tabular}
+}
+\caption{SLU results on the SLURP dataset under different ASR conditions. We reported F1 score.}
+\label{tab:slu_results}
+\end{table}

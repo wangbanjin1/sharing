@@ -1,0 +1,23 @@
+\section{Introduction}
+
+Large Language Models (LLMs) have demonstrated remarkable capabilities in complex reasoning~\citep{jaech2024openai, guo2025deepseek}, code generation~\citep{hui2024qwen2, guo2024deepseek,zhang2024diversity}, and solving advanced mathematical problems~\citep{yang2024qwen2, shao2024deepseekmath, qian2025modelingagent}. Their limitations in updated knowledge and precise computation are increasingly mitigated through tool use~\citep{liu2024apigen, qian2024investigate, zhang2024xlam, prabhakar2025apigen} and tool creation~\citep{qian2023creator, cai2023large, yuan2024craft, qian2024toolink}, enabling them to retrieve information and interact with external environments including database, web and games~\citep{deng2024mind2web, qian2024escapebench, zhu2025multiagentbench}. This tool-augmented reasoning grants LLMs agentic capabilities: they can autonomously execute tasks via these tools.
+
+However, existing agentic environments often overlook a critical dimension: the role of the user. Despite achieving strong task performance, agents frequently fail to satisfy real user needs due to their inability to understand, adapt to, and collaborate with the task initiator~\citep{qian2024tell, lu2025proactive}. Current evaluations primarily assess tool use and task execution, rarely considering whether the agent effectively interprets and aligns with the user’s underlying and evolving intent.
+
+This motivates our central research question: \textbf{How can we evaluate agents from a user-centric perspective?} To answer this, we first examine how users typically communicate goals. Human communication is inherently a joint activity, where meaning is co-constructed through interaction \citep{clark1996using}. Moreover, language is inherently ambiguous, making it difficult for users to fully and clearly convey their intent in a single interaction.~\citep{liu2023we}. As such, user instructions tend to share three core traits:
+(i) \textbf{Underspecification}: users often initiate requests before fully formulating their goals;
+(ii) \textbf{Incrementality}: intent emerges and evolves across interaction; and
+(iii) \textbf{Indirectness}: users may obscure or soften their true intent due to social or strategic reasons.
+
+Revolving around these traits, we introduce \textbf{{\gymname}}, a user-centric environment designed to facilitate an agent’s ability to engage in meaningful, multi-turn interactions with users who exhibit these traits. In {\gymname}, simulated users provide initial vague task instruction (underspecification), gradually reveal preferences over time (incrementality), and often do so implicitly (indirectness). Agents must proactively clarify goals, interpret subtle cues, and adaptively reason through tool use to succeed.
+
+Built on the standard Gymnasium framework, {\gymname} offers a modular, extensible setup with a standardized interaction interface and a stable tool-use backend, enabling rigorous and reproducible evaluation. We benchmark several leading open- and closed-source models and find that current LLMs still struggle to interactively uncover and act on user preferences.
+For instance, scores drop by over 40\% on average when models are restricted to selecting only one option per traveling aspect in {\gymname}, revealing their difficulty in making optimal decisions. Moreover, models provide answers that fully align with all user intents only 20\% of the time on average, and even the best-performing models elicit less than 30\% of all user preferences through active querying, suggesting limited ability to engage in purposeful, user-driven dialogue. While strong models handle tool use reliably, they remain brittle in understanding implicit and nuanced human needs, highlighting the core challenge that {\gymname} aims to measure. We summarize our contributions as follows:
+\begin{itemize}[topsep=2pt, partopsep=-3pt, leftmargin=8pt, itemsep=-3pt]
+  \item \textbf{Data}: We propose 4K+ scenarios that capture grounded communication challenges (underspecification, incrementality, indirectness) through a carefully curated pipeline.
+  \item \textbf{Environment}: We introduce {\gymname}, a scalable and modular gym environment designed both as a benchmark and a training ground for LLM agents engaged in multi-turn, preference-driven user interactions.
+  \item \textbf{Analysis}: We show that despite strong tool use capability, current models still struggle to comprehensively uncover and align with user intent, revealing limits in user-centric reasoning.
+\end{itemize}
+
+We view this work as a foundational step toward truly user-centric agents: not just efficient executors, but collaborative teammates capable of aligning with nuanced human intent.
+

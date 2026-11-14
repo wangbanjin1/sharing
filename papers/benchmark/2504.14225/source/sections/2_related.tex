@@ -1,0 +1,115 @@
+\section{Related Work}
+
+
+% \input{Template-2025/tables/compare_with_prior}
+
+% Our work builds upon from several lines of research into the abilities of LLMs: \textit{memory in dialogue settings}, and \textit{user-centric personalized generation}.
+% Our study unifies these lines into a benchmark for evaluating whether LLMs can, on a specific user persona, learn a user's profile, update it over the course of multiple dialogues, and provide personalized responses.
+
+\subsection{Evaluating Long-Context Memory Capabilities of LLMs}
+% The recent advent of long-context techniques for LLMs has raised inquiry into their memory capability, and how adequately they can consider information over the entire context. 
+Needle-in-the-haystack tests, which task models to locate specific facts within a given long context, are a common method for this evaluation. Prior benchmarks perform tasks from direct information retrieval~\citep{kuratov2024search, nelson2024needle} to question answering and summarization~\citep{xu2024stress, bai-etal-2024-longbench, zhang2024bench}. 
+% However, these benchmarks often lack contextual grounding and are agnostic to user personas.
+% One main finding is that, models have more difficulty with memory over the middle, over the beginning or the end~\citep{liu2024lost}. Our results concur with this, and add additional insights.
+A more real-world setting for such evaluation is through dialogue conversations. Earlier benchmarks curated human-human~\citep{xu2021beyond} or human-AI interactions~\cite{xu-etal-2022-long}, with sessions up to 10K tokens. More recent works have used LLMs to generate much longer sessions of 100k+ tokens long~\citep{maharana2024evaluating,kim2024dialsim,castillo2024beyond}. 
+% Representative benchmarks here include LoCoMo~\citep{maharana2024evaluating}, LongMemEval~\citep{wu2024longmemeval}, DialSim~\citep{kim2024dialsim}, and LTM~\citep{castillo2024beyond}. 
+More recently, \cite{wu2024longmemeval} present \textsc{LongMemEval}, a dialogue benchmark which also considers contexts up to 1M, and uses persona-driven sessions. The major differences are that sessions from \datasetname~consider a broader range of topics than just task-oriented ones; and that the evaluation of \datasetname~focuses on fine-grained personalization concerns, rather than more general memory abilities.
+
+% Our proposed \datasetname~benchmark extends to the limits of long-context ability (up to 1M tokens), as well as to be over multiple, persona-driven and temporally-ordered dialogue sessions (for 1M token contexts, average of 30 sessions). Our evaluation is also more realistic as it is integrated into the conversational flow, with the user writing the query and the LLM choosing the response. 
+
+% Memory Benchmark:
+% % LoCoMo~\citep{maharana2024evaluating}
+% % LongMemEval~\citep{wu2024longmemeval}
+% Minerva~\citep{xia2025minerva}
+% SORT~\citep{pink2024assessing}
+% % Needle in the Haystack~\citep{kamradt2023needle, kuratov2024search, nelson2024needle, wang2024multimodal, xu2024stress, shi2025semantic, team2024gemini, hsieh2024ruler, li2024needlebench, zhang2024bench}
+% DialSim~\citep{kim2024dialsim}
+% Episodic~\citep{huet2025episodic}
+% Memory Gym~\cite{pleines2023memory}
+% MSC
+% DuLeMon
+
+% Long-Context Evaluation:
+% PerLTQA~\citep{du2024perltqa}
+% Multi-Session Chat~\citep{xu2021beyond}
+% Long-Span QA~\citep{bohnet2024long}
+% Michelangelo~\citep{vodrahalli2024michelangelo}
+% Infinite Bench~\citep{zhang2024bench}
+% \citep{hilgert2024evaluating}
+% \citep{lou2024quantifying}
+% LongICBench~\citep{li2024long}
+% NarrativeQA
+% Qasper
+% Multi-FieldQA\_En
+% HotpotQA
+% 2WikimQA
+% Musique
+
+
+% Survey:
+% \citep{zhang2024survey}
+
+% Algorithms:
+% Memory Transformer~\citep{burtsev2020memory}
+% MemoryBank~\citep{zhong2024memorybank}
+% MemoRAG~\citep{qian2024memorag}
+% M+~\citep{wang2025m+}
+% MemoryLLM~\citep{wang2024memoryllm}
+% Personalized PEFT~\citep{tan-etal-2024-democratizing}
+% \citep{guo2023empowering}
+% \citep{liang2023unleashing}
+% \citep{yuan2023evolving}
+% \citep{chen2024compress}
+% \citep{li2024streamingdialogue}
+% \citep{he2024hmt}
+% \citep{alonso2024toward}
+
+% Personalized Chatbot: \citep{ma2021one}
+% Other studies:
+% \citep{gong2024working}
+
+\subsection{Towards Personalization in Large Language Models}
+% Personalization has long been a concern with building chatbots, and is especially important given the contemporary popularity of LLM-based chat interfaces. 
+As users have a diversity of preferences, both at a demographic-level~\citep{santurkar2023whose} and at an individual-level~\citep{zollo2024personalllm}. \textit{Personas} are short biographies of individuals, that capture both levels, and can be generated en masse by LLMs~\citep{ge2024scaling}. Researchers have used personas to evaluate how LLMs can adapt to users and environments~\citep{castricato2024persona,tseng2024two}.
+Reliable evaluation of personalization is also key. Many of the aforementioned benchmarks through formulation as NLP tasks, and another line of work uses LLMs to automatically judge texts along different axes of personalization~\citep{dong2024can, wang2023automated}. The approach taken by \datasetname~follows the former, as we report performance on question-answering. Importantly though, the personalization evaluation is by design of the questions and answers, each of which is grounded in specific temporal events, and is generated to adhere to a specific question type.
+
+Turning to the dialogue setting, earlier works like \textsc{LaMP} and \textsc{PersonaLLM} consider personalization within a single turn or session~\citep{salemi2023lamp, jiang2023personallm, kirk2024prism}. More recently, \textsc{ImplexConv}~\citep{li2025toward} focuses on modeling implicit reasoning within personalized conversations. \textsc{PersonaBench}~\citep{tan2025personabench} simulates social interactions among diverse users through numerous but shorter sessions and access to synthetic private user data. \textsc{PersoBench}~\citep{afzoon2024persobench} leverages existing persona-aware datasets to evaluate language quality, persona coverage, and consistency. \textsc{LongLaMP}~\citep{kumar2024longlamp} focuses on generating long-form texts other than more interactive responses within long context. \cite{zhao2025prefeval} introduce \textsc{PrefEval}, which evaluates LLMs' preference-following abilities for 20 topics in persona-oriented dialogues of 100k+ tokens. \datasetname, besides the flexible setting of generating numerous 1$M$-token contexts efficiently, places greater emphasis on personas as simulated humans in user-model interactions, featuring multiple fine-grained personalization tasks where profiles and preferences evolve through temporally grounded events.
+
+% Personalization Benchmark:
+% LaMP~\citep{salemi2023lamp}
+% PersonaLLM~\citep{jiang2023personallm}
+% PRISM~\citep{kirk2024prism}
+% OpinionQA~\citep{santurkar2023whose}
+
+% Survey:
+% \citep{zhang2024personalization}
+% \citep{tseng2024two} 
+% \citep{chen2024large}
+
+% Persona:
+% PersonaHub~\citep{ge2024scaling}
+
+% Algorithms:
+% PUMA~\citep{cai2024large}
+% \citep{pal2024empowering}
+% Pearl~\cite{mysore2023pearl}
+% SPAR~\citep{zhang2024spar}
+% \citep{tang2023enhancing}
+
+% Other studies:
+% Personalized Judges~\citep{dong2024can}
+% AuPEL~\citep{wang2023automated}
+
+% \cite{wu2024longmemeval} present the \textsc{LongMemEval} benchmark, which evaluates the long-term memory abilities of LLMs in simulated user-agent settings. They propose a typology of 5 desired core memory abilities
+% % -- information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention --
+% and curate 500 question-answer (QA) pairs to test them. 
+% LongMemEval is especially relevant to ours. They consider extremely long contexts (100K to 1M+ tokens), which are built in stages. Starting from a seed attribute, they generate a background paragraph, then generated from the QA pairs. Considering the background again, they then generate the user-agent interactions. The multi-stage generation allows for each QA pair to be traced to the chat turn in the conversational history -- which allows for insight into the decisions made at inference-time for different LLM-based approaches.
+
+% Our work also perform a multi-stage generation process for QA and conversation, albeit the decomposition proceeds a bit differently. The primary difference our benchmark further captures how these memory abilities relate to specific user's personas, not just the general memory abilities. Furthermore, we specifically design our pipeline for diverse conversational topics. These differences means that our dataset targets a more broadly applicable real-world use-case of conversational agents.
+
+% \citet{maharana2024evaluating} release the LoCoMo benchmark, which tests the ability of LLMs to retain information over long multimodal simulated user-user interactions; there are 35 chat sessions which average 30 turns and 9000 tokens each. Aside from the difference in conversation type (user-user instead of user-agent), our work considers far longer conversations, both token-wise and that we consider conversations that span multiple distinct sessions over time.
+
+% \subsection{Towards Personalization in Large Language Models}
+% \citet{castricato2024persona} propose the PERSONA testbed, which consists of 4k prompts, and 317k feedback pairs, which are written from user demographics such as race and occupation. 
+% \citet{zollo2024personalllm} release PersonalLLM, an interaction database for personalization. Their goal is to capture diverse user's diverse perspectives, and their dataset consists of 10k open-ended prompts, each of which is paired with 8 high-quality responses, generated from simulated users with different personas; these personas consider user's individual idiosyncrasies rather than high-level attributes.
+% Our work also studies how LLMs capture specific user's preferences, but over multi-turn and multi-session chat interactions.

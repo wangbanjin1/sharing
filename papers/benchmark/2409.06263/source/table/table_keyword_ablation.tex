@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{l|cc|cc|cc}
+\hline
+\multirow{2}{*}{Method} &
+\multicolumn{2}{c|}{Weak-ASR } &
+\multicolumn{2}{c|}{Noised Audio} &
+\multicolumn{2}{c}{Strong  ASR} \\ \cline{2-7}
+ & JGA & N-acc & JGA & N-acc & JGA & N-acc \\ \hline
+Baseline & 29.88 & 45.76 & 29.70 & 46.77 & 34.87 & 52.07 \\
++ Overall Error (Step 1) & 31.31 & 50.67 & 31.13 & 52.29 & 35.40 & 55.80 \\
++ Keyword Error (Step 2) & 31.66 & 49.88 & 31.61 & 51.02 & 36.12 & 54.23 \\
+EPA (Step1+2) & \textbf{32.39} & \textbf{51.12} & \textbf{32.24} & \textbf{52.70} & \textbf{36.61} & \textbf{55.87} \\ \hline
+\end{tabular}%
+}
+\caption{Ablation on overall and keyword-specific augmentation steps. Combining both (EPA) yields the highest robustness across ASR conditions.}
+\label{tab:keyword_ablation}
+\end{table}

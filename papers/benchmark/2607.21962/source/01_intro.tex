@@ -1,0 +1,118 @@
+\section{Introduction}
+\label{sec:intro}
+
+Agents are becoming long-lived. An assistant that drafts email, triages a
+mailbox, or manages a project accumulates months of interaction with one user
+--- and what it should \emph{remember} becomes as consequential as what it
+can reason about. The engineering response has been a wave of memory systems:
+extraction pipelines over vector stores \citep{chhikara2025mem0}, temporal
+knowledge graphs \citep{rasmussen2025zep}, self-editing agent memory
+\citep{packer2023memgpt}, budgeted context maps \citep{gu2026peek}. The
+evaluation response has not kept pace. The standard benchmarks generate
+conversations first and extract answer keys afterwards --- a pipeline with
+audited label errors \citep[6.4\% of LoCoMo's answer
+key;][]{penfield2026locomoaudit,northcutt2021labelerrors} --- use real-world
+entities that leak to pretraining (frontier models answer 70--85\% from
+priors on MemGym's diagnostic; \citealp{xu2026memgym}), saturate at the top
+of leaderboards \citep{he2026memoryarena}, and measure almost exclusively
+\emph{short} interaction histories, the regime where full-context answering
+is still competitive \citep{convomem2025}.
+
+This paper asks what an agent-memory evaluation looks like when ground truth
+comes first, and what it reveals when it runs long. We built a fully
+synthetic, fictionalized corpus in which a deterministic life-script sampler
+emits facts --- with validity intervals, volatility classes, and
+channel/authorship provenance --- \emph{before any text exists}; an LLM
+renderer writes chat and email from per-event fact manifests; a fidelity
+verifier confirms every planted fact; and questions are instantiated
+mechanically from the script, so gold answers are script-valid by
+construction and separately audited for rendered-corpus answerability.
+On this instrument we benchmark five memory architectures against a
+no-memory control under a fixed answerer, a versioned LLM judge treated as
+part of the benchmark, and threefold stochastic replication, across two history
+horizons.
+
+Three findings organize the results.
+
+\paragraph{Rankings invert with history length.} The budgeted curated-map
+memory that wins the short horizon (94.2\%) loses recall of evicted early
+content as history grows (96.3\%$\rightarrow$72.2\% on early-chapter
+probes), while a provenance-typed graph rises to 90.4\% and a layered hybrid
+to 93.2\% by nine weeks. The aggregate ranking crossed over, all six users
+show graph $\geq$ map by week~9, and the interaction is judge-robust:
+under the primary judge, five of six per-user interaction effects are
+positive (exact six-user randomization $p=0.063$, resolution-limited);
+under a complete re-judging by a cross-family judge, all six are positive
+(exact $p=0.031$, the test's minimum; \S\ref{sec:crossover}). Short-horizon benchmarks
+--- the field's norm \citep{mem0report2026} --- can mis-rank the very
+systems a long-lived assistant needs, and recent disputes about whether the
+write path matters at all \citep{derehag2026smartsearch,yuan2026bottlenecks}
+look different once horizon is treated as a variable. Two history baselines
+locate the effect precisely: full rendered history tied or exceeded the
+tested memory systems on the short horizon (confirming the sub-threshold
+regime of \citealp{convomem2025} directly), while at nine weeks no
+judge-independent accuracy winner emerged --- the layered system leads
+under the primary judge, trails under the cross-family judge --- at roughly
+half the per-question read cost, with read cost growing far more slowly
+than full history's; a recency window matched to the memory system's mean
+short-horizon read budget collapses in both regimes. What memory buys at
+the same mean read budget is selectively constructed, structured context;
+what it buys against full history at tenure is drastically lower
+input-token growth, with no judge-independent accuracy winner at week nine
+(\S\ref{sec:cost}).
+
+\paragraph{In these systems, write-stage quality was a strong correlate of
+downstream quality.} A write-stage audit against script ground truth shows the
+two-stage curated writer produces ${\sim}2\times$ cleaner memories than
+single-call extraction (half the audited errors: 4.0 vs.\ 8.5 per audit; fact recall
+84.5\% vs.\ 74.6\%), write errors align
+with downstream QA failures fact-for-fact, and a layered design ---
+unbounded provenance-preserving store below, LLM-curated budgeted view
+above, focused retrieval as supplement --- performed best among the memory
+architectures on both horizons (96.8\% short-horizon, with no significant
+primary-judge difference from full rendered history there; the only system
+top-tier at every tenure). These are complete engineered systems that differ in write path,
+representation, and token spend together, so we claim a strong association,
+not a causal isolation (\S\ref{sec:writequality}).
+
+\paragraph{Observed injection resistance tracked provenance boundaries ---
+and accuracy does not confer caution.} The provenance-typed graph --- third-party claims stored
+as claims, with the claimant as source --- blocked every planted,
+non-adaptive injection probe (14 unique questions over 42 answer trials)
+and every rung of a plausibility-graded
+attack ladder with no added defense, while flattened assertional stores
+breached on mundane attacks --- and a raw transcript that preserves source
+framing also resisted (\S\ref{sec:cost}): the operative boundary is
+provenance surviving representation, not graph topology per se
+(\S\ref{sec:security}). And
+although the accuracy winner also confabulates least in absolute terms, it
+almost never abstains: 93.9\% of its errors are confidently asserted wrong
+specifics under a deterministic answer-text classifier (8 abstentions in
+972 answers), and the one surviving injection
+leak re-enters through the episodic channel --- together specifying,
+precisely, the evidence-grounded abstention gate a production system needs
+(\S\ref{sec:security}).
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item A ground-truth-first evaluation instrument for longitudinal,
+  multi-channel, adversarial agent memory --- validity intervals, volatility
+  classes, sent/received trust, injection probes in a benign harness,
+  as-of-date question sets --- a combination absent from the published
+  benchmarks we surveyed as of July 2026 (\S\ref{sec:related},
+  Table~\ref{tab:gap}).
+\item A controlled comparison of five memory architectures plus control,
+  across two horizons and three stochastic replicates, under a fully
+  logged protocol (52{,}797 LLM calls including validation).
+\item The tenure crossover, with its mechanism (eviction of early-epoch
+  content) isolated and replicated.
+\item The write-quality result, with a fact-level audit linking write errors
+  to downstream failures.
+\item The observed pattern that injection resistance tracked whether
+  provenance boundaries survive representation, plus the
+  confident-confabulation failure mode that motivates read-time
+  abstention.
+\item \veracium, an open-source, provenance-aware memory library that
+  operationalizes the winning design, and the corpus generator and harness,
+  released for reproduction and extension.
+\end{enumerate}

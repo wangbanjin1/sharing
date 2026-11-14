@@ -1,0 +1,17 @@
+\begin{table}[tp]
+\centering
+% \footnotesize{
+\setlength\tabcolsep{2pt}
+\begin{tabular}{llll|cc}
+\toprule
+Dataset         &  Algorithm    & 1-$\alpha$ & $th$ & F1$\uparrow$    & AUROC$\uparrow$ \\
+\midrule
+C150-OOS        &   CICC        & .990      & 7     & .07   & .88 \\
+                &   CICC-OOS    & .995      & 6     & \textbf{.91}   & \textbf{.97} \\ \midrule
+B77-OOS         &   CICC        & .970      & 7     & .76   & .92 \\
+                &   CICC-OOS    & .994      & 6     & \textbf{.90}   & \textbf{.97} \\
+\bottomrule
+\end{tabular}
+    \caption{Results for the OOS detection task.}
+    \label{tab:ood_results}
+\end{table}

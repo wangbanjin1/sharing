@@ -1,0 +1,42 @@
+\section{A Unified View of Long-Term Memory Assistants}
+\label{section-unified-view}
+
+
+In this section, we formulate a three-stage long-term memory model for chat assistants. Despite its simplicity, this model provides a unified view of existing long-term memory assistant works. Along each of its stages, we then investigate crucial control points and propose our optimizations.
+
+
+ \subsection{Long-Term Memory System: Formulation}
+
+
+We formulate long-term memory as a massive key-value datastore $[(k_1, v_1), (k_2, v_2), ...]$. The keys $k_i$ can be heterogeneous, and could be discrete or continuous. In the discrete case, the key could be a sentence, a paragraph, a fact, or an entity, etc. In the continuous case, the key could be e.g., the model’s internal representation under some inputs. The values $v_i$ might repeat. As shown in \Cref{fig:main-fig-memory-unified-view}, we formulate three stages for a memory-augmented assistant: (1) \textit{indexing}, converting each history session $(t_i, S_i)$ into one or more key-value items, (2) \textit{retrieval}, formulating a retrieval query and collecting $k$ most relevant items, and (3) \textit{reading}, an LLM $\mathcal{M}$ reads the retrieval result and generates a response. {In \Cref{tab:memory-system-dimensions-comp}, we show how nine memory-augmented chat assistant systems can be viewed as instantiations of this framework. An alternative mathematical formulation is presented in \Cref{appendix-mem-system-view}. For its conciseness, the rest of this paper follows this section's formulation.}
+
+% \vspace{-0.05in}
+\subsection{Long-Term Memory System: Design Choices}
+\label{section-design-choices}
+
+We identify four crucial control points for long-term memory of chat assistants, as illustrated in \Cref{fig:main-fig-memory-unified-view}. We analyze design choices from existing works and their limitations, and propose our optimizations. Due to space constraints, we present these designs at a high level here, with detailed designs further described in \Cref{section-results} and \Cref{appendix-memory-implementation}.
+
+\begin{figure}[t]
+ \centering
+ \vspace{-4mm}
+ \includegraphics[width=\textwidth]{figures/mem_system_unified_view.pdf}
+ % \vspace{-1mm}
+ \caption{A unified view of a chat assistant with long-term memory in operation. We formulate three stages and four control points (CP). {We provide further examples in \Cref{tab:memory-system-dimensions-comp} and \Cref{appendix-mem-system-view}.}}
+ \vspace{-2mm}
+ \label{fig:main-fig-memory-unified-view}
+ % \vspace{-1mm}
+\end{figure}
+
+\paragraph{CP 1: Value} The value represents the format and granularity of each session stored in memory. Given that user-AI chat sessions are often lengthy and cover multiple topics, storing each session as a single item can hinder effective retrieval and reading. Conversely, compressing sessions into summaries or user-specific facts, as seen in prior work such as \citet{zhong2024memorybank} and \citet{du-etal-2024-perltqa}, can lead to information loss, harming the performance of the system to answer detailed questions. In \Cref{section-value-results}, we compare three value representation strategies: storing entire sessions, decomposing sessions into individual rounds, and further applying summary/fact extraction.
+
+
+\paragraph{CP 2: Key} Even when sessions are decomposed and compressed, each item still contains substantial information, with only a fraction relevant to the user's query. Therefore, using the value itself as the key, a common practice in prior works \citep{zhong2024memorybank, maharana-etal-2024-evaluating}, may be suboptimal. We introduce a key expansion approach in \Cref{section-key-results}, where summaries, keyphrases, user facts, and timestamped events are extracted from the values to augment the index. This optimization highlights the key information and enables effective retrieval with multiple pathways.
+
+
+\paragraph{CP 3: Query} For straightforward user queries, the aforementioned key-value optimizations may yield high retrieval accuracy. However, when queries involve temporal references (e.g., ``Which restaurant did you recommend last weekend?"), naive similarity search proves insufficient. We address this with a time-aware indexing and query expansion strategy, where values are indexed with timestamped events, and retrieval is restricted to items within the relevant time range (\Cref{section-query-results}).
+
+
+\paragraph{CP 4: Reading Strategy} Answering complex queries may require recalling numerous memory items. Although the retrieval accuracy can be enhanced through the preceding designs, it does not guarantee that the LLM can effectively reason over the extensive context \citep{DBLP:conf/icml/ShiCMSDCSZ23, DBLP:journals/tacl/LiuLHPBPL24}. In \Cref{section-reading-results}, we explore reading strategies and demonstrate that optimizations such as extracting key information before answering (Chain-of-Note, \citep{yu2023chain}) and using structured format prompting \citep{yin-etal-2023-read} are crucial for achieving high reading performance.
+
+
+\input{tables/memory_system_dimensions_comp}

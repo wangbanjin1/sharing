@@ -1,0 +1,177 @@
+\begin{thebibliography}{10}
+
+\bibitem{andreas2020task}
+Jacob Andreas, John Bufe, David Burkett, Charles Chen, Josh Clausman, Jean
+  Crawford, Kate Crim, Jordan DeLoach, Leah Dorner, Jason Eisner, et~al.
+\newblock Task-oriented dialogue as dataflow synthesis.
+\newblock {\em Transactions of the Association for Computational Linguistics},
+  8:556--571, 2020.
+
+\bibitem{claude37sonnet}
+Anthropic.
+\newblock {Claude 3.7 Sonnet}, 2025.
+\newblock Model release: 2025-02-24.
+
+\bibitem{litellm}
+BerriAI.
+\newblock {litellm}, 2025.
+
+\bibitem{budzianowski2018multiwoz}
+Pawe{\l} Budzianowski, Tsung-Hsien Wen, Bo-Hsiang Tseng, Inigo Casanueva,
+  Stefan Ultes, Osman Ramadan, and Milica Ga{\v{s}}i{\'c}.
+\newblock Multiwoz--a large-scale multi-domain wizard-of-oz dataset for
+  task-oriented dialogue modelling.
+\newblock {\em arXiv preprint arXiv:1810.00278}, 2018.
+
+\bibitem{chen2021action}
+Derek Chen, Howard Chen, Yi~Yang, Alex Lin, and Zhou Yu.
+\newblock Action-based conversations dataset: A corpus for building more
+  in-depth task-oriented dialogue systems.
+\newblock {\em arXiv preprint arXiv:2104.00783}, 2021.
+
+\bibitem{gur2018hidden}
+Izzeddin Gür, Dilek Hakkani-Tür, Gokhan Tür, and Pararth Shah.
+\newblock User modeling for task oriented dialogues.
+\newblock In {\em 2018 IEEE Spoken Language Technology Workshop (SLT)}, pages
+  900--906, 2018.
+
+\bibitem{he2018decoupling}
+He~He, Derek Chen, Anusha Balakrishnan, and Percy Liang.
+\newblock Decoupling strategy and generation in negotiation dialogues.
+\newblock {\em arXiv preprint arXiv:1808.09637}, 2018.
+
+\bibitem{Hu_2023}
+Zhiyuan Hu, Yue Feng, Anh~Tuan Luu, Bryan Hooi, and Aldo Lipani.
+\newblock Unlocking the potential of user feedback: Leveraging large language
+  model as user simulators to enhance dialogue system.
+\newblock In {\em Proceedings of the 32nd ACM International Conference on
+  Information and Knowledge Management}, CIKM ’23. ACM, October 2023.
+
+\bibitem{huang2023metatool}
+Yue Huang, Jiawen Shi, Yuan Li, Chenrui Fan, Siyuan Wu, Qihui Zhang, Yixin Liu,
+  Pan Zhou, Yao Wan, Neil~Zhenqiang Gong, et~al.
+\newblock Metatool benchmark for large language models: Deciding whether to use
+  tools and which to use.
+\newblock {\em arXiv preprint arXiv:2310.03128}, 2023.
+
+\bibitem{jimenez2023swe}
+Carlos~E Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir
+  Press, and Karthik Narasimhan.
+\newblock Swe-bench: Can language models resolve real-world github issues?
+\newblock {\em arXiv preprint arXiv:2310.06770}, 2023.
+
+\bibitem{kazi_large_2024}
+Taaha Kazi, Ruiliang Lyu, Sizhe Zhou, Dilek Hakkani-Tur, and Gokhan Tur.
+\newblock Large {Language} {Models} as {User}-{Agents} for {Evaluating}
+  {Task}-{Oriented}-{Dialogue} {Systems}, November 2024.
+\newblock arXiv:2411.09972.
+
+\bibitem{levi2025intellagent}
+Elad Levi and Ilan Kadar.
+\newblock Intellagent: A multi-agent framework for evaluating conversational ai
+  systems.
+\newblock {\em arXiv preprint arXiv:2501.11067}, 2025.
+
+\bibitem{liu2023agentbench}
+Xiao Liu, Hao Yu, Hanchen Zhang, Yifan Xu, Xuanyu Lei, Hanyu Lai, Yu~Gu,
+  Hangliang Ding, Kaiwen Men, Kejuan Yang, et~al.
+\newblock Agentbench: Evaluating llms as agents.
+\newblock {\em arXiv preprint arXiv:2308.03688}, 2023.
+
+\bibitem{lu2024toolsandbox}
+Jiarui Lu, Thomas Holleis, Yizhe Zhang, Bernhard Aumayer, Feng Nan, Felix Bai,
+  Shuang Ma, Shen Ma, Mengyu Li, Guoli Yin, et~al.
+\newblock Toolsandbox: A stateful, conversational, interactive evaluation
+  benchmark for llm tool use capabilities.
+\newblock {\em arXiv preprint arXiv:2408.04682}, 2024.
+
+\bibitem{oliehoek2016concise}
+Frans~A Oliehoek, Christopher Amato, et~al.
+\newblock {\em A concise introduction to decentralized POMDPs}, volume~1.
+\newblock Springer, 2016.
+
+\bibitem{gpt41}
+OpenAI.
+\newblock {gpt-4.1}, 2025.
+\newblock Model release: 2025-04-14.
+
+\bibitem{o4mini}
+OpenAI.
+\newblock {o4-mini}, 2025.
+\newblock Model release: 2025-04-16.
+
+\bibitem{pietquin_survey_2013}
+Olivier Pietquin and Helen Hastie.
+\newblock A survey on metrics for the evaluation of user simulations.
+\newblock {\em The knowledge engineering review}, 28(1):59--73, 2013.
+\newblock Publisher: Cambridge University Press.
+
+\bibitem{prabhakar2025apigen}
+Akshara Prabhakar, Zuxin Liu, Weiran Yao, Jianguo Zhang, Ming Zhu, Shiyu Wang,
+  Zhiwei Liu, Tulika Awalgaonkar, Haolin Chen, Thai Hoang, et~al.
+\newblock Apigen-mt: Agentic pipeline for multi-turn data generation via
+  simulated agent-human interplay.
+\newblock {\em arXiv preprint arXiv:2504.03601}, 2025.
+
+\bibitem{qin2024toolllm}
+Yujia Qin, Shihao Liang, Yining Ye, Kunlun Zhu, Lan Yan, Yaxi Lu, Yankai Lin,
+  Xin Cong, Xiangru Tang, Bill Qian, et~al.
+\newblock Toolllm: Facilitating large language models to master 16000+
+  real-world apis.
+\newblock In {\em ICLR}, 2024.
+
+\bibitem{ruan2023identifying}
+Yangjun Ruan, Honghua Dong, Andrew Wang, Silviu Pitis, Yongchao Zhou, Jimmy Ba,
+  Yann Dubois, Chris~J Maddison, and Tatsunori Hashimoto.
+\newblock Identifying the risks of lm agents with an lm-emulated sandbox.
+\newblock {\em arXiv preprint arXiv:2309.15817}, 2023.
+
+\bibitem{schatzmann2007evaluating}
+Jost Schatzmann, Daniel Jurafsky, Michael Galley, and David Trevillian.
+\newblock Evaluating agenda-based user simulation for reinforcement learning of
+  dialogue management.
+\newblock In {\em Speech Communication}, volume~47, pages 95--121, 2007.
+
+\bibitem{xiao2024flowbench}
+Ruixuan Xiao, Wentao Ma, Ke~Wang, Yuchuan Wu, Junbo Zhao, Haobo Wang, Fei
+  Huang, and Yongbin Li.
+\newblock Flowbench: Revisiting and benchmarking workflow-guided planning for
+  llm-based agents.
+\newblock {\em arXiv preprint arXiv:2406.14884}, 2024.
+
+\bibitem{berkeley-function-calling-leaderboard}
+Fanjia Yan, Huanzhi Mao, Charlie Cheng-Jie Ji, Tianjun Zhang, Shishir~G. Patil,
+  Ion Stoica, and Joseph~E. Gonzalez.
+\newblock Berkeley function calling leaderboard.
+\newblock
+  \url{https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html},
+  2024.
+
+\bibitem{yao2022webshop}
+Shunyu Yao, Howard Chen, John Yang, and Karthik Narasimhan.
+\newblock Webshop: Towards scalable real-world web interaction with grounded
+  language agents.
+\newblock {\em Advances in Neural Information Processing Systems},
+  35:20744--20757, 2022.
+
+\bibitem{yao2024tau}
+Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan.
+\newblock $\tau$-bench: A benchmark for tool-agent-user interaction in
+  real-world domains.
+\newblock {\em arXiv preprint arXiv:2406.12045}, 2024.
+
+\bibitem{zhou2023webarena}
+Shuyan Zhou, Frank~F Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar,
+  Xianyi Cheng, Yonatan Bisk, Daniel Fried, Uri Alon, et~al.
+\newblock {WebArena: A Realistic Web Environment for Building Autonomous
+  Agents}.
+\newblock {\em arXiv preprint arXiv:2307.13854}, 2023.
+
+\bibitem{zhu2025multiagentbench}
+Kunlun Zhu, Hongyi Du, Zhaochen Hong, Xiaocheng Yang, Shuyi Guo, Zhe Wang,
+  Zhenhailong Wang, Cheng Qian, Xiangru Tang, Heng Ji, et~al.
+\newblock Multiagentbench: Evaluating the collaboration and competition of llm
+  agents.
+\newblock {\em arXiv preprint arXiv:2503.01935}, 2025.
+
+\end{thebibliography}

@@ -1,0 +1,441 @@
+\begin{thebibliography}{56}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bhargava and Sobral~Barrento(2026)]{bhargava2026memaudit}
+Nishant Bhargava and Rodrigo Sobral~Barrento.
+\newblock {MEMAUDIT}: An exact package-oracle evaluation protocol for budgeted
+  long-term {LLM} memory writing.
+\newblock \emph{arXiv preprint arXiv:2605.02199}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.02199}.
+
+\bibitem[Chen et~al.(2024)Chen, Xiang, Xiao, Song, and Li]{chen2024agentpoison}
+Zhaorun Chen, Zhen Xiang, Chaowei Xiao, Dawn Song, and Bo~Li.
+\newblock {AgentPoison}: Red-teaming {LLM} agents via poisoning memory or
+  knowledge bases.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2407.12784}.
+
+\bibitem[Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and
+  Yadav]{chhikara2025mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock {Mem0}: Building production-ready {AI} agents with scalable long-term
+  memory.
+\newblock \emph{arXiv preprint arXiv:2504.19413}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2504.19413}.
+
+\bibitem[Dash et~al.(2026)Dash, Ge, Jain, Shah, and Shang]{dash2026mpbench}
+Pritam Dash, Tongyu Ge, Aditi Jain, Tanmay Shah, and Zhiwei Shang.
+\newblock From untrusted input to trusted memory: A systematic study of memory
+  poisoning attacks in {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2606.04329}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.04329}.
+
+\bibitem[Deng et~al.(2026)Deng, Zhong, Peng, Lu, Wu, Li, Xu, Yao, Fang, Cao,
+  Guo, Yuan, Ma, Yu, Hu, Dong, Zhu, and Zhang]{deng2026memtrace}
+Xinle Deng, Ruobin Zhong, Hujin Peng, Xiaoben Lu, Yanzhe Wu, Guang Li, Buqiang
+  Xu, Yunzhi Yao, Jizhan Fang, Haoliang Cao, Junjie Guo, Yuan Yuan, Ziqing Ma,
+  Yuanqiang Yu, Rui Hu, Baohua Dong, Hangcheng Zhu, and Ningyu Zhang.
+\newblock {MemTrace}: Tracing and attributing errors in large language model
+  memory systems.
+\newblock \emph{arXiv preprint arXiv:2605.28732}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.28732}.
+
+\bibitem[Derehag et~al.(2026)Derehag, Calva, and
+  Ghiurau]{derehag2026smartsearch}
+Jesper Derehag, Carlos Calva, and Timmy Ghiurau.
+\newblock {SmartSearch}: How ranking beats structure for conversational memory
+  retrieval.
+\newblock \emph{arXiv preprint arXiv:2603.15599}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.15599}.
+
+\bibitem[Farquhar et~al.(2024)Farquhar, Kossen, Kuhn, and
+  Gal]{farquhar2024semantic}
+Sebastian Farquhar, Jannik Kossen, Lorenz Kuhn, and Yarin Gal.
+\newblock Detecting hallucinations in large language models using semantic
+  entropy.
+\newblock \emph{Nature}, 630\penalty0 (8017):\penalty0 625--630, 2024.
+\newblock URL \url{https://www.nature.com/articles/s41586-024-07421-0}.
+
+\bibitem[Flynt(2026)]{flynt2026orgforge}
+Jeffrey Flynt.
+\newblock {OrgForge-IT}: A verifiable synthetic benchmark for {LLM}-based
+  insider threat detection.
+\newblock \emph{arXiv preprint arXiv:2603.22499}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.22499}.
+
+\bibitem[Greshake et~al.(2023)Greshake, Abdelnabi, Mishra, Endres, Holz, and
+  Fritz]{greshake2023injection}
+Kai Greshake, Sahar Abdelnabi, Shailesh Mishra, Christoph Endres, Thorsten
+  Holz, and Mario Fritz.
+\newblock Not what you've signed up for: Compromising real-world
+  {LLM}-integrated applications with indirect prompt injection.
+\newblock In \emph{Proceedings of the 16th ACM Workshop on Artificial
+  Intelligence and Security (AISec)}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2302.12173}.
+
+\bibitem[Gu et~al.(2026)Gu, Zhang, Khattab, and Madden]{gu2026peek}
+Zhuohan Gu, Qizheng Zhang, Omar Khattab, and Samuel Madden.
+\newblock {PEEK}: Context map as an orientation cache for long-context {LLM}
+  agents.
+\newblock \emph{arXiv preprint arXiv:2605.19932}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.19932}.
+
+\bibitem[Guti\'{e}rrez et~al.(2024)Guti\'{e}rrez, Shu, Gu, Yasunaga, and
+  Su]{gutierrez2024hipporag}
+Bernal~Jim\'{e}nez Guti\'{e}rrez, Yiheng Shu, Yu~Gu, Michihiro Yasunaga, and
+  Yu~Su.
+\newblock {HippoRAG}: Neurobiologically inspired long-term memory for large
+  language models.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2405.14831}.
+
+\bibitem[He et~al.(2026)He, Wang, Zhi, Hu, Chen, Yin, Chen, Wu, Ouyang, Wang,
+  Pei, McAuley, Choi, and Pentland]{he2026memoryarena}
+Zexue He, Yu~Wang, Churan Zhi, Yuanzhe Hu, Tzu-Ping Chen, Lang Yin, Ze~Chen,
+  Tong~Arthur Wu, Siru Ouyang, Zihan Wang, Jiaxin Pei, Julian McAuley, Yejin
+  Choi, and Alex Pentland.
+\newblock {MemoryArena}: Benchmarking agent memory in interdependent
+  multi-session agentic tasks.
+\newblock \emph{arXiv preprint arXiv:2602.16313}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.16313}.
+
+\bibitem[Hu et~al.(2025)Hu, Wang, and McAuley]{hu2026memoryagentbench}
+Yuanzhe Hu, Yu~Wang, and Julian McAuley.
+\newblock Evaluating memory in {LLM} agents via incremental multi-turn
+  interactions.
+\newblock \emph{arXiv preprint arXiv:2507.05257}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2507.05257}.
+\newblock MemoryAgentBench; ICLR 2026.
+
+\bibitem[Jiang et~al.(2026)Jiang, Li, Wei, Yang, Kishore, Zhao, Kang, Hu, Chen,
+  Li, and Li]{jiang2026anatomy}
+Dongming Jiang, Yi~Li, Songtao Wei, Jinxin Yang, Ayushi Kishore, Alysa Zhao,
+  Dingyi Kang, Xu~Hu, Feng Chen, Qiannan Li, and Bingzhe Li.
+\newblock Anatomy of agentic memory: Taxonomy and empirical analysis of
+  evaluation and system limitations.
+\newblock \emph{arXiv preprint arXiv:2602.19320}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.19320}.
+
+\bibitem[Kadavath et~al.(2022)Kadavath, Conerly, Askell,
+  et~al.]{kadavath2022know}
+Saurav Kadavath, Tom Conerly, Amanda Askell, et~al.
+\newblock Language models (mostly) know what they know.
+\newblock \emph{arXiv preprint arXiv:2207.05221}, 2022.
+\newblock URL \url{https://arxiv.org/abs/2207.05221}.
+
+\bibitem[Lam et~al.(2026)Lam, Li, Zhang, and Zhao]{lam2026ssgm}
+Chingkwun Lam, Jiaxin Li, Lingfei Zhang, and Kuo Zhao.
+\newblock Governing evolving memory in {LLM} agents: Risks, mechanisms, and the
+  stability and safety governed memory ({SSGM}) framework.
+\newblock \emph{arXiv preprint arXiv:2603.11768}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.11768}.
+
+\bibitem[Li et~al.(2026)Li, Li, Ma, Zhu, Liu, Wang, and Feng]{li2026plant}
+Yongxiang Li, Moxin Li, Zhixin Ma, Fengbin Zhu, Dongrui Liu, Wenjie Wang, and
+  Fuli Feng.
+\newblock Plant, persist, trigger: Sleeper attack on large language model
+  agents.
+\newblock \emph{arXiv preprint arXiv:2605.28201}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.28201}.
+
+\bibitem[Lin et~al.(2026)Lin, Hao, Fu, Cui, Chen, Li, Li, and
+  Xiong]{lin2026ltmsecurity}
+Zehao Lin, Xixuan Hao, Renyu Fu, Shaobo Cui, Kai Chen, Chunyu Li, Zhiyu Li, and
+  Feiyu Xiong.
+\newblock A survey on long-term memory security in {LLM} agents: Attacks,
+  defenses, and governance across the memory lifecycle.
+\newblock \emph{arXiv preprint arXiv:2604.16548}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2604.16548}.
+
+\bibitem[Louck(2026)]{louck2026tmanm}
+Yedidel Louck.
+\newblock Securing {LLM}-agent long-term memory against poisoning:
+  Non-malleable, origin-bound authority with machine-checked guarantees.
+\newblock \emph{arXiv preprint arXiv:2606.24322}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.24322}.
+
+\bibitem[Lu et~al.(2026)Lu, Li, Shi, Wang, Wang, and Hu]{lu2026seem}
+Zhengxuan Lu, Dongfang Li, Yukun Shi, Beilun Wang, Longyue Wang, and Baotian
+  Hu.
+\newblock Structured episodic event memory.
+\newblock \emph{arXiv preprint arXiv:2601.06411}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2601.06411}.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and
+  Fung]{maharana2024locomo}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco
+  Barbieri, and Yuwei Fung.
+\newblock Evaluating very long-term conversational memory of {LLM} agents.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
+  for Computational Linguistics (ACL)}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2402.17753}.
+
+\bibitem[{Mem0}(2026)]{mem0report2026}
+{Mem0}.
+\newblock {AI} memory benchmarks in 2026: {LoCoMo}, {LongMemEval} \& {BEAM}.
+\newblock Industry report (blog), 2026.
+\newblock URL \url{https://mem0.ai/blog/ai-memory-benchmarks-in-2026}.
+
+\bibitem[Meng et~al.(2022)Meng, Bau, Andonian, and Belinkov]{meng2022rome}
+Kevin Meng, David Bau, Alex Andonian, and Yonatan Belinkov.
+\newblock Locating and editing factual associations in {GPT}.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2022.
+\newblock URL \url{https://arxiv.org/abs/2202.05262}.
+
+\bibitem[Meng et~al.(2023)Meng, Sen~Sharma, Andonian, Belinkov, and
+  Bau]{meng2023memit}
+Kevin Meng, Arnab Sen~Sharma, Alex Andonian, Yonatan Belinkov, and David Bau.
+\newblock Mass-editing memory in a transformer.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2210.07229}.
+
+\bibitem[Northcutt et~al.(2021)Northcutt, Athalye, and
+  Mueller]{northcutt2021labelerrors}
+Curtis~G. Northcutt, Anish Athalye, and Jonas Mueller.
+\newblock Pervasive label errors in test sets destabilize machine learning
+  benchmarks.
+\newblock In \emph{NeurIPS Datasets and Benchmarks Track}, 2021.
+\newblock URL \url{https://arxiv.org/abs/2103.14749}.
+
+\bibitem[{OWASP GenAI Security Project}(2025)]{owasp2025llm01}
+{OWASP GenAI Security Project}.
+\newblock {LLM01}:2025 prompt injection, 2025.
+\newblock URL \url{https://genai.owasp.org/llmrisk/llm01-prompt-injection/}.
+
+\bibitem[Packer et~al.(2023)Packer, Wooders, Lin, Fang, Patil, Stoica, and
+  Gonzalez]{packer2023memgpt}
+Charles Packer, Sarah Wooders, Kevin Lin, Vivian Fang, Shishir~G. Patil, Ion
+  Stoica, and Joseph~E. Gonzalez.
+\newblock {MemGPT}: Towards {LLMs} as operating systems.
+\newblock \emph{arXiv preprint arXiv:2310.08560}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2310.08560}.
+
+\bibitem[Pakhomov et~al.(2025)Pakhomov, Nijkamp, and Xiong]{convomem2025}
+Egor Pakhomov, Erik Nijkamp, and Caiming Xiong.
+\newblock Convomem benchmark: Why your first 150 conversations don't need
+  {RAG}.
+\newblock \emph{arXiv preprint arXiv:2511.10523}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2511.10523}.
+
+\bibitem[Park et~al.(2023)Park, O'Brien, Cai, Morris, Liang, and
+  Bernstein]{park2023generative}
+Joon~Sung Park, Joseph~C. O'Brien, Carrie~J. Cai, Meredith~Ringel Morris, Percy
+  Liang, and Michael~S. Bernstein.
+\newblock Generative agents: Interactive simulacra of human behavior.
+\newblock In \emph{Proceedings of the 36th Annual ACM Symposium on User
+  Interface Software and Technology (UIST)}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2304.03442}.
+
+\bibitem[Patel(2026)]{patel2026supersede}
+Vedant Patel.
+\newblock Supersede: Diagnosing and training the memory-update gap in {LLM}
+  agents.
+\newblock \emph{arXiv preprint arXiv:2606.27472}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.27472}.
+
+\bibitem[{Penfield Labs}(2026)]{penfield2026locomoaudit}
+{Penfield Labs}.
+\newblock We audited {LoCoMo}: 6.4\% of the answer key is wrong and the judge
+  accepts up to 63\%.
+\newblock Blog post; reproducible audit: github.com/dial481/locomo-audit, 2026.
+\newblock URL
+  \url{https://penfieldlabs.substack.com/p/we-audited-locomo-64-of-the-answer}.
+
+\bibitem[{Perplexity AI}(2026)]{perplexity2026brain}
+{Perplexity AI}.
+\newblock Self-improving memory for agents (``brain'').
+\newblock Perplexity blog, 2026.
+\newblock URL
+  \url{https://www.perplexity.ai/hub/blog/self-improving-memory-for-agents}.
+
+\bibitem[Pulipaka et~al.(2026)Pulipaka, Hlebik, Raghav, Abdelnabi, Raina,
+  Sheth, and Fritz]{pulipaka2026sleeper}
+Sidharth Pulipaka, Stanislau Hlebik, Leonidas Raghav, Sahar Abdelnabi, Vyas
+  Raina, Ivaxi Sheth, and Mario Fritz.
+\newblock Hidden in memory: Sleeper memory poisoning in {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2605.15338}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.15338}.
+
+\bibitem[Rasmussen et~al.(2025)Rasmussen, Paliychuk, Beauvais, Ryan, and
+  Chalef]{rasmussen2025zep}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel
+  Chalef.
+\newblock {Zep}: A temporal knowledge graph architecture for agent memory.
+\newblock \emph{arXiv preprint arXiv:2501.13956}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2501.13956}.
+
+\bibitem[Reddy and Challaram(2026)]{reddy2026freshness}
+Vikas Reddy and Sumanth Challaram.
+\newblock Don't ask the {LLM} to track freshness: A deterministic recipe for
+  memory conflict resolution.
+\newblock \emph{arXiv preprint arXiv:2606.01435}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.01435}.
+
+\bibitem[Roig(2026)]{roig2026riker}
+JV~Roig.
+\newblock Scalable and reliable evaluation of {AI} knowledge retrieval systems:
+  {RIKER} and the coherent simulated universe.
+\newblock \emph{arXiv preprint arXiv:2601.08847}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2601.08847}.
+
+\bibitem[Roynard(2026)]{roynard2026knowledgelayer}
+Micha\"{e}l Roynard.
+\newblock The missing knowledge layer in cognitive architectures for ai agents.
+\newblock \emph{arXiv preprint arXiv:2604.11364}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2604.11364}.
+
+\bibitem[Shen et~al.(2026)Shen, Li, Zhou, and Hu]{shen2026mem2actbench}
+Yiting Shen, Kun Li, Wei Zhou, and Songlin Hu.
+\newblock {Mem2ActBench}: A benchmark for evaluating long-term memory
+  utilization in task-oriented autonomous agents.
+\newblock \emph{arXiv preprint arXiv:2601.19935}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2601.19935}.
+
+\bibitem[Shutova et~al.(2026)Shutova, Olenina, Vinogradov, and
+  Sinitsin]{shutova2026structmemeval}
+Alina Shutova, Alexandra Olenina, Ivan Vinogradov, and Anton Sinitsin.
+\newblock Evaluating memory structure in {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2602.11243}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.11243}.
+
+\bibitem[Sun et~al.(2026)Sun, Zhu, Yao, Liu, and Han]{trimem2026}
+Jingwei Sun, Jianing Zhu, Jiangchao Yao, Tongliang Liu, and Bo~Han.
+\newblock {TriMem}: Rethinking how to remember---beyond atomic facts in
+  lifelong {LLM} agent memory.
+\newblock \emph{arXiv preprint arXiv:2605.19952}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.19952}.
+
+\bibitem[Tan et~al.(2026)Tan, Yao, Jin, Yu, Wang, Fan, Lu, Liu, Zhang, Ma,
+  Yang, and Sun]{tan2026memaudit}
+Zhewen Tan, Yilun Yao, Huiyan Jin, Wenhan Yu, Guoan Wang, Mengyuan Fan, Liang
+  Lu, Feng Liu, Xiangzheng Zhang, Duohe Ma, Tong Yang, and Lin Sun.
+\newblock {MemAudit}: Post-hoc auditing of poisoned agent memory via causal
+  attribution and structural anomaly detection.
+\newblock \emph{arXiv preprint arXiv:2605.23723}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.23723}.
+
+\bibitem[Tavakoli et~al.(2025)Tavakoli, Salemi, Ye, Abdalla, Zamani, and
+  Mitchell]{tavakoli2025beam}
+Mohammad Tavakoli, Alireza Salemi, Carrie Ye, Mohamed Abdalla, Hamed Zamani,
+  and J~Ross Mitchell.
+\newblock Beyond a million tokens: Benchmarking and enhancing long-term memory
+  in {LLMs}.
+\newblock \emph{arXiv preprint arXiv:2510.27246}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2510.27246}.
+
+\bibitem[Wang(2026)]{wang2026memdelta}
+Kuan Wang.
+\newblock {MemDelta}: Controlled baselines and hidden confounds in agent memory
+  evaluation.
+\newblock \emph{arXiv preprint arXiv:2606.29914}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.29914}.
+
+\bibitem[Wang et~al.(2024)Wang, Li, Chen, Cai, Zhu, Lin, Cao, Liu, Liu, and
+  Sui]{wang2024notfair}
+Peiyi Wang, Lei Li, Liang Chen, Zefan Cai, Dawei Zhu, Binghuai Lin, Yunbo Cao,
+  Qi~Liu, Tianyu Liu, and Zhifang Sui.
+\newblock Large language models are not fair evaluators.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
+  for Computational Linguistics (ACL)}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2305.17926}.
+
+\bibitem[Wen et~al.(2024)Wen, Yao, Feng, Xu, Tsvetkov, Howe, and
+  Wang]{wen2024abstention}
+Bingbing Wen, Jihan Yao, Shangbin Feng, Chenjun Xu, Yulia Tsvetkov, Bill Howe,
+  and Lucy~Lu Wang.
+\newblock Know your limits: A survey of abstention in large language models.
+\newblock \emph{arXiv preprint arXiv:2407.18418}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2407.18418}.
+
+\bibitem[Wu et~al.(2025)Wu, Wang, Yu, Zhang, Chang, and Yu]{wu2024longmemeval}
+Di~Wu, Hongwei Wang, Wenhao Yu, Yuwei Zhang, Kai-Wei Chang, and Dong Yu.
+\newblock {LongMemEval}: Benchmarking chat assistants on long-term interactive
+  memory.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2410.10813}.
+
+\bibitem[Xu et~al.(2024)Xu, Guan, Greene, and Kechadi]{xu2024contamination}
+Cheng Xu, Shuhao Guan, Derek Greene, and M-Tahar Kechadi.
+\newblock Benchmark data contamination of large language models: A survey.
+\newblock \emph{arXiv preprint arXiv:2406.04244}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2406.04244}.
+
+\bibitem[Xu et~al.(2025)Xu, Liang, Mei, Gao, Tan, and Zhang]{xu2025amem}
+Wujiang Xu, Zujie Liang, Kai Mei, Hang Gao, Juntao Tan, and Yongfeng Zhang.
+\newblock {A-Mem}: Agentic memory for {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2502.12110}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2502.12110}.
+
+\bibitem[Xu et~al.(2026)Xu, Wang, Mei, Liang, Wang, Jin, Zhang, Zhang, Hua,
+  Sahu, and Metaxas]{xu2026memgym}
+Wujiang Xu, Yu~Wang, Kai Mei, Kaiqu Liang, Zhenting Wang, Mingyu Jin, Han
+  Zhang, Shi-Xiong Zhang, Wenyue Hua, Sambit Sahu, and Dimitris~N. Metaxas.
+\newblock {MemGym}: a long-horizon memory environment for {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2605.20833}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.20833}.
+
+\bibitem[Yadav(2026)]{yadav2026memstrata}
+Neeraj Yadav.
+\newblock Temporal validity in retrieval memory: Eliminating stale-fact errors
+  for {AI} agents over evolving knowledge.
+\newblock \emph{arXiv preprint arXiv:2606.26511}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.26511}.
+
+\bibitem[Yuan et~al.(2026)Yuan, Su, and Yao]{yuan2026bottlenecks}
+Boqin Yuan, Yue Su, and Kun Yao.
+\newblock Diagnosing retrieval vs. utilization bottlenecks in {LLM} agent
+  memory.
+\newblock \emph{arXiv preprint arXiv:2603.02473}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.02473}.
+
+\bibitem[Zheng et~al.(2023)Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li,
+  Li, Xing, Zhang, Gonzalez, and Stoica]{zheng2023judging}
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao
+  Zhuang, Zi~Lin, Zhuohan Li, Dacheng Li, Eric~P. Xing, Hao Zhang, Joseph~E.
+  Gonzalez, and Ion Stoica.
+\newblock Judging {LLM}-as-a-judge with {MT-Bench} and chatbot arena.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2306.05685}.
+
+\bibitem[Zhong et~al.(2024)Zhong, Guo, Gao, Ye, and Wang]{zhong2023memorybank}
+Wanjun Zhong, Lianghong Guo, Qiqi Gao, He~Ye, and Yanlin Wang.
+\newblock {MemoryBank}: Enhancing large language models with long-term memory.
+\newblock \emph{Proceedings of the AAAI Conference on Artificial Intelligence},
+  2024.
+\newblock URL \url{https://arxiv.org/abs/2305.10250}.
+
+\bibitem[Zhong et~al.(2023)Zhong, Wu, Manning, Potts, and
+  Chen]{zhong2023mquake}
+Zexuan Zhong, Zhengxuan Wu, Christopher~D. Manning, Christopher Potts, and
+  Danqi Chen.
+\newblock {MQuAKE}: Assessing knowledge editing in language models via
+  multi-hop questions.
+\newblock In \emph{Proceedings of the 2023 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2305.14795}.
+
+\bibitem[Zhou et~al.(2026)Zhou, Zhou, Han, Xu, Li, Li, Xiong, and
+  Wu]{zhou2026agentnative}
+Wei Zhou, Xuanhe Zhou, Shaokun Han, Hongming Xu, Guoliang Li, Zhiyu Li, Feiyu
+  Xiong, and Fan Wu.
+\newblock Are we ready for an agent-native memory system?
+\newblock \emph{arXiv preprint arXiv:2606.24775}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.24775}.
+
+\bibitem[Zhu et~al.(2026)Zhu, Chen, Yu, Wu, and Wang]{zhu2026tiermem}
+Qiming Zhu, Shunian Chen, Rui Yu, Zhehao Wu, and Benyou Wang.
+\newblock From lossy to verified: A provenance-aware tiered memory for agents.
+\newblock \emph{arXiv preprint arXiv:2602.17913}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.17913}.
+
+\end{thebibliography}

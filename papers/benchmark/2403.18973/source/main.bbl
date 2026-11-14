@@ -1,0 +1,214 @@
+\begin{thebibliography}{42}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Acharya and Fung(2020)}]{acharya2020using}
+Shailesh Acharya and Glenn Fung. 2020.
+\newblock \href {http://ceur-ws.org/Vol-2666/KDD_Converse20_paper_10.pdf} {Using optimal embeddings to learn new intents with few examples: An application in the insurance domain}.
+\newblock In \emph{KDD 2020 Workshop on Conversational Systems Towards Mainstream Adoption(KDD Converse 2020)}. CEUR-WS.org.
+
+\bibitem[{Alfieri et~al.(2022)Alfieri, Wolter, and Hashemi}]{alfieri2022intent}
+Andrea Alfieri, Ralf Wolter, and Seyyed~Hadi Hashemi. 2022.
+\newblock Intent disambiguation for task-oriented dialogue systems.
+\newblock In \emph{Proceedings of the 31st ACM International Conference on Information \& Knowledge Management}, pages 5079--5080.
+
+\bibitem[{Angelopoulos et~al.(2023)Angelopoulos, Bates et~al.}]{angelopoulos2023conformal}
+Anastasios~N Angelopoulos, Stephen Bates, et~al. 2023.
+\newblock Conformal prediction: A gentle introduction.
+\newblock \emph{Foundations and Trends{\textregistered} in Machine Learning}, 16(4):494--591.
+
+\bibitem[{Angelopoulos et~al.(2021)Angelopoulos, Bates, Jordan, and Malik}]{angelopoulos2020uncertainty}
+Anastasios~Nikolas Angelopoulos, Stephen Bates, Michael Jordan, and Jitendra Malik. 2021.
+\newblock Uncertainty sets for image classifiers using conformal prediction.
+\newblock In \emph{International Conference on Learning Representations}.
+
+\bibitem[{Casanueva et~al.(2020)Casanueva, Tem{\v{c}}inas, Gerz, Henderson, and Vuli{\'c}}]{casanueva2020efficient}
+I{\~n}igo Casanueva, Tadas Tem{\v{c}}inas, Daniela Gerz, Matthew Henderson, and Ivan Vuli{\'c}. 2020.
+\newblock Efficient intent detection with dual sentence encoders.
+\newblock In \emph{Proceedings of the 2nd Workshop on Natural Language Processing for Conversational AI}, pages 38--45.
+
+\bibitem[{Cavalin et~al.(2020)Cavalin, Ribeiro, Appel, and Pinhanez}]{cavalin2020improving}
+Paulo Cavalin, Victor Henrique~Alves Ribeiro, Ana Appel, and Claudio Pinhanez. 2020.
+\newblock Improving out-of-scope detection in intent classification by using embeddings of the word graph space of the classes.
+\newblock In \emph{Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 3952--3961.
+
+\bibitem[{Den~Hengst et~al.(2020)Den~Hengst, Grua, el~Hassouni, and Hoogendoorn}]{den2020reinforcement}
+Floris Den~Hengst, Eoin~Martino Grua, Ali el~Hassouni, and Mark Hoogendoorn. 2020.
+\newblock Reinforcement learning for personalization: A systematic literature review.
+\newblock \emph{Data Science}, 3(2):107--147.
+
+\bibitem[{Den~Hengst et~al.(2019)Den~Hengst, Hoogendoorn, Van~Harmelen, and Bosman}]{den2019reinforcement}
+Floris Den~Hengst, Mark Hoogendoorn, Frank Van~Harmelen, and Joost Bosman. 2019.
+\newblock Reinforcement learning for personalized dialogue management.
+\newblock In \emph{IEEE/WIC/ACM International Conference on Web Intelligence}, pages 59--67.
+
+\bibitem[{DeVault and Stone(2007)}]{devault2007managing}
+David DeVault and Matthew Stone. 2007.
+\newblock Managing ambiguities across utterances in dialogue.
+\newblock In \emph{Proceedings of the 11th Workshop on the Semantics and Pragmatics of Dialogue (Decalog 2007)}, pages 49--56.
+
+\bibitem[{Devlin et~al.(2019)Devlin, Chang, Lee, and Toutanova}]{kenton2019bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019.
+\newblock \href {https://doi.org/10.18653/v1/N19-1423} {{BERT}: Pre-training of deep bidirectional transformers for language understanding}.
+\newblock In \emph{Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}, pages 4171--4186, Minneapolis, Minnesota. Association for Computational Linguistics.
+
+\bibitem[{Dhole(2020)}]{dhole2020resolving}
+Kaustubh~D Dhole. 2020.
+\newblock Resolving intent ambiguities by retrieving discriminative clarifying questions.
+\newblock \emph{arXiv preprint arXiv:2008.07559}.
+
+\bibitem[{Fisch et~al.(2022)Fisch, Schuster, Jaakkola, and Barzilay}]{fisch2022conformal}
+Adam Fisch, Tal Schuster, Tommi Jaakkola, and Regina Barzilay. 2022.
+\newblock Conformal prediction sets with limited false positives.
+\newblock In \emph{International Conference on Machine Learning}, pages 6514--6532. PMLR.
+
+\bibitem[{Fong and Holmes(2021)}]{fong2021conformal}
+Edwin Fong and Chris~C Holmes. 2021.
+\newblock Conformal bayesian computation.
+\newblock \emph{Advances in Neural Information Processing Systems}, 34:18268--18279.
+
+\bibitem[{Giovannotti and Gammerman(2021)}]{giovannotti2021transformer}
+Patrizio Giovannotti and Alex Gammerman. 2021.
+\newblock Transformer-based conformal predictors for paraphrase detection.
+\newblock In \emph{Conformal and Probabilistic Prediction and Applications}, pages 243--265. PMLR.
+
+\bibitem[{Hemphill et~al.(1990)Hemphill, Godfrey, and Doddington}]{hemphill1990atis}
+Charles~T Hemphill, John~J Godfrey, and George~R Doddington. 1990.
+\newblock The atis spoken language systems pilot corpus.
+\newblock In \emph{Speech and Natural Language: Proceedings of a Workshop Held at Hidden Valley, Pennsylvania, June 24-27, 1990}.
+
+\bibitem[{Hendrycks et~al.(2020)Hendrycks, Liu, Wallace, Dziedzic, Krishnan, and Song}]{hendrycks2020pretrained}
+Dan Hendrycks, Xiaoyuan Liu, Eric Wallace, Adam Dziedzic, Rishabh Krishnan, and Dawn Song. 2020.
+\newblock Pretrained transformers improve out-of-distribution robustness.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}, pages 2744--2751.
+
+\bibitem[{Keyvan and Huang(2022)}]{keyvan2022approach}
+Kimiya Keyvan and Jimmy~Xiangji Huang. 2022.
+\newblock How to approach ambiguous queries in conversational search: A survey of techniques, approaches, tools, and challenges.
+\newblock \emph{ACM Computing Surveys}, 55(6):1--40.
+
+\bibitem[{Kuhn et~al.(2023)Kuhn, Gal, and Farquhar}]{kuhn2022clam}
+Lorenz Kuhn, Yarin Gal, and Sebastian Farquhar. 2023.
+\newblock {CLAM}: Selective clarification for ambiguous questions with large language models.
+\newblock In \emph{ICML Workshop Challenges of Deploying Generative AI}.
+
+\bibitem[{Larson et~al.(2019)Larson, Mahendran, Peper, Clarke, Lee, Hill, Kummerfeld, Leach, Laurenzano, Tang, and Mars}]{larson-etal-2019-evaluation}
+Stefan Larson, Anish Mahendran, Joseph~J. Peper, Christopher Clarke, Andrew Lee, Parker Hill, Jonathan~K. Kummerfeld, Kevin Leach, Michael~A. Laurenzano, Lingjia Tang, and Jason Mars. 2019.
+\newblock \href {https://doi.org/10.18653/v1/D19-1131} {An evaluation dataset for intent classification and out-of-scope prediction}.
+\newblock In \emph{Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)}, pages 1311--1316, Hong Kong, China. Association for Computational Linguistics.
+
+\bibitem[{Lin and Xu(2019)}]{lin2019deep}
+Ting-En Lin and Hua Xu. 2019.
+\newblock Deep unknown intent detection with margin loss.
+\newblock In \emph{Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics}, pages 5491--5496.
+
+\bibitem[{Liu et~al.(2021)Liu, Eshghi, Swietojanski, and Rieser}]{liu2021benchmarking}
+Xingkun Liu, Arash Eshghi, Pawel Swietojanski, and Verena Rieser. 2021.
+\newblock Benchmarking natural language understanding services for building conversational agents.
+\newblock In \emph{Increasing Naturalness and Flexibility in Spoken Dialogue Interaction: 10th International Workshop on Spoken Dialogue Systems}, pages 165--183. Springer.
+
+\bibitem[{Maltoudoglou et~al.(2020)Maltoudoglou, Paisios, and Papadopoulos}]{maltoudoglou2020bert}
+Lysimachos Maltoudoglou, Andreas Paisios, and Harris Papadopoulos. 2020.
+\newblock Bert-based conformal predictor for sentiment analysis.
+\newblock In \emph{Conformal and Probabilistic Prediction and Applications}, pages 269--284. PMLR.
+
+\bibitem[{Miller(1956)}]{miller1956magical}
+George~A Miller. 1956.
+\newblock The magical number seven, plus or minus two: Some limits on our capacity for processing information.
+\newblock \emph{Psychological review}, 63(2):81.
+
+\bibitem[{Papadopoulos et~al.(2002)Papadopoulos, Proedrou, Vovk, and Gammerman}]{papadopoulos2002inductive}
+Harris Papadopoulos, Kostas Proedrou, Volodya Vovk, and Alex Gammerman. 2002.
+\newblock Inductive confidence machines for regression.
+\newblock In \emph{Machine Learning: ECML 2002: 13th European Conference on Machine Learning Helsinki, Finland, August 19--23, 2002 Proceedings 13}, pages 345--356. Springer.
+
+\bibitem[{Plass et~al.(2010)Plass, Moreno, and Br{\"{u}}nken}]{plass2010cognitive}
+Jan~L Plass, Roxana Moreno, and Roland Br{\"{u}}nken, editors. 2010.
+\newblock \href {https://doi.org/10.1017/CBO9780511844744} {\emph{{Cognitive load theory.}}}
+\newblock Cambridge University Press, New York, NY, US.
+
+\bibitem[{Platt et~al.(1999)}]{platt1999probabilistic}
+John Platt et~al. 1999.
+\newblock Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods.
+\newblock \emph{Advances in large margin classifiers}, 10(3):61--74.
+
+\bibitem[{Purver et~al.(2003)Purver, Ginzburg, and Healey}]{purver2003means}
+Matthew Purver, Jonathan Ginzburg, and Patrick Healey. 2003.
+\newblock On the means for clarification in dialogue.
+\newblock \emph{Current and new directions in discourse and dialogue}, pages 235--255.
+
+\bibitem[{Romano et~al.(2020)Romano, Sesia, and Candes}]{romano2020classification}
+Yaniv Romano, Matteo Sesia, and Emmanuel Candes. 2020.
+\newblock Classification with valid and adaptive coverage.
+\newblock \emph{Advances in Neural Information Processing Systems}, 33:3581--3591.
+
+\bibitem[{Sadinle et~al.(2019)Sadinle, Lei, and Wasserman}]{sadinle2019least}
+Mauricio Sadinle, Jing Lei, and Larry Wasserman. 2019.
+\newblock Least ambiguous set-valued classifiers with bounded error levels.
+\newblock \emph{Journal of the American Statistical Association}, 114(525):223--234.
+
+\bibitem[{Schuster et~al.(2019)Schuster, Gupta, Shah, and Lewis}]{schuster2019cross}
+Sebastian Schuster, Sonal Gupta, Rushin Shah, and Mike Lewis. 2019.
+\newblock Cross-lingual transfer learning for multilingual task oriented dialog.
+\newblock In \emph{Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}, pages 3795--3805.
+
+\bibitem[{Shafer and Vovk(2008)}]{shafer2008tutorial}
+Glenn Shafer and Vladimir Vovk. 2008.
+\newblock A tutorial on conformal prediction.
+\newblock \emph{Journal of Machine Learning Research}, 9(3).
+
+\bibitem[{Shu et~al.(2017)Shu, Xu, and Liu}]{shu2017doc}
+Lei Shu, Hu~Xu, and Bing Liu. 2017.
+\newblock Doc: Deep open classification of text documents.
+\newblock In \emph{Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing}, pages 2911--2916.
+
+\bibitem[{Siro et~al.(2022)Siro, Aliannejadi, and de~Rijke}]{siro2022understanding}
+Clemencia Siro, Mohammad Aliannejadi, and Maarten de~Rijke. 2022.
+\newblock Understanding user satisfaction with task-oriented dialogue systems.
+\newblock In \emph{Proceedings of the 45th International ACM SIGIR Conference on Research and Development in Information Retrieval}, pages 2018--2023.
+
+\bibitem[{van Zeelt et~al.(2020)van Zeelt, den Hengst, and Hashemi}]{van2020collecting}
+Mickey van Zeelt, Floris den Hengst, and Seyyed~Hadi Hashemi. 2020.
+\newblock Collecting high-quality dialogue user satisfaction ratings with third-party annotators.
+\newblock In \emph{Proceedings of the 2020 Conference on Human Information Interaction and Retrieval}, pages 363--367.
+
+\bibitem[{Vovk et~al.(1999)Vovk, Gammerman, and Saunders}]{vovk1999machine}
+Volodya Vovk, Alexander Gammerman, and Craig Saunders. 1999.
+\newblock Machine-learning applications of algorithmic randomness.
+\newblock In \emph{Proceedings of the Sixteenth International Conference on Machine Learning}, pages 444--453.
+
+\bibitem[{Yan et~al.(2020)Yan, Fan, Li, Liu, Zhang, Wu, and Lam}]{yan2020unknown}
+Guangfeng Yan, Lu~Fan, Qimai Li, Han Liu, Xiaotong Zhang, Xiao-Ming Wu, and Albert~YS Lam. 2020.
+\newblock Unknown intent detection using gaussian mixture model with an application to zero-shot intent classification.
+\newblock In \emph{Proceedings of the 58th annual meeting of the association for computational linguistics}, pages 1050--1060.
+
+\bibitem[{Yilmaz and Toraman(2020)}]{yilmaz2020kloos}
+Eyup~Halit Yilmaz and Cagri Toraman. 2020.
+\newblock Kloos: Kl divergence-based out-of-scope intent detection in human-to-machine conversations.
+\newblock In \emph{Proceedings of the 43rd international ACM SIGIR conference on research and development in information retrieval}, pages 2105--2108.
+
+\bibitem[{Ying and Thomas(2022)}]{ying2022label}
+Cecilia Ying and Stephen Thomas. 2022.
+\newblock Label errors in banking77.
+\newblock In \emph{Proceedings of the Third Workshop on Insights from Negative Results in NLP}, pages 139--143.
+
+\bibitem[{Zamani et~al.(2020)Zamani, Dumais, Craswell, Bennett, and Lueck}]{zamani2020generating}
+Hamed Zamani, Susan Dumais, Nick Craswell, Paul Bennett, and Gord Lueck. 2020.
+\newblock Generating clarifying questions for information retrieval.
+\newblock In \emph{Proceedings of the web conference 2020}, pages 418--428.
+
+\bibitem[{Zhan et~al.(2021)Zhan, Liang, Liu, Fan, Wu, and Lam}]{zhan2021out}
+Li-Ming Zhan, Haowen Liang, Bo~Liu, Lu~Fan, Xiao-Ming Wu, and Albert~YS Lam. 2021.
+\newblock Out-of-scope intent detection with self-supervision and discriminative training.
+\newblock In \emph{Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing}, pages 3521--3532.
+
+\bibitem[{Zhang and Zhu(2021)}]{zhang2021diverse}
+Zhiling Zhang and Kenny Zhu. 2021.
+\newblock Diverse and specific clarification question generation with keywords.
+\newblock In \emph{Proceedings of the Web Conference 2021}, pages 3501--3511.
+
+\bibitem[{Zhou et~al.(2021)Zhou, Liu, and Chen}]{zhou2021contrastive}
+Wenxuan Zhou, Fangyu Liu, and Muhao Chen. 2021.
+\newblock Contrastive out-of-distribution detection for pretrained transformers.
+\newblock In \emph{Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing (EMNLP)}.
+
+\end{thebibliography}

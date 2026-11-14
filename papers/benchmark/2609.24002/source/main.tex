@@ -1,0 +1,138 @@
+%% FinInteract preprint. Compile main.tex with pdfLaTeX and BibTeX.
+\documentclass[11pt]{article}
+%\usepackage[review]{acl}
+\usepackage[preprint]{acl}
+
+%% Standard *ACL template includes
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+
+%% Packages this paper needs on top of the template.
+%% NOTE: acl.sty already loads natbib, caption and hyperref. Do not load them
+%% again here, or the citation and caption formatting will break.
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xspace}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, calc}
+\setcounter{secnumdepth}{2}
+
+%% Portable check / cross (drawn, not font glyphs).
+%% These MUST be robust: a TikZ picture is fragile, and hyperref (loaded by
+%% acl.sty) expands caption text, which breaks an unprotected \tikz.
+\DeclareRobustCommand{\cmark}{\tikz[baseline=-0.55ex]{\draw[green!55!black,line width=0.9pt] (0,0.6pt)--(2pt,-1.4pt)--(5pt,3.6pt);}}
+\DeclareRobustCommand{\xmark}{\tikz[baseline=-0.55ex]{\draw[red!75!black,line width=0.9pt] (0,0)--(4pt,4pt) (0,4pt)--(4pt,0);}}
+\DeclareRobustCommand{\checkmark}{\cmark}
+\newcommand{\fininteract}{\textsc{FinInteract}\xspace}
+\newcommand{\interactcomp}{\textsc{InteractComp}\xspace}
+\newcommand{\HO}{$H_0$\xspace}
+\newcommand{\disep}{$\text{DisE}^+$\xspace}
+\newcommand{\disei}{$\text{DisE}^+$\xspace}
+
+%% Where the shared appendix should point for the short limitations list.
+%% *ACL puts it in an unnumbered \section*, which has no number to \ref.
+\newcommand{\limref}{the Limitations section}
+
+%% Venue code of ethics cited by the generative-AI disclosure in the appendix.
+\newcommand{\ethicscode}{the ACL Code of Ethics}
+
+%% Hardware used for local compute; runtime is reported in the appendix.
+\newcommand{\GPUSPEC}{a single NVIDIA H200 GPU}
+
+\title{FinInteract: Benchmarking Clarification and Intent Integration in Ambiguous Financial Question Answering}
+
+%% Under the "review" option acl.sty replaces this with "Anonymous ACL
+%% submission". Fill in real authors before switching to "final".
+\author{
+  \textbf{Xinyu Wang} \\
+  McGill University
+  \And
+  \textbf{Tung Sum Thomas Kwok} \\
+  University of California, Los Angeles
+  \And
+  \textbf{Zhenghan Tai} \\
+  University of Toronto
+  \AND
+  \textbf{Guang Cheng} \\
+  University of California, Los Angeles \\
+  \texttt{guangcheng@stat.ucla.edu}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/0_abstract}
+\end{abstract}
+
+%% ============================================================
+\section{Introduction}
+\label{sec:intro}
+%% ============================================================
+\input{sections/1_introduction}
+
+%% ============================================================
+\section{Problem Formulation}
+\label{sec:task}
+%% ============================================================
+\input{sections/2_problem}
+
+%% ============================================================
+\section{Methodology}
+\label{sec:methodology}
+%% ============================================================
+\input{sections/3_methodology}
+
+%% ============================================================
+\section{Experiments}
+\label{sec:exp}
+\label{sec:eval}
+%% ============================================================
+\input{sections/4_experiments}
+
+%% ============================================================
+\section{Discussion}
+\label{sec:discussion}
+%% ============================================================
+\input{sections/5_discussion}
+
+%% ============================================================
+\section{Related Work}
+\label{sec:related}
+%% ============================================================
+\input{sections/6_related_work}
+
+%% ============================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%% ============================================================
+\input{sections/7_conclusion}
+
+%% ============================================================
+%% ARR CFP: Limitations is REQUIRED, unnumbered, placed after the conclusion
+%% and before the references, and "it will not count toward the page limit".
+%% Long papers get 8 pages of content plus unlimited extra space for this
+%% section and for an optional ethics section, plus unlimited references.
+%% Appendices come after the references and also do not count.
+%% (The bundled formatting.md does not state this; it defers to the venue CFP.)
+%% ============================================================
+\section*{Limitations}
+\input{sections/5_limitations}
+
+
+%% ============================================================
+%% acl.sty sets \bibliographystyle{acl_natbib}; do not set it again.
+%% ============================================================
+\bibliography{refs}
+
+\appendix
+\input{sections/appendix}
+
+\end{document}

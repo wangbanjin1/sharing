@@ -1,0 +1,168 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+\usepackage[]{acl}
+
+% Standard package includes
+\usepackage{fnpos}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{fourier} 
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{makecell}
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out.
+% However, it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
+\usepackage{listings}
+
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{arydshln}
+% Beamer presentation requires \usepackage{colortbl} instead of \usepackage[table,xcdraw]{xcolor}
+\usepackage[table]{xcolor}    % 반드시 먼저 선언
+\definecolor{warningcolor}{RGB}{250,35,64}
+\definecolor{myLightBlue}{RGB}{200,230,255}
+\definecolor{myBlue}{RGB}{0, 102, 202}
+
+
+\definecolor{myGreen}{RGB}{0, 153, 102}   
+\definecolor{myRed}{RGB}{204, 0, 0}   
+\definecolor{aqua}{rgb}{0.0, 1.0, 1.0}
+\definecolor{orange}{RGB}{244,164,71}
+\definecolor{myOrange}{RGB}{244, 130, 50}
+\definecolor{yellow(ryb)}{RGB}{249,195,0}
+\def\thickhline{\noalign{\hrule height.8pt}}
+
+\usepackage{colortbl}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{float}
+\usepackage[most]{tcolorbox}    % most = 주요 서브패키지 한꺼번에
+\tcbuselibrary{breakable}       % 페이지 넘어가도 이어지는 상자
+
+\newtcolorbox{prompt}[2][]{
+    colback=gray!20,
+    colframe=white,
+    fonttitle=\bfseries\small,
+    boxrule=0.4mm,
+    fontupper=\small, 
+    fontlower=\small,
+    coltitle=white,
+    %sharp corners,
+    title=#2,
+    #1,breakable
+}
+
+
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{commentgray}{gray}{0.4}
+\definecolor{keywordblue}{rgb}{0.26, 0.26, 0.9}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{codebg},
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{keywordblue}\bfseries,
+    commentstyle=\color{commentgray}\itshape,
+    stringstyle=\color{orange},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    framerule=0.5pt,
+    xleftmargin=1em,
+    xrightmargin=1em,
+    tabsize=4
+}
+
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Speak \& Spell: LLM-Driven Controllable Phonetic Error Augmentation for
+Robust Dialogue State Tracking
+}
+
+
+\author{Jihyun Lee$^1$, Solee Im$^3$\thanks{This work was conducted at POSTECH.}, Wonjun Lee$^2$, Gary Geunbae Lee$^{1,2}$ \\
+  $^1$Graduate School of Artificial Intelligence, POSTECH, Republic of Korea\\
+  $^2$Department of Computer Science and Engineering, POSTECH, Republic of Korea\\
+  $^3$KT\\
+  \texttt{\{jihyunlee, lee1jun, gblee\}@postech.ac.kr} \\
+  \texttt{\{solee.im\}@kt.com}
+}
+
+
+
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Dialogue State Tracking (DST) is a key part of task-oriented dialogue systems, identifying important information in conversations. However, its accuracy drops significantly in spoken dialogue environments due to named entity errors from Automatic Speech Recognition (ASR) systems. We introduce a simple yet effective data augmentation method that targets those entities to improve the robustness of DST model. Our novel method can control the placement of errors using keyword-highlighted prompts while introducing phonetically similar errors. As a result, our method generated sufficient error patterns on keywords, leading to improved accuracy in noised and low-accuracy ASR environments.
+\end{abstract}
+\input{introduction}
+\input{method}
+\input{experiment}
+\input{analysis}
+\vspace{-4pt}
+\section{Conclusion}
+\vspace{-4pt}
+
+We propose a novel data augmentation method tailored for DST tasks that ensures sufficient error patterns in both key phrases and overall text. By leveraging LLMs for their controlled text generation capabilities, we strategically place errors within key phrases. Our method demonstrates substantially improved robustness in DST by generating diverse, plausible keyword errors. Error case analysis reveals that keyword augmentation significantly enhances robustness against ASR errors.  As the pioneering research in leveraging LLMs for generating ASR errors, we hope this work lays a strong foundation for future phonetic-based augmentation research.
+
+\section*{Limitations}
+
+Through detailed error analysis, we identified a trade-off introduced by our keyword-focused phonetic augmentation strategy. While the augmentation helps the model become more robust to noisy slot expressions—leading to substantial reductions in "Wrong" errors—it also increases the model’s sensitivity to phonetic variations. As a result, we observed cases where the model hallucinates slot values that were not actually mentioned, thereby increasing the number of "Spurious" errors. This hallucination effect represents a key limitation of our method. We attribute it to the model's repeated exposure to noisy keywords, which may cause it to overgeneralize phonetic cues as valid slot mentions. As a direction for future work, we plan to incorporate an auxiliary loss term for slot presence prediction~\cite{trippy,kim2019efficient} to help the model better distinguish between mentioned and unmentioned slots and mitigate this side effect.
+
+
+\section*{Ethical Considerations}
+Our phonetic augmentation method, while effective for simulating ASR-style errors, may raise several ethical concerns. One such concern is the potential for accent bias, wherein phonetic transformations may disproportionately reflect majority or standard pronunciations, thereby marginalizing regional or minority accents. Another concern is the inadvertent corruption of proper names, particularly those that are less common or culturally specific, which could lead to misrepresentation or reduced inclusivity. We acknowledge these risks and emphasize that our method relies on LLMs trained on diverse and large-scale corpora. As such, the phonetic errors generated are likely to reflect dominant patterns present in mainstream ASR systems, rather than rare or region-specific variations. Nonetheless, we recognize the importance of fairness and inclusivity in language technologies and believe that future work should explore augmentation strategies that are more sensitive to accent and cultural variability.
+
+
+\section*{Acknowledgements}
+This research was supported by the Culture, Sports and Tourism R\&D Program through the Korea Creative Content Agency funded by the Ministry of Culture, Sports and Tourism in 2025 (Project No. RS-2025-02413038, 45\%),
+the IITP-ITRC (Information Technology Research Center) Program funded by the Ministry of Science and ICT (Project No. IITP-2025-RS-2024-00437866, 45\%),
+and the IITP Artificial Intelligence Graduate School Program (POSTECH) funded by the Ministry of Science and ICT (Project No. RS-2019-II191906, 10\%).
+
+
+
+
+
+
+\bibliography{anthology,custom, reference}
+
+\clearpage
+\appendix
+\input{appendix}
+
+
+\end{document}

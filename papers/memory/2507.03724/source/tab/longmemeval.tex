@@ -1,0 +1,25 @@
+\begin{table}[ht]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.3}
+\caption{
+We evaluated our \textsc{MemOS-1031} model against various baselines on the LongMemEval benchmark, all using the same GPT-4o-mini foundation LLM. 
+We report the performance percentage across six key scenarios (single-session preference, single-session assistant, temporal reasoning, multi-session, knowledge update, and single-session user), along with the context tokens used by each method. 
+The results demonstrate that \textsc{MemOS-1031} achieved the best precision in almost all scenarios while maintaining acceptable control over context length.
+}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|ccccccc|c}
+\hline
+method      & \makecell{content \\ tokens}    & \makecell{ single-session \\ preference$\uparrow$} & \makecell{single-session \\ assistant $\uparrow$} & \makecell{temporal \\ reasoning $\uparrow$}   & \makecell{multi- \\ session $\uparrow$} & \makecell{knowledge \\ update $\uparrow$} & \makecell{single-session \\ user $\uparrow$}   & overall $\uparrow$ \\ \hline 
+MIRIX       & -                 & 53.3                      & 63.6                      & 25.6                  & 30.1          & 52.6              & 72.9                  & 43.49 \\
+Zep         & 1.6k              & 53.3                      & \textbf{75.0}                      & 54.1                  & 47.4          & 74.4              & 92.9                  & 63.8 \\
+Mem0        & 1.1k              & 90.0                      & 26.8                      & 72.2                  & 63.2          & 66.7              & 82.9                  & 66.4 \\
+Memobase    & 1.5k              & 80.1                      & 23.2                      & 75.9                  & 66.9          & \textbf{89.7}     & 92.9                  & 72.4 \\ 
+Supermemory & 0.4k              & 89.9                      & 58.9                      & 44.4                  & 52.6          & 55.1              & 85.7                  & 58.4 \\
+MemU        & 0.5k              & 76.7                      & 19.6                      & 17.3                  & 42.1          & 41.0              & 67.1                  & 38.4 \\   
+\rowcolor[HTML]{EFEFEF} \textsc{MemOS-1031}       & 1.4k              & \textbf{96.7}             & 67.9             & \textbf{77.4}         & \textbf{70.7} & 74.3              & \textbf{95.7}         & \textbf{77.8} \\ \hline
+\end{tabular}
+}
+
+\label{tab:longmemeval}
+\end{table}

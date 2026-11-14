@@ -1,0 +1,221 @@
+\section{Commitment Extraction Rules}
+\label{app:commitment-extractor}
+
+\noindent\textbf{Overview.}
+For each candidate query $y$, we define its commitment set $S(y)$ as a finite set of clause-scoped atomic units extracted from the parsed SQL abstract syntax tree. Each unit records a localized semantic decision expressed by the query, covering what is projected, which predicates are imposed, which grouping keys are used, and how the results are ordered. We obtain these units by traversing the abstract syntax tree produced by \texttt{sqlglot} and applying the per-scope emission rules in Table~\ref{tab:atomic-units}.
+
+\namedpara{Extraction procedure.}
+Algorithm~\ref{alg:commitment-extraction} constructs $S(y)$ using a scope-aware traversal. Each worklist entry pairs a query block with its scope path. Clause-level units are emitted only from the current scope, while immediate subqueries and set-operation branches are assigned distinct child paths and processed independently through the worklist.
+
+\begin{table*}[t]
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\linewidth}{@{}p{0.14\linewidth} X p{0.37\linewidth}@{}}
+\toprule
+\textbf{Scope} & \textbf{Emission rule} & \textbf{Example} \\
+\midrule
+\texttt{WHERE}
+& Emit each conjunct after top-level \texttt{AND} decomposition; keep predicates
+  under \texttt{OR} or \texttt{NOT} intact.
+& \sql{WHERE a=1 AND b=2} $\to$ \{\sql{a=1}, \sql{b=2}\} \\
+
+\texttt{SELECT}
+& Emit each \texttt{SELECT} item; \texttt{SELECT *} is one marker.
+& \sql{SELECT c, AVG(v)} $\to$ \{\sql{c}, \sql{AVG(v)}\} \\
+
+\texttt{GROUP BY}
+& Emit each grouping expression.
+& \sql{GROUP BY c, d} $\to$ \{\sql{c}, \sql{d}\} \\
+
+\texttt{ORDER BY}
+& Emit each ordering expression with its direction.
+& \sql{ORDER BY v DESC} $\to$ \{\sql{v DESC}\} \\
+
+\texttt{HAVING}
+& Emit each conjunct after top-level \texttt{AND} decomposition.
+& \sql{HAVING COUNT(*)>5} $\to$ \{\sql{COUNT(*)>5}\} \\
+
+\texttt{LIMIT}/\texttt{OFFSET}
+& Emit the clause with its numeric argument.
+& \sql{LIMIT 10} $\to$ \{\sql{LIMIT 10}\} \\
+\bottomrule
+\end{tabularx}
+\vspace{-2.5mm}
+\caption{Scope-specific emission rules for constructing the commitment set $S(y)$. Each emitted unit is paired with its query-scope path and canonicalized into value-preserving and structural forms before insertion for drift testing.}
+\label{tab:atomic-units}
+\vspace{-3mm}
+\end{table*}
+
+\namedpara{Value and structural forms.}
+Each emitted unit is stored in two forms. The value form preserves literal values, such as \sql{region = 'West'}, while the structural form replaces literals with placeholders, such as \sql{region = ?}. The non-monotonicity test in \S\ref{subsec:drift} compares value forms: a follow-up is marked as drift when $S(y_{\mathrm{pre}}) \nsubseteq S(y_{\mathrm{post}})$. We use the structural form only to identify value-level edits: a retracted unit and a newly introduced unit share the same structure but differ only in their literal values.
+
+
+\begin{algorithm}[t]
+\captionsetup{
+    font=footnotesize,
+    labelfont=bf,
+    textfont=normalfont
+}
+\caption{Commitment Extraction}
+\label{alg:commitment-extraction}
+\small
+\renewcommand{\arraystretch}{1.08}
+
+\begin{tabularx}{\linewidth}{
+    @{}r@{\hspace{0.75em}}
+    >{\raggedright\arraybackslash}X@{}
+}
+
+\multicolumn{2}{@{}l}{
+    \textbf{Require:} Candidate SQL query $y$
+} \\
+
+\multicolumn{2}{@{}l}{
+    \textbf{Ensure:} Commitment set $S(y)$
+} \\[2pt]
+
+\multicolumn{2}{@{}l}{
+    \textbf{Notation:}
+} \\[-1pt]
+
+&
+$W$: worklist of query-scope pairs $(q,\pi)$
+\\
+
+&
+$\epsilon$: root scope
+\\
+
+&
+$\pi\oplus\ell$: extend path $\pi$ with location $\ell$
+\\
+
+&
+$\textsc{Branch}(q,j)$: path label for branch $b_j$
+\\[2pt]
+
+&
+\textcolor{gray}{\itshape\% Parse and initialize}
+\\[-1pt]
+
+1: &
+$T\gets\textsc{ParseSQL}(y)$;
+$S\gets\emptyset$;
+$W\gets[(T,\epsilon)]$
+\\[2pt]
+
+&
+\textcolor{gray}{\itshape\% Traverse query scopes}
+\\[-1pt]
+
+2: &
+\textbf{while} $W\neq\emptyset$ \textbf{do}
+\\
+
+3: &
+\hspace*{1.2em}
+$(q,\pi)\gets\textsc{Pop}(W)$
+\\
+
+4: &
+\hspace*{1.2em}
+\textbf{if} $q$ is a set operation \textbf{then}
+\\
+
+5: &
+\hspace*{2.4em}
+\textbf{for each} ordered branch $b_j$ of $q$ \textbf{do}
+\\
+
+6: &
+\hspace*{3.6em}
+$\pi_j\gets\pi\oplus\textsc{Branch}(q,j)$;
+$\textsc{Push}(W,(b_j,\pi_j))$
+\\
+
+7: &
+\hspace*{2.4em}
+\textbf{end for}
+\\
+
+8: &
+\hspace*{2.4em}
+\textbf{continue}
+\\
+
+9: &
+\hspace*{1.2em}
+\textbf{end if}
+\\[2pt]
+
+&
+\textcolor{gray}{\itshape\% Emit current-scope commitments}
+\\[-1pt]
+
+10: &
+\hspace*{1.2em}
+\textbf{for each} current-scope clause node $v$ of $q$
+\textbf{do}
+\\
+
+11: &
+\hspace*{2.4em}
+\textbf{for each} unit $u$ emitted from $v$ by
+Table~\ref{tab:atomic-units} \textbf{do}
+\\
+
+12: &
+\hspace*{3.6em}
+$u^{\mathrm{val}}\gets\textsc{CanonValue}(u)$;
+$u^{\mathrm{str}}\gets\textsc{CanonStruct}(u)$
+\\
+
+13: &
+\hspace*{3.6em}
+$S\gets S\cup
+\{(\pi,u^{\mathrm{val}},u^{\mathrm{str}})\}$
+\\
+
+14: &
+\hspace*{2.4em}
+\textbf{end for}
+\\
+
+15: &
+\hspace*{1.2em}
+\textbf{end for}
+\\[2pt]
+
+&
+\textcolor{gray}{\itshape\% Enqueue nested subqueries}
+\\[-1pt]
+
+16: &
+\hspace*{1.2em}
+\textbf{for each} immediate subquery $q_j$ at $\ell_j$ in $q$
+\textbf{do}
+\\
+
+17: &
+\hspace*{2.4em}
+$\pi_j\gets\pi\oplus\ell_j$;
+$\textsc{Push}(W,(q_j,\pi_j))$
+\\
+
+18: &
+\hspace*{1.2em}
+\textbf{end for}
+\\
+
+19: &
+\textbf{end while}
+\\[2pt]
+
+20: &
+\textbf{return} $S$
+\\
+
+\end{tabularx}
+
+\end{algorithm}

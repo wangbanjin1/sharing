@@ -1,0 +1,70 @@
+\section{Extended Formalization}
+\label{app:formalization}
+
+\paragraph{Harness and residual knowledge.}
+The fixed harness $H$ contains the executor implementation, system prompt,
+available tools, environment interface, and retrieval mechanism. In our
+implementation, $H$ is instantiated by \texttt{pi-agent}, and its action space
+contains only bash commands. We use \emph{residual procedural knowledge} for
+any reusable condition, action, implementation detail, or error path that
+improves execution but is absent from $H$. This definition is operational: a
+knowledge item is residual if it can be learned from a rollout and changes
+later task execution without changing the model or harness.
+
+\paragraph{Round update.}
+For the $n=127$ benchmark tasks $Q=\{q_i\}_{i=1}^{n}$, the execute phase under $M_r$
+produces rollout batch $B_r$, the set $\{\tau_i^r\}_{i=1}^{n}$ in which
+$\tau_i^r$ is the trace of the attempt at $q_i$ during round $r$. A feedback function $E$ maps each rollout and its
+resulting environment state to $f_i^r$. Scope $S$ selects passed checkpoint
+evidence only or both passed and failed checkpoint evidence. The consolidate
+phase applies
+\[
+M_{r+1}=C\!\left(M_r,
+  \{(\tau_i^r,f_i^r)\mid q_i\in Q\};S\right).
+\]
+The memory store remains frozen within an execute phase, so all rollouts in one
+batch use the same $M_r$; updates become visible only in the next round.
+
+\paragraph{Procedural sufficiency.}
+A consolidated procedure should specify (i) its purpose, (ii) conditions under
+which it applies, (iii) executable actions and implementation details, and
+(iv) recovery behavior when an action fails. Consolidation is successful when
+it transforms multiple rollout-specific observations into a procedure that
+improves execution on other tasks sharing those conditions. This criterion
+permits different surface representations while excluding pure replay as the
+target behavior.
+
+\begin{table}[th]
+\caption{\textbf{Memory types and evaluation requirements.} Procedural memory
+differs because repeated trials should refine a reusable action policy, and its
+quality is established by execution rather than recall.}
+\label{tab:memory-types}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}lXXX@{}}
+\toprule
+ & Episodic & Semantic & Procedural \\
+\midrule
+Stored content &
+Specific event and context &
+General fact or concept &
+Condition-action procedure \\
+Repeated trials &
+Remain distinct events &
+Duplicate facts merge &
+Refine one reusable procedure \\
+Failure value &
+Another event &
+Wrong facts are discarded &
+Reveals missing conditions or error paths \\
+Generalization target &
+Event recall &
+Concept-level recall &
+Execution across task instantiations \\
+Primary evaluation &
+Recall accuracy &
+Recall accuracy &
+Execution success \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,0 +1,17 @@
+{
+   "sources" : [
+      {
+         "usage" : "toplevel",
+         "filename" : "IEEE_TNNLS_2024.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "lrec-coling2024-example.bib"
+      }
+   ],
+   "spec_version" : 1,
+   "texlive_version" : "2025",
+   "process" : {
+      "compiler" : "pdflatex"
+   }
+}

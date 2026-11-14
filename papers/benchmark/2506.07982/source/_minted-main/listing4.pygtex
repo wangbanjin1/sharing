@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+Domain: airline
+Reason for call:
+    You want to book a one\PYGZhy{}way flight from ORD to PHL on May 26.
+Known info:
+    Your name is Sophia Silva.
+    Your user id is sophia\PYGZus{}silva\PYGZus{}7557.
+Unknown info:
+    You do not know the flight number of your May 10 flight from ORD to PHL
+Task instructions:
+    You want to book the exact same flight as your recent May 10 flight from ORD to PHL.
+    You do not want any other flight.
+    You don\PYGZsq{}t have any baggages, but want to add an extra passenger Kevin Smith, DOB 2001\PYGZhy{}04\PYGZhy{}12.
+    You are ok with economy and want aisle and a middle seat together. You are willing to pay up to \PYGZdl{}500 for the purchase.
+    If and only if the price is above \PYGZdl{}500, drop the second passenger and book only for yourself.
+    If the agent asks, you only want a one\PYGZhy{}way ticket, not roundtrip.
+    You don\PYGZsq{}t need any travel insurance.
+    You want to pay using only one of your certificates.
+    You do not accept any other mode of payment.
+\end{Verbatim}

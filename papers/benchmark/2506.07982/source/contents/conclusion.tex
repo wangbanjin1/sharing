@@ -1,0 +1,10 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We present \bench that generalizes \taubench by introducing the dual-control setting and found a substantial performance drop in LLMs due to coordination and communication requirements, highlighting these as critical bottlenecks over pure reasoning capabilities for solving user requests.
+
+Works remains to be done to improve the user simulator. Although we have shown that augmenting users with curated tools can help avoid critical errors, we have not yet investigated how this method could be applied to the existing \airline and \retail domains. Doing so would pave the way towards a more generic solution to ensuring high quality user simulator. 
+
+Extending domain coverage for the benchmark still heavily relies on human experts. For benchmarking methods to be adopted by industry, providing much needed standards, it is critical to further investigate how to automate the domain curation process.
+
+One important limitation of \bench is that it does not explicitly model the expert-novice gap inherent to most customer support tasks. When interacting with a naive user, an expert must understand the user's mental model and adapt explanations accordingly. Assessing and improving the AI agent's abilities to bridge this gap is a promising direction for future work and \bench provides a strong starting point for such explorations.

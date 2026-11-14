@@ -1,0 +1,66 @@
+\begin{table*}[t]
+\centering
+\small
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{llccc|cccc}
+\toprule
+\multirow{2}{*}{\textbf{Backbone}} &
+\multirow{2}{*}{\textbf{Method}}
+& \multicolumn{3}{c|}{\textbf{SkillsBench}}
+& \multicolumn{4}{c}{\textbf{ALFWorld}}\\
+\cmidrule(lr){3-5} \cmidrule(lr){6-9}
+& & R $\uparrow$ & T $\downarrow$ & S $\downarrow$
+& Success $\uparrow$ & Steps $\downarrow$ & Tokens $\downarrow$ & Runtime $\downarrow$ \\
+\midrule
+
+\multirow{5}{*}{\textbf{MiniMax-M2.7}}
+& Vanilla Skills
+& 21.61 & 798,323 & 469.3
+& 59.3 & 21.24 & 152,242.1 & 55.95s \\
+& Vector Skills
+& 13.07 & \underline{722,765} & 439.5
+& 63.9 & 18.36 & \underline{55,816.6} & 55.71s \\
+& GoS
+& 23.50 & 735,113 & \underline{399.4}
+& \underline{68.6} & 20.26 & 62,033.9 & \underline{54.22s} \\
+& SkillDAG
+& \textbf{27.09} & 979,781 & 476.1
+& 63.3 & \textbf{16.37} & 296,512.4 & 137.38s \\
+& \textbf{Ours}
+& \underline{25.14} & \textbf{721,926} & \textbf{360.5}
+& \textbf{70.7} & \underline{18.29} & \textbf{45,785.7} & \textbf{51.56s} \\
+
+
+\midrule
+
+\multirow{5}{*}{\textbf{GPT-5.2-Codex}}
+& Vanilla Skills
+& 28.87 & 2,785,485 & \underline{686.8}
+& 84.9 & \underline{14.65} & 99,023.9 & 84.57s \\
+& Vector Skills
+& 23.44 & \underline{1,047,698} & 763.4
+& 83.7 & 16.18 & \textbf{47,357.3} & 80.43s \\
+& GoS
+& \underline{37.50} & 1,162,375 & 705.2
+& 85.3 & 16.46 & 48,805.6 & \underline{71.23s} \\
+& SkillDAG
+& 34.38 & 1,370,270 & 861.1
+& \underline{85.7} &\textbf{ 11.73} & 105,449.9 & 169.10s \\
+& \textbf{Ours}
+& \textbf{38.38} & \textbf{980,029} & \textbf{618.7}
+& \textbf{87.1} & 15.07 & \underline{47,409.1} & \textbf{66.01s} \\
+
+
+\bottomrule
+\end{tabular}
+\caption{Main results on SkillsBench and ALFWorld under different backbone models.
+For SkillsBench, R denotes the verifier reward, T denotes average input tokens,
+and S denotes agent-only runtime in seconds. For ALFWorld, Success denotes task
+success rate, while Steps, Tokens, and Runtime denote average environment steps,
+average token consumption, and agent-only runtime, respectively.
+$\uparrow$ indicates higher is better, and $\downarrow$ indicates lower is better.
+Bold numbers indicate the best result within each backbone group and benchmark,
+and underlined numbers indicate the second-best result.}
+\label{tab:main_results}
+\end{table*}

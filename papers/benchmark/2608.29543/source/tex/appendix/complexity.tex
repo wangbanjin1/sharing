@@ -1,0 +1,542 @@
+\section{Ground-Truth SQL Complexity}
+\label{app:complexity}
+
+This appendix substantiates two claims made in \S\ref{sec:experiment}: (a) value-level drift produces post-drift SQL that is structurally identical to the pre-drift query (\S\ref{subsec:interaction-finding}), and (b) constraint-level drift produces the simplest post-drift SQL among the three subtypes (\S\ref{subsec:drift-bottleneck}). We characterize each drift subtype by comparing the pre-drift ground-truth SQL $y_{\mathrm{pre}}^*$ against the post-drift ground-truth SQL $y_{\mathrm{post}}^*$ over all 514 triplets. All anchors parse successfully under our analyzer.
+
+\subsection{Per-Subtype Structural Effects}
+\label{subapp:subtype-effects}
+
+Table~\ref{tab:complexity-subtype} reports the mean change ($\Delta$) in five key structural complexity measures from pre- to post-drift, separately for each drift subtype. Values are means over the corresponding subtype subset; negative values indicate that the post-drift SQL is
+simpler than the pre-drift SQL along that dimension.
+
+
+\namedpara{Value-level.} Every measure shows zero mean change. This is by design: value-level drift only replaces a literal inside a WHERE predicate, with predicate structure and all other commitments preserved (\S\ref{subsec:drift}). The AST validator explicitly enforces this invariant for every candidate during construction, and the tier distribution before and after drift is identical (44/107/24 in basic/intermediate/advanced). For value-level samples, $y_{\mathrm{pre}}^*$ and $y_{\mathrm{post}}^*$ are therefore structurally indistinguishable at the level of these measures, isolating dialogue state itself as the only variable that still differs between the paired Drift-only and Joint samples (\S\ref{subsec:interaction-finding}).
+
+\namedpara{Constraint-level.} WHERE predicates drop by 1.11 on average across constraint-level samples, consistent with the subtype definition (retraction of one or more WHERE predicates without introducing new constraints, \S\ref{subsec:drift}). Token count drops by 7.47, the largest absolute reduction among the three subtypes. Critically, JOIN, aggregation, and subquery structures are all unchanged on average. The tier distribution shifts substantially toward lower complexity (44/104/13 $\to$ 76/79/6 in basic/intermediate/advanced), with roughly 25 samples moving from intermediate to basic. By every measure reported, constraint-level drift yields the simplest post-drift SQL of the three subtypes (used in \S\ref{subsec:drift-bottleneck}).
+
+
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{lccc}
+\toprule
+& \textbf{Value} & \textbf{Constraint} & \textbf{Projection} \\
+& ($n{=}175$) & ($n{=}161$) & ($n{=}178$) \\
+\midrule
+SQL Tokens         & $+0.00$ & $-7.47$ & $-5.87$ \\
+WHERE Predicates   & $+0.00$ & $-1.11$ & $-0.03$ \\
+JOIN Count         & $+0.00$ & $+0.00$ & $-0.03$ \\
+Aggregation Count  & $+0.00$ & $+0.00$ & $-0.26$ \\
+Subquery Depth     & $+0.00$ & $+0.00$ & $-0.01$ \\
+\bottomrule
+\end{tabular}
+\vspace{-2mm}
+\caption{Mean change in structural complexity from $y_{\mathrm{pre}}^*$ to $y_{\mathrm{post}}^*$, by drift subtype. Values are means over the corresponding subtype subset. Negative values indicate reduced post-drift complexity along the corresponding dimension, with zero denoting no change on average.}
+\label{tab:complexity-subtype}
+\vspace{-5mm}
+\end{table}
+
+\namedpara{Projection-level.} Aggregation count drops by 0.26 on average, while WHERE predicates ($-0.03$) and JOIN count ($-0.03$) are effectively unchanged. This matches the subtype definition: changes are confined to SELECT, GROUP BY, ORDER BY, HAVING, LIMIT, or OFFSET, with WHERE predicates preserved (\S\ref{subsec:drift}). The aggregation reduction reflects projection changes that move from aggregate to non-aggregate queries (e.g., from \texttt{SELECT AVG(profit)} to a top-$k$ row listing query), while largely preserving the filtering and join structure.
+
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.45}
+
+\begin{tabular*}{\linewidth}{
+@{}
+c@{\hspace{4pt}}
+l@{\hspace{6pt}}
+c@{\extracolsep{\fill}}
+c c c c c c c c
+@{}
+}
+\toprule
+\multirow{2}{*}{\textbf{\#}}
+& \multicolumn{1}{c@{\hspace{6pt}}}
+  {\multirow{2}{*}{\textbf{Model}}}
+& \multicolumn{4}{c}{\textbf{Chain-only}}
+& \multicolumn{4}{c}{\textbf{Joint}}
+& \multicolumn{1}{c}{\textbf{Drift-only}} \\
+\cmidrule(lr){3-6}
+\cmidrule(lr){7-10}
+\cmidrule(lr){11-11}
+
+& &
+\textbf{L1-IR}
+& \textbf{L2-IR$^p$}
+& \textbf{JIR}
+& \textbf{AR}
+& \textbf{L1-IR}
+& \textbf{L2-IR$^p$}
+& \textbf{JIR}
+& \textbf{AR}
+& \textbf{AR} \\
+\midrule
+1  & Claude-Sonnet-4.6 & 5.6  & 13.8 & 0.6 & 9.7  & 6.0  & 11.1 & 1.4 & 10.5 & 0.4  \\
+2  & Qwen2.5-72B       & 36.2 & 3.3  & 1.2 & 60.1 & 35.8 & 3.9  & 1.8 & 60.7 & 20.0 \\
+3  & o4-mini           & 27.8 & 11.5 & 1.4 & 54.9 & 29.2 & 12.6 & 2.1 & 55.4 & 17.5 \\
+4  & GPT-4o            & 31.3 & 5.3  & 1.4 & 48.2 & 30.0 & 6.2  & 4.1 & 47.3 & 8.9  \\
+5  & GPT-5.4           & 19.5 & 11.7 & 2.5 & 30.0 & 20.0 & 10.9 & 3.1 & 31.7 & 2.5  \\
+6  & Llama-3.3-70B     & 32.7 & 12.1 & 3.7 & 58.2 & 34.0 & 12.1 & 3.3 & 58.0 & 11.1 \\
+7  & o3-mini           & 21.6 & 9.9  & 1.8 & 33.5 & 23.7 & 9.7  & 2.1 & 34.8 & 4.3  \\
+8  & Gemini-2.5-Flash  & 15.6 & 1.2  & 1.2 & 30.5 & 12.6 & 0.4  & 0.4 & 28.8 & 4.1  \\
+9  & Grok-4.1-Fast     & 26.1 & 12.6 & 2.9 & 39.5 & 25.7 & 11.5 & 2.1 & 42.2 & 5.4  \\
+10 & Qwen-Max          & 27.8 & 1.4  & 1.4 & 43.8 & 26.5 & 2.1  & 2.1 & 44.9 & 4.3  \\
+11 & DeepSeek-V4-Flash & 8.4  & 5.1  & 0.4 & 14.6 & 7.8  & 5.1  & 0.6 & 12.8 & 0.8  \\
+12 & Grok-4-Fast       & 18.9 & 11.7 & 1.6 & 34.6 & 18.7 & 11.1 & 1.8 & 36.4 & 5.4  \\
+\bottomrule
+\end{tabular*}
+
+\vspace{-1mm}
+\caption{Chain-layer identification and ask rates (\%) on Chain-only,
+Joint, and Drift-only samples. L1-IR and L2-IR$^p$ measure whether the
+agent identifies the corresponding clarification layer; JIR requires
+both layers to be identified within one trajectory, while AR records
+whether the agent issues any clarification request. L2-IR$^p$ is
+measured under the $p$-protocol with L1 pre-injected; all other metrics
+use the $f$-protocol throughout all
+evaluations.}
+\label{tab:chain-identification}
+\vspace{-1mm}
+\end{table*}
+
+
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.45}
+
+\begin{tabular*}{\linewidth}{
+@{}
+c@{\hspace{4pt}}
+l@{\hspace{6pt}}
+c@{\extracolsep{\fill}}
+c c c c c c c c c
+@{}
+}
+\toprule
+\multirow{2}{*}{\textbf{\#}}
+& \multicolumn{1}{c@{\hspace{6pt}}}
+  {\multirow{2}{*}{\textbf{Model}}}
+& \multicolumn{4}{c}{\textbf{Drift-only DRA}}
+& \multicolumn{4}{c}{\textbf{Joint DRA}}
+& \multicolumn{2}{c}{\textbf{DRR}} \\
+\cmidrule(lr){3-6}
+\cmidrule(lr){7-10}
+\cmidrule(lr){11-12}
+
+& &
+\textbf{Value}
+& \textbf{Constraint}
+& \textbf{Projection}
+& \textbf{All}
+& \textbf{Value}
+& \textbf{Constraint}
+& \textbf{Projection}
+& \textbf{All}
+& \textbf{Drift}
+& \textbf{Joint} \\
+\midrule
+1  & Claude-Sonnet-4.6 & \textbf{53.4} & \underline{48.5} & \textbf{64.0} & \textbf{55.4} & \underline{38.6} & 34.4 & \textbf{55.4} & \textbf{43.0} & \textbf{98.2} & \underline{96.9} \\
+2  & Qwen2.5-72B       & 47.2 & 46.0 & 58.3 & 50.6 & 38.3 & 35.6 & 45.7 & 40.0 & \textbf{98.2} & 95.8 \\
+3  & o4-mini           & 46.6 & 44.2 & 59.4 & 50.2 & \textbf{39.7} & 32.5 & 49.7 & 40.8 & 94.9 & 93.7 \\
+4  & GPT-4o            & \underline{49.4} & 45.1 & \underline{62.3} & \underline{52.4} & 34.1 & 35.0 & 51.4 & 40.3 & 97.3 & \underline{96.9} \\
+5  & GPT-5.4           & 48.3 & 42.3 & 61.7 & 51.0 & 35.8 & 34.4 & \underline{52.6} & \underline{41.1} & 97.3 & 94.7 \\
+6  & Llama-3.3-70B     & 44.9 & 44.8 & 52.0 & 47.3 & 38.1 & \textbf{39.9} & 45.1 & \underline{41.1} & 97.4 & \textbf{97.1} \\
+7  & o3-mini           & 44.3 & 42.3 & 55.4 & 47.5 & 35.2 & 30.1 & 51.4 & 39.1 & 95.7 & 94.9 \\
+8  & Gemini-2.5-Flash  & 44.3 & \textbf{49.7} & 47.4 & 47.1 & 36.4 & \underline{39.3} & 45.7 & 40.5 & 97.4 & 95.7 \\
+9  & Grok-4.1-Fast     & 44.3 & 42.9 & 58.3 & 48.6 & 33.5 & 30.1 & 46.3 & 36.8 & 96.5 & 92.0 \\
+10 & Qwen-Max          & 46.0 & 47.9 & 54.3 & 49.4 & 34.7 & 35.6 & 41.1 & 37.2 & \underline{97.9} & 96.1 \\
+11 & DeepSeek-V4-Flash & 45.5 & 43.6 & 54.3 & 47.9 & 29.0 & 32.5 & 46.9 & 36.2 & 97.3 & 96.7 \\
+12 & Grok-4-Fast       & 40.9 & 37.4 & 57.7 & 45.5 & 29.0 & 28.8 & 47.4 & 35.2 & 96.4 & 93.9 \\
+\bottomrule
+\end{tabular*}
+
+\vspace{-1mm}
+\caption{Drift handling metrics (\%) under the paired factorial design.
+The best and second-best results in each column are highlighted in bold
+and underlined, respectively. Drift-only DRA and Joint DRA are reported
+overall (All) and by drift subtype. The DRR columns report aggregate
+Drift Recognition Rate on Drift-only and Joint samples. Higher values
+indicate more reliable recognition and resolution of injected drift
+across interaction settings.}
+\label{app:drift-handling}
+\vspace{-1mm}
+\end{table*}
+
+\begin{figure*}[t]
+\centering
+\begin{tcolorbox}[
+  width=1.03\textwidth,
+  enhanced,
+  colback=white,
+  colframe=black,
+  boxrule=0.5pt,
+  arc=0.8mm,
+  left=1.6mm,
+  right=1.6mm,
+  top=1.3mm,
+  bottom=1.3mm
+]
+\small
+\setstretch{1.04}
+\setlength{\parskip}{0.32em}
+
+\noindent System prompt.
+
+\noindent
+You are an expert data annotator for a conversational Text-to-SQL benchmark thatstudies chained ambiguity. Your task is to construct CHAIN AMBIGUITY samples on top of the BIRD benchmark.
+
+A chained ambiguity sample is a dialogue where:
+\begin{itemize}[leftmargin=1.35em,itemsep=0.05em,topsep=0.05em]
+    \item A user issues an initially ambiguous question.
+    \item The system asks a first clarification (L1), whose options represent two
+    genuinely plausible interpretations of an abstract business concept.
+    \item The user selects one option, \texttt{L1\_chosen}.
+    \item ONLY AFTER L1 is resolved does a second ambiguity (L2) become meaningful.
+    L2 must be activated by the specific L1 answer, not be a standalone ambiguity.
+    \item The user answers L2, and the system outputs the final SQL, which must
+    match the provided BIRD ground-truth SQL exactly.
+\end{itemize}
+
+\vspace{0.35em}
+\noindent Hard constraints.
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=0.22em,topsep=0.15em,label=C\arabic*.]
+    \item L1 must be a binary choice.
+    \texttt{L1\_options} contains exactly 2 items. Both options must represent
+    plausible user intents: a real user could reasonably have meant either one.
+
+    \item L2 must be a binary choice.
+    \texttt{L2\_options} contains exactly 2 items. Both options must represent
+    plausible user intents: a real user could reasonably have meant either one.
+
+    \item Ground-truth path.
+    \texttt{L1\_chosen} must be the option that, together with
+    \texttt{L2\_chosen}, leads to the BIRD ground-truth SQL. The other L1 option
+    must lead to a different but valid SQL.
+
+    \item Conditional dependency.
+    L2 must become meaningful only after \texttt{L1\_chosen} is selected. Strip
+    any opening reference to \texttt{L1\_chosen} from \texttt{L2\_question}
+    and check the remaining core. If the same core question could be asked under
+    the L1 alternative with the same words, then L2 is independent, not a chain.
+    Redesign.
+
+    \item Content novelty.
+    Each clarification layer must introduce information not already present in
+    the initial question. If a layer only re-asks or narrows concrete concepts,
+    entities, filters, named values, or constraints already stated by the user,
+    redesign it to cover a genuinely new dimension.
+
+    \item Literal placement.
+    Category A literals are ambiguity-relevant literals that operationalize an
+    abstract business term; they must surface through L1 or L2 clarification.
+    Category B literals are context parameters, including LIMIT values, dates,
+    named subjects, places, products, and arbitrary numeric query parameters;
+    they must appear in the initial question. Category C literals are explicitly
+    mapped by the BIRD evidence field and need not appear in the dialogue.
+
+    \item Initial question.
+    The initial question must contain: (a) all Category B literals from the BIRD
+    SQL; (b) the abstract business term whose operationalization is ambiguous;
+    and (c) no Category A literals. It must be ambiguous with respect to L1 only
+    and should not pre-expose L2.
+
+    \item Correspondence to BIRD SQL.
+    The resolved dialogue must fully specify the BIRD ground-truth SQL. Every
+    filter, LIMIT, aggregation, ordering, and join must trace back to either a
+    Category B literal in the initial question, a Category A literal grounded in
+    L1/L2, or a Category C evidence mapping.
+
+    \item Naturalness.
+    User utterances must use natural business language. Users never reference SQL
+    column names, table names, or schema identifiers. Clarification must be at
+    the business-concept level, not the schema-detail level.
+
+    \item Alternative SQL feasibility.
+    Both the L1 alternative and L2 alternative must correspond to SQL actually
+    writable against the provided schema. Do not invent columns, tables, or
+    relationships. For each alternative, verify that the referenced columns,
+    tables, and joins exist in the schema.
+\end{enumerate}
+
+\vspace{0.35em}
+\noindent User prompt template.
+
+\noindent
+Construct a CHAIN AMBIGUITY sample from a BIRD entry containing
+\texttt{db\_id}, \texttt{schema\_ddl}, \texttt{sample\_rows},
+\texttt{bird\_question}, \texttt{bird\_evidence}, \texttt{bird\_sql}, and
+\texttt{complexity\_tier}. Generate the JSON object as specified in the system
+prompt. Remember: L2 must genuinely depend on \texttt{L1\_chosen}; Category B
+literals go in the initial question; Category A literals go in L1/L2; both L1 and
+L2 must introduce new information; every part of the SQL must be grounded; and
+both alternatives must use only the provided schema.
+
+\vspace{0.35em}
+\noindent Output protocol.
+
+\noindent
+Output only a JSON object containing
+\texttt{initial\_ambiguous\_question}, \texttt{L1\_question},
+\texttt{L1\_options}, \texttt{L1\_chosen},
+\texttt{L1\_alternative\_sql\_impact}, \texttt{L2\_question},
+\texttt{L2\_options}, \texttt{L2\_chosen},
+\texttt{L2\_alternative\_sql\_impact},
+\texttt{L1\_user\_answer\_utterance},
+\texttt{L2\_user\_answer\_utterance}, and
+\texttt{chain\_rationale}; no markdown fences, reasoning, prose, or commentary.
+
+\end{tcolorbox}
+\caption{Compressed version of the prompt used to generate chain ambiguity
+samples. The full prompt will be released with the code upon publication.}
+\label{fig:chain-prompt}
+\end{figure*}
+
+
+\begin{figure*}[t]
+\centering
+\begin{tcolorbox}[
+  width=1.03\textwidth,
+  enhanced,
+  colback=white,
+  colframe=black,
+  boxrule=0.5pt,
+  arc=0.8mm,
+  left=1.6mm,
+  right=1.6mm,
+  top=1.3mm,
+  bottom=1.3mm
+]
+\small
+\setlength{\parskip}{0.32em}
+
+\noindent System prompt.
+
+\noindent
+You are a data annotation specialist constructing INTENT DRIFT samples for a
+multi-turn conversational Text-to-SQL benchmark.
+
+\noindent
+Core concept: Intent drift is a non-monotonic change in a user's query intent
+during conversation. Formally, let $S_{\mathrm{pre}}$ be the set of atomic
+commitments encoded in the pre-drift SQL, and $S_{\mathrm{post}}$ be the set of
+atomic commitments encoded in the post-drift SQL. A valid drift requires
+$S_{\mathrm{pre}} \nsubseteq S_{\mathrm{post}}$, i.e., at least one prior
+commitment must be retracted, replaced, or removed. This distinguishes drift from
+cooperative follow-up, which is monotonic.
+
+\vspace{0.35em}
+\noindent Hard rules.
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=0.22em,topsep=0.15em,label=R\arabic*.]
+    \item Non-monotonicity is mandatory.
+    The post-drift SQL must retract, replace, or remove at least one commitment
+    from the pre-drift SQL. Pure additions, such as appending new predicates while
+    keeping all old ones, are not drift.
+
+    \item Drift subtype constraints are strict.
+    The assigned drift subtype is one of three. For value-level,
+    replace exactly one literal value in a WHERE predicate; SELECT, predicate
+    count, and predicate structure must remain identical. For
+    constraint-level, delete one or more top-level WHERE predicates;
+    SELECT must remain identical, and no new predicates or value changes are
+    allowed. For projection-level, change the SELECT projection, including
+    columns, aggregations, ORDER BY, or LIMIT; this SELECT shift must be the
+    dominant change.
+
+    \item Executability.
+    The post-drift SQL must be executable on the given schema, use only existing
+    tables and columns, and follow SQLite dialect.
+
+    \item Non-empty result.
+    The post-drift SQL must return a non-empty result set.
+
+    \item Different result.
+    The post-drift SQL must produce different results from the pre-drift SQL. If
+    both return the same rows, the sample fails.
+
+    \item Natural drift utterance.
+    \texttt{drift\_utterance} must be natural first-person speech, not a
+    mechanical instruction. It should use colloquial transition words such as
+    ``wait'', ``actually'', ``forget that'', ``on second thought'', ``scratch
+    that'', or ``let me change that''. Length: 1--3 sentences.
+
+    \item Projection-level fine-grained subtype.
+    For projection-level only, declare \texttt{intent\_subtype} as either
+    \texttt{aspect\_change} or \texttt{target\_change}. In
+    \texttt{aspect\_change}, the core entities remain the same, while the
+    presentation viewpoint shifts. In \texttt{target\_change}, the core entity,
+    grouping key, FROM tables, or WHERE column set changes.
+\end{enumerate}
+
+\vspace{0.35em}
+\noindent Drift-subtype-specific instructions.
+
+\noindent
+\textbf{Value-level:} replace exactly one literal value in a WHERE predicate,
+such as changing \texttt{year = 2021} to \texttt{year = 2022}. Do not change
+SELECT, GROUP BY, ORDER BY, HAVING, LIMIT, JOIN structure, predicate count,
+operator, or filtered column. The new value must be plausible and must produce a
+different, non-empty result set. The utterance should explicitly signal which
+value is being changed.
+
+\noindent
+\textbf{Constraint-level:} delete one or more top-level AND-joined WHERE
+predicates. Do not change SELECT, GROUP BY, ORDER BY, HAVING, LIMIT, JOIN
+structure, or retained predicate values. Do not remove sub-components of OR
+expressions, and do not remove predicates inside nested subqueries. Avoid peeling
+off predicates that act as single-row structural anchors; the removal should
+broaden an otherwise stable query.
+
+\noindent
+\textbf{Projection-level:} change the SELECT projection in a substantive way,
+such as changing the returned columns, aggregation, GROUP BY, ORDER BY, or
+LIMIT. Declare \texttt{intent\_subtype}. Use \texttt{aspect\_change} when FROM
+tables, WHERE column set, and GROUP BY keys remain identical and only the
+presentation viewpoint shifts. Use \texttt{target\_change} when at least one of
+FROM tables, GROUP BY keys, or WHERE column set differs.
+
+\vspace{0.35em}
+\noindent User prompt template.
+
+\noindent
+Construct a DRIFT INJECTION sample from a BIRD entry containing
+\texttt{db\_id}, \texttt{schema\_ddl}, \texttt{sample\_rows},
+\texttt{bird\_question}, \texttt{bird\_evidence}, \texttt{bird\_sql},
+\texttt{complexity\_tier}, and \texttt{assigned\_drift\_subtype}. The original
+question is the fixed pre-drift user utterance, and \texttt{bird\_sql} is the
+pre-drift SQL. Generate only the user's next turn, \texttt{drift\_utterance}, and
+the corresponding \texttt{post\_drift\_sql}. The output must satisfy the assigned
+drift subtype, executability, non-empty result, different result, and
+non-monotonic commitment change.
+
+\vspace{0.35em}
+\noindent Output protocol.
+
+\noindent
+Output only a JSON object containing
+\texttt{drift\_utterance}, \texttt{post\_drift\_sql},
+\texttt{drift\_subtype\_claimed}, \texttt{intent\_subtype},
+\texttt{pre\_commitments\_narrative},
+\texttt{post\_commitments\_narrative}, and \texttt{drift\_rationale}. If
+\texttt{drift\_subtype\_claimed} is not projection-level, set
+\texttt{intent\_subtype} to null. Return no markdown fences, prose, or commentary
+outside the JSON.
+
+\end{tcolorbox}
+\caption{Compressed version of the prompt used to generate intent drift
+samples. The full prompt will be released with the code upon publication.}
+\label{fig:drift-prompt}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\begin{tcolorbox}[
+  width=1.03\textwidth,
+  enhanced,
+  colback=white,
+  colframe=black,
+  boxrule=0.5pt,
+  arc=0.8mm,
+  left=1.6mm,
+  right=1.6mm,
+  top=1.3mm,
+  bottom=1.3mm
+]
+\small
+\setstretch{1.04}
+\setlength{\parskip}{0.32em}
+
+\noindent System prompt.
+
+\noindent
+You are a text-to-SQL agent. Your task is to understand a user's
+natural-language data question and produce a correct SQL query for the
+database described below.
+
+\vspace{0.35em}
+\noindent Database schema.
+
+\noindent
+\texttt{\{schema\_ddl\}}
+
+\vspace{0.35em}
+\noindent Evidence / domain context.
+
+\noindent
+\texttt{\{evidence\}}. Evidence may be empty for some tasks; if so, rely on
+schema and dialogue alone.
+
+\vspace{0.35em}
+\noindent When to ask vs.\ when to answer.
+
+\noindent
+Carefully read the user's request. If anything is ambiguous or
+under-specified, ask for clarification rather than making assumptions. When
+sufficient information is available, produce the SQL query.
+
+\vspace{0.35em}
+\noindent Clarification rules.
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=0.22em,topsep=0.15em,label=R\arabic*.]
+    \item Ask at most one clarification question per turn. Focus each
+    question on a single ambiguity.
+
+    \item When asking, offer 2--3 discrete options where appropriate to make
+    it easy for the user to choose.
+
+    \item Do not ask about information already determinable from the schema
+    or evidence above.
+
+    \item Do not ask the user to confirm specific table names, column
+    names, or stored values: these are database-internal facts the user
+    does not know.
+\end{enumerate}
+
+\vspace{0.35em}
+\noindent Handling intent change.
+
+\noindent
+If the user changes their request mid-dialogue (e.g., ``actually, instead of
+X, give me Y''), respect the new request and produce the updated SQL based
+on the latest user intent. Do not revert to the original request.
+
+\vspace{0.35em}
+\noindent SQL output rules.
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=0.22em,topsep=0.15em,label=S\arabic*.]
+    \item When producing SQL, the content must contain only the raw SQL
+    query: no explanation, no markdown code fences, no markdown link
+    syntax such as \texttt{[col](url)}.
+
+    \item Produce valid SQLite-compatible SQL unless the schema implies
+    another dialect.
+
+    \item Use the exact column and table names as they appear in the
+    schema, preserving backticks, quotes, and case as shown.
+\end{enumerate}
+
+\vspace{0.35em}
+\noindent Output protocol.
+
+\noindent
+Respond with a single JSON object and nothing else:
+\texttt{\{"type": "ask", "content": <clarification question>\}} or
+\texttt{\{"type": "sql", "content": <complete SQL query>\}}.
+
+\end{tcolorbox}
+\caption{Agent system prompt template used uniformly across all 12 evaluated
+models. \texttt{\{schema\_ddl\}} and \texttt{\{evidence\}} are populated
+per sample.}
+\label{fig:agent-prompt}
+\end{figure*}

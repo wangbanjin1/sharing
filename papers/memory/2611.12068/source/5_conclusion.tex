@@ -1,0 +1,33 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We presented \ours, a multi-agent memory system that keeps complete typed
+records, indexes them with a provenance hypergraph under explicit budgets, and
+runs AutoDream outside the write path to merge duplicate anchors and refine
+skills. It leads the compared systems on four of the five QA benchmarks, two of
+them with AutoDream disabled, reaching 91.4\% on LoCoMo and 72.6\% on
+LongMemEval-S, and it has the highest value on all four metrics for
+cross-domain review summarization on MemoryCD. On LoCoMo, the hypergraph and
+AutoDream each add accuracy over flat memory. As procedural memory, its
+distilled skills lead the compared memory methods in mean success on ALFWorld
+and WebShop, and with GPT-5.2 they reach 49.2\% on MetaClaw-Bench, against
+44.0\% reported for the MetaClaw skill library. With AutoDream disabled, \ours
+answers each question in less time than HyperMem on all five timed benchmarks,
+and on WebShop its skills cost the fewest tokens among the memory methods. One
+store serves both uses, and the system runs with closed and open models without
+fine-tuning. The results suggest that a memory layer can be
+practical, accurate, and efficient at once when complete records remain the
+system of record, the graph is only a bounded index, and consolidation changes
+how evidence is connected rather than what evidence exists. 
+
+\paragraph{Limitations.}
+Our ablations add components in groups. They do not isolate n-ary frames,
+cited source rows, occurrence identities, answer-time verification, or the
+judge, distiller, and curator of procedural memory, so the explanations in \Cref{sec:experiments}
+remain interpretations. The user-memory results come from single runs, partly
+scored by an LLM judge, the agent results average three runs with large
+spreads, and some baselines are values reported by their authors. 
+
+% Building the
+% graph slows the ingestion of long documents, the cost of AutoDream is not yet
+% measured, and the public benchmarks we use do not test months of real use.

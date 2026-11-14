@@ -1,0 +1,320 @@
+@inproceedings{xu-etal-2022-beyond,
+    title = "Beyond Goldfish Memory: Long-Term Open-Domain Conversation",
+    author = "Xu, Jing  and
+      Szlam, Arthur  and
+      Weston, Jason",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-long.356/",
+    doi = "10.18653/v1/2022.acl-long.356",
+    pages = "5180--5197",
+    abstract = "Despite recent improvements in open-domain dialogue models, state of the art models are trained and evaluated on short conversations with little context. In contrast, the long-term conversation setting has hardly been studied. In this work we collect and release a human-human dataset consisting of multiple chat sessions whereby the speaking partners learn about each other`s interests and discuss the things they have learnt from past sessions. We show how existing models trained on existing datasets perform poorly in this long-term conversation setting in both automatic and human evaluations, and we study long-context models that can perform much better. In particular, we find retrieval-augmented methods and methods with an ability to summarize and recall previous conversations outperform the standard encoder-decoder architectures currently considered state of the art."
+}
+
+@inproceedings{xu-etal-2022-long,
+    title = "Long Time No See! Open-Domain Conversation with Long-Term Persona Memory",
+    author = "Xu, Xinchao  and
+      Gou, Zhibin  and
+      Wu, Wenquan  and
+      Niu, Zheng-Yu  and
+      Wu, Hua  and
+      Wang, Haifeng  and
+      Wang, Shihang",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL 2022",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.findings-acl.207/",
+    doi = "10.18653/v1/2022.findings-acl.207",
+    pages = "2639--2650",
+    abstract = "Most of the open-domain dialogue models tend to perform poorly in the setting of long-term human-bot conversations. The possible reason is that they lack the capability of understanding and memorizing long-term dialogue history information. To address this issue, we present a novel task of Long-term Memory Conversation (LeMon) and then build a new dialogue dataset DuLeMon and a dialogue generation framework with Long-Term Memory (LTM) mechanism (called PLATO-LTM). This LTM mechanism enables our system to accurately extract and continuously update long-term persona memory without requiring multiple-session dialogue datasets for model training. To our knowledge, this is the first attempt to conduct real-time dynamic management of persona information of both parties, including the user and the bot. Results on DuLeMon indicate that PLATO-LTM can significantly outperform baselines in terms of long-term dialogue consistency, leading to better dialogue engagingness."
+}
+
+@inproceedings{maharana-etal-2024-evaluating,
+    title = "Evaluating Very Long-Term Conversational Memory of {LLM} Agents",
+    author = "Maharana, Adyasha  and
+      Lee, Dong-Ho  and
+      Tulyakov, Sergey  and
+      Bansal, Mohit  and
+      Barbieri, Francesco  and
+      Fang, Yuwei",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.747/",
+    doi = "10.18653/v1/2024.acl-long.747",
+    pages = "13851--13870",
+    abstract = "Existing works on long-term open-domain dialogues focus on evaluating model responses within contexts spanning no more than five chat sessions. Despite advancements in long-context large language models (LLMs) and retrieval augmented generation (RAG) techniques, their efficacy in very long-term dialogues remains unexplored. To address this research gap, we introduce a machine-human pipeline to generate high-quality, very long-term dialogues by leveraging LLM-based agent architectures and grounding their dialogues on personas and temporal event graphs. Moreover, we equip each agent with the capability of sharing and reacting to images. The generated conversations are verified and edited by human annotators for long-range consistency and grounding to the event graphs. Using this pipeline, we collect LoCoMo, a dataset of very long-term conversations, each encompassing 600 turns and 16K tokens on avg., over up to 32 sessions. Based on LoCoMo, we present a comprehensive evaluation benchmark to measure long-term memory in models, encompassing question answering, event summarization, and multi-modal dialogue generation tasks. Our experimental results indicate that LLMs exhibit challenges in understanding lengthy conversations and comprehending long-range temporal and causal dynamics within dialogues. Employing strategies like long-context LLMs or RAG can offer improvements but these models still substantially lag behind human performance."
+}
+
+@inproceedings{du-etal-2024-perltqa,
+    title = "{P}er{LTQA}: A Personal Long-Term Memory Dataset for Memory Classification, Retrieval, and Fusion in Question Answering",
+    author = "Du, Yiming  and
+      Wang, Hongru  and
+      Zhao, Zhengyi  and
+      Liang, Bin  and
+      Wang, Baojun  and
+      Zhong, Wanjun  and
+      Wang, Zezhong  and
+      Wong, Kam-Fai",
+    editor = "Wong, Kam-Fai  and
+      Zhang, Min  and
+      Xu, Ruifeng  and
+      Li, Jing  and
+      Wei, Zhongyu  and
+      Gui, Lin  and
+      Liang, Bin  and
+      Zhao, Runcong",
+    booktitle = "Proceedings of the 10th SIGHAN Workshop on Chinese Language Processing (SIGHAN-10)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.sighan-1.18/",
+    pages = "152--164",
+    abstract = "In conversational AI, effectively employing long-term memory improves personalized and consistent response generation. Existing work only concentrated on a single type of long-term memory, such as preferences, dialogue history, or social relationships, overlooking their interaction in real-world contexts. To this end, inspired by the concept of semantic memory and episodic memory from cognitive psychology, we create a new and more comprehensive Chinese dataset, coined as PerLTQA, in which world knowledge, profiles, social relationships, events, and dialogues are considered to leverage the interaction between different types of long-term memory for question answering (QA) in conversation. Further, based on PerLTQA, we propose a novel framework for memory integration in QA, consisting of three subtasks: \textbf{Memory Classification}, \textbf{Memory Retrieval}, and \textbf{Memory Fusion}, which provides a comprehensive paradigm for memory modeling, enabling consistent and personalized memory utilization. This essentially allows the exploitation of more accurate memory information for better responses in QA. We evaluate this framework using five LLMs and three retrievers. Experimental results demonstrate the importance of personal long-term memory in the QA task"
+}
+
+@inproceedings{yin-etal-2023-read,
+    title = "Did You Read the Instructions? Rethinking the Effectiveness of Task Definitions in Instruction Learning",
+    author = "Yin, Fan  and
+      Vig, Jesse  and
+      Laban, Philippe  and
+      Joty, Shafiq  and
+      Xiong, Caiming  and
+      Wu, Chien-Sheng",
+    editor = "Rogers, Anna  and
+      Boyd-Graber, Jordan  and
+      Okazaki, Naoaki",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-long.172/",
+    doi = "10.18653/v1/2023.acl-long.172",
+    pages = "3063--3079",
+    abstract = "Large language models (LLMs) have shown impressive performance in following natural language instructions to solve unseen tasks. However, it remains unclear whether models truly understand task definitions and whether the human-written definitions are optimal. In this paper, we systematically study the role of task definitions in instruction learning. We first conduct an ablation analysis informed by human annotations to understand which parts of a task definition are most important, and find that model performance only drops substantially when removing contents describing the task output, in particular label information. Next, we propose an automatic algorithm to compress task definitions to a minimal supporting set of tokens, and find that 60{\%} of tokens can be removed while maintaining or even improving model performance. Based on these results, we propose two strategies to help models better leverage task instructions: (1) providing only key information for tasks in a common structured format, and (2) adding a meta-tuning stage to help the model better understand the definitions. With these two strategies, we achieve a 4.2 Rouge-L improvement over 119 unseen test tasks."
+}
+
+@inproceedings{budzianowski-etal-2018-multiwoz,
+    title = "{M}ulti{WOZ} - A Large-Scale Multi-Domain {W}izard-of-{O}z Dataset for Task-Oriented Dialogue Modelling",
+    author = "Budzianowski, Pawe{\l}  and
+      Wen, Tsung-Hsien  and
+      Tseng, Bo-Hsiang  and
+      Casanueva, I{\~n}igo  and
+      Ultes, Stefan  and
+      Ramadan, Osman  and
+      Ga{\v{s}}i{\'c}, Milica",
+    editor = "Riloff, Ellen  and
+      Chiang, David  and
+      Hockenmaier, Julia  and
+      Tsujii, Jun{'}ichi",
+    booktitle = "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+    month = oct # "-" # nov,
+    year = "2018",
+    address = "Brussels, Belgium",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D18-1547/",
+    doi = "10.18653/v1/D18-1547",
+    pages = "5016--5026",
+    abstract = "Even though machine learning has become the major scene in dialogue research community, the real breakthrough has been blocked by the scale of data available. To address this fundamental obstacle, we introduce the Multi-Domain Wizard-of-Oz dataset (MultiWOZ), a fully-labeled collection of human-human written conversations spanning over multiple domains and topics. At a size of 10k dialogues, it is at least one order of magnitude larger than all previous annotated task-oriented corpora. The contribution of this work apart from the open-sourced dataset is two-fold:firstly, a detailed description of the data collection procedure along with a summary of data structure and analysis is provided. The proposed data-collection pipeline is entirely based on crowd-sourcing without the need of hiring professional annotators;secondly, a set of benchmark results of belief tracking, dialogue act and response generation is reported, which shows the usability of the data and sets a baseline for future studies."
+}
+
+@inproceedings{wei-etal-2018-airdialogue,
+    title = "{A}ir{D}ialogue: An Environment for Goal-Oriented Dialogue Research",
+    author = "Wei, Wei  and
+      Le, Quoc  and
+      Dai, Andrew  and
+      Li, Jia",
+    editor = "Riloff, Ellen  and
+      Chiang, David  and
+      Hockenmaier, Julia  and
+      Tsujii, Jun{'}ichi",
+    booktitle = "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+    month = oct # "-" # nov,
+    year = "2018",
+    address = "Brussels, Belgium",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D18-1419/",
+    doi = "10.18653/v1/D18-1419",
+    pages = "3844--3854",
+    abstract = "Recent progress in dialogue generation has inspired a number of studies on dialogue systems that are capable of accomplishing tasks through natural language interactions. A promising direction among these studies is the use of reinforcement learning techniques, such as self-play, for training dialogue agents. However, current datasets are limited in size, and the environment for training agents and evaluating progress is relatively unsophisticated. We present AirDialogue, a large dataset that contains 301,427 goal-oriented conversations. To collect this dataset, we create a context-generator which provides travel and flight restrictions. We then ask human annotators to play the role of a customer or an agent and interact with the goal of successfully booking a trip given the restrictions. Key to our environment is the ease of evaluating the success of the dialogue, which is achieved by using ground-truth states (e.g., the flight being booked) generated by the restrictions. Any dialogue agent that does not generate the correct states is considered to fail. Our experimental results indicate that state-of-the-art dialogue models can only achieve a score of 0.17 while humans can reach a score of 0.91, which suggests significant opportunities for future improvement."
+}
+
+@inproceedings{liu-etal-2023-g,
+    title = "{G}-Eval: {NLG} Evaluation using Gpt-4 with Better Human Alignment",
+    author = "Liu, Yang  and
+      Iter, Dan  and
+      Xu, Yichong  and
+      Wang, Shuohang  and
+      Xu, Ruochen  and
+      Zhu, Chenguang",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.153/",
+    doi = "10.18653/v1/2023.emnlp-main.153",
+    pages = "2511--2522",
+    abstract = "The quality of texts generated by natural language generation (NLG) systems is hard to measure automatically. Conventional reference-based metrics, such as BLEU and ROUGE, have been shown to have relatively low correlation with human judgments, especially for tasks that require creativity and diversity. Recent studies suggest using large language models (LLMs) as reference-free metrics for NLG evaluation, which have the benefit of being applicable to new tasks that lack human references. However, these LLM-based evaluators still have lower human correspondence than medium-size neural evaluators. In this work, we present G-Eval, a framework of using large language models with chain-of-thoughts (CoT) and a form-filling paradigm, to assess the quality of NLG outputs. We experiment with two generation tasks, text summarization and dialogue generation. We show that G-Eval with GPT-4 as the backbone model achieves a Spearman correlation of 0.514 with human on summarization task, outperforming all previous methods by a large margin. We also propose analysis on the behavior of LLM-based evaluators, and highlight the potential concern of LLM-based evaluators having a bias towards the LLM-generated texts."
+}
+
+@article{reddy-etal-2019-coqa,
+    title = "{C}o{QA}: A Conversational Question Answering Challenge",
+    author = "Reddy, Siva  and
+      Chen, Danqi  and
+      Manning, Christopher D.",
+    editor = "Lee, Lillian  and
+      Johnson, Mark  and
+      Roark, Brian  and
+      Nenkova, Ani",
+    journal = "Transactions of the Association for Computational Linguistics",
+    volume = "7",
+    year = "2019",
+    address = "Cambridge, MA",
+    publisher = "MIT Press",
+    url = "https://aclanthology.org/Q19-1016/",
+    doi = "10.1162/tacl_a_00266",
+    pages = "249--266",
+    abstract = "Humans gather information through conversations involving a series of interconnected questions and answers. For machines to assist in information gathering, it is therefore essential to enable them to answer conversational questions. We introduce CoQA, a novel dataset for building Conversational Question Answering systems. Our dataset contains 127k questions with answers, obtained from 8k conversations about text passages from seven diverse domains. The questions are conversational, and the answers are free-form text with their corresponding evidence highlighted in the passage. We analyze CoQA in depth and show that conversational questions have challenging phenomena not present in existing reading comprehension datasets (e.g., coreference and pragmatic reasoning). We evaluate strong dialogue and reading comprehension models on CoQA. The best system obtains an F1 score of 65.4{\%}, which is 23.4 points behind human performance (88.8{\%}), indicating that there is ample room for improvement. We present CoQA as a challenge to the community at \url{https://stanfordnlp.github.io/coqa}."
+}
+
+@inproceedings{zhang-choi-2021-situatedqa,
+    title = "{S}ituated{QA}: Incorporating Extra-Linguistic Contexts into {QA}",
+    author = "Zhang, Michael  and
+      Choi, Eunsol",
+    editor = "Moens, Marie-Francine  and
+      Huang, Xuanjing  and
+      Specia, Lucia  and
+      Yih, Scott Wen-tau",
+    booktitle = "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2021",
+    address = "Online and Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.emnlp-main.586/",
+    doi = "10.18653/v1/2021.emnlp-main.586",
+    pages = "7371--7387",
+    abstract = "Answers to the same question may change depending on the extra-linguistic contexts (when and where the question was asked). To study this challenge, we introduce SituatedQA, an open-retrieval QA dataset where systems must produce the correct answer to a question given the temporal or geographical context. To construct SituatedQA, we first identify such questions in existing QA datasets. We find that a significant proportion of information seeking questions have context-dependent answers (e.g. roughly 16.5{\%} of NQ-Open). For such context-dependent questions, we then crowdsource alternative contexts and their corresponding answers. Our study shows that existing models struggle with producing answers that are frequently updated or from uncommon locations. We further quantify how existing models, which are trained on data collected in the past, fail to generalize to answering questions asked in the present, even when provided with an updated evidence corpus (a roughly 15 point drop in accuracy). Our analysis suggests that open-retrieval QA benchmarks should incorporate extra-linguistic context to stay relevant globally and in the future. Our data, code, and datasheet are available at \url{https://situatedqa.github.io/}."
+}
+
+@inproceedings{zhong-etal-2022-training,
+    title = "Training Language Models with Memory Augmentation",
+    author = "Zhong, Zexuan  and
+      Lei, Tao  and
+      Chen, Danqi",
+    editor = "Goldberg, Yoav  and
+      Kozareva, Zornitsa  and
+      Zhang, Yue",
+    booktitle = "Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2022",
+    address = "Abu Dhabi, United Arab Emirates",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.emnlp-main.382/",
+    doi = "10.18653/v1/2022.emnlp-main.382",
+    pages = "5657--5673",
+    abstract = "Recent work has improved language models (LMs) remarkably by equipping them with a non-parametric memory component. However, most existing approaches only introduce mem-ories at testing time or represent them using a separately trained encoder, resulting in suboptimal training of the language model. In this work, we present TRIME, a novel yet simple training approach designed for training LMs with memory augmentation. Our approach uses a training objective that directly takes in-batch examples as accessible memory. We also present new methods for memory construction and data batching, which are used for adapting to different sets of memories{---}local, long-term, and external memory{---}at testing time. We evaluate TRIME on multiple language modeling and machine translation benchmarks and show that it is able to achieve significant improvements across all the settings. Concretely, TRIME reduces the perplexity from 18.70 to 15.37 on WIKITEXT-103, by effectively leveraging a large memory set from the training corpus. Compared to standard LM training, TRIME adds negligible computational overhead and is compatible with different neural architectures, making it a versatile solution for training memory-augmented LMs."
+}
+
+@inproceedings{shi-etal-2024-replug,
+    title = "{REPLUG}: Retrieval-Augmented Black-Box Language Models",
+    author = "Shi, Weijia  and
+      Min, Sewon  and
+      Yasunaga, Michihiro  and
+      Seo, Minjoon  and
+      James, Richard  and
+      Lewis, Mike  and
+      Zettlemoyer, Luke  and
+      Yih, Wen-tau",
+    editor = "Duh, Kevin  and
+      Gomez, Helena  and
+      Bethard, Steven",
+    booktitle = "Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)",
+    month = jun,
+    year = "2024",
+    address = "Mexico City, Mexico",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.naacl-long.463/",
+    doi = "10.18653/v1/2024.naacl-long.463",
+    pages = "8371--8384",
+    abstract = "We introduce REPLUG, a retrieval-augmented language modeling framework that treats the language model (LM) as a black box and augments it with a tuneable retrieval model. Unlike prior retrieval-augmented LMs that train language models with special cross-attention mechanisms to encode the retrieved text, REPLUG simply prepends retrieved documents to the input for the frozen black-box LM. This simple design can be easily applied to any existing language models. Furthermore, we show that the LM can be used to supervise the retrieval model, which can then find documents that help the LM make better predictions. Our experiments demonstrate that REPLUG with the tuned retriever significantly improves the performance of GPT-3 (175B) on language modeling by 6.3{\%}, as well as the performance of Codex on five-shot MMLU by 5.1{\%}. Code is publicly released at github.com/swj0419/REPLUG."
+}
+
+@inproceedings{tao-etal-2006-language,
+    title = "Language Model Information Retrieval with Document Expansion",
+    author = "Tao, Tao  and
+      Wang, Xuanhui  and
+      Mei, Qiaozhu  and
+      Zhai, ChengXiang",
+    editor = "Moore, Robert C.  and
+      Bilmes, Jeff  and
+      Chu-Carroll, Jennifer  and
+      Sanderson, Mark",
+    booktitle = "Proceedings of the Human Language Technology Conference of the {NAACL}, Main Conference",
+    month = jun,
+    year = "2006",
+    address = "New York City, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N06-1052/",
+    pages = "407--414"
+}
+
+@inproceedings{xu-etal-2023-baize,
+    title = "Baize: An Open-Source Chat Model with Parameter-Efficient Tuning on Self-Chat Data",
+    author = "Xu, Canwen  and
+      Guo, Daya  and
+      Duan, Nan  and
+      McAuley, Julian",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.385/",
+    doi = "10.18653/v1/2023.emnlp-main.385",
+    pages = "6268--6278",
+    abstract = "Chat models, such as ChatGPT, have shown impressive capabilities and have been rapidly adopted across numerous domains. However, these models are only accessible through a restricted API, creating barriers for new research and progress in the field. We propose a pipeline that can automatically generate a high-quality multi-turn chat corpus by leveraging ChatGPT to engage in a conversation with itself. Subsequently, we employ parameter-efficient tuning to enhance LLaMA, an open-source large language model. The resulting model, named Baize, demonstrates good performance in multi-turn dialogues with guardrails that minimize potential risks. Additionally, we propose a new technique called Self-Distill with Feedback, to further improve the performance of the Baize models with feedback from ChatGPT."
+}
+
+@inproceedings{muennighoff-etal-2023-mteb,
+    title = "{MTEB}: Massive Text Embedding Benchmark",
+    author = "Muennighoff, Niklas  and
+      Tazi, Nouamane  and
+      Magne, Loic  and
+      Reimers, Nils",
+    editor = "Vlachos, Andreas  and
+      Augenstein, Isabelle",
+    booktitle = "Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics",
+    month = may,
+    year = "2023",
+    address = "Dubrovnik, Croatia",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.eacl-main.148/",
+    doi = "10.18653/v1/2023.eacl-main.148",
+    pages = "2014--2037",
+    abstract = "Text embeddings are commonly evaluated on a small set of datasets from a single task not covering their possible applications to other tasks. It is unclear whether state-of-the-art embeddings on semantic textual similarity (STS) can be equally well applied to other tasks like clustering or reranking. This makes progress in the field difficult to track, as various models are constantly being proposed without proper evaluation. To solve this problem, we introduce the Massive Text Embedding Benchmark (MTEB). MTEB spans 8 embedding tasks covering a total of 58 datasets and 112 languages. Through the benchmarking of 33 models on MTEB, we establish the most comprehensive benchmark of text embeddings todate. We find that no particular text embedding method dominates across all tasks. This suggests that the field has yet to converge on a universal text embedding method and scale it up sufficiently to provide state-of-theart results on all embedding tasks. MTEB comes with open-source code and a public leaderboard at \url{https://github.com/embeddings-benchmark/mteb}."
+}

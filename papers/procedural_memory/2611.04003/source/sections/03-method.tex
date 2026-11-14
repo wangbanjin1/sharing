@@ -1,0 +1,122 @@
+\section{Method}
+\label{sec:method}
+
+
+We target recurring enterprise workflows in which a task attempt can
+modify a shared environment and relevant organization-specific procedures
+may be absent from the initial agent harness.
+Let $M_r$ denote the persistent memory store at round $r$, $B_r$ a batch
+of execution traces, $F_r$ the corresponding environment or human
+feedback, and $S$ the ingestion scope governing which traces and feedback
+are eligible for consolidation. A consolidation method $C$ updates the
+store as
+\begin{equation}
+    M_{r+1}=C(M_r,B_r,F_r;S).
+    \label{eq:consolidation}
+\end{equation}
+The goal is to capture residual procedural knowledge not already encoded
+in the fixed harness. Consolidation transforms many rollout-specific
+observations into fewer reusable procedures by merging repeated evidence,
+correcting inaccurate knowledge, and retaining distinct lessons when their
+conditions or remedies differ. The model parameters, harness, and executor
+loop remain fixed; methods differ only in their memory representation and
+consolidation operation. After consolidation on training tasks, the store
+is frozen and evaluated by the checkpoint and task completion rates the
+agent achieves on test tasks.
+
+\subsection{\method{} Consolidation Method}
+\label{sec:wasp-method}
+
+\method{} is a memory-consolidation and retrieval method for training-free
+continual learning that organizes execution traces and feedback into
+persistent, interlinked procedural wiki pages at different granularities and
+retrieves them to guide future execution, drawing on the idea of an
+LLM-maintained wiki as a personal knowledge base \citep{karpathy2026llmwiki}.
+\method{} initializes a wiki filesystem with no initial procedural content and
+mandatory control files such as \texttt{index.md}, which serves as a
+high-level router over the wiki pages. A \method{} consolidator agent creates,
+organizes, revises, or removes pages and their links during consolidation.
+Three interface operations are provided:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt,topsep=3pt]
+    \item \textbf{Ingestion.} Given a raw agent-session \texttt{.jsonl} file
+    and optional asynchronously produced natural-language feedback, the
+    \method{} agent spawns a subagent that reviews the session trace to
+    identify actionable observations retrospectively, then uses them to add,
+    update, or remove pages and links.
+    \item \textbf{Query.} During both consolidation and execution, agents begin
+    from \texttt{index.md} and combine semantic search with shell navigation to
+    locate relevant pages and follow inter-page relationships, such as related
+    conditions, actions, and outcomes; the semantic-search index is rebuilt
+    after each consolidation phase.
+    \item \textbf{Lint.} Prompt-based rules and scripts direct the agent to
+    scrutinize generalizability, reusability, ambiguity, excessive page length,
+    link integrity, and conflicts, and to determine whether pages should be
+    split, merged, or relinked.
+\end{itemize}
+
+\paragraph{\method{} variants.}
+\emph{Free Form} is the basic \method{} instantiation described above. Each
+page is markdown with a minimal metadata header, such as its title, brief
+description, and last-modified time; the consolidator decides the remaining
+page structure and content. \emph{Schema Form} adds prescriptive,
+human-designed organization: pages must be Procedures, Actions, or Lessons,
+each with fixed fields and enumerated options. Both \emph{Free Form} and
+\emph{Schema Form} read the existing wiki before writing and therefore perform
+implicit, agent-managed deduplication. \emph{Schema Form-ED} further adds explicit deduplication
+rules: each session is first processed independently into candidate pages,
+after which a separate normalization, matching, and merge stage consolidates
+candidates before committing them to the persistent store. \emph{Schema Form}
+and \emph{Schema Form-ED} thus represent increasing levels of upfront
+prescriptive knowledge organization.
+
+
+\subsection{Controlled Consolidation Design Space}
+\label{sec:design-space}
+
+To identify which consolidation choices improve downstream execution and where
+human and system effort is most rewarding, we vary four dimensions
+systematically while holding the remaining factors fixed.
+
+\paragraph{Consolidation method.}
+We compare the three \method{} variants above with four baselines. \emph{No
+Memory} executes without assistance from any long-term memory, while \emph{No
+Consolidation} stores raw execution traces and retrieves the most similar trace
+without abstraction or integration. \emph{Insights} distills each session into
+abstract procedural insights \citep{insights} and stores them in a flat
+collection, with no cross-session deduplication, verification, or
+reconciliation. \emph{SkillX} constructs a knowledge base in the form of agent
+skills organized at three levels: planning, functional, and atomic
+\citep{skillx}. This hierarchy is prescriptive, analogous to imposing a page
+schema: each planning skill forms an independent procedural hierarchy, and
+reusable functional or atomic skills are not deduplicated into a shared pool
+across those hierarchies.
+
+\paragraph{Feedback type.}
+Feedback determines what evidence the consolidator has for deciding whether an
+execution was correct and why it succeeded or failed. We construct a ladder
+from \emph{Self-Judge}, which uses only the agent's own assessment, to external
+\emph{Checkpoint-binary} feedback that localizes success and failure to
+individual checkpoints within the task, and \emph{Checkpoint-binary + Human}
+feedback that additionally provides natural-language diagnosis. This separates
+the value of an external outcome signal from the value of diagnostic
+explanation.
+
+\paragraph{Ingestion scope.}
+Ingestion scope determines which experiences are eligible for consolidation.
+\emph{Success-only} admits evidence from successful executions, whereas
+\emph{Both} also admits failed traces and their feedback. Failure traces become
+useful when outcome or diagnostic feedback distinguishes a reusable procedural
+lesson from incidental unsuccessful behavior.
+
+\paragraph{Refinement rounds.}
+Refinement rounds control whether memory is consolidated once or repeatedly
+revised as further execution traces become available. R0 serves as the
+no-memory baseline, R1 performs the first consolidation, and R2--R4 repeatedly
+execute against and update the same persistent store, allowing knowledge to be
+corroborated, corrected, or extended over time. Appendix~\ref{app:methods}
+specifies the complete controlled matrix and protocols.
+
+
+
+

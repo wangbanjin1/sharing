@@ -1,0 +1,96 @@
+
+
+\begin{table*}[tbh]
+    \centering
+    \caption{
+            Overview of evaluation datasets. 
+            We select datasets that cover various important long-context capabilities. In the table, we underline the datasets we constructed ourselves. AvgL.: Average Context Length (measured using the GPT-4o-mini model's tokenizer).
+    }
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{lllll}
+            \toprule
+            \textbf{Category} & \textbf{Dataset}   & \textbf{Metrics} & \textbf{AvgL.} & \textbf{Description} \\
+
+            \midrule
+            \multirow{4}{7em}{\textbf{Accurate Retrieval}} 
+            & SH-Doc QA         & \multirow{4}{*}{Accuracy} & 197K & Single-Hop Gold passage retrieval QA.  \\
+            & MH-Doc QA         &  & 421K & Multiple-Hop Gold passage retrieval QA.  \\
+            & LongMemEval (S*)  &  & 355K & Dialogues based QA.  \\
+            & EventQA           &  & 534K & Novel multiple-choice QA on characters events. \\
+
+            \midrule
+            \multirow{6}{7em}{\textbf{Test-time Learning}} & BANKING77  &  \multirow{5}{*}{Accuracy} & \multirow{5}{*}{103K} & Banking intent classification, 77 labels. \\
+            & CLINC150 &  &  & Intent classification, 151 labels. \\
+            & NLU &  &  & Task intent classification, 68 labels. \\
+            & TREC Coarse &  &  & Question type classification, 6 labels. \\
+            & TREC Fine &  &  & Question type classification, 50 labels. \\
+            & Movie Recommendation  & Recall@5 & 1.44M & Recommend movies based on provided dialogues examples. \\
+
+             \midrule
+            \multirow{2}{8em}{\textbf{Long Range Understanding}} 
+            & $\infty$Bench-Sum & F1-Score   & 172K & Novel summarization with entity replacement.   \\
+            & Detective QA      & Accuaracy        & 124K & Long-range reasoning QA on detective novels.   \\
+
+            \midrule
+            \multirow{2}{7em}{\textbf{Selective Forgetting}}  & FactConsolidation-SH   & \multirow{2}{*}{Accuracy}     & \multirow{2}{*}{262K} &   Single hop reasoning in facts judgment.  \\
+            & FactConsolidation-MH  &      &  & Multiple hop reasoning in facts judgment. \\
+            \bottomrule
+        \end{tabular}
+        }
+    \label{tab:dataset_overview_details}
+\end{table*}
+
+\section{\ours}
+
+\subsection{Dataset Preperation}
+In this section, we describe how we reconstruct existing datasets and build new ones for evaluating each competency aspect. All datasets with their categories are shown in Table \ref{tab:dataset_overview_details}. We introduce the details in datasets curation in Appendix~\ref{sec:details_of_datasets}. 
+
+\vspace{-8pt}
+\paragraph{Datasets for Accurate Retrieval (AR)}
+We adopt four datasets to evaluate the accurate retrieval capability of memory agents. Three are reconstructed from existing benchmarks, and one is newly created: (1) \textbf{Document Question Answering}: This is a NIAH-style QA task where a long passage contains single (SH-QA) or multiple (MH-QA) documents answering the input question. The agent must identify and extract relevant snippets from the extended context. (2) \textbf{LongMemEval}: This benchmark evaluates memory agents on long dialogue histories. Although task types like information extraction (IE) or multi-session reasoning are included, most tasks can be reformulated as single-retrieval problems requiring agents to retrieve the correct segments spanning a long multi-turn conversation. We reformulated chat history into five long dialogues ($\sim$355K tokens) with 300 questions (LongMemEval (S*) in Table ~\ref{tab:dataset_overview_details}). We create LongMemEval (S*) specifically for increasing the number of questions per context, mitigating the exhaustive needs of reconstructing the memory for each question. (3) \textbf{EventQA (ours)}: We introduce EventQA this reasoning style NIAH task to evaluate agents’ ability to recall and reason about temporal sequences in long-form narratives. In this dataset, the agent is required to read a novel and select the correct event from a series of candidates after receiving up-to five previous events. Unlike other long-range narrative text datasets that require extensive manual annotation~\citep{infinitebench, detectiveqa}, our dataset is built through a fully automated pipeline, making the process more efficient and scalable. Moreover, this pipeline can be directly applied to other novel-style texts. 
+
+
+\vspace{-8pt}
+
+\paragraph{Datasets for Test-Time Learning (TTL)}
+We evaluate TTL via two task categories: (1) \textbf{Multi-Class Classification (MCC)}: We reconstructed five classification datasets used in prior TTL work~\citep{icl,HELMET}: BANKING77~\citep{banking77}, CLINC150~\citep{clinic150}, TREC-Coarse, TREC-Fine~\citep{trec}, and NLU~\citep{nlu}. Each task requires the agent to map sentences to class labels, leveraging previously seen labeled examples in context. (2) \textbf{Recommendation}: Based on the setup from \citep{redial, LLM_Zeroshot_Recsys}, we construct a dataset to evaluate movie recommendation via dialogue history. The agent is exposed to thousands of movie-related dialogue turns and is asked to recommend twenty relevant movies based on the long interaction history.
+
+\vspace{-8pt}
+\paragraph{Datasets for Long Range Understanding (LRU)} We evaluate LRU via two tasks: (1) \textbf{Novel Summarization (Summ.)}: We adopt the Summarization task \texttt{En.Sum} from $\infty$-Bench~\citep{infinitebench}. The agent is required to analyze and organize the plot and characters of the novel, and then compose a summary of 1000 to 1200 words. (2) \textbf{Detective QA (Det QA)}: We also create a difficult question set from Detective QA~\citep{detectiveqa}, which include ten novels with 71 questions and these questions require agents to do reasoning over a longer narrative range.
+
+\vspace{-8pt}
+\paragraph{Datasets for Selective Forgetting (SF)}
+To assess whether an agent can forget out of date memory and reason over them, we construct a new dataset called FactConsolidation. Specifically, We build this benchmark using counterfactual edit pairs from \textsc{MQUAKE}~\citep{mquake}. Each pair contains a true fact and a rewritten, contradictory version. These are ordered such that the rewritten (new) fact appears after the original, simulating a realistic update scenario. We concatenate multiple such edit pairs to create long contexts of length {6K, 32K, 64K, 262K}. We then adpot MQUAKE’s original questions and categorize them into: (1) \textbf{FactConsolidation-SH (Ours)} (SH means Single-Hop), requiring direct factual recall (e.g., “Which country was tool $A$ created in?”), and (2) \textbf{FactConsolidation-MH (Ours)} (MH refers to Multi-Hop), requiring inference over multiple facts (e.g., “What is the location of death of the spouse of person $B$?”). 
+Agents are prompted to prioritize later information in case of conflict and reason based on the final memory state. This setup directly evaluates the strength and consistency of selective forgetting over long sequences.
+
+
+
+\subsection{Different Categories of Memory Agents}
+\label{sub:various_memory_agents}
+
+We evaluate three major types of memory agents that reflect common strategies for handling long-term information: \emph{Long-Context Agents}, \emph{RAG Agents}, and \emph{Agentic Memory Agents}. These approaches differ in how they store, retrieve, and reason over past inputs. 
+
+\textbf{(1) Long Context Agents}
+Modern language models often support extended context windows ranging from 128K to over 1M tokens. A straightforward strategy for memory is to maintain a context buffer of the most recent tokens. For example, in a model with a 128K-token limit, the agent concatenates all incoming chunks until the total exceeds the window size. Once the limit is reached, the earliest chunks are evicted in a FIFO (first-in, first-out) manner. This agent design relies solely on positional recency and assumes the model can attend effectively over the current context window. \textbf{(2) RAG Agents}
+RAG-based agents address context limitations by storing past information in an external memory pool and retrieving relevant content as needed. We consider three RAG variants: \emph{Simple RAG Agents}: All input chunks are stored as raw text. During inference, a keyword or rule-based string matching mechanism retrieves relevant passages. \emph{Embedding-based RAG Agents}: Each input chunk is embedded and saved. At query time, the agent embeds the query and performs retrieval using cosine similarity between embeddings. \emph{Structure-Augmented RAG Agents}: After ingesting all input chunks, the agent constructs a structured representation (e.g., knowledge graph or event timeline). Subsequent queries are answered based on this structured memory. \textbf{(3) Agentic Memory Agents}
+Agentic memory agents extend beyond static memory stores by employing agentic loops—iterative reasoning cycles in which the agent may reformulate questions, perform memory lookups, and update its working memory. These agents are designed to simulate a more human-like process of recalling, verifying, and integrating knowledge.
+
+\subsection{Datasets and Agents Formulation}
+
+\paragraph{Datasets Formulation}
+We standardize all datasets into the format: ${c_1, c_2, \cdots, c_n}$ (chunks), ${q_1, q_2, \cdots, q_m}$ (questions), and ${a_1, a_2, \cdots, a_m}$ (answers), where $c_i$ denotes the $i$-th chunk wrapped to construct a user message with instructions of memorizing the content in a sequential input, and ${c_1, c_2, \cdots, c_n}$ represents a single conversation. Each chunk is accompanied by instructions prompting the agent to memorize its contents. Example prompts are provided in Appendix~\ref{sub:instructions_for_memory_construction}. When curating datasets like EventQA and FactConsolidation, we deliberately design scenarios where multiple questions follow a single context. This allows us to probe the model’s memory multiple times with one sequential injection. For example, in LME (S*), five contexts are paired with 300 questions (shown in Table \ref{tab:datasets} in Appendix \ref{sec:details_of_datasets}). This design choice reflects a key trend: as LLMs support increasingly long context windows and memory agents become more capable of handling extended inputs, evaluation datasets must also scale accordingly. Injecting 1M tokens for just one question is resource-inefficient, whereas associating the same input with many questions provides significantly higher utility. 
+
+
+\paragraph{Prompt Formulation and Interaction Protocol} Unlike standard long-context evaluations that input raw text, we wrap all input chunks within a simulated User-Assistant dialogue to explicitly trigger the agent's memory mechanism. Each input chunk $c_i$ is preceded by a memorization instruction (e.g., ``Please memorize it and I will ask some questions...'') to establish a clear intent for information storage. Simultaneously, for each specific dataset, we carefully curated the instructions to ensure agents accurately comprehend the task intent and execute the required actions.  Crucially, for the Selective Forgetting competency, we introduce explicit guardrails in the prompt. We explicitly instruct agents that facts are indexed by serial numbers, and that ``\textit{newer facts have larger serial numbers.}''. The agents are mandated to solve conflicts by finding the newest fact (see Appendix ~\ref{sec:prompts} for full templates).
+
+
+
+
+
+\paragraph{Agents Formulation} 
+In our framework, all agents are required to take the chunks one by one, absorb them into memory, and incrementally update the memory. After seeing all the chunks, we ask the agent to answer the related questions. To guarantee fair comparison, we employed standardized prompt templates across all agents within each evaluation category, with only minimal adaptations where necessary. 
+
+% \vspace{-6pt}
+
+% Although some of the datasets mentioned above were originally designed for long-context modeling, we preprocess them by splitting the documents into smaller chunks and wrapping them into a dialogue format between a user and a memory agent. This setup mirrors realistic human–agent interaction scenarios. For instance, a user might read several chapters of a novel in one day and ask the agent to remember them by issuing a request like “Please memorize this novel context.” On a later day, the user may ask the memory agent to recall specific narrative details (Accurate Retrieval) or to summarize certain chapters of the novel (Long-Range Understanding). Our benchmark is designed to comprehensively evaluate whether the memory agent can truly handle and make use of the user-provided memory content. \yuanzhe{need to simplify}
+

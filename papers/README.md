@@ -1,41 +1,92 @@
 # papers/ 资料目录
 
-本目录存放论文与 benchmark 原始材料，**按种类分目录**。原始材料由用户提供并先自行阅读，我方只在其后做归类、整理与产出。
+本目录存放论文、LaTeX 转换后的 Markdown 与开源代码仓，**按三个核心类别分目录管理**。每篇论文均遵循「先拉取论文 + LaTeX Markdown + 开源仓 $\rightarrow$ 用户先精读 $\rightarrow$ 总结单篇复现级素材 $\rightarrow$ 合入主报告」的流程。
 
-## 目录结构
+## 一、目录结构
 
-| 目录 | 放什么 | 例 |
-|---|---|---|
-| `inbox/` | 新到、尚未归类的材料。落地后在此暂存，归类时再移动 | 刚下载的 PDF |
-| `memory/` | 记忆系统与上下文管理 | MemoryOS、MemOS、Mem0、MemoryBank、MIRIX、MemGPT |
-| `benchmark/` | 评测基准、数据集、用户模拟器 | PersonaMem-v3、τ²-bench、LoCoMo、LongMemEval、IN3 |
-| `agent/` | Agent 能力：推理、自省、工具使用、多智能体 | Reflexion、ReAct、ExpeL、Self-Refine |
-| `notes/` | 我方产出的讲义、综述、拆解 | `memory_summary.md`（七套记忆系统精读）；`reading_notes.md`（四篇精读索引）＋ `papers/`（01 Mem0 / 02 τ² / 03 PersonaMem / 04 Reflexion / 05 数据集 / 06 横向 / 07 工程坑，七篇各自成文件）；`datasets.md`（数据集图鉴索引）＋ `datasets/`（01 LoCoMo / 02 τ 系 / 03 PersonaMem-v3 / 04 六个能力基准，另含总表、抄什么、仓库清单）；`PROGRESS.md`（学习进度：逐篇完成度、产出清单、待补项、引分口径） |
+| 目录                 | 放什么                                                                                                                            | 代表工作                                                                                                               |
+|:-------------------- |:--------------------------------------------------------------------------------------------------------------------------------- |:---------------------------------------------------------------------------------------------------------------------- |
+| `memory/`            | **记忆分层底座、事实记忆（Semantic）与情景记忆（Episodic）系统**：架构分层、抽取更新、热度晋升、时序图谱、记忆巩固与遗忘          | `CoALA`、`Mem0`、`MemoryOS`、`Zep / Graphiti`、`A-MEM`、`MemOS`、`MIRIX`、`Epistemics of Agent Memory`                 |
+| `procedural_memory/` | **程序记忆（Procedural）与经验规则提炼**：从成功与失败轨迹中归纳调参规则、工作流（Workflows）、策略记忆与防负迁移治理             | `ReasoningBank`、`AWM`、`Experience-Following`、`WASP-Mem`、`SPEM`、`REM`                                              |
+| `benchmark/`         | **评测基准、合成数据集与受控用户模拟器**：长程记忆评测、单轮多意图/否定排除、多轮改口、主动反问消歧、双端协同排障（Dual-Control） | `PersonaMem-v3`、`τ²-bench`、`LoCoMo-Plus`、`LongMemEval`、`MemoryAgentBench`、`IntentDelta`、`IN3`、`ClarifyMT-Bench` |
+| `repos/`             | **各论文配套的官方开源代码仓与评测数据集仓**                                                                                      | `mem0`、`MemoryOS`、`graphiti`、`PersonaMem-v3`、`tau2-bench`、`locomo` 等                                             |
+| `notes/`             | **单篇复现级精读素材与横向拆解笔记**                                                                                              | `notes/papers/`（单篇论文精读）、`notes/datasets/`（数据集拆解）、`notes/memory_summary.md`                            |
+| `inbox/`             | 新到、尚未归类的临时材料                                                                                                          | 刚下载的原始文件                                                                                                       |
 
-## 命名约定
+## 二、命名与工具约定
 
-- 原始材料：`<简称>_<年份>.<ext>`，年份取论文首次公开年。例：`PersonaMem-v3_2026.pdf`
-- 我方笔记：`notes/<简称>_notes.md`，与材料同名以便对应
-- 一篇论文有多种格式（pdf / html / 补充材料）时，统一放同一目录，用后缀区分：`Mem0_2025.pdf`、`Mem0_2025_supp.pdf`
+1. **原始论文与 LaTeX 源码转换**：
+   - PDF 命名：`<简称>_<年份>.pdf`（如 `MemoryOS_2025.pdf`）；
+   - LaTeX 转 Markdown：统一通过 `arxiv-doc-builder` 拉取源码包转出，保留附录 System Prompt、伪代码与公式。
+2. **精读与写作配套 Skills**：
+   - 拆记忆系统与程序记忆：`paper-explainer`（复现级深度 + 章节/图表/公式原文坐标锚点）；
+   - 拆评测集 Benchmark：`benchmark-research-skill`（提取数据构造、任务切分、指标算式与 Baseline 矩阵）；
+   - 中文表达与润色：`humanizer-zh`（去除铺垫、假对比与空泛修饰，保留事实边界与确定程度）。
 
-## 阅读地图
+---
 
-`reading_plan.md` 是这轮阅读的导读：每篇的定位、读之前先定的判断问题、读法（哪几节精读）、配套工作、以及**读完后该给我什么材料**。四篇的读序与对应关系见该文件开头的总览表。
+## 三、2024–2026 论文与开源仓精读总清单（共 42 篇，分四梯队）
 
-## 清单
+> 除保留 `CoALA`（TMLR 2024 正式发表）作为“工作记忆 + 语义/情景/程序三类长期记忆”的分类底座外，其余 2023 年早期论文均已替换为 2024–2026 年工作。
 
-状态含义：**已给材料** = 用户已提供原始文件；**待给** = 在阅读清单里但材料未到；**已产出** = 我方已有对应笔记。
+### 1. P0 梯队：核心理论、主力记忆架构与评测底座（7 篇）
 
-| 分类 | 简称 | 全称 / 主题 | 出处 | 材料 | 状态 | 关联 |
-|---|---|---|---|---|---|---|
-| benchmark | PersonaMem-v3 | 全平台个人智能基准（GIST-Bench 起底，31 类任务） | arXiv:2608.21381 | `benchmark/PersonaMem-v3_2026.pdf` | PDF 不完整（正文已从 HTML 版读全，图表待补） | `notes/papers/03_personamem_v3.md` |
-| benchmark | τ²-bench | 双端控制的工具调用基准（Dec-POMDP，114 题电信域） | arXiv:2506.07982 | `benchmark/tau2-bench_2025.pdf` | 已给材料 | `notes/papers/02_tau2_bench.md` |
-| agent | Reflexion | 言语化反思与情节记忆（NeurIPS 2023） | arXiv:2303.11366 | `agent/Reflexion_2023.pdf` | 已给材料 | `notes/papers/04_reflexion.md` |
-| memory | Mem0 | 抽取—更新两段式事实记忆 | arXiv:2504.19413 | `memory/Mem0_2025.pdf` | 已给材料 | `notes/papers/01_mem0.md` |
-| memory | MemoryOS / MemOS / MemoryBank / MIRIX | 分页调度 / 资源治理 / 遗忘曲线 / 多智能体分库 | 见 `notes/memory_summary.md` §9 | — | 已产出笔记 | `notes/memory_summary.md` |
+| 优先级   | 归类目录             | 论文简称           | 年份与出处      | arXiv ID     | 在主报告中支撑的核心机制与章节                                                                                                                    | 本地文件状态                                                                                 | 开源仓状态（`repos/`）                       |
+|:-------- |:-------------------- |:------------------ |:--------------- |:------------ |:------------------------------------------------------------------------------------------------------------------------------------------------- |:-------------------------------------------------------------------------------------------- |:-------------------------------------------- |
+| **P0-1** | `memory/`            | **CoALA**          | 2024-02 (TMLR)  | `2309.02427` | **3.1 / 3.2 节底座**：短期工作记忆（`Working`）+ 长期语义/情景/程序记忆（`Semantic / Episodic / Procedural`）四分层与 `Retrieval / Learning` 流转 | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `00_coala.md`](notes/papers/00_coala.md)                 | 已有 `repos/awesome-language-agents`         |
+| **P0-2** | `memory/`            | **Mem0**           | 2025-04         | `2504.19413` | **3.3.2 节表 3.2**：两阶段事实抽取与 `ADD / UPDATE / DELETE / NOOP` 冲突消解、图记忆 `Mem0g`、以及开源仓 V3 实现对账                              | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `01_mem0.md`](notes/papers/01_mem0.md)                   | 已有 `repos/mem0`、`repos/memory-benchmarks` |
+| **P0-3** | `memory/`            | **MemoryOS**       | 2025-06 (EMNLP) | `2506.06326` | **3.3.1 节核心**：`STM → MTM（段页式话题聚合）→ LPM` 三级演进、$\text{Fscore}$ 合并阈值、$\text{Heat}$ 热度晋升与指数衰减                         | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `02_memoryos.md`](notes/papers/02_memoryos.md)           | 已有 `repos/MemoryOS`                        |
+| **P0-4** | `memory/`            | **Zep / Graphiti** | 2025-01         | `2501.13956` | **3.3.2 / 3.3.4 节**：Episode / Entity / Community 三层时序知识图谱、双时间戳 $[t_{\text{valid}}, t_{\text{invalid}})$ 有效期接替（不物理删旧边） | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `03_zep_graphiti.md`](notes/papers/03_zep_graphiti.md)   | 已有 `repos/graphiti`                        |
+| **P0-5** | `procedural_memory/` | **ReasoningBank**  | 2025-09         | `2509.25140` | **3.3.3 节核心**：同时从成功与失败轨迹中提炼结构化策略记忆，支撑测试时自演进                                                                      | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `04_reasoningbank.md`](notes/papers/04_reasoningbank.md) | 已有 `repos/ReasoningBank`                   |
+| **P0-6** | `benchmark/`         | **PersonaMem-v3**  | 2026-07         | `2608.21381` | **1.1 方向一 / 2.5 / 2.6 / 4.2 节**：200 用户 4 类演化轨迹（稳定/消退/新增/偶发）、95% 隐式日志+5% 对话合成、积分晋升阈值与 4 项一票否决判分      | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `05_personamem_v3.md`](notes/papers/05_personamem_v3.md) | 已有 `repos/PersonaMem-v3`                   |
+| **P0-7** | `benchmark/`         | **$\tau^2$-bench** | 2025-06         | `2506.07982` | **1.1 方向五 / 1.3 节**：Dec-POMDP 用户-Agent 双端协同排障（电信域 114 题）、受控模拟器、数据库与设备终态比对及 $\text{Pass}^k$                   | ✅ 已完成 PDF + LaTeX 源码 + [精读笔记 `06_tau2_bench.md`](notes/papers/06_tau2_bench.md)     | 已有 `repos/tau2-bench`、`repos/tau-bench`   |
 
-## 维护规则
+### 2. P1 梯队：2024–2026 记忆系统演进与程序记忆治理（9 篇）
 
-1. 用户给材料 → 先落 `inbox/`，按命名约定改名，再在清单登记一行。
-2. 归类时移动到对应目录，同时更新"材料"列路径。
-3. 能读到原文才填参数与数字；拿不到原文的字段留空并标 `待补`，不用二手信息回填。
+| 优先级   | 归类目录             | 论文简称                           | 年份与出处             | arXiv ID                    | 在主报告中支撑的核心机制与章节                                                                                                                                                                                                                   | 对应开源仓                                                                                                       |
+|:-------- |:-------------------- |:---------------------------------- |:---------------------- |:--------------------------- |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |:---------------------------------------------------------------------------------------------------------------- |
+| **P1-1** | `memory/`            | **A-MEM**                          | 2025-02 (NeurIPS)      | `2502.12110`                | **3.3.2 / 3.4 节**：仿 Zettelkasten 卡片盒结构化记录、新记录写入自动建链并反向更新旧记录上下文描述                                                                                                                                               | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `07_amem.md`](notes/papers/07_amem.md)                                       |
+| **P1-2** | `memory/`            | **MemOS**                          | 2025-07                | `2507.03724`                | **3.3.2 节表 3.2**：`MemCube` 统一元数据容器、激活/明文/参数三层计算介质由 `MemScheduler` 动态升降级                                                                                                                                             | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `08_memos.md`](notes/papers/08_memos.md)                                     |
+| **P1-3** | `memory/`            | **MIRIX & MIRIX-2.0**              | 2025-07 / 2026-11      | `2507.07957` / `2611.12068` | **3.2 / 3.4 节**：工程级六类分库（`Core / Episodic / Semantic / Procedural / Resource / Vault`）、保血缘 $n$ 元超图索引与 AutoDream 巩固                                                                                                         | ✅ 已完成双篇 PDF + LaTeX MD + [精读笔记 `09_mirix.md`](notes/papers/09_mirix.md)                                 |
+| **P1-4** | `memory/`            | **Memory in the Age of AI Agents** | 2025-12                | `2512.13564`                | **3.1 / 3.2 节综述支撑**：按存储形态、功能（事实/经验/工作记忆）与生命周期三维统一梳理 2025–2026 记忆系统                                                                                                                                        | ✅ 已完成 PDF + MD + [精读笔记 `10_memory_age_of_ai_agents.md`](notes/papers/10_memory_age_of_ai_agents.md)       |
+| **P1-5** | `memory/`            | **Epistemics of Agent Memory**     | 2026-09                | `2609.33013`                | **3.3.4 节**：长周期记忆巩固决策（保留、压缩、抽象为规则或遗忘）的度量与治理（`G1-G4`）                                                                                                                                                          | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `11_epistemics_agent_memory.md`](notes/papers/11_epistemics_agent_memory.md) |
+| **P1-6** | `procedural_memory/` | **AWM (Agent Workflow Memory)**    | 2024-09 (ICML 2025)    | `2409.07429`                | **3.3.3 节**：从历史轨迹离线/在线归纳可复用任务工作流（Workflows）写入程序记忆                                                                                                                                                                   | ✅ 已完成 PDF + LaTeX MD + [精读笔记 `12_awm.md`](notes/papers/12_awm.md)                                         |
+| **P1-7** | `procedural_memory/` | **Experience-Following Study**     | 2025-05                | `2505.16067`                | **3.3.3 / 3.3.4 节**：实证分析强经验跟随特性下错误自举传播与失配经验重放，提出选择性写入与下游免费质量标签历史淘汰 + ✅ 已完成 LaTeX 源码 + [精读笔记 `13_experience_following.md`](notes/papers/13_experience_following.md)                      | 已有 `repos/agent_memory_manage`                                                                                 |
+| **P1-8** | `procedural_memory/` | **WASP-Mem & SPEM**                | 2026-11 / 2026-10      | `2611.04003` / `2610.26995` | **3.3.3 / 3.3.4 / 3.4 节**：企业复杂排障规程自组织 Wiki（`Free Form` 隐式去重）+ 诊断反馈价值、原子技能与反向切片 `Skill-DAG` 双层检索 + ✅ 已完成双篇 PDF + LaTeX 源码 + [精读笔记 `14_wasp_mem_spem.md`](notes/papers/14_wasp_mem_spem.md)      | 论文内含完整复现协议与伪代码                                                                                     |
+| **P1-9** | `procedural_memory/` | **REM**                            | 2026-10 (NeurIPS CLEA) | `2610.27377`                | **3.3.3 / 3.3.4 节**：经验记忆何时写入（四阶段 270 tok 文档）、何时召回（受挫门控 `Struggle Gate`）、何时遗忘（单次曝光即驱逐 `One-Shot Eviction`）的运行态闭环治理 + ✅ 已完成 PDF + LaTeX 源码 + [精读笔记 `15_rem.md`](notes/papers/15_rem.md) | 论文内含完整 `Alg. 1` 与 5 模型全量对账                                                                          |
+
+### 3. P2 梯队：第 1、2、4 章五大方向核心评测 Benchmark（11 篇）
+
+| 优先级    | 归类目录     | 论文简称             | 年份与出处            | arXiv ID     | 在主报告中支撑的核心机制与章节                                                                                                                                                                                          | 对应开源仓                                                        |
+|:--------- |:------------ |:-------------------- |:--------------------- |:------------ |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |:----------------------------------------------------------------- |
+| **P2-1**  | `benchmark/` | **LoCoMo**           | 2024-02 (ACL)         | `2402.17753` | **1.1 / 2.5 / 4.2 节**：事件因果图驱动跨月长会话生成，单跳/多跳/时序/开放域/对抗五类 QA + ✅ 已完成双版 PDF + LaTeX 源码 + [精读笔记 `16_locomo.md`](notes/papers/16_locomo.md)                                          | 已有 `repos/locomo`                                               |
+| **P2-2**  | `benchmark/` | **LoCoMo-Plus**      | 2026-02               | `2602.10715` | **1.1 / 2.5 节**：区分 Level-1 显式事实与 Level-2 隐式认知约束（因果、状态、目标、价值），触发句与线索句零字面重合 + ✅ 已完成 PDF + LaTeX 源码 + [精读笔记 `17_locomo_plus.md`](notes/papers/17_locomo_plus.md)         | 已有 `repos/Locomo-Plus`                                          |
+| **P2-3**  | `benchmark/` | **LongMemEval**      | 2024-10 (ICLR 2025)   | `2410.10813` | **1.1 / 2.5 / 4.2 节**：信息提取（IE）、多跳（MR）、知识更新（KU）、时序推理（TR）、未知拒答（ABS）五大能力 + ✅ 已完成 PDF + LaTeX 源码 + [精读笔记 `18_longmemeval.md`](notes/papers/18_longmemeval.md)                | 已有 `repos/LongMemEval`                                          |
+| **P2-4**  | `benchmark/` | **MemoryAgentBench** | 2025-07               | `2507.05257` | **2.5 / 4.2 节**：增量多轮交互下准确检索（AR）、测试时学习（TTL）、长程理解（LRU）、选择性遗忘（SF）四项能力 + ✅ 已完成 PDF + LaTeX 源码 + [精读笔记 `19_memory_agent_bench.md`](notes/papers/19_memory_agent_bench.md) | 已有 `repos/MemoryAgentBench`                                     |
+| **P2-5**  | `benchmark/` | **PersonaMem-v1/v2** | 2025-04 (COLM)        | `2504.14225` | **1.1 / 4.2 节**：PersonaMem 系列初代动态用户画像与跨会话偏好追踪设计 + ✅ 已完成 PDF + LaTeX 源码 + [精读笔记 `20_personamem_v1_v2.md`](notes/papers/20_personamem_v1_v2.md)                                            | 已有 `repos/PersonaMem`                                           |
+| **P2-6**  | `benchmark/` | **BlendX**           | 2024-03 (LREC-COLING) | `2403.18277` | **1.1 方向二核心 / 3.4 节**：单轮多意图口语交织、显式连词多样化、无连词/动名词隐式顺承与省略指代（无原生 $A \land \neg B$ 否定排除）                                                                                    | ✅ [精读笔记](notes/papers/21_blendx.md) · `HYU-NLP/BlendX`        |
+| **P2-7**  | `benchmark/` | **GEMIS**            | 2026-02               | `2602.08322` | **1.1 方向二参考**：`BART`+`AoA` 联合多意图槽位生成框架与 BERT-NSP 连贯多意图数据集 `MultiATIS/MultiSNIPS`（无显式意图-槽位归属边）                                                                                     | ✅ [精读笔记](notes/papers/22_gemis.md)                            |
+| **P2-8**  | `benchmark/` | **IntentDelta**      | 2026-10               | `2610.33806` | **1.1 方向三核心**：638 条多轮改口轨迹、可行性受挫与偏好驱动改口、作废旧约束残留率（`Obsolete Retention`）                                                                                                              | ✅ [精读笔记](notes/papers/23_intent_delta.md)                     |
+| **P2-9**  | `benchmark/` | **IN3**              | 2024-02 (ACL)         | `2402.09205` | **1.1 方向四核心**：指令模糊标注、`Lv3/Lv2/Lv1` 缺失细节重要度分级、主动单问带选项与上游消歧缓冲 `Mistral-Interact`                                                                                                     | ✅ [精读笔记](notes/papers/24_in3.md) · `HBX-hbx/Mistral-Interact` |
+| **P2-10** | `benchmark/` | **ClarifyMT-Bench**  | 2025-12               | `2512.21120` | **1.1 方向四核心**：5 维 12 类模糊分类、6 类受控用户模拟器（精准/半模糊/跑题/矛盾/事实错/拒答）与 `ClarifyAgent`（`6,120` 对话）                                                                                        | ✅ [精读笔记](notes/papers/25_clarifymt_bench.md)                  |
+| **P2-11** | `benchmark/` | **$\tau$-bench**     | 2024-06 (ICLR 2025)   | `2406.12045` | **1.1 方向五基础**：领域数据库 + API + 业务规程约束下的受控多轮交互与 $\text{Pass}^k$ 指标提出者                                                                                                                        | ✅ [精读笔记](notes/papers/26_tau_bench.md) · `repos/tau-bench`    |
+
+### 4. P3 梯队：第 1.1 节同方向扩展与第 2/3 章专项基准（15 篇）
+
+| 优先级    | 归类目录     | 论文简称                                            | 年份              | arXiv ID                    | 在主报告中支撑的具体评测点                                                                                                                     |
+|:--------- |:------------ |:--------------------------------------------------- |:----------------- |:--------------------------- |:---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **P3-1**  | `benchmark/` | **BehaviorMem**                                     | 2026-10           | `2610.34790`                | 1.1 方向一：3 年真实行为日志按 50 次访问 / 120 天切分批次，区分 `Remember Pool` 与 `Infer Pool`                                                |
+| **P3-2**  | `benchmark/` | **Why Bother Me Again? (MemPABench)**               | 2026-10           | `2610.30485`                | 1.1 方向一：工作与个人双场景物理隔离、14 维交互免打扰偏好与事件驱动极性翻转                                                                    |
+| **P3-3**  | `benchmark/` | **Speak & Spell** & **Omnilingua-AudioMC**          | 2024-09 / 2026-11 | `2409.06263` / `2611.04390` | 1.1 方向二 & 1.2 语法层：核心槽位同音错字容错、口头改口（Voice Editing）与跨句追补修饰                                                         |
+| **P3-4**  | `benchmark/` | **Beyond the Known** & **DROID**                    | 2024-02 / 2025-10 | `2402.17256` / `2510.14110` | 1.1 方向二 & 1.3：按 25%/50%/75% 已知意图切分，评测同域细粒度未知意图拒识（`Near-OOD`） ✅（[精读笔记](notes/papers/30_beyond_known_droid.md)） |
+| **P3-5**  | `benchmark/` | **Read the Room (READI)**                           | 2026-08           | `2608.30270`                | 1.1 方向三 & 1.2 语用层：规约性间接、非规约性弱暗示、高语境强暗示（仅抱怨状态零祈使词）三级言外之意 ✅（[精读笔记](notes/papers/31_readi.md)）  |
+| **P3-6**  | `benchmark/` | **Chain Ambiguity & Intent Drift (TIDE)**           | 2026-08           | `2608.29543`                | 1.1 方向三：跨轮条件依赖的链式歧义与非单调承诺撤回 ✅（[精读笔记](notes/papers/32_tide.md)）                                                    |
+| **P3-7**  | `benchmark/` | **Multi-User DST**                                  | 2025-06           | `2506.10504`                | 1.1 方向三 & 1.3：主叫与同行人员旁人插话干扰，仅主叫显式采纳或默认同意才入库 ✅（[精读笔记](notes/papers/33_multi_user_dst.md)）                |
+| **P3-8**  | `benchmark/` | **MediQ**                                           | 2024-06 (NeurIPS) | `2406.00922`                | 1.1 方向四：1 句首轮主诉 + $N$ 条隐藏原子事实，模拟器按问释放、未达置信度禁抢跑作答 ✅（[精读笔记](notes/papers/34_mediq.md)）                  |
+| **P3-9**  | `benchmark/` | **Conformal Intent Clarification (CICC)**           | 2024-03           | `2403.18973`                | 1.1 方向四：基于保形预测候选集大小 $                                                                                                           |
+| **P3-10** | `benchmark/` | **FinInteract**                                     | 2026-09           | `2609.24002`                | 1.1 方向四：区分“默认常见口径（Default）”与“真实预期口径（Intended）”双真值，防盲猜默认值过关 ✅（[精读笔记](notes/papers/36_fininteract.md)）  |
+| **P3-11** | `benchmark/` | **CAREFUL-Bench**                                   | 2026-11           | `2611.02978`                | 1.1 方向五 & 1.3：区分只读幂等接口（静默调用）与破坏性写接口（执行前必须自然语言二次确认） ✅（[精读笔记](notes/papers/37_careful_bench.md)）   |
+| **P3-12** | `benchmark/` | **UserBench** & **Disclosure-Gated Sim**            | 2025-07 / 2026-09 | `2507.22034` / `2609.00982` | 1.1 方向五：首轮隐去 $>70\%$ 细分偏好，按五级门控规则随追问分步释放 · [精读笔记](notes/papers/38_userbench_disclosure_sim.md)                  |
+| **P3-13** | `benchmark/` | **UserProxyBench**                                  | 2026-09           | `2609.38043`                | 1.1 方向五：用户模拟器契约忠实度（`UFS`）审计，拦截模拟器提前剧透未问槽位或编造状态 · [精读笔记](notes/papers/39_userproxybench.md)            |
+| **P3-14** | `benchmark/` | **MERIT** & **Ground Truth First**                  | 2026-09 / 2026-07 | `2609.05441` / `2607.21962` | 2.1.7 节：记忆评测跨随机种子方差（最大差 0.45）与排名随历史长度翻转的实证依据 · [精读笔记](notes/papers/40_merit_gt_first.md)                  |
+| **P3-15** | `benchmark/` | **Can Agents Forget When Asked?** & **MemSecBench** | 2026-10 / 2026-07 | `2610.18052` / `2607.27080` | 3.3.4 节：记忆定向遗忘评测（分别考核目标记忆删干净 + 同源良性记忆不误删） · [精读笔记](notes/papers/41_forget_memsecbench.md)                  |

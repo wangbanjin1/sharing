@@ -1,0 +1,201 @@
+\begin{thebibliography}{38}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Anokhin et~al.(2024)Anokhin, Semenov, Sorokin, Evseev, Kravchenko, Burtsev, and Burnaev]{arigraph}
+Petr Anokhin, Nikita Semenov, Artyom Sorokin, Dmitry Evseev, Andrey Kravchenko, Mikhail Burtsev, and Evgeny Burnaev.
+\newblock Arigraph: Learning knowledge graph world models with episodic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2407.04363}, 2024.
+
+\bibitem[Bulatov et~al.(2022)Bulatov, Kuratov, and Burtsev]{RMT}
+Aydar Bulatov, Yuri Kuratov, and Mikhail~S. Burtsev.
+\newblock Recurrent memory transformer.
+\newblock In \emph{NeurIPS}, 2022.
+
+\bibitem[Burtsev and Sapunov(2020)]{memoryTransformer}
+Mikhail~S. Burtsev and Grigory~V. Sapunov.
+\newblock Memory transformer.
+\newblock \emph{CoRR}, abs/2006.11527, 2020.
+\newblock URL \url{https://arxiv.org/abs/2006.11527}.
+
+\bibitem[Chen et~al.(2024)Chen, Kumar, and Patel]{Chen2024}
+Li~Chen, Rohan Kumar, and Anika Patel.
+\newblock Agentverse: A multi-agent framework for autonomous task completion.
+\newblock Online; accessed 2024, 2024.
+
+\bibitem[Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and Yadav]{mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock Mem0: Building production-ready ai agents with scalable long-term memory.
+\newblock \emph{arXiv preprint arXiv:2504.19413}, 2025.
+
+\bibitem[Community(2023{\natexlab{a}})]{AutoGPT}
+Community.
+\newblock Autogpt: Autonomous gpt-4 powered agent.
+\newblock GitHub repository, \url{https://github.com/Significant-Gravitas/Auto-GPT}, 2023{\natexlab{a}}.
+
+\bibitem[Community(2023{\natexlab{b}})]{BabyAGI}
+Community.
+\newblock Babyagi: Open-source autonomous ai agent.
+\newblock GitHub repository, \url{https://github.com/yoheinakajima/babyagi}, 2023{\natexlab{b}}.
+
+\bibitem[Das et~al.(2024)Das, Chaudhury, Nelson, Melnyk, Swaminathan, Dai, Lozano, Kollias, Chenthamarakshan, Navr{\'{a}}til, Dan, and Chen]{larimar}
+Payel Das, Subhajit Chaudhury, Elliot Nelson, Igor Melnyk, Sarathkrishna Swaminathan, Sihui Dai, Aur{\'{e}}lie~C. Lozano, Georgios Kollias, Vijil Chenthamarakshan, Jir{\'{\i}} Navr{\'{a}}til, Soham Dan, and Pin{-}Yu Chen.
+\newblock Larimar: Large language models with episodic memory control.
+\newblock In \emph{{ICML}}. OpenReview.net, 2024.
+
+\bibitem[Eyuboglu et~al.(2025)Eyuboglu, Ehrlich, Arora, Guha, Zinsley, Liu, Tennien, Rudra, Zou, Mirhoseini, et~al.]{cartridges}
+Sabri Eyuboglu, Ryan Ehrlich, Simran Arora, Neel Guha, Dylan Zinsley, Emily Liu, Will Tennien, Atri Rudra, James Zou, Azalia Mirhoseini, et~al.
+\newblock Cartridges: Lightweight and general-purpose long context representations via self-study.
+\newblock \emph{arXiv preprint arXiv:2506.06266}, 2025.
+
+\bibitem[He et~al.(2024)He, Karlinsky, Kim, McAuley, Krotov, and Feris]{he2024camelot}
+Zexue He, Leonid Karlinsky, Donghyun Kim, Julian McAuley, Dmitry Krotov, and Rogerio Feris.
+\newblock Camelot: Towards large language models with training-free consolidated associative memory.
+\newblock \emph{arXiv preprint arXiv:2402.13449}, 2024.
+
+\bibitem[Hong et~al.(2023)Hong, Zhao, and Lee]{Hong2023}
+Emily Hong, Xin Zhao, and Kevin Lee.
+\newblock Metagpt: Designing a multi-agent ecosystem for task management.
+\newblock Online; accessed 2023, 2023.
+
+\bibitem[Kang et~al.(2025)Kang, Ji, Zhao, and Bai]{memoryos}
+Jiazheng Kang, Mingming Ji, Zhe Zhao, and Ting Bai.
+\newblock Memory os of ai agent.
+\newblock \emph{arXiv preprint arXiv:2506.06326}, 2025.
+
+\bibitem[Kim et~al.(2023)Kim, Cochez, Fran{\c{c}}ois-Lavet, Neerincx, and Vossen]{kim2023machine}
+Taewoon Kim, Michael Cochez, Vincent Fran{\c{c}}ois-Lavet, Mark Neerincx, and Piek Vossen.
+\newblock A machine with short-term, episodic, and semantic memory systems.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~37, pages 48--56, 2023.
+
+\bibitem[Li and Li(2024{\natexlab{a}})]{li2024memory}
+Jitang Li and Jinzheng Li.
+\newblock Memory, consciousness and large language model.
+\newblock \emph{arXiv preprint arXiv:2401.02509}, 2024{\natexlab{a}}.
+
+\bibitem[Li and Li(2024{\natexlab{b}})]{memory_consciousness_and_llm}
+Jitang Li and Jinzheng Li.
+\newblock Memory, consciousness and large language model.
+\newblock \emph{arXiv preprint arXiv:2401.02509}, 2024{\natexlab{b}}.
+
+\bibitem[Li et~al.(2024)Li, Huang, Yang, Venkitesh, Locatelli, Ye, Cai, Lewis, and Chen]{snapkv}
+Yuhong Li, Yingbing Huang, Bowen Yang, Bharat Venkitesh, Acyr Locatelli, Hanchen Ye, Tianle Cai, Patrick Lewis, and Deming Chen.
+\newblock Snapkv: {LLM} knows what you are looking for before generation.
+\newblock \emph{CoRR}, abs/2404.14469, 2024.
+\newblock \doi{10.48550/ARXIV.2404.14469}.
+\newblock URL \url{https://doi.org/10.48550/arXiv.2404.14469}.
+
+\bibitem[Liao et~al.(2024)Liao, Chen, and Zhao]{Liao2024}
+Ming Liao, Su~Chen, and Li~Zhao.
+\newblock The role of episodic memory in long-term llm agents: A position paper.
+\newblock Online; accessed 2024, 2024.
+
+\bibitem[Liu et~al.(2025)Liu, Zhang, Zhou, Gao, and Liu]{echo}
+WenTao Liu, Ruohua Zhang, Aimin Zhou, Feng Gao, and JiaLi Liu.
+\newblock Echo: A large language model with temporal episodic memory.
+\newblock \emph{arXiv preprint arXiv:2502.16090}, 2025.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and Fang]{locomo}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco Barbieri, and Yuwei Fang.
+\newblock Evaluating very long-term conversational memory of llm agents.
+\newblock \emph{arXiv preprint arXiv:2402.17753}, 2024.
+
+\bibitem[Markovic et~al.(2025)Markovic, Obradovic, Hajdu, and Pavlovic]{cognee}
+Vasilije Markovic, Lazar Obradovic, Laszlo Hajdu, and Jovan Pavlovic.
+\newblock Optimizing the interface between knowledge graphs and llms for complex reasoning.
+\newblock \emph{arXiv preprint arXiv:2505.24478}, 2025.
+
+\bibitem[Munkhdalai et~al.(2024)Munkhdalai, Faruqui, and Gopal]{infini-attention}
+Tsendsuren Munkhdalai, Manaal Faruqui, and Siddharth Gopal.
+\newblock Leave no context behind: Efficient infinite context transformers with infini-attention.
+\newblock \emph{arXiv preprint arXiv:2404.07143}, 101, 2024.
+
+\bibitem[Packer et~al.(2023)Packer, Fang, Patil, Lin, Wooders, and Gonzalez]{memgpt}
+Charles Packer, Vivian Fang, Shishir~G. Patil, Kevin Lin, Sarah Wooders, and Joseph~E. Gonzalez.
+\newblock Memgpt: Towards llms as operating systems.
+\newblock \emph{CoRR}, abs/2310.08560, 2023.
+
+\bibitem[Pink et~al.(2025)Pink, Wu, Vo, Turek, Mu, Huth, and Toneva]{episodic_memory_missing_piece}
+Mathis Pink, Qinyuan Wu, Vy~Ai Vo, Javier Turek, Jianing Mu, Alexander Huth, and Mariya Toneva.
+\newblock Position: Episodic memory is the missing piece for long-term llm agents.
+\newblock \emph{arXiv preprint arXiv:2502.06975}, 2025.
+
+\bibitem[Rasmussen et~al.(2025)Rasmussen, Paliychuk, Beauvais, Ryan, and Chalef]{zep}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel Chalef.
+\newblock Zep: A temporal knowledge graph architecture for agent memory.
+\newblock \emph{arXiv preprint arXiv:2501.13956}, 2025.
+
+\bibitem[Shan et~al.(2025)Shan, Luo, Zhu, Yuan, and Wu]{cognitive_memory_in_llms}
+Lianlei Shan, Shixian Luo, Zezhou Zhu, Yu~Yuan, and Yong Wu.
+\newblock Cognitive memory in large language models.
+\newblock \emph{arXiv preprint arXiv:2504.02441}, 2025.
+
+\bibitem[Sridhar et~al.(2023)Sridhar, Khamaj, and Asthana]{sridhar2023cognitive}
+Sruthi Sridhar, Abdulrahman Khamaj, and Manish~Kumar Asthana.
+\newblock Cognitive neuroscience perspective on memory: overview and summary.
+\newblock \emph{Frontiers in human neuroscience}, 17:\penalty0 1217093, 2023.
+
+\bibitem[Tulving(1985)]{tulving1985memory}
+Endel Tulving.
+\newblock Memory and consciousness.
+\newblock \emph{Canadian Psychology/Psychologie canadienne}, 26\penalty0 (1):\penalty0 1, 1985.
+
+\bibitem[Wang et~al.(2024{\natexlab{a}})Wang, Gao, Chen, Jiang, Li, Yang, Yin, Li, Li, Yin, Shang, and McAuley]{memoryllm}
+Yu~Wang, Yifan Gao, Xiusi Chen, Haoming Jiang, Shiyang Li, Jingfeng Yang, Qingyu Yin, Zheng Li, Xian Li, Bing Yin, Jingbo Shang, and Julian~J. McAuley.
+\newblock {MEMORYLLM:} towards self-updatable large language models.
+\newblock In \emph{{ICML}}. OpenReview.net, 2024{\natexlab{a}}.
+
+\bibitem[Wang et~al.(2024{\natexlab{b}})Wang, Han, Wu, He, Zhou, Sadeq, Chen, He, Wang, Haffari, Ji, and McAuley]{lscs}
+Yu~Wang, Chi Han, Tongtong Wu, Xiaoxin He, Wangchunshu Zhou, Nafis Sadeq, Xiusi Chen, Zexue He, Wei Wang, Gholamreza Haffari, Heng Ji, and Julian~J. McAuley.
+\newblock Towards lifespan cognitive systems.
+\newblock \emph{CoRR}, abs/2409.13265, 2024{\natexlab{b}}.
+
+\bibitem[Wang et~al.(2024{\natexlab{c}})Wang, Liu, Chen, O'Brien, Wu, and McAuley]{self-param}
+Yu~Wang, Xinshuang Liu, Xiusi Chen, Sean O'Brien, Junda Wu, and Julian McAuley.
+\newblock Self-updatable large language models with parameter integration.
+\newblock \emph{arXiv preprint arXiv:2410.00487}, 2024{\natexlab{c}}.
+
+\bibitem[Wang et~al.(2025)Wang, Krotov, Hu, Gao, Zhou, McAuley, Gutfreund, Feris, and He]{mplus}
+Yu~Wang, Dmitry Krotov, Yuanzhe Hu, Yifan Gao, Wangchunshu Zhou, Julian McAuley, Dan Gutfreund, Rogerio Feris, and Zexue He.
+\newblock M+: Extending memoryllm with scalable long-term memory.
+\newblock \emph{arXiv preprint arXiv:2502.00592}, 2025.
+
+\bibitem[Westh{\"a}u{\ss}er et~al.(2025)Westh{\"a}u{\ss}er, Berenz, Minker, and Zepf]{caim}
+Rebecca Westh{\"a}u{\ss}er, Frederik Berenz, Wolfgang Minker, and Sebastian Zepf.
+\newblock Caim: Development and evaluation of a cognitive ai memory framework for long-term interaction with intelligent agents.
+\newblock \emph{arXiv preprint arXiv:2505.13044}, 2025.
+
+\bibitem[Wheeler and Jeunen(2025)]{procedural_memory_all_you_need}
+Schaun Wheeler and Olivier Jeunen.
+\newblock Procedural memory is not all you need: Bridging cognitive gaps in llm-based agents.
+\newblock \emph{arXiv preprint arXiv:2505.03434}, 2025.
+
+\bibitem[Wu et~al.(2024)Wu, Wang, Yu, Zhang, Chang, and Yu]{longmemeval}
+Di~Wu, Hongwei Wang, Wenhao Yu, Yuwei Zhang, Kai-Wei Chang, and Dong Yu.
+\newblock Longmemeval: Benchmarking chat assistants on long-term interactive memory.
+\newblock \emph{arXiv preprint arXiv:2410.10813}, 2024.
+
+\bibitem[Xu et~al.(2025)Xu, Mei, Gao, Tan, Liang, and Zhang]{amem}
+Wujiang Xu, Kai Mei, Hang Gao, Juntao Tan, Zujie Liang, and Yongfeng Zhang.
+\newblock A-mem: Agentic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2502.12110}, 2025.
+
+\bibitem[Yan et~al.(2024)Yan, Mao, Ji, Zhang, Patil, Stoica, and Gonzalez]{berkeley-function-calling-leaderboard}
+Fanjia Yan, Huanzhi Mao, Charlie Cheng-Jie Ji, Tianjun Zhang, Shishir~G. Patil, Ion Stoica, and Joseph~E. Gonzalez.
+\newblock Berkeley function calling leaderboard.
+\newblock \url{https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html}, 2024.
+
+\bibitem[Zhang et~al.(2023)Zhang, Sheng, Zhou, Chen, Zheng, Cai, Song, Tian, R{\'{e}}, Barrett, Wang, and Chen]{h2o}
+Zhenyu Zhang, Ying Sheng, Tianyi Zhou, Tianlong Chen, Lianmin Zheng, Ruisi Cai, Zhao Song, Yuandong Tian, Christopher R{\'{e}}, Clark~W. Barrett, Zhangyang Wang, and Beidi Chen.
+\newblock {H2O:} heavy-hitter oracle for efficient generative inference of large language models.
+\newblock In \emph{NeurIPS}, 2023.
+
+\bibitem[Zhong et~al.(2023)Zhong, Guo, Gao, and Wang]{MemoryBank}
+Wanjun Zhong, Lianghong Guo, Qiqi Gao, and Yanlin Wang.
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock \emph{arXiv preprint arXiv:2305.10250}, 2023.
+
+\end{thebibliography}

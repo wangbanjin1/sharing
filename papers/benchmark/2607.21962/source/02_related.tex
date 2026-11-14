@@ -1,0 +1,224 @@
+\section{Related work}
+\label{sec:related}
+
+\subsection{Agent memory architectures}
+
+Long-term memory for LLM agents has three architectural lineages.
+\emph{Curated working views}: MemGPT pages a small working context over a
+larger store \citep{packer2023memgpt}; Generative Agents synthesize episodes
+into reflections \citep{park2023generative}; PEEK maintains a fixed-budget
+``context map'' via a Distiller, Cartographer, and priority Evictor
+\citep{gu2026peek} --- the design our curated-map backend instantiates.
+\emph{Retrieval over unbounded stores}: vector retrieval with decay
+\citep{zhong2023memorybank}, graph-structured memory with associative
+retrieval \citep{gutierrez2024hipporag,xu2025amem}, and commercial systems
+--- Mem0's extraction pipeline \citep{chhikara2025mem0} and Zep's bi-temporal
+knowledge graph \citep{rasmussen2025zep}. \emph{Layered combinations}:
+TriMem keeps raw segments, atomic facts, and synthesized profiles at three
+granularities \citep{trimem2026}; TierMem composes an immutable raw-log
+store with a summary tier and a sufficiency router that escalates between
+them \citep{zhu2026tiermem}; \citet{roynard2026knowledgelayer} argues from
+cognitive-architecture principles that different knowledge layers need
+different persistence semantics. Our layered result (\S\ref{sec:layered}) is
+consistent with this direction but differs from its nearest neighbor TierMem
+in three measurable ways: a \emph{budgeted, LLM-curated} working view (not
+summaries), a security evaluation, and a tenure analysis --- the latter two
+being where the layering earns its keep. Industry systems have converged on
+adjacent shapes --- Perplexity's ``Brain'' compiles a context-graph work
+memory into an overnight-synthesized wiki \citep{perplexity2026brain} ---
+which we cite as evidence of the pattern's practical currency, not as
+evaluated results.
+
+\subsection{Benchmarks, and the case for ground-truth-first generation}
+\label{sec:related-benchmarks}
+
+The field's standard memory benchmarks are conversation-first: LoCoMo
+extracts QA keys from generated long-term dialogues
+\citep{maharana2024locomo}; LongMemEval curates questions into scalable chat
+histories \citep{wu2024longmemeval}; MemoryAgentBench evaluates incremental
+multi-turn competencies \citep{hu2026memoryagentbench}; industry surveys of
+practice treat this set --- with BEAM \citep{tavakoli2025beam} --- as the
+de-facto standard \citep{mem0report2026}. Their weaknesses are documented.
+LoCoMo's answer key fails an independent audit at 6.4\% (99/1{,}540
+score-corrupting errors, with an LLM judge accepting 62.81\% of deliberately
+wrong answers) \citep{penfield2026locomoaudit} --- a non-peer-reviewed audit
+with public, reproducible artifacts, corroborated by an open issue on the
+benchmark's own repository; label-error rates of this order are consistent
+with peer-reviewed findings across ML test sets
+\citep{northcutt2021labelerrors}. Real-entity content leaks to pretraining:
+MemGym shows frontier models score 0.70--0.85 on its diagnostic without
+fictionalization \citep{xu2026memgym}, part of a broader contamination
+picture \citep{xu2024contamination}. ConvoMem shows that below ${\sim}150$
+conversations full-context answering beats retrieval memory
+\citep{convomem2025} --- so short-horizon benchmarks also compress the very
+differences they aim to measure. Newer benchmarks extend \emph{what} is
+measured --- proactive memory-to-action \citep{shen2026mem2actbench},
+memory-organization structure \citep{shutova2026structmemeval}, and
+interdependent multi-session tasks, where MemoryArena finds that agents
+near-saturated on LoCoMo fail badly once memory must guide sequential
+decisions \citep{he2026memoryarena} --- without changing the
+conversation-first pipeline.
+
+Ground-truth-first generation itself is not new: RIKER builds RAG corpora
+truth-first for static document QA \citep{roig2026riker}, and OrgForge-IT
+applies the same philosophy to security telemetry \citep{flynt2026orgforge};
+BEAM generates million-token dialogue histories with validated questions
+\citep{tavakoli2025beam}. Our contribution is extending the inversion to
+\emph{longitudinal, multi-channel, adversarial agent memory}: per-fact
+validity intervals, volatility classes, a sent/received trust distinction,
+injection probes inside a benign harness, and as-of-date question sets for
+tenure curves. Table~\ref{tab:gap} locates each feature against the
+published benchmarks; we did not find any of the five features in the
+surveyed benchmarks and released artifacts as of July 2026.
+(MemStrata implements temporal validity \emph{in a system}
+\citep{yadav2026memstrata}, which sharpens the point: validity intervals
+exist in products but not yet in any benchmark's ground truth.)
+
+\begin{table}[t]
+\centering
+\small
+\caption{Benchmark feature gap analysis. GTF = ground-truth-first
+generation; VI = per-fact validity intervals; VC = volatility classes; TR =
+sent/received trust distinction; IP = injection probes in a benign harness;
+AO = as-of-date question sets; FE = fictionalized entities; LH =
+longitudinal (multi-week/multi-session) horizon. Judgments verified against
+abstracts and released artifacts (July 2026); $\pm$ = partial or unclear.}
+\label{tab:gap}
+\begin{tabular}{lcccccccc}
+\toprule
+Benchmark & GTF & VI & VC & TR & IP & AO & FE & LH \\
+\midrule
+LoCoMo \citep{maharana2024locomo}            & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark \\
+LongMemEval \citep{wu2024longmemeval}        & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark \\
+MemoryAgentBench \citep{hu2026memoryagentbench} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & $\pm$ & $\pm$ \\
+ConvoMem \citep{convomem2025}                & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark \\
+MemGym \citep{xu2026memgym}                  & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark \\
+Mem2ActBench \citep{shen2026mem2actbench}    & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & $\pm$ & \cmark \\
+MemoryArena \citep{he2026memoryarena}        & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & $\pm$ & \cmark \\
+RIKER \citep{roig2026riker}                  & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark \\
+BEAM \citep{tavakoli2025beam}                & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & $\pm$ & \cmark \\
+\midrule
+\textbf{Ours}                                & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Does the write path matter? A horizon-dependent picture}
+\label{sec:related-writepath}
+
+Two recent studies find that retrieval and ranking dominate end-to-end
+memory quality while write-time strategy barely matters: SmartSearch reports
+that a deterministic ranking pipeline beats LLM-structured stores
+\citep{derehag2026smartsearch}, and a diagnosis study finds accuracy spans
+${\sim}20$ points across retrieval methods but only 3--8 across write
+strategies \citep{yuan2026bottlenecks}. Both measure on short-horizon
+benchmarks (LoCoMo, LongMemEval-S). Our results agree \emph{in that regime}
+--- at ${\sim}30$--60 records per user, write-path differences are
+compressed (\S\ref{sec:bakeoff}, cf.\ ConvoMem's threshold) --- and disagree
+sharply outside it: the write-quality audit aligns with downstream failures
+fact-for-fact (\S\ref{sec:writequality}), and the tenure crossover
+(\S\ref{sec:crossover}) shows the regime where curation and time-aware
+structure dominate is precisely the regime short-horizon benchmarks never
+enter. The two findings are consistent once horizon is treated as a
+variable --- reconciling them descriptively is one of this paper's
+contributions; a causal resolution needs the crossed ablation named in
+\S\ref{sec:writequality}. Two methodological
+neighbors sharpen the picture: MemDelta shows memory-method rankings flip
+with the answerer's model family and even the embedding model
+\citep{wang2026memdelta} --- confounds our protocol excludes by holding the
+answerer fixed and making only differential claims (the residual
+single-answerer scope is discussed in \S\ref{sec:threats}) --- and MemTrace
+traces operation-level error propagation through memory evolution
+\citep{deng2026memtrace}, which our fact-for-fact write audit against
+scripted ground truth complements from the other end.
+
+Relatedly, Anatomy of Agentic Memory shows memory-system rankings are
+fragile to backbone and benchmark choice \citep{jiang2026anatomy}, and a
+systematic study concludes no single memory architecture dominates across
+workloads \citep{zhou2026agentnative}. We strengthen this line with a
+\emph{specific, mechanistic} instance: a measured ranking inversion in a
+single variable (history length), with its cause isolated (eviction of
+early-epoch content, \S\ref{sec:crossover}). To our knowledge the
+history-length inversion itself is not shown in prior work.
+
+\subsection{Memory security: poisoning, provenance, and where defenses
+live}
+\label{sec:related-security}
+
+Indirect prompt injection via retrieved content is the founding attack class
+\citep{greshake2023injection}; AgentPoison demonstrates poisoning of the
+memory/RAG store itself, with retrieval attack success of 82\% and
+end-to-end target impact of 62.6\% \citep{chen2024agentpoison}, and
+standards bodies treat the risk as unresolved by RAG design
+\citep{owasp2025llm01}. A 2026 wave sharpens the memory-specific threat:
+MPBench benchmarks memory-poisoning attacks systematically
+\citep{dash2026mpbench}; sleeper attacks plant content that stays dormant
+across sessions before activation \citep{pulipaka2026sleeper,li2026plant};
+TMA-NM proves content- and lineage-based defenses unsound under laundering
+(via the agent's own summarization, trusted-tool echo, or manufactured
+corroboration) and achieves 0\% attack success with non-malleable,
+origin-bound authority --- an engineered enforcement mechanism with
+machine-checked guarantees \citep{louck2026tmanm}. A lifecycle survey of
+long-term-memory security concludes that defenses ``cannot be retrofitted at
+retrieval or execution time alone'' but must be anchored in storage-time
+provenance, versioning, and policy-aware retention \citep{lin2026ltmsecurity};
+conceptual governance frameworks propose consistency verification and access
+control before consolidation \citep{lam2026ssgm}; post-hoc auditing detects
+poisoned memories after the fact \citep{tan2026memaudit} (distinct from
+\textsc{MemAudit} the write-quality evaluation protocol,
+\citealp{bhargava2026memaudit}). Provenance \emph{pointers} also appear for
+non-security ends (narrative reconstruction in SEEM, \citealp{lu2026seem}).
+
+Our security result (\S\ref{sec:security}) is complementary and deliberately
+narrower than TMA-NM's: we show that an \emph{ordinary provenance-typed
+store} --- no authority mechanism, no added enforcement --- already provides
+structural quarantine (zero assertions across 14 unique probes over 42
+trials; 0/6 on a plausibility-graded ladder),
+because third-party claims are represented as claims rather than facts. This
+is the ``storage-time provenance'' the survey calls for, observed as a free
+dividend of representation. We are explicit about scope: our probes are
+planted, not adaptive; relation-level attacks on graph memories remain open;
+and the laundering channels TMA-NM formalizes are real --- our own episodic
+leak (\S\ref{sec:security}) is one of them.
+
+\subsection{Supersession, temporal knowledge, and knowledge editing}
+
+Fact updating has two lineages: knowledge editing in weights
+\citep[ROME/MEMIT;][]{meng2022rome,meng2023memit}, evaluated by MQuAKE
+including its temporal variant \citep{zhong2023mquake}, and temporal
+invalidation in stores \citep[Zep/Graphiti's bi-temporal
+edges;][]{rasmussen2025zep}, deterministic freshness recipes
+\citep{reddy2026freshness}, and MemStrata's supersession rule
+\citep{yadav2026memstrata}. Update handling is where deployed systems
+measure worst --- MemoryAgentBench's FactConsolidation single-hop: Mem0
+18.0, Zep/Graphiti 7.0 \citep[v4, Table~3;][]{hu2026memoryagentbench},
+independently corroborated by \citet{reddy2026freshness} --- which motivates
+our supersession design and its evaluation (\S\ref{sec:representation}). A
+concurrent diagnosis confirms the gap and its length-dependence: bounded
+self-maintained memory trails full context by 15 points on LongMemEval's
+update subset, degrading from 68\% to 28\% as conversations grow $24\times$
+\citep{patel2026supersede} --- a single-system degradation curve consistent
+with, but distinct from, our \emph{cross-architecture ranking inversion}
+(\S\ref{sec:crossover}). Our contribution to this line is a read-time
+result: explicit bi-temporal versioned edges \emph{underperform}
+prose-inline history at answer time (72/81 vs.\ 79/81), because rendering
+superseded edges returns stale values to the answerer's view.
+
+\subsection{Confabulation, abstention, and judged evaluation}
+
+Abstention when evidence is absent is a recognized gap: semantic-entropy
+methods detect confabulations \citep{farquhar2024semantic}, models carry
+usable self-knowledge signal \citep{kadavath2022know}, and surveys catalogue
+abstention methods \citep{wen2024abstention}; LongMemEval includes an
+abstention ability \citep{wu2024longmemeval}. We add a measurement that
+sharpens the need: under a deterministic answer-text classifier, our most
+\emph{accurate} system almost never abstains when wrong --- 93.9\% of its
+judged errors classify as wrong-specific rather than abstention, vs.\
+62.7\% for the least accurate --- even though it confabulates least in
+absolute terms under the primary judge; accuracy does not confer
+calibrated abstention (\S\ref{sec:security}). For judged
+evaluation, we follow the LLM-judge validity literature
+\citep{zheng2023judging,wang2024notfair}: the judge is versioned as part of
+the benchmark, kept in a separate model family from the corpus generator,
+and all headline claims are differential (rankings, crossovers) rather than
+absolute.

@@ -1,0 +1,69 @@
+\begin{thebibliography}{13}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Cai et~al.(2022)Cai, Zhou, Mi, and Faltings}]{9747477}
+Fengyu Cai, Wanhao Zhou, Fei Mi, and Boi Faltings. 2022.
+\newblock \href {https://doi.org/10.1109/ICASSP43922.2022.9747477} {Slim: Explicit slot-intent mapping with bert for joint multi-intent detection and slot filling}.
+\newblock In \emph{IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}.
+
+\bibitem[{Chen et~al.(2022{\natexlab{a}})Chen, Zhou, and Zou}]{9747843}
+Lisong Chen, Peilin Zhou, and Yuexian Zou. 2022{\natexlab{a}}.
+\newblock \href {https://doi.org/10.1109/ICASSP43922.2022.9747843} {Joint multiple intent detection and slot filling via self-distillation}.
+\newblock In \emph{IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}.
+
+\bibitem[{Chen et~al.(2022{\natexlab{b}})Chen, Chen, Zou, Wang, and Sun}]{chen-etal-2022-transformer}
+Lisung Chen, Nuo Chen, Yuexian Zou, Yong Wang, and Xinzhong Sun. 2022{\natexlab{b}}.
+\newblock \href {https://aclanthology.org/2022.coling-1.629} {A transformer-based threshold-free framework for multi-intent {NLU}}.
+\newblock In \emph{Proceedings of the 29th International Conference on Computational Linguistics (COLING)}.
+
+\bibitem[{Cheng et~al.(2023)Cheng, Yang, and Jia}]{Cheng_2023}
+Lizhi Cheng, Wenmian Yang, and Weijia Jia. 2023.
+\newblock \href {https://doi.org/10.1609%2Faaai.v37i11.26493} {A scope sensitive and result attentive model for multi-intent spoken language understanding}.
+\newblock \emph{Proceedings of the {AAAI} Conference on Artificial Intelligence (AAAI)}.
+
+\bibitem[{Gangadharaiah and Narayanaswamy(2019)}]{gangadharaiah-narayanaswamy-2019-joint}
+Rashmi Gangadharaiah and Balakrishnan Narayanaswamy. 2019.
+\newblock \href {https://aclanthology.org/N19-1055} {Joint multiple intent detection and slot labeling for goal-oriented dialog}.
+\newblock In \emph{Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL)}.
+
+\bibitem[{Jiang et~al.(2023)Jiang, Zhu, Cao, Miao, and Yu}]{jiang-etal-2023-spm}
+Sheng Jiang, Su~Zhu, Ruisheng Cao, Qingliang Miao, and Kai Yu. 2023.
+\newblock \href {https://aclanthology.org/2023.acl-industry.64} {{SPM}: A split-parsing method for joint multi-intent detection and slot filling}.
+\newblock In \emph{Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (ACL)}.
+
+\bibitem[{Larson and Leach(2022)}]{larson2022survey}
+Stefan Larson and Kevin Leach. 2022.
+\newblock A survey of intent classification and slot-filling datasets for task-oriented dialog.
+\newblock \emph{arXiv preprint arXiv:2207.13211}.
+
+\bibitem[{Meng et~al.(2022)Meng, Xin, Liu, Wang, Feng, Lin, Zhao, Cao, and Sui}]{meng-etal-2022-dialogusr_}
+Haoran Meng, Zheng Xin, Tianyu Liu, Zizhen Wang, He~Feng, Binghuai Lin, Xuemin Zhao, Yunbo Cao, and Zhifang Sui. 2022.
+\newblock \href {https://aclanthology.org/2022.findings-emnlp.234} {{D}ialog{USR}: Complex dialogue utterance splitting and reformulation for multiple intent detection}.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2022}.
+
+\bibitem[{Qin et~al.(2021)Qin, Wei, Xie, Xu, Che, and Liu}]{qin-etal-2021-gl}
+Libo Qin, Fuxuan Wei, Tianbao Xie, Xiao Xu, Wanxiang Che, and Ting Liu. 2021.
+\newblock \href {https://aclanthology.org/2021.acl-long.15} {{GL}-{GIN}: Fast and accurate non-autoregressive model for joint multiple intent detection and slot filling}.
+\newblock In \emph{Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (ACL-IJCNLP)}.
+
+\bibitem[{Reimers and Gurevych(2019)}]{reimers-gurevych-2019-sentence}
+Nils Reimers and Iryna Gurevych. 2019.
+\newblock \href {https://aclanthology.org/D19-1410} {Sentence-{BERT}: Sentence embeddings using {S}iamese {BERT}-networks}.
+\newblock In \emph{Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)}.
+
+\bibitem[{Tu et~al.(2023)Tu, Uyen, Phuong, and Bach}]{Tu_2023}
+Nguyen~Anh Tu, Hoang Thi~Thu Uyen, Tu~Minh Phuong, and Ngo~Xuan Bach. 2023.
+\newblock \href {https://doi.org/10.3233%2Ffaia230538} {Joint multiple intent detection and slot filling with supervised contrastive learning and self-distillation}.
+\newblock In \emph{Frontiers in Artificial Intelligence and Applications}. {IOS} Press.
+
+\bibitem[{Xing and Tsang(2022)}]{xing-tsang-2022-co}
+Bowen Xing and Ivor Tsang. 2022.
+\newblock \href {https://aclanthology.org/2022.emnlp-main.12} {Co-guiding net: Achieving mutual guidances between multiple intent detection and slot filling via heterogeneous semantics-label graphs}.
+\newblock In \emph{Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP)}.
+
+\bibitem[{Ying and Thomas(2022)}]{ying-thomas-2022-label}
+Cecilia Ying and Stephen Thomas. 2022.
+\newblock \href {https://aclanthology.org/2022.insights-1.19} {Label errors in {BANKING}77}.
+\newblock In \emph{Proceedings of the Third Workshop on Insights from Negative Results in NLP}.
+
+\end{thebibliography}

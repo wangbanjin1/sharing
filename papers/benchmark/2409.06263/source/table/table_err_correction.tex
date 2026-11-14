@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{l|cc|cc|cc}
+\hline
+\multicolumn{1}{c|}{\multirow{2}{*}{Method}} &
+  \multicolumn{2}{c|}{Weak-ASR} &
+  \multicolumn{2}{c|}{Noised-ASR} &
+  \multicolumn{2}{c|}{Strong-ASR} \\\cline{2-7} 
+\multicolumn{1}{c|}{} & JGA & N-acc & JGA & N-acc & JGA & N-acc \\ \hline
+Baseline & 29.88 & 45.76 & 29.70 & 46.77 & 34.87 & 52.07 \\ 
++ \textsc{Correction model 1} & 23.30 & 41.50 & 23.96 & 42.86 & 26.68 & 46.14 \\ 
++ \textsc{Correction model 2} & 30.14 & 46.79 & 29.82 & 47.68 & 34.62 & 52.00 \\ 
++ EPA (with GPT, ours) & \textbf{32.39} & \textbf{51.12} & \textbf{32.24} & \textbf{52.70} & \textbf{36.61} & \textbf{55.87} \\ \hline
+\end{tabular}%
+}
+\caption{Comparison with ASR error correction models under different ASR conditions. }
+\label{tab:err_correction}
+\end{table}

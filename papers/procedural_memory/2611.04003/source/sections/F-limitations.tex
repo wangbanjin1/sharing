@@ -1,0 +1,25 @@
+\section{Limitations and Future Work}
+\label{app:limitations}
+
+Section~\ref{sec:conclusion} lists the bounds on this study. Three of
+them constrain the conclusions most, and each is taken up here with the
+experiment that would lift it.
+
+\paragraph{Single runs.}
+Agent execution is stochastic, but each configuration was executed once. Large
+gaps motivate the paper's conclusions. Small differences should be
+treated as unresolved until replicated, among them the 0.2 to 1.7 pp between
+\cond{Task-binary} and \cond{Checkpoint-binary} (Table~\ref{tab:exp2-full}) and the 0.8 to 1.6 pp between the best
+fully-passed rates in Experiment~1 (Table~\ref{tab:exp1-full}). Stateful long-horizon execution makes exhaustive replication
+costly, but cost does not remove the need to replicate the central contrasts.
+
+\paragraph{Repeated-task distribution.}
+R1 to R4 re-executed the same benchmark tasks. The experiment measures
+deepening competence over recurring procedural workloads, not unrestricted
+generalization to unseen distributions. Held-out task families and cross-domain
+transfer are necessary to measure how broadly the learned procedures apply.
+
+\paragraph{Human diagnosis.}
+\cond{Checkpoint-binary + Human} provides the strongest feedback but requires human
+effort after execution. Automating failure diagnosis without reverting to
+unreliable self-judgment is the most direct route to scaling the approach.

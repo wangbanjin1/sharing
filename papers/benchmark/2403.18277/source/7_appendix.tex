@@ -1,0 +1,128 @@
+\section*{Appendix}
+
+\section{Prompt Details}
+\subsection{For Concatenation}
+\label{subsec:prompt_concat}
+Table \ref{table:appendix_concatenation_prompt} depicts the detailed prompts of concatenating multiple utterances using ChatGPT. 
+When two or three sentences are given as input, the prompt works to combine them into a single sentence while maintaining the essence of each sentence, mirroring the exemplary good answers. 
+Despite numerous constraints, the generative approach often struggles to achieve concatenation, as shown in Table \ref{table:generative}.
+We experimented with a variety of prompts, including adding or excluding components, in an effort to optimize the concatenation process. 
+The term [Bad Answer] indicates an answer is not recommended, not necessarily incorrect.
+However, the variations in prompts yielded negligible differences in the quality of the results.
+
+\begin{table*}
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \setlength{\tabcolsep}{0.5em}
+    
+    \begin{tabular}{>{\raggedright\arraybackslash}p{15cm}}
+        \toprule
+        You are a native English speaker. \\
+        
+        \textbf{[Task Definition]} Combine 2 or 3 utterances as one single utterance.\\
+        
+        \textbf{[Goal]} The focus is on creating a single utterance that captures the essence of both ideas without unnecessary redundancy.\\
+        
+        \textbf{[Instructions]}
+        \begin{itemize}[leftmargin=10mm, nosep]
+            \item Avoid adding just punctuation.
+            \item Don't paraphrase.
+            \item Don't compromise the meaning of each utterance.
+            % \item Don't capitalize all characters.
+            \item Don't replace numbers with radix.
+            \item Maintain the intent of each utterance.
+            \item Don't forget that if a utterance starts with a verb, it's a statement.
+            \item Do NOT use conjunctions like `and'.
+            % \item Don't print `[Good Answer]'.
+            \item Don't print intent directly. 
+        \end{itemize} \\
+        \arrayrulecolor{lightgray}\midrule\arrayrulecolor{black} 
+        
+        \textcolor{commentcolor}{\# $N$ iterations}\\
+        \textbf{[Example 1]} 
+        % \textbf{[Example $N$]} 
+        \begin{quote}
+            
+        play my 88 keys playlist (\texttt{PlayMusic}) + add another song to my 88 keys playlist (\texttt{AddToPlaylist}) 
+        
+        {[Good Answer]} while playing my 88 keys playlist, add another song to it. 
+        
+        {[Bad Answer]} Play my 88 keys playlist and also add another song to my 88 keys playlist. 
+        
+        \end{quote}
+        ... \\
+        
+        \arrayrulecolor{lightgray}\midrule\arrayrulecolor{black}
+        
+        \textbf{[Query]} Combine the following utterances naturally.
+        
+        Inside the parentheses is the intent of each utterance: $\mathrm{utt_0}$ ({$\mathrm{intent_0}$}) + $\mathrm{utt_1}$ ({$\mathrm{intent_1}$}) \\
+        
+        \bottomrule
+    \end{tabular}
+    
+    \caption{Specification of the prompt used for the Generative Concatenation Approach with $N=3$.}
+    \label{table:appendix_concatenation_prompt}
+\end{table*}
+
+
+\subsection{For Evaluating Multi-intent Detection}
+\label{subsec:prompt_evaluate}
+Table \ref{table:appendix_chatgpt_prompt} is the prompt for evaluating MID using ChatGPT in our study. Each dataset offers its distinct set of labels and examples to detect multiple intents of the given query.
+In this study, we expanded the dataset up to 150 single intents into multi-label settings, significantly expanding the label space.
+This expansion limited to the capacity to provide all examples for each prompt. 
+The lack of a standardized approach to these few-shot prompts would be a notable challenge.
+
+\begin{table*}
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \setlength{\tabcolsep}{0.5em}
+    
+    \begin{tabular}{>{\raggedright\arraybackslash}p{15cm}}
+        \toprule
+        You are an Intent Detection Model on single utterance. \\
+        
+        \textbf{[Task Definition]} Detect single or more intent(s) of each utterance, but you can only classify UP TO 3 most plausible intents on 1 utterance.\\
+        
+        \textbf{[Intents]} \texttt{atis\_airport, atis\_ground\_service, atis\_abbreviation, atis\_city, atis\_aircraft, atis\_ground\_fare, atis\_flight, ...} \\
+        
+        \textbf{[Answer format]} If more than one, concatenate with `\#', such as \{Intent\}\#\{Intent\}. 
+        
+        e.g. \texttt{atis\_ground\_fare\#atis\_distance} \\
+        \arrayrulecolor{lightgray}\midrule\arrayrulecolor{black} 
+        
+        % \textcolor{commentcolor}{\# $N$ iterations}\\
+            \textbf{[Example 1]}
+            \begin{quote}
+                {[Utterance]} does delta aircraft fly dc10
+                
+                {[Answer]} \texttt{atis\_aircraft} 
+            \end{quote}
+            
+            \textbf{[Example 2]}
+            \begin{quote}
+                {[Utterance]} which airline has more business class flights than any other airline and what city is the airport mco in
+                
+                {[Answer]} \texttt{atis\_airline\#atis\_city} 
+            \end{quote}
+            
+            \textbf{[Example 3]}
+            \begin{quote}
+            {[Utterance]} what does the fare code qx mean, what is the distance between pittsburgh airport and downtown pittsburgh and what is restriction ap80
+            
+            {[Answer]} \texttt{atis\_abbreviation\#atis\_distance\#atis\_restriction} 
+            \end{quote}
+            \\
+            \arrayrulecolor{lightgray}\midrule\arrayrulecolor{black}
+        
+        \textbf{[Query]} Detect a single or up to 3 intent(s) on this following utterance. : $\mathrm{utt}$ \\
+        
+        \bottomrule
+    \end{tabular}
+    
+    \caption{Specification of the prompt used for addressing MID within the in-context learning framework. (Dataset: MixATIS).}
+    \centering
+    \label{table:appendix_chatgpt_prompt}
+\end{table*}

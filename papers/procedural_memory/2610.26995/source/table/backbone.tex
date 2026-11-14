@@ -1,0 +1,37 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Backbone comparison for Skill-GNN under the online-like ALFWorld protocol. Results are reported as mean $\pm$ std over three random seeds.}
+\label{tab:gnn_backbone}
+\begin{tabular}{lccccc}
+\toprule
+Backbone 
+& Acc@1 $\uparrow$ 
+& MRR $\uparrow$ 
+& Edge-F1 $\uparrow$ 
+& Loss $\downarrow$ 
+& Infer. ms $\downarrow$ \\
+\midrule
+GAT 
+& $0.978 \pm 0.002$ 
+& $0.988 \pm 0.001$ 
+& $0.974 \pm 0.003$ 
+& $0.100 \pm 0.013$ 
+& $4.57 \pm 0.23$ \\
+
+GIN 
+& $\mathbf{0.981 \pm 0.001}$ 
+& $\mathbf{0.990 \pm 0.001}$ 
+& $0.977 \pm 0.002$ 
+& $0.082 \pm 0.000$ 
+& $\mathbf{1.47 \pm 0.04}$ \\
+
+Hetero-GNN 
+& $0.978 \pm 0.003$ 
+& $0.989 \pm 0.002$ 
+& $\mathbf{0.984 \pm 0.001}$ 
+& $\mathbf{0.081 \pm 0.010}$ 
+& $2.42 \pm 0.71$ \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,111 @@
+\begin{table*}
+    \scriptsize
+    \centering
+    \extrarowheight=\aboverulesep
+    \addtolength{\extrarowheight}{\belowrulesep}
+    \aboverulesep=0pt
+    \belowrulesep=0pt
+    \setlength{\tabcolsep}{0.45em}
+        \begin{tabular}{>{\centering\arraybackslash\columncolor{Gray}}m{1.0cm} x{3.5cm} y{3.5cm} x{4.7cm} y{2.3cm}}
+        \toprule
+        \textbf{Success} & \textbf{Utterance 1} & \textbf{Utterance 2} & \textbf{Concatenation} & \textbf{Implication} \\
+        \midrule
+         X & weather for frankfort (\texttt{GetWeather}) & 3 out of 6 for the last album (\texttt{RateBook}) & frankfort's weather gets a 3 out of 6 rating for the last album & Intent (\texttt{RateBook}) removed \\
+         & show me the fares for a first class ticket from baltimore to dallas (\texttt{atis\_airfare}) & i would like the time of all flights from san francisco to pittsburgh on sunday (\texttt{atis\_flight\_time}) & show me the fares for a first class ticket from baltimore to dallas and i would like to know all flights from san francisco to pittsburgh on sunday & Intent changed (from \texttt{atis\_flight\_time} to \texttt{atis\_flight}) \\
+        & what is mci (\texttt{atis\_abbreviation}) & list la (\texttt{atis\_city}) & combine the sentences: "what is mci?" and "list la". & Failed to merge \\
+        \midrule
+        O & play the playlist funtime activity 
+        (\texttt{AddToPlaylist}) & add adele onto funtime activity playlist
+        (\texttt{PlayMusic}) & play the playlist, adding adele to the funtime activity playlist & Gerund phrase \\
+        & how do i freeze my bank account	
+        (\texttt{account\_blocked}) & do you know why my bank account is frozen (\texttt{freeze\_account}) & how do i freeze my bank account, and do you know why it is frozen & Coreference \\
+        \bottomrule
+        \end{tabular}
+    \caption{Failed and successful results of the Generative Approach and their implications.}
+    \label{table:generative}
+\end{table*}
+
+\subsection{Concatenation}
+\label{subsec:concatenation}
+MID datasets are typically created by merging two utterances using connectives. 
+However, this fails to encompass the full range of ways people express multiple intents, as they often employ varied connectives or omit them entirely.
+To assemble multi-intent utterances with nuanced patterns and to improve upon the rule-based approach suggested by MixX, we view concatenation from two distinct aspects, as in Figure \ref{fig:concat}: 
+\textbf{the complexity of concatenation} (explicit or implicit) and \textbf{the methodology of performing concatenation} (whether conducted manually or through tools such as ChatGPT.)
+
+\paragraph{The complexity aspect}
+We present two merging methods based on their level of complexity.
+
+\begin{enumerate}
+    \item \textbf{Explicit Concatenation:}    
+    Conjunctions are explicitly used to concatenate two or more utterances.\footnote{Specifically: \texttt{`and'}, \texttt{`and then'}, \texttt{`and also'}, \texttt{`,(comma)'}, \texttt{`;(semi-colon)'}, \texttt{`or'}, \texttt{`before'}, \texttt{`after'}, \texttt{`additionally'}, \texttt{`finally'}.\label{fn:conjunctions}}
+    We refer to the use of the four connectives as outlined in \citetlanguageresource{qin-etal-2020-agif}---\texttt{`and'}, \texttt{`and then'}, \texttt{`and also'}, \texttt{`,(comma)'}---as the \textbf{AND variants} setting.    
+    If other conjunctions are employed, we denote it as \textbf{various conjunctions} (see Figure \ref{fig:concat}).
+    \item \textbf{Implicit Concatenation:} This approach pursues a seamless blend of utterances, minimizing the apparent usage of conjunctions.
+    \citet{meng-etal-2022-dialogusr_} discovered that 62.5\% of the follow-up queries in the dialogues they gathered were either incomplete or incorrectly formulated.
+    This inspires us to consider the four following implicit merging patterns.
+    \textbf{Inherent ambiguity (conjunction removal)} refers to cases where conjunctions are simply removed from their original positions.
+    Despite its simplicity, it effectively reflects the intuition that speakers tend to favor shorter utterances.
+    In line with the same philosophy, we also consider \textbf{omissions} and \textbf{coreferences}, where redundant expressions are either eliminated or substituted with pronouns.
+    Lastly, we employ \textbf{gerund phrases} (the \texttt{-ing} form of verbs) which are useful for emphasizing concurrency.
+    For a clearer understanding of readers, we provide examples of each case in Table \ref{table:concat_and_metrics}.
+\end{enumerate}
+
+\paragraph{The methodology aspect}
+The remaining issue is how we implement the phenomena we have specified.
+While we permit minor adjustments to source sentences during merging, like omissions and coreferences, we aim to retain the sentences' original structure to the greatest extent possible.
+In alignment with our mission, we propose two implementation strategies: manual rule-based heuristics and the utilization of ChatGPT.
+
+\begin{enumerate}
+    \item \textbf{Na\"ive Approach:}
+    It follows the original practices proposed in \citetlanguageresource{qin-etal-2020-agif}.
+    It is Explicit Concatenation with the AND variants setting. 
+    \item \textbf{Manual Approach:} It expands the Na\"ive Approach with further rule-based techniques. 
+    To be specific, it utilizes a broader range of conjunctions (see Footnote \ref{fn:conjunctions}), occasionally skips connectives, and, when feasible, transforms one of the utterances into a gerund phrase.
+    \item \textbf{Generative Approach}: Facing the non-trivial challenge of implicit concatenations, we attempt to circumvent this issue with the aid of large language models, especially ChatGPT.
+    We instruct the tool to merge utterances while preserving their original intents and structures as much as possible, and we specifically encourage it to avoid using conjunctions such as \texttt{'and'}.
+    Figure \ref{figure:prompt_chatgpt_concat} shows the prompt used in the process. 
+    We provide three few-shot samples each of both successful and unsuccessful merges.
+    More detailed information about the prompt is available in Appendix \ref{subsec:prompt_concat}.
+    \label{table:metric_samples}
+\end{enumerate}
+
+\begin{figure}[t]
+    \setlength{\fboxsep}{7pt} 
+    \noindent\fbox{%
+        \begin{minipage}{\dimexpr\columnwidth-2\fboxsep-2\fboxrule\relax}
+        
+            \fontsize{9pt}{11pt}\selectfont 
+            \setlength{\parskip}{5pt} 
+            \textbf{Instructions:} \textsc{You are a native English speaker. Combine the following sentences as one single sentence naturally.} \\
+            \vspace{-5pt}
+
+            \textcolor{commentcolor}{\# $N$ iterations} \\
+            \vspace{-5pt}
+            \textbf{Example $N$: } [($\mathrm{utt_1}$, $\mathrm{intent_1}$), ..., ($\mathrm{utt_k}$, $\mathrm{intent_k}$)]
+            \begin{itemize}
+                \item \textbf{Good Answer: } \textsc{[sample answer]} \\\vspace{-3pt}\textcolor{commentcolor}{\# An ideal result of concatenating example utterances}
+                \item \textbf{Bad Answer: } \textsc{[sample answer]} \\\vspace{-3pt}\textcolor{commentcolor}{\# An unwanted or incorrect result of concatenating example utterances}
+            \end{itemize}
+
+            \textbf{Query: } \textsc{[query]} \\\vspace{-5pt}
+            
+            \textbf{Answer: } \textsc{[answer]}
+        \end{minipage}%
+    }
+    \caption{
+    Prompt design for the Generative Approach. 
+    The demonstration section showcases $N$ ($=$ 3)  examples of combining $k$ ($=$ 2 or 3) utterances, featuring both a successful and a failed case. 
+    The \textsc{[query]} lists the sentences to be merged.
+    ChatGPT performs the merging process by filling in the \textsc{[answer]} part. 
+    Blue comments are for illustrative purposes only and are not part of the actual prompt.
+    }
+    \label{figure:prompt_chatgpt_concat}
+\end{figure}
+
+In our preliminary experiments, we discovered that ChatGPT often fails to combine two given sentences with the expected level of creativity and naturalness.
+Consequently, contrary to our expectations, the initial results from ChatGPT closely reproduced those from the Manual Approach, which heavily relies on directly using conjunctions.
+For reference, Table \ref{table:generative} displays a few examples of failed and successful outputs from ChatGPT.
+
+Nevertheless, we noted some instances where ChatGPT excels in producing high-quality utterances (e.g., the bottom part of Table \ref{table:generative}) that could not be simply achieved through rule-based heuristics.
+We highlight that manually designing such examples requires an exceptional level of expertise and effort, and they are not readily achievable even by human annotators.
+Therefore, in the subsequent section, we investigate techniques in terms of utterance selection to better condition ChatGPT for creating more reliable data samples.

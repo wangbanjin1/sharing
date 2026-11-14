@@ -1,0 +1,47 @@
+\begin{table*}[t]
+\centering
+\normalsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.35}
+
+\begin{tabularx}{\linewidth}{@{}p{0.08\linewidth} p{0.32\linewidth} p{0.47\linewidth} p{0.07\linewidth}@{}}
+\toprule
+\textbf{Metric}
+& \textbf{Full Name}
+& \textbf{Definition}
+& \textbf{Set} \\
+\midrule
+DEA & Dialogue Execution Accuracy
+& $\frac{1}{|\mathcal{S}|} \sum_{\tau \in \mathcal{S}} \prod_{i=1}^{n_\tau} \mathrm{EX}(y_i, y_i^*)$
+& all \\
+
+AR & Ask Rate
+& $\frac{1}{|\mathcal{S}|} \sum_{\tau \in \mathcal{S}} \mathds{1}\!\left[\tau \text{ contains a clarification}\right]$
+& all \\
+
+L1-IR & L1 Identification Rate
+& $\frac{1}{|\mathcal{S}|} \sum_{\tau \in \mathcal{S}} \mathds{1}\!\left[\exists\, t : \rho_t = \mathrm{L1}\right]$
+& $\mathcal{C}, \mathcal{J}$ \\
+
+L2-IR$^{p}$ & L2 Identification Rate
+& $\frac{1}{|\mathcal{S}|} \sum_{\tau \in \mathcal{S}} \mathds{1}\!\left[\exists\, t : \rho_t = \mathrm{L2}\right]$
+& $\mathcal{C}, \mathcal{J}$ \\
+
+JIR & Joint Identification Rate
+& $\frac{1}{|\mathcal{S}|} \sum_{\tau \in \mathcal{S}} \mathds{1}\!\left[\exists\, t_1, t_2 : \rho_{t_1} = \mathrm{L1} \wedge \rho_{t_2} = \mathrm{L2}\right]$
+& $\mathcal{C}, \mathcal{J}$ \\
+
+DRR & Drift Recognition Rate
+& $\frac{1}{|\mathcal{S}|} \sum_{\tau \in \mathcal{S}} \mathds{1}\!\left[\mathrm{Rec}(\tau)\right]$
+& $\mathcal{D}, \mathcal{J}$ \\
+
+DRA & Drift Resolution Accuracy
+& $\frac{1}{|\mathcal{S}|} \sum_{\tau \in \mathcal{S}} \mathds{1}\!\left[\mathrm{Rec}(\tau) \wedge \mathrm{EX}(y_{\mathrm{post}}, y_{\mathrm{post}}^*)\right]$
+& $\mathcal{D}, \mathcal{J}$ \\
+\bottomrule
+\end{tabularx}
+\vspace{-1mm}
+\caption{\textsc{TIDE-Bench} metrics spanning four behavioral facets: execution accuracy (DEA), clarification behavior (AR), chain-layer identification (L1-IR, L2-IR$^{p}$, JIR), and drift handling (DRR, DRA). $\mathcal{C}, \mathcal{D}, \mathcal{J}$ denote Chain-only, Drift-only, and Joint sample sets. L2-IR$^{p}$ uses the $p$-protocol (\S~\ref{subsec:interaction}); all other metrics use the $f$-protocol instead.}
+\label{tab:metrics}
+\vspace{-4mm}
+\end{table*}

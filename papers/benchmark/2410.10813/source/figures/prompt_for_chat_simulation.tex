@@ -1,0 +1,22 @@
+\begin{figure*}[t]
+ \begin{tcolorbox}
+ % \textbf{System Prompt:} \\
+
+ % xxxxx
+
+ % \textbf{Prompt:} \\
+
+ I will give you a past memory. Use the memory to act as a normal user to chat with a chat assistant. In the chat, you may ask it to assist you various tasks or ask it about various information. However, make sure that your convey the following fact about you: "\{evidence\_statement\}". In addition, make sure your message is concise (1-2 simple sentences), since the real users often do not bother write a long message. I will provide you with the chat history and the response from the assistant. Directly generate the next response from the user's perspective. You must simulate the tone of a neutral user and do not be overly enthusiastic, verbose, formal, or polite. For conciseness, DO NOT react to the assistant's message with e.g., "thanks" or "I will do that". Instead, directly state the follow-up questions or new questions.\\
+ 
+ Memory: \{background\} \\
+ 
+ Chat History: \\
+ 
+ assistant: Hi! How can I assist you today? \\
+
+ ... (more rounds as the conversation continues) ...
+ 
+ \end{tcolorbox}
+ \caption{The prompt for instruction an LLM to act as a user and initiates a task-oriented dialogue with another LLM. Both the background and the evidence statement is provided. This prompt is used for the question type \textbf{single-session}. For the other question types, the prompt components are slightly different but the prompt overall follows the same style. }
+ \label{fig:chat-simulation-prompt}
+\end{figure*}

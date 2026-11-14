@@ -1,0 +1,31 @@
+\begin{table}[!t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.35}
+
+\begin{tabular*}{\columnwidth}{
+    @{\extracolsep{\fill}}cccc@{}
+}
+\toprule
+\textbf{Split}
+& \textbf{Majority Acc.}
+& \textbf{Strict Acc.}
+& \textbf{Fleiss' $\boldsymbol{\kappa}$} \\
+\midrule
+\textsc{Chain-only} & 93.2 & 84.8 & 0.82 \\
+\textsc{Drift-only} & 95.6 & 87.6 & 0.80 \\
+\textsc{Joint}      & 88.4 & 76.8 & 0.77 \\
+\midrule
+Overall             
+& \textbf{92.4}
+& \textbf{83.1}
+& \textbf{0.81} \\
+\bottomrule
+\end{tabular*}
+
+\vspace{-1mm}
+\caption{Human validation on 250 stratified triplets. Majority requires $\geq 3/5$ annotators per item; strict requires unanimity. Fleiss' $\kappa$ uses binary accept/reject verdicts.}
+\label{tab:human-validation}
+\vspace{-5mm}
+\end{table}

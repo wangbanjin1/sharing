@@ -1,0 +1,28 @@
+\setlength{\tabcolsep}{3.1pt}
+\begin{table}[t]
+    % \vspace{-3mm}
+    \caption{{A comparison of nine memory-augmented frameworks through the lens of the proposed unified framework. We provide detailed references and discussions of each work in \Cref{appendix-mem-system-view}. For ChatGPT and Coze, we skip several designs as they are unknown.}}
+    \vspace{-1mm}
+    \centering
+    \resizebox{\linewidth}{!}{
+    \begin{tabular}{c|c|c|c|c|c|c}
+        \toprule
+        \textbf{Method} & \textbf{Value} & \textbf{Key} & \textbf{Query} & \textbf{Retrieval} & \textbf{Time-aware} & \textbf{Reading} \\
+        \midrule
+        In-context RAG \citep{shi-etal-2024-replug} & round/session & K = V & question & flat & No & direct \\
+        MemoryBank \citep{zhong2024memorybank} & summary + round & K = V & question & flat & Yes & direct \\
+        LD-Agent \citep{DBLP:journals/corr/abs-2406-05925} & summary + fact & K = V & keyphrase & flat & Yes & direct \\
+        CoN \citep{yu2023chain} & round/session & K = V & question & flat & No & CoN \\
+        ChatGPT & fact & - & - & - & No & - \\
+        Coze & fact & - & - & - & No & - \\
+        RAPTOR \citep{DBLP:conf/iclr/SarthiATKGM24} & round/session & node summary & question & flat/interactive & No & - \\
+        MemWalker \citep{DBLP:journals/corr/abs-2310-05029} & round/session & node summary & question & interactive & No & interactive \\
+        HippoRAG \citep{DBLP:journals/corr/abs-2405-14831} & round/session & entity & entity & PPR & No & direct \\
+        \midrule
+        Our Design & round & K = V + fact & question + time & flat & Yes & CoN \\
+         \bottomrule
+    \end{tabular}
+    }
+    \vspace{-2mm}
+    \label{tab:memory-system-dimensions-comp}
+\end{table}

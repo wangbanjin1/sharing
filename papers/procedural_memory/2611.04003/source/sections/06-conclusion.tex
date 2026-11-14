@@ -1,0 +1,17 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We introduced \method{}, a training-free continual-learning method that
+consolidates execution traces and feedback into persistent, interlinked
+procedural wiki pages. Across two enterprise benchmarks and three model
+families, Free Form \method{} leads or ties checkpoint pass rate in all six
+settings while maintaining compact stores. The controlled study further shows
+that prescribed schemas and explicit deduplication rules do not improve
+consolidation, that failed traces become useful as feedback becomes more
+diagnostic, and that one round with checkpoint outcomes and human diagnosis
+outperforms four rounds of self-judgment. Continued diagnosis produces larger
+and more sustainable improvements across refinement rounds, with local
+checkpoint corrections compounding into end-to-end task completion. The
+resulting design principle is simple: provide a general memory system, let the
+agent organize the procedural knowledge revealed by experience, and spend human
+effort reactively on diagnosing the failures that remain.

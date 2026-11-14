@@ -1,0 +1,46 @@
+\begin{table}[htbp]
+\centering
+\caption{Classification of Memory Types, Mechanisms, and Example References}
+\label{tab:memory_classification}
+\renewcommand{\arraystretch}{1.4}
+\footnotesize
+\begin{tabular}{m{0.08\textwidth} m{0.12\textwidth} m{0.23\textwidth} m{0.46\textwidth}}
+\hline
+\textbf{Timescale} & \textbf{Consciousness} & \textbf{Mechanism} & \textbf{Example References} \\ \hline
+
+\multirow{4}{*}[-4ex]{\makecell[l]{Short-term}} 
+& \multirow{1}{*}{\makecell[l]{Explicit}} 
+& Prompt-Based Context 
+& GPT-2 \cite{radford_gpt2_nodate}, GPT-3 \cite{brown_gpt3_2020}, Prefix-Tuning \cite{li_prefix-tuning_2021}, Prompt-Tuning \cite{lester_prompt-tuning_2021}, P-Tuning \cite{liu_ptuning_2023, liu_ptuningv2_2022}, InstructGPT \cite{ouyang_instructgpt_2022} \\ \cline{2-4}
+
+& \multirow{3}{*}[-2ex]{\makecell[l]{Implicit}} 
+& Key-Value Cache Mechanism 
+& vLLM \cite{kwon_vLLM_2023}, StreamingLLM\cite{xiao_streamingllm_2023}, H2O\cite{zhang_h2o_2023}, LESS \cite{dong_less_2024}, KVQuant \cite{hooper_kvquant_2024}, RetrievalAttention \cite{liu_retrievalattention_2024}, Memory\textsuperscript{3} \cite{memory3_Yang_2024} \\ \cline{3-4}
+
+& 
+& Hidden State Steering 
+& Steer \cite{subramani_steerno1_2022}, ICV \cite{liu_ICV_2024}, ActAdd \cite{turner_ActAdd_2024}, StyleVec \cite{konen_stylevec_2024}, CAA \cite{rimsky_CAA_2024}, FreeCtrl \cite{feng_freectrl_2024}, EasyEdit2 \cite{xu_easyedit2_2025} \\ \cline{3-4}
+
+& 
+& Activation Circuit Modulation 
+& SAC \cite{xiao_sac_2024}, DESTEIN \cite{li_destein_2024}, LM-Steer \cite{han_lmsteer_2024} \\ \hline
+
+\multirow{4}{*}[-6ex]{\makecell[l]{Long-term}} 
+& \multirow{1}{*}[-2ex]{\makecell[l]{Explicit}} 
+& Non-parametric Retrieval-Augmented Generation 
+& kNN-LMs \cite{khandelwal_knnlm_2019,pozzobon_goodtriever_2023}, MEMWALKER \cite{DBLP:journals/corr/abs-2310-05029}, Graph RAG \cite{DBLP:journals/corr/abs-2404-16130}, LightRAG \cite{DBLP:journals/corr/abs-2410-05779}, NodeRAG \cite{xu2025noderagstructuringgraphbasedrag,yang2025heteragheterogeneousretrievalaugmentedgeneration}, HyperGraphRAG \cite{DBLP:journals/corr/abs-2503-21322}, HippoRAG \cite{DBLP:conf/nips/GutierrezS0Y024,DBLP:journals/corr/abs-2502-14802}, PGRAG\cite{DBLP:journals/corr/abs-2405-16933}, Zep \cite{DBLP:journals/corr/abs-2501-13956}, A-MEM~\cite{DBLP:journals/corr/abs-2502-12110}, Mem0\cite{chhikara2025mem0buildingproductionreadyai} \\ \cline{2-4}
+
+& \multirow{3}{*}[-4ex]{\makecell[l]{Implicit}} 
+& Parametric Knowledge 
+& BERT \cite{devlin_bert_2019}, RLHF \cite{bai_rlhf_2022}, CTRL \cite{keskar_ctrl_2019}, SLayer \cite{chen_slayer_2024} \\ \cline{3-4}
+
+& 
+& Modular Parameter Adaptation 
+& LoRA \cite{hu_lora_2021}, PRAG \cite{su_PRAG_2025}, DyPRAG \cite{tan_DyPRAG_2025}, SERAC \cite{mitchell_serac_2022}, CaliNet \cite{dong_CaliNet_2022}, DPM \cite{cheng_DPM_2023}, GRACE \cite{hartvigsen_grace_2023} \\ \cline{3-4}
+
+& 
+& Parametric Memory Editing 
+& ROME \cite{meng_rome_2023}, MEMIT \cite{meng_memit_2023}, AlphaEdit \cite{fang_alphaedit_2025}, AnyEdit \cite{jiang_anyedit_2025}, EasyEdit \cite{zhang_easyedit_2024}, AdaPLE \cite{li_AdaPLE_2024}, MEMAT \cite{tamayo_memat_2024} \\ \hline
+
+\end{tabular}
+\end{table}

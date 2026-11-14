@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{3.8pt}
+\begin{tabular}{lcccc}
+\toprule
+Method Variant & Succ. $\uparrow$ & Steps $\downarrow$ & Time $\downarrow$ & Tokens $\downarrow$ \\
+\midrule
+w/o Skill-DAG  & 56.8 & 23.0 & 55.4 & 67.5K \\
+w/o Skill-GNN$^\dagger$ & 58.3 & 20.3 & 54.7 & 53.6K \\
+w/o DAG Extraction & 63.0 & 18.9 & 57.8 & 56.2K \\
+Full \model{} & \textbf{70.7} & \textbf{18.3} & \textbf{51.6} & \textbf{45.8K} \\
+\bottomrule
+\end{tabular}
+\caption{Component ablation of \model{} on ALFWorld. Succ., Steps, Time, and Tokens denote task success rate, average completion steps, average runtime, and average token consumption. $^\dagger$ removes graph-based Skill-GNN and uses retrieved procedural memory.}
+\label{tab:ablation}
+\end{table}

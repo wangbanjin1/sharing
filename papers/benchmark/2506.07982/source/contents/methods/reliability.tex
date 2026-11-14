@@ -1,0 +1,24 @@
+\subsection{How does dual-control impact benchmark reliability?}
+\label{sec:reliability}
+
+Ensuring the reliability of conversational agent benchmarks is paramount. Three primary sources of uncertainty can impact benchmark reliability: \textbf{implementation errors}, \textbf{task specification errors}, and \textbf{user simulator errors}. While the user simulator is often cited as a critical component requiring careful evaluation, its assessment can be confounded by issues in the benchmark's implementation or task definitions. Therefore, we first address these potential error sources before evaluating the user simulator itself. This is detailed in \Cref{app:verify_tau}.
+
+\paragraph{User simulator quality evaluation.}
+
+Having minimized errors in the benchmark implementation and task specifications, we evaluated the user simulator quality.
+
+To assess the quality of the user simulator across domains, we manually annotated interaction traces generated using \gptmodelshort for both the User Simulator and the Agent.
+
+Each conversation was reviewed by two separate annotators tasked with identifying user simulator errors. 
+Annotators were given the User Simulator Guidelines, the specific User Instructions for this conversation (see \Cref{app:user-prompt}), descriptions of the available User Tools (if any), and the complete conversation trajectory (messages and tool calls). Annotators assessed each user turn against four criteria: adherence to \textbf{User Simulator Guidelines}, adherence to \textbf{User Instructions}, correct use of \textbf{User Tools}, and generation of a \textbf{natural and consistent} conversational continuation.
+
+Errors were categorized as either (1) \textbf{task‑critical} errors: high‑severity failures that preclude task completion (e.g., generating an intent that contradicts the user goal, or causing an irrecoverable state transition),  or as (2) \textbf{task‑benign} errors: Errors that do not prevent the task from being completed.
+
+
+
+\paragraph{Reliability of the user simulator.}
+\label{sec:user-sim-quality}
+
+\input{tables/user_sim_quality}
+
+As shown in \Cref{tab:user_sim_error_rates}, our analysis of user simulator behavior reveals significant improvements in reliability for the new \telecom domain. While for the \retail and \airline domains we recorded a 40\% and 47\% error rate for the user simulator (with 12\% and 13\% being critical errors that prevent task completion), this rate is much lower for the \telecom domain, only 16\% with 6\% critical errors reported. This substantial improvement in reliability can be attributed to the domain design, which shapes and tightly constrains user behavior through its environment and available affordances. Rather than relying heavily on natural language specifications to guide behavior, the \telecom domain's structured interface and clear action space naturally guide the user simulator toward correct interactions, resulting in more consistent and predictable behavior.

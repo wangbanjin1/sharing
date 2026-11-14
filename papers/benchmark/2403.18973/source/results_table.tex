@@ -1,0 +1,52 @@
+\begin{table}[tp]
+\centering
+\footnotesize{
+\setlength\tabcolsep{2pt}
+\begin{tabular}{lccr|cccc}
+\toprule
+Setting & $1-\alpha$ & $th$ &    & Cov$\uparrow$ & Single$\uparrow$ & $|\text{CQ}|\downarrow$ & Amb \\ \midrule
+ACID  & .98 & 7 &  CICC & \underline{.98} & .87 & \textbf{3.01} & .03 \\
+& & &  B1 & \underline{.98} & \textbf{.88} & 5 & 0 \\
+& & &  B2 & .95 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{.99} & 0 & 5 & 0 \\
+\midrule
+ATIS & .99 & 7  &  CICC & \underline{.99} & \textbf{.98} & \textbf{2.54} & 0 \\
+& & &  B1 & \underline{.99} & .73 & 5 & 0 \\
+& & &  B2 & .98 & 1.00 & - & 0 \\
+& & &  B3 & \underline{1.00} & 0 & 5 & 0 \\
+\midrule
+B77/BERT & .97 & 7 &  CICC & \underline{.98} & .73 & \textbf{2.84} & .04 \\
+& & &  B1 & \underline{.97} & \textbf{.84} & 5 & 0 \\
+& & &  B2 & .93 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{.98} & 0 & 5 & 0 \\
+\midrule
+B77/DFCX  & .90& 4 &  CICC & \underline{.91} & .66 & \textbf{2.63} & .02 \\
+&& &  B1 & \underline{.95} & \textbf{.71} & 5 & .27 \\
+&& &  B2 & .90 & .98 & 2.26 & 0 \\
+&& &  B3 & \underline{.97} & 0 & 5 & 1 \\
+\midrule
+C150-ID  & .99 & 7 &  CICC & \underline{.99} & \textbf{.97} & \textbf{2.66} & 0 \\
+& & &  B1 & \underline{.99} & .82 & 5 & 0 \\
+& & &  B2 & .98 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{1} & 0 & 5 & 0 \\
+\midrule
+HWU64 & .95 & 7 &  CICC & \underline{.95} & \textbf{.82} & \textbf{2.81} & .01 \\
+& & &  B1 & \underline{.97} & .70 & 5 & 0 \\
+& & &  B2 & .90 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{.98} & 0 & 5 & 0 \\
+\midrule
+IND  & .90 & 7 &  CICC & \underline{.91} & \textbf{.25} & \textbf{3.46} & .11 \\
+& & &  B1 & .88 & .42 & 5 & 0 \\
+& & &  B2 & .70 & 1 & $-$ & 0 \\
+& & &  B3 & \underline{.91} & 0 & 5 & 0 \\
+\midrule
+MTOD  & .99 & 7  &  CICC & \underline{.99} & \textbf{1} & $-$ & 0 \\
+& & &  B1 & \underline{1} & .98 & 5 & 0 \\
+& & &  B2 & \underline{.99} & \textbf{1} & $-$ & 0 \\
+& & &  B3 & \underline{1} & 0 & 5 & 0 \\
+ 
+\bottomrule
+\end{tabular}}
+    \caption{Test set results where \underline{underline} indicates meeting coverage requirement. \textbf{Bold} denotes best when meeting this requirement, omitted for last column due to missing ground truth for ambiguous.}
+    \label{tab:results}
+\end{table}

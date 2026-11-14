@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+Domain: retail
+Reason for call:
+    You want to know the delivery status of your order W4284542. If it has not shipped, you want to cancel the air purifier from the order. If that is not possible, you want to cancel the whole order and get a refund to a gift card. If refunding to a gift card is not possible, you do not want to cancel.
+Known info:
+    You are Ivan Hernandez. Your user id is ivan\PYGZus{}hernandez\PYGZus{}6923. You live in San Diego, 92133.
+Unknown info:
+    You do not know the current shipping status of your order. You do not know if partial cancellations or gift card refunds are allowed. You do not remember your email address.
+Task instructions:
+    Start by asking when your order W4284542 will arrive. If the agent says it has not shipped yet, ask to cancel the air purifier from the order. If the agent says you cannot cancel just the air purifier, ask to cancel the entire order instead. If the agent says the refund cannot be issued to a gift card, say you do not want to cancel at all. Remain polite, brief, and firm throughout the conversation.
+\end{Verbatim}

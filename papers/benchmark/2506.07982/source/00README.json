@@ -1,0 +1,80 @@
+{
+   "stamp" : true,
+   "sources" : [
+      {
+         "usage" : "toplevel",
+         "filename" : "main.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/default.pygstyle"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing1.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing10.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing11.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing2.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing3.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing4.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing5.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing6.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing7.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing8.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "_minted-main/listing9.pygtex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "codes/airline_agent_policy.md"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "codes/retail_agent_policy.md"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "codes/telecom_agent_generic.md"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "codes/telecom_agent_troubleshooting.md"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "codes/user_simulation_guideline.md"
+      }
+   ],
+   "process" : {
+      "compiler" : "pdflatex"
+   }
+}

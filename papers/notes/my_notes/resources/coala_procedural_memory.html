@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoALA 四类记忆：零售助手实例（语义 / 情景 / 程序 / 工作）</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --muted: #64748b;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --teal: #0d9488;
+    --teal-bg: #f0fdfa;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --rose: #be123c;
+    --rose-bg: #fff1f2;
+    --indigo: #4338ca;
+    --indigo-bg: #eef2ff;
+    --code-bg: #0f172a;
+    --code-fg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 14px;
+    line-height: 1.45;
+  }
+  .app {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+  }
+  .topbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: #f1f5f9;
+  }
+  .title-group h1 { font-size: 15px; font-weight: 700; color: var(--text); }
+  .title-group p { font-size: 12px; color: var(--muted); }
+  .mode-tabs { display: flex; gap: 6px; background: #e2e8f0; padding: 3px; border-radius: 8px; }
+  .mode-btn {
+    border: none; background: transparent; padding: 6px 12px;
+    font-size: 12px; font-weight: 600; color: #475569;
+    border-radius: 6px; cursor: pointer; transition: all 0.18s;
+  }
+  .mode-btn.active { background: var(--card); color: var(--blue); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+  .subbar {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; }
+  .legend-item { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-weight: 500; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .controls { display: flex; align-items: center; gap: 6px; }
+  .ctrl-btn {
+    border: 1px solid var(--border); background: var(--card); color: var(--text);
+    padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .ctrl-btn:hover:not(:disabled) { border-color: var(--blue); color: var(--blue); }
+  .ctrl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .step-badge { font-weight: 700; color: var(--blue); min-width: 64px; text-align: center; }
+
+  .canvas-wrap {
+    position: relative; width: 100%;
+    background: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 18px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  svg { width: 100%; height: auto; display: block; user-select: none; }
+  .node-box { cursor: pointer; transition: filter 0.2s, stroke-width 0.2s; }
+  .node-box:hover { filter: brightness(0.97); }
+  .node-active { stroke-width: 2.6px !important; filter: drop-shadow(0 4px 10px rgba(37, 99, 235, 0.18)); }
+  .edge-path { fill: none; stroke-width: 2; opacity: 0.20; transition: opacity 0.25s, stroke-width 0.25s; }
+  .edge-active { opacity: 1; stroke-width: 3; stroke-dasharray: 7 5; animation: dashFlow 0.75s linear infinite; }
+  @keyframes dashFlow { to { stroke-dashoffset: -24; } }
+  .edge-label { font-size: 9.5px; font-weight: 700; opacity: 0.26; transition: opacity 0.25s; }
+  .edge-label.active { opacity: 1; }
+
+  .detail-panel {
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px;
+    padding: 14px 16px; background: #ffffff;
+  }
+  @media (max-width: 720px) { .detail-panel { grid-template-columns: 1fr; } }
+  .step-card { display: flex; flex-direction: column; gap: 8px; }
+  .action-pill {
+    display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+    padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700;
+  }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .step-desc { font-size: 12.5px; color: #334155; line-height: 1.55; }
+  .evo-tabs { display: none; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .evo-tabs.visible { display: flex; }
+  .evo-tab {
+    border: 1px solid var(--border); background: #f8fafc; padding: 4px 9px;
+    border-radius: 6px; font-size: 11.5px; font-weight: 600; color: #475569; cursor: pointer;
+  }
+  .evo-tab.active { background: var(--amber-bg); border-color: var(--amber); color: #b45309; }
+  .code-box {
+    background: var(--code-bg); color: var(--code-fg); border-radius: 8px;
+    padding: 10px 12px; font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 11.5px; line-height: 1.5; overflow-x: auto; white-space: pre-wrap;
+  }
+  .code-header {
+    font-size: 11px; color: #94a3b8; margin-bottom: 6px; padding-bottom: 4px;
+    border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between;
+  }
+  .diff-add { color: #4ade80; }
+  .diff-del { color: #fb7185; }
+  .diff-info { color: #38bdf8; }
+  .diff-deny { color: #fbbf24; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="title-group">
+      <h1>CoALA 四类记忆在零售助手中的分工与写入</h1>
+      <p>实例：按上周清单复购，预算 300，送公司 —— 点击任意模块可检视其存储定义（对应 Sec 4.1）</p>
+    </div>
+    <div class="mode-tabs">
+      <button class="mode-btn active" id="btnModeA" onclick="switchMode('A')">场景 A：四类记忆如何协作</button>
+      <button class="mode-btn" id="btnModeB" onclick="switchMode('B')">场景 B：三类记忆各自被写入</button>
+    </div>
+  </div>
+
+  <div class="subbar">
+    <div class="legend">
+      <span class="legend-item"><i class="dot" style="background:var(--indigo)"></i>任务输入</span>
+      <span class="legend-item"><i class="dot" style="background:var(--blue)"></i>Retrieval</span>
+      <span class="legend-item"><i class="dot" style="background:var(--purple)"></i>Reasoning</span>
+      <span class="legend-item"><i class="dot" style="background:var(--teal)"></i>Grounding</span>
+      <span class="legend-item"><i class="dot" style="background:var(--amber)"></i>Learning</span>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" id="btnPrev" onclick="stepDelta(-1)">◀ 上一步</button>
+      <span class="step-badge" id="stepCounter">1 / 5</span>
+      <button class="ctrl-btn" id="btnNext" onclick="stepDelta(1)">下一步 ▶</button>
+    </div>
+  </div>
+
+  <div class="canvas-wrap">
+    <svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+        </marker>
+        <marker id="arr-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+        </marker>
+        <marker id="arr-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+        </marker>
+        <marker id="arr-indigo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#4338ca"/>
+        </marker>
+        <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
+        </marker>
+      </defs>
+
+      <!-- 右栏总标 -->
+      <text x="556" y="10" font-size="10" font-weight="700" fill="#94a3b8">长期记忆 (Long-Term Memory) —— 三个模块，均跨会话持久</text>
+
+      <!-- 语义记忆 -->
+      <g class="node-box" onclick="inspectNode('sem')">
+        <rect id="node-sem" x="556" y="18" width="390" height="104" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+        <text x="568" y="38" font-size="12" font-weight="700" fill="#334155">语义记忆 (Semantic)</text>
+        <text x="700" y="38" font-size="9.5" fill="#94a3b8">事实 · 不含过程</text>
+        <line x1="760" y1="46" x2="760" y2="112" stroke="#e2e8f0" stroke-width="1"/>
+        <text x="568" y="56" font-size="9.5" font-weight="700" fill="#64748b">世界事实 · 只读</text>
+        <text id="sem-l1" x="568" y="76" font-size="10" fill="#475569"></text>
+        <text id="sem-l2" x="568" y="92" font-size="10" fill="#475569"></text>
+        <text id="sem-l3" x="568" y="108" font-size="10" fill="#475569"></text>
+        <text x="772" y="56" font-size="9.5" font-weight="700" fill="#64748b">关于用户 · 反思可写</text>
+        <text id="sem-r1" x="772" y="76" font-size="10" fill="#475569"></text>
+        <text id="sem-r2" x="772" y="92" font-size="10" fill="#475569"></text>
+        <text id="sem-r3" x="772" y="108" font-size="10" fill="#475569"></text>
+      </g>
+
+      <!-- 情景记忆 -->
+      <g class="node-box" onclick="inspectNode('ep')">
+        <rect id="node-ep" x="556" y="132" width="390" height="88" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+        <text x="568" y="152" font-size="12" font-weight="700" fill="#334155">情景记忆 (Episodic)</text>
+        <text x="700" y="152" font-size="9.5" fill="#94a3b8">事件流 / 轨迹 · 可作范例</text>
+        <text id="ep-l1" x="568" y="172" font-size="10" fill="#64748b"></text>
+        <text id="ep-l2" x="568" y="188" font-size="10" fill="#64748b"></text>
+        <text id="ep-l3" x="568" y="204" font-size="10" fill="#64748b"></text>
+      </g>
+
+      <!-- 程序记忆组 -->
+      <rect x="556" y="228" width="390" height="160" rx="8" fill="#fffbeb" fill-opacity="0.6" stroke="#fcd34d"/>
+      <text x="568" y="248" font-size="11" font-weight="700" fill="#b45309">程序记忆 (Procedural) · 唯一不可为空的长期记忆</text>
+
+      <g class="node-box" onclick="inspectNode('imp')">
+        <rect id="node-imp" x="568" y="256" width="366" height="34" rx="6" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.3"/>
+        <text x="580" y="277" font-size="10.5" font-weight="700" fill="#6d28d9">隐式 · LLM 权重：意图折算与工具调用格式</text>
+      </g>
+
+      <g class="node-box" onclick="inspectNode('sop')">
+        <rect id="node-sop" x="568" y="296" width="366" height="40" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.3"/>
+        <text x="580" y="313" font-size="10.5" font-weight="700" fill="#b45309">显式 · 规程 SKILL.md（文本态）</text>
+        <text id="sop-sub" x="580" y="328" font-size="9.5" fill="#78716c"></text>
+      </g>
+
+      <g class="node-box" onclick="inspectNode('code')">
+        <rect id="node-code" x="568" y="342" width="366" height="40" rx="6" fill="#ffffff" stroke="#0d9488" stroke-width="1.3"/>
+        <text x="580" y="359" font-size="10.5" font-weight="700" fill="#0f766e">显式 · 代码 catalog_api.py（代码态）</text>
+        <text id="code-sub" x="580" y="374" font-size="9.5" fill="#64748b"></text>
+      </g>
+
+      <!-- 外部环境 -->
+      <g class="node-box" onclick="inspectNode('env')">
+        <rect id="node-env" x="6" y="152" width="146" height="100" rx="10" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+        <text x="18" y="176" font-size="12" font-weight="700" fill="#0f766e">外部环境 (External)</text>
+        <text x="18" y="197" font-size="10" fill="#334155">• 商品 / 实时库存接口</text>
+        <text x="18" y="214" font-size="10" fill="#334155">• 下单与配送系统</text>
+        <text x="18" y="231" font-size="10" fill="#334155">• 用户对话与反馈</text>
+      </g>
+
+      <!-- 工作记忆 -->
+      <g class="node-box" onclick="inspectNode('wm')">
+        <rect id="node-wm" x="210" y="112" width="230" height="186" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+        <text x="224" y="140" font-size="13" font-weight="700" fill="#1d4ed8">工作记忆 (Working)</text>
+        <text x="224" y="158" font-size="10" fill="#475569">当前活跃的符号变量</text>
+        <rect x="222" y="166" width="206" height="94" rx="6" fill="#ffffff" stroke="#bfdbfe"/>
+        <text id="wm1" x="232" y="186" font-size="10" fill="#1e293b"></text>
+        <text id="wm2" x="232" y="206" font-size="10" fill="#1e293b"></text>
+        <text id="wm3" x="232" y="226" font-size="10" fill="#1e293b"></text>
+        <text x="224" y="280" font-size="9" fill="#64748b">每次调 LLM 只取子集填模板，输出解析后写回</text>
+      </g>
+
+      <!-- Edges: Retrieval -->
+      <path id="edge-ret-ep" class="edge-path" d="M 556 162 C 512 162, 484 163, 442 164" stroke="#2563eb" marker-end="url(#arr-blue)"/>
+      <path id="edge-ret-sem" class="edge-path" d="M 600 122 C 574 106, 470 100, 408 113" stroke="#2563eb" marker-end="url(#arr-blue)"/>
+      <path id="edge-ret-sop" class="edge-path" d="M 556 318 C 512 318, 480 292, 442 268" stroke="#2563eb" marker-end="url(#arr-blue)"/>
+
+      <!-- Edges: Reasoning -->
+      <path id="edge-rea-imp" class="edge-path" d="M 556 272 C 512 272, 482 246, 442 226" stroke="#7c3aed" marker-end="url(#arr-purple)"/>
+      <path id="edge-rea-loop" class="edge-path" d="M 300 298 C 300 344, 386 344, 386 298" stroke="#7c3aed" marker-end="url(#arr-purple)"/>
+
+      <!-- Edges: 感知输入 -->
+      <path id="edge-sense" class="edge-path" d="M 156 170 L 208 170" stroke="#4338ca" marker-end="url(#arr-indigo)"/>
+
+      <!-- Edges: Grounding -->
+      <path id="edge-grd-env" class="edge-path" d="M 210 206 L 156 206" stroke="#0d9488" marker-start="url(#arr-teal)" marker-end="url(#arr-teal)"/>
+      <path id="edge-grd-code" class="edge-path" d="M 400 298 C 440 350, 500 356, 552 352" stroke="#0d9488" marker-end="url(#arr-teal)"/>
+
+      <!-- Edges: Learning -->
+      <path id="edge-lrn-ep" class="edge-path" d="M 442 184 C 486 184, 512 180, 554 176" stroke="#d97706" marker-end="url(#arr-amber)"/>
+      <path id="edge-lrn-sem" class="edge-path" d="M 330 112 C 326 58, 480 50, 552 60" stroke="#d97706" marker-end="url(#arr-amber)"/>
+      <path id="edge-lrn-proc" class="edge-path" d="M 442 288 C 486 306, 496 352, 552 366" stroke="#d97706" marker-end="url(#arr-amber)"/>
+
+      <!-- Labels -->
+      <text id="lbl-ret" class="edge-label" x="486" y="148" fill="#2563eb">Retrieval</text>
+      <text id="lbl-ret-sop" class="edge-label" x="462" y="306" fill="#2563eb">Retrieval · 规程</text>
+      <text id="lbl-rea" class="edge-label" x="488" y="248" fill="#7c3aed">Reasoning</text>
+      <text id="lbl-sense" class="edge-label" x="158" y="163" font-size="8.5" fill="#4338ca">任务输入</text>
+      <text id="lbl-grd" class="edge-label" x="158" y="200" font-size="8.5" fill="#0d9488">Grounding</text>
+      <text id="lbl-lrn-fact" class="edge-label" x="350" y="66" fill="#d97706">Learning · 写事实</text>
+      <text id="lbl-lrn-proc" class="edge-label" x="446" y="284" fill="#d97706">Learning · 写过程</text>
+    </svg>
+  </div>
+
+  <div class="detail-panel">
+    <div class="step-card">
+      <span class="action-pill" id="pillTag">Retrieval</span>
+      <div class="step-title" id="stepTitle"></div>
+      <div class="step-desc" id="stepDesc"></div>
+      <div class="evo-tabs" id="evoTabs">
+        <button class="evo-tab active" onclick="selectEvo(0)">软固化：SKILL.md 规程</button>
+        <button class="evo-tab" onclick="selectEvo(1)">硬固化：guard.py 代码</button>
+        <button class="evo-tab" onclick="selectEvo(2)">蒸馏：隐式权重</button>
+      </div>
+    </div>
+    <div class="code-box">
+      <div class="code-header">
+        <span id="codeTitle">Payload / 状态快照</span>
+        <span>CoALA Trace</span>
+      </div>
+      <div id="codeBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const MUTED = "#64748b", BLUE = "#2563eb", TEAL = "#0d9488", AMBER = "#d97706", ROSE = "#be123c";
+
+const DATA = {
+  A: [
+    {
+      pill: ["① 任务输入 · 感知", "#eef2ff", "#4338ca"],
+      title: "Step 1：用户这句话先进工作记忆，成为当前活跃目标",
+      desc: "一切从那句「按上周清单复购，预算 300，送公司」开始。它不会直接触发检索，而是先作为新的感知输入落进工作记忆、变成活跃目标——Sec 4.1 里工作记忆装的头两样就是最新感知输入与当前目标。此刻三类长期记忆一条都还没读过，「上周清单」是什么也还不知道。",
+      edges: ["edge-sense"],
+      nodes: ["node-wm", "node-env"],
+      wm: ["输入: 按上周清单复购", "约束: 预算 300｜送公司", "状态: 尚未读取任何记忆"],
+      ep: [["（本轮尚未读取）", "#cbd5e1"], ["", "#cbd5e1"], ["", "#cbd5e1"]],
+      semL: [["（本轮尚未读取）", "#cbd5e1"], ["", "#cbd5e1"], ["", "#cbd5e1"]],
+      semR: [["—", "#cbd5e1"], ["", "#cbd5e1"], ["", "#cbd5e1"]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "工作记忆初始化（尚无任何检索结果）",
+      code: `<span class="diff-info">// 进入工作记忆的三样东西</span>
++ {"role":"user","text":"按上周清单复购，预算 300，送公司"}
++ {"goal":"完成本轮复购下单"}
++ {"constraints":{"budget":300,"deliver_to":"company"}}
+
+<span class="diff-deny">// Episodic / Semantic / SKILL.md 均未被读取</span>
+<span class="diff-deny">// 「上周清单」指哪三样，此刻是未知项</span>`
+    },
+    {
+      pill: ["② Retrieval · 三路读入子集", "#eff6ff", "#1d4ed8"],
+      title: "Step 2：目标落定后才去读，三类长期记忆各取一个子集",
+      desc: "按 SOP 第 1 条先读情景记忆——取的是一整条「哪套推荐路径成交过」的轨迹当范例，不是取单条事实；再读语义记忆里的商品事实与用户事实，这才知道「上周清单」是咖啡豆 250g×2 加滤纸；最后把 SKILL.md 规程本身挂进上下文。三路都只取与本轮目标相关的子集。",
+      edges: ["edge-ret-ep", "edge-ret-sem", "edge-ret-sop"],
+      nodes: ["node-wm", "node-ep", "node-sem", "node-sop"],
+      wm: ["目标: 复购上周清单｜≤¥300", "已装载: SKILL.md 三条规程", "范例: 10-21 成交轨迹 1 条"],
+      ep: [["2026-10-21 复购成交 ¥203", TEAL], ["2026-10-14 问滤纸规格，未下单", MUTED], ["2026-10-02 首单: 咖啡豆 + 滤纸", MUTED]],
+      semL: [["咖啡豆 250g  ¥89  中度", MUTED], ["咖啡豆 500g  ¥168  中度", MUTED], ["滤纸 ¥25｜礼盒 ¥199", MUTED]],
+      semR: [["偏好: 中度烘焙", MUTED], ["客单价: 200–300", MUTED], ["规避项: 无记录", "#94a3b8"]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "长期记忆 → 工作记忆（三路子集）",
+      code: `<span class="diff-info">// ① 情景记忆：取「路径」当范例，不是取「事实」</span>
++ "2026-10-21 同款复购 + 同类替代 → 成交 ¥203"   ← few-shot 范例
+
+<span class="diff-info">// ② 语义记忆：世界事实（只读）+ 用户事实（可写）</span>
+  商品: SKU-1024 ¥89 中度 / SKU-1025 ¥168 中度 / SKU-3011 ¥25 滤纸
+  用户: 偏好=中度烘焙；客单价 200–300；规避项=空
+
+<span class="diff-info">// ③ 程序记忆：SKILL.md 只有三条，整篇挂载</span>
+  1. 先读近 30 天轨迹当范例  2. 预算内筛选，超预算给替代  3. 每条附理由
+
+<span class="diff-add">→ 工作记忆此刻才补上「上周清单 = 250g×2 + 滤纸」</span>`
+    },
+    {
+      pill: ["③ Reasoning · 意图折算", "#f5f3ff", "#6d28d9"],
+      title: "Step 3：隐式权重做折算，工作记忆里生成检索计划",
+      desc: "这一步不碰外部世界。模型把「复购 + 预算 300 + 送公司」折算成可执行条件：品类 2 类、价格上限 300（含运费）、配送切公司；策略则照抄情景范例——上次「同款复购 + 同类替代」成交了。折算的一部分依据来自语义记忆里的用户事实（避开深烘）。",
+      edges: ["edge-rea-imp", "edge-rea-loop"],
+      nodes: ["node-wm", "node-imp"],
+      wm: ["折算: 咖啡豆+滤纸｜≤300｜公司", "策略: 同款复购 → 同类替代", "约束: 排除深烘（用户事实）"],
+      ep: [["2026-10-21 复购成交 ¥203", TEAL], ["2026-10-14 问滤纸规格，未下单", MUTED], ["2026-10-02 首单: 咖啡豆 + 滤纸", MUTED]],
+      semL: [["咖啡豆 250g  ¥89  中度", MUTED], ["咖啡豆 500g  ¥168  中度", MUTED], ["滤纸 ¥25｜礼盒 ¥199", MUTED]],
+      semR: [["偏好: 中度烘焙", MUTED], ["客单价: 200–300", MUTED], ["规避项: 无记录", "#94a3b8"]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "工作记忆内部规划输出（无外部调用）",
+      code: `{
+  "thought": "上周买过 250g×2 + 滤纸，成交 ¥203；本轮同构复购，预算 300 含运费",
+  "derived_from": {"episodic": "10-21 成交轨迹", "semantic.user": "中度烘焙"},
+  "plan": [
+    {"tool": "catalog.query", "category": ["coffee_bean", "filter"], "max_price": 300},
+    {"tool": "catalog.filter_stock", "min_stock": 1},
+    {"tool": "recorder.explain", "per_item": true}
+  ]
+}`
+    },
+    {
+      pill: ["④ Grounding · 外部执行", "#f0fdfa", "#0f766e"],
+      title: "Step 4：调 catalog_api.py 做确定性过滤，模型不心算价格",
+      desc: "价格求和、SKU 变体归一、库存校验交给代码。5 个 SKU 组合出 3 条预算内候选，礼盒装组合 313 超预算被代码剔除并给出 ¥289 替代方案；模型只负责排序和写理由，不算数。",
+      edges: ["edge-grd-code", "edge-grd-env"],
+      nodes: ["node-wm", "node-code", "node-env"],
+      wm: ["调用: catalog.query(2 类, ≤300)", "观测: 5 SKU → 3 条组合", "剔除: 礼盒组合 ¥313 超预算"],
+      ep: [["2026-10-21 复购成交 ¥203", TEAL], ["2026-10-14 问滤纸规格，未下单", MUTED], ["2026-10-02 首单: 咖啡豆 + 滤纸", MUTED]],
+      semL: [["咖啡豆 250g  ¥89  中度", MUTED], ["咖啡豆 500g  ¥168  中度", MUTED], ["滤纸 ¥25｜礼盒 ¥199", MUTED]],
+      semR: [["偏好: 中度烘焙", MUTED], ["客单价: 200–300", MUTED], ["规避项: 无记录", "#94a3b8"]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "catalog_api.py（代码态程序记忆 · 确定性）",
+      code: `<span class="diff-info"># 价格与库存不交给模型估算</span>
+SKU = {"咖啡豆250g": "SKU-1024", "咖啡豆500g": "SKU-1025",
+       "滤纸": "SKU-3011", "礼盒": "SKU-4002"}
+
+def query(categories, max_price, min_stock=1):
+    items = [get(s) for s in SKU.values() if s.category in categories]
+    return [i for i in items
+            if i.price &lt;= max_price and i.stock &gt;= min_stock]   # 礼盒组合被剔除
+
+<span class="diff-add"># 返回 3 条候选，每条带 price / stock / reason 字段</span>`
+    },
+    {
+      pill: ["⑤ Evaluation · 自检（Sec 6 补充）", "#eef2ff", "#4338ca"],
+      title: "Step 5：显式校验候选是否真的满足意图，再交给用户",
+      desc: "Evaluation 不在四类动作里，但 Sec 6 第三步明确要求「显式加入 Evaluation 步评估检索结果是否满足用户意图」。这里查三件事：预算是否覆盖全部品类、是否踩到偏好红线、配送地址是否已切公司。三项全过才输出；任一不过退回 Reasoning 改条件，而不是硬推。",
+      edges: ["edge-rea-loop"],
+      nodes: ["node-wm"],
+      wm: ["校验: 预算 ✓｜偏好 ✓｜配送 ✓", "输出: 3 条候选 + 逐条理由", "未过则回退 Step 3 改条件"],
+      ep: [["2026-10-21 复购成交 ¥203", TEAL], ["2026-10-14 问滤纸规格，未下单", MUTED], ["2026-10-02 首单: 咖啡豆 + 滤纸", MUTED]],
+      semL: [["咖啡豆 250g  ¥89  中度", MUTED], ["咖啡豆 500g  ¥168  中度", MUTED], ["滤纸 ¥25｜礼盒 ¥199", MUTED]],
+      semR: [["偏好: 中度烘焙", MUTED], ["客单价: 200–300", MUTED], ["规避项: 无记录", "#94a3b8"]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "Evaluation 检查表（不过则回退）",
+      code: `<span class="diff-info">// Sec 6 第三步：评估检索结果是否满足用户意图</span>
+[✓] 预算   合计 ¥203 ≤ 300，且覆盖 2 个品类
+[✓] 偏好   三条候选均为中度烘焙，未命中回避项
+[✓] 配送   地址已从「家」切到「公司」
+
+<span class="diff-add">→ PASS：3 条候选连同理由提交用户</span>
+<span class="diff-deny">→ FAIL：任一不过则回退 Reasoning 改条件重跑，禁止带病输出</span>`
+    }
+  ],
+  B: [
+    {
+      pill: ["① 用户反馈 · 感知", "#eef2ff", "#4338ca"],
+      title: "Step 1：第三次「太苦」进来，先只是工作记忆里的一句话",
+      desc: "用户第三次说「还是太苦」。这句话先落进工作记忆，此刻它只是一条新输入，和前两次没有建立任何联系——工作记忆里不会自动出现「本月已拒三次」，除非主动去读情景记忆。",
+      edges: ["edge-sense"],
+      nodes: ["node-wm", "node-env"],
+      wm: ["输入: 「还是太苦」", "指代: 刚推的 SKU-1043", "状态: 未比对历史拒绝"],
+      ep: [["（本轮尚未读取）", "#cbd5e1"], ["", "#cbd5e1"], ["", "#cbd5e1"]],
+      semL: [["（本轮尚未读取）", "#cbd5e1"], ["", "#cbd5e1"], ["", "#cbd5e1"]],
+      semR: [["—", "#cbd5e1"], ["", "#cbd5e1"], ["", "#cbd5e1"]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "工作记忆收到一条否定反馈",
+      code: `<span class="diff-info">// 进入工作记忆，尚未与历史比对</span>
++ {"role":"user","text":"还是太苦"}
++ {"ref":"SKU-1043","turn":3}
+
+<span class="diff-deny">// 「第三次了」这个判断不在输入里，必须读情景记忆才有</span>`
+    },
+    {
+      pill: ["② 观测 · 读情景记忆", "#fff1f2", "#be123c"],
+      title: "Step 2：读情景记忆，才看出这是本月第三次同类拒绝",
+      desc: "情景记忆是追加写的事件流：11-04、11-07、11-11 三条「推深烘 → 用户嫌苦 → 拒绝」。读到之后才形成「同一原因」的判断。但注意：它们只回答「发生过什么」，语义记忆里仍然只有「中度烘焙」，没有任何一条写着「规避深烘」。",
+      edges: ["edge-ret-ep"],
+      nodes: ["node-wm", "node-ep"],
+      wm: ["检索: 同类否定反馈 → 3 条", "共同点: 均深烘 +「苦」", "判定: 同一原因，可归纳"],
+      ep: [["2026-11-11 推 SKU-1043 深烘 → 拒（太苦）", ROSE], ["2026-11-07 推 SKU-1042 深烘 → 拒", ROSE], ["2026-11-04 推 SKU-1041 深烘 → 拒", ROSE]],
+      semL: [["咖啡豆 250g  ¥89  中度", MUTED], ["SKU-1041/42/43 深烘", MUTED], ["滤纸 ¥25｜礼盒 ¥199", MUTED]],
+      semR: [["偏好: 中度烘焙", MUTED], ["规避项: 无记录", "#94a3b8"], ["客单价: 200–300", MUTED]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "Episodic Memory · events.jsonl（append-only）",
+      code: `{"ts":"2026-11-04","event":"recommend","sku":"SKU-1041","roast":"dark","user":"太苦，不要"}
+{"ts":"2026-11-07","event":"recommend","sku":"SKU-1042","roast":"dark","user":"换一个"}
+{"ts":"2026-11-11","event":"recommend","sku":"SKU-1043","roast":"dark","user":"还是太苦"}
+
+<span class="diff-info">// 三条记录各自独立，没有字段说明它们同因</span>
+<span class="diff-deny">// 语义记忆此刻仍为: 偏好=中度烘焙，规避项=空</span>`
+    },
+    {
+      pill: ["③ Learning · 反思写入语义记忆", "#fffbeb", "#b45309"],
+      title: "Step 3：三条同类轨迹归纳成一条事实，写进语义记忆",
+      desc: "这是 Sec 4.5 说的「对原始经历做推理反思，把归纳出的事实写回语义记忆」。关键在门槛：单次拒绝不写（可能只是当天心情），同类事件出现 ≥3 次才升格为常驻事实。写进去的是事实「用户对深烘苦味敏感」，不是过程「以后先问烘焙度」——过程归程序记忆。",
+      edges: ["edge-lrn-sem"],
+      nodes: ["node-wm", "node-sem"],
+      wm: ["归纳: 三次同因 = 苦味", "门槛: ≥3 次 → 升格为常驻", "写入: 语义·关于用户 ✓"],
+      ep: [["2026-11-11 推 SKU-1043 深烘 → 拒（太苦）", ROSE], ["2026-11-07 推 SKU-1042 深烘 → 拒", ROSE], ["2026-11-04 推 SKU-1041 深烘 → 拒", ROSE]],
+      semL: [["咖啡豆 250g  ¥89  中度", MUTED], ["SKU-1041/42/43 深烘", MUTED], ["滤纸 ¥25｜礼盒 ¥199", MUTED]],
+      semR: [["偏好: 中度烘焙", MUTED], ["规避: 深烘 ×3 已晋升", AMBER], ["客单价: 200–300", MUTED]],
+      sopSub: "三条：先读轨迹 → 预算内筛选 → 每条附理由",
+      codeSub: "query / filter_stock / assert_order",
+      codeHeader: "Semantic Memory 写入（带晋升门槛）",
+      code: `<span class="diff-info">// ① 先判定是否达到晋升门槛</span>
+hits = [e for e in events if e.roast == "dark" and e.user_said in NEGATIVE]
+assert len(hits) &gt;= 3, "单次不写，避免把偶发当偏好"
+
+<span class="diff-info">// ② 归纳事实，而不是照抄事件</span>
+<span class="diff-add">+ user.profile.avoid = [{"attr":"roast","value":"dark",
++                        "evidence":3,"confidence":0.86}]</span>
+
+<span class="diff-del">- user.profile.avoid = []</span>
+<span class="diff-deny">[NOTE] 写入的是「事实」；「以后怎么做」留给程序记忆</span>`
+    },
+    {
+      pill: ["④ Learning · 写入程序记忆", "#fffbeb", "#b45309"],
+      title: "Step 4：把结论固化成办事逻辑，软硬两档 + 权重一档",
+      desc: "语义记忆只记「用户不喜欢深烘」；要让下次真的不问，得改程序记忆。三档对应显式/隐式两种程序记忆：软固化成 SKILL.md 一条筛选规则（文本态，可读可审，占 token）；硬固化成 guard.py 一个函数（代码态，100% 确定、零 token，要过单测）；蒸馏进权重（隐式，零开销但最慢）。三者都读语义记忆里那个 avoid 字段，不自己另存一份。",
+      edges: ["edge-lrn-proc"],
+      nodes: ["node-wm", "node-sop", "node-code", "node-imp"],
+      wm: ["软固化: SKILL.md 增筛选规则", "硬固化: guard.py 前置断言", "红线: 框架代码只读，业务规则可写"],
+      ep: [["2026-11-11 推 SKU-1043 深烘 → 拒（太苦）", ROSE], ["2026-11-07 推 SKU-1042 深烘 → 拒", ROSE], ["2026-11-04 推 SKU-1041 深烘 → 拒", ROSE]],
+      semL: [["咖啡豆 250g  ¥89  中度", MUTED], ["SKU-1041/42/43 深烘", MUTED], ["滤纸 ¥25｜礼盒 ¥199", MUTED]],
+      semR: [["偏好: 中度烘焙", MUTED], ["规避: 深烘 ×3 已晋升", AMBER], ["客单价: 200–300", MUTED]],
+      sopSub: "新增第 4 条：按 avoid 过滤后再推荐",
+      codeSub: "新增 filter_avoid() 前置胶囊",
+      evo: [
+        {
+          header: "软固化 · SKILL.md（文本态程序记忆，可读可审）",
+          body: `<span class="diff-info"># File: retail-reco/SKILL.md</span>
+  1. 先读近 30 天轨迹作为范例
+  2. 预算内筛选，超预算给替代款
+  3. 每条推荐附一句理由
+<span class="diff-add">+ 4. [防坑] 推荐前先读 user.profile.avoid 过滤；</span>
+<span class="diff-add">+    命中回避项直接剔除，不得先推荐再解释。依据：11 月三次深烘被拒。</span>
+
+<span class="diff-deny">代价：每次推理都要把第 4 条挂进上下文，占 token</span>`
+        },
+        {
+          header: "硬固化 · guard.py（代码态程序记忆，过单测才落盘）",
+          body: `<span class="diff-info"># File: tools/guard.py（新增，unit-tested）</span>
+<span class="diff-add">+ def filter_avoid(skus, uid):</span>
+<span class="diff-add">+     avoid = profile(uid).avoid          # 读语义记忆，不另存一份</span>
+<span class="diff-add">+     return [s for s in skus</span>
+<span class="diff-add">+             if not any(s.attr[k] == v for a in avoid for k, v in a.items())]</span>
+  def place_order(sku, qty):
+<span class="diff-add">+     assert sku in filter_avoid([sku], uid), "命中用户回避项"</span>
+      return request_order_create(sku, qty)
+
+<span class="diff-deny">代价：要过单元测试才能落盘；规则写死，改需求要发版</span>`
+        },
+        {
+          header: "蒸馏 · 隐式程序记忆（改的是 LLM 权重，不是源码）",
+          body: `<span class="diff-info"># Offline Distillation</span>
+收集 5,000 条「推荐深烘 → 被拒 → 改推中度」的轨迹，微调端侧 LoRA：
+
+<span class="diff-add">+ 推理零额外 token，连 SKILL.md 都不用挂</span>
+<span class="diff-del">- 训练周期长；用户口味一变，不如改规程或改代码敏捷</span>
+<span class="diff-deny">注意：这一档改的是「隐式」程序记忆，回滚成本最高</span>`
+        }
+      ]
+    }
+  ]
+};
+
+const NODE_INFO = {
+  env: ["外部环境 (External Environment)", "商品与库存服务、下单系统、人类用户。智能体只能通过 Grounding 向它发指令、接收文本化 Observation。世界状态的真相在这一层，不在任何记忆里。"],
+  wm: ["工作记忆 (Working Memory)", "Sec 4.1：维护当前决策周期活跃的符号变量——最新感知输入、当前目标、从长期记忆检索出的活跃知识、上一周期结转的中间状态。全架构中心枢纽：每次调 LLM 从这里抽变量填模板，输出经解析器拆回变量写回。注意它不是 CoT/Scratchpad，而是跨多次调用持久化的外部结构。"],
+  ep: ["情景记忆 (Episodic Memory)", "Sec 4.1：存早先决策周期的具体经历——历史事件流、完整交互轨迹、输入输出示例对。初始可为空；规划阶段被检索进工作记忆当范例，Learning 时把新经历从工作记忆追加进来。它只回答「发生过什么」，不回答「现在是什么」。"],
+  sem: ["语义记忆 (Semantic Memory)", "Sec 4.1：存关于世界与智能体自身的事实。图中分两栏——左边是世界事实（商品目录），只读，只能由上游商品服务写；右边是关于用户的事实，可经反思写入。Sec 4.5 允许高阶智能体对原始经历做推理反思，把归纳出的事实写回这里；但写的是「事实」，不是「以后怎么做」。"],
+  imp: ["隐式程序记忆 (Implicit Procedural)", "Sec 4.1：存储在 LLM 权重中的先验与推理分布。只能通过 SFT / RLHF / 蒸馏改变，推理时零额外 token，但训练周期长、回滚成本最高。"],
+  sop: ["显式规程记忆 (SKILL.md / Prompts)", "Sec 4.1 显式程序记忆的文本形态：业务 SOP 与护栏规则，人类可读可审，按需检索挂载或轻量追加。落成本最低，代价是每次推理都要占上下文。"],
+  code: ["显式代码记忆 (Deterministic Tool Code)", "Sec 4.1 显式程序记忆的代码形态：实现 Retrieval / Reasoning / Grounding / Learning 四类动作的过程代码与顶层决策循环。提供 100% 确定性与零 token 消耗，改动需过测试。原文 Sec 6 建议把这一层设为只读，防智能体改坏自身核心代码。"],
+};
+
+const GROUP_OF_EDGE = { sense: ["lbl-sense"], ret: ["lbl-ret", "lbl-ret-sop"], rea: ["lbl-rea"], grd: ["lbl-grd"], lrn: ["lbl-lrn-fact", "lbl-lrn-proc"] };
+
+let curMode = 'A';
+let curStep = 0;
+let curEvo = 0;
+
+function setLines(prefix, arr, colorDefault) {
+  arr.forEach((item, i) => {
+    const el = document.getElementById(prefix + (i + 1));
+    if (!el) return;
+    el.textContent = item[0];
+    el.setAttribute('fill', item[1] || colorDefault);
+  });
+}
+
+function render() {
+  const steps = DATA[curMode];
+  const s = steps[curStep];
+
+  document.getElementById('btnModeA').classList.toggle('active', curMode === 'A');
+  document.getElementById('btnModeB').classList.toggle('active', curMode === 'B');
+  document.getElementById('stepCounter').textContent = `${curStep + 1} / ${steps.length}`;
+  document.getElementById('btnPrev').disabled = curStep === 0;
+  document.getElementById('btnNext').disabled = curStep === steps.length - 1;
+
+  document.querySelectorAll('.edge-path').forEach(el => el.classList.remove('edge-active'));
+  document.querySelectorAll('.edge-label').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('rect[id^="node-"]').forEach(el => el.classList.remove('node-active'));
+
+  s.edges.forEach(id => document.getElementById(id)?.classList.add('edge-active'));
+  s.nodes.forEach(id => document.getElementById(id)?.classList.add('node-active'));
+
+  const groups = new Set(s.edges.map(id => id.split('-')[1]));
+  groups.forEach(g => (GROUP_OF_EDGE[g] || []).forEach(l => document.getElementById(l)?.classList.add('active')));
+  // 写事实 / 写过程 两个 learning 标签按目标区分
+  if (groups.has('lrn')) {
+    document.getElementById('lbl-lrn-fact').classList.toggle('active', s.edges.includes('edge-lrn-sem'));
+    document.getElementById('lbl-lrn-proc').classList.toggle('active', s.edges.includes('edge-lrn-proc'));
+  }
+
+  document.getElementById('wm1').textContent = s.wm[0];
+  document.getElementById('wm2').textContent = s.wm[1];
+  document.getElementById('wm3').textContent = s.wm[2];
+
+  setLines('ep-l', s.ep, MUTED);
+  setLines('sem-l', s.semL, MUTED);
+  setLines('sem-r', s.semR, MUTED);
+
+  document.getElementById('sop-sub').textContent = s.sopSub;
+  document.getElementById('code-sub').textContent = s.codeSub;
+
+  const pill = document.getElementById('pillTag');
+  pill.textContent = s.pill[0];
+  pill.style.background = s.pill[1];
+  pill.style.color = s.pill[2];
+
+  document.getElementById('stepTitle').textContent = s.title;
+  document.getElementById('stepDesc').textContent = s.desc;
+
+  const evoWrap = document.getElementById('evoTabs');
+  if (s.evo) {
+    evoWrap.classList.add('visible');
+    document.querySelectorAll('.evo-tab').forEach((btn, idx) => btn.classList.toggle('active', idx === curEvo));
+    document.getElementById('codeTitle').textContent = s.evo[curEvo].header;
+    document.getElementById('codeBody').innerHTML = s.evo[curEvo].body;
+  } else {
+    evoWrap.classList.remove('visible');
+    document.getElementById('codeTitle').textContent = s.codeHeader;
+    document.getElementById('codeBody').innerHTML = s.code;
+  }
+}
+
+function switchMode(m) { curMode = m; curStep = 0; curEvo = 0; render(); }
+function stepDelta(d) {
+  const steps = DATA[curMode];
+  curStep = Math.max(0, Math.min(steps.length - 1, curStep + d));
+  render();
+}
+function selectEvo(idx) { curEvo = idx; render(); }
+
+function inspectNode(key) {
+  const info = NODE_INFO[key];
+  if (!info) return;
+  document.querySelectorAll('rect[id^="node-"]').forEach(el => el.classList.remove('node-active'));
+  document.getElementById('node-' + key)?.classList.add('node-active');
+  document.getElementById('codeTitle').textContent = "模块检视 · " + info[0];
+  document.getElementById('codeBody').innerHTML = `<span class="diff-info">[模块定位]</span>\n${info[1]}`;
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') stepDelta(1);
+  if (e.key === 'ArrowLeft') stepDelta(-1);
+});
+
+render();
+</script>
+</body>
+</html>

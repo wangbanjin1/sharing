@@ -1,0 +1,39 @@
+\section{\textsc{TIDE-Bench} Construction}
+\label{sec:construction}
+
+
+We describe the construction of \textsc{TIDE-Bench}. The benchmark is built around a paired design that isolates each interaction pattern from the anchor.
+
+\subsection{Paired Factorial Design}
+\label{subsec:paired-factorial}
+
+\textsc{TIDE-Bench} uses a \textbf{paired factorial design}: each BIRD anchor SQL $y^*$ that passes construction filters spawns three samples sharing the anchor but activating different interaction patterns: $\mathcal{C}_{y^*}$ (Chain-only), $\mathcal{D}_{y^*}$ (Drift-only), and $\mathcal{J}_{y^*}$ (Joint). Pairing by anchor controls for schema complexity, domain difficulty, and surface ambiguity, attributing performance differences to the activated patterns rather than any uncontrolled anchor-specific confounds.
+
+\subsection{Construction Pipeline}
+\label{subsec:pipeline}
+
+Building on this design, our construction pipeline proceeds in four stages: anchor selection, chain injection, drift injection, and triplet assembly (Figure~\ref{fig:construction}, right). We summarize each stage below; full prompts, judge configurations, and associated validation checks are instead deferred to Appendix~\ref{app:pipeline}.
+
+\input{table/drift_test}
+
+\namedpara{Anchor selection.} Candidate anchors are drawn from BIRD~\citep{li2023bird}, retaining only SQLs that (i) execute on their SQLite database, (ii) carry enough structural complexity for two-layer chain injection, and (iii) admit at least one drift subtype from \S~\ref{subsec:drift}. Stratified sampling balances complexity tiers and source splits, totaling \textbf{830 anchors}.
+
+\namedpara{Chain injection.} For each anchor, an advanced LLM (GPT-5.1) generates the two-layer clarification structure $(L1, L2)$, an underspecified initial question, chosen responses, and unchosen alternatives, conditioned on the anchor SQL as the canonical $L1 + L2$ target. Two independent judges (GPT-5.3-Codex, DeepSeek-V4-Pro) apply the counterfactual test (\S~\ref{subsec:chain}) and discard \emph{invariant} candidates. This stage retains 695/830 candidates (83.7\%), with 94.7\% overall inter-judge agreement. A final LLM rewrite of BIRD's evidence field removes clauses pre-resolving L1 or L2 while faithfully preserving schema-essential mappings (Appendix~\ref{app:pipeline}).
+
+\namedpara{Drift injection.} For each chain-validated anchor, the same generator produces a drift utterance and post-drift target $y_{\mathrm{post}}^*$ conditioned on a pre-assigned subtype. Each pair passes two stages. AST-level validation enforces parseability, executability, result distinctness, the non-monotonicity condition $S_{\mathrm{pre}} \nsubseteq S_{\mathrm{post}}$, and subtype-specific scope constraints. LLM cross-validation (Claude-Sonnet-4.6, DeepSeek-V4-Pro) assesses semantic validity beyond formal checks, namely faithfulness to the drift turn and preservation of non-targeted structural elements. The two stages are complementary: AST checks enforce the definition, while cross-validation guards against drifts pass checks but misalign with semantic intent. AST validation retains 554/695 (79.7\%); cross-validation retains 514/554 (92.8\%), with 96.6\% overall inter-judge agreement.
+
+\namedpara{Triplet assembly.} Surviving chain and drift constructions are paired by anchor to form \textbf{514 triplets (1{,}542 samples)}, each consisting of matched Chain-only, Drift-only, and Joint instances built over the same anchor SQL and sharing the same schema. This pairing supports controlled performance comparisons across all the three interaction settings.
+
+\subsection{Human Validation}
+\label{sec:human-validation}
+
+Beyond the automated filters above, we additionally verify the quality and construct validity of \textsc{TIDE-Bench} through human annotation. We conduct a stratified audit over 250 triplets (750 samples), balanced across sample type, drift subtype, counterfactual verdict, and SQL complexity tier. Each sample is independently annotated by five annotators with NLP and production SQL backgrounds, blind to automated verdicts produced during construction. Rather than a holistic judgment, we use a per-item checklist that operationalizes the definitions in \S~\ref{sec:formalization}; the full checklist and annotator details appear in Appendix~\ref{app:validation} for reproducibility.
+
+We report \emph{majority acceptance} ($\geq$3/5 annotators pass every applicable item) and \emph{strict acceptance} (unanimity). Overall majority and strict acceptance are 92.4\% and 83.1\% (Table~\ref{tab:human-validation}; all Fleiss' $\kappa > 0.77$). Counterfactual dependency and non-monotonic retraction pass on 93.4\% and 94.8\% respectively, while joint transition coherence is slightly lower at 91.6\%, as it requires both interaction patterns to be validated jointly in the dialogue.
+
+\input{table/human_validation}
+\input{table/metrics}
+\subsection{Dataset Statistics}
+\label{sec:dataset-statistics}
+\textsc{TIDE-Bench} comprises 514 triplets and 1{,}542 benchmark samples (514 each of Chain-only, Drift-only, Joint). Anchors are partitioned into basic, intermediate, and advanced tiers by a rule-based score combining anchor-SQL structure with chain- and drift-induced factors. Drift subtypes are evenly covered: value level 34.0\%, constraint-level 31.3\%, and projection-level 34.6\%. Counterfactual verdicts are balanced between \emph{eliminated} (49.4\%) and \emph{transformed} (50.6\%), while the overall complexity is mostly intermediate (61.3\%), with basic and advanced tiers at 26.5\% and 12.3\%, respectively.
+

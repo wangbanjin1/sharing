@@ -1,0 +1,20 @@
+\begin{table}[tbp]
+    \centering
+    \caption{User simulator error count (\textit{rates}) across domains. Only critical user errors prevent the agent from solving the task while benign errors do not affect task completion. New \telecom domain shows much lower error rate and no critical errors were reported. (See \Cref{app:user-sim-quality} for additional details).}
+    \label{tab:user_sim_error_rates}
+    \vspace{0.2em}
+    \begin{adjustbox}{width=0.8\linewidth}
+    \begin{tabular}{l|l|l|l|l}
+        \toprule
+        \textbf{Domain} & \textbf{Num Conversations} & \textbf{Critical Errors} & \textbf{Benign Errors} & \textbf{Total Errors}\\
+        \midrule
+        \airline & 100  & 13 (\textit{13\%}) & 34 (\textit{34\%}) & 47 (\textit{47\%})\\
+        \retail & 50  & 6 (\textit{12\%}) & 14 (\textit{28\%})& 20 (\textit{40\%}) \\
+        \telecom & 50  & 3 (\textit{6\%}) & 5 (\textit{10\%}) & 8 (\textit{16\%})\\
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+    \vspace{-0.5em}
+\end{table}
+
+

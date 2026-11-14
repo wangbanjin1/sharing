@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\hline
+\textbf{Method} & \textbf{Low-acc ASR} & \textbf{Noised Audio} & \textbf{High-acc ASR} \\
+\hline
+Baseline             & 56.29 & 60.50 & 60.02 \\
++ OPT 6.7B           & 59.64 & 62.84 & 62.47 \\
++ LLaMA 7B           & 58.29 & 60.53 & 60.46 \\
++ GPT-3.5 (125B)     & 59.39 & 62.62 & 62.16 \\
+\hline
+\end{tabular}
+}
+\caption{NER results on the ASAPP/SLUE dataset under different ASR conditions. We reported the F1 score.}
+\label{tab:ner_results}
+\end{table}

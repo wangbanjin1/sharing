@@ -1,0 +1,411 @@
+\clearpage
+\appendix
+
+\section*{Appendix}
+\label{sec:appendix}
+
+\section{Comparison Traits Details}
+\label{sec:apdx_comparison}
+
+We identify eight core traits that characterize recent benchmarks. These traits reflect the agent’s ability to engage in realistic, multi-step, user-centered interactions, and the infrastructure's capacity to support scalable, extensible evaluation.
+
+\begin{itemize}[topsep=2pt, partopsep=-3pt, leftmargin=8pt, itemsep=-3pt]
+  \item \textbf{Multi-turn Interaction}: The benchmark requires the agent to conduct extended conversations over multiple turns, often involving behaviors including clarification, refinement, or feedback-based improvement.
+  
+  \item \textbf{Goal Ambiguity}: The tasks are initially underspecified, vague, or indirect, requiring the agent to ask clarifying questions, infer missing information, or resolve ambiguity over time.
+  
+  \item \textbf{Tool Use}: The agent must interact with external tools such as APIs, structured search engines, databases, or execution environments to complete tasks beyond its internal reasoning.
+  
+  \item \textbf{Dynamic State}: The benchmark maintains an evolving internal state (e.g., environment database, user preference profile) that is updated based on the agent or user's actions across time.
+  
+  \item \textbf{Multi-Aspect Reasoning}: Tasks consist of multiple interdependent subgoals (e.g., booking flights, hotels, and cars) that require coordinated reasoning and decision-making across aspects.
+  
+  \item \textbf{User Simulation}: The environment includes a simulated user that responds to agent queries or actions, enabling interactive learning and evaluation without requiring human annotators.
+  
+  \item \textbf{Domain Diversity}: The benchmark spans multiple domains, various tools, and different task structures, ensuring generalization beyond a fixed task type or narrow scenario.
+  
+  \item \textbf{Customizable}: The benchmark framework allows researchers to adjust task settings, rewards, user behavior, or interaction protocols without redesigning from scratch.
+
+  \item \textbf{Scalable}: The benchmark supports large-scale, automated generation of tasks or environments, enabling reproducible experiments and stress-testing of agent capabilities.
+\end{itemize}
+
+
+\section{Gym Construction Details}
+\label{sec:apdx_construction}
+
+{\small
+\begin{tcolorbox}[colback=gray!5!white, colframe=black!75!black, 
+title=Wrong Option Example: Flight Option F2, boxrule=0.3mm, width=0.48\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{Path:} New York $\rightarrow$ Los Angeles $\rightarrow$ San Francisco \\
+\textbf{Time (hours):} 5 (Leg 1), 2 (Layover), 1 (Leg 2) \\
+\textbf{Airlines:} United Airlines, United Airlines \\
+\textbf{Flight Numbers:} UA789, UA321 \\
+\textbf{Total Cost:} \$400 \\
+\textbf{Amenities:} WiFi, Meal Service, Lounge Access \\
+\textbf{Service Costs:} \\
+\hspace*{4mm}Checked Bag Total: \$50 \\
+\hspace*{4mm}Business Class Upgrade: \$250 \\
+\rule{\linewidth}{0.2pt} \\[2mm]
+\textbf{Option Type:} \texttt{not-suitable} \\
+\textbf{Reason:} This option includes a layover, which does not satisfy the preference for a direct flight.
+\end{tcolorbox}
+}
+
+{\small
+\begin{tcolorbox}[colback=gray!5!white, colframe=black!75!black, 
+title=Correct Option Example: Flight Option F14, boxrule=0.3mm, width=0.48\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{Path:} New York $\rightarrow$ San Francisco \\
+\textbf{Time (hours):} 6 (Direct) \\
+\textbf{Airlines:} Delta Airlines \\
+\textbf{Flight Numbers:} DL4567 \\
+\textbf{Total Cost:} \$350 \\
+\textbf{Amenities:} WiFi, Meal Service, Carry on Baggage Allowance \\
+\textbf{Service Costs:} \\
+\hspace*{4mm}Checked Bag Total: \$30 \\
+\hspace*{4mm}Business Class Upgrade: \$150 \\
+\rule{\linewidth}{0.2pt} \\[2mm]
+\textit{The following content is invisible when presented to tested model (serve as label, only for evaluation use)} \\[2mm]
+\textbf{Option Type:} \texttt{suitable} \\
+\textbf{Reason:} This option is suitable because it is a direct flight from New York to San Francisco, adhering to the user's preference to avoid layovers. It also offers a business class upgrade, meeting the user's need for extra comfort and space during the flight. The available amenities such as WiFi and meal service add to the travel experience.
+\end{tcolorbox}
+}
+
+{\small
+\begin{tcolorbox}[colback=gray!5!white, colframe=black!75!black, 
+title=Noise Option Example: Flight Option F10, boxrule=0.3mm, width=0.48\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{Path:} New York $\rightarrow$ San Francisco \\
+\textbf{Time (hours):} 1000 (Direct) \\
+\textbf{Airlines:} Fantasy Air \\
+\textbf{Flight Numbers:} FA999 \\
+\textbf{Total Cost:} \$1{,}000{,}000 \\
+\textbf{Amenities:} WiFi, Meal Service, Carry on Baggage Allowance, Lounge Access \\
+\textbf{Service Costs:} \\
+\hspace*{4mm}Checked Bag Total: \$0 \\
+\hspace*{4mm}Business Class Upgrade: \$0 \\
+\rule{\linewidth}{0.2pt} \\[2mm]
+\textbf{Option Type:} \texttt{noise} \\
+\textbf{Reason:} This flight path takes an unrealistic 1000 hours, which is unrelated to the user's request for a flight from New York to San Francisco.
+\end{tcolorbox}
+}
+
+\paragraph{Option Generation.}  
+We generate three types of options: correct, wrong, and noise. Above, we present one example of each type, all drawn from the same user scenario.
+
+For \textbf{correct} options, under our budget-constrained setting, there is only one best option: the one that incurs the lowest total cost after accounting for all relevant charges. For example, if a user prefers a business class seat, the total cost includes both the base fare and any additional business class upgrade fees.
+
+\textbf{Wrong} options explicitly violate one or more of the user's preferences, for instance, offering a layover when the user prefers direct flights.
+
+\textbf{Noise} options differ from wrong options in that they are either (i) unrelated to the user’s search intent (e.g., the flight goes from San Francisco to Los Angeles when the user searched for flights from San Francisco to New York), or (ii) unrealistic (e.g., an option with an implausible flight time or cost, such as taking 1000 hours).
+
+
+\paragraph{Environment Setting.}
+The environment simulates a user who responds naturally to the tested model's conversation and queries, gradually and implicitly revealing preferences over time. When the tested model issues a \texttt{search}, the environment evaluates whether the search query aligns with any of the ground truth arguments using the prompt in \Cref{fig:judge_search_request}.
+
+If the model issues an \texttt{action}, the environment first analyzes the model’s latest utterance to determine its intent. This intent is categorized into four types using the prompt in \Cref{fig:judge_agent_response}:  
+(1) the utterance explicitly and concretely asks for a preference that the simulated user possesses;  
+(2) the utterance explicitly and concretely asks for a preference, but the user does not possess a specific preference for that aspect;  
+(3) the utterance makes a vague and general query about preferences rather than focusing on a specific aspect;  
+(4) other, indicating a normal conversation not related to preferences.
+
+For Type "1", the environment uses the prompt in \Cref{fig:response_preference_prompt} to implicitly and naturally reveal the corresponding preference.  
+For Type "2", the response is coded in the environment as: ``This is a good question. However, I do not have specific preference in the aspect you ask about yet (or maybe I have already elicited that to you before). You may continue to ask me about other detailed and specific preferences.''  
+For Type "3", the response is also coded in the environment as: ``Your question is too vague and general, and I am not sure how to respond to it. Please ask me about some specific aspects of my preferences, in a more detailed and concrete way, so that I can provide you with a more accurate response.''  
+For Type "4", the environment uses the prompt in \Cref{fig:response_natural_prompt} to continue the conversation naturally and neutrally, without revealing any specific preferences.
+
+If the model's utterance has not been judged as Type "1" for several consecutive turns (a hyperparameter that can be configured), the environment will proactively use the prompt in \Cref{fig:response_elicit_prompt} to introduce one of its remaining preferences at random. From the model’s perspective, this is treated as a passively obtained preference, rather than one elicited through a successful action attempt. We will discuss this mechanism in more detail when describing the metrics.
+
+Finally, if the tested model issues an \texttt{answer}, the environment parses the proposed answer in a rule-based manner, compares it with the ground truth, and returns the corresponding reward.
+
+
+\section{Experiment Details}
+\label{sec:apdx_exp_setting}
+
+\paragraph{Settings.} On the model side, we set the generation temperature to 0, the number of samples to 1, the maximum response length per turn to 2048 tokens, and the maximum number of interaction turns to 20. We use 8 Nvidia H200 GPUs (1 node) for the whole evaluation (mainly for hosting open-source models). All the results are produced by a single run as generation temperature is set to 0.
+
+{\small
+\begin{tcolorbox}[colback=gray!5!white, colframe=black!75!black, 
+title=Tool Schema: \texttt{interact\_with\_env}, boxrule=0.3mm, width=0.48\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{Type:} \texttt{function} \\
+\textbf{Name:} \texttt{interact\_with\_env} \\
+\textbf{Description:} A tool for interacting with a target environment. The detailed environment description and action space is provided in the system prompt, so please follow the system prompt. You can use this tool to analyze and interact with the environment step by step through three actions including \texttt{search}, \texttt{action}, or \texttt{answer}.
+
+\rule{\linewidth}{0.2pt} \\
+
+\textbf{Parameters:} \texttt{object} \\[2mm]
+\hspace*{4mm}\textbf{thought} (\texttt{string}):
+Your thought of what to do next, including your reason or analysis of your choice and why.\\[2mm]
+\hspace*{4mm}\textbf{choice} (\texttt{string}, enum: \texttt{"action"}, \texttt{"answer"}, \texttt{"search"}):
+Your choice of what to do next, must be one of \texttt{action}, \texttt{answer}, or \texttt{search}.\\[2mm]
+\hspace*{4mm}\textbf{content} (\texttt{string}):
+The content of your choice, must be a string.
+If you choose \texttt{action}, provide the action you want to take.
+If you choose \texttt{answer}, provide the answer you want to submit.
+If you choose \texttt{search}, provide the search query.
+The specific format of the content is determined by the environment description, which should be provided in the system prompt. Please follow the format strictly in order to invoke this tool.
+
+\end{tcolorbox}
+}
+
+
+The tool schema for interaction is presented above. Note that the model is expected and required to make a tool call in order to interact with the environment. If a tool call is not detected, the interaction is immediately terminated. To enforce this behavior, the tool call field (e.g., ``tool choice'') is always set to \texttt{required} or an equivalent constraint, ensuring that the model must invoke a tool on every turn.
+
+{\small
+\begin{tcolorbox}[colback=gray!5!white, colframe=black!75!black, 
+title=Environment Configuration, boxrule=0.3mm, width=0.48\textwidth, arc=3mm, auto outer arc=true]
+
+\textbf{Driving Model Settings:} \\
+\hspace*{4mm}\textbf{Model Name:} \texttt{GPT-4o} \\
+\hspace*{4mm}\textbf{Temperature:} \texttt{0.0} \\
+\hspace*{4mm}\textbf{Max Tokens:} \texttt{2048} \\
+\hspace*{4mm}\textbf{Timeout:} \texttt{15.0} (seconds, timeout will fallback to default response)\\
+
+\textbf{Environment Configuration:} \\
+\hspace*{4mm}\textbf{Max Steps:} \texttt{20} (align with the maximum interaction turn) \\
+\hspace*{4mm}\textbf{Search Failure Interval:} \texttt{5} (every Nth search results in a system error) \\
+\hspace*{4mm}\textbf{Elicitation Interval:} \texttt{3} (proactive preference elicitation if off-topic for N consecutive turns) \\
+
+\textbf{Reward Configuration:} \\
+\hspace*{4mm}\textbf{Reward Scale:} \texttt{1.0} (final reward equals reward value times reward scale) \\
+\hspace*{4mm}\textbf{Step Penalty:} \texttt{0.0} (no step penalty on reward in basic setting) \\
+\hspace*{4mm}\textbf{Search Correct Reward:} \texttt{0.2} (partial reward given to a correct and aligned search attempt) \\
+\hspace*{4mm}\textbf{Preference Correct Reward:} \texttt{0.2} (partial reward given to a successful action attempt) \\
+\hspace*{4mm}\textbf{Choice Best Reward:} \texttt{1.0} (reward given to best answer being chosen)\\
+\hspace*{4mm}\textbf{Choice Correct Reward:} \texttt{0.8} (partial reward given to correct but not best answer being chosen) \\
+\hspace*{4mm}\textbf{Wrong Choice Penalty:} \texttt{0.0} (no penalty for choosing the wrong choice in basic setting) \\
+
+\textbf{Choice Number Customization:} \\
+\hspace*{4mm}\textbf{Wrong Choice Number:} \texttt{10} (the number of wrong choices presented in the search result in basic setting) \\
+\hspace*{4mm}\textbf{Noise Choice Number:} \texttt{5} (the number of noise choices presented in the search result in basic setting) \\
+\end{tcolorbox}
+}
+
+From the environment side, we use GPT-4o as the backbone model to simulate the user. Additional configuration details are summarized in the table we present above.
+
+Additionally, as mentioned earlier, we incorporate search failure simulation and budget constraint settings. For the single-choice and multiple-choice settings, we use different system prompts (differing only in one specific requirement) while keeping the user prompt identical. The corresponding prompts are shown in \Cref{fig:system_prompt_1} to \Cref{fig:user_prompt}.
+
+
+\paragraph{Metrics.}
+We provide detailed definitions of the auxiliary metrics used to better understand model performance:
+
+\begin{itemize}[topsep=2pt, partopsep=-3pt, leftmargin=8pt]
+
+\item \textbf{Best Exist Rate}: Each data scenario typically involves 2 to 4 travel aspects (e.g., flight, hotel, car). For each aspect, there is one \emph{best} option and two other \emph{correct but suboptimal} options—three correct options in total. For example, if a scenario involves both flight and hotel, and the model selects the best hotel option but only a correct (not best) flight option, the Best Exist Rate for this instance is $1/2$. This score is micro-averaged over all data points. It measures the model’s ability to select the best options while being budget-aware, as instructed.
+
+\item \textbf{Correct Exist Rate}: This metric is similar to the one above, except that any correct option (not necessarily the best) is considered sufficient. Using the previous example, if the model selects correct options for both flight and hotel, the Correct Exist Rate is $2/2$. This metric captures how well the model adheres to user preferences, without considering budget constraints.
+
+\item \textbf{Valid Search Attempt (\%)}: Each search action is evaluated by the environment to determine if it aligns with any ground-truth search arguments. A valid search returns results (i.e., receives a non-zero reward). For example, if a data point involves three aspects and the model makes four \texttt{search} actions, but only three yield valid results, the Valid Search Attempt rate is $3/4$. This metric is micro-averaged across all data points and reflects the model's ability to issue precise and effective search queries.
+
+\item \textbf{Valid Action Attempt (\%)}: Each \texttt{action} the model takes is categorized by the environment into one of four types we mentioned earlier. A \emph{valid} action is classified as type "1", indicating a targeted and meaningful clarifying question. For each data point, we compute the ratio of type "1" actions to the total number of actions, then micro-average across all data. This metric evaluates whether the model consistently issues high-quality clarifying queries. However, note that this is a \emph{relative} metric—high validity does not necessarily mean more preferences are elicited. For instance, a model that asks one valid question (1/1) achieves a 100\% rate, even if the user holds many unelicited preferences.
+
+\item \textbf{Preference Elicited (\%)}: This metric measures the \emph{absolute} number of user preferences elicited, either actively or passively. Active elicitation occurs when the model issues a type "1" \texttt{action} (a valid query). Passive elicitation occurs when the model fails to elicit preferences for a number of steps (set by the hyperparameter Elicitation Interval, which is 3 in our experiments), prompting the environment to release a preference. The sum of actively and passively elicited preferences is divided by the total number of user preferences per data point and micro-averaged across the dataset. In particular, the Active Preference Elicited metric reflects the model’s ability to proactively uncover user preferences, regardless of the number of queries issued.
+
+\end{itemize}
+
+
+\section{Analysis Details}
+We provide a case study of Qwen3-32B and Claude-4-Sonnet in \Cref{fig:good_qwen3} and \Cref{fig:good_claude4} respectively (positive case). This first case demonstrates Qwen3-32B's ability to recover from vague initial action attempt, effectively elicit user preferences through targeted follow-up questions, conduct precise searches, and present clear comparisons between viable options. The model's reasoning aligns well with both user preferences and budget constraints, ultimately leading to the correct selection of the best hotel option.
+
+The second case highlights Claude's ability to elicit nuanced user preferences through stepwise clarification, recover gracefully from vague questioning, and refine its inquiries based on prior feedback. The agent successfully identifies key user preferences, adjusts its strategy accordingly, and recommends a flight option that aligns with both stated and implied travel needs. Its interaction demonstrates strong adaptability and goal-oriented reasoning within a multi-aspect travel planning scenario.
+
+Finally, we provide a case study of Deepseek-V3 in \Cref{fig:bad_deepseek-v3} (negative case). Despite issuing structurally valid search queries, the model demonstrates shallow user understanding and fails to elicit preferences through conversation. It prematurely selects suboptimal options without sufficiently narrowing down user constraints, and attempts repeated selections on the same aspect, indicating poor state tracking. This case illustrates brittle reasoning and a lack of alignment with the user's evolving intent, highlighting a failure mode of large models under ambiguous user goals and minimal feedback.
+
+
+% =============== All Prompt Details =================
+
+\input{sections/Env_Prompts}
+
+% =============== Case Study of Qwen-32B =================
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=green!5!white, colframe=green!75!black, 
+title=Good Example - Qwen3-32B (Travel-444), boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\small
+
+\textbf{Concrete Interaction Sequence (First 6 Turns):}\\
+
+\textbf{Turn 1} - \textit{ACTION} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "Could you share your preferences for the hotel (e.g., neighborhood, amenities), car rental (e.g., economy, SUV), and restaurant (e.g., cuisine type, dietary restrictions)? This will help me find the most cost-effective options that suit your needs."\\
+\textbf{Feedback:} "Your question is too vague and general, and I am not sure how to respond to it. Please ask me about some specific aspects of my preferences, in a more detailed and concrete way, so that I can provide you with a more accurate response."\\
+
+\textbf{Turn 2} - \textit{ACTION} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Let’s clarify your preferences step by step:
+
+1. \textbf{Hotel}: Would you prefer a hotel in a specific San Francisco neighborhood (e.g., Union Square for downtown access, Fisherman’s Wharf for scenic views, or Mission District for affordability)? Do you need amenities like free breakfast, parking, or pet-friendly policies?
+
+2. \textbf{Car Rental}: What type of vehicle are you looking for? For example: economy car (e.g., Toyota Corolla), compact SUV (e.g., Honda CR-V), or hybrid? Do you need features like automatic transmission, GPS, or a sunroof?
+
+3. \textbf{Restaurant (April 11th)}: What cuisine type are you interested in (e.g., Italian, Mexican, seafood, or vegan)? Do you have dietary restrictions (e.g., gluten-free, halal, or nut allergies)? Would you prefer a casual eatery or a higher-end dining experience within your budget?"\\
+\textbf{Feedback:} "When it comes to hotels, I find it really reassuring to know that my car is well taken care of, especially when I'm exploring a new city like San Francisco. It just adds a layer of comfort to my stay."\\
+
+\textbf{Turn 3} - \textit{SEARCH} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Search for hotels in San Francisco from April 10th to April 17th with parking availability. Sort results by price (lowest first) and filter for budget-friendly options."\\
+\textbf{Feedback:} "You have provided the correct search request arguments.
+
+Each hotel option includes:
+- name: Hotel name
+- room: Array of available room types with capacity
+- cost: Array of costs for different room types for the entire stay in USD
+- rating: Hotel rating on a scale of 0-10
+- amenities: Available facilities free of charge
+- service: Additional services with costs\\
+
+% Best Option: \textbf{Vista Point Lodge (H15)}: Double Room for 2 people, \$1300 for 7 nights, plus \$90 parking. Total: \$1390. Amenities: Mountain View, Business Workspace, WiFi. Rating: 7/10."\\
+
+\textbf{Turn 4} - \textit{ACTION} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Here are the top 3 budget-friendly hotels with parking in San Francisco:
+
+1. \textbf{Sunset Retreat (H8)}: \$1280 total (room + parking), 7/10 rating, mountain view, pets allowed, WiFi.
+
+2. \textbf{Vista Point Lodge (H15)}: \$1390 total, 7/10 rating, mountain view, business workspace.
+
+3. \textbf{Harbor View Lodge (H13)}: \$1690 total, 5/10 rating, ocean view.
+
+Would you like to proceed with the cheapest option (H8), or do you have preferences for ratings, room types, or other amenities?"\\
+\textbf{Feedback:} "You know, I've always found that places with a rating around 7 tend to strike a nice balance between quality and affordability. The Sunset Retreat and Vista Point Lodge both seem to fit that bill quite well. Could you tell me a bit more about the room types they offer?"\\
+
+\textbf{Turn 5} - \textit{ACTION} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Here’s a detailed breakdown of the room types for the two hotels:
+
+\textbf{Sunset Retreat (H8)}
+- \textbf{King Room}: \$1200 total for 7 nights (includes parking: \$80). Capacity: 2 people. Amenities: Mountain view, pets allowed, high-speed WiFi.
+- \textbf{Queen Room}: \$1800 total for 7 nights (includes parking: \$80). Capacity: 2 people. Slightly larger space but same amenities.
+
+\textbf{Vista Point Lodge (H15)}
+- \textbf{Double Room}: \$1300 total for 7 nights (includes parking: \$90). Capacity: 2 people. Amenities: Mountain view, business workspace, high-speed WiFi.
+- \textbf{Queen Room}: \$1500 total for 7 nights (includes parking: \$90). Capacity: 2 people. Additional workspace and slightly upgraded comfort.
+
+Would you prefer the \textbf{cheapest option (H8 King)} or the \textbf{workspace-inclusive option (H15 Double)}?"\\
+\textbf{Feedback:} "There's something quite appealing about having a bit of extra space and the option to switch things up depending on the mood. The Double room at Vista Point Lodge sounds like it could offer that kind of flexibility and comfort."\\
+
+\textbf{Turn 6} - \textit{ANSWER} (Reward: \textcolor{deepgreen}{1.0})\\
+\textbf{Content:} "H15"\\
+\textbf{Feedback:} "Your chosen options contain the best option! Your choice is recorded and do not choose options of this travel aspect again. Please continue your interaction and reasoning focusing on other travel aspects."
+% \textbf{Why this demonstrates excellent performance:}\\
+% \textbullet \textbf{Clarified Vague Input:} Recovered from poor initial action with concrete follow-up\\
+% \textbullet \textbf{Effective Preference Elicitation:} Clearly asked for parking, ratings, amenities\\
+% \textbullet \textbf{Targeted Search:} Returned correct hotel list sorted by cost and parking filter\\
+% \textbullet \textbf{Comparative Reasoning:} Presented trade-offs across three hotel choices\\
+% \textbullet \textbf{User-Guided Final Answer:} Supported decision aligned with both affordability and preferences\
+\end{tcolorbox}
+}
+\caption{Good example showing successful hotel planning with clear preference elicitation, relevant search, and optimal recommendation by Qwen3-32B.}
+\label{fig:good_qwen3}
+\end{figure*}
+
+% =============== Case Study of Claude-4-Sonnet =================
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=green!5!white, colframe=green!75!black, 
+title=Good Example - Claude-4-Sonnet (Travel-444), boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\small
+
+\textbf{Analysis Summary:}\\
+
+\textbf{Concrete Interaction Sequence (First 9 Turns):}\\
+
+\textbf{Turn 1} - \textit{SEARCH} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "flight from Los Angeles to New York City on March 15th, one-way"\\
+\textbf{Feedback:} You have provided the correct search request arguments.\\
+
+\textbf{Turn 2} - \textit{SEARCH} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "car rental in New York City from March 15th to March 20th"\\
+\textbf{Feedback:} You have provided the correct search request arguments.\\
+
+\textbf{Turn 3} - \textit{SEARCH} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "restaurant in New York City on March 17th"\\
+\textbf{Feedback:} You have provided the correct search request arguments.\\
+
+\textbf{Turn 4} - \textit{ACTION} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "I found several flight options for your March 15th trip from Los Angeles to New York City. Since you mentioned budget is a concern, I see some very affordable options. However, I'd like to understand your preferences better:
+
+1. Are you comfortable with connecting flights, or do you prefer direct flights?  
+2. Do you have any airline preferences or ones you'd like to avoid?  
+3. How important are amenities like WiFi, meal service, or lounge access to you?  
+4. Will you need to check any bags for your business trip?"\\
+\textbf{Feedback:} I don't mind a connecting flight if it means I get to experience a different airport along the way.\\
+
+\textbf{Turn 5} - \textit{ACTION} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "A few more questions to help me find the perfect flight for you:
+
+1. Do you have any airline preferences, or are you flexible as long as the price is right?  
+2. Will you need to check any bags for your business trip, or are you planning to travel with just carry-on?  
+3. Are there any specific amenities that are important for your business travel (like WiFi for working during the flight)?"\\
+\textbf{Feedback:} Your question is too vague and general. Please ask me about some specific aspects in a more detailed and concrete way.\\
+
+\textbf{Turn 6} - \textit{ACTION} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "You're right, let me be more specific. For your business trip, will you need to check a suitcase, or can you manage with just a carry-on bag? This is important because checked bag fees can add $25-$60 to your total flight cost depending on the airline."\\
+\textbf{Feedback:} Good question, but I do not have a specific preference on that aspect yet. Please continue asking about other detailed preferences.\\
+
+\textbf{Turn 7} - \textit{ACTION} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Do you have any specific airlines you prefer to fly with or any you'd rather avoid? For example, some business travelers prefer major carriers like United or American, while others are comfortable with budget airlines like Spirit or Southwest."\\
+\textbf{Feedback:} I always feel well taken care of with United Airlines.\\
+
+\textbf{Turn 8} - \textit{ACTION} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Perfect! I can see you appreciate United's service quality. Now, would you prefer a shorter total travel time even if it costs a bit more, or are you willing to have a longer journey with a longer layover if it saves you money?"\\
+\textbf{Feedback:} I get restless with long layovers, so I prefer shorter journeys even if they cost more.\\
+
+\textbf{Turn 9} - \textit{ANSWER} (Reward: \textcolor{deepgreen}{1.0})\\
+\textbf{Content:} "F15"\\
+\textbf{Feedback:} Your chosen options contain the best option! Your choice is recorded. Please continue your interaction focusing on other travel aspects.\\
+
+\end{tcolorbox}
+}
+\caption{Good example showing Claude-4-Sonnet's ability to elicit implicit preferences, adapt follow-up questions, and recommend optimal options based on evolving user intent.}
+\label{fig:good_claude4}
+\end{figure*}
+
+% =============== Case Study of Deepseek-v3 =================
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{
+\begin{tcolorbox}[colback=red!3!white, colframe=red!75!black, 
+title=Bad Example - Deepseek-V3 (Travel-22), boxrule=0.3mm, width=\textwidth, arc=3mm, auto outer arc=true]
+
+\small
+
+\textbf{Concrete Interaction Sequence (First 7 Turns):}\\
+
+\textbf{Turn 0} - \textit{SEARCH} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Search for budget-friendly apartments in Austin available from November 10th to November 15th, sorted by price (lowest first)."\\
+\textbf{Feedback:} You have provided the correct search request arguments.\\
+
+\textbf{Turn 1} - \textit{ACTION} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "How many people will be joining the trip? This will help me find an apartment that comfortably accommodates everyone."\\
+\textbf{Feedback:} I'm not sure about the exact number right now.\\
+
+\textbf{Turn 2} - \textit{SEARCH} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "Search for budget-friendly apartments in Austin with 2-3 bedrooms, available from November 10th to November 15th, sorted by price (lowest first)."\\
+\textbf{Feedback:} You have already got the search results for <apartment>. Please directly refer to the previous search results.\\
+
+\textbf{Turn 3} - \textit{ANSWER} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "A10"\\
+\textbf{Feedback:} Your chosen options do not contain any of the best or correct options. Please continue your interaction focusing on other travel aspects.\\
+
+\textbf{Turn 4} - \textit{SEARCH} (Reward: \textcolor{deepgreen}{0.2})\\
+\textbf{Content:} "Search for budget-friendly car rental options in Austin available from November 10th to November 15th, sorted by price (lowest first)."\\
+\textbf{Feedback:} You have provided the correct search request arguments.\\
+
+\textbf{Turn 5} - \textit{ANSWER} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "C18"\\
+\textbf{Feedback:} Your chosen options do not contain any of the best or correct options. Please continue your interaction focusing on other travel aspects.\\
+
+\textbf{Turn 6} - \textit{ANSWER} (Reward: \textcolor{red}{0.0})\\
+\textbf{Content:} "A10"\\
+\textbf{Feedback:} You have already recommended an option with the same initial ‘A’. You are allowed to recommend only one option per travel aspect.\\
+
+\end{tcolorbox}
+}
+\caption{Negative example showing Deepseek-V3's failure to elicit meaningful preferences or recover from ambiguity. The model issues redundant queries, skips clarification, and selects incorrect options without leveraging available feedback.}
+\label{fig:bad_deepseek-v3}
+\end{figure*}

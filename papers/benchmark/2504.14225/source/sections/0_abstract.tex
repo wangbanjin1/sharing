@@ -1,0 +1,74 @@
+\begin{abstract}
+
+% Large Language Models (LLMs) are increasingly used as conversational chatbots, yet one key question remains: how well do they remember our interactions to deliver personalized responses?
+% \textcolor{orange}{Sihao: The high-level framing of the story should be \textbf{**laser-focused** on personalization}, more specifically -- "\textbf{learning about each user from the user-LLM interaction history across different scenarios}". IMO we should avoid putting emphasis on "memory" or "long-context". Try to highlight our competitive advantage here -- (1). We have persona for user + user's entire (and diverse) interaction history w/ LLM, and (2). We are testing LLM in realistic task scenarios that require personalization.  }
+
+% \textcolor{orange}{Research Questions
+% \begin{enumerate}
+%     \item User profiling: Can LLM learn about users from interaction histories?
+%     \item Dynamic: Can LLM recognize how user preferences evolve over time?
+%     \item Personalized response: Can LLM use what it knows about user and personalize its response?
+% \end{enumerate}}
+Large Language Models (LLMs) have emerged as \textit{personalized} assistants for users across a wide range of tasks -- from offering writing support to delivering tailored recommendations or consultations. Over time, the interaction history between a user and an LLM can provide extensive information about an individual's traits and preferences. However, open questions remain on how well LLMs today can effectively leverage such history to (1) internalize the user's inherent traits and preferences, (2) track how the user profiling and preferences evolve over time, and (3) generate personalized responses accordingly in new scenarios.
+
+In this work, we introduce the \textit{\datasetnameemoji} benchmark. \datasetname~features curated user profiles with over 180 simulated user-LLM interaction histories, each containing up to 60 sessions of multi-turn conversations across 15 real-world tasks that require personalization. Given an \emph{in-situ} user query, i.e. query issued by the user from the first-person perspective,  
+we evaluate LLM chatbots' ability to identify the most suitable response according to the current state of the user's profile. 
+We observe that current LLMs still struggle to recognize the dynamic evolution in users' profiles over time through direct prompting approaches. As a consequence, LLMs often fail to deliver responses that align with users' current situations and preferences, with frontier models such as GPT-4.1, o4-mini, GPT-4.5, o1, or Gemini-2.0 achieving only around $50\%$ overall accuracy, suggesting room for improvement. We hope that \datasetname, along with the user profile and conversation simulation pipeline, can facilitate future research in the development of truly user-aware chatbots.
+Code and data are available at \href{https://github.com/bowen-upenn/PersonaMem}{github.com/bowen-upenn/PersonaMem}.
+
+
+
+%We hope that \datasetname, along with our proposed user profile curation and conversation simulation pipeline can facilitate future research in the LLM personalization space. 
+% It comprises 100 unique 128k-token contexts with 2k questions and 20 long conversation sessions, as well as 250 unique 1M-token contexts with 3.5k questions and 60 sessions, spanning 20 personas, 8 fine-grained question types, and 18 conversation topics, each with coherent persona development to reflect real-world interactions.
+% a personalization-oriented benchmark that evaluates how well LLMs can learn and utilize user-specific information to generate personalized responses in \textit{long, multi-turn, multi-session} conversations.
+% Many users today rely on large language models (LLMs) as \textit{personalized} chatbots for a wide variety of task scenarios.
+% Today, large langauge models (LLMs) has become the personalized chatbot for many users. 
+% Across many daily task scenarios, from writing assistance, to recommendation or consultation, users interact   
+% The LLM chatbots can be helpful assistants in a wide range of daily tasks
+%Many users today use Large Language Models (LLMs) for a wide variety of tasks and rely on them as their \textit{personalized} chatbots. 
+% \textcolor{red}{
+% Sent 2: highlight the fact that users interact with LLMs in many different ways (we can list a few example task scenarios covered by our work, e.g. recommendation, consultation, writing assistance, etc).} 
+%Their daily interaction of LLMs spans from writing assistance to recommendation or consultation.
+% \textcolor{red}{
+% Sent 3-4: Say that the conversation history actually contains a lot of information about user's traits, preferences, (and  reflect dynamic changes of these, if space allows). 
+% }
+%Because of such frequent and diverse usage, the entire conversation history actually contains a lot of information about user's traits, preferences, and reflects dynamic changes of these.   
+% Sent 5: Next, state the two research questions we are after -- (1) Can LLMs learn about the user from the interaction history, (2) Can LLM use what they learned to provide a personalized response to user.
+% but do they actually function as personalized chatbot that interactively learns about the user and adapts accordingly?
+% knowledge about the user's traits, personal preferences, and provide a personalized response? 
+%It's yet unclear whether LLMs have been able to know about the users and adapt their response accordingly. %[Q]is it better to change it to a sentence with question mark explicitly to be more catchy?
+%This work introduces \textit{\datasetname}, a personalization-oriented conversation benchmark designed to evaluate whether LLMs can interactively learn about the user and leverage their memory to generate personalized responses within \textit{long, multi-turn, and multi-session} conversations.
+% This work introduces \textit{\datasetname}, a personalization-oriented memory benchmark designed to evaluate whether large language models can not only memorize user preferences, but also leverage that memory to generate personalized responses within \textit{long, multi-turn, and multi-session} conversations.
+% Sent 7: Highlight the scale of our dataset
+
+% Sent 6: Evaluation tasks
+%Our  simulates personalization challenges embedded in the user-model interactions, including recalling factual user information, tracking preference updates and their reasons, and generating personalized responses beyond generally correct answers.
+% Our method simulates real-world user-model interactions, assessing model performance on fine-grained memory and personalization challenges, including recalling factual user information, tracking preference updates and their reasons, and generating personalized responses beyond generally correct answers.
+% To facilitate benchmarking, we propose a cost-effective, scalable approach for curating high-quality, long-form dialogues across diverse topics, such as therapy consultations and creative writing.
+% Sent 7: Spoiler for evaluation results
+
+% We evaluate several popular LLMs on \textit{\datasetname}, and find that while LLMs are excellent at retaining short-term user details, they still struggle to reconcile conflicting information over extended dialogue histories.
+%Sent 8: Our contribution
+%Our contribution
+% Our benchmark defines a concrete suite of evaluation data and tasks for assessing and enhancing LLM personalization, thereby guiding the development of truly user-aware chatbots, and we publicly release it to facilitate future research.\footnote{TODO anonymous link or point reviewers to ZIP}
+
+% From seeking recommendation or consultation, to , each user interact with 
+% As large language models (LLMs) users interact  personalized chatbots for a wide variety of daily scenarios.  
+% Large language models (LLMs)
+% Users interact with these chatbots  
+% The LLM chatbots can be helpful assistants in a wide range of daily tasks, from writing assistance to providing recommendations or consultations, etc.   
+
+% but do they actually function as personalized chatbot that interactively learns about the user and adapts accordingly?
+% knowledge about the user's traits, personal preferences, and provide a personalized response? 
+
+% Memory is the cornerstone of personalization. 
+
+ 
+    %[no need to detail about the implementation] Specifically, we segment long conversations into multiple sessions, enabling flexible concatenation to construct extended conversation histories as needed, without additional cost.
+    % Our benchmark consists of two settings: meta-evaluation of personalized memory (Bowen), and evaluation of simulated real-time user questions (Zoey)
+    %TODO: Add summary of experimental results.
+    %TODO: add one sentence contribution of the paper.
+    % Large Language Models (LLMs) are increasingly used as conversational chatbots, yet one key question remains: how well do they remember our interactions to deliver personalized responses?0
+    % LLM are now used as conversational chatbots currenlly but how much do LLMs know me and respond to me over our interaction history? 
+    % First, highlight the importance of personalization of LLM agents. Then discuss what we are evaluating: how much do LLMs know me and respond to me over our interaction history? emphasize that we constructed the entire conversation history to enable the evaluation of personalization. first one to two questions should be catchy and clearly defined the research question. the following sentences talk about what we do and their contributions. Conclude with the findings: current models can memorize short term memory struggle at handling the conflicts throughout the long conversation.
+\end{abstract}

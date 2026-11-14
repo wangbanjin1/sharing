@@ -1,0 +1,118 @@
+
+\begin{table*}[t!]
+\centering
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc|rr|rr|rr|rr}
+\toprule
+\multicolumn{1}{c}{\multirow{2}{*}{Method}} &
+  \multicolumn{4}{c|}{Features} &
+  \multicolumn{2}{l|}{Low-acc ASR} &
+  \multicolumn{2}{l|}{Noised Aud.} &
+  \multicolumn{2}{l|}{Paraphrased} &
+  \multicolumn{2}{l}{High-acc ASR} \\ \cline{2-13} 
+\multicolumn{1}{c}{} & 
+  Aud. &
+  Utt-aug &
+  Key-aug &
+  LLM &
+  JGA &
+  N-Acc &
+  JGA &
+  N-Acc &
+  JGA &
+  N-Acc &
+  JGA &
+  N-Acc \\\hline
+Baseline       & - & - & - & - & 29.88 & 45.76 & 29.70  & 46.77 & 28.92 & 48.79 & 34.87 & 52.07 \\\hline
+AEDA \cite{aeda}        & - & \checkmark & - & - & 29.90  & 46.46 & 29.74 & 47.48 & 29.12 & 48.86 & 34.94 & 52.32 \\
+EDA \cite{eda}           & - & \checkmark & - & - & 29.22 & 47.65 & 28.70  & 49.51 & 28.08 & 49.99 & 33.68 & 53.78 \\
+BT \cite{BT}             & - & \checkmark & - & - & 31.69 & 49.17 & 31.26 & 50.98 & 29.90  & 51.73 & 36.27 & 54.81 \\
+TTS-ASR   & \checkmark & \checkmark & - & - & 29.94 & 46.34 & 29.99 & 47.37 & 29.08 & 48.88 & 35.07 & 52.03 \\
+ASR-translation         & \checkmark & \checkmark & - & - & 30.40  & 47.65 & 30.14 & 48.45 & 29.54 & 50.38 & 35.25 & 53.66 \\ \hdashline
+
+EPA (Opt 6.7B) & \checkmark & \checkmark & \checkmark & \checkmark & 31.82 & 50.73 & 32.03 & 51.92 & 29.57 & 52.49 & \textbf{37.05} & 55.78 \\
+  
+\quad \small{w/o Keyword Aug} &
+  \checkmark &
+  \checkmark &
+  - &
+  \checkmark &
+  \small{31.43} &
+  \small{49.63} &
+  \small{31.51} &
+   \small{50.56} &
+   \small{30.41} &
+   \small{52.02} &
+   \small{36.34} &
+  \small{ 54.57} \\
+
+  
+% EPA (Llama 7B) & \checkmark & \checkmark & \checkmark & \checkmark & \underline{31.80}  & \underline{50.70}  & \underline{31.81} & \underline{51.96} & \underline{30.52} & \underline{53.12} & \underline{36.41} & \underline{55.36} \\
+
+EPA (\textsc{LLaMA2-7B}) & \checkmark & \checkmark & \checkmark & \checkmark & {31.54}  & \textbf{51.12}  & {31.55} & {52.27} & {30.10} & \textbf{53.55} & {36.22} & {55.49} \\
+  
+\quad \small{w/o Keyword Aug} &
+  \checkmark &
+  \checkmark &
+  - &
+  \checkmark &
+  \small{31.12} &
+  \small{50.33} &
+  \small{31.44} &
+  \small{52.07} &
+  \small{30.01} &
+  \small{53.49} &
+  \small{35.70} &
+\small{54.90} \\
+  
+\rowcolor[gray]{0.9} EPA (GPT3.5) & 
+  \checkmark &
+  \checkmark &
+  \checkmark &
+  \checkmark &
+  \textbf{32.39} &
+  \textbf{51.12} &
+  \textbf{32.24} &
+  \textbf{52.70} &
+  \textbf{30.95} &
+    53.34 &
+  36.61 &
+  \textbf{55.87} \\
+% \quad w/o Utt. Aug &
+%   \checkmark &
+%   - &
+%   \checkmark &
+%   \checkmark &
+  
+%   31.28 &
+%   49.80 &
+%   31.39 &
+%   51.39 &
+%   30.41 &
+%   52.39 &
+%   36.11 &
+%   54.96 \\
+  
+\quad \small{w/o Keyword Aug} &
+  \checkmark &
+  \checkmark &
+  - &
+  \checkmark &
+  \small{31.31} &
+  \small{50.67} &
+  \small{31.13} &
+  \small{52.29} &
+  \small{30.06} &
+  \small{52.85} &
+  \small{35.40} &
+  \small{55.80} \\\hline
+Olisia \cite{jacqmin2023olisia}         & - & - & - & - & 30.17 & 46.25 & 30.43 & 48.07 & 29.13 & 49.21 & 36.1  & 52.58 \\
+\bottomrule
+\end{tabular}%
+}
+\caption{Comparison of various augmentation methods in enhancing the robustness of DST models across different ASR environments. In the feature columns, ``Aud.'' indicates the use of audio-based augmentation, ``Utt-aug.'' denotes utterance-level text augmentation, ``Key-aug.'' refers to keyword-specific augmentation, and ``LLM'' indicates whether large language models were used for error generation. 
+All results were averaged over three seeds for better consistency.}
+\label{tab:main}
+\vspace{-10pt}
+\end{table*}

@@ -1,0 +1,282 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+\PassOptionsToPackage{dvipsnames}{xcolor} % \textcolor clash 해결
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+\usepackage[]{acl}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{CJKutf8}
+\usepackage[english]{babel}
+\usepackage{makecell}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{multirow} % Table 기능
+\usepackage{adjustbox}
+\usepackage{float} % H
+\usepackage{amsmath} % cases / align
+\usepackage{adjustbox} % \resizebox{\textwidth}{!}
+\usepackage{verbatim} % comment 기능
+\usepackage{hwemoji}
+\usepackage{pifont} % emoji 
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage[table,xcdraw]{}  % \textcolor 확장
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{dsfont}
+\usepackage{tabularx}
+
+\usepackage{listings}
+
+\setlength{\extrarowheight}{2pt} 
+
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+      <5> <6> <7> <8> <9> <10>
+      <10.95> <12> <14.4> <17.28> <20.74> <24.88>
+      mathx10
+      }{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareFontSubstitution{U}{mathx}{m}{n}
+\DeclareMathAccent{\widebar}{0}{mathx}{"73}
+
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Beyond Single-User Dialogue: Assessing Multi-User Dialogue State Tracking Capabilities of Large Language Models}
+
+\author{Sangmin Song, Juhwan Choi, JungMin Yun, \and YoungBin Kim  \\
+  Chung-Ang University, Republic of Korea, Seoul \\
+  \texttt{,@.com ,@.com \{cocoro357, ybkim85\}@cau.ac.kr} \\
+}
+
+\author{Sangmin Song\textsuperscript{1*}, Juhwan Choi\textsuperscript{2*}, JungMin Yun\textsuperscript{3}, \and YoungBin Kim\textsuperscript{3} \\
+  \textsuperscript{1}GS Neotek \quad
+  \textsuperscript{2}AITRICS \quad
+  \textsuperscript{3}Chung-Ang University \quad \\
+  \textsuperscript{1}\texttt{song0313@gsneotek.com} 
+  \quad \textsuperscript{2}\texttt{jhchoi@aitrics.com} \\ \textsuperscript{3}\texttt{\{cocoro357, ybkim85\}@cau.ac.kr}
+}
+
+\begin{document}
+\maketitle
+
+\blfootnote{\textsuperscript{*}Equal contribution as co-first author.}
+
+\begin{abstract}
+Large language models (LLMs) have demonstrated remarkable performance in zero-shot dialogue state tracking (DST), reducing the need for task-specific training. However, conventional DST benchmarks primarily focus on structured user-agent conversations, failing to capture the complexities of real-world multi-user interactions. In this study, we assess the robustness of LLMs in multi-user DST while minimizing dataset construction costs. Inspired by recent advances in LLM-based data annotation, we extend an existing DST dataset by generating utterances of a second user based on speech act theory. Our methodology systematically incorporates a second user’s utterances into conversations, enabling a controlled evaluation of LLMs in multi-user settings. Experimental results reveal a significant performance drop compared to single-user DST, highlighting the limitations of current LLMs in extracting and tracking dialogue states amidst multiple speakers. Our findings emphasize the need for future research to enhance LLMs for multi-user DST scenarios, paving the way for more realistic and robust DST models.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Large language models (LLMs) have achieved remarkable success across various natural language processing tasks, ranging from translation to mathematical problem-solving \cite{brown2020language, achiam2023gpt, dubey2024llama, team2024gemma, hurst2024gpt}. Their effectiveness has also been demonstrated in dialogue state tracking (DST), a task that predicts a user’s goal based on conversations between the user and an agent \cite{jacqmin2022you}. Traditional approaches to DST typically rely on training sequence-to-sequence models \cite{heck2020trippy, campagna2020zero, li2021zero}. However, recent studies suggest that LLMs can achieve competitive performance in DST through zero-shot inference, eliminating the need for task-specific training \cite{heck2023chatgpt}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/figure1.jpg}
+    \caption{Example of a dialogue and slot values where utterance of user$_2$ is introduced through our proposed method. We use this multi-user dialogue to evaluate LLM-based zero-shot DST approaches and compare its performance with existing single-user DST.}
+\label{fig:example}
+\end{figure}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/figure2.jpg}
+    \caption{The illustration of our method stated in Section~\ref{sec:method-generation}.}
+\label{fig:framework}
+\end{figure*}
+
+Despite these advances, conventional DST benchmarks primarily feature structured user-agent dialogues, limiting their applicability to more complex real-world scenarios. For instance, MultiWOZ \cite{budzianowski2018multiwoz}, one of the most widely used DST datasets, contains only single-user conversations. In contrast, real-world interactions often involve multiple users collaboratively engaging in decision-making before interacting with an agent. For example, a group of friends discussing restaurant options might first debate their cuisine preferences and locations before making a request to a booking system (e.g., "I prefer Korean food." → "Is there a good Korean restaurant in Karlsplatz, Vienna?"). Assessing DST models in multi-user scenarios is therefore essential for evaluating their robustness and generalizability.
+
+In this work, we conduct a case study to assess the performance of LLMs in multi-user DST, with minimal dataset construction costs. Inspired by recent efforts to employ LLMs for data annotation, we extend existing DST datasets using state-of-the-art LLMs \cite{tan2024large, choi2024multi}. Specifically, we generate additional user utterances that interleave between the original user-agent exchanges. Our approach comprises two main steps: (1) identifying the appropriate type of interjections based on speech act theory \cite{austin1975things, bach1979linguistic}, and (2) prompting an LLM to generate and validate the second user’s utterances accordingly. Figure~\ref{fig:example} presents an example of a dialogue with utterances of the second user, based on our suggested framework. We compare the performance of LLMs in cases where the second user utterance is present or absent throughout the experiment.
+
+Experimental results on our extended dataset show a substantial performance drop compared to single-user DST. This indicates that current LLMs struggle to correctly extract and track dialogue states in conversations with multiple users, underscoring limitations in their generalizability. Our findings highlight the need for future research to develop DST methods and prompt-engineering strategies optimized for multi-user settings.
+
+Our primary contributions are as follows:
+\begin{itemize}
+    \item We propose the first systematic evaluation of LLMs in multi-user DST, highlighting the unique challenges posed by multi-user interactions.
+    \item We introduce a cost-efficient method to extend existing DST datasets by generating additional user utterances based on speech acts using state-of-the-art LLMs.
+    \item We conduct comprehensive experiments demonstrating a notable performance drop in multi-user DST, underscoring the limitations of current LLMs when handling complex dialogue dynamics.
+\end{itemize}
+
+\section{Methodology}
+\label{sec:method}
+\subsection{Preliminaries}
+\label{sec:method-preliminary}
+
+In this subsection, we briefly explain preliminaries regarding DST, especially focusing on zero-shot DST using LLMs. We follow the definitions and notations of a previous study \cite{heck2023chatgpt}.
+
+DST is a core component of task-oriented dialogue systems, responsible for tracking the user’s evolving intent throughout a conversation. At each dialogue turn $t$, given a user utterance $U_t$ and a preceding agent utterance $M_t$, DST predicts a structured set of slot-value pairs representing the user’s goal. We call this structured set of slot-value pairs the dialogue state $\textit{DS}_t$, which encapsulates the user’s intent and relevant context at turn $t$. $\textit{DS}_t$ is updated as follows:
+
+\begin{gather*}
+\textit{DS}_t = \textit{DS}_{t-1} \cup \widehat{\textit{DS}}_t
+\end{gather*}
+where $\widehat{\textit{DS}}_t$ is the newly inferred slot-value set at turn $t$.
+
+Traditional DST models require extensive supervised training on labeled datasets \cite{heck2020trippy, campagna2020zero, li2021zero}. However, recent advances in LLMs have enabled zero-shot DST, where a general-purpose model extracts slot values without explicit fine-tuning \cite{feng2023towards, heck2023chatgpt}. In zero-shot DST, the inference-time slot set \( S = \{(s_1, v_1), (s_2, v_2), ..., (s_n, v_n)\} \), where \( s_i \) denotes a slot and \( v_i \) its corresponding value, is disjoint from the training-time slot set \( S' \), meaning \( S \cap S' = \emptyset \). This requires the model to generalize without prior domain-specific training.
+
+Zero-shot DST using LLMs typically follows a prompting-based approach. $P$, an instruction including task description, is provided in natural language, guiding the model to extract relevant slot-value pairs from a conversation. At each turn, the prompt $A_t$ includes both agent and user utterances:
+
+\begin{gather*}
+A_1 = P \oplus \text{"agent": } M_1 \oplus \text{"user1": } U^{(1)}_1, \\
+A_t = \text{"agent": } M_t \oplus \text{"user1": } U^{(1)}_t, \quad \forall t \in [2, T]
+\end{gather*}
+
+
+
+
+Unlike traditional approaches, LLMs perform DST by leveraging their conversational alignment and pre-trained world knowledge without modifying its parameters. In this study, we aim to validate the capabilities of LLMs in handling multi-user DST scenario.
+
+\subsection{Construction of Multi-user DST Dataset}
+\label{sec:method-generation}
+
+This subsection outlines our method to extend the existing dataset to incorporate a second user, thereby establishing multi-user DST.  To accomplish this, we follow the concept of speech act theory \cite{austin1975things, bach1979linguistic}, which defines the types of human utterances.
+
+We adopt four speech act types based on an established study \cite{bach1979linguistic}:
+
+\begin{itemize}
+    \item \textbf{Constatives}: Statements that express factual information or claims, including answering, confirming, denying, disagreeing, or stating.
+    \item \textbf{Directives}: Attempts to influence the actions of the addressee, such as advising, asking, requesting, forbidding, inviting, or ordering.
+    \item \textbf{Commissives}: Utterances that commit the speaker to a future action, including promising, planning, vowing, betting, or opposing.
+    \item \textbf{Acknowledgments}: Expressions of the speaker’s attitude toward the hearer’s social actions, such as apologizing, greeting, thanking, or accepting acknowledgments.
+\end{itemize}
+
+Based on these speech act types, we introduce user$_2$ utterances ($U^{(2)}_{t}$) into existing user-agent dialogues. Specifically, we insert $U^{(2)}_{t}$ at each dialogue turn $t$, within the original user$1$ utterance ($U^{(1)}_{t}$) and the agent response ($M_{t}$). To achieve this, we first use an LLM to determine the appropriate speech act type for $U^{(2)}_{t}$. This classification is represented as $T^{(2)}_t=\mathcal{L}(\mathcal{P}_{\textit{id}}, U^{(1)}_{t}, M_{t})$, where $\mathcal{L}$ denotes the LLM and $\mathcal{P}_{\textit{id}}$ represents the corresponding prompt.
+
+Once the speech act type is identified, we generate $U^{(2)}_{t}$ by prompting the LLM with relevant context, including $T^{(2)}_t$, $U^{(1)}_{t}$, $M_{t}$, dialogue history ($H_{<t}$), and the gold slot value ($\widebar{\textit{DS}}_t$). This process is formulated as $U^{(2)}_{t} = \mathcal{L}(\mathcal{P}_{\textit{gen}}(T^{(2)}_t), H_{<t}, U^{(1)}_{t}, M_{t}, \widebar{\textit{DS}}_t)$.
+
+To ensure the generated $U^{(2)}_{t}$ maintains conversation coherence and does not introduce hallucinated slot values, we conduct a validation step. If $V_t = \mathcal{L}(\mathcal{P}_{\textit{val}}, U^{(1)}_{t}, U^{(2)}_{t}, M_{t}, \widebar{\textit{DS}}_t)$ returns True, we accept $U^{(2)}_{t}$ and insert it into the dialogue. Otherwise, we regenerate and revalidate $U^{(2)}_{t}$ up to three times. If validation fails in all attempts, we discard $U^{(2)}_{t}$ by setting it to $\emptyset$, ensuring that its inclusion does not compromise dialogue integrity.
+
+This procedure is applied iteratively across all dialogue turns, extending the dataset to a multi-user DST setting. When performing DST on the extended dataset, we append user$_2$’s utterance to the prompt $A_t$ as follows:
+
+
+\begin{gather*}
+A_t' = A_t \oplus \text{"user2": } U_t^{(2)} \thinspace\thinspace \text{ if } U_t^{(2)} \thinspace \neq \emptyset,\thinspace\thinspace\thinspace \forall t \in [1, T]
+\end{gather*}
+
+\section{Experiment}
+\label{sec:experiment}
+
+\subsection{Experimental Design}
+\label{sec:experiment-evaluation}
+% Prompt design->app., models used.
+
+We introduce our experimental design to assess the performance of LLMs on multi-user DST using the extended dataset. 
+
+\paragraph{Evaluation Models.} We adopt five different LLMs for experiments: GPT-4o \cite{hurst2024gpt}, Claude 3.5 Sonnet \cite{anthropic2024claude35sonnet}, Gemini-2.0-Flash \cite{pichai2024gemini}, LLaMA-3.1-8B \cite{dubey2024llama}, and Gemma-2-9B \cite{team2024gemma}. These models are selected to evaluate performance across different pretraining paradigms and parameter sizes. Further details can be found in Appendix~\ref{app:impl-details}.
+
+\paragraph{Zero-Shot DST Setup.} We use a prompting-based approach following \cite{heck2023chatgpt}. The prompt provides a task description, slot definitions, and the current dialogue history. At each turn, models extract slot-value pairs based on their internal knowledge. We keep inference parameters (temperature, top-p) at default values to ensure consistency across all models. A detailed breakdown of the prompt format is provided in Appendix~\ref{app:prompt-experiment}.
+
+\paragraph{Evaluation Metric.} To assess the performance of each model, we use Joint Goal Accuracy (JGA) \cite{henderson2014second}, which measures whether all slot values at each turn match the ground truth:
+\begin{equation}
+\textit{JGA} = \frac{1}{N} \sum^{N}_{i=1}\mathds{1}(\widehat{\textit{DS}}_t=\widebar{\textit{DS}}_t)
+\end{equation}
+where $N$ is the total number of turns, $\widehat{\textit{DS}}_t$ is the predicted dialogue state, and $\widebar{\textit{DS}}_t$ is the ground truth. We measure JGA of each model on the original MultiWOZ 2.1 \cite{eric2020multiwoz} and its extended version based on our methodology as stated in Section~\ref{sec:method-generation}, thereby comparing the performance of the LLM on single-user and multi-user scenario. Please refer to Appendix~\ref{app:dataset-stats} for the statistics of the extended dataset. By analyzing the performance gap between these settings, we quantify the impact of the existence of $U^{(2)}_{t}$ on DST performance. Specifically, we hypothesize that LLMs will show a performance drop in a multi-user DST, even if the topic, context, and slot value of the dialogue remain identical.
+
+\subsection{Result}
+\label{sec:experiment-result}
+
+\begin{table}[t]
+    \centering
+    \resizebox{0.95\columnwidth}{!}{
+    %\renewcommand{\arraystretch}{1.0}  % Adjust row spacing
+    % \setlength{\tabcolsep}{3pt}  % Reduce column spacing
+    \begin{tabular}{l|ccccc|c}
+        \Xhline{3\arrayrulewidth}
+        Models & Attr. & Hotel & Rest. & Taxi & Train & Avg. \\  
+        \hline\hline
+        GPT-4o            & 56.8 & 46.0 & 55.1 & 69.3 & 61.9 & 57.82 \\
+        w/ user$_2$ utterances     & -4.6 & -2.1 & -2.2 & -1.7 & -7.1 & -3.54 \\
+        \hline
+        Claude 3.5 Sonnet & 64.9 & 47.5 & 55.8 & 68.2 & 74.0 & 62.08 \\
+        w/ user$_2$ utterances     & -3.8 & -1.9 & -2.6 & -1.3 & -6.7 & -3.26 \\
+        \hline
+        Gemini-2.0-Flash  & 36.7 & 25.3 & 24.4 & 61.9 & 28.0 & 35.26 \\
+        w/ user$_2$ utterances     & -2.2 & -2.5 & -3.1 & -1.2 & -2.6 & -2.32 \\
+        \hline
+        LLaMA-3.1-8B      & 25.4 & 23.2 & 18.8 & 46.9 & 25.5 & 27.96 \\
+        w/ user$_2$ utterances     & -1.6 & -0.3 & -1.2 & -0.4 & -1.8 & -1.06 \\
+        \hline
+        Gemma-2-9B        & 40.0 & 36.3 & 44.4 & 61.5 & 35.4 & 43.52 \\
+        w/ user$_2$ utterances     & -1.1 & -0.2 & -2.0 & -1.1 & -2.4 & -1.36 \\
+        \Xhline{3\arrayrulewidth}
+    \end{tabular}
+    }
+    \caption{Performance comparison between LLM models for zero-shot DST in per-domain JGA. The first row of each model represents the performance of the model on the original dataset (i.e., no user$_2$ utterances), and the second row denotes the performance degradation of the model on the extended dataset with $U^{(2)}_{t}$ compared to the original dataset. Note that Attr. and Rest. denote attraction and restaurant, respectively. Please refer to Appendix~\ref{app:slot-eval} for slot-level evaluation.}
+    \label{tab:performance}
+\end{table}
+
+Table~\ref{tab:performance} presents a detailed performance comparison of various LLMs under both single-user and extended multi-user DST settings. Across all evaluated models, we observe a consistent drop in JGA when additional user$_2$ utterances are present, thus confirming our hypothesis that the presence of multiple speakers introduces added complexity. In particular, models such as GPT-4o and Claude 3.5 Sonnet experience more severe degradations (e.g., up to -7.1\% in the train domain), indicating that even state-of-the-art LLMs struggle to disentangle the intertwined dialogue cues from multiple users.
+
+Our qualitative analysis in Appendix~\ref{app:error-analysis} attributes these drops to two main error types: (1) mis-extraction of slot values when user$_2$ utterances distract the model and (2) incorrect inference of slot types due to unintended slot predictions. These findings emphasize the need for more robust, speaker-aware DST strategies. Future work should explore sophisticated prompt engineering or model architectures to distinguish multiple speakers.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We presented a systematic investigation of multi-user DST, a task that has been largely overlooked in traditional DST research. By extending an existing dataset through LLM-based generation of additional user$_2$ utterances, we revealed that contemporary LLMs face notable performance drops in multi-user DST scenarios, even when the underlying user request remains unchanged. Our findings underscore the importance of focusing on multi-user dialogue and highlight the challenges in maintaining accurate slot tracking when multiple speakers contribute to the conversation. 
+
+Future work could explore more advanced prompt-engineering strategies or model designs that disentangle each speaker’s goal. In real-world applications, multiple people often share or refine a collective plan, such as making group travel arrangements or ordering meals. Improving LLM-based DST for these more realistic, collaborative settings will be crucial for developing robust, universally applicable dialogue systems.
+
+\newpage
+\section*{Limitations}
+% Human annotated가 아니라 완전하지 않을 수 있지만, 본 논문에서 제시한 목적 - 2nd user의 등장에 따른 zero-shot DST의 challenge의 존재-를 증명하는데는 충분함.
+
+While our methodology offers a straightforward means to extend a single-user dataset to a multi-user dialogue scenario, it does not fully capture the dynamic and often collaborative nature of real-world multi-user interactions. Below, we elaborate on the key limitations:
+
+\paragraph{Limited Conversation Realistic and Dynamics.} 
+Our approach places additional speaker utterances into existing user-agent conversations without substantially altering the dialogue flow or the user’s underlying intent, to accurately evaluate the effect of the additional utterance. In realistic multi-user settings, however, users often negotiate, question, and refine each other’s ideas in ways that can change the system’s ultimate goals. For example, two users might disagree on a restaurant’s location or cuisine. Our current method does not model these forms of dynamic interaction, potentially less realistic and underrepresenting more complex use cases. Nonetheless, it is important to note that current relatively minor additions of multi-user interactions bring significant performance degradation, which suggests that more realistic interactions would likely pose even greater challenges, further highlighting the need for research in this field.
+
+\paragraph{Quality of Generated Utterances.}
+We rely on LLMs to generate and validate the additional user’s utterances. Although we employ validation steps to filter out incoherent or hallucinatory utterances, the generated data may still not fully reflect natural human conversational patterns. Furthermore, because these inserted utterances are not human-annotated, there is a risk that subtle contextual nuances are lost, and some inadvertently introduced biases or errors could remain unchecked. To precisely examine the quality of the generated utterances, we performed a manual inspection across three dimensions, which is presented in Appendix~\ref{app:verify-data-quality}.
+
+\paragraph{Focus on Zero-shot DST.} 
+We specifically target zero-shot DST based on LLMs to highlight the inherent challenge posed by multi-user DST. While this isolates the effect of additional user utterances, it also may not reflect performance under scenarios where LLMs are not used. However, from our initial attempt to conduct experiments using existing DST methods that do not use LLMs, we found that were not capable of handling this new multi-user interaction structure effectively. Accordingly, future research could investigate whether non-LLM or fully fine-tuned approaches better mitigate these multi-user complexities.
+
+Overall, while our study demonstrates the feasibility of extending single-user dialogue datasets to multi-user scenarios at low cost, it serves primarily as a proof of concept to validate the limitation of current LLMs for multi-user DST, which is the key objective of this paper. Further methodological refinements in future studies, including human validation, richer conversation modeling, and domain diversification, will be essential to capture the true depth and breadth of multi-user task-oriented dialogues.
+
+
+%\section*{Acknowledgements}
+%ACK HERE
+
+% Entries for the entire Anthology, followed by custom entries
+
+\bibliography{custom}
+\bibliographystyle{acl_natbib}
+
+\input{09_appendix}
+
+\end{document}

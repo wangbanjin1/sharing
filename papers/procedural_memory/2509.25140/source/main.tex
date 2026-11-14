@@ -1,0 +1,315 @@
+\documentclass[11pt, a4paper, logo, copyright]{googlecloud}
+
+\pdfinfoomitdate 1
+\pdftrailerid{redacted}
+
+\makeatletter
+\renewcommand\bibentry[1]{\nocitep{#1}{\frenchspacing\@nameuse{BR@r@#1\@extra@b@citeb}}}
+\makeatother
+
+\usepackage{kantlipsum, lipsum}
+\usepackage{dsfont}
+\usepackage[authoryear, sort&compress, round]{natbib}
+
+\usepackage[utf8]{inputenc} %
+\usepackage[T1]{fontenc}    %
+\usepackage{hyperref}       %
+\hypersetup{
+  colorlinks,
+  citecolor=blue,
+  linkcolor=red,
+  urlcolor=blue}
+\usepackage{booktabs}       %
+\usepackage{nicefrac}       %
+\usepackage{microtype}      %
+\usepackage{wrapfig} %
+\usepackage{soul} %
+\usepackage{tikz, adjustbox}
+% \usepackage{minted}
+\usepackage{arydshln}
+\usepackage[capitalize,noabbrev]{cleveref}
+\usepackage{fancyvrb}
+
+\usepackage{inconsolata}
+\usepackage[skins,breakable,most]{tcolorbox}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{flushend}
+\usepackage{balance}
+\usepackage{lineno}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{colortbl}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{bbm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\def \mL{\mathcal L}
+\def \T{\mathbb T}
+\def \R{\mathbb R}
+
+\def \st{\;\text{s.t.}\;}
+\def\etal{et al.\;}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bU}{\mathbf{U}}
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\bD}{\mathbf{D}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bY}{\mathbf{Y}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bB}{\mathbf{B}}
+\newcommand{\bS}{\mathbf{S}}
+\newcommand{\bW}{\mathbf{W}}
+\newcommand{\bH}{\mathbf{H}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bO}{\mathbf{O}}
+
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bp}{\mathbf{p}}
+
+\newcommand{\bsig}{\mathbf{\sigma}}
+\newcommand{\bSig}{\mathbf{\Sigma}}
+\newcommand{\NM}[2]{\| #1 \|_{#2} }  
+\newcommand{\SO}[1]{\mathcal{P}_{\mathbf{\Omega}}(#1)}
+\newcommand{\Tr}[1]{\text{tr}( #1 ) }
+
+\newcommand{\Diag}[1]{\text{Diag}(#1)}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline  \\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline \\\arraybackslash\hspace{0pt}}m{#1}}
+% Replace "require" and "ensure" with "input" and "output" in algorithmic package of LaTeX
+
+\newcommand{\ours}{\textsc{ReasoningBank}\xspace}
+\newcommand{\mats}{\textsc{MaTTS}\xspace}
+
+
+\definecolor{lightorange}{RGB}{245, 237, 211}
+\definecolor{clovergreen}{RGB}{32,115,55}
+
+\newcommand{\okmark}{{\textbf{\textcolor[rgb]{0.55,0.71,0.0}{\checkmark}}}}
+\newcommand{\ngmark}{{\textbf{\textcolor[rgb]{0.9,0.17,0.31}{\ding{55}}}}}
+
+\newcommand{\uag}[1]{{\scriptsize\hlprimarytab{\uashifted{#1}}}}
+\newcommand{\dab}[1]{{\scriptsize\hlsecondarytab{\ualgshifted{#1}}}}
+
+\newcommand{\cas}[1]{{\hlcasetab{{#1}}}}
+\newcommand{\csx}[1]{{\hlprimarytab{{#1}}}}
+\newcommand{\csy}[1]{{\hlsecondarytab{{#1}}}}
+\newcommand{\dalgshifted}{\raisebox{0.5\depth}{$\downarrow$}}
+\newcommand{\daugshifted}{\raisebox{0.5\depth}{$\uparrow$}}
+\newcommand{\dashifted}{\raisebox{0.5\depth}{\tiny$\downarrow$}}
+\newcommand{\ualgshifted}{\raisebox{0.5\depth}}
+\newcommand{\uashifted}{\raisebox{0.5\depth}{\tiny}}
+
+\newtcbox{\hlprimarytab}{on line, rounded corners, box align=base, colback=c3!10,colframe=white,size=fbox,arc=3pt, before upper=\strut, top=-2pt, bottom=-4pt, left=-2pt, right=-2pt, boxrule=0pt}
+\newtcbox{\hlsecondarytab}{on line, box align=base, colback=blue!10,colframe=white,size=fbox,arc=3pt, before upper=\strut, top=-2pt, bottom=-4pt, left=-2pt, right=-2pt, boxrule=0pt}
+\newtcbox{\hlcasetab}{on line, box align=base, colback=c5!10,colframe=white,size=fbox,arc=3pt, before upper=\strut, top=-2pt, bottom=-4pt, left=-2pt, right=-2pt, boxrule=0pt}
+
+\definecolor{c1}{cmyk}{0,0.6175,0.8848,0.1490} 
+\definecolor{c2}{cmyk}{0.1127,0.6690,0,0.4431} 
+\definecolor{c3}{cmyk}{0.3081,0,0.7209,0.3255} 
+\definecolor{c4}{cmyk}{0.6765,0.2017,0,0.0667} 
+\definecolor{c5}{cmyk}{0,0.8765,0.7099,0.3647} 
+
+%\usepackage{ bbold }
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\newtheorem{innercustomthm}{Theorem}
+\newenvironment{customthm}[1]
+  {\renewcommand\theinnercustomthm{#1}\innercustomthm}
+  {\endinnercustomthm}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{comment} 
+\usepackage{mdframed}
+\usepackage{fontawesome}
+\usepackage{csquotes}
+\usepackage{makecell}
+\definecolor{beigecolor}{RGB}{253, 244, 204} % Beige color
+\definecolor{greencolor}{RGB}{228, 242, 217} % Green color
+\definecolor{bluecolor}{RGB}{66, 133, 244} % Beige color
+\definecolor{orgcolor}{RGB}{255, 140, 15} % Green color
+
+\definecolor{redcolor}{RGB}{234, 67, 53} % Green color
+
+\definecolor{ggreen}{RGB}{52, 168, 83}
+
+\definecolor{gyellow}{RGB}{251, 188, 5}
+
+\definecolor{lightorange}{RGB}{245, 237, 211} % Adjust these values as needed
+\definecolor{bluebar}{RGB}{138,159,201}
+\definecolor{pinkbar}{RGB}{232,180,189}
+
+\usepackage{mathtools}
+
+\usepackage{titletoc}
+\newcommand\DoToC{%
+  \startcontents
+    \printcontents{}{1}{\textbf{Contents of Appendix}\vskip3pt\hrule\vskip5pt}
+  \vskip3pt\hrule\vskip5pt
+}
+
+
+\newcommand{\stitle}[1]{\noindent \textbf{#1.}}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\scriptsize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=none,
+    aboveskip=1pt,
+    belowskip=1pt,
+}
+\lstdefinestyle{plainins}{
+    backgroundcolor=\color{white},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\scriptsize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=none,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    aboveskip=0pt,
+    belowskip=0pt,
+    frame=single
+}
+\lstdefinestyle{plainexam}{
+    backgroundcolor=\color[HTML]{FFFCF3},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\scriptsize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=none,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    aboveskip=0pt,
+    belowskip=0pt
+}
+
+
+\lstset{style=mystyle}
+\lstset{style=plainins}
+\lstset{style=plainexam}
+\title{\ours{}: Scaling Agent Self-Evolving with Reasoning Memory}
+
+\correspondingauthor{siruo2@illinois.edu, \{junyann, chenyulee\}@google.com}
+
+\renewcommand{\today}{}
+\newcommand*{\affmark}[1][*]{\textsuperscript{#1}}
+\author[1*]{Siru Ouyang}
+\author[2$\dagger$]{Jun Yan}
+\author[2]{I-Hung Hsu}
+\author[2]{Yanfei Chen}
+\author[2]{Ke Jiang}
+\author[2]{Zifeng Wang}
+\author[2]{Rujun Han}
+\author[2]{Long T. Le}
+
+\author[2]{Samira Daruki}
+\author[3]{Xiangru Tang}
+\author[2]{Vishy Tirumalashetty}
+\author[2]{George Lee}
+\author[4]{Mahsan Rofouei}
+\author[4]{Hangfei Lin}
+\author[1]{Jiawei Han}
+\author[2$\dagger$]{Chen-Yu Lee}
+\author[2]{Tomas Pfister}
+
+
+\affil[1]{University of Illinois Urbana-Champaign}
+\affil[2]{Google Cloud AI Research}
+\affil[3]{Yale University}
+\affil[4]{Google Cloud AI}
+
+\begin{abstract}
+With the growing adoption of large language model agents in persistent real-world roles, they naturally encounter continuous streams of tasks. A key limitation, however, is their failure to learn from the accumulated interaction history, forcing them to discard valuable insights and repeat past errors. We propose \ours{}, a novel memory framework that distills generalizable reasoning strategies from an agent's self-judged successful and failed experiences. At test time, an agent retrieves relevant memories from \ours{} to inform its interaction and then integrates new learnings back, enabling it to become more capable over time. Building on this powerful experience learner, we further introduce memory-aware test-time scaling (\mats{}), which accelerates and diversifies this learning process by scaling up the agent's interaction experience. By allocating more compute to each task, the agent generates abundant, diverse experiences that provide rich contrastive signals for synthesizing higher-quality memory. The better memory in turn guides more effective scaling, establishing a powerful synergy between memory and test-time scaling. Across web browsing and software engineering benchmarks, \ours{} consistently outperforms existing memory mechanisms that store raw trajectories or only successful task routines, improving both effectiveness and efficiency; \mats{} further amplifies these gains. These findings establish \textit{memory-driven experience scaling} as a new scaling dimension, enabling agents to self-evolve with emergent behaviors naturally arise. Our code can be found at \url{https://github.com/google-research/reasoning-bank}.
+\end{abstract}
+
+\begin{document}
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02-relatedwork}
+\input{sections/03-method}
+\input{sections/04-experiments}
+\input{sections/05_analysis}
+
+\section{Conclusion}
+
+We introduce \ours{}, a memory framework that distills strategy-level reasoning signals from both successes and failures and integrates them into test-time scaling (\mats). Extensive experiments show that \ours{} consistently improves performance while reducing redundant exploration. Further results reveal a strong synergy between memory and scaling: \ours{} guides scaling toward more promising rollouts, while diverse rollouts enrich memory with valuable contrastive signals. We also provide analyses of individual components and emergent behaviors. Our findings suggest a practical pathway toward building adaptive and lifelong-learning agents, with additional future directions and limitations in Appendix~\ref{app: future} and~\ref{app: limitation}.
+
+\section{Acknowledgments}
+We thank Jiao Sun, Jing Nathan Yan, Chi Wang, and members from Google Cloud AI Research for their valuable feedback during the preparation of the paper. Siru was supported by the Molecule Maker Lab Institute: An AI Research Institutes program supported by NSF under Award No. 2019897.
+
+\bibliographystyle{abbrvnat}
+\nobibliography*
+\bibliography{custom}
+
+\clearpage
+\appendix
+\input{sections/appendix}
+
+\end{document}
