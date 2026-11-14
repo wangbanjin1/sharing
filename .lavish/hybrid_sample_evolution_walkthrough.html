@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="parchment">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>单样本端到端产物演变看板 · persona_8613409272151</title>
+  <style>
+    :root[data-theme="parchment"] {
+      --bg: #FBF7F0;
+      --surface: #FFFDF8;
+      --surface-alt: #F4EFE6;
+      --code-bg: #F2ECE1;
+      --border: #E2D9C8;
+      --text: #2C2520;
+      --muted: #6E6259;
+      --accent: #9A4D1C;
+      --accent-soft: #F6E9DD;
+      --ok-bg: #EDF5EE;
+      --ok-border: #B7D6BC;
+      --ok-text: #235D31;
+      --warn-bg: #FDF1ED;
+      --warn-border: #E7C2B7;
+      --warn-text: #8D3620;
+    }
+    :root[data-theme="github"] {
+      --bg: #F6F8FA;
+      --surface: #FFFFFF;
+      --surface-alt: #F0F3F6;
+      --code-bg: #F6F8FA;
+      --border: #D0D7DE;
+      --text: #1F2328;
+      --muted: #59636E;
+      --accent: #0969DA;
+      --accent-soft: #EBF3FE;
+      --ok-bg: #DAFBE1;
+      --ok-border: #ACEEBB;
+      --ok-text: #1A7F37;
+      --warn-bg: #FFEBE9;
+      --warn-border: #FFCECB;
+      --warn-text: #CF222E;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .pipeline-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .kpi-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .kpi-val {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .stage-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+    }
+    .stage-card.hidden { display: none; }
+    .stage-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .stage-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .entry-point {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface-alt);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    .change-list {
+      margin: 0 0 14px;
+      padding-left: 18px;
+      font-size: 13.5px;
+    }
+    .change-list li { margin-bottom: 4px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 14px;
+    }
+    .pane {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-alt);
+      padding: 12px;
+      min-width: 0;
+    }
+    .pane-ok { background: var(--ok-bg); border-color: var(--ok-border); }
+    .pane-warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .pane-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+    .pane-ok .pane-title { color: var(--ok-text); }
+    .pane-warn .pane-title { color: var(--warn-text); }
+    pre {
+      margin: 0;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--text);
+    }
+    .dialogue-turn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .dialogue-turn:last-child { margin-bottom: 0; }
+    .turn-meta {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      margin-bottom: 3px;
+    }
+    @media print {
+      html, body { background: #FFFFFF !important; }
+      .controls, .pipeline-nav { display: none !important; }
+      .stage-card { display: block !important; break-inside: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>单样本端到端产物演变看板：<code>persona_8613409272151</code></h1>
+        <p class="subtitle">从真实网元画像到配置化因子规划、纵向状态机时间线及双渠道渲染（<code>deepseek-flash</code> 小样本实测）</p>
+      </div>
+      <div class="controls">
+        <button class="btn active" id="theme-parchment" onclick="setTheme('parchment')">暖阳米纸</button>
+        <button class="btn" id="theme-github" onclick="setTheme('github')">GitHub 简洁</button>
+      </div>
+    </header>
+
+    <div class="kpi-strip">
+      <div class="kpi-card">
+        <div class="kpi-label">真实种子窗口</div>
+        <div class="kpi-val">3 天 / 12 会话</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">推断职业与套餐</div>
+        <div class="kpi-val">程序员 · 30GB 标准</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">时间线外推规模</div>
+        <div class="kpi-val">30 天 / 57 节点</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">双渠道配比 (50:50)</div>
+        <div class="kpi-val">28 单据 + 29 对话</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">小样本 LLM 质检</div>
+        <div class="kpi-val">2/2 通过 · 0 回退</div>
+      </div>
+    </div>
+
+    <nav class="pipeline-nav" aria-label="阶段筛选">
+      <button class="btn active" onclick="filterStage('all', this)">全部阶段 (0 → 5)</button>
+      <button class="btn" onclick="filterStage('step0', this)">0. 原始画像</button>
+      <button class="btn" onclick="filterStage('step1', this)">1. 归一化与审计</button>
+      <button class="btn" onclick="filterStage('step2', this)">2. 骨架与因子规划</button>
+      <button class="btn" onclick="filterStage('step3', this)">3. 时间线与状态机</button>
+      <button class="btn" onclick="filterStage('step4', this)">4. 双渠道渲染与润色</button>
+      <button class="btn" onclick="filterStage('audit', this)">5. 当前简化点</button>
+    </nav>
+
+    <!-- Step 0 -->
+    <section class="stage-card" data-stage="step0">
+      <div class="stage-head">
+        <h2 class="stage-title"><span class="badge">Stage 0</span> 原始网元画像输入</h2>
+        <span class="entry-point">data/raw/user_profiles.json</span>
+      </div>
+      <ul class="change-list">
+        <li>直接来自网元单据聚合统计：纯会议应用（<code>tencentmeeting</code> 58.33% + <code>dingtalk_meeting</code> 41.67%）；<code>recurrent_cells.pairs</code> 记录了 5 个早高峰基站小区的出现次数（非丢包）；<code>signal_edge.sessions_with_loss: 9</code> 表示 12 次会话中有 9 次出现丢包。</li>
+        <li>包含未观测空值（<code>qoe_median: null</code>）与待定实验字段（<code>_source: "pending"</code>）。</li>
+      </ul>
+      <pre>{
+  "user_id": "8613409272151",
+  "dim_a_identity": { "user_id": "8613409272151", "device_fingerprint": "86756336471041746" },
+  "dim_b_app_behavior": {
+    "app_usage_profile": { "meeting": 1.0 },
+    "frequent_apps": { "tencentmeeting": 0.5833, "dingtalk_meeting": 0.4167 }
+  },
+  "dim_c_spatio_temporal": {
+    "recurrent_cells": {
+      "pairs": {
+        "4600040386A|morning": 3, "4600040391C|morning": 2, "4600040393B|morning": 2,
+        "4600040394B|morning": 1, "4600040380A|morning": 1
+      }
+    }
+  },
+  "dim_d_network_exp": {
+    "resolution_mode": { "mode_value": 720.0 },
+    "signal_edge": { "loss_dl_ratio": 0.0274, "loss_ul_ratio": 0.1029, "edge_level": "medium", "sessions_with_loss": 9 },
+    "stall_proxy": { "stall_ratio": 1.0, "stall_total_s": 1.0, "qoe_median": null },
+    "bandwidth_ul_dl_ratio": { "median_ratio": 12.3387, "p75_ratio": 44.3327, "_source": "pending" }
+  }
+}</pre>
+    </section>
+
+    <!-- Step 1 -->
+    <section class="stage-card" data-stage="step1">
+      <div class="stage-head">
+        <h2 class="stage-title"><span class="badge">Step 1</span> 归一化与缺失维度审计</h2>
+        <span class="entry-point">src/profile_normalizer.py → normalize_user_profile()</span>
+      </div>
+      <ul class="change-list">
+        <li><code>_collect_pending_and_clean()</code> 遍历 <code>dim_d_network_exp</code>，剥离 <code>_source: "pending"</code> 标记并将对应指标名归入 <code>audit.pending_metrics</code>。</li>
+        <li><code>_collect_unobserved()</code> 检查 <code>resolution_mode.mode_value</code> 与 <code>stall_proxy.{stall_ratio, stall_total_s, qoe_median}</code>，为 <code>None</code> 即写入 <code>audit.unobserved_dims</code>（<code>service_delay</code> 因 EXP 单据无对应列暂未纳入）。</li>
+      </ul>
+      <pre>{
+  "seed_id": "seed_8613409272151",
+  "observed_window": { "active_days": 3, "n_sessions": 12 },
+  "audit": {
+    "unobserved_dims": ["stall_proxy.qoe_median"],
+    "pending_metrics": ["bandwidth_ul_dl_ratio", "bandwidth_peak_avg_diff", "delay_ul_dl_diff", "delay_ul_dl_ratio"]
+  },
+  "network_exp.bandwidth_ul_dl_ratio": { "median_ratio": 12.3387, "p75_ratio": 44.3327 }
+}</pre>
+    </section>
+
+    <!-- Step 2 -->
+    <section class="stage-card" data-stage="step2">
+      <div class="stage-head">
+        <h2 class="stage-title"><span class="badge">Step 2</span> 语义骨架扩充与配置化因子规划</h2>
+        <span class="entry-point">src/persona_enricher.py → enrich_seed_profile()</span>
+      </div>
+      <ul class="change-list">
+        <li><strong>职业与场所映射</strong>：<code>_infer_occupation()</code> 按主应用类映射为 <code>程序员</code> 并校验其属于 <code>two_layer_factors.csv</code> 的 20 个合法职业；<code>_build_cell_venue_map()</code> 取频次前 4 基站，同时段多个基站自动追加序号（如 <code>早高峰通勤沿线2</code>）。</li>
+        <li><strong>确定性加权采样</strong>：<code>_weighted_pick()</code> 对 <code>sha256(seed_id:factor)</code> 前 8 字节归一化到 <code>[0, 1)</code> 后按累积权重区间落点；<code>2 周</code> 强制排除 <code>[30, 60]</code>，<code>单主线</code> 强制清空触发事件与支线结局。</li>
+      </ul>
+      <div class="grid-2">
+        <div class="pane">
+          <div class="pane-title">语义骨架与物理隔离映射</div>
+          <pre>{
+  "persona_id": "persona_8613409272151",
+  "static_profile": {
+    "occupation": "程序员",
+    "speech_style": {
+      "tone": "直爽干练、略带急切",
+      "catchphrases": "老样子、赶紧、别掉线、稳一点"
+    },
+    "plan": { "data_cap_gb": 30, "vip_tier": "标准", "addons": ["高铁商旅"] }
+  },
+  "cell_venue_isolation": [
+    { "ticket_cell_id": "4600040386A", "dialogue_venue": "早高峰通勤沿线" },
+    { "ticket_cell_id": "4600040391C", "dialogue_venue": "早高峰通勤沿线2" }
+  ],
+  "aliases": { "tencentmeeting": ["腾讯会议", "腾会"] }
+}</pre>
+        </div>
+        <div class="pane pane-ok">
+          <div class="pane-title">命中耦合规则与 L1/L2 因子计划</div>
+          <pre>{
+  "matched_rules": [
+    "high_mobility_multi_branch",
+    "signal_loss_causal_chain",
+    "high_daily_sessions_scale",
+    "workday_dominant_hybrid_ratio"
+  ],
+  "factor_plan": {
+    "L1-1_time_span": "1 月",
+    "L1-1.1_event_scale": "[30, 60]",
+    "L1-3_branch_topology": "主线+多条（2~3）",
+    "L1-3.1_trigger_event": "异地出差或旅行",
+    "L1-6.1_ticket_dialogue_ratio": "50:50",
+    "L1-6.3_L2-15_noise_band": ">50%",
+    "L2-14_missing_forms": ["③单侧单项 KQI 未提"]
+  }
+}</pre>
+        </div>
+      </div>
+      <div class="pane" style="margin-top:12px;">
+        <div class="pane-title">核心代码：确定性加权采样公式与局部硬约束（src/factor_registry.py）</div>
+        <pre>def _weighted_pick(seed_key: str, options: tuple[str, ...], weights: dict[str, float] | None) -> str:
+    w_list = [max(0.0, float(weights.get(opt, 1.0))) for opt in options]
+    total = sum(w_list)
+    digest = hashlib.sha256(seed_key.encode("utf-8")).digest()
+    target = (int.from_bytes(digest[:8], "big") / float(1 << 64)) * total  # 映射至 [0, total)
+    acc = 0.0
+    for opt, w in zip(options, w_list, strict=True):
+        acc += w
+        if target <= acc:
+            return opt
+    return options[-1]
+
+# 硬约束裁剪：
+scale_opts = ("[10, 15]", "[16, 22]") if time_span == "2 周" else ("[10, 15]", "[16, 22]", "[30, 60]")
+if topology == "单主线":
+    trigger_event = branch_outcome = interleave = None</pre>
+      </div>
+    </section>
+
+    <!-- Step 3 -->
+    <section class="stage-card" data-stage="step3">
+      <div class="stage-head">
+        <h2 class="stage-title"><span class="badge">Step 3</span> 纵向时间线外推与记忆状态机</h2>
+        <span class="entry-point">src/timeline_planner.py → plan_persona_timeline()</span>
+      </div>
+      <ul class="change-list">
+        <li><strong>角色与时间分布</strong>：<code>_assign_node_roles()</code> 按 <code>NOISE_RATIO_MAP</code>（<code>&gt;50% → 0.55</code>）将 31 个噪音插入非首位置；前 3 节点固定落在 <code>seed_3day</code>，同日时间冲突时按 <code>active_hours</code> 顺延或递增 <code>25 + (idx*5)%20</code> 分钟保证单调递增。</li>
+        <li><strong>状态机转移（<code>_apply_memory_transition()</code>）</strong>：<code>evidence/reinforce</code> 累积 <code>count &gt;= 3</code> 升为 <code>strong</code>；<code>branch_start</code> 写入 <code>ttl_days=14</code> 的支线；<code>correction</code> 在 <code>回原主线</code> 时置为 <code>superseded</code>，否则写 <code>latency_target="&lt;=50ms"</code>；<code>noise</code> 仅发射 <code>IGNORE_NOISE</code> 且保持前后快照一致。</li>
+      </ul>
+      <div class="grid-2">
+        <div class="pane">
+          <div class="pane-title">n01（单据 · 初始证据建立）</div>
+          <pre>{
+  "node_id": "persona_8613409272151_n01",
+  "timestamp": "2026-01-05 08:00:00",
+  "epoch": "seed_3day",
+  "carrier": "ticket",
+  "role": "evidence",
+  "location": { "cell_id": "4600040386A" },
+  "memory_events_after": [
+    { "op": "UPSERT_EVIDENCE", "slot": "main_app", "value": "tencentmeeting", "count": 1 }
+  ],
+  "gold_memory_state_after": {
+    "active_preferences": {
+      "main_app": { "value": "tencentmeeting", "count": 1, "strength": "weak" }
+    },
+    "unobserved_dims": { "stall_proxy.qoe_median": null }
+  }
+}</pre>
+        </div>
+        <div class="pane pane-ok">
+          <div class="pane-title">n14 后的状态（强偏好 + 支线 + 纠偏目标）</div>
+          <pre>{
+  "active_preferences": {
+    "main_app": {
+      "value": "tencentmeeting", "status": "active",
+      "count": 5, "strength": "strong", "source": "ticket"
+    },
+    "branch_rule": {
+      "value": "异地出差或旅行_优先保障", "status": "active",
+      "ttl_days": 14, "source": "dialogue"
+    },
+    "latency_target": {
+      "value": "<=50ms", "status": "active",
+      "source": "corrections", "ts": "2026-01-11 08:01:00"
+    }
+  },
+  "unobserved_dims": { "stall_proxy.qoe_median": null }
+}</pre>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:12px;">
+        <div class="pane">
+          <div class="pane-title">核心代码：单调时间外推与防回跳（src/timeline_planner.py）</div>
+          <pre>day_offset = idx if idx < 3 else 3 + int((idx - 2) * max(1, total_days - 3) / max(1, n_nodes - 3))
+ts_dt = base_dt + timedelta(days=day_offset, hours=active_hours[idx % len(active_hours)], minutes=(idx * 7) % 55)
+if prev_ts_dt is not None and ts_dt <= prev_ts_dt:
+    later_hours = [h for h in active_hours if h > prev_ts_dt.hour]
+    cand = base_dt + timedelta(days=day_offset, hours=later_hours[0], minutes=(idx * 7) % 55) if later_hours else None
+    ts_dt = cand if (cand is not None and cand > prev_ts_dt) else prev_ts_dt + timedelta(minutes=25 + (idx * 5) % 20)</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-title">核心代码：记忆状态机转移规则（_apply_memory_transition）</div>
+          <pre>if role == "noise":
+    return [{"op": "IGNORE_NOISE", "reason": "short_or_non_preference", "ts": timestamp}]  # state 不变
+elif role == "evidence" or role not in ("branch_start", "correction"):
+    slot["count"] += 1
+    slot["strength"] = "strong" if slot["count"] >= 3 else "weak"
+elif role == "branch_start":
+    state["active_preferences"]["branch_rule"] = {"value": f"{trig}_优先保障", "status": "active", "ttl_days": 14}
+elif role == "correction":
+    if "branch_rule" in state["active_preferences"] and plan["L1-3.2_branch_outcome"] == "回原主线":
+        state["active_preferences"]["branch_rule"]["status"] = "superseded"
+    else:
+        state["active_preferences"]["latency_target"] = {"value": "<=50ms", "status": "active"}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 4 -->
+    <section class="stage-card" data-stage="step4">
+      <div class="stage-head">
+        <h2 class="stage-title"><span class="badge">Step 4</span> 双渠道渲染、LLM 口语润色与 5 项质检</h2>
+        <span class="entry-point">dual_track_renderer.py → render_dataset_file() / llm_dialogue_renderer.py → rewrite_turns()</span>
+      </div>
+      <ul class="change-list">
+        <li><strong>EXP 单据公式（<code>_render_ticket_record()</code>）</strong>：<code>start_time_utc</code> 为本地时间减 8 小时；<code>tai = cell_id[:11]</code>；<code>rat_type</code> 按 <code>5g_share &gt;= 0.5</code> 取 <code>"10"</code>；<code>delay_an_ms / delay_dn_ms</code> 按 <code>latency_ms_median × 0.4 / 0.6</code> 拆分；<code>avg_qoe</code> 命中 <code>unobserved_dims</code> 保持 <code>null</code>。</li>
+        <li><strong>LLM 校验与回退（<code>parse_and_validate_turns()</code>）</strong>：强制校验轮数、<code>turn_id / role / intent</code> 与草稿完全一致且未泄露 <code>46000...</code> 基站前缀，最多重试 2 次；小样本 33 次调用零回退，QC <code>2/2</code> 通过。</li>
+      </ul>
+      <div class="grid-2">
+        <div class="pane">
+          <div class="pane-title">n01 网元单据输出（EXP 对齐 · 缺失列保持 null）</div>
+          <pre>{
+  "record_id": "EXP20260105080021510001",
+  "start_time_utc": "2026-01-05T00:00:00Z",
+  "timestamp_local": "2026/01/05 08:00",
+  "gpsi": "8613409272151",
+  "apn": "cmnet",
+  "snssai": "1-FFFFFF",
+  "rat_type": "10",
+  "app_id": "meeting",
+  "sub_app_id": "tencentmeeting",
+  "tai": "4600040386A",
+  "cell_id": "4600040386A",
+  "sub_app_eff_duration_s": 9060.0,
+  "delay_an_ms": 34.9,
+  "delay_dn_ms": 52.3,
+  "avg_qoe": null,
+  "stalling_duration_s": 12.5,
+  "resolution": "1080p"
+}</pre>
+        </div>
+        <div class="pane pane-ok">
+          <div class="pane-title">n14 对话：结构化草稿 → deepseek-flash 口语润色</div>
+          <div class="dialogue-turn">
+            <div class="turn-meta">Turn 1 · user · Report_Issue</div>
+            <div><strong>草稿：</strong>我还是在早高峰通勤沿线2这边用腾讯会议，有点别卡。</div>
+            <div><strong>润色：</strong>还是早高峰通勤沿线2这块，用腾讯会议有点卡，赶紧看看。</div>
+          </div>
+          <div class="dialogue-turn">
+            <div class="turn-meta">Turn 2 · assistant · Confirm_Slot</div>
+            <div><strong>草稿：</strong>收到，请问您是继续按此前早高峰通勤沿线2的腾讯会议保障偏好（目标时延&lt;=50ms）执行吗？</div>
+            <div><strong>润色：</strong>收到，还是按之前早高峰通勤沿线2用腾讯会议那套来，时延压到50ms以内，对吧？</div>
+          </div>
+          <div class="dialogue-turn">
+            <div class="turn-meta">Turn 3 · user · Confirm</div>
+            <div><strong>草稿：</strong>对，就按原来的习惯来。</div>
+            <div><strong>润色：</strong>对，老样子来，稳一点，别掉线。</div>
+          </div>
+          <div class="dialogue-turn">
+            <div class="turn-meta">Turn 4 · assistant · Acknowledge</div>
+            <div><strong>草稿：</strong>好的，已按您确认的习惯为您持续保障，祝您使用愉快。</div>
+            <div><strong>润色：</strong>好，按您说的接着盯，尽量稳住，有问题随时喊我。</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:12px;">
+        <div class="pane">
+          <div class="pane-title">核心代码：EXP 单据数值公式（src/dual_track_renderer.py）</div>
+          <pre>"start_time_utc": (dt - timedelta(hours=8)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+"rat_type": "10" if rat_5g >= 0.5 else "6",
+"tai": node["location"]["cell_id"][:11],
+"sub_app_eff_duration_s": round(node["duration_min"] * 60.0, 1),
+"delay_an_ms": round(latency_med * 0.4, 1),
+"delay_dn_ms": round(latency_med * 0.6, 1),
+"avg_qoe": None if "stall_proxy.qoe_median" in unobs else (85 if not is_noise else 95),
+"stalling_duration_s": None if "stall_proxy.stall_total_s" in unobs else (0.0 if is_noise else 12.5),
+"resolution": None if "resolution_mode" in unobs else "1080p"</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-title">核心代码：LLM 校验与自动回退（src/llm_dialogue_renderer.py）</div>
+          <pre>def parse_and_validate_turns(raw_text, draft_turns):
+    turns = json.loads(cleaned).get("turns")
+    if not isinstance(turns, list) or len(turns) != len(draft_turns): return None
+    for orig, cand in zip(draft_turns, turns, strict=True):
+        if cand.get("turn_id") != orig["turn_id"] or cand.get("role") != orig["role"] or cand.get("intent") != orig["intent"]:
+            return None
+        if not cand.get("content", "").strip() or "46000" in cand["content"]:
+            return None  # 禁止基站编号泄露
+# rewrite_turns() 最多重试 max_retries=2 次，失败则 fallback_count += 1 并返回 draft_turns</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 5: Code Review & Simplifications -->
+    <section class="stage-card" data-stage="audit">
+      <div class="stage-head">
+        <h2 class="stage-title"><span class="badge">Review</span> 当前代码中的 4 个简化假设（待加强点）</h2>
+        <span class="entry-point">Code Audit · 待迭代清单</span>
+      </div>
+      <div class="grid-2">
+        <div class="pane pane-warn">
+          <div class="pane-title">1. 单据数值生成偏静态</div>
+          <p style="margin:0;font-size:13px;"><code>_render_ticket_record()</code> 中 <code>delay_an/dn</code> 固定按中位数 <code>0.4/0.6</code> 拆分，正常卡顿 <code>stalling_duration_s</code> 固定为 <code>12.5</code>，<code>resolution</code> 固定 <code>"1080p"</code>，尚未按 <code>resolution_mode=720</code> 或 <code>signal_edge</code> 分布随机波动。</p>
+        </div>
+        <div class="pane pane-warn">
+          <div class="pane-title">2. 多应用与时间密度未展开</div>
+          <p style="margin:0;font-size:13px;">Step 3 节点 <code>app</code> 始终取 <code>frequent_apps</code> 第一名，未按概率混合副应用；<code>L1-1.2_density</code>（前疏后密等）与 <code>L1-6.2_evidence_gap</code> 尚未控制时间间隔分布。</p>
+        </div>
+        <div class="pane pane-warn">
+          <div class="pane-title">3. 冷启动首段未做前置留白</div>
+          <p style="margin:0;font-size:13px;"><code>L1-2 == "冷启动"</code> 目前仅写入 <code>L2-14_missing_forms</code> 标签，Step 3 的 <code>seed_3day</code> 仍会生成初始证据节点，未做冷启动历史全空切片。</p>
+        </div>
+        <div class="pane pane-warn">
+          <div class="pane-title">4. 闲置画像指标尚未接入</div>
+          <p style="margin:0;font-size:13px;"><code>seed_profiles.json</code> 中的 <code>app_session_stats.avg_dur_s</code>、<code>bitrate_median</code>、<code>bandwidth_env</code> 暂未接入单据时长或码率渲染。</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('theme-parchment').classList.toggle('active', theme === 'parchment');
+      document.getElementById('theme-github').classList.toggle('active', theme === 'github');
+    }
+    function filterStage(stage, btn) {
+      document.querySelectorAll('.pipeline-nav .btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.stage-card').forEach(card => {
+        const show = stage === 'all' || card.getAttribute('data-stage') === stage;
+        card.classList.toggle('hidden', !show);
+      });
+    }
+  </script>
+</body>
+</html>
