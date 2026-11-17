@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="github">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>意图理解 Agent 记忆方案与 Benchmark 构造方案</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <style>
+    :root[data-theme="github"] {
+      --bg: #F6F8FA;
+      --paper: #FFFFFF;
+      --subtle: #F6F8FA;
+      --border: #D0D7DE;
+      --text: #1F2328;
+      --muted: #59636E;
+      --accent: #0969DA;
+      --accent-soft: #EBF3FE;
+      --quote-border: #D0D7DE;
+      --quote-bg: #F6F8FA;
+      --warn-border: #D1242F;
+      --warn-bg: #FFF8F7;
+      --ok-border: #1A7F37;
+      --ok-bg: #F3FBF5;
+    }
+    :root[data-theme="parchment"] {
+      --bg: #F4EFE6;
+      --paper: #FBF7F0;
+      --subtle: #F2ECE1;
+      --border: #DDD3C2;
+      --text: #2C2520;
+      --muted: #6E6259;
+      --accent: #9A4D1C;
+      --accent-soft: #F6E9DD;
+      --quote-border: #CBBBA6;
+      --quote-bg: #F4EFE6;
+      --warn-border: #B33A3A;
+      --warn-bg: #FDF5F5;
+      --ok-border: #2E7D4F;
+      --ok-bg: #F4FAF6;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Top utility bar */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .topbar-left { font-size: 13.5px; font-weight: 600; color: var(--muted); }
+    .topbar-right { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .btn {
+      cursor: pointer; border: 1px solid var(--border); background: var(--paper); color: var(--text);
+      padding: 5px 11px; border-radius: 6px; font-size: 12.5px; font-weight: 500; text-decoration: none; display: inline-block;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+    /* Markdown document container */
+    .markdown-body {
+      max-width: 960px;
+      margin: 24px auto 48px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 36px 46px 48px;
+    }
+    @media (max-width: 720px) {
+      .markdown-body { margin: 12px; padding: 22px 18px; }
+    }
+
+    .markdown-body h1 {
+      font-size: 26px; font-weight: 700; margin: 0 0 8px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    .doc-subtitle { margin: 0 0 18px; font-size: 14px; color: var(--muted); }
+    .markdown-body h2 {
+      font-size: 20px; font-weight: 700; margin: 30px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+    }
+    .markdown-body h3 { font-size: 16px; font-weight: 700; margin: 18px 0 8px; }
+    .markdown-body p { margin: 0 0 12px; }
+    .markdown-body ul, .markdown-body ol { margin: 6px 0 14px; padding-left: 22px; }
+    .markdown-body li { margin-bottom: 5px; }
+    .markdown-body code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em; background: var(--subtle); padding: 2px 5px; border-radius: 4px; border: 1px solid var(--border);
+    }
+
+    /* TOC pills */
+    .toc-pills {
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 12px 14px;
+      background: var(--subtle); border: 1px solid var(--border); border-radius: 8px;
+    }
+    .toc-pills a {
+      font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
+      padding: 3px 9px; border-radius: 5px; background: var(--paper); border: 1px solid var(--border);
+    }
+    .toc-pills a:hover { border-color: var(--accent); }
+
+    /* Markdown Blockquotes */
+    blockquote {
+      margin: 12px 0 16px; padding: 10px 16px;
+      border-left: 4px solid var(--quote-border); background: var(--quote-bg);
+      border-radius: 0 6px 6px 0; font-size: 14px;
+    }
+    blockquote.bq-ok { border-left-color: var(--ok-border); background: var(--ok-bg); }
+    blockquote.bq-warn { border-left-color: var(--warn-border); background: var(--warn-bg); }
+    blockquote p:last-child, blockquote ul:last-child { margin-bottom: 0; }
+
+    /* Markdown Tables */
+    .table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; line-height: 1.55; }
+    th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; vertical-align: top; }
+    th { background: var(--subtle); font-weight: 700; }
+    tr:nth-child(even) td { background: rgba(128, 128, 128, 0.03); }
+
+    /* Interactive Animated SVG Embeds */
+    .sim-app {
+      border: 1px solid var(--border); border-radius: 8px; background: #FFFFFF;
+      margin: 14px 0 18px; overflow: hidden;
+    }
+    .sim-topbar {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 9px 14px; background: var(--subtle); border-bottom: 1px solid var(--border);
+    }
+    .sim-title { font-size: 13.5px; font-weight: 700; color: #0F172A; }
+    .sim-sub { font-size: 12px; color: #475569; }
+    .mode-tabs { display: flex; gap: 4px; background: #E2E8F0; padding: 3px; border-radius: 6px; }
+    .mode-btn {
+      border: none; background: transparent; padding: 4px 10px; font-size: 12px; font-weight: 600;
+      color: #475569; border-radius: 4px; cursor: pointer;
+    }
+    .mode-btn.active { background: #FFFFFF; color: #0969DA; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+    .sim-subbar {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 6px 14px; border-bottom: 1px solid #E2E8F0; font-size: 12px; background: #FAFAFA;
+    }
+    .legend { display: flex; flex-wrap: wrap; gap: 10px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 4px; color: #475569; font-weight: 500; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .ctrl-group { display: flex; align-items: center; gap: 6px; }
+    .ctrl-btn {
+      border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F172A;
+      padding: 3px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; cursor: pointer;
+    }
+    .ctrl-btn:hover:not(:disabled) { border-color: #0969DA; color: #0969DA; }
+    .ctrl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .step-badge { font-weight: 700; color: #0969DA; min-width: 48px; text-align: center; }
+
+    .canvas-wrap {
+      width: 100%; background: radial-gradient(#E2E8F0 1px, transparent 1px); background-size: 16px 16px;
+      border-bottom: 1px solid #E2E8F0;
+    }
+    .canvas-wrap svg { width: 100%; height: auto; display: block; user-select: none; }
+    .node-box { cursor: pointer; transition: filter 0.15s; }
+    .node-box:hover { filter: brightness(0.97); }
+    .node-active { stroke-width: 2.5px !important; filter: drop-shadow(0 3px 8px rgba(9, 105, 218, 0.2)); }
+    .edge-path { fill: none; stroke-width: 2; opacity: 0.18; transition: opacity 0.2s, stroke-width 0.2s; }
+    .edge-active { opacity: 1; stroke-width: 2.8; stroke-dasharray: 7 5; animation: dashFlow 0.75s linear infinite; }
+    @keyframes dashFlow { to { stroke-dashoffset: -24; } }
+    .edge-label { font-size: 9.5px; font-weight: 700; opacity: 0.24; transition: opacity 0.2s; }
+    .edge-label.active { opacity: 1; }
+
+    .detail-panel { display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; padding: 12px 14px; background: #FFFFFF; }
+    @media (max-width: 720px) { .detail-panel { grid-template-columns: 1fr; } }
+    .action-pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; margin-bottom: 5px; }
+    .step-title { font-size: 13.5px; font-weight: 700; color: #0F172A; margin-bottom: 4px; }
+    .step-desc { font-size: 12.5px; color: #334155; line-height: 1.55; }
+    .trace-box {
+      background: var(--subtle); color: var(--text); border: 1px solid var(--border); border-radius: 6px;
+      padding: 8px 11px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; line-height: 1.5; white-space: pre-wrap;
+    }
+    .trace-head {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+      font-size: 11px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border);
+      padding-bottom: 4px; margin-bottom: 6px; display: flex; justify-content: space-between;
+    }
+
+    .doc-footer {
+      margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+      font-size: 13px; color: var(--muted);
+    }
+
+    @media print {
+      @page { size: A4 portrait; margin: 9mm 10mm; }
+      html, body { background: #FFFFFF !important; font-size: 12.5px; line-height: 1.55; }
+      .topbar, .sim-subbar, .mode-tabs { display: none !important; }
+      .markdown-body { max-width: none; margin: 0; padding: 0; border: none; background: #FFFFFF !important; }
+      .sim-app, blockquote, .table-wrap { break-inside: auto; }
+      .edge-active { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-left">意图理解 Agent · 记忆架构与 Benchmark 构造方案</div>
+    <div class="topbar-right">
+      <a class="btn" data-lavish-ui="true" href="./connectivity_memory_sub/memory_and_benchmark_details.html">配套细节说明材料 →</a>
+      <button class="btn active" id="btn-theme-github" data-lavish-ui="true" onclick="setTheme('github')">GitHub 简洁</button>
+      <button class="btn" id="btn-theme-parchment" data-lavish-ui="true" onclick="setTheme('parchment')">暖阳米纸</button>
+      <button class="btn" data-lavish-ui="true" onclick="window.print()">导出 PDF</button>
+    </div>
+  </div>
+
+  <article class="markdown-body">
+    <h1>意图理解 Agent 记忆方案与 Benchmark 构造</h1>
+    <p class="doc-subtitle">分层设计 · 双渠道门控萃取 · 混合存储检索 · 经验记忆闭环 · 受控遗忘 · GT-First 评测建设</p>
+
+    <div class="toc-pills">
+      <a href="#sec1" data-lavish-ui="true">1. 四层记忆分工与协作</a>
+      <a href="#sec2" data-lavish-ui="true">2. 双渠道萃取与噪音门控</a>
+      <a href="#sec3" data-lavish-ui="true">3. 混合存储与多路检索</a>
+      <a href="#sec4" data-lavish-ui="true">4. 经验记忆构造与淘汰</a>
+      <a href="#sec5" data-lavish-ui="true">5. 演化管理与受控遗忘</a>
+      <a href="#sec6" data-lavish-ui="true">6. GT-First 基准与双端评测</a>
+    </div>
+
+    <h2 id="sec1">1. 四层记忆分工与协作</h2>
+    <p>面向网络保障的<strong>意图理解 Agent</strong> 同时接收两路异构信号：高频隐式的<strong>网元单据流</strong>与稀疏显式的<strong>多轮口语对话</strong>，核心目标是在信息缺失或模糊（Underspecified）时识别用户真实诉求，实现“成熟习惯快路径直通、未知或冲突场景慢路径澄清”。</p>
+    <p>我们将记忆拆分为四个正交层级：<strong>工作记忆</strong>（当前会话意图与待决槽位）、<strong>情景与事实记忆</strong>（双渠道事件流、偏好槽位与未观测空值边界）、<strong>语义与表达映射层</strong>（职业画像、口语别名字典与基站-场所隔离表）、以及<strong>经验记忆</strong>（跨场景意图消歧与避坑规则）。</p>
+
+    <div class="sim-app">
+      <div class="sim-topbar">
+        <div>
+          <div class="sim-title">动态图 1：四层记忆协作与分库写入仿真</div>
+          <div class="sim-sub">实例：早高峰通勤程序员 <code>8613409272151</code> · 点击「上一步 / 下一步」或任意模块查看状态流转</div>
+        </div>
+        <div class="mode-tabs">
+          <button class="mode-btn active" id="memBtnA" data-lavish-ui="true" onclick="switchMemMode('A')">场景 A：四层记忆协作</button>
+          <button class="mode-btn" id="memBtnB" data-lavish-ui="true" onclick="switchMemMode('B')">场景 B：三类记忆写入与淘汰</button>
+        </div>
+      </div>
+      <div class="sim-subbar">
+        <div class="legend">
+          <span class="legend-item"><i class="dot" style="background:#4338ca"></i>双渠道输入</span>
+          <span class="legend-item"><i class="dot" style="background:#2563eb"></i>混合检索</span>
+          <span class="legend-item"><i class="dot" style="background:#7c3aed"></i>推理决策</span>
+          <span class="legend-item"><i class="dot" style="background:#0d9488"></i>下发/回流</span>
+          <span class="legend-item"><i class="dot" style="background:#d97706"></i>写入/淘汰</span>
+        </div>
+        <div class="ctrl-group">
+          <button class="ctrl-btn" id="memPrev" data-lavish-ui="true" onclick="stepMem(-1)">◀ 上一步</button>
+          <span class="step-badge" id="memCounter">1 / 4</span>
+          <button class="ctrl-btn" id="memNext" data-lavish-ui="true" onclick="stepMem(1)">下一步 ▶</button>
+        </div>
+      </div>
+      <div class="canvas-wrap">
+        <svg viewBox="0 0 960 390" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="m-arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#2563eb"/></marker>
+            <marker id="m-arr-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#7c3aed"/></marker>
+            <marker id="m-arr-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#0d9488"/></marker>
+            <marker id="m-arr-indigo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#4338ca"/></marker>
+            <marker id="m-arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#d97706"/></marker>
+          </defs>
+          <text x="548" y="14" font-size="10.5" font-weight="700" fill="#64748b">长期记忆 (Long-Term Memory) —— 跨会话持久存储与血缘治理</text>
+          <g class="node-box" onclick="inspectMemNode('sem')">
+            <rect id="m-node-sem" x="548" y="22" width="398" height="102" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+            <text x="562" y="42" font-size="12" font-weight="700" fill="#1e293b">语义与表达映射层 (Semantic)</text>
+            <text x="760" y="42" font-size="9.5" fill="#64748b">画像 · 别名 · 基站隔离</text>
+            <line x1="748" y1="50" x2="748" y2="114" stroke="#e2e8f0" stroke-width="1"/>
+            <text x="562" y="60" font-size="9.5" font-weight="700" fill="#475569">个性化表述映射</text>
+            <text id="m-sem-l1" x="562" y="78" font-size="10" fill="#334155"></text>
+            <text id="m-sem-l2" x="562" y="94" font-size="10" fill="#334155"></text>
+            <text x="760" y="60" font-size="9.5" font-weight="700" fill="#475569">基站-场所隔离 &amp; 职业</text>
+            <text id="m-sem-r1" x="760" y="78" font-size="10" fill="#334155"></text>
+            <text id="m-sem-r2" x="760" y="94" font-size="10" fill="#334155"></text>
+          </g>
+          <g class="node-box" onclick="inspectMemNode('ep')">
+            <rect id="m-node-ep" x="548" y="134" width="398" height="102" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+            <text x="562" y="154" font-size="12" font-weight="700" fill="#1e293b">情景与事实记忆 (Episodic / Factual)</text>
+            <text x="772" y="154" font-size="9.5" fill="#64748b">双时间戳 · null 边界</text>
+            <text id="m-ep-l1" x="562" y="174" font-size="10" fill="#334155"></text>
+            <text id="m-ep-l2" x="562" y="191" font-size="10" fill="#334155"></text>
+            <text id="m-ep-l3" x="562" y="208" font-size="10" fill="#334155"></text>
+            <text id="m-ep-l4" x="562" y="225" font-size="10" fill="#64748b"></text>
+          </g>
+          <rect x="548" y="246" width="398" height="132" rx="8" fill="#fffbeb" fill-opacity="0.7" stroke="#f59e0b"/>
+          <text x="562" y="265" font-size="11.5" font-weight="700" fill="#b45309">经验记忆 (Procedural) —— 受挫门控按需召回</text>
+          <g class="node-box" onclick="inspectMemNode('exp')">
+            <rect id="m-node-exp" x="560" y="274" width="374" height="44" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.3"/>
+            <text x="572" y="291" font-size="10.5" font-weight="700" fill="#b45309">Schema Form-ED 经验规则条目（带原话 Quote 核验）</text>
+            <text id="m-exp-sub" x="572" y="308" font-size="9.8" fill="#475569"></text>
+          </g>
+          <g class="node-box" onclick="inspectMemNode('gov')">
+            <rect id="m-node-gov" x="560" y="324" width="374" height="44" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.3"/>
+            <text x="572" y="341" font-size="10.5" font-weight="700" fill="#6d28d9">运行态治理：单次曝光驱逐 + 低胜率淘汰 + 软失效血缘</text>
+            <text id="m-gov-sub" x="572" y="358" font-size="9.8" fill="#475569"></text>
+          </g>
+          <g class="node-box" onclick="inspectMemNode('env')">
+            <rect id="m-node-env" x="12" y="136" width="158" height="122" rx="10" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+            <text x="24" y="160" font-size="12" font-weight="700" fill="#0f766e">外部双渠道环境</text>
+            <text x="24" y="182" font-size="10" fill="#334155">1. 对话：口语诉求/确认</text>
+            <text x="24" y="200" font-size="10" fill="#334155">2. 网元单据：EXP 遥测</text>
+            <text x="24" y="218" font-size="10" fill="#334155">3. 保障下发与实测反馈</text>
+            <text x="24" y="242" font-size="9.5" font-weight="700" fill="#0f766e">（短时废单走噪音门控）</text>
+          </g>
+          <g class="node-box" onclick="inspectMemNode('wm')">
+            <rect id="m-node-wm" x="234" y="102" width="236" height="196" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+            <text x="248" y="128" font-size="13" font-weight="700" fill="#1d4ed8">工作记忆 (Working)</text>
+            <text x="248" y="146" font-size="10" fill="#475569">当前会话上下文与待决槽位</text>
+            <rect x="246" y="156" width="212" height="114" rx="6" fill="#ffffff" stroke="#bfdbfe"/>
+            <text id="m-wm1" x="256" y="176" font-size="10" fill="#1e293b"></text>
+            <text id="m-wm2" x="256" y="196" font-size="10" fill="#1e293b"></text>
+            <text id="m-wm3" x="256" y="216" font-size="10" fill="#1e293b"></text>
+            <text id="m-wm4" x="256" y="236" font-size="10" fill="#1e293b"></text>
+            <text id="m-wm5" x="256" y="256" font-size="9.5" fill="#64748b"></text>
+            <text x="248" y="286" font-size="9.2" fill="#64748b">只抽取当前子集进 Prompt，不混入全库</text>
+          </g>
+          <path id="m-edge-in" class="edge-path" d="M 172 170 L 232 170" stroke="#4338ca" marker-end="url(#m-arr-indigo)"/>
+          <path id="m-edge-ret-sem" class="edge-path" d="M 548 74 C 496 74, 480 96, 440 102" stroke="#2563eb" marker-end="url(#m-arr-blue)"/>
+          <path id="m-edge-ret-ep" class="edge-path" d="M 548 176 L 472 176" stroke="#2563eb" marker-end="url(#m-arr-blue)"/>
+          <path id="m-edge-ret-exp" class="edge-path" d="M 548 294 C 500 294, 492 262, 472 252" stroke="#2563eb" marker-end="url(#m-arr-blue)"/>
+          <path id="m-edge-rea" class="edge-path" d="M 314 298 C 314 344, 396 344, 396 298" stroke="#7c3aed" marker-end="url(#m-arr-purple)"/>
+          <path id="m-edge-grd" class="edge-path" d="M 232 220 L 172 220" stroke="#0d9488" marker-start="url(#m-arr-teal)" marker-end="url(#m-arr-teal)"/>
+          <path id="m-edge-lrn-ep" class="edge-path" d="M 472 204 L 546 204" stroke="#d97706" marker-end="url(#m-arr-amber)"/>
+          <path id="m-edge-lrn-sem" class="edge-path" d="M 390 102 C 406 50, 490 50, 546 56" stroke="#d97706" marker-end="url(#m-arr-amber)"/>
+          <path id="m-edge-lrn-exp" class="edge-path" d="M 472 270 C 502 284, 514 328, 558 340" stroke="#d97706" marker-end="url(#m-arr-amber)"/>
+          <text id="m-lbl-in" class="edge-label" x="176" y="162" fill="#4338ca">感知输入</text>
+          <text id="m-lbl-ret" class="edge-label" x="480" y="168" fill="#2563eb">混合检索</text>
+          <text id="m-lbl-ret-exp" class="edge-label" x="476" y="294" fill="#2563eb">受挫门控召回</text>
+          <text id="m-lbl-rea" class="edge-label" x="322" y="348" fill="#7c3aed">推理与红线校验</text>
+          <text id="m-lbl-grd" class="edge-label" x="176" y="212" fill="#0d9488">下发与回流</text>
+          <text id="m-lbl-lrn" class="edge-label" x="478" y="220" fill="#d97706">门控写入/淘汰</text>
+        </svg>
+      </div>
+      <div class="detail-panel">
+        <div>
+          <span class="action-pill" id="memPill"></span>
+          <div class="step-title" id="memTitle"></div>
+          <div class="step-desc" id="memDesc"></div>
+        </div>
+        <div class="trace-box">
+          <div class="trace-head"><span id="memTraceTitle">状态快照</span><span>Memory Trace</span></div>
+          <div id="memTraceBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:14%;">方案模块</th><th style="width:24%;">主基座论文</th><th style="width:28%;">实际场景中暴露的问题</th><th style="width:34%;">叠加参考的解决思路</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 分层架构</strong></td>
+            <td><code>CoALA</code>（四分库底座）</td>
+            <td><code>Epistemics</code> 实测跨层迁移率为 <code>0</code>，缺血缘与基站隔离</td>
+            <td><code>MemOS</code> <code>MemCube</code> 血缘账本（达 \(N_{\min}\) 显式晋升）+ <code>cell_id ↔ venue</code> 隔离</td>
+          </tr>
+          <tr>
+            <td><strong>2. 情景萃取</strong></td>
+            <td><code>Mem0</code>（抽取 + 四操作消解）</td>
+            <td>短时废单污染库、预算泄压误删、单据含 <code>null</code> 缺失</td>
+            <td><code>Experience-Following</code> 写入门控 + <code>Epistemics</code> 防自泄露 + <code>MediQ</code> 空值拒答边界</td>
+          </tr>
+          <tr>
+            <td><strong>3. 存储检索</strong></td>
+            <td><code>Zep</code>（双时间戳多路检索）</td>
+            <td><code>MERIT</code> 纯向量方差 <code>0.45</code>；<code>A-MEM</code> 陈旧嵌入；口语脱节</td>
+            <td><code>MIRIX-2.0</code> 证据与索引分离 + <code>BehaviorMem</code> 双池解耦 + 同行结构化槽位提取</td>
+          </tr>
+          <tr>
+            <td><strong>4. 经验记忆</strong></td>
+            <td><code>AWM / ReasoningBank</code></td>
+            <td>错误自举传播、自由文本冗余、常驻注入干扰</td>
+            <td><code>MIRIX-2.0</code> 原话核验 + <code>WASP-Mem</code> <code>Schema Form-ED</code> + <code>REM</code> 受挫门控与单次驱逐</td>
+          </tr>
+          <tr>
+            <td><strong>5. 管理遗忘</strong></td>
+            <td><code>Zep</code>（双时间戳软失效）</td>
+            <td><code>BEMULA</code> 遗忘成功率 \(\le 1.5\%\)；<code>MemSecBench</code> 重编误伤 <code>30.2 pp</code></td>
+            <td>常态走 <code>SUPERSEDE</code> 软失效；显式删除沿 <code>source_episodes</code> 血缘局部剥离</td>
+          </tr>
+          <tr>
+            <td><strong>6. 基准评测</strong></td>
+            <td><code>LoCoMo / PersonaMem-v3</code></td>
+            <td>先对话后标注致真值漂移；模拟器剧透虚高 <code>24.4%</code></td>
+            <td><code>GT-First</code> 先建标准快照 + <code>Disclosure-Gated</code> 防剧透 + <code>τ²-Bench</code> 双端交互与 \(\text{pass}^k\)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec2">2. 双渠道萃取、噪音门控与冲突消解</h2>
+    <p>以 <strong>Mem0</strong> 的两阶段抽取与冲突消解为主基座；针对<strong>情景记忆噪音污染、否定误抽与空值幻觉</strong>问题，叠加 <code>Experience-Following</code> 写入门控与 <code>MediQ</code> 未观测边界保留机制：</p>
+    <ul>
+      <li><strong>单据侧噪音判据</strong>：有效时长小于阈值 \(T_{\min}\) 的误触打开或中途取消单据，以及在统计窗 \(W_{\text{span}}\) 内仅偶发 1 次、无跨日复现的孤立访问，均触发 <code>IGNORE_NOISE</code>。</li>
+      <li><strong>对话侧噪音判据</strong>：无保障槽位的纯闲聊寒暄、域外诉求（如宽带报修）、已自愈无需干预的反馈，以及否定子句中被排除的靶点（如“不要 4K”），禁止写入正偏好。</li>
+      <li><strong>空值边界与冲突消解</strong>：原始单据中为 <code>null</code> 的指标（如 <code>qoe_median</code>）显式保留在 <code>unobserved_dims</code> 禁止回填；有效事件按现存槽位比对路由至 <code>ADD / UPDATE / SUPERSEDE</code>。</li>
+    </ul>
+
+    <div class="sim-app">
+      <div class="sim-topbar">
+        <div>
+          <div class="sim-title">图 2：双渠道记忆萃取、否定分离与冲突消解全景流程</div>
+          <div class="sim-sub">异构预处理 → 准入门控拦截 → 四操作冲突路由与血缘账本</div>
+        </div>
+      </div>
+      <div class="canvas-wrap" style="border-bottom:none;">
+        <svg viewBox="0 0 960 230" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="e-arr-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#475569"/></marker>
+          </defs>
+          <!-- 1. Raw -->
+          <rect x="14" y="24" width="186" height="182" rx="8" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5"/>
+          <text x="26" y="46" font-size="11.5" font-weight="700" fill="#4338ca">1. 异构原始输入</text>
+          <text x="26" y="72" font-size="10" font-weight="700" fill="#1e293b">网元单据流 (EXP)</text>
+          <text x="26" y="90" font-size="9.5" fill="#334155">• 应用 / 基站 / 时段 / 时长</text>
+          <text x="26" y="106" font-size="9.5" fill="#334155">• KQI（含真实 null 缺失列）</text>
+          <text x="26" y="138" font-size="10" font-weight="700" fill="#1e293b">口语对话流</text>
+          <text x="26" y="156" font-size="9.5" fill="#334155">• 诉求 / 否定句 / 改口</text>
+          <text x="26" y="172" font-size="9.5" fill="#334155">• Confirm_Slot 确认</text>
+
+          <!-- 2. Preclean -->
+          <rect x="228" y="24" width="212" height="182" rx="8" fill="#fff1f2" stroke="#be123c" stroke-width="1.5"/>
+          <text x="240" y="46" font-size="11.5" font-weight="700" fill="#be123c">2. 清洗、否定分离与空值审计</text>
+          <text x="240" y="74" font-size="10" fill="#1e293b">• 单据：提取五元组</text>
+          <text x="240" y="92" font-size="9.5" fill="#334155">  将缺失列记入 unobserved_dims</text>
+          <text x="240" y="122" font-size="10" fill="#1e293b">• 对话：否定子句分离</text>
+          <text x="240" y="140" font-size="9.5" fill="#be123c">  剥离“不要 4K”等否定靶点</text>
+          <text x="240" y="158" font-size="9.5" fill="#334155">  仅保留确认后的正偏好槽位</text>
+          <text x="240" y="188" font-size="9.5" font-weight="700" fill="#be123c">严禁对 null 维度做推测回填</text>
+
+          <!-- 3. Admission Gate -->
+          <rect x="468" y="24" width="216" height="182" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+          <text x="480" y="46" font-size="11.5" font-weight="700" fill="#1d4ed8">3. 准入门控 (Admission Gate)</text>
+          <text x="480" y="74" font-size="10" font-weight="700" fill="#be123c">噪音拦截 → IGNORE_NOISE</text>
+          <text x="480" y="92" font-size="9.5" fill="#334155">• 单据：dur &lt; T_min / 孤立单次</text>
+          <text x="480" y="108" font-size="9.5" fill="#334155">• 对话：纯闲聊 / 域外 / 已自愈</text>
+          <line x1="480" y1="122" x2="672" y2="122" stroke="#bfdbfe" stroke-width="1"/>
+          <text x="480" y="142" font-size="10" font-weight="700" fill="#1d4ed8">有效事件 → 现存槽位比对</text>
+          <text x="480" y="160" font-size="9.5" fill="#334155">• 按应用 + 时段检索历史快照</text>
+          <text x="480" y="178" font-size="9.5" fill="#334155">• 判定新增、强化或冲突改口</text>
+
+          <!-- 4. Conflict Resolver -->
+          <rect x="712" y="24" width="234" height="182" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+          <text x="724" y="46" font-size="11.5" font-weight="700" fill="#0f766e">4. 冲突消解与血缘账本</text>
+          <text x="724" y="74" font-size="10" fill="#1e293b">• 新槽位：ADD 候选（weak）</text>
+          <text x="724" y="96" font-size="10" fill="#1e293b">• 一致重复：UPDATE count +1</text>
+          <text x="724" y="114" font-size="9.5" fill="#0f766e">  (达 N_min 晋升为 strong)</text>
+          <text x="724" y="138" font-size="10" fill="#1e293b">• 改口/支线退场：SUPERSEDE</text>
+          <text x="724" y="156" font-size="9.5" fill="#334155">  标 invalid_at 保留溯源边</text>
+          <text x="724" y="186" font-size="9.5" font-weight="700" fill="#0f766e">同步写入 memory_events_after</text>
+
+          <path d="M 202 115 L 226 115" stroke="#475569" stroke-width="1.8" marker-end="url(#e-arr-gray)"/>
+          <path d="M 442 115 L 466 115" stroke="#475569" stroke-width="1.8" marker-end="url(#e-arr-gray)"/>
+          <path d="M 686 115 L 710 115" stroke="#475569" stroke-width="1.8" marker-end="url(#e-arr-gray)"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:18%;">典型场景</th><th style="width:28%;">输入特征示例</th><th style="width:26%;">门控与预处理动作</th><th style="width:28%;">记忆状态结果</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 噪音拦截</strong></td>
+            <td>2 分钟优酷取消单 + “客服几点下班”闲聊</td>
+            <td><code>dur &lt; T_min</code> 与无保障槽位判定，直接拦截</td>
+            <td>发射 <code>IGNORE_NOISE</code>，标准记忆快照零变动</td>
+          </tr>
+          <tr>
+            <td><strong>2. 否定与空值保护</strong></td>
+            <td>“不要 4K，720p 就行” + 单据 <code>qoe_median=null</code></td>
+            <td>剥离否定靶点“4K”，显式登记 <code>qoe_median</code> 未观测</td>
+            <td>仅写入 <code>720p</code> 正偏好，严禁猜测回填 QoE</td>
+          </tr>
+          <tr>
+            <td><strong>3. 一致强化晋升</strong></td>
+            <td>工作日早高峰连续使用腾讯会议达 \(N_{\min}\) 次</td>
+            <td>命中现存 <code>main_app</code> 槽位，执行一致累加</td>
+            <td><code>UPDATE</code> 支持度，状态由 <code>weak</code> 晋升为 <code>strong</code></td>
+          </tr>
+          <tr>
+            <td><strong>4. 改口与支线退场</strong></td>
+            <td>出差结束回归通勤，或将目标改为 <code>&lt;=30ms</code></td>
+            <td>识别冲突变更，定位旧支线或旧目标槽位</td>
+            <td><code>SUPERSEDE</code> 标 <code>invalid_at</code>，新状态生效且可追溯</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec3">3. 混合存储与多路检索机制</h2>
+    <p>存储与检索以 <strong>Zep / Graphiti</strong> 为主基座，叠加 <strong>MIRIX-2.0</strong> 与 <strong>BehaviorMem</strong> 的存储解耦思路，落地结构化与向量混合检索管线。三项核心技术的引入动机与解决的问题如下：</p>
+    <ul>
+      <li><strong>为什么用 <code>Zep</code> 双时间戳时序图谱（解决“过期规则误召回”）</strong>：意图与偏好随时间动态演进（如上周出差临时规则、本周回归常态）。每条关系边绑定生效时间 <code>valid_at</code> 与失效时间 <code>invalid_at</code>，检索期直接过滤已失效历史边；同时“向量 + 关键词 + 图遍历”兼顾模糊语义与实体跳转。</li>
+      <li><strong>为什么用 <code>MIRIX-2.0</code> 原始证据与索引分离（解决“陈旧嵌入与参数拆散”）</strong>：<code>A-MEM</code> 修改文本后未重算向量引发陈旧嵌入，且长文切块易拆散同一单据中的“应用-时段-时延”绑定。证据与索引分离后，向量仅用于定位候选记录，随后直接读取<strong>同行结构化槽位列</strong>（Row-Level Column Projection），保证数值参数 100% 精确且更新无需重算摘要。</li>
+      <li><strong>为什么用 <code>BehaviorMem</code> 记忆/推断双池解耦（解决“推测污染事实真值”）</strong>：原始单据与用户明说归入客观事实池（Remember），画像归因与习惯倾向归入推断池（Infer）。双池物理隔离后，客观事实直接支撑精准参数查询，概率推断需受支持度阈值校验才可辅助决策，防止错误推断反向污染事实库。</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:18%;">检索阶段</th><th style="width:42%;">具体处理机制</th><th style="width:40%;">解决的痛点与论文局限</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 口语归一化</strong></td>
+            <td>通过个性化表述映射层（<code>expression</code>）将别名（“腾会”）与体感词（“460 / 别卡”）转为标准槽位，场所映射为基站候选</td>
+            <td>消除口语与网元字段的词表鸿沟，且全程隔离内部基站编号</td>
+          </tr>
+          <tr>
+            <td><strong>2. 混合召回与同行投影</strong></td>
+            <td>向量定位候选记录 + 结构化 <code>SELECT</code> + 双时间戳图谱遍历；随后读取同行结构化槽位列并经 <code>service_to_app</code> 二阶段补全</td>
+            <td>解决纯向量召回丢失数值约束（<code>&lt;=50ms</code>）及 <code>MERIT</code> 高方差（<code>0.45</code>）问题</td>
+          </tr>
+          <tr>
+            <td><strong>3. 时效与空值校验</strong></td>
+            <td>过滤 <code>superseded</code> 历史边；若查询指向 <code>unobserved_dims</code>（如缺失 <code>qoe_median</code>），直接返回拒答信号</td>
+            <td>消除过期规则误触发，杜绝未观测指标幻觉回填</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec4">4. 经验记忆构造、受挫门控与动态淘汰</h2>
+    <p>经验记忆以 <strong>AWM</strong> 与 <strong>ReasoningBank</strong> 的成败双源蒸馏为主基座；针对<code>Experience-Following</code> 揭露的错误自举、<code>WASP-Mem</code> 指出的自由文本冗余以及 <code>REM</code> 实证的常驻注入干扰，设计构造与运行态闭环：</p>
+    <blockquote class="bq-ok">
+      <p><strong>构造期（离线/准实时）</strong></p>
+      <ul>
+        <li><strong>成败双源对比 + 原话核验（<code>MIRIX-2.0</code>）</strong>：对比顺畅单据与卡顿异常记录提炼规律（如展馆开播提前预热），每条经验必须绑定源单据 ID 或用户原话切片，未命中引用直接丢弃。</li>
+        <li><strong>结构化编辑去重（<code>WASP-Mem</code>）</strong>：统一收敛为 <code>Schema Form-ED</code>（<code>trigger_condition</code> · <code>failure_pattern</code> · <code>action_policy</code>），消除自由文本重复膨胀。</li>
+      </ul>
+    </blockquote>
+    <blockquote>
+      <p><strong>运行态（在线闭环）</strong></p>
+      <ul>
+        <li><strong>受挫门控按需召回（<code>REM</code>）</strong>：成熟习惯走快路径直通时禁止默认注入经验；仅当出现弱网边缘、多单冲突或用户反复反馈卡顿时才召回 Top-k 经验，并通过 <code>Confirm_Slot</code> 协商确认。</li>
+        <li><strong>单次曝光驱逐与胜率淘汰</strong>：追踪保障后网络实际运行结果，若曝光经验未带来体验改善立即触发单次驱逐或低胜率淘汰。</li>
+      </ul>
+    </blockquote>
+
+    <h2 id="sec5">5. 演化管理与双约束受控遗忘</h2>
+    <p>针对 <code>Epistemics</code> 揭露的跨层迁移失效以及 <code>BEMULA / MemSecBench</code> 揭露的遗忘难题（显式遗忘成功率 \(\text{RPR} \le 1.5\%\)，暴力重编摘要误伤良性记忆高达 \(30.2\text{ pp}\)），管理层按三类动作分流治理：</p>
+    <ul>
+      <li><strong>跨层晋升</strong>：同一偏好在时间窗 \(W_{\text{span}}\) 内累计达支持次数 \(N_{\min}\)，由候选（<code>weak</code>）晋升为稳定偏好（<code>strong</code>）并写入血缘账本，支撑快路径。</li>
+      <li><strong>常态软失效（<code>SUPERSEDE</code>）</strong>：临时支线（出差/恶劣天气）到期或用户改口时，标记 <code>status="superseded"</code> 并写 <code>invalid_at</code>，保留历史审计链。</li>
+      <li><strong>双约束定向遗忘</strong>：用户显式要求忘掉某敏感地点或旧习惯时，沿 <code>source_episodes</code> 血缘图精确剥离原始记录并局部重算关联槽位，守住“目标残余 = 0”且“良性零误伤”。</li>
+    </ul>
+
+    <h2 id="sec6">6. GT-First 基准构造与双端交互评测</h2>
+    <p>以 <code>LoCoMo / PersonaMem-v3</code> 为起点，针对先写对话后标注的真值漂移与 <code>UserProxyBench</code> 揭露的模拟器剧透虚高（<code>24.4%</code>），依托已有<strong>两层 40 维故事线因子表</strong>，采用 <strong>GT-First 先建状态机真值 + 物理隔离双渠道渲染 + <code>τ²-Bench</code> 双端交互评测</strong>。</p>
+
+    <div class="sim-app">
+      <div class="sim-topbar">
+        <div>
+          <div class="sim-title">图 3：GT-First 基准构造与双端评测闭环全景</div>
+          <div class="sim-sub">真实种子 + 40 维因子 → 状态机先建标准快照 → 物理隔离双渠道渲染 → 双端交互与一票否决判分</div>
+        </div>
+      </div>
+      <div class="canvas-wrap" style="border-bottom:none;">
+        <svg viewBox="0 0 960 236" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="b-arr-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#475569"/></marker>
+          </defs>
+          <rect x="14" y="20" width="206" height="196" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+          <text x="26" y="42" font-size="11.5" font-weight="700" fill="#1d4ed8">1. 真实种子 + 40 维因子</text>
+          <text x="26" y="66" font-size="10" fill="#1e293b">• 真实 3 天网元画像锚点</text>
+          <text x="26" y="86" font-size="10" fill="#1e293b">• 审计缺失: qoe_median=null</text>
+          <text x="26" y="112" font-size="10" fill="#334155">• L1: 跨度/支线/噪音/比例</text>
+          <text x="26" y="132" font-size="10" fill="#334155">• L2: 职业/场所映射/缺口</text>
+          <text x="26" y="164" font-size="9.5" font-weight="700" fill="#2563eb">输出: persona_skeletons</text>
+          <text x="26" y="182" font-size="9.5" fill="#475569">+ factor_assignments 覆盖快照</text>
+
+          <rect x="256" y="20" width="212" height="196" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+          <text x="268" y="42" font-size="11.5" font-weight="700" fill="#b45309">2. GT-First 状态机前置</text>
+          <text x="268" y="66" font-size="10" fill="#1e293b">• 先建跨月/跨周单调时间线</text>
+          <text x="268" y="86" font-size="10" fill="#1e293b">• 每节点演进三联真值:</text>
+          <text x="268" y="106" font-size="9.8" fill="#334155">  snapshot_before</text>
+          <text x="268" y="124" font-size="9.8" fill="#334155">  events_after (含 IGNORE_NOISE)</text>
+          <text x="268" y="142" font-size="9.8" fill="#334155">  gold_memory_state_after</text>
+          <text x="268" y="176" font-size="9.5" font-weight="700" fill="#b45309">真值确定后再渲染文本（零漂移）</text>
+
+          <rect x="504" y="20" width="216" height="196" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+          <text x="516" y="42" font-size="11.5" font-weight="700" fill="#0f766e">3. 物理隔离双渠道渲染</text>
+          <text x="516" y="66" font-size="10" fill="#1e293b">• 单据侧: EXP 字段对齐</text>
+          <text x="516" y="84" font-size="9.8" fill="#334155">  仅含 cell_id，qoe_median=null</text>
+          <text x="516" y="112" font-size="10" fill="#1e293b">• 对话侧: 双视角隔离</text>
+          <text x="516" y="130" font-size="9.8" fill="#334155">  user_private_view 禁首轮剧透</text>
+          <text x="516" y="148" font-size="9.8" fill="#334155">  仅含生活化场所（禁基站号）</text>
+          <text x="516" y="178" font-size="9.5" font-weight="700" fill="#0f766e">5 项自动化 QC 拦截违规样本</text>
+
+          <rect x="756" y="20" width="190" height="196" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="768" y="42" font-size="11.5" font-weight="700" fill="#6d28d9">4. 双端交互与红线判分</text>
+          <text x="768" y="66" font-size="10" fill="#1e293b">• 用户模拟器按问释放槽位</text>
+          <text x="768" y="92" font-size="10" font-weight="700" fill="#be123c">一票否决硬红线:</text>
+          <text x="768" y="110" font-size="9.5" fill="#334155">  臆造 null 指标 / 基站泄露</text>
+          <text x="768" y="126" font-size="9.5" fill="#334155">  噪音污染 / 高风险未确认</text>
+          <text x="768" y="154" font-size="10" font-weight="700" fill="#6d28d9">核心软指标:</text>
+          <text x="768" y="172" font-size="9.5" fill="#334155">  快照 F1 · pass^k · 快慢分流</text>
+
+          <path d="M 222 118 L 254 118" stroke="#475569" stroke-width="1.8" marker-end="url(#b-arr-gray)"/>
+          <path d="M 470 118 L 502 118" stroke="#475569" stroke-width="1.8" marker-end="url(#b-arr-gray)"/>
+          <path d="M 722 118 L 754 118" stroke="#475569" stroke-width="1.8" marker-end="url(#b-arr-gray)"/>
+        </svg>
+      </div>
+    </div>
+
+    <blockquote class="bq-warn">
+      <p><strong>评测一票否决红线与核心软指标</strong></p>
+      <ul>
+        <li><strong>四条一票否决红线</strong>：① 对未观测维度（如缺失 <code>qoe_median</code>）臆造数值；② 对话侧泄露内部基站编号；③ 短时无效单据污染长期偏好；④ 高风险变更未经 <code>Confirm_Slot</code> 确认直接下发。</li>
+        <li><strong>三项核心软指标</strong>：节点级标准记忆状态快照槽位一致率、多次采样稳定性 \(\text{pass}^k\)、以及快路径直通与慢路径消歧的分流准确率。</li>
+      </ul>
+    </blockquote>
+
+    <div class="doc-footer">
+      <span>意图理解 Agent 记忆方案与 Benchmark 构造 · 完整 Schema 与 42 篇论文对照见配套材料</span>
+      <a class="btn" href="./connectivity_memory_sub/memory_and_benchmark_details.html" data-lavish-ui="true">打开配套细节说明材料 →</a>
+    </div>
+  </article>
+
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.getElementById("btn-theme-github").classList.toggle("active", theme === "github");
+      document.getElementById("btn-theme-parchment").classList.toggle("active", theme === "parchment");
+    }
+
+    var memMode = "A", memIdx = 0;
+    var MEM_DATA = {
+      A: [
+        {
+          pill: ["① 双渠道输入 · 感知", "#eef2ff", "#4338ca"],
+          title: "Step 1：口语诉求与网元单据同步进入，工作记忆锁定当前上下文",
+          desc: "用户在早高峰地铁发出「在通勤地铁上用腾会又卡了，帮我保一下」；同时后台刚落盘 1 条网元单据（cell_id=4600040386A, qoe_median=null）。短时废单直接被噪音门控拦在长期库外，工作记忆尚未读取长期偏好。",
+          edges: ["m-edge-in"], nodes: ["m-node-env", "m-node-wm"], labels: ["m-lbl-in"],
+          wm: ["用户诉求: 地铁用腾会卡顿", "当前时间: 工作日 08:15", "待补槽位: 时延/时长未明说", "单据空值: qoe_median=null", "状态: 待检索长期记忆"],
+          semL: ["（待检索 aliases）", ""], semR: ["（待检索 venue 隔离）", ""],
+          ep: ["（待检索历史单据与偏好）", "", "", ""],
+          expSub: "（待受挫门控判定是否召回）", govSub: "未触发淘汰",
+          traceTitle: "Working Memory 初始状态",
+          trace: "user_utterance: \"地铁上用腾会又卡了，帮我保一下\"\nrecent_ticket: { cell_id: \"4600040386A\", avg_qoe: null }\nnoise_gate: normal_session -> 允许进入检索阶段"
+        },
+        {
+          pill: ["② 混合检索 · Retrieval", "#eff6ff", "#2563eb"],
+          title: "Step 2：表述映射 + 同行槽位提取 + 受挫门控按需召回经验",
+          desc: "先经语义映射层把「腾会」归一化为 tencentmeeting，确认地铁基站对应「早高峰通勤车厢」（绝不把 46000... 暴露给对话）。再由向量命中候选并读取同行槽位得到强偏好「时延<=50ms」；因当前含「又卡了」受挫信号，受挫门控顺便召回 1 条地铁切换防断流经验规则。",
+          edges: ["m-edge-ret-sem", "m-edge-ret-ep", "m-edge-ret-exp"], nodes: ["m-node-sem", "m-node-ep", "m-node-exp", "m-node-wm"], labels: ["m-lbl-ret", "m-lbl-ret-exp"],
+          wm: ["映射应用: tencentmeeting", "命中强偏好: <=50ms (count=5)", "受挫召回: 地铁切基站预留缓冲", "拒答边界: qoe_median 保持 null", "决策: 走 Confirm_Slot 确认"],
+          semL: ["腾会 -> tencentmeeting", "别卡 -> ServiceDelay/Stalling"], semR: ["4600040386A -> 通勤地铁车厢", "职业: 程序员 (直爽干练)"],
+          ep: ["main_app: tencentmeeting [strong, 5]", "latency_target: <=50ms [active]", "branch_rule: 异地出差 [superseded]", "unobserved: [stall_proxy.qoe_median]"],
+          expSub: "命中 exp_07: 地铁通勤弱网切换 -> 提前稳住上行缓冲", govSub: "当前规则 hit_count=3, success_rate=100%",
+          traceTitle: "混合检索命中结果（绝无基站号泄露）",
+          trace: "matched_slot: { app: \"tencentmeeting\", latency: \"<=50ms\", strength: \"strong\" }\nstruggle_gate: TRIGGERED (\"又卡了\") -> recall exp_07\nmissing_guard: qoe_median is null (禁止向用户编造 QoE 分数)"
+        },
+        {
+          pill: ["③ 推理与红线核验 · Reasoning", "#f5f3ff", "#7c3aed"],
+          title: "Step 3：工作记忆完成红线校验，生成口语化确认话术",
+          desc: "若仅复购日常已确认偏好可走快路径直通；本例因触发经验建议调整缓冲，Agent 先通过 Confirm_Slot 向用户口语化确认，且全句不含基站编号或未观测参数猜测。",
+          edges: ["m-edge-rea"], nodes: ["m-node-wm"], labels: ["m-lbl-rea"],
+          wm: ["路径选择: 经验协商确认", "拟回复: 还是地铁上腾讯会议那套", "补充建议: 稳住切换缓冲 <=50ms?", "红线核验: 无基站号 / 无禁词", "等待用户 Confirm"],
+          semL: ["腾会 -> tencentmeeting", "别卡 -> ServiceDelay/Stalling"], semR: ["4600040386A -> 通勤地铁车厢", "职业: 程序员 (直爽干练)"],
+          ep: ["main_app: tencentmeeting [strong, 5]", "latency_target: <=50ms [active]", "branch_rule: 异地出差 [superseded]", "unobserved: [stall_proxy.qoe_median]"],
+          expSub: "命中 exp_07: 地铁通勤弱网切换 -> 提前稳住上行缓冲", govSub: "待用户确认后追踪本次实际运行结果",
+          traceTitle: "Agent Turn 1 输出（严格受控）",
+          trace: "intent: Confirm_Slot\ncontent: \"收到，还是按之前地铁通勤用腾讯会议那套来，\n          顺便把切换缓冲稳住、时延压在50ms内，行吗？\""
+        },
+        {
+          pill: ["④ 下发与实测回流 · Grounding", "#f0fdfa", "#0d9488"],
+          title: "Step 4：用户确认后下发保障单，回收真实网络运行结果",
+          desc: "用户回复「对，老样子来，别掉线」后，Agent 下发保障单并生成 Acknowledge 闭环。保障结束后网元侧回流本次实际运行结果（stalling_duration_s=0.0, delay_dn_ms=41.2），为下一步记忆更新提供客观真值依据。",
+          edges: ["m-edge-grd"], nodes: ["m-node-wm", "m-node-env"], labels: ["m-lbl-grd"],
+          wm: ["用户回复: 对，老样子来", "动作: 下发 <=50ms 保障策略", "运行回流: 0 卡顿 / 时延 41.2ms", "准备转入三类记忆写入"],
+          semL: ["腾会 -> tencentmeeting", "别卡 -> ServiceDelay/Stalling"], semR: ["4600040386A -> 通勤地铁车厢", "职业: 程序员 (直爽干练)"],
+          ep: ["main_app: tencentmeeting [strong, 5]", "latency_target: <=50ms [active]", "branch_rule: 异地出差 [superseded]", "unobserved: [stall_proxy.qoe_median]"],
+          expSub: "命中 exp_07: 地铁通勤弱网切换 -> 提前稳住上行缓冲", govSub: "收到正反馈: success_count +1",
+          traceTitle: "保障执行与实测回流",
+          trace: "user_confirm: \"对，老样子来，稳一点，别掉线。\"\nnetwork_outcome: { status: \"smooth\", stalling_s: 0.0, delay_ms: 41.2 }"
+        }
+      ],
+      B: [
+        {
+          pill: ["写入 1 · 事实库增量与噪音拦截", "#fffbeb", "#d97706"],
+          title: "写入规则 A：有效单据累加支持度，短时中断单据直接 IGNORE_NOISE",
+          desc: "本次保障顺利完成，事实库执行 UPDATE 将 main_app.count 推进至 6；若网元流中出现一条 2 分钟中途取消单据，则在准入门控直接触发 IGNORE_NOISE，绝不改写黄金记忆状态。",
+          edges: ["m-edge-lrn-ep"], nodes: ["m-node-wm", "m-node-ep"], labels: ["m-lbl-lrn"],
+          wm: ["有效事件: 腾讯会议保障成功", "噪音事件: 2min 优酷取消单", "处置: 有效 UPD / 废单 IGNORE"],
+          semL: ["腾会 -> tencentmeeting", "别卡 -> ServiceDelay/Stalling"], semR: ["4600040386A -> 通勤地铁车厢", "职业: 程序员"],
+          ep: ["+ UPDATE main_app.count: 5 -> 6", "+ IGNORE_NOISE: 2min 短时单据被拦截", "  branch_rule: [superseded] (保留溯源)", "  qoe_median: null (保持未观测)"],
+          expSub: "等待写入校验", govSub: "账本记录: memory_events_after",
+          traceTitle: "情景事实库状态迁移（含血缘事件）",
+          trace: "+ {\"op\": \"REINFORCE\", \"slot\": \"main_app\", \"count\": 6}\n+ {\"op\": \"IGNORE_NOISE\", \"reason\": \"duration=2m < T_min\"}"
+        },
+        {
+          pill: ["写入 2 · 语义晋升与软失效", "#fffbeb", "#d97706"],
+          title: "写入规则 B：达阈值晋升语义层；改口/忘掉走软失效或血缘剥离",
+          desc: "当新应用/新场所重复达 N_min 次时晋升至语义映射层；若出差结束回归主线，旧支线标为 SUPERSEDE（保留 invalid_at）；若用户显式要求「忘掉旧公司地址」，则沿 source_episodes 血缘精确剥离，零误伤其他习惯。",
+          edges: ["m-edge-lrn-sem"], nodes: ["m-node-wm", "m-node-sem"], labels: ["m-lbl-lrn"],
+          wm: ["跨层晋升: 满足支持度 >= N_min", "显式遗忘: 定位 source_episodes", "双约束: 删净目标 + 良性零误伤"],
+          semL: ["腾会 -> tencentmeeting [稳固]", "新增别名校验通过"], semR: ["4600040386A -> 通勤地铁车厢", "旧公司场所: [已按血缘定向剥离]"],
+          ep: ["main_app: tencentmeeting [strong, 6]", "branch_rule: [superseded, invalid_at=01-19]", "其他习惯: 100% 保留无连带损伤"],
+          expSub: "与事实层物理隔离", govSub: "符合 MemSecBench 零误伤约束",
+          traceTitle: "语义晋升与双约束遗忘日志",
+          trace: "promote: \"tencentmeeting\" -> semantic_core (count=6 >= N_min)\nforget_audit: { target_residual: 0.0%, benign_damage: 0.0 pp }"
+        },
+        {
+          pill: ["写入 3 · 经验蒸馏与运行态驱逐", "#fffbeb", "#d97706"],
+          title: "写入规则 C：Schema Form-ED 蒸馏入库 + 无效规则单次驱逐",
+          desc: "仅从带原话 Quote/实测对照的成败轨迹中蒸馏经验规则并结构化去重；运行态若某条经验被召回曝光后下游仍卡顿（未带来收益），立即触发单次曝光驱逐或胜率淘汰，杜绝错误自举。",
+          edges: ["m-edge-lrn-exp"], nodes: ["m-node-wm", "m-node-exp", "m-node-gov"], labels: ["m-lbl-lrn"],
+          wm: ["成功曝光: exp_07 胜率保持 100%", "对照淘汰: 若 exp_09 曝光仍卡顿", "动作: One-Shot Eviction 驱逐"],
+          semL: ["腾会 -> tencentmeeting"], semR: ["4600040386A -> 通勤地铁车厢"],
+          ep: ["main_app: tencentmeeting [strong, 6]"],
+          expSub: "exp_07 [active, Schema Form-ED, Quote=已核验]", govSub: "exp_09 [evicted: 曝光后实测未改善]",
+          traceTitle: "经验规则库治理快照",
+          trace: "upsert_rule: { id: \"exp_07\", form: \"Schema-ED\", quote_verified: true }\nevict_rule:   { id: \"exp_09\", reason: \"one_shot_no_gain\" }"
+        }
+      ]
+    };
+    var MEM_INSPECT = {
+      sem: { title: "语义与表达映射层（Semantic）", desc: "存放用户静态职业画像、应用口语别名映射（腾会→tencentmeeting）、体感词映射，以及网元基站与生活场所的隔离字典。", trace: "cell_venue_isolation:\n  4600040386A -> \"地铁早高峰通勤车厢\"\n  4600040391C -> \"早高峰主干道班车途中\"" },
+      ep: { title: "情景与事实记忆（Episodic / Factual）", desc: "存放双渠道汇总的偏好槽位、支持计数、状态（active / superseded）及双时间戳（valid_at / invalid_at），同时显式保留 unobserved_dims 空值边界。", trace: "active_preferences:\n  main_app: { value: \"tencentmeeting\", strength: \"strong\", count: 6 }\nunobserved_dims: { \"stall_proxy.qoe_median\": null }" },
+      exp: { title: "经验记忆（Procedural / Schema Form-ED）", desc: "独立于事实库存放跨场景策略规则，每条均以结构化触发条件 + 动作建议存储，且强制绑定原话 Quote 或单据实测核验。", trace: "rule_id: \"exp_07\"\ntrigger: { venue: \"地铁\", app: \"meeting\" }\naction: \"提前稳住上行切换缓冲\"" },
+      gov: { title: "运行态治理与淘汰（Governance）", desc: "采用 REM 受挫门控按需召回经验，结合保障后网络实际运行结果执行单次曝光驱逐，防止错误经验自举传播。", trace: "struggle_gate: only_on_jitter_or_conflict\neviction_policy: one_shot_if_outcome_degraded" },
+      env: { title: "外部双渠道环境", desc: "包含用户的口语对话交互与网元侧 EXP 遥测单据，以及保障下发后的网络实际运行结果回流。", trace: "channels: [\"ticket (EXP)\", \"dialogue (口语)\"]" },
+      wm: { title: "工作记忆（Working Memory）", desc: "仅装载当前轮次活跃意图、待澄清槽位与检索命中的精确子集，不把全量历史塞入大模型上下文。", trace: "capacity: bounded_active_slots\nisolation: no_raw_cell_id_in_prompt" }
+    };
+    function renderMemStep() {
+      var list = MEM_DATA[memMode], s = list[memIdx];
+      document.getElementById("memCounter").textContent = (memIdx + 1) + " / " + list.length;
+      document.getElementById("memPrev").disabled = memIdx === 0;
+      document.getElementById("memNext").disabled = memIdx === list.length - 1;
+      var pill = document.getElementById("memPill");
+      pill.textContent = s.pill[0]; pill.style.background = s.pill[1]; pill.style.color = s.pill[2];
+      document.getElementById("memTitle").textContent = s.title;
+      document.getElementById("memDesc").textContent = s.desc;
+      document.getElementById("memTraceTitle").textContent = s.traceTitle;
+      document.getElementById("memTraceBody").textContent = s.trace;
+      ["m-node-sem","m-node-ep","m-node-exp","m-node-gov","m-node-env","m-node-wm"].forEach(function(id){ document.getElementById(id).classList.toggle("node-active", s.nodes.indexOf(id) !== -1); });
+      ["m-edge-in","m-edge-ret-sem","m-edge-ret-ep","m-edge-ret-exp","m-edge-rea","m-edge-grd","m-edge-lrn-ep","m-edge-lrn-sem","m-edge-lrn-exp"].forEach(function(id){ document.getElementById(id).classList.toggle("edge-active", s.edges.indexOf(id) !== -1); });
+      ["m-lbl-in","m-lbl-ret","m-lbl-ret-exp","m-lbl-rea","m-lbl-grd","m-lbl-lrn"].forEach(function(id){ document.getElementById(id).classList.toggle("active", s.labels.indexOf(id) !== -1); });
+      s.wm.forEach(function(txt, i){ document.getElementById("m-wm" + (i + 1)).textContent = txt; });
+      document.getElementById("m-sem-l1").textContent = s.semL[0]; document.getElementById("m-sem-l2").textContent = s.semL[1];
+      document.getElementById("m-sem-r1").textContent = s.semR[0]; document.getElementById("m-sem-r2").textContent = s.semR[1];
+      s.ep.forEach(function(txt, i){ document.getElementById("m-ep-l" + (i + 1)).textContent = txt; });
+      document.getElementById("m-exp-sub").textContent = s.expSub; document.getElementById("m-gov-sub").textContent = s.govSub;
+    }
+    function switchMemMode(mode) {
+      memMode = mode; memIdx = 0;
+      document.getElementById("memBtnA").classList.toggle("active", mode === "A");
+      document.getElementById("memBtnB").classList.toggle("active", mode === "B");
+      renderMemStep();
+    }
+    function stepMem(d) { memIdx = Math.max(0, Math.min(MEM_DATA[memMode].length - 1, memIdx + d)); renderMemStep(); }
+    function inspectMemNode(key) {
+      var info = MEM_INSPECT[key]; if (!info) return;
+      document.getElementById("memPill").textContent = "模块检视";
+      document.getElementById("memTitle").textContent = info.title;
+      document.getElementById("memDesc").textContent = info.desc;
+      document.getElementById("memTraceTitle").textContent = "模块存储定义";
+      document.getElementById("memTraceBody").textContent = info.trace;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMemStep();
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "\\[", right: "\\]", display: true },
+            { left: "\\(", right: "\\)", display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>

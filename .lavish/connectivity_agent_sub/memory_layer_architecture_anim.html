@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>四层记忆架构与工作记忆枢纽交互动图</title>
+  <style>
+    :root {
+      --bg: #FBF7F0;
+      --card: #FFFFFF;
+      --card-sub: #F4EFE6;
+      --border: #D9D0C1;
+      --text: #1F2328;
+      --muted: #59636E;
+      --accent: #0969DA;
+      --accent-soft: #EBF5FF;
+      --green: #1A7F37;
+      --green-soft: #EAF7EE;
+      --amber: #9A6700;
+      --amber-soft: #FFF8C5;
+      --purple: #6639BA;
+      --purple-soft: #F3EDFF;
+    }
+    body.theme-github {
+      --bg: #F6F8FA;
+      --card: #FFFFFF;
+      --card-sub: #F0F3F6;
+      --border: #D0D7DE;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
+    }
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .header p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    button {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button.active {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+    }
+    .stage-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .diagram-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .node-box {
+      fill: #FFFFFF;
+      stroke: #8C959F;
+      stroke-width: 1.5;
+      rx: 8;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .node-box:hover {
+      stroke: var(--accent);
+      stroke-width: 2.2;
+    }
+    .node-hub { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+    .node-epi { fill: var(--green-soft); stroke: var(--green); }
+    .node-sem { fill: var(--amber-soft); stroke: var(--amber); }
+    .node-pro { fill: var(--purple-soft); stroke: var(--purple); }
+    .node-title {
+      font-size: 14px;
+      font-weight: 700;
+      fill: var(--text);
+      pointer-events: none;
+    }
+    .node-sub {
+      font-size: 11.5px;
+      fill: var(--muted);
+      pointer-events: none;
+    }
+    .edge-base {
+      fill: none;
+      stroke: #C8D0D8;
+      stroke-width: 1.8;
+    }
+    .edge-dashed {
+      stroke-dasharray: 5 4;
+    }
+    .edge-active {
+      stroke: var(--accent);
+      stroke-width: 2.8;
+      stroke-dasharray: 8 6;
+      animation: flowDash 1s linear infinite;
+    }
+    .edge-active-green { stroke: var(--green); }
+    .edge-active-amber { stroke: var(--amber); }
+    .edge-active-purple { stroke: var(--purple); }
+    .edge-label {
+      font-size: 11px;
+      font-weight: 600;
+      fill: var(--muted);
+    }
+    .edge-label-active {
+      fill: var(--accent);
+      font-weight: 700;
+    }
+    @keyframes flowDash {
+      to { stroke-dashoffset: -28; }
+    }
+    .info-panel {
+      margin-top: 14px;
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .info-panel h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+    .info-panel p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--accent-soft);
+      color: var(--accent);
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>四层正交记忆架构与工作记忆枢纽交互动图</h1>
+        <p>三类长期记忆（情景 / 语义 / 经验）并列独立，均通过工作记忆进行双向读写、更新与大模型决策输出</p>
+      </div>
+      <div class="controls">
+        <button id="playBtn" onclick="toggleAutoPlay()">暂停轮播</button>
+        <button onclick="toggleTheme()">切换主题</button>
+      </div>
+    </div>
+
+    <div class="stage-bar">
+      <button class="stage-btn active" onclick="setStage(0)">1. 准入过滤与检索召回</button>
+      <button class="stage-btn" onclick="setStage(1)">2. 工作记忆 ↔ LLM 推理输出</button>
+      <button class="stage-btn" onclick="setStage(2)">3. 会话后写入情景与语义更新</button>
+      <button class="stage-btn" onclick="setStage(3)">4. 异步晋升与澄清难例沉淀</button>
+    </div>
+
+    <div class="diagram-card">
+      <svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#8C959F" />
+          </marker>
+          <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#0969DA" />
+          </marker>
+          <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#1A7F37" />
+          </marker>
+          <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#9A6700" />
+          </marker>
+          <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#6639BA" />
+          </marker>
+        </defs>
+
+        <!-- LTM Container -->
+        <rect x="130" y="185" width="700" height="150" rx="10" fill="#FAF8F5" stroke="#D9D0C1" stroke-dasharray="6 4" />
+        <text x="148" y="208" class="edge-label">三类独立并列的长期记忆（均经工作记忆双向读写与更新）</text>
+
+        <!-- Top Row Nodes -->
+        <g onclick="selectNode('in')">
+          <rect x="25" y="34" width="165" height="68" class="node-box" />
+          <text x="107" y="62" text-anchor="middle" class="node-title">单据 + 对话输入</text>
+          <text x="107" y="82" text-anchor="middle" class="node-sub">网元单据 · 多轮口语</text>
+        </g>
+
+        <g onclick="selectNode('working')">
+          <rect x="265" y="26" width="210" height="84" class="node-box node-hub" />
+          <text x="370" y="54" text-anchor="middle" class="node-title">1. 工作记忆 (Working)</text>
+          <text x="370" y="74" text-anchor="middle" class="node-sub">交互枢纽：当前意图 · 待补槽位</text>
+          <text x="370" y="92" text-anchor="middle" class="node-sub">近期滑窗 · 本轮召回切片</text>
+        </g>
+
+        <g onclick="selectNode('llm')">
+          <rect x="555" y="34" width="155" height="68" class="node-box" />
+          <text x="632" y="62" text-anchor="middle" class="node-title">LLM 推理与决策</text>
+          <text x="632" y="82" text-anchor="middle" class="node-sub">仅读工作记忆子集</text>
+        </g>
+
+        <g onclick="selectNode('out')">
+          <rect x="780" y="34" width="155" height="68" class="node-box" />
+          <text x="857" y="62" text-anchor="middle" class="node-title">对外输出</text>
+          <text x="857" y="82" text-anchor="middle" class="node-sub">最终意图 / 多轮澄清</text>
+        </g>
+
+        <!-- Bottom Row LTM Nodes -->
+        <g onclick="selectNode('episodic')">
+          <rect x="155" y="228" width="180" height="84" class="node-box node-epi" />
+          <text x="245" y="256" text-anchor="middle" class="node-title">2. 情景记忆 (Episodic)</text>
+          <text x="245" y="276" text-anchor="middle" class="node-sub">只追加 Event 流水</text>
+          <text x="245" y="294" text-anchor="middle" class="node-sub">TimelineSummary 摘要</text>
+        </g>
+
+        <g onclick="selectNode('semantic')">
+          <rect x="390" y="228" width="180" height="84" class="node-box node-sem" />
+          <text x="480" y="256" text-anchor="middle" class="node-title">3. 语义记忆 (Semantic)</text>
+          <text x="480" y="276" text-anchor="middle" class="node-sub">6 张正交用户偏好表</text>
+          <text x="480" y="294" text-anchor="middle" class="node-sub">主键查表 · 空值边界</text>
+        </g>
+
+        <g onclick="selectNode('procedural')">
+          <rect x="625" y="228" width="180" height="84" class="node-box node-pro" />
+          <text x="715" y="256" text-anchor="middle" class="node-title">4. 经验记忆 (Procedural)</text>
+          <text x="715" y="276" text-anchor="middle" class="node-sub">多轮澄清难例切片</text>
+          <text x="715" y="294" text-anchor="middle" class="node-sub">三段式策略 (减少轮次)</text>
+        </g>
+
+        <!-- Edges -->
+        <path id="e-in-w" d="M 190 68 L 260 68" class="edge-base" marker-end="url(#arrow)" />
+        <text id="l-in-w" x="225" y="58" text-anchor="middle" class="edge-label">过滤</text>
+
+        <path id="e-w-llm" d="M 478 68 L 550 68" class="edge-base" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <text id="l-w-llm" x="514" y="58" text-anchor="middle" class="edge-label">双向推理</text>
+
+        <path id="e-llm-out" d="M 710 68 L 775 68" class="edge-base" marker-end="url(#arrow)" />
+        <text id="l-llm-out" x="742" y="58" text-anchor="middle" class="edge-label">输出</text>
+
+        <path id="e-w-epi" d="M 315 110 L 245 223" class="edge-base" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <text id="l-w-epi" x="255" y="162" text-anchor="middle" class="edge-label">读写事件</text>
+
+        <path id="e-w-sem" d="M 385 110 L 472 223" class="edge-base" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <text id="l-w-sem" x="454" y="162" text-anchor="middle" class="edge-label">检索 / 更新</text>
+
+        <path id="e-w-pro" d="M 445 110 L 700 223" class="edge-base" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <text id="l-w-pro" x="615" y="155" text-anchor="middle" class="edge-label">受挫召回 / 难例沉淀</text>
+
+        <path id="e-epi-sem" d="M 338 270 L 385 270" class="edge-base edge-dashed" marker-end="url(#arrow)" />
+        <text id="l-epi-sem" x="362" y="258" text-anchor="middle" class="edge-label">N_min</text>
+      </svg>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+      <div>
+        <h3 id="panelTitle"><span class="badge">阶段 1</span>准入过滤与检索召回</h3>
+        <p id="panelDesc">单据与对话输入先经规则过滤噪音（如 duration &lt; T_min、纯闲聊、临时选择），进入工作记忆；随后工作记忆按需从语义记忆（6 张正交表）检索有效偏好，若遇多轮受阻再触发经验记忆 Top-1 召回。</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const stages = [
+      {
+        title: "准入过滤与检索召回",
+        desc: "单据与对话输入先经规则过滤噪音（如 duration < T_min、纯闲聊、临时选择），进入工作记忆；随后工作记忆按需从语义记忆检索有效偏好，若遇多轮受阻再触发经验记忆 Top-1 召回。",
+        active: ["e-in-w", "e-w-sem", "e-w-epi"],
+        classes: { "e-in-w": "edge-active", "e-w-sem": "edge-active edge-active-amber", "e-w-epi": "edge-active edge-active-green" },
+        labels: ["l-in-w", "l-w-sem", "l-w-epi"]
+      },
+      {
+        title: "工作记忆 ↔ LLM 推理与输出",
+        desc: "工作记忆将“当前活跃意图 + 待补槽位 + 召回的精确记忆切片”拼装为紧凑 Prompt 送入大模型；大模型返回结构化槽位更新写回工作记忆，决定快速闭环输出意图或发起多轮澄清提问。",
+        active: ["e-w-llm", "e-llm-out"],
+        classes: { "e-w-llm": "edge-active", "e-llm-out": "edge-active" },
+        labels: ["l-w-llm", "l-llm-out"]
+      },
+      {
+        title: "会话后写入情景与语义确定性更新",
+        desc: "会话结束后，工作记忆将客观事件以只追加（ADD-Only）方式写入情景记忆；用户明确声明的长期规则或改口直接按唯一键查表更新至语义记忆（同值 +1，冲突则旧版标 superseded）。",
+        active: ["e-w-epi", "e-w-sem"],
+        classes: { "e-w-epi": "edge-active edge-active-green", "e-w-sem": "edge-active edge-active-amber" },
+        labels: ["l-w-epi", "l-w-sem"]
+      },
+      {
+        title: "异步晋升与多轮澄清难例沉淀",
+        desc: "后台任务将时间窗 W_span 内重复达 N_min 次的隐式情景事件异步晋升至语义记忆；同时工作记忆将多轮澄清成败轨迹经反向切片与对比蒸馏沉淀至经验记忆，持续减少后续澄清轮次。",
+        active: ["e-epi-sem", "e-w-pro"],
+        classes: { "e-epi-sem": "edge-active edge-active-amber", "e-w-pro": "edge-active edge-active-purple" },
+        labels: ["l-epi-sem", "l-w-pro"]
+      }
+    ];
+
+    const nodeDetails = {
+      in: { title: "单据 + 对话输入", desc: "网元单据流提供高频精确的客观记录；多轮对话提供主观意图、个性化表述、改口与否定反讽信号。" },
+      working: { title: "1. 工作记忆 (Working Memory)", desc: "全架构唯一交互枢纽：保存当前活跃意图、待补槽位、近期滑窗与本轮检索子集，会话结束即销毁并将结果写回长期记忆。" },
+      llm: { title: "LLM 推理与决策", desc: "无状态推理引擎，每次仅读取工作记忆合成的紧凑子集，输出槽位填充结果或精准澄清提问。" },
+      out: { title: "对外输出", desc: "信息完备时快速闭环输出结构化意图；信息缺失或冲突时发起最少轮次的多轮澄清提问。" },
+      episodic: { title: "2. 情景记忆 (Episodic Memory)", desc: "只追加存储带时间戳的原子 Event 与主题时间线摘要 TimelineSummary，零写时冲突 LLM 调用。" },
+      semantic: { title: "3. 语义记忆 (Semantic Memory)", desc: "六张正交用户偏好表，依托结构化唯一键实现确定性更新与 SUPERSEDE 软失效，显式保留 unobserved_dims 空值边界。" },
+      procedural: { title: "4. 经验记忆 (Procedural Memory)", desc: "沉淀多轮澄清难例与三段式经验条目（Title + 适用/禁用边界 + 澄清策略），受挫门控触发 Top-1 注入以减少交互轮次。" }
+    };
+
+    let current = 0;
+    let timer = null;
+
+    function renderStage(idx) {
+      current = idx;
+      document.querySelectorAll(".stage-btn").forEach((b, i) => b.classList.toggle("active", i === idx));
+      document.querySelectorAll("path.edge-base").forEach(p => {
+        p.setAttribute("class", p.id === "e-epi-sem" ? "edge-base edge-dashed" : "edge-base");
+      });
+      document.querySelectorAll("text.edge-label").forEach(t => t.classList.remove("edge-label-active"));
+
+      const st = stages[idx];
+      st.active.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute("class", "edge-base " + (st.classes[id] || "edge-active"));
+      });
+      st.labels.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add("edge-label-active");
+      });
+      document.getElementById("panelTitle").innerHTML = `<span class="badge">阶段 ${idx + 1}</span>${st.title}`;
+      document.getElementById("panelDesc").textContent = st.desc;
+    }
+
+    function setStage(idx) {
+      stopAutoPlay();
+      renderStage(idx);
+    }
+
+    function selectNode(key) {
+      stopAutoPlay();
+      const d = nodeDetails[key];
+      document.getElementById("panelTitle").innerHTML = `<span class="badge">模块详情</span>${d.title}`;
+      document.getElementById("panelDesc").textContent = d.desc;
+    }
+
+    function startAutoPlay() {
+      timer = setInterval(() => renderStage((current + 1) % stages.length), 3500);
+      document.getElementById("playBtn").textContent = "暂停轮播";
+    }
+
+    function stopAutoPlay() {
+      if (timer) { clearInterval(timer); timer = null; }
+      document.getElementById("playBtn").textContent = "继续轮播";
+    }
+
+    function toggleAutoPlay() {
+      if (timer) stopAutoPlay(); else startAutoPlay();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("theme-github");
+    }
+
+    renderStage(0);
+    startAutoPlay();
+  </script>
+</body>
+</html>

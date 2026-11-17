@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="parchment">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联接 Agent 记忆与 Benchmark 细节说明材料</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+  <style>
+    :root[data-theme="parchment"] {
+      --bg: #FBF7F0; --surface: #FFFDF8; --surface-alt: #F4EFE6; --code-bg: #F2ECE1;
+      --border: #E2D9C8; --text: #2C2520; --muted: #6E6259; --accent: #9A4D1C; --accent-soft: #F6E9DD;
+    }
+    :root[data-theme="github"] {
+      --bg: #F6F8FA; --surface: #FFFFFF; --surface-alt: #F0F3F6; --code-bg: #F6F8FA;
+      --border: #D0D7DE; --text: #1F2328; --muted: #59636E; --accent: #0969DA; --accent-soft: #EBF3FE;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.65; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 24px 20px 48px; }
+    header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 22px; }
+    h1 { margin: 0 0 4px; font-size: 21px; }
+    .subtitle { margin: 0; font-size: 13.5px; color: var(--muted); }
+    .btn { cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); padding: 6px 12px; border-radius: 6px; font-size: 13px; text-decoration: none; display: inline-block; }
+    .btn:hover, .btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
+    h2 { margin: 0 0 12px; font-size: 17px; border-left: 4px solid var(--accent); padding-left: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--surface-alt); font-weight: 700; }
+    pre { margin: 8px 0; background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; line-height: 1.5; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+    @media print { html, body { background: #FFFFFF !important; } .no-print { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>联接 Agent 记忆方案与 Benchmark 细节说明材料</h1>
+        <p class="subtitle">配套主汇报材料（Schema 定义、42 篇论文技术对照矩阵、经验记忆门控与 40 维故事线因子细则）</p>
+      </div>
+      <div class="no-print" style="display:flex;gap:8px;align-items:center;">
+        <a class="btn" data-lavish-ui="true" href="../connectivity_agent_memory_report.html">返回主汇报 (8 页精华)</a>
+        <button class="btn active" id="theme-parchment" data-lavish-ui="true" onclick="setTheme('parchment')">暖阳米纸</button>
+        <button class="btn" id="theme-github" data-lavish-ui="true" onclick="setTheme('github')">GitHub 简洁</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>1. 记忆分层数据结构与统一 Schema</h2>
+      <p>联接 Agent 采用四层正交记忆结构，每条记录均携带血缘来源（<code>source_channel</code>）、置信状态与双时间戳（<code>valid_at / invalid_at</code>）：</p>
+      <table>
+        <thead>
+          <tr><th>记忆层级</th><th>载体与介质</th><th>核心字段 Schema</th><th>更新与淘汰机制</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>工作记忆</strong><br/>(Working)</td>
+            <td>会话内状态字典 + 近期滑窗</td>
+            <td><code>active_intent</code>、<code>pending_slots</code>、<code>clarify_round</code>、<code>recent_turns</code></td>
+            <td>会话结束即清空或触发跨层抽取；不直接污染长期记忆</td>
+          </tr>
+          <tr>
+            <td><strong>情景 / 事实记忆</strong><br/>(Episodic &amp; Factual)</td>
+            <td>结构化槽位表 + 向量索引 + 时序图谱</td>
+            <td><code>slot_id</code>、<code>app_id</code>、<code>venue / cell_id</code>、<code>target_kqi</code>、<code>support_count</code>、<code>strength</code>(weak/strong)、<code>status</code>(active/superseded)</td>
+            <td><code>ADD / UPDATE / SUPERSEDE / IGNORE_NOISE</code>；连续重复达 $N_{\min}$ 次晋升为强偏好</td>
+          </tr>
+          <tr>
+            <td><strong>语义与表达映射层</strong><br/>(Semantic &amp; Expression)</td>
+            <td>用户画像表 + 个性化表述字典</td>
+            <td><code>occupation</code>、<code>plan_tier</code>、<code>app_aliases</code>、<code>sensory_kqi_map</code>、<code>cell_venue_isolation</code></td>
+            <td>低频静态画像 + 口语别名增量绑定；严禁将基站号直接暴露给对话生成层</td>
+          </tr>
+          <tr>
+            <td><strong>经验记忆</strong><br/>(Procedural / Experience)</td>
+            <td>结构化规则条目库（<code>Schema Form-ED</code>）</td>
+            <td><code>rule_id</code>、<code>trigger_condition</code>、<code>failure_pattern</code>、<code>action_policy</code>、<code>verified_quote</code>、<code>hit_count</code>、<code>success_rate</code></td>
+            <td>受挫门控按需召回；单次曝光驱逐 + 质量分下降淘汰</td>
+          </tr>
+        </tbody>
+      </table>
+      <pre>{
+  "memory_id": "exp_rule_014",
+  "tier": "procedural_memory",
+  "trigger_condition": { "venue_type": "大型场馆/展会", "app_category": "live_streaming" },
+  "failure_pattern": "未提前预热导致开播前 10 分钟上行丢包冲高",
+  "action_policy": "建议保障起始时间提前 Δt_warmup，并主动向用户确认（Confirm_Slot）",
+  "provenance": { "source_episodes": ["ep_091", "ep_104"], "verified_quote": "上次展馆开播卡了十分钟" },
+  "governance": { "status": "active", "ttl_days": 90, "use_count": 4, "success_count": 4 }
+}</pre>
+    </section>
+
+    <section class="card">
+      <h2>2. 核心论文支撑与局限对照矩阵（节选自 42 篇精读库）</h2>
+      <table>
+        <thead>
+          <tr><th>模块</th><th>代表论文</th><th>论文核心做法</th><th>暴露的局限（实证依据）</th><th>联接 Agent 解决思路</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>分层与系统底座</td>
+            <td>CoALA / MemoryOS / MemOS / MIRIX</td>
+            <td>Working + Episodic + Semantic + Procedural 分层；OS 段页式热度晋升；<code>MemCube</code> 血缘头；证据平面与超图分离</td>
+            <td><code>ConsolidationBench</code> 实测 Mem0/SimpleMem 跨层迁移为 0；部分系统缺少冲突合并血缘</td>
+            <td>引入显式 <code>memory_events_after</code> 转移账本，记录 <code>weak → strong</code> 与 <code>SUPERSEDE</code> 血缘边</td>
+          </tr>
+          <tr>
+            <td>抽取与巩固治理</td>
+            <td>Mem0 / Epistemics / Experience-Following</td>
+            <td>两阶段抽取 + 冲突四操作；四阶段巩固度量与防自泄露三门控；六档写入门控</td>
+            <td>无门控全量写入导致短时废单与闲聊污染；自由文本合并引发预算泄压误删</td>
+            <td>分离否定子句与噪音门控（短时中断单据触发 <code>IGNORE_NOISE</code>），高风险写入需达到支持次数阈值 $N_{\min}$</td>
+          </tr>
+          <tr>
+            <td>存储与混合检索</td>
+            <td>Zep(Graphiti) / A-MEM / BehaviorMem / GT-First</td>
+            <td>双时间戳时序图谱；Zettelkasten 原子笔记建链；<code>Remember</code> 与 <code>Infer</code> 双池分离</td>
+            <td><code>MERIT</code> 实测纯向量检索跨种子方差达 <code>0.45</code>、更新忽略率 <code>0.45</code>；<code>A-MEM</code> 存在 Stale Embedding</td>
+            <td>采用“向量相似度检索 + 同行槽位精确投影 + 双向关联补全”，关键数值约束由结构化条件过滤</td>
+          </tr>
+          <tr>
+            <td>经验记忆构造</td>
+            <td>AWM / ReasoningBank / WASP-Mem / SPEM / REM</td>
+            <td>成败双源蒸馏；<code>Schema Form-ED</code> 结构化去重；<code>Skill-DAG</code> 子图检索；受挫门控与 <code>~270 tok</code> 精简文档</td>
+            <td>直接重放导致错误自举传播与失配重放；自由文本经验高度冗余；全量注入损伤小模型</td>
+            <td>采用“结构化触发条件 + 动作建议”模板，并绑定原话 Quote 校验与运行态受挫门控注入</td>
+          </tr>
+          <tr>
+            <td>受控遗忘与安全</td>
+            <td>BEMULA / MemSecBench</td>
+            <td>6 类显式遗忘请求基准；“删净目标 + 不误伤良性”双约束修复评测</td>
+            <td>端到端显式遗忘 <code>RPR ≤ 1.5%</code> 几乎全军覆没；暴力重编导致 <code>30.2 pp</code> 良性记忆误伤</td>
+            <td>物理软失效（<code>status="superseded"</code> + <code>invalid_at</code>）配合血缘索引，实现零连带误伤的定向剔除</td>
+          </tr>
+          <tr>
+            <td>Benchmark 构造</td>
+            <td>PersonaMem-v3 / GT-First / Disclosure-Gated Sim / τ²-Bench</td>
+            <td>95% 隐式日志 + 5% 对话；先建标准状态真值再渲染；五级披露门控防提前剧透；双端协同 <code>pass^k</code></td>
+            <td><code>UserProxyBench</code> 发现 24.4% 成功轨迹因用户模拟器提前剧透虚高；<code>FinInteract</code> 单真值虚高 3.1 倍</td>
+            <td>先规划 L1/L2 因子与 <code>Ground-Truth Memory Snapshot</code>，再通过物理隔离视图逐轮渲染，并用 QC 自动拦截剧透</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>3. 故事线两层因子表（<code>two_layer_factors.csv</code> 40 维明细）与配比约束</h2>
+      <p>故事线生成器以 <code>L1</code>（宏观动态演进）与 <code>L2</code>（微观个体属性与渠道约束）共 40 个因子驱动合成：</p>
+      <table>
+        <thead>
+          <tr><th>层级</th><th>分组</th><th>关键因子与取值域</th><th>核心依赖与硬约束</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>L1</strong></td>
+            <td>时间、规模与密度<br/>(<code>L1-1 ~ L1-1.2</code>)</td>
+            <td>跨度 <code>{2 周, 1 月, 3 月, 6 月}</code>；事件规模 <code>{[10,15], [16,22], [30,60]}</code>；密度 <code>{均匀, 忙闲交替, 前密后疏, 前疏后密}</code></td>
+            <td><code>2 周</code> 不得取 <code>[30, 60]</code> 规模；前 3 节点锚定 <code>seed_3day</code>，其余外推</td>
+          </tr>
+          <tr>
+            <td><strong>L1</strong></td>
+            <td>冷热启动、支线与趋势<br/>(<code>L1-2 ~ L1-5</code>)</td>
+            <td><code>{冷启动, 热启动}</code>；拓扑 <code>{单主线, 主线+1 支线, 主线+多条}</code>；趋势 <code>{平稳保持, 单次迁移覆盖, 逐渐弃用, 波动纠正后改回}</code>；因果链</td>
+            <td><code>单主线</code> 时触发事件与支线结局强制置空；<code>回原主线</code> 触发支线 <code>SUPERSEDE</code></td>
+          </tr>
+          <tr>
+            <td><strong>L1</strong></td>
+            <td>双渠道配比与噪音<br/>(<code>L1-6.1 ~ L1-6.3</code>)</td>
+            <td>单据与对话比例 <code>{100:0, 75:25, 50:50, 25:75, 0:100}</code>；证据间隔；噪音占比 <code>{&lt;20%, 20%~50%, &gt;50%}</code></td>
+            <td>噪音节点仅允许发射 <code>IGNORE_NOISE</code>，不得改写 <code>gold_memory_state_after</code></td>
+          </tr>
+          <tr>
+            <td><strong>L2</strong></td>
+            <td>画像、隔离与缺失边界<br/>(<code>L2-1 ~ L2-18</code>)</td>
+            <td>20 类职业、套餐档位、<code>cell_id ↔ venue</code> 物理隔离、个性化表述映射、4 类缺失形态（含单侧 KQI 未提）</td>
+            <td>真实画像中为 <code>null</code> 的指标（如 <code>qoe_median</code>）在单据中保持 <code>null</code>，作为拒答真值</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>4. 核心评测指标与一票否决红线细则</h2>
+      <table>
+        <thead>
+          <tr><th>评测阶段</th><th>一票否决红线（Hard Gates）</th><th>核心软评分（Soft Metrics）</th><th>业务判分示例</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>记忆更新与状态维护</td>
+            <td>1. 噪音/短时中断单据污染长期偏好；<br/>2. 未观测维度被模型凭空臆造数值</td>
+            <td>标准记忆状态快照（<code>Ground-Truth Memory Snapshot</code>）槽位 F1 与冲突消解准确率</td>
+            <td>用户仅用 2 分钟优酷即取消，记忆状态必须保持不变；询问缺失的 <code>qoe_median</code> 时须明确拒答</td>
+          </tr>
+          <tr>
+            <td>交互决策与端到端闭环</td>
+            <td>1. 基站编号泄露至对话端或未确认直接执行高风险变更；<br/>2. 对已明确偏好仍反复冗余追问</td>
+            <td>双端交互成功率与 $\text{pass}^k$ 稳定性；记忆驱动快路径与多轮消歧路径分流准确率</td>
+            <td>成熟偏好（<code>count ≥ N_min</code>）直接匹配并确认执行；支线变更或首次建联必须先澄清再执行</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('theme-parchment').classList.toggle('active', theme === 'parchment');
+      document.getElementById('theme-github').classList.toggle('active', theme === 'github');
+    }
+  </script>
+</body>
+</html>

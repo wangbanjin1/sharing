@@ -129,8 +129,6 @@ $$\text{Heat} = \alpha \cdot N_{\text{visit}} + \beta \cdot L_{\text{interaction
 
 ---
 
-<a id="c2-4"></a>
-
 ## 2.4 实验设置、完整结果矩阵与消融分析（Sec 4, Table 1–3, Fig. 2–3）
 
 > 注：LaTeX 源码 [`acl_latex.tex`](../../memory/2506.06326/source/latex/acl_latex.tex#L808-L905) 中的 Table 2（`table*`）与 Fig. 2（`figure*`）在 pandoc 转换时被折叠，以下完整表格与实验数据均直接核对自 `acl_latex.tex` 源码与 PDF 原文。

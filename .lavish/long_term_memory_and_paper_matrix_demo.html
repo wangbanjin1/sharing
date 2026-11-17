@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>长期记忆设计框架与文献机制对比矩阵（Demo）</title>
+  <style>
+    :root {
+      --bg: #FBF7F0;
+      --surface: #FFFFFF;
+      --surface-alt: #F4EFE6;
+      --border: #D9D0C1;
+      --text: #1F2328;
+      --muted: #59636E;
+      --accent: #0969DA;
+      --accent-soft: #EBF5FF;
+      --green: #1A7F37;
+      --green-soft: #EAF7EE;
+      --amber: #9A6700;
+      --amber-soft: #FFF8C5;
+      --purple: #6639BA;
+      --purple-soft: #F3EDFF;
+    }
+    body.theme-github {
+      --bg: #F6F8FA;
+      --surface: #FFFFFF;
+      --surface-alt: #F0F3F6;
+      --border: #D0D7DE;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .topbar h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .topbar p {
+      margin: 2px 0 0;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .controls { display: flex; gap: 8px; }
+    button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button.active {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .main {
+      max-width: 1440px;
+      margin: 18px auto 72px;
+      padding: 0 20px;
+    }
+    .sheet-panel { display: none; }
+    .sheet-panel.active { display: block; }
+
+    /* Excel-style bottom sheet tabs */
+    .sheet-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+      padding: 8px 20px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      z-index: 30;
+    }
+    .sheet-tab {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 6px 14px;
+      border-radius: 6px 6px 0 0;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .sheet-tab.active {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 18px;
+    }
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+    .b-epi { background: var(--green-soft); color: var(--green); }
+    .b-sem { background: var(--amber-soft); color: var(--amber); }
+    .b-pro { background: var(--purple-soft); color: var(--purple); }
+    .b-yes { background: var(--green-soft); color: var(--green); font-weight: 700; }
+    .b-no { background: var(--surface-alt); color: var(--muted); }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 16px;
+    }
+    .mem-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .mem-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .kv-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .kv-list li {
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 13px;
+    }
+    .kv-list li:last-child { border-bottom: none; }
+    .kv-label {
+      font-weight: 700;
+      color: var(--text);
+      display: inline-block;
+      min-width: 82px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      min-width: 1220px;
+    }
+    th, td {
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    th:last-child, td:last-child { border-right: none; }
+    thead th {
+      background: var(--surface-alt);
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      border-bottom: 2px solid var(--text);
+    }
+    tr.row-muted td { color: var(--muted); background: #FCFBF9; }
+    .meta-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>长期记忆设计框架与文献机制对比矩阵（Demo）</h1>
+      <p>Tab 0 为我们意图理解 Agent 的三类长期记忆完整拆解；底部标签页可切换各篇文献的 13 维机制子表</p>
+    </div>
+    <div class="controls">
+      <button onclick="toggleTheme()">切换浅色主题</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Sheet 0: Our Long-Term Memory Design -->
+    <section id="sheet-ours" class="sheet-panel active">
+      <div class="card">
+        <h2>一、三种长期记忆的核心定位与生命周期闭环（面向意图理解 Agent）</h2>
+        <p style="margin:6px 0 0; color:var(--muted); font-size:13.5px;">
+          围绕用户提出的“<strong>解决什么问题 → 输入/输出/存储 → 生成/更新/检索/遗忘/删除（算法与触发时机）</strong>”框架，对情景、语义、程序三类长期记忆进行完整设计。
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Episodic -->
+        <div class="mem-card">
+          <h3><span class="badge b-epi">情景记忆</span>Episodic Memory</h3>
+          <ul class="kv-list">
+            <li><span class="kv-label">解决的问题：</span>解决“<strong>过去何时何地发生过什么具体交互与意图演化</strong>”的可追溯问题（如临时改口背景、某次保障为何成功或被撤销），同时作为语义晋升与经验蒸馏的原始证据底座。</li>
+            <li><span class="kv-label">触发与输入：</span><strong>时机</strong>：每次会话结束（或网元单据到达）后异步触发。<br/><strong>内容</strong>：用户与 Agent 交互对话、结构化意图模板、意图状态变化（变更/撤销）、调用的外部资源（RAG、记忆、业务规则）。</li>
+            <li><span class="kv-label">标准输出：</span>标准化事件表达（时间、地点/场所、用户、起因[诉求/改参/撤销]、经过[理解轨迹与调用资源]、结果[最终意图模板与闭环状态]）。</li>
+            <li><span class="kv-label">存储形式：</span>结构化 JSON/表节点（含时间戳与外键）+ 经过语义文本正文。</li>
+            <li><span class="kv-label">生成算法：</span><strong>时机</strong>：会话结束即生成。<br/><strong>算法</strong>：时间/起因/结果走模板确定性填充；“经过”由单次 LLM 摘要生成；多粒度（日/周）则在无重叠时间窗结束时压缩提炼。</li>
+            <li><span class="kv-label">更新算法：</span><strong>单次事件</strong>生成后原则上不改写内容；<strong>周期摘要</strong>在无重叠窗口内有新事件加入时增量刷新；若用户明确纠错则打标纠错版本。</li>
+            <li><span class="kv-label">检索算法：</span><strong>时机</strong>：回答“上次/某天做了什么”或需要追溯某条偏好依据时触发。<br/><strong>算法</strong>：先按时间范围与主体精确过滤，再结合关键词/向量召回事件或时间线摘要。</li>
+            <li><span class="kv-label">遗忘机制：</span>艾宾浩斯保留率 $R(t,n)$ 随时间自然衰减；超期且已被周期摘要覆盖的细粒度流水降权归档，不再进入热检索池。</li>
+            <li><span class="kv-label">删除机制：</span>支持用户显式遗忘指令：按时间/主题/外键精准删除目标事件记录，并增量重算受影响的周期摘要（不暴力度重写全量摘要）。</li>
+          </ul>
+        </div>
+
+        <!-- Semantic -->
+        <div class="mem-card">
+          <h3><span class="badge b-sem">语义记忆</span>Semantic Memory</h3>
+          <ul class="kv-list">
+            <li><span class="kv-label">解决的问题：</span>解决“<strong>用户当前稳定的习惯、个性化表达与默认参数是什么</strong>”，在用户输入缺失或模糊时直接补全槽位，支撑快速闭环（减少不必要反问）。</li>
+            <li><span class="kv-label">触发与输入：</span><strong>时机</strong>：① 对话中用户显式长期声明（“以后默认…”）立即触发；② 后台定时扫描近期情景事件。<br/><strong>内容</strong>：结构化意图槽位（应用、业务、时段、场景、QoS 参数、表达别名）及来源事件 ID。</li>
+            <li><span class="kv-label">标准输出：</span>强类型正交偏好条目（含唯一主键 `user_id + scope + slot`、当前值、有效状态、生效/失效双时间戳与 `evidence_event_ids`）。</li>
+            <li><span class="kv-label">存储形式：</span>六张正交关系表（如 `expression`、`preferred_value`、`periodic_preference` 等）+ 向量/FTS5 派生索引。</li>
+            <li><span class="kv-label">生成算法：</span><strong>时机</strong>：显式声明即时生成；隐式习惯需在时间窗 $W_{\text{span}}$ 内跨会话复现达 $N_{\min}$ 次才晋升生成。<br/><strong>算法</strong>：先写入 `candidate`，投票达标后晋升 `active / reinforced`。</li>
+            <li><span class="kv-label">更新算法：</span><strong>时机</strong>：新结论落入同一正交主键格子时。<br/><strong>算法</strong>：确定性查表比对——同值则支持度 `+1`；异值（用户改口）则旧版标 `superseded` 写 `invalid_at`，新建新版指向旧版。</li>
+            <li><span class="kv-label">检索算法：</span><strong>时机</strong>：每轮意图理解前必查。<br/><strong>算法</strong>：个性化表述展开 → 周期/业务两跳补全 + 同行槽位列读取 → 过滤 `superseded` 与 `null` 空值边界 → 融合重排。</li>
+            <li><span class="kv-label">遗忘机制：</span>带复习稳定性的艾宾浩斯衰减 $R(t,n)$：极长期未使用的 `reinforced` 降级回 `active`（不再免确认直通）；超长未用转 `archived`；`expression` 词典衰减率为 0。</li>
+            <li><span class="kv-label">删除机制：</span>支持显式删除指定偏好或全部某场景习惯，同时清理派生向量索引并保留审计删除记录。</li>
+          </ul>
+        </div>
+
+        <!-- Procedural -->
+        <div class="mem-card">
+          <h3><span class="badge b-pro">程序记忆（经验记忆）</span>Procedural Memory</h3>
+          <ul class="kv-list">
+            <li><span class="kv-label">解决的问题：</span>解决“<strong>遇到信息缺失、冲突或模糊输入时，Agent 怎么提问和确认才能更快闭环、减少多轮澄清轮次</strong>”（区别于底层只读源码，聚焦业务级交互策略）。</li>
+            <li><span class="kv-label">触发与输入：</span><strong>时机</strong>：多轮澄清会话结束（特别是经历 2 轮以上澄清、用户纠偏或最终快速收敛的交互）。<br/><strong>内容</strong>：初始模糊/缺失槽位、Agent 澄清提问序列、用户反馈、最终收敛轮次与成败状态。</li>
+            <li><span class="kv-label">标准输出：</span>`ReasoningBank` 风格三段式澄清策略条目（`Title` + 含适用/禁用边界的 `Description` + 1～3 句可迁移澄清策略 `Content` + 来源切片核验）。</li>
+            <li><span class="kv-label">存储形式：</span>结构化策略条目（`strategies/`）+ 反向切片后的精简难例（`raw_cases/`）+ 固定规则硬固化为 Python 校验函数。</li>
+            <li><span class="kv-label">生成算法：</span><strong>时机</strong>：澄清难例积累或成败对照完成时。<br/><strong>算法</strong>：`SPEM` 终点反向切片去废步 → `ReasoningBank` 成败双源对比蒸馏（仅成功或成败配对可建新策略，失败负保护禁止单独建模板）。</li>
+            <li><span class="kv-label">更新算法：</span><strong>时机</strong>：新经验入库或积累 $K_{\text{review}}$ 个反馈案例时。<br/><strong>算法</strong>：`WASP-Mem Free Form` 先读后写隐式归并（增补澄清分支或新建）；采用后若仍拉长轮次或被否定则单次曝光降权。</li>
+            <li><span class="kv-label">检索算法：</span><strong>时机</strong>：<strong>受挫门控</strong>（常规快速闭环不注入；仅当多轮未收敛、用户连续否定或冲突难判时触发）。<br/><strong>算法</strong>：按当前澄清状态向量匹配并严格限流注入 **Top-1**（先核验适用/禁用边界）。</li>
+            <li><span class="kv-label">遗忘机制：</span>基于使用胜率与时间的 EMA 可靠性衰减：长期未触发或被新澄清策略替代的条目自动降权归档。</li>
+            <li><span class="kv-label">删除机制：</span>支持按策略 ID 驱逐错误自举策略，或因业务规则变更批量下线废弃澄清策略。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sheet 1: MemoryBank -->
+    <section id="sheet-memorybank" class="sheet-panel">
+      <div class="card">
+        <h2>MemoryBank（SiliconFriend）— 机制拆解表</h2>
+        <div class="meta-bar">
+          <span><strong>核心思路：</strong>外部持久化记忆 + 三级事件/画像总结 + 艾宾浩斯遗忘曲线 + 稠密检索</span>
+          <span><strong>代码：</strong><code>zhongwanjun/MemoryBank-SiliconFriend</code></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>类别</th><th>是否涉及</th><th>记忆目标与具体内容</th><th>载体形式</th><th>拓扑结构</th><th>记忆生成</th><th>记忆巩固</th><th>记忆更新</th><th>记忆遗忘</th><th>检索时机与意图</th><th>查询创建</th><th>检索策略</th><th>后检索处理</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>用户事实记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>用户相关的对话时间、兴趣、偏好、情绪、性格和长期画像</td>
+                <td>token 级</td>
+                <td>底层：1D 按时间顺序排列<br/>整体：3D 分层结构</td>
+                <td>每日原始对话经 LLM 生成每日事件摘要与每日性格/情绪分析</td>
+                <td>原始对话压缩为每日摘要，再聚合为全局摘要；每日画像聚合为全局画像</td>
+                <td><strong>新记忆追加</strong>：持续写入新对话和时间戳<br/><strong>摘要更新</strong>：随新对话更新每日与全局事件<br/><strong>用户画像更新</strong>：持续更新全局画像</td>
+                <td>艾宾浩斯遗忘曲线（随时间衰减，被召回则强化重置）</td>
+                <td><strong>时机</strong>：实时对话生成回答之前<br/><strong>意图</strong>：找到与当前话题或问题最相关的历史交互</td>
+                <td>无</td>
+                <td>双塔稠密检索器</td>
+                <td>无</td>
+              </tr>
+              <tr class="row-muted"><td><strong>环境事实记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr class="row-muted"><td><strong>基于案例的经验记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr class="row-muted"><td><strong>基于策略的经验记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr class="row-muted"><td><strong>基于技能的经验记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr class="row-muted"><td><strong>单轮工作记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr class="row-muted"><td><strong>多轮工作记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sheet 2: Mem0 -->
+    <section id="sheet-mem0" class="sheet-panel">
+      <div class="card">
+        <h2>Mem0（含 V3 源码演进）— 机制拆解表</h2>
+        <div class="meta-bar">
+          <span><strong>核心思路：</strong>双上下文（摘要 S + 近窗 m）抽取带语境事实 → 论文版二阶段四操作更新 / V3 开源只追加 + 混合检索</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>类别</th><th>是否涉及</th><th>记忆目标与具体内容</th><th>载体形式</th><th>拓扑结构</th><th>记忆生成</th><th>记忆巩固</th><th>记忆更新</th><th>记忆遗忘</th><th>检索时机与意图</th><th>查询创建</th><th>检索策略</th><th>后检索处理</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>用户事实记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>带语境的用户个人事实、偏好、经历与状态变化（15–80 词自然语言短句）</td>
+                <td>自然语言文本 + 向量嵌入（可选图三元组）</td>
+                <td>1D 扁平向量条目集合（图版本为有向带标签图）</td>
+                <td>每轮消息对结合全局摘要 $S$ 与近 10 条消息，由 LLM 按 8 项抽取原则提取事实 $\Omega$</td>
+                <td>无跨周期频次晋升门限，抽取后直接入库</td>
+                <td><strong>论文版</strong>：召回 Top-10 邻近记忆调 LLM 判 `ADD/UPDATE/DELETE/NOOP`<br/><strong>V3 源码</strong>：只追加 `ADD-Only`，省去二次 LLM 调用</td>
+                <td>论文版通过 `DELETE` 物理移除（图版做失效标记）；V3 无显式遗忘衰减</td>
+                <td><strong>时机</strong>：回答生成前<br/><strong>意图</strong>：召回与当前查询最相关的用户事实（压缩约 93% Token）</td>
+                <td>直接使用当前 Query 编码</td>
+                <td>论文版：稠密向量相似度<br/>V3：三路混合检索</td>
+                <td>读时提示词按时间戳优先采信最新记录</td>
+              </tr>
+              <tr class="row-muted"><td><strong>环境事实记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr class="row-muted"><td><strong>基于案例/策略/技能的经验记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr>
+                <td><strong>多轮工作记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>全局异步摘要 $S$ + 最近 10 条对话滑窗 $\{m_{t-10},\dots,m_{t-1}\}$</td>
+                <td>文本摘要与消息列表</td>
+                <td>定长近窗队列</td>
+                <td>抽取前动态拼接当前对话近窗与异步摘要</td>
+                <td>异步模块周期刷新全局摘要 $S$</td>
+                <td>随新轮次滑窗推进更新</td>
+                <td>滑窗外旧消息自动移出近窗</td>
+                <td>每次抽取阶段自动读取</td>
+                <td>无</td>
+                <td>直接切片读取</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sheet 3: Reflexion -->
+    <section id="sheet-reflexion" class="sheet-panel">
+      <div class="card">
+        <h2>Reflexion — 机制拆解表</h2>
+        <div class="meta-bar">
+          <span><strong>核心思路：</strong>Actor + Evaluator + Self-Reflection 三角色闭环，将二值/标量反馈放大为第一人称“语义梯度”滑窗</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>类别</th><th>是否涉及</th><th>记忆目标与具体内容</th><th>载体形式</th><th>拓扑结构</th><th>记忆生成</th><th>记忆巩固</th><th>记忆更新</th><th>记忆遗忘</th><th>检索时机与意图</th><th>查询创建</th><th>检索策略</th><th>后检索处理</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-muted"><td><strong>用户事实 / 环境事实记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr>
+                <td><strong>基于案例的经验记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>同一任务多次试错中定位出的失败根因与纠错计划 $sr_t$（第一人称语言反思）</td>
+                <td>自然语言反思文本</td>
+                <td>定长 FIFO 滑动窗口 `memory[-3:]`（$\Omega \in \{1,3\}$）</td>
+                <td>Evaluator 判失败后，Self-Reflection 模块结合轨迹与反馈生成错因诊断与改写计划</td>
+                <td>无跨任务持久化沉淀（仅限当前任务内部试验复用）</td>
+                <td>每次失败试错追加一条 $sr_t$，超出滑窗长度 $\Omega$ 即顶掉最旧反思</td>
+                <td>按滑窗容量 $\Omega$ FIFO 挤出</td>
+                <td><strong>时机</strong>：下一次重跑该任务前<br/><strong>意图</strong>：避免重复踩坑，指导新试验修正动作</td>
+                <td>无（直接全量注入）</td>
+                <td>直接读取 `memory[-Ω:]` 滑窗全部内容</td>
+                <td>直接拼接进 Actor 提示词</td>
+              </tr>
+              <tr class="row-muted"><td><strong>基于策略 / 技能的经验记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr>
+                <td><strong>多轮工作记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>当前试验轮次内的动作与观察轨迹历史 $\tau_t$</td>
+                <td>ReAct / CoT 文本序列</td>
+                <td>线性序列</td>
+                <td>每步执行交互实时追加</td>
+                <td>试验结束用于触发反思</td>
+                <td>单步追加</td>
+                <td>新试验重置清空</td>
+                <td>每步推理直接携带</td>
+                <td>无</td>
+                <td>全量上下文拼接</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sheet 4: ReasoningBank -->
+    <section id="sheet-reasoningbank" class="sheet-panel">
+      <div class="card">
+        <h2>ReasoningBank — 机制拆解表</h2>
+        <div class="meta-bar">
+          <span><strong>核心思路：</strong>跨任务成败双通道蒸馏（`SUCCESSFUL_SI / FAILED_SI`）+ `MaTTS` 跨轨迹自对比 + 三段式策略结构</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>类别</th><th>是否涉及</th><th>记忆目标与具体内容</th><th>载体形式</th><th>拓扑结构</th><th>记忆生成</th><th>记忆巩固</th><th>记忆更新</th><th>记忆遗忘</th><th>检索时机与意图</th><th>查询创建</th><th>检索策略</th><th>后检索处理</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-muted"><td><strong>用户事实 / 环境事实记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr>
+                <td><strong>基于策略的经验记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>剥离具体实体的可迁移推理策略：`Title` + `Description`（含 `when or when NOT to use`）+ `Content`（1–3 句步骤与护栏）</td>
+                <td>结构化 JSONL 文本条目 + 任务查询向量</td>
+                <td>1D 扁平条目库（按历史 `task_id` 组织）</td>
+                <td>LLM-as-a-Judge 判成败后走双通道：`SUCCESSFUL_SI` 总结成功模式，`FAILED_SI` 提炼失败预防护栏（或 `MaTTS` 多轨迹自对比）</td>
+                <td>直接将提炼的 $\le 3$ 条（并行扩展 $\le 5$ 条）追加写入记忆库</td>
+                <td><strong>Append-Only 只追加</strong>（不做去重合并与修改）</td>
+                <td>无显式遗忘或淘汰机制</td>
+                <td><strong>时机</strong>：新任务启动前<br/><strong>意图</strong>：复用相似任务的推理策略与防错护栏</td>
+                <td>使用新任务原始 Query 编码</td>
+                <td>向量余弦相似度检索（实验证明 Top-$k=1$ 最优，$k>1$ 性能反降）</td>
+                <td>注入 System Prompt 并要求每步先显式评估是否采用该经验</td>
+              </tr>
+              <tr class="row-muted"><td><strong>基于案例 / 技能的经验记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr>
+                <td><strong>多轮工作记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>Agent 每步的思考与动作压缩序列 `&lt;think&gt;...&lt;/think&gt;&lt;action&gt;...&lt;/action&gt;`</td>
+                <td>文本序列</td>
+                <td>线性轨迹</td>
+                <td>交互过程中记录思考与动作</td>
+                <td>任务结束后送入双通道抽取器</td>
+                <td>单步追加</td>
+                <td>任务结束清理</td>
+                <td>每步推理</td>
+                <td>无</td>
+                <td>上下文读取</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sheet 5: WASP-Mem -->
+    <section id="sheet-waspmem" class="sheet-panel">
+      <div class="card">
+        <h2>WASP-Mem — 机制拆解表</h2>
+        <div class="meta-bar">
+          <span><strong>核心思路：</strong>`Free Form` 自组织互链 Markdown Wiki（`index.md` + `[[wikilinks]]`），先读后写隐式归并，人工精力聚焦失败诊断</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>类别</th><th>是否涉及</th><th>记忆目标与具体内容</th><th>载体形式</th><th>拓扑结构</th><th>记忆生成</th><th>记忆巩固</th><th>记忆更新</th><th>记忆遗忘</th><th>检索时机与意图</th><th>查询创建</th><th>检索策略</th><th>后检索处理</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-muted"><td><strong>用户事实 / 环境事实记忆</strong></td><td><span class="badge b-no">否</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr>
+                <td><strong>基于策略 / 技能的经验记忆</strong></td>
+                <td><span class="badge b-yes">是</span></td>
+                <td>企业复杂流程规程、前置条件与异常恢复分支（`Free Form` 自由弹性文本，不硬套死板 Schema）</td>
+                <td>Markdown Wiki 页面 + 向量嵌入</td>
+                <td>`index.md` 总路由 + `[[wikilinks]]` 互链页面图</td>
+                <td>任务完成后由巩固子 Agent 提取可复用操作规程与异常恢复分支</td>
+                <td><strong>先读后写隐式归并</strong>：先检索相似旧规程页，再决定原地补充异常分支还是新建页并挂接双链</td>
+                <td>在既有 Markdown 页内原地增量修订与更新 `index.md`（严禁按动作名脚本强合并）</td>
+                <td>无显式衰减，靠原地修订替代冗余碎片页（体积压至 ~234 KB）</td>
+                <td><strong>时机</strong>：执行相似复杂流程前或遇报错时<br/><strong>意图</strong>：查找对应规程与异常恢复分支</td>
+                <td>基于当前任务描述检索</td>
+                <td>`index.md` 目录路由 + 向量检索 + 沿 `[[wikilinks]]` 扩展</td>
+                <td>注入命中规程页供 Agent 执行参照</td>
+              </tr>
+              <tr class="row-muted"><td><strong>工作记忆</strong></td><td><span class="badge b-no">否</span></td><td>依赖底层 `pi-agent` 会话上下文</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Sheet Tabs -->
+  <nav class="sheet-bar" aria-label="文献子表切换">
+    <button class="sheet-tab active" onclick="switchSheet('sheet-ours', this)">我们的长期记忆设计</button>
+    <button class="sheet-tab" onclick="switchSheet('sheet-memorybank', this)">MemoryBank</button>
+    <button class="sheet-tab" onclick="switchSheet('sheet-mem0', this)">Mem0</button>
+    <button class="sheet-tab" onclick="switchSheet('sheet-reflexion', this)">Reflexion</button>
+    <button class="sheet-tab" onclick="switchSheet('sheet-reasoningbank', this)">ReasoningBank</button>
+    <button class="sheet-tab" onclick="switchSheet('sheet-waspmem', this)">WASP-Mem</button>
+  </nav>
+
+  <script>
+    function switchSheet(id, btn) {
+      document.querySelectorAll('.sheet-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.sheet-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function toggleTheme() {
+      document.body.classList.toggle('theme-github');
+    }
+  </script>
+</body>
+</html>
