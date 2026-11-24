@@ -1,7 +1,7 @@
 ---
 
 excalidraw-plugin: parsed
-tags: [excalidraw, agent-memory, zep, mem0, graph-vs-vector, real-llm-experiment]
+tags: [excalidraw, agent-memory, zep, mem0, graph-vs-vector, strict-paper-experiment]
 
 ---
 ==⚠  Switch to EXCALIDRAW VIEW in the MORE OPTIONS menu of this document. ⚠==
@@ -10,640 +10,225 @@ tags: [excalidraw, agent-memory, zep, mem0, graph-vs-vector, real-llm-experiment
 # Excalidraw Data
 
 ## Text Elements
-记忆管理建图与否实测笔记：Zep-Graphiti (图谱) 与 Mem0 (扁平向量) 真实模型对照 ^txt_0002
+记忆管理建图与否实证笔记 · Mem0 (扁平向量) 与 Zep / Graphiti (双时态图谱) 全面对照 ^txt_0002
 
-真实端到端模型：qwen3.8-flash + text-embedding-v4 (1024维) ｜ 数据：hybrid_dataset.json 4 用户 67 条原始单据与对话（完全屏蔽标注） ^txt_0003
+覆盖：存储形态与机制差异 + 严格原论文复现版实测（V2 3 用户 38 条事件 · 11 道探针 · qwen3.8-flash + text-embedding-v4）+ 联接 Agent 落地方案 ^txt_0003
 
-一、真实模型建库直观对照：同一用户（persona_8613522947905），建图与存向量分别长什么样？ ^txt_0005
+核心区别 · 不是图库对比向量库，而是三处机制取舍 ^txt_0005
 
-二、19 题真实端到端准确率与 Token 成本账单（无规则替身，首轮原始基线） ^txt_0008
+两边都用向量相似度；真正分水岭在于：是否保留底层 Episode 溯源、冲突时覆写删旧还是双时态截断、以及是否按共享实体建跨跳关联。 ^txt_0006
 
-两边各自真实管用的优势（高度互补） ^txt_0011
+实测结论 · 单用户场景下两者全面打平（72.7%） ^txt_0008
 
-• Zep 真正赢在「边合并与频次计数」：同名边自动累计支撑次数，Q1 问主力应用拿到 75%（Mem0 因碎片化 ADD 拒答，0%）。
-• Mem0 真正赢在「自然语言原话保真」：老实存下“取消突发恶劣天气规则”原句，Q2 撤销后当前态拿到 100%（Zep 0%）。 ^txt_0012
+严格按原论文复现后，Mem0 与 Zep-Strict 总通过率（72.7%）、需记忆难题（60%）与写入耗时（~140s）全面打平；Zep 不滤失效边则掉至 63.6%。 ^txt_0009
 
-纯 LLM 自动建图暴露的 3 个真实硬伤 ^txt_0014
+共同天花板 · 纯 LLM 抽取难以无损保真精确单据 ^txt_0011
 
-1. 单用户高度星型化：真实建图 75.6% 边直连 User，没有复杂网状结构。
-2. 冲突截断极脆弱：4 用户全部 invalid=0，LLM 漏判撤销导致 Q2 全军覆没。
-3. 更贵且 3 跳被挤爆：写入 Token 贵 +41%、问答贵 +86%；跨用户 Q5 第 3 跳被 Top-8 挤出，得分 0%。 ^txt_0015
+精确单据分钟时间平移（09:05→09:30）与隐式迁移精确参数（4K/30ms 丢失）两边均失败，证明网元单据必须走确定性结构化直写。 ^txt_0012
 
-联接 Agent 最终落地结论（取长补短） ^txt_0017
+一、建图与扁平向量的实际区别：同一用户数据怎么存？写入、更新与检索怎么跑？ ^txt_0014
 
-• 不走纯 LLM 自由建图（贵且冲突截断不可靠），采用「确定性结构化双时态槽位表 + 向量原文短句库」双轨设计：
-  ① 槽位表负责确定性的应用/小区频次合并与 [t_valid, t_invalid) 状态机（拿走 Zep 的 Q1 优势）；
-  ② 向量短句库保留改口撤销等自然语言细节（拿走 Mem0 的 Q2 保真优势）。 ^txt_0018
+二、4 组严格原论文版实测准确率与真实 Token / 延迟成本账单 ^txt_0017
+
+三、11 道 V2 探针逐题通过矩阵与共同天花板根因定位（对齐表 2 × 表 3 × 表 4） ^txt_0020
+
+四、深度复盘：建图相对扁平向量的真实优势与边界在哪里？ ^txt_0023
+
+1. 单用户图谱的真实长相：浅星型结构 ^txt_0025
+
+• 20 用户数据与 V2 试点均证实：单用户图平均 11~18 节点、10~19 边，72%~76% 的边直接挂在 User 节点上（浅星型），并非复杂多跳网。
+• 因此单用户日常补全中，Zep-Strict 与 Mem0 准确率完全打平（72.7%），建图本身不产生代差优势。
+• 只有当多用户共享基站小区（Cell）与标准应用（App）做群体排障时，图才真正长出多跳网络骨架。 ^txt_0026
+
+2. Zep 建图真正有价值的 3 个基因 ^txt_0028
+
+• 基因① 双时态区间 [t_valid, t_invalid)：保留历史演进与 TTL 到期自动回退（如 5 天出差规则），前提是独立冲突裁决 + 查询时间窗过滤。
+• 基因② 情节溯源 episodes[]：同名边自动合并计数，能区分单次偶发与 >=N_min 长期稳定习惯。
+• 基因③ 三路 RRF 混合检索：向量 + BM25 + BFS 融合对精确关键词（如私有简称“腾会”）召回更稳。 ^txt_0029
+
+3. 纯 LLM 建图与纯向量共同的 3 个硬伤 ^txt_0031
+
+• 硬伤① 精确数值与分钟时刻失真：网元单据的 09:05、4K/30ms 经 LLM 文本改写后极易压成 09:00 或被套餐上限覆盖（U001_P02 / U002_P01 双双失败）。
+• 硬伤② 否定与隐含前提易丢：三元组擅长正向关系 A→B，不擅长表达“取消一个库里尚未建出的规则”。
+• 硬伤③ 写入重且耗时高：完整原论文流水线 38 条写入均耗时 ~140s、消耗 5.7万~7.2万 Token。 ^txt_0032
+
+五、联接 Agent 长期记忆最终落地方案：确定性结构化双时态槽位表 + 向量原文短句库（按需挂接共享枢纽图） ^txt_0034
+
+轨道 A · 确定性结构化双时态槽位表（接管全部网元单据与状态机） ^txt_0036
+
+• 网元单据零 LLM 直写：精确留存毫秒/分钟时间戳（彻底解决 U001_P02）、精确画质/时延参数（彻底解决 U002_P01）、顺畅/卡顿运行状态与被动弱覆盖标记；
+• 吸收 Zep 最值钱基因：每条偏好按 (app, sub_service, scope) 隔离，确定性维护 [t_valid, t_invalid)、ttl_days 到期自动回退与 source_episodes[] 频次计数（>=N_min 晋升），查当前态默认硬过滤失效项，零 LLM 冲突漏判、零 Token 写入成本。 ^txt_0037
+
+轨道 B · 向量语义短句库 + 程序记忆库（兜底对话表达与演进多跳） ^txt_0039
+
+• 对话侧自然语言高保真：用轻量向量库留存用户私有简称（expression）、改口撤销原话与假设咨询上下文，结合 BM25 + 向量 RRF 召回；
+• 程序记忆独立三段式管理：沉淀闭合式澄清策略与弱覆盖避错规则，显式携带 forbidden_boundary（如 5G 稳定覆盖禁用），避免三元组压扁多轮交互细节；
+• 演进扩展：当业务进入基站小区级群体排障时，仅以共享 Cell / App 为枢纽建轻量邻接图索引。 ^txt_0040
 
 ## Embedded Files
-9c57c8d95b4f55001f328ece0966b0e840a354b6: [[graph_vs_vector_fig1_topology_compare.png]]
+59951f359f3f9da82722a3059477eba0d77a7747: [[graph_vs_vector_fig0_mechanism_and_structure.png]]
 
-90790196f7bbb506b48e89b43328b6ed0089add3: [[graph_vs_vector_fig2_benchmark_bars.png]]
+3223de705a2efa8a689946197c0d275c7943106e: [[graph_vs_vector_fig1_topology_compare.png]]
+
+c1c0eed7e76938d2f02db95ccd29e0d213e60e61: [[graph_vs_vector_fig2_benchmark_bars.png]]
 
 %%
 ## Drawing
-```json
-{
-  "type": "excalidraw",
-  "version": 2,
-  "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.0.0",
-  "elements": [
-    {
-      "id": "rect_0001",
-      "type": "rectangle",
-      "x": 40,
-      "y": 30,
-      "width": 2240,
-      "height": 118,
-      "angle": 0,
-      "strokeColor": "#343a40",
-      "backgroundColor": "#f8f9fa",
-      "fillStyle": "solid",
-      "strokeWidth": 2.4,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 1769401121,
-      "version": 1,
-      "versionNonce": 372259959,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false
-    },
-    {
-      "id": "txt_0002",
-      "type": "text",
-      "x": 72,
-      "y": 48,
-      "width": 2160,
-      "height": 43.5,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 1450335050,
-      "version": 1,
-      "versionNonce": 7447862,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "记忆管理建图与否实测笔记：Zep-Graphiti (图谱) 与 Mem0 (扁平向量) 真实模型对照",
-      "fontSize": 30,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "记忆管理建图与否实测笔记：Zep-Graphiti (图谱) 与 Mem0 (扁平向量) 真实模型对照",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "txt_0003",
-      "type": "text",
-      "x": 72,
-      "y": 94,
-      "width": 2160,
-      "height": 26.099999999999998,
-      "angle": 0,
-      "strokeColor": "#495057",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 95725236,
-      "version": 1,
-      "versionNonce": 1443471666,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "真实端到端模型：qwen3.8-flash + text-embedding-v4 (1024维) ｜ 数据：hybrid_dataset.json 4 用户 67 条原始单据与对话（完全屏蔽标注）",
-      "fontSize": 18,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "真实端到端模型：qwen3.8-flash + text-embedding-v4 (1024维) ｜ 数据：hybrid_dataset.json 4 用户 67 条原始单据与对话（完全屏蔽标注）",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "rect_0004",
-      "type": "rectangle",
-      "x": 40,
-      "y": 174,
-      "width": 2240,
-      "height": 962,
-      "angle": 0,
-      "strokeColor": "#343a40",
-      "backgroundColor": "#ffffff",
-      "fillStyle": "solid",
-      "strokeWidth": 2.0,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 1710932538,
-      "version": 1,
-      "versionNonce": 1485161076,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false
-    },
-    {
-      "id": "txt_0005",
-      "type": "text",
-      "x": 72,
-      "y": 192,
-      "width": 2160,
-      "height": 33.35,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 296021161,
-      "version": 1,
-      "versionNonce": 1884511023,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "一、真实模型建库直观对照：同一用户（persona_8613522947905），建图与存向量分别长什么样？",
-      "fontSize": 23,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "一、真实模型建库直观对照：同一用户（persona_8613522947905），建图与存向量分别长什么样？",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "img_0006",
-      "type": "image",
-      "x": 60,
-      "y": 232,
-      "width": 2200,
-      "height": 888,
-      "angle": 0,
-      "strokeColor": "transparent",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 1301640335,
-      "version": 1,
-      "versionNonce": 999027944,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "status": "saved",
-      "fileId": "9c57c8d95b4f55001f328ece0966b0e840a354b6",
-      "scale": [
-        1,
-        1
-      ]
-    },
-    {
-      "id": "rect_0007",
-      "type": "rectangle",
-      "x": 40,
-      "y": 1164,
-      "width": 1400,
-      "height": 626,
-      "angle": 0,
-      "strokeColor": "#343a40",
-      "backgroundColor": "#ffffff",
-      "fillStyle": "solid",
-      "strokeWidth": 2.0,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 1051515979,
-      "version": 1,
-      "versionNonce": 349503507,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false
-    },
-    {
-      "id": "txt_0008",
-      "type": "text",
-      "x": 64,
-      "y": 1178,
-      "width": 1340,
-      "height": 30.45,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 1631706427,
-      "version": 1,
-      "versionNonce": 941380343,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "二、19 题真实端到端准确率与 Token 成本账单（无规则替身，首轮原始基线）",
-      "fontSize": 21,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "二、19 题真实端到端准确率与 Token 成本账单（无规则替身，首轮原始基线）",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "img_0009",
-      "type": "image",
-      "x": 58,
-      "y": 1216,
-      "width": 1364,
-      "height": 560,
-      "angle": 0,
-      "strokeColor": "transparent",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 911819250,
-      "version": 1,
-      "versionNonce": 1667758955,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "status": "saved",
-      "fileId": "90790196f7bbb506b48e89b43328b6ed0089add3",
-      "scale": [
-        1,
-        1
-      ]
-    },
-    {
-      "id": "rect_0010",
-      "type": "rectangle",
-      "x": 1466,
-      "y": 1164,
-      "width": 814,
-      "height": 200,
-      "angle": 0,
-      "strokeColor": "#15803d",
-      "backgroundColor": "#f0fdf4",
-      "fillStyle": "solid",
-      "strokeWidth": 2.2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 1798957121,
-      "version": 1,
-      "versionNonce": 1221043967,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false
-    },
-    {
-      "id": "txt_0011",
-      "type": "text",
-      "x": 1488,
-      "y": 1180,
-      "width": 770,
-      "height": 31.9,
-      "angle": 0,
-      "strokeColor": "#15803d",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 528995128,
-      "version": 1,
-      "versionNonce": 162876765,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "两边各自真实管用的优势（高度互补）",
-      "fontSize": 22,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "两边各自真实管用的优势（高度互补）",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "txt_0012",
-      "type": "text",
-      "x": 1488,
-      "y": 1218,
-      "width": 770,
-      "height": 132,
-      "angle": 0,
-      "strokeColor": "#2b3035",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 1716492788,
-      "version": 1,
-      "versionNonce": 1556447872,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "• Zep 真正赢在「边合并与频次计数」：同名边自动累计支撑次数，Q1 问主力应用拿到 75%（Mem0 因碎片化 ADD 拒答，0%）。\n• Mem0 真正赢在「自然语言原话保真」：老实存下“取消突发恶劣天气规则”原句，Q2 撤销后当前态拿到 100%（Zep 0%）。",
-      "fontSize": 17,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "• Zep 真正赢在「边合并与频次计数」：同名边自动累计支撑次数，Q1 问主力应用拿到 75%（Mem0 因碎片化 ADD 拒答，0%）。\n• Mem0 真正赢在「自然语言原话保真」：老实存下“取消突发恶劣天气规则”原句，Q2 撤销后当前态拿到 100%（Zep 0%）。",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "rect_0013",
-      "type": "rectangle",
-      "x": 1466,
-      "y": 1378,
-      "width": 814,
-      "height": 204,
-      "angle": 0,
-      "strokeColor": "#b91c1c",
-      "backgroundColor": "#fef2f2",
-      "fillStyle": "solid",
-      "strokeWidth": 2.2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 2347802,
-      "version": 1,
-      "versionNonce": 1253201672,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false
-    },
-    {
-      "id": "txt_0014",
-      "type": "text",
-      "x": 1488,
-      "y": 1394,
-      "width": 770,
-      "height": 31.9,
-      "angle": 0,
-      "strokeColor": "#b91c1c",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 1206369163,
-      "version": 1,
-      "versionNonce": 1904038217,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "纯 LLM 自动建图暴露的 3 个真实硬伤",
-      "fontSize": 22,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "纯 LLM 自动建图暴露的 3 个真实硬伤",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "txt_0015",
-      "type": "text",
-      "x": 1488,
-      "y": 1432,
-      "width": 770,
-      "height": 136,
-      "angle": 0,
-      "strokeColor": "#2b3035",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 124191412,
-      "version": 1,
-      "versionNonce": 304229571,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "1. 单用户高度星型化：真实建图 75.6% 边直连 User，没有复杂网状结构。\n2. 冲突截断极脆弱：4 用户全部 invalid=0，LLM 漏判撤销导致 Q2 全军覆没。\n3. 更贵且 3 跳被挤爆：写入 Token 贵 +41%、问答贵 +86%；跨用户 Q5 第 3 跳被 Top-8 挤出，得分 0%。",
-      "fontSize": 17,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "1. 单用户高度星型化：真实建图 75.6% 边直连 User，没有复杂网状结构。\n2. 冲突截断极脆弱：4 用户全部 invalid=0，LLM 漏判撤销导致 Q2 全军覆没。\n3. 更贵且 3 跳被挤爆：写入 Token 贵 +41%、问答贵 +86%；跨用户 Q5 第 3 跳被 Top-8 挤出，得分 0%。",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "rect_0016",
-      "type": "rectangle",
-      "x": 1466,
-      "y": 1596,
-      "width": 814,
-      "height": 194,
-      "angle": 0,
-      "strokeColor": "#1d4ed8",
-      "backgroundColor": "#eff6ff",
-      "fillStyle": "solid",
-      "strokeWidth": 2.2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 1370895098,
-      "version": 1,
-      "versionNonce": 972918217,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false
-    },
-    {
-      "id": "txt_0017",
-      "type": "text",
-      "x": 1488,
-      "y": 1612,
-      "width": 770,
-      "height": 31.9,
-      "angle": 0,
-      "strokeColor": "#1d4ed8",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 626072404,
-      "version": 1,
-      "versionNonce": 1887571498,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "联接 Agent 最终落地结论（取长补短）",
-      "fontSize": 22,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "联接 Agent 最终落地结论（取长补短）",
-      "lineHeight": 1.35
-    },
-    {
-      "id": "txt_0018",
-      "type": "text",
-      "x": 1488,
-      "y": 1650,
-      "width": 770,
-      "height": 126,
-      "angle": 0,
-      "strokeColor": "#2b3035",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": null,
-      "seed": 58329118,
-      "version": 1,
-      "versionNonce": 1624844498,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1763950000000,
-      "link": null,
-      "locked": false,
-      "text": "• 不走纯 LLM 自由建图（贵且冲突截断不可靠），采用「确定性结构化双时态槽位表 + 向量原文短句库」双轨设计：\n  ① 槽位表负责确定性的应用/小区频次合并与 [t_valid, t_invalid) 状态机（拿走 Zep 的 Q1 优势）；\n  ② 向量短句库保留改口撤销等自然语言细节（拿走 Mem0 的 Q2 保真优势）。",
-      "fontSize": 17,
-      "fontFamily": 3,
-      "textAlign": "left",
-      "verticalAlign": "top",
-      "containerId": null,
-      "originalText": "• 不走纯 LLM 自由建图（贵且冲突截断不可靠），采用「确定性结构化双时态槽位表 + 向量原文短句库」双轨设计：\n  ① 槽位表负责确定性的应用/小区频次合并与 [t_valid, t_invalid) 状态机（拿走 Zep 的 Q1 优势）；\n  ② 向量短句库保留改口撤销等自然语言细节（拿走 Mem0 的 Q2 保真优势）。",
-      "lineHeight": 1.35
-    }
-  ],
-  "appState": {
-    "gridSize": null,
-    "viewBackgroundColor": "#ffffff"
-  },
-  "files": {}
-}
+```compressed-json
+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
 ```
 %%

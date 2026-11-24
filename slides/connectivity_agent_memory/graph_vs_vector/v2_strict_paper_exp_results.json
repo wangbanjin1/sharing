@@ -1,0 +1,397 @@
+{
+  "models": {
+    "llm": "qwen3.8-flash",
+    "embedding": "text-embedding-v4"
+  },
+  "mem0_ops": {
+    "ADD": 25,
+    "UPDATE": 16
+  },
+  "zep_invalidation_count": 3,
+  "zep_edges_with_invalid_or_ttl": 8,
+  "api_cost_stats": {
+    "mem0_full_write": {
+      "calls": 87,
+      "prompt_tokens": 63896,
+      "completion_tokens": 7811,
+      "latency_s": 144.49
+    },
+    "mem0_full_write_emb": {
+      "calls": 60,
+      "prompt_tokens": 4375,
+      "completion_tokens": 0,
+      "latency_s": 64.1
+    },
+    "zep_full_write": {
+      "calls": 80,
+      "prompt_tokens": 46978,
+      "completion_tokens": 9809,
+      "latency_s": 140.13
+    },
+    "zep_full_write_emb": {
+      "calls": 24,
+      "prompt_tokens": 1420,
+      "completion_tokens": 0,
+      "latency_s": 31.28
+    },
+    "mem0_full_query_emb": {
+      "calls": 11,
+      "prompt_tokens": 385,
+      "completion_tokens": 0,
+      "latency_s": 13.91
+    },
+    "mem0_full_qa": {
+      "calls": 11,
+      "prompt_tokens": 11721,
+      "completion_tokens": 1887,
+      "latency_s": 28.77
+    },
+    "judge": {
+      "calls": 33,
+      "prompt_tokens": 21752,
+      "completion_tokens": 1092,
+      "latency_s": 40.47
+    },
+    "zep_full_default_qa": {
+      "calls": 11,
+      "prompt_tokens": 13360,
+      "completion_tokens": 1758,
+      "latency_s": 26.11
+    },
+    "zep_full_strict_qa": {
+      "calls": 11,
+      "prompt_tokens": 11885,
+      "completion_tokens": 1632,
+      "latency_s": 27.29
+    }
+  },
+  "evaluation": {
+    "mem0_full": {
+      "summary": {
+        "all": {
+          "passed": 8,
+          "total": 11,
+          "acc": 0.727
+        },
+        "requires_memory": {
+          "passed": 3,
+          "total": 5,
+          "acc": 0.6
+        },
+        "no_memory_baseline": {
+          "passed": 5,
+          "total": 6,
+          "acc": 0.833
+        }
+      },
+      "rows": [
+        {
+          "case_id": "U001_P01_ALIAS_AND_TTL_FALLBACK",
+          "persona_id": "USER_001",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "单轮直通，准确还原腾会/老样子为1080P/30ms，无多余追问。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：腾讯会议\n子业务：视频会议\n起止时间：2026-01-29 09:00:00 至 2026-01-29 10:30:00\n画质与时延要求：1080P，时延≤30ms"
+        },
+        {
+          "case_id": "U001_P02_CROSS_CHANNEL_SMOOTH_VS_STALL",
+          "persona_id": "USER_001",
+          "requires_memory": true,
+          "passed": false,
+          "reason": "输出截断且未给出完整方案，日期推导错误（非1月9日）",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n*   **应用名称**：腾讯会议 (tencentmeeting)\n*   **子业务**：视频会议\n*   **起止时间**：2026-01-29 09:35:00 至 2026-01-29 10:35:00\n    *   *推导逻辑*：用户指定参照“1月9号早上运行顺畅那次会议”。检索历史记忆，1月9日无直接会话记录，但1月7日、8日（隐含在连续工作日中，且1月7日有明确记录）、1月14日等均有类似早间会议。然而，用户明确提到“1月9号...参数照旧”，结合记忆 `[2026-01-09 09:00:00]` 存在一条关于腾讯会议画质和时延要求的记录（虽未明确说是“顺畅运行”的会话日志，但作为唯一的1月9日配置锚点，且用户强调“别用1月12号出差卡顿那次”，暗示要避开临时规则或异常状态）。更严谨地看，记忆中 `2026-01-07 08:55:00` 是顺畅运行的腾讯会议，而 `2026-01-09 09:00:00` 是一条配置指令。通常“按...那次会议单据的时间”指代具体的会话开始时间。若视1月9日为配置生效日而非具体会话日，可能存在歧义。但观察记忆列表，1月7日"
+        },
+        {
+          "case_id": "U001_P03_NEW_APP_NO_GUESS",
+          "persona_id": "USER_001",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "Agent未盲猜模板，精准追问缺失的画质与时延参数，符合澄清要求。",
+          "answer": "【动作：CLARIFY】\n检测到您指定的应用为“王者荣耀”，但当前检索到的历史记忆中仅包含腾讯会议、钉钉视频会议及微信等办公/社交类应用的保障记录，无王者荣耀相关的子业务（如排位赛、巅峰赛）或特定网络参数偏好。为避免盲猜导致保障策略不精准，请补充以下关键信息：\n1. **具体场景**：是常规排位赛还是其他模式？\n2. **画质要求**：期望的分辨率（如高清、超清）？\n3. **时延敏感度**：是否有特定的低时延阈值要求（例如低于多少毫秒）？"
+        },
+        {
+          "case_id": "U001_P04_EXPLICIT_OVERRIDE_NO_TAMPER",
+          "persona_id": "USER_001",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "直接输出完整方案，参数与用户指令完全一致，无篡改或多余追问。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：腾讯会议\n子业务：视频会议\n起止时间：2026-01-31 10:00:00 至 2026-01-31 11:00:00\n画质要求：720P\n时延要求：<50ms"
+        },
+        {
+          "case_id": "U002_P01_IMPLICIT_MIGRATION_AND_SKIP_CONSULT",
+          "persona_id": "USER_002",
+          "requires_memory": true,
+          "passed": false,
+          "reason": "时延参数错误，标准答案为30ms，Agent输出15ms",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：Bilibili（小破站）\n子业务：视频点播（观看剧集）\n起止时间：2026-02-03 20:00:00 至 2026-02-03 21:30:00\n画质与时延要求：4K画质，时延≤15ms，MOS≥4.5"
+        },
+        {
+          "case_id": "U002_P02_CONCURRENT_AND_TRADEOFF",
+          "persona_id": "USER_002",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "准确拆解双意图，参数与标准答案一致，无多余追问。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**最终保障方案：**\n\n1.  **主业务（虎牙直播）**\n    *   **应用/子业务**：Huya_Live / 观看直播\n    *   **起止时间**：2026-02-04 14:00:00 - 2026-02-04 16:00:00\n    *   **画质要求**：优先 4K，带宽受限时允许降级至 1080P\n    *   **时延要求**：≤ 30ms\n    *   **套餐校验**：用户为钻石VIP档（上限4K，最小时延15ms），当前需求在能力范围内。\n\n2.  **后台业务（百度网盘）**\n    *   **应用/子业务**：Baidu_NetDisk / 大文件传输\n    *   **起止时间**：2026-02-04 14:00:00 - 2026-02-04 16:00:00（与主业务并行）\n    *   **时延要求**：< 80ms\n    *   **策略说明**：鉴于主业务对时延敏感且占用高带宽，建议将网盘任务设为“后台低优先级”或“限速模式”，以确保虎牙直播的QoS不被挤占。若网络拥塞严重，系统可能自动暂停网盘上传以保直播流畅。"
+        },
+        {
+          "case_id": "U002_P03_CROSS_INTENT_NEGATION_PROTECT",
+          "persona_id": "USER_002",
+          "requires_memory": false,
+          "passed": false,
+          "reason": "违反红线2：多余追问/输出无关项。严禁将否定子句中的B站误抽为新增或修改意图，Agent输出了保留B站的方案，不符合仅输出新增意图的要求。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n\n1.  **新增钉钉视频会议保障**\n    *   **应用**：钉钉 (DingTalk)\n    *   **子业务**：视频会议\n    *   **起止时间**：2026-02-05 15:00:00 至 2026-02-05 16:30:00\n    *   **画质要求**：1080P（符合钻石VIP档上限）\n    *   **时延要求**：≤40ms（符合钻石VIP档最小时延15ms的能力范围，用户指定值在允许区间内）\n\n2.  **保留B站观看保障**\n    *   **应用**：哔哩哔哩 (Bilibili)\n    *   **子业务**：视频点播/直播观看\n    *   **状态**：维持原计划不变（根据历史记忆及用户指令，晚上8点已排好的单据继续执行，不进行修改或取消）。"
+        },
+        {
+          "case_id": "U003_P01_PROCEDURAL_CLOSED_CLARIFY",
+          "persona_id": "USER_003",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "Agent识别歧义，精准追问子业务类型，未盲猜，符合I2.2澄清要求。",
+          "answer": "【动作：CLARIFY】\n您好，抖音业务包含“开直播推流”和“观看直播”两种场景，且对网络保障要求不同。请问今晚 19:00-21:00 您具体是需要进行**开播推流**还是**观看直播**？"
+        },
+        {
+          "case_id": "U003_P02_FORBIDDEN_BOUNDARY_5G_SKIP",
+          "persona_id": "USER_003",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "参数与标准答案一致，正确识别5G覆盖未误降画质，符合直通要求。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n*   **应用**：抖音直播（推流）\n*   **子业务**：开播推流\n*   **起止时间**：2026-01-21 19:00:00 至 2026-01-21 21:00:00\n*   **画质要求**：1080P\n*   **时延要求**：≤30ms\n\n**决策依据说明：**\n1.  **槽位完整**：用户明确指定了时间、地点（隐含网络环境）、应用及具体参数（1080P, 30ms），无需追问。\n2.  **套餐合规性校验**：\n    *   用户当前为**标准档**，系统上限为 **1080P** 和 **40ms**。\n    *   用户请求的 **1080P** 在套餐上限内，允许执行。\n    *   用户请求的 **30ms** 优于套餐承诺的最小时延（40ms）。根据规则5“若用户当前明确指定了合法参数，绝不可用历史长期习惯反向篡改”，且30ms未超出物理/技术可行范围（仅严于套餐SLA下限），故直接按用户指定的更优指标配置，不触发NEGOTIATE（通常NEGOTIATE用于用户请求超出套餐能力上限的情况，如请求2K或10ms；此处请求的是比套餐底线更好的体验，属于用户主动优化需求，只要资源允许即可满足，或者视为用户接受该特定场景下的严格约束"
+        },
+        {
+          "case_id": "U003_P03_PACKAGE_MOS_NEGOTIATION",
+          "persona_id": "USER_003",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "准确指出标准档上限1080P/40ms，拒绝盲目承诺并给出平替方案。",
+          "answer": "【动作：NEGOTIATE】\n当前标准档套餐上限为1080P画质与40ms时延，无法支持您要求的4K超清及15ms超低时延。建议调整为档内最优配置：在5G网络稳定环境下锁定1080P画质、时延≤40ms；若遇晚高峰或信号波动，依据您历史确立的策略自动降级至720P以保障推流流畅不卡顿。是否按此方案执行？"
+        },
+        {
+          "case_id": "U003_P04_NEAR_MISS_OOD_AND_SEMI_CHITCHAT",
+          "persona_id": "USER_003",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "未输出模板，礼貌拒绝并收口，符合半闲聊熔断要求。",
+          "answer": "【动作：REJECT_OR_CLOSE】\n您好，当前系统仅支持视频直播类应用（如抖音）的网络保障服务，暂不支持游戏类应用（王者荣耀）的专项优化。建议您直接连接Wi-Fi或确保5G信号良好以获得最佳游戏体验。祝您放松愉快！"
+        }
+      ]
+    },
+    "zep_full_default": {
+      "summary": {
+        "all": {
+          "passed": 7,
+          "total": 11,
+          "acc": 0.636
+        },
+        "requires_memory": {
+          "passed": 3,
+          "total": 5,
+          "acc": 0.6
+        },
+        "no_memory_baseline": {
+          "passed": 4,
+          "total": 6,
+          "acc": 0.667
+        }
+      },
+      "rows": [
+        {
+          "case_id": "U001_P01_ALIAS_AND_TTL_FALLBACK",
+          "persona_id": "USER_001",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "准确还原私有简称与默认KPI，单轮直通无多余追问，符合I1.3标准。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：腾讯会议 (tencentmeeting)\n子业务：视频会议保障\n起止时间：2026-01-29 09:00:00 至 2026-01-29 10:30:00\n画质与时延要求：1080P，时延 ≤ 30ms"
+        },
+        {
+          "case_id": "U001_P02_CROSS_CHANNEL_SMOOTH_VS_STALL",
+          "persona_id": "USER_001",
+          "requires_memory": true,
+          "passed": false,
+          "reason": "未直接输出完整方案，包含大量冗余推导且截断，违反单轮直通要求",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n*   **应用名称**：腾讯会议 (tencentmeeting)\n*   **子业务场景**：科技园独立会议室视频会议（基于“老样子”规则及1月9日生效的分支规则）\n*   **起止时间**：2026-01-29 09:35:00 至 2026-01-29 10:35:00\n    *   *推导逻辑*：用户指定参照“1月9号早上运行顺畅那次会议单据”。检索历史记忆，1月9日生效的是《科技园独立会议室_QoS_Config》规则确立日，而实际有明确“运行顺畅”且带具体时延数据的最近一次腾讯会议记录为 **2026-01-05 09:05:00**（支撑次数8，状态smooth）。但用户明确说“按1月9号...那次会议”，结合语境极可能指代该日期确立的**标准配置习惯**或用户口误将“1月5日/近期常态”记错。鉴于1月9日无具体单次会议日志，仅有规则确立记录，且用户强调“参数照旧”、“别用出差配置”，最稳妥的策略是沿用其核心稳定习惯：**1080P / ≤30ms**。\n    *   *修正推导*：若严格咬文嚼字“1月9号...那次会议”，记忆中1月9日仅记录了规则确立，未记录具体会议开始时间。但通常“早上”默认指工作时段。考虑到用户要求“往后推30分钟”，若"
+        },
+        {
+          "case_id": "U001_P03_NEW_APP_NO_GUESS",
+          "persona_id": "USER_001",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "Agent未盲猜模板，精准追问画质等缺失参数，符合澄清要求。",
+          "answer": "【动作：CLARIFY】\n您好，已收到您今晚 20:00-21:30 使用《王者荣耀》进行排位赛的需求。为了为您匹配最合适的网络保障策略，请确认以下关键信息：\n\n1. **画质要求**：您希望开启最高画质（如“极致”或“超高帧率”模式）还是标准画质？\n   *注：您的黄金档套餐支持最高 2K 分辨率及最低 25ms 时延，通常足以支撑高帧率游戏，但具体参数需结合游戏内设置确认。*\n2. **当前场景**：您是在常驻的科技园基站附近，还是其他地点？（不同基站的网络负载情况可能影响最终体验）\n\n请补充上述信息，我将立即为您生成专属保障方案。"
+        },
+        {
+          "case_id": "U001_P04_EXPLICIT_OVERRIDE_NO_TAMPER",
+          "persona_id": "USER_001",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "准确解析用户指令，未受历史习惯干扰，参数与标准答案一致。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**最终保障方案：**\n*   **应用**：腾讯会议 (tencentmeeting)\n*   **子业务**：视频会议\n*   **起止时间**：2026-01-31 10:00:00 至 2026-01-31 11:00:00\n*   **画质要求**：720P（用户明确指定，优先于历史习惯中的1080P）\n*   **时延要求**：<50ms（用户明确指定，优先于历史习惯中的≤30ms；当前黄金档套餐支持最低25ms时延，满足需求）"
+        },
+        {
+          "case_id": "U002_P01_IMPLICIT_MIGRATION_AND_SKIP_CONSULT",
+          "persona_id": "USER_002",
+          "requires_memory": true,
+          "passed": false,
+          "reason": "画质与时延参数错误，未匹配标准答案4K/30ms",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n*   **应用名称**：哔哩哔哩 (B站)\n*   **子业务类型**：视频点播 (VOD)\n*   **起止时间**：2026-02-03 20:00:00 至 2026-02-03 21:30:00\n*   **画质要求**：高清/超清（基于历史“常用规格”及当前未开启4K的默认状态，匹配其日常流畅体验标准）\n*   **时延要求**：≤ 28ms（基于历史记忆中的稳定低时延表现）\n*   **备注**：已识别用户位于居家书房直播间场景，套餐为钻石VIP档，支持该规格保障。"
+        },
+        {
+          "case_id": "U002_P02_CONCURRENT_AND_TRADEOFF",
+          "persona_id": "USER_002",
+          "requires_memory": false,
+          "passed": false,
+          "reason": "I1.2单轮直通题，Agent多余追问且未直接输出完整方案",
+          "answer": "【动作：CLARIFY】\n您好，为了为您生成准确的网络保障方案，请补充以下关键信息：\n\n1. **虎牙直播的具体子业务类型**：您提到的“看虎牙4K直播”是指**观众端观看直播**（低时延要求通常较宽松），还是指您作为主播进行**开播推流**（对上行带宽和时延有极高要求）？这两者在网络调度策略上差异巨大。\n2. **百度网盘传输的方向与优先级**：后台挂传大文件是指**上传**还是**下载**？在带宽紧张时，您希望优先保障哪一项业务的体验（例如：优先保直播画质/时延，允许网盘速度波动；还是两者均需严格达标）？\n\n*注：您的钻石VIP套餐支持最高4K画质及最低15ms时延，当前需求中的30ms和80ms均在套餐能力范围内，待明确上述细节后即可为您配置。*"
+        },
+        {
+          "case_id": "U002_P03_CROSS_INTENT_NEGATION_PROTECT",
+          "persona_id": "USER_002",
+          "requires_memory": false,
+          "passed": false,
+          "reason": "违反红线2：多余输出保留任务详情，未严格仅输出新增意图。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n1. **新增任务（钉钉视频会议）**\n   - **应用/子业务**：钉钉 / 视频会议\n   - **起止时间**：2026-02-05 15:00:00 至 2026-02-05 16:30:00\n   - **画质要求**：1080P（符合钻石VIP档上限4K，支持）\n   - **时延要求**：≤40ms（符合钻石VIP档下限15ms，支持）\n\n2. **保留任务（B站视频点播）**\n   - **应用/子业务**：Bilibili / 视频点播\n   - **状态**：维持原计划不变（依据用户指令“不要动”，且历史记忆显示该时段有既定使用习惯及生效单据）"
+        },
+        {
+          "case_id": "U003_P01_PROCEDURAL_CLOSED_CLARIFY",
+          "persona_id": "USER_003",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "Agent精准识别子业务歧义并发起闭合式反问，符合I2.2澄清要求。",
+          "answer": "【动作：CLARIFY】\n检测到“抖音”存在多个易混子业务（开播推流 vs 观看直播），且历史记忆中两者均有记录。请确认您今晚19:00-21:00的具体需求是**抖音开播推流**还是**观看直播**？"
+        },
+        {
+          "case_id": "U003_P02_FORBIDDEN_BOUNDARY_5G_SKIP",
+          "persona_id": "USER_003",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "参数完全匹配，正确识别5G满格未触发降级规则",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：抖音直播推流（douyin_live）\n子业务：开播/推流\n起止时间：2026-01-21 19:00:00 - 2026-01-21 21:00:00\n画质要求：1080P\n时延要求：≤30ms"
+        },
+        {
+          "case_id": "U003_P03_PACKAGE_MOS_NEGOTIATION",
+          "persona_id": "USER_003",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "准确指出标准档上限并给出1080P/40ms平替，符合协商规则。",
+          "answer": "【动作：NEGOTIATE】\n检测到您的请求超出当前“标准档”套餐能力上限（最高支持1080P，最小时延40ms），无法直接承诺4K画质及15ms时延。\n\n建议协商方案：\n1. **画质调整**：将目标画质调整为套餐上限 **1080P**。\n2. **时延调整**：将目标时延调整为套餐下限 **40ms**（历史记忆中您曾要求≤30ms，但需确认是否接受放宽至40ms以符合当前套餐硬性指标，或尝试申请临时升级）。\n3. **稳定性保障**：鉴于您习惯在居家书房使用，若处于5G稳定覆盖区，可尽力维持高画质；若遇弱信号，依据历史规则可能自动降级至720P以防掉线，请知悉。\n\n请回复“同意按1080P/40ms配置”或“申请升级套餐”。"
+        },
+        {
+          "case_id": "U003_P04_NEAR_MISS_OOD_AND_SEMI_CHITCHAT",
+          "persona_id": "USER_003",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "简短共情并引导收口，未输出模板，符合半闲聊熔断要求。",
+          "answer": "【动作：REJECT_OR_CLOSE】\n收到，辛苦了！今晚好好休息放松。如需为“王者荣耀”开启低时延保障或调整网络优先级，请随时告知具体时间段及需求（如画质、时延上限），我将为您配置。"
+        }
+      ]
+    },
+    "zep_full_strict": {
+      "summary": {
+        "all": {
+          "passed": 8,
+          "total": 11,
+          "acc": 0.727
+        },
+        "requires_memory": {
+          "passed": 3,
+          "total": 5,
+          "acc": 0.6
+        },
+        "no_memory_baseline": {
+          "passed": 5,
+          "total": 6,
+          "acc": 0.833
+        }
+      },
+      "rows": [
+        {
+          "case_id": "U001_P01_ALIAS_AND_TTL_FALLBACK",
+          "persona_id": "USER_001",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "准确还原简称与KPI，时间计算正确，单轮直通无多余追问。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：腾讯会议 (tencentmeeting)\n子业务：视频会议保障\n起止时间：2026-01-29 09:00:00 至 2026-01-29 10:30:00\n画质与时延要求：1080P，时延 ≤ 30ms"
+        },
+        {
+          "case_id": "U001_P02_CROSS_CHANNEL_SMOOTH_VS_STALL",
+          "persona_id": "USER_001",
+          "requires_memory": true,
+          "passed": false,
+          "reason": "时间计算错误，标准答案应为09:35起，Agent误算为09:30起。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n**保障方案详情：**\n\n*   **应用名称**：腾讯会议 (tencentmeeting)\n*   **子业务场景**：科技园独立会议室视频会议（基于“1月9号早上运行顺畅”及“老样子”规则匹配）\n*   **起止时间**：2026-01-29 09:30:00 至 2026-01-29 10:30:00\n    *   *推导逻辑*：历史记忆中1月9日该场景开始时间为09:00，往后推30分钟即当前日期（1月29日）的09:30；用户要求保一小时，故结束时间为10:30。\n*   **画质与时延要求**：1080P / ≤30ms\n    *   *参数依据*：遵循用户指定的“参数照旧”及历史确立的“科技园独立会议室_QoS_Config”规则（1080P/≤30ms）。\n    *   *套餐校验*：黄金档上限支持2K且最小时延25ms，当前需求1080P/30ms完全在能力范围内，无需降级或协商。"
+        },
+        {
+          "case_id": "U001_P03_NEW_APP_NO_GUESS",
+          "persona_id": "USER_001",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "Agent未盲猜模板，精准追问缺失的画质与时延参数，符合澄清要求。",
+          "answer": "【动作：CLARIFY】\n您好，当前套餐为黄金档（上限2K画质）。为了为您生成准确的保障方案，请确认以下信息：\n1. **画质要求**：您希望开启“极致/超高”画质（接近2K）还是保持默认高清？\n2. **时延敏感度**：排位赛对时延要求较高，是否接受黄金档最低25ms的时延标准？若需更低时延可能超出套餐能力。"
+        },
+        {
+          "case_id": "U001_P04_EXPLICIT_OVERRIDE_NO_TAMPER",
+          "persona_id": "USER_001",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "参数完全匹配用户指令，未受历史习惯干扰，直接输出模板。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：腾讯会议 (tencentmeeting)\n子业务：视频会议\n起止时间：2026-01-31 10:00:00 至 2026-01-31 11:00:00\n画质要求：720P\n时延要求：<50ms"
+        },
+        {
+          "case_id": "U002_P01_IMPLICIT_MIGRATION_AND_SKIP_CONSULT",
+          "persona_id": "USER_002",
+          "requires_memory": true,
+          "passed": false,
+          "reason": "画质与时延参数错误，未匹配标准答案4K/30ms",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n*   **应用名称**：哔哩哔哩 (B站)\n*   **子业务类型**：视频点播 (看剧)\n*   **起止时间**：2026-02-03 20:00:00 至 2026-02-03 21:30:00\n*   **画质要求**：高清/超清（基于历史“常用规格”及当前体验极佳状态，未指定4K故不启用最高档）\n*   **时延要求**：≤ 28ms（匹配历史稳定低时延水平）\n*   **备注**：用户位于居家书房直播间场景，套餐为钻石VIP，支持该规格保障。"
+        },
+        {
+          "case_id": "U002_P02_CONCURRENT_AND_TRADEOFF",
+          "persona_id": "USER_002",
+          "requires_memory": false,
+          "passed": false,
+          "reason": "单轮直通题错误澄清，未直接输出完整保障方案",
+          "answer": "【动作：CLARIFY】\n您好，为了为您生成准确的网络保障方案，请补充以下关键信息：\n1. **虎牙直播的具体子业务**：是“观看直播”还是“开播/推流”？（两者对上行带宽和时延要求差异巨大）\n2. **百度网盘传输方向**：是“上传大文件”还是“下载大文件”？\n\n*注：您提到的4K画质在您的钻石VIP套餐能力范围内（上限4K），但需明确上述场景细节以配置正确的QoS策略。*"
+        },
+        {
+          "case_id": "U002_P03_CROSS_INTENT_NEGATION_PROTECT",
+          "persona_id": "USER_002",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "正确解析新增钉钉意图，未误抽B站为修改项，参数准确。",
+          "answer": "【动作：DIRECT_TEMPLATE】\n\n**保障方案详情：**\n1. **新增任务（钉钉视频会议）**\n   - **应用**：钉钉 (DingTalk)\n   - **子业务**：视频会议\n   - **起止时间**：2026-02-05 15:00:00 至 2026-02-05 16:30:00\n   - **画质要求**：1080P\n   - **时延要求**：≤40ms\n   - **备注**：符合钻石VIP档位能力（上限4K/最低15ms），直接生效。\n\n2. **保留任务（B站点播）**\n   - **应用**：哔哩哔哩 (bilibili_vod)\n   - **子业务**：视频点播\n   - **状态**：维持原计划，不做任何变更或干扰。"
+        },
+        {
+          "case_id": "U003_P01_PROCEDURAL_CLOSED_CLARIFY",
+          "persona_id": "USER_003",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "Agent识别歧义并精准追问子业务类型，未盲猜，符合I2.2澄清要求。",
+          "answer": "【动作：CLARIFY】\n检测到“抖音”存在多个易混子业务（历史记忆显示您既有“推流直播”习惯，也有“观看直播”记录）。请确认今晚 19:00-21:00 您需要保障的是**抖音开播推流**还是**抖音观看直播**？"
+        },
+        {
+          "case_id": "U003_P02_FORBIDDEN_BOUNDARY_5G_SKIP",
+          "persona_id": "USER_003",
+          "requires_memory": true,
+          "passed": true,
+          "reason": "参数完全一致，正确识别5G满格未触发降级，直接输出模板",
+          "answer": "【动作：DIRECT_TEMPLATE】\n应用：抖音直播推流（douyin_live）\n子业务：开播/推流\n起止时间：2026-01-21 19:00:00 - 2026-01-21 21:00:00\n画质与时延要求：1080P，时延≤30ms"
+        },
+        {
+          "case_id": "U003_P03_PACKAGE_MOS_NEGOTIATION",
+          "persona_id": "USER_003",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "准确指出标准档上限，给出1080P/40ms平替方案，符合协商规则。",
+          "answer": "【动作：NEGOTIATE】\n您指定的4K超清画质与15ms时延要求超出了当前“标准档”套餐的上限（最高支持1080P，最小时延40ms）。\n\n基于您的历史习惯（居家书房douyin_live推流）及当前时间（2026-01-22 18:00），为您协商以下**档内最优保障方案**：\n1. **应用/子业务**：抖音直播推流 (douyin_live)\n2. **起止时间**：2026-01-22 20:00 - 22:00\n3. **画质与时延策略**：\n   - **默认配置**：锁定 **1080P** 高清画质，目标时延 **≤40ms**。\n   - **智能降级保护**：若检测到信号波动或晚高峰拥塞导致无法维持1080P稳定传输，系统将依据您的历史规则自动降级至 **720P** 以优先防止掉线卡顿（而非强行维持高画质导致断流）。\n   - **位置关联**：鉴于您在基站4600040777E曾出现劣化记录，若在该区域推流，建议提前确认信号强度，必要时切换至信号更稳定的居家书房主基站（46000404997）以确保最佳体验。\n\n请确认是否接受此1080P/40ms的保障方案？"
+        },
+        {
+          "case_id": "U003_P04_NEAR_MISS_OOD_AND_SEMI_CHITCHAT",
+          "persona_id": "USER_003",
+          "requires_memory": false,
+          "passed": true,
+          "reason": "未输出模板，简短共情并闭合引导，符合半闲聊收口要求。",
+          "answer": "【动作：REJECT_OR_CLOSE】\n您好，检测到您当前处于“居家书房”场景且刚结束直播工作。鉴于您提到的“躺沙发打王者”属于非核心业务场景的休闲行为，且未明确指定具体的网络保障需求（如是否需开启游戏加速或特定QoS策略），系统暂不自动触发保障模板。\n\n若您希望为今晚的游戏体验开启专项优化（例如降低时延至套餐上限40ms以内），请回复“开启游戏保障”，我将为您配置标准档下的最优参数；否则祝您休息愉快！"
+        }
+      ]
+    }
+  }
+}
