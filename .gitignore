@@ -13,6 +13,9 @@
 .DS_Store
 Thumbs.db
 node_modules/
+.obsidian/
+__pycache__/
+*.pyc
 
 # 论文配套代码仓（本地核对用，不入库）
 papers/repos/

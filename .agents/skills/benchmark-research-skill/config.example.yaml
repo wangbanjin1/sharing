@@ -1,0 +1,26 @@
+language: "zh"
+vault_path: "E:/Your/Obsidian/Vault"
+
+benchmark_survey:
+  workspace_dir: "Benchmark_Surveys"
+  papers_dir_name: "papers"
+  reports_dir_name: "reports"
+  survey_runs_dir_name: "surveys"
+  enable_collect_links: false
+
+# Optional topic-specific search hints for search_papers.py.
+research_domains:
+  "your-topic":
+    keywords:
+      - "main phrase"
+      - "synonym"
+      - "related task phrase"
+    arxiv_categories:
+      - "cs.AI"
+      - "cs.LG"
+
+# Optional low-value keywords to filter from search results.
+excluded_keywords:
+  - "workshop"
+  - "survey"
+  - "review"

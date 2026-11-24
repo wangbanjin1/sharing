@@ -1,0 +1,4264 @@
+{
+ "config": {
+  "n_users": 20,
+  "n_facts": 260,
+  "now": "2026-11-25",
+  "base_date": "2026-11-01",
+  "injected_migrations": [
+   {
+    "user_id": "8613213213689",
+    "from": "youku_vod",
+    "to": "iqiyi_vod",
+    "at": "2026-11-20",
+    "old_fact": "F0003",
+    "new_fact": "F0258"
+   },
+   {
+    "user_id": "8613419812206",
+    "from": "hongguo_svod",
+    "to": "youku_vod",
+    "at": "2026-11-20",
+    "old_fact": "F0054",
+    "new_fact": "F0259"
+   },
+   {
+    "user_id": "8613460256444",
+    "from": "douyin_svod",
+    "to": "youku_vod",
+    "at": "2026-11-20",
+    "old_fact": "F0066",
+    "new_fact": "F0260"
+   }
+  ],
+  "vector_encoder": "char-bigram TF-IDF cosine (offline stand-in for dense embedding)",
+  "top_k": 5
+ },
+ "summary": {
+  "graph": {
+   "all": {
+    "n": 15,
+    "recall": 1.0,
+    "correct": 1.0,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 532.1,
+    "avg_ms": 0.009
+   },
+   "single": {
+    "n": 5,
+    "recall": 1.0,
+    "correct": 1.0,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 243.0,
+    "avg_ms": 0.003
+   },
+   "multi": {
+    "n": 4,
+    "recall": 1.0,
+    "correct": 1.0,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 1388.2,
+    "avg_ms": 0.028
+   },
+   "temporal": {
+    "n": 3,
+    "recall": 1.0,
+    "correct": 1.0,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 45.3,
+    "avg_ms": 0.002
+   },
+   "negation": {
+    "n": 3,
+    "recall": 1.0,
+    "correct": 1.0,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 359.0,
+    "avg_ms": 0.002
+   }
+  },
+  "vector": {
+   "all": {
+    "n": 15,
+    "recall": 0.4,
+    "correct": 0.333,
+    "conflict_rate": 0.133,
+    "avg_ctx_chars": 518.5,
+    "avg_ms": 0.189
+   },
+   "single": {
+    "n": 5,
+    "recall": 0.6,
+    "correct": 0.4,
+    "conflict_rate": 0.4,
+    "avg_ctx_chars": 518.6,
+    "avg_ms": 0.05
+   },
+   "multi": {
+    "n": 4,
+    "recall": 0.25,
+    "correct": 0.25,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 535.2,
+    "avg_ms": 0.567
+   },
+   "temporal": {
+    "n": 3,
+    "recall": 0.667,
+    "correct": 0.667,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 509.7,
+    "avg_ms": 0.054
+   },
+   "negation": {
+    "n": 3,
+    "recall": 0.0,
+    "correct": 0.0,
+    "conflict_rate": 0.0,
+    "avg_ctx_chars": 505.0,
+    "avg_ms": 0.052
+   }
+  }
+ },
+ "rows": [
+  {
+   "qid": "S1",
+   "type": "single",
+   "query": "用户 8613213213689 现在最常用的子应用是哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0258",
+   "expect": "iqiyi_vod",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 296,
+    "ms": 0.005,
+    "facts": [
+     "F0004",
+     "F0005",
+     "F0006",
+     "F0007",
+     "F0258"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 1,
+    "correct": false,
+    "ctx_chars": 536,
+    "ms": 0.062,
+    "facts": [
+     "F0011",
+     "F0004",
+     "F0003",
+     "F0005",
+     "F0012",
+     "F0013",
+     "F0007",
+     "F0006",
+     "F0010",
+     "F0009"
+    ]
+   }
+  },
+  {
+   "qid": "S2",
+   "type": "single",
+   "query": "用户 8613409272151 现在最常用的子应用是哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0015",
+   "expect": "tencentmeeting",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 112,
+    "ms": 0.003,
+    "facts": [
+     "F0015",
+     "F0016"
+    ]
+   },
+   "vector": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "ctx_chars": 482,
+    "ms": 0.044,
+    "facts": [
+     "F0020",
+     "F0021",
+     "F0022",
+     "F0014",
+     "F0017",
+     "F0019",
+     "F0018",
+     "F0015",
+     "F0016"
+    ]
+   }
+  },
+  {
+   "qid": "S3",
+   "type": "single",
+   "query": "用户 8613409383368 现在最常用的子应用是哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0026",
+   "expect": "sanjiaozhouxingdong_game",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 310,
+    "ms": 0.003,
+    "facts": [
+     "F0026",
+     "F0027",
+     "F0028",
+     "F0029",
+     "F0030"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 513,
+    "ms": 0.051,
+    "facts": [
+     "F0035",
+     "F0034",
+     "F0036",
+     "F0023",
+     "F0027",
+     "F0029",
+     "F0025",
+     "F0031",
+     "F0032",
+     "F0024"
+    ]
+   }
+  },
+  {
+   "qid": "S4",
+   "type": "single",
+   "query": "用户 8613419793054 现在最常用的子应用是哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0038",
+   "expect": "sanjiaozhouxingdong_game",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 191,
+    "ms": 0.002,
+    "facts": [
+     "F0038",
+     "F0039",
+     "F0040"
+    ]
+   },
+   "vector": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "ctx_chars": 561,
+    "ms": 0.042,
+    "facts": [
+     "F0044",
+     "F0045",
+     "F0037",
+     "F0046",
+     "F0042",
+     "F0043",
+     "F0039",
+     "F0041",
+     "F0040",
+     "F0038"
+    ]
+   }
+  },
+  {
+   "qid": "S5",
+   "type": "single",
+   "query": "用户 8613419812206 现在最常用的子应用是哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0050",
+   "expect": "douyin_live",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 306,
+    "ms": 0.003,
+    "facts": [
+     "F0050",
+     "F0051",
+     "F0052",
+     "F0053",
+     "F0259"
+    ]
+   },
+   "vector": {
+    "hit": true,
+    "conflicts": 1,
+    "correct": false,
+    "ctx_chars": 501,
+    "ms": 0.05,
+    "facts": [
+     "F0058",
+     "F0060",
+     "F0059",
+     "F0050",
+     "F0048",
+     "F0051",
+     "F0054",
+     "F0049",
+     "F0047",
+     "F0057"
+    ]
+   }
+  },
+  {
+   "qid": "M6",
+   "type": "multi",
+   "query": "和用户 8613213213689 常驻同一小区的人里，谁偏好短视频？",
+   "at": "2026-11-25",
+   "gold_fact": "F0061",
+   "expect": "short_video",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 3,
+    "ctx_chars": 1328,
+    "ms": 0.03,
+    "facts": [
+     "F0023",
+     "F0024",
+     "F0025",
+     "F0047",
+     "F0048",
+     "F0049",
+     "F0061",
+     "F0062",
+     "F0063",
+     "F0064",
+     "F0076",
+     "F0077",
+     "F0114",
+     "F0115",
+     "F0139",
+     "F0140",
+     "F0180",
+     "F0181",
+     "F0207",
+     "F0208",
+     "F0209",
+     "F0210",
+     "F0222",
+     "F0223",
+     "F0224",
+     "F0236",
+     "F0245",
+     "F0246"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 537,
+    "ms": 0.554,
+    "facts": [
+     "F0002",
+     "F0010",
+     "F0009",
+     "F0008",
+     "F0180",
+     "F0001",
+     "F0004",
+     "F0003",
+     "F0005",
+     "F0011"
+    ]
+   }
+  },
+  {
+   "qid": "M7",
+   "type": "multi",
+   "query": "和用户 8613213213689 常驻同一小区的人里，谁偏好短视频？",
+   "at": "2026-11-25",
+   "gold_fact": "F0049",
+   "expect": "short_video",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 3,
+    "ctx_chars": 1328,
+    "ms": 0.027,
+    "facts": [
+     "F0023",
+     "F0024",
+     "F0025",
+     "F0047",
+     "F0048",
+     "F0049",
+     "F0061",
+     "F0062",
+     "F0063",
+     "F0064",
+     "F0076",
+     "F0077",
+     "F0114",
+     "F0115",
+     "F0139",
+     "F0140",
+     "F0180",
+     "F0181",
+     "F0207",
+     "F0208",
+     "F0209",
+     "F0210",
+     "F0222",
+     "F0223",
+     "F0224",
+     "F0236",
+     "F0245",
+     "F0246"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 537,
+    "ms": 0.555,
+    "facts": [
+     "F0002",
+     "F0010",
+     "F0009",
+     "F0008",
+     "F0180",
+     "F0001",
+     "F0004",
+     "F0003",
+     "F0005",
+     "F0011"
+    ]
+   }
+  },
+  {
+   "qid": "M8",
+   "type": "multi",
+   "query": "和用户 8613213213689 常驻同一小区的人里，谁偏好短视频？",
+   "at": "2026-11-25",
+   "gold_fact": "F0049",
+   "expect": "short_video",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 3,
+    "ctx_chars": 1328,
+    "ms": 0.025,
+    "facts": [
+     "F0023",
+     "F0024",
+     "F0025",
+     "F0047",
+     "F0048",
+     "F0049",
+     "F0061",
+     "F0062",
+     "F0063",
+     "F0064",
+     "F0076",
+     "F0077",
+     "F0114",
+     "F0115",
+     "F0139",
+     "F0140",
+     "F0180",
+     "F0181",
+     "F0207",
+     "F0208",
+     "F0209",
+     "F0210",
+     "F0222",
+     "F0223",
+     "F0224",
+     "F0236",
+     "F0245",
+     "F0246"
+    ]
+   },
+   "vector": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "ctx_chars": 537,
+    "ms": 0.551,
+    "facts": [
+     "F0002",
+     "F0010",
+     "F0009",
+     "F0008",
+     "F0180",
+     "F0001",
+     "F0004",
+     "F0003",
+     "F0005",
+     "F0011"
+    ]
+   }
+  },
+  {
+   "qid": "M9",
+   "type": "multi",
+   "query": "和用户 8613409272151 常驻同一小区的人里，谁偏好短视频？",
+   "at": "2026-11-25",
+   "gold_fact": "F0061",
+   "expect": "short_video",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 3,
+    "ctx_chars": 1569,
+    "ms": 0.028,
+    "facts": [
+     "F0023",
+     "F0024",
+     "F0025",
+     "F0047",
+     "F0048",
+     "F0049",
+     "F0061",
+     "F0062",
+     "F0063",
+     "F0064",
+     "F0076",
+     "F0077",
+     "F0089",
+     "F0090",
+     "F0102",
+     "F0103",
+     "F0114",
+     "F0115",
+     "F0151",
+     "F0152",
+     "F0153",
+     "F0154",
+     "F0180",
+     "F0181",
+     "F0193",
+     "F0194",
+     "F0195",
+     "F0222",
+     "F0223",
+     "F0224",
+     "F0236",
+     "F0245",
+     "F0246"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 530,
+    "ms": 0.607,
+    "facts": [
+     "F0017",
+     "F0019",
+     "F0018",
+     "F0020",
+     "F0021",
+     "F0014",
+     "F0022",
+     "F0015",
+     "F0016",
+     "F0139"
+    ]
+   }
+  },
+  {
+   "qid": "T10",
+   "type": "temporal",
+   "query": "用户 8613213213689 在 11 月 15 日用哪个视频应用看剧？",
+   "at": "2026-11-15",
+   "gold_fact": "F0003",
+   "expect": "youku_vod",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 44,
+    "ms": 0.003,
+    "facts": [
+     "F0003"
+    ]
+   },
+   "vector": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "ctx_chars": 515,
+    "ms": 0.053,
+    "facts": [
+     "F0002",
+     "F0001",
+     "F0011",
+     "F0012",
+     "F0013",
+     "F0004",
+     "F0003",
+     "F0005",
+     "F0010",
+     "F0009"
+    ]
+   }
+  },
+  {
+   "qid": "N11",
+   "type": "negation",
+   "query": "用户 8613213213689 的视频应用偏好变过吗？现在用哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0258",
+   "expect": "从 youku_vod 变为 iqiyi_vod",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 352,
+    "ms": 0.002,
+    "facts": [
+     "F0003",
+     "F0004",
+     "F0005",
+     "F0006",
+     "F0007",
+     "F0258"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 515,
+    "ms": 0.049,
+    "facts": [
+     "F0011",
+     "F0012",
+     "F0013",
+     "F0002",
+     "F0001",
+     "F0004",
+     "F0003",
+     "F0005",
+     "F0010",
+     "F0009"
+    ]
+   }
+  },
+  {
+   "qid": "T12",
+   "type": "temporal",
+   "query": "用户 8613419812206 在 11 月 15 日用哪个视频应用看剧？",
+   "at": "2026-11-15",
+   "gold_fact": "F0054",
+   "expect": "hongguo_svod",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 46,
+    "ms": 0.002,
+    "facts": [
+     "F0054"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 509,
+    "ms": 0.054,
+    "facts": [
+     "F0049",
+     "F0058",
+     "F0060",
+     "F0059",
+     "F0048",
+     "F0050",
+     "F0047",
+     "F0057",
+     "F0055",
+     "F0056"
+    ]
+   }
+  },
+  {
+   "qid": "N13",
+   "type": "negation",
+   "query": "用户 8613419812206 的视频应用偏好变过吗？现在用哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0259",
+   "expect": "从 hongguo_svod 变为 youku_vod",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 364,
+    "ms": 0.002,
+    "facts": [
+     "F0050",
+     "F0051",
+     "F0052",
+     "F0053",
+     "F0054",
+     "F0259"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 509,
+    "ms": 0.053,
+    "facts": [
+     "F0058",
+     "F0060",
+     "F0059",
+     "F0049",
+     "F0048",
+     "F0047",
+     "F0050",
+     "F0057",
+     "F0055",
+     "F0056"
+    ]
+   }
+  },
+  {
+   "qid": "T14",
+   "type": "temporal",
+   "query": "用户 8613460256444 在 11 月 15 日用哪个视频应用看剧？",
+   "at": "2026-11-15",
+   "gold_fact": "F0066",
+   "expect": "douyin_svod",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 46,
+    "ms": 0.002,
+    "facts": [
+     "F0066"
+    ]
+   },
+   "vector": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "ctx_chars": 505,
+    "ms": 0.056,
+    "facts": [
+     "F0061",
+     "F0073",
+     "F0074",
+     "F0075",
+     "F0070",
+     "F0066",
+     "F0063",
+     "F0064",
+     "F0072",
+     "F0071"
+    ]
+   }
+  },
+  {
+   "qid": "N15",
+   "type": "negation",
+   "query": "用户 8613460256444 的视频应用偏好变过吗？现在用哪个？",
+   "at": "2026-11-25",
+   "gold_fact": "F0260",
+   "expect": "从 douyin_svod 变为 youku_vod",
+   "graph": {
+    "hit": true,
+    "conflicts": 0,
+    "correct": true,
+    "hops": 1,
+    "ctx_chars": 361,
+    "ms": 0.001,
+    "facts": [
+     "F0065",
+     "F0066",
+     "F0067",
+     "F0068",
+     "F0069",
+     "F0260"
+    ]
+   },
+   "vector": {
+    "hit": false,
+    "conflicts": 0,
+    "correct": false,
+    "ctx_chars": 491,
+    "ms": 0.055,
+    "facts": [
+     "F0073",
+     "F0074",
+     "F0075",
+     "F0061",
+     "F0063",
+     "F0064",
+     "F0062",
+     "F0070",
+     "F0066",
+     "F0072"
+    ]
+   }
+  }
+ ],
+ "graph": {
+  "nodes": null,
+  "edges": [
+   {
+    "id": "F0001",
+    "subj": "8613213213689",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "vod_streaming",
+    "text": "用户 8613213213689 偏好视频点播业务，时长占比 60.06%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.6006
+    }
+   },
+   {
+    "id": "F0002",
+    "subj": "8613213213689",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "short_video",
+    "text": "用户 8613213213689 偏好短视频业务，时长占比 39.94%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3994
+    }
+   },
+   {
+    "id": "F0003",
+    "subj": "8613213213689",
+    "rel": "USES_APP",
+    "obj": "youku_vod",
+    "text": "用户 8613213213689 常用子应用 youku_vod，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": "2026-11-20",
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0004",
+    "subj": "8613213213689",
+    "rel": "USES_APP",
+    "obj": "douyin_svod",
+    "text": "用户 8613213213689 常用子应用 douyin_svod，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0005",
+    "subj": "8613213213689",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613213213689 常用子应用 douyin_watch，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0006",
+    "subj": "8613213213689",
+    "rel": "USES_APP",
+    "obj": "bilibili_vod",
+    "text": "用户 8613213213689 常用子应用 bilibili_vod，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0007",
+    "subj": "8613213213689",
+    "rel": "USES_APP",
+    "obj": "kuaishou_svod",
+    "text": "用户 8613213213689 常用子应用 kuaishou_svod，占其会话 8.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0833
+    }
+   },
+   {
+    "id": "F0008",
+    "subj": "8613213213689",
+    "rel": "RESIDES_AT",
+    "obj": "4600040371D",
+    "text": "用户 8613213213689 常驻小区 4600040371D（evening 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0009",
+    "subj": "8613213213689",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613213213689 常驻小区 46000404997（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0010",
+    "subj": "8613213213689",
+    "rel": "RESIDES_AT",
+    "obj": "4600040380A",
+    "text": "用户 8613213213689 常驻小区 4600040380A（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0011",
+    "subj": "8613213213689",
+    "rel": "ACTIVE_AT",
+    "obj": "19时",
+    "text": "用户 8613213213689 的高峰活跃小时为 19 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0012",
+    "subj": "8613213213689",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613213213689 的 5G 驻留占比为 91.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.9167
+    }
+   },
+   {
+    "id": "F0013",
+    "subj": "8613213213689",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613213213689 的时延中位数 61.7 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 61.7
+    }
+   },
+   {
+    "id": "F0014",
+    "subj": "8613409272151",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "meeting",
+    "text": "用户 8613409272151 偏好会议业务，时长占比 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 1.0
+    }
+   },
+   {
+    "id": "F0015",
+    "subj": "8613409272151",
+    "rel": "USES_APP",
+    "obj": "tencentmeeting",
+    "text": "用户 8613409272151 常用子应用 tencentmeeting，占其会话 58.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.5833
+    }
+   },
+   {
+    "id": "F0016",
+    "subj": "8613409272151",
+    "rel": "USES_APP",
+    "obj": "dingtalk_meeting",
+    "text": "用户 8613409272151 常用子应用 dingtalk_meeting，占其会话 41.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.4167
+    }
+   },
+   {
+    "id": "F0017",
+    "subj": "8613409272151",
+    "rel": "RESIDES_AT",
+    "obj": "4600040386A",
+    "text": "用户 8613409272151 常驻小区 4600040386A（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0018",
+    "subj": "8613409272151",
+    "rel": "RESIDES_AT",
+    "obj": "4600040391C",
+    "text": "用户 8613409272151 常驻小区 4600040391C（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0019",
+    "subj": "8613409272151",
+    "rel": "RESIDES_AT",
+    "obj": "4600040393B",
+    "text": "用户 8613409272151 常驻小区 4600040393B（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0020",
+    "subj": "8613409272151",
+    "rel": "ACTIVE_AT",
+    "obj": "10时",
+    "text": "用户 8613409272151 的高峰活跃小时为 10 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0021",
+    "subj": "8613409272151",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613409272151 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0022",
+    "subj": "8613409272151",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613409272151 的时延中位数 87.15 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 87.15
+    }
+   },
+   {
+    "id": "F0023",
+    "subj": "8613409383368",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613409383368 偏好手游业务，时长占比 35.04%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3504
+    }
+   },
+   {
+    "id": "F0024",
+    "subj": "8613409383368",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "voip",
+    "text": "用户 8613409383368 偏好语音通话业务，时长占比 34.71%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3471
+    }
+   },
+   {
+    "id": "F0025",
+    "subj": "8613409383368",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "meeting",
+    "text": "用户 8613409383368 偏好会议业务，时长占比 30.25%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3025
+    }
+   },
+   {
+    "id": "F0026",
+    "subj": "8613409383368",
+    "rel": "USES_APP",
+    "obj": "sanjiaozhouxingdong_game",
+    "text": "用户 8613409383368 常用子应用 sanjiaozhouxingdong_game，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0027",
+    "subj": "8613409383368",
+    "rel": "USES_APP",
+    "obj": "hepingjingying_game",
+    "text": "用户 8613409383368 常用子应用 hepingjingying_game，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0028",
+    "subj": "8613409383368",
+    "rel": "USES_APP",
+    "obj": "wangzherongyao_game",
+    "text": "用户 8613409383368 常用子应用 wangzherongyao_game，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0029",
+    "subj": "8613409383368",
+    "rel": "USES_APP",
+    "obj": "weixin_voip",
+    "text": "用户 8613409383368 常用子应用 weixin_voip，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0030",
+    "subj": "8613409383368",
+    "rel": "USES_APP",
+    "obj": "tencentmeeting",
+    "text": "用户 8613409383368 常用子应用 tencentmeeting，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0031",
+    "subj": "8613409383368",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613409383368 常驻小区 46000404997（evening 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0032",
+    "subj": "8613409383368",
+    "rel": "RESIDES_AT",
+    "obj": "4600040391C",
+    "text": "用户 8613409383368 常驻小区 4600040391C（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0033",
+    "subj": "8613409383368",
+    "rel": "RESIDES_AT",
+    "obj": "4600040495D",
+    "text": "用户 8613409383368 常驻小区 4600040495D（evening 时段出现 1 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 1
+    }
+   },
+   {
+    "id": "F0034",
+    "subj": "8613409383368",
+    "rel": "ACTIVE_AT",
+    "obj": "23时",
+    "text": "用户 8613409383368 的高峰活跃小时为 23 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0035",
+    "subj": "8613409383368",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613409383368 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0036",
+    "subj": "8613409383368",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613409383368 的时延中位数 58.3 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 58.3
+    }
+   },
+   {
+    "id": "F0037",
+    "subj": "8613419793054",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613419793054 偏好手游业务，时长占比 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 1.0
+    }
+   },
+   {
+    "id": "F0038",
+    "subj": "8613419793054",
+    "rel": "USES_APP",
+    "obj": "sanjiaozhouxingdong_game",
+    "text": "用户 8613419793054 常用子应用 sanjiaozhouxingdong_game，占其会话 40.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.4
+    }
+   },
+   {
+    "id": "F0039",
+    "subj": "8613419793054",
+    "rel": "USES_APP",
+    "obj": "hepingjingying_game",
+    "text": "用户 8613419793054 常用子应用 hepingjingying_game，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0040",
+    "subj": "8613419793054",
+    "rel": "USES_APP",
+    "obj": "wangzherongyao_game",
+    "text": "用户 8613419793054 常用子应用 wangzherongyao_game，占其会话 26.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2667
+    }
+   },
+   {
+    "id": "F0041",
+    "subj": "8613419793054",
+    "rel": "RESIDES_AT",
+    "obj": "4600040394B",
+    "text": "用户 8613419793054 常驻小区 4600040394B（evening 时段出现 4 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 4
+    }
+   },
+   {
+    "id": "F0042",
+    "subj": "8613419793054",
+    "rel": "RESIDES_AT",
+    "obj": "4600040493D",
+    "text": "用户 8613419793054 常驻小区 4600040493D（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0043",
+    "subj": "8613419793054",
+    "rel": "RESIDES_AT",
+    "obj": "4600040383A",
+    "text": "用户 8613419793054 常驻小区 4600040383A（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0044",
+    "subj": "8613419793054",
+    "rel": "ACTIVE_AT",
+    "obj": "19时",
+    "text": "用户 8613419793054 的高峰活跃小时为 19 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0045",
+    "subj": "8613419793054",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613419793054 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0046",
+    "subj": "8613419793054",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613419793054 的时延中位数 98.55 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 98.55
+    }
+   },
+   {
+    "id": "F0047",
+    "subj": "8613419812206",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "meeting",
+    "text": "用户 8613419812206 偏好会议业务，时长占比 59.52%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.5952
+    }
+   },
+   {
+    "id": "F0048",
+    "subj": "8613419812206",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "live_streaming",
+    "text": "用户 8613419812206 偏好直播业务，时长占比 39.05%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3905
+    }
+   },
+   {
+    "id": "F0049",
+    "subj": "8613419812206",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "short_video",
+    "text": "用户 8613419812206 偏好短视频业务，时长占比 1.43%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0143
+    }
+   },
+   {
+    "id": "F0050",
+    "subj": "8613419812206",
+    "rel": "USES_APP",
+    "obj": "douyin_live",
+    "text": "用户 8613419812206 常用子应用 douyin_live，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0051",
+    "subj": "8613419812206",
+    "rel": "USES_APP",
+    "obj": "kuaishou_live",
+    "text": "用户 8613419812206 常用子应用 kuaishou_live，占其会话 25.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.25
+    }
+   },
+   {
+    "id": "F0052",
+    "subj": "8613419812206",
+    "rel": "USES_APP",
+    "obj": "tencentmeeting",
+    "text": "用户 8613419812206 常用子应用 tencentmeeting，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0053",
+    "subj": "8613419812206",
+    "rel": "USES_APP",
+    "obj": "dingtalk_meeting",
+    "text": "用户 8613419812206 常用子应用 dingtalk_meeting，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0054",
+    "subj": "8613419812206",
+    "rel": "USES_APP",
+    "obj": "hongguo_svod",
+    "text": "用户 8613419812206 常用子应用 hongguo_svod，占其会话 8.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": "2026-11-20",
+    "meta": {
+     "kind": "app",
+     "weight": 0.0833
+    }
+   },
+   {
+    "id": "F0055",
+    "subj": "8613419812206",
+    "rel": "RESIDES_AT",
+    "obj": "4600040380A",
+    "text": "用户 8613419812206 常驻小区 4600040380A（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0056",
+    "subj": "8613419812206",
+    "rel": "RESIDES_AT",
+    "obj": "4600040393B",
+    "text": "用户 8613419812206 常驻小区 4600040393B（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0057",
+    "subj": "8613419812206",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613419812206 常驻小区 46000404997（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0058",
+    "subj": "8613419812206",
+    "rel": "ACTIVE_AT",
+    "obj": "10时",
+    "text": "用户 8613419812206 的高峰活跃小时为 10 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0059",
+    "subj": "8613419812206",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613419812206 的 5G 驻留占比为 91.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.9167
+    }
+   },
+   {
+    "id": "F0060",
+    "subj": "8613419812206",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613419812206 的时延中位数 125.55 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 125.55
+    }
+   },
+   {
+    "id": "F0061",
+    "subj": "8613460256444",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "short_video",
+    "text": "用户 8613460256444 偏好短视频业务，时长占比 66.68%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.6668
+    }
+   },
+   {
+    "id": "F0062",
+    "subj": "8613460256444",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "watch_live",
+    "text": "用户 8613460256444 偏好直播观看业务，时长占比 22.37%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.2237
+    }
+   },
+   {
+    "id": "F0063",
+    "subj": "8613460256444",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "meeting",
+    "text": "用户 8613460256444 偏好会议业务，时长占比 8.41%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0841
+    }
+   },
+   {
+    "id": "F0064",
+    "subj": "8613460256444",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613460256444 偏好手游业务，时长占比 2.54%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0254
+    }
+   },
+   {
+    "id": "F0065",
+    "subj": "8613460256444",
+    "rel": "USES_APP",
+    "obj": "kuaishou_watch",
+    "text": "用户 8613460256444 常用子应用 kuaishou_watch，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0066",
+    "subj": "8613460256444",
+    "rel": "USES_APP",
+    "obj": "douyin_svod",
+    "text": "用户 8613460256444 常用子应用 douyin_svod，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": "2026-11-20",
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0067",
+    "subj": "8613460256444",
+    "rel": "USES_APP",
+    "obj": "kuaishou_svod",
+    "text": "用户 8613460256444 常用子应用 kuaishou_svod，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0068",
+    "subj": "8613460256444",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613460256444 常用子应用 douyin_watch，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0069",
+    "subj": "8613460256444",
+    "rel": "USES_APP",
+    "obj": "tencentmeeting",
+    "text": "用户 8613460256444 常用子应用 tencentmeeting，占其会话 8.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0833
+    }
+   },
+   {
+    "id": "F0070",
+    "subj": "8613460256444",
+    "rel": "RESIDES_AT",
+    "obj": "4600040386A",
+    "text": "用户 8613460256444 常驻小区 4600040386A（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0071",
+    "subj": "8613460256444",
+    "rel": "RESIDES_AT",
+    "obj": "4600040371D",
+    "text": "用户 8613460256444 常驻小区 4600040371D（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0072",
+    "subj": "8613460256444",
+    "rel": "RESIDES_AT",
+    "obj": "4600040394B",
+    "text": "用户 8613460256444 常驻小区 4600040394B（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0073",
+    "subj": "8613460256444",
+    "rel": "ACTIVE_AT",
+    "obj": "9时",
+    "text": "用户 8613460256444 的高峰活跃小时为 9 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0074",
+    "subj": "8613460256444",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613460256444 的 5G 驻留占比为 83.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.8333
+    }
+   },
+   {
+    "id": "F0075",
+    "subj": "8613460256444",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613460256444 的时延中位数 77.2 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 77.2
+    }
+   },
+   {
+    "id": "F0076",
+    "subj": "8613460580808",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "vod_streaming",
+    "text": "用户 8613460580808 偏好视频点播业务，时长占比 52.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.5233
+    }
+   },
+   {
+    "id": "F0077",
+    "subj": "8613460580808",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "voip",
+    "text": "用户 8613460580808 偏好语音通话业务，时长占比 47.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.4767
+    }
+   },
+   {
+    "id": "F0078",
+    "subj": "8613460580808",
+    "rel": "USES_APP",
+    "obj": "weixin_voip",
+    "text": "用户 8613460580808 常用子应用 weixin_voip，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0079",
+    "subj": "8613460580808",
+    "rel": "USES_APP",
+    "obj": "iqiyi_vod",
+    "text": "用户 8613460580808 常用子应用 iqiyi_vod，占其会话 22.22%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2222
+    }
+   },
+   {
+    "id": "F0080",
+    "subj": "8613460580808",
+    "rel": "USES_APP",
+    "obj": "qq_voip",
+    "text": "用户 8613460580808 常用子应用 qq_voip，占其会话 22.22%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2222
+    }
+   },
+   {
+    "id": "F0081",
+    "subj": "8613460580808",
+    "rel": "USES_APP",
+    "obj": "bilibili_vod",
+    "text": "用户 8613460580808 常用子应用 bilibili_vod，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0082",
+    "subj": "8613460580808",
+    "rel": "USES_APP",
+    "obj": "youku_vod",
+    "text": "用户 8613460580808 常用子应用 youku_vod，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0083",
+    "subj": "8613460580808",
+    "rel": "RESIDES_AT",
+    "obj": "4600040380A",
+    "text": "用户 8613460580808 常驻小区 4600040380A（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0084",
+    "subj": "8613460580808",
+    "rel": "RESIDES_AT",
+    "obj": "4600040393B",
+    "text": "用户 8613460580808 常驻小区 4600040393B（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0085",
+    "subj": "8613460580808",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613460580808 常驻小区 46000404997（evening 时段出现 1 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 1
+    }
+   },
+   {
+    "id": "F0086",
+    "subj": "8613460580808",
+    "rel": "ACTIVE_AT",
+    "obj": "20时",
+    "text": "用户 8613460580808 的高峰活跃小时为 20 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0087",
+    "subj": "8613460580808",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613460580808 的 5G 驻留占比为 77.78%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.7778
+    }
+   },
+   {
+    "id": "F0088",
+    "subj": "8613460580808",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613460580808 的时延中位数 130.3 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 130.3
+    }
+   },
+   {
+    "id": "F0089",
+    "subj": "8613462113785",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613462113785 偏好手游业务，时长占比 69.02%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.6902
+    }
+   },
+   {
+    "id": "F0090",
+    "subj": "8613462113785",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "watch_live",
+    "text": "用户 8613462113785 偏好直播观看业务，时长占比 30.98%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3098
+    }
+   },
+   {
+    "id": "F0091",
+    "subj": "8613462113785",
+    "rel": "USES_APP",
+    "obj": "wangzherongyao_game",
+    "text": "用户 8613462113785 常用子应用 wangzherongyao_game，占其会话 37.50%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.375
+    }
+   },
+   {
+    "id": "F0092",
+    "subj": "8613462113785",
+    "rel": "USES_APP",
+    "obj": "sanjiaozhouxingdong_game",
+    "text": "用户 8613462113785 常用子应用 sanjiaozhouxingdong_game，占其会话 25.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.25
+    }
+   },
+   {
+    "id": "F0093",
+    "subj": "8613462113785",
+    "rel": "USES_APP",
+    "obj": "hepingjingying_game",
+    "text": "用户 8613462113785 常用子应用 hepingjingying_game，占其会话 12.50%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.125
+    }
+   },
+   {
+    "id": "F0094",
+    "subj": "8613462113785",
+    "rel": "USES_APP",
+    "obj": "bilibili_watch",
+    "text": "用户 8613462113785 常用子应用 bilibili_watch，占其会话 12.50%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.125
+    }
+   },
+   {
+    "id": "F0095",
+    "subj": "8613462113785",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613462113785 常用子应用 douyin_watch，占其会话 6.25%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0625
+    }
+   },
+   {
+    "id": "F0096",
+    "subj": "8613462113785",
+    "rel": "RESIDES_AT",
+    "obj": "4600040386A",
+    "text": "用户 8613462113785 常驻小区 4600040386A（evening 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0097",
+    "subj": "8613462113785",
+    "rel": "RESIDES_AT",
+    "obj": "4600040495D",
+    "text": "用户 8613462113785 常驻小区 4600040495D（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0098",
+    "subj": "8613462113785",
+    "rel": "RESIDES_AT",
+    "obj": "4600040383A",
+    "text": "用户 8613462113785 常驻小区 4600040383A（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0099",
+    "subj": "8613462113785",
+    "rel": "ACTIVE_AT",
+    "obj": "21时",
+    "text": "用户 8613462113785 的高峰活跃小时为 21 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0100",
+    "subj": "8613462113785",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613462113785 的 5G 驻留占比为 93.75%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.9375
+    }
+   },
+   {
+    "id": "F0101",
+    "subj": "8613462113785",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613462113785 的时延中位数 107.25 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 107.25
+    }
+   },
+   {
+    "id": "F0102",
+    "subj": "8613522947905",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "vod_streaming",
+    "text": "用户 8613522947905 偏好视频点播业务，时长占比 65.45%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.6545
+    }
+   },
+   {
+    "id": "F0103",
+    "subj": "8613522947905",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "watch_live",
+    "text": "用户 8613522947905 偏好直播观看业务，时长占比 34.55%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3455
+    }
+   },
+   {
+    "id": "F0104",
+    "subj": "8613522947905",
+    "rel": "USES_APP",
+    "obj": "bilibili_vod",
+    "text": "用户 8613522947905 常用子应用 bilibili_vod，占其会话 53.85%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.5385
+    }
+   },
+   {
+    "id": "F0105",
+    "subj": "8613522947905",
+    "rel": "USES_APP",
+    "obj": "iqiyi_vod",
+    "text": "用户 8613522947905 常用子应用 iqiyi_vod，占其会话 30.77%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3077
+    }
+   },
+   {
+    "id": "F0106",
+    "subj": "8613522947905",
+    "rel": "USES_APP",
+    "obj": "youku_vod",
+    "text": "用户 8613522947905 常用子应用 youku_vod，占其会话 7.69%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0769
+    }
+   },
+   {
+    "id": "F0107",
+    "subj": "8613522947905",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613522947905 常用子应用 douyin_watch，占其会话 7.69%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0769
+    }
+   },
+   {
+    "id": "F0108",
+    "subj": "8613522947905",
+    "rel": "RESIDES_AT",
+    "obj": "4600040391C",
+    "text": "用户 8613522947905 常驻小区 4600040391C（daytime 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0109",
+    "subj": "8613522947905",
+    "rel": "RESIDES_AT",
+    "obj": "4600040393B",
+    "text": "用户 8613522947905 常驻小区 4600040393B（daytime 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0110",
+    "subj": "8613522947905",
+    "rel": "RESIDES_AT",
+    "obj": "4600040386A",
+    "text": "用户 8613522947905 常驻小区 4600040386A（daytime 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0111",
+    "subj": "8613522947905",
+    "rel": "ACTIVE_AT",
+    "obj": "14时",
+    "text": "用户 8613522947905 的高峰活跃小时为 14 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0112",
+    "subj": "8613522947905",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613522947905 的 5G 驻留占比为 84.62%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.8462
+    }
+   },
+   {
+    "id": "F0113",
+    "subj": "8613522947905",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613522947905 的时延中位数 112.8 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 112.8
+    }
+   },
+   {
+    "id": "F0114",
+    "subj": "8613523296217",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "watch_live",
+    "text": "用户 8613523296217 偏好直播观看业务，时长占比 54.98%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.5498
+    }
+   },
+   {
+    "id": "F0115",
+    "subj": "8613523296217",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "voip",
+    "text": "用户 8613523296217 偏好语音通话业务，时长占比 45.02%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.4502
+    }
+   },
+   {
+    "id": "F0116",
+    "subj": "8613523296217",
+    "rel": "USES_APP",
+    "obj": "kuaishou_watch",
+    "text": "用户 8613523296217 常用子应用 kuaishou_watch，占其会话 42.86%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.4286
+    }
+   },
+   {
+    "id": "F0117",
+    "subj": "8613523296217",
+    "rel": "USES_APP",
+    "obj": "qq_voip",
+    "text": "用户 8613523296217 常用子应用 qq_voip，占其会话 28.57%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2857
+    }
+   },
+   {
+    "id": "F0118",
+    "subj": "8613523296217",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613523296217 常用子应用 douyin_watch，占其会话 14.29%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1429
+    }
+   },
+   {
+    "id": "F0119",
+    "subj": "8613523296217",
+    "rel": "USES_APP",
+    "obj": "weixin_voip",
+    "text": "用户 8613523296217 常用子应用 weixin_voip，占其会话 14.29%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1429
+    }
+   },
+   {
+    "id": "F0120",
+    "subj": "8613523296217",
+    "rel": "RESIDES_AT",
+    "obj": "4600040371D",
+    "text": "用户 8613523296217 常驻小区 4600040371D（evening 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0121",
+    "subj": "8613523296217",
+    "rel": "RESIDES_AT",
+    "obj": "4600040391C",
+    "text": "用户 8613523296217 常驻小区 4600040391C（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0122",
+    "subj": "8613523296217",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613523296217 常驻小区 46000404997（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0123",
+    "subj": "8613523296217",
+    "rel": "ACTIVE_AT",
+    "obj": "19时",
+    "text": "用户 8613523296217 的高峰活跃小时为 19 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0124",
+    "subj": "8613523296217",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613523296217 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0125",
+    "subj": "8613523296217",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613523296217 的时延中位数 79.65 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 79.65
+    }
+   },
+   {
+    "id": "F0126",
+    "subj": "8613523308471",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "short_video",
+    "text": "用户 8613523308471 偏好短视频业务，时长占比 59.68%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.5968
+    }
+   },
+   {
+    "id": "F0127",
+    "subj": "8613523308471",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "instant_message",
+    "text": "用户 8613523308471 偏好即时消息业务，时长占比 40.32%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.4032
+    }
+   },
+   {
+    "id": "F0128",
+    "subj": "8613523308471",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613523308471 常用子应用 douyin_watch，占其会话 30.77%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3077
+    }
+   },
+   {
+    "id": "F0129",
+    "subj": "8613523308471",
+    "rel": "USES_APP",
+    "obj": "hongguo_svod",
+    "text": "用户 8613523308471 常用子应用 hongguo_svod，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0130",
+    "subj": "8613523308471",
+    "rel": "USES_APP",
+    "obj": "kuaishou_svod",
+    "text": "用户 8613523308471 常用子应用 kuaishou_svod，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0131",
+    "subj": "8613523308471",
+    "rel": "USES_APP",
+    "obj": "dingtalk_im",
+    "text": "用户 8613523308471 常用子应用 dingtalk_im，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0132",
+    "subj": "8613523308471",
+    "rel": "USES_APP",
+    "obj": "qq_im",
+    "text": "用户 8613523308471 常用子应用 qq_im，占其会话 7.69%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0769
+    }
+   },
+   {
+    "id": "F0133",
+    "subj": "8613523308471",
+    "rel": "RESIDES_AT",
+    "obj": "4600040495D",
+    "text": "用户 8613523308471 常驻小区 4600040495D（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0134",
+    "subj": "8613523308471",
+    "rel": "RESIDES_AT",
+    "obj": "4600040394B",
+    "text": "用户 8613523308471 常驻小区 4600040394B（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0135",
+    "subj": "8613523308471",
+    "rel": "RESIDES_AT",
+    "obj": "4600040493D",
+    "text": "用户 8613523308471 常驻小区 4600040493D（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0136",
+    "subj": "8613523308471",
+    "rel": "ACTIVE_AT",
+    "obj": "11时",
+    "text": "用户 8613523308471 的高峰活跃小时为 11 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0137",
+    "subj": "8613523308471",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613523308471 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0138",
+    "subj": "8613523308471",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613523308471 的时延中位数 125.1 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 125.1
+    }
+   },
+   {
+    "id": "F0139",
+    "subj": "8613525218516",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "short_video",
+    "text": "用户 8613525218516 偏好短视频业务，时长占比 99.28%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.9928
+    }
+   },
+   {
+    "id": "F0140",
+    "subj": "8613525218516",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "voip",
+    "text": "用户 8613525218516 偏好语音通话业务，时长占比 0.72%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0072
+    }
+   },
+   {
+    "id": "F0141",
+    "subj": "8613525218516",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613525218516 常用子应用 douyin_watch，占其会话 46.15%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.4615
+    }
+   },
+   {
+    "id": "F0142",
+    "subj": "8613525218516",
+    "rel": "USES_APP",
+    "obj": "hongguo_svod",
+    "text": "用户 8613525218516 常用子应用 hongguo_svod，占其会话 30.77%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3077
+    }
+   },
+   {
+    "id": "F0143",
+    "subj": "8613525218516",
+    "rel": "USES_APP",
+    "obj": "douyin_svod",
+    "text": "用户 8613525218516 常用子应用 douyin_svod，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0144",
+    "subj": "8613525218516",
+    "rel": "USES_APP",
+    "obj": "weixin_voip",
+    "text": "用户 8613525218516 常用子应用 weixin_voip，占其会话 7.69%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0769
+    }
+   },
+   {
+    "id": "F0145",
+    "subj": "8613525218516",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613525218516 常驻小区 46000404997（evening 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0146",
+    "subj": "8613525218516",
+    "rel": "RESIDES_AT",
+    "obj": "4600040493D",
+    "text": "用户 8613525218516 常驻小区 4600040493D（evening 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0147",
+    "subj": "8613525218516",
+    "rel": "RESIDES_AT",
+    "obj": "4600040383A",
+    "text": "用户 8613525218516 常驻小区 4600040383A（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0148",
+    "subj": "8613525218516",
+    "rel": "ACTIVE_AT",
+    "obj": "19时",
+    "text": "用户 8613525218516 的高峰活跃小时为 19 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0149",
+    "subj": "8613525218516",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613525218516 的 5G 驻留占比为 92.31%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.9231
+    }
+   },
+   {
+    "id": "F0150",
+    "subj": "8613525218516",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613525218516 的时延中位数 89.85 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 89.85
+    }
+   },
+   {
+    "id": "F0151",
+    "subj": "8613525576968",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613525576968 偏好手游业务，时长占比 46.06%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.4606
+    }
+   },
+   {
+    "id": "F0152",
+    "subj": "8613525576968",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "voip",
+    "text": "用户 8613525576968 偏好语音通话业务，时长占比 38.35%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3835
+    }
+   },
+   {
+    "id": "F0153",
+    "subj": "8613525576968",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "live_streaming",
+    "text": "用户 8613525576968 偏好直播业务，时长占比 11.93%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.1193
+    }
+   },
+   {
+    "id": "F0154",
+    "subj": "8613525576968",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "instant_message",
+    "text": "用户 8613525576968 偏好即时消息业务，时长占比 3.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0367
+    }
+   },
+   {
+    "id": "F0155",
+    "subj": "8613525576968",
+    "rel": "USES_APP",
+    "obj": "sanjiaozhouxingdong_game",
+    "text": "用户 8613525576968 常用子应用 sanjiaozhouxingdong_game，占其会话 23.08%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2308
+    }
+   },
+   {
+    "id": "F0156",
+    "subj": "8613525576968",
+    "rel": "USES_APP",
+    "obj": "qq_voip",
+    "text": "用户 8613525576968 常用子应用 qq_voip，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0157",
+    "subj": "8613525576968",
+    "rel": "USES_APP",
+    "obj": "weixin_voip",
+    "text": "用户 8613525576968 常用子应用 weixin_voip，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0158",
+    "subj": "8613525576968",
+    "rel": "USES_APP",
+    "obj": "hepingjingying_game",
+    "text": "用户 8613525576968 常用子应用 hepingjingying_game，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0159",
+    "subj": "8613525576968",
+    "rel": "USES_APP",
+    "obj": "weixin_im",
+    "text": "用户 8613525576968 常用子应用 weixin_im，占其会话 7.69%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0769
+    }
+   },
+   {
+    "id": "F0160",
+    "subj": "8613525576968",
+    "rel": "RESIDES_AT",
+    "obj": "4600040383A",
+    "text": "用户 8613525576968 常驻小区 4600040383A（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0161",
+    "subj": "8613525576968",
+    "rel": "RESIDES_AT",
+    "obj": "4600040391C",
+    "text": "用户 8613525576968 常驻小区 4600040391C（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0162",
+    "subj": "8613525576968",
+    "rel": "RESIDES_AT",
+    "obj": "4600040394B",
+    "text": "用户 8613525576968 常驻小区 4600040394B（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0163",
+    "subj": "8613525576968",
+    "rel": "ACTIVE_AT",
+    "obj": "8时",
+    "text": "用户 8613525576968 的高峰活跃小时为 8 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0164",
+    "subj": "8613525576968",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613525576968 的 5G 驻留占比为 76.92%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.7692
+    }
+   },
+   {
+    "id": "F0165",
+    "subj": "8613525576968",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613525576968 的时延中位数 114.4 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 114.4
+    }
+   },
+   {
+    "id": "F0166",
+    "subj": "8613525860212",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "meeting",
+    "text": "用户 8613525860212 偏好会议业务，时长占比 45.51%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.4551
+    }
+   },
+   {
+    "id": "F0167",
+    "subj": "8613525860212",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613525860212 偏好手游业务，时长占比 43.04%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.4304
+    }
+   },
+   {
+    "id": "F0168",
+    "subj": "8613525860212",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "watch_live",
+    "text": "用户 8613525860212 偏好直播观看业务，时长占比 11.45%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.1145
+    }
+   },
+   {
+    "id": "F0169",
+    "subj": "8613525860212",
+    "rel": "USES_APP",
+    "obj": "dingtalk_meeting",
+    "text": "用户 8613525860212 常用子应用 dingtalk_meeting，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0170",
+    "subj": "8613525860212",
+    "rel": "USES_APP",
+    "obj": "hepingjingying_game",
+    "text": "用户 8613525860212 常用子应用 hepingjingying_game，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0171",
+    "subj": "8613525860212",
+    "rel": "USES_APP",
+    "obj": "bilibili_watch",
+    "text": "用户 8613525860212 常用子应用 bilibili_watch，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0172",
+    "subj": "8613525860212",
+    "rel": "USES_APP",
+    "obj": "kuaishou_watch",
+    "text": "用户 8613525860212 常用子应用 kuaishou_watch，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0173",
+    "subj": "8613525860212",
+    "rel": "USES_APP",
+    "obj": "wangzherongyao_game",
+    "text": "用户 8613525860212 常用子应用 wangzherongyao_game，占其会话 11.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1111
+    }
+   },
+   {
+    "id": "F0174",
+    "subj": "8613525860212",
+    "rel": "RESIDES_AT",
+    "obj": "4600040495D",
+    "text": "用户 8613525860212 常驻小区 4600040495D（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0175",
+    "subj": "8613525860212",
+    "rel": "RESIDES_AT",
+    "obj": "4600040383A",
+    "text": "用户 8613525860212 常驻小区 4600040383A（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0176",
+    "subj": "8613525860212",
+    "rel": "RESIDES_AT",
+    "obj": "4600040394B",
+    "text": "用户 8613525860212 常驻小区 4600040394B（evening 时段出现 1 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 1
+    }
+   },
+   {
+    "id": "F0177",
+    "subj": "8613525860212",
+    "rel": "ACTIVE_AT",
+    "obj": "21时",
+    "text": "用户 8613525860212 的高峰活跃小时为 21 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0178",
+    "subj": "8613525860212",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613525860212 的 5G 驻留占比为 77.78%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.7778
+    }
+   },
+   {
+    "id": "F0179",
+    "subj": "8613525860212",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613525860212 的时延中位数 51.4 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 51.4
+    }
+   },
+   {
+    "id": "F0180",
+    "subj": "8613525897325",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "short_video",
+    "text": "用户 8613525897325 偏好短视频业务，时长占比 91.37%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.9137
+    }
+   },
+   {
+    "id": "F0181",
+    "subj": "8613525897325",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "live_streaming",
+    "text": "用户 8613525897325 偏好直播业务，时长占比 8.63%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0863
+    }
+   },
+   {
+    "id": "F0182",
+    "subj": "8613525897325",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613525897325 常用子应用 douyin_watch，占其会话 20.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2
+    }
+   },
+   {
+    "id": "F0183",
+    "subj": "8613525897325",
+    "rel": "USES_APP",
+    "obj": "kuaishou_live",
+    "text": "用户 8613525897325 常用子应用 kuaishou_live，占其会话 20.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2
+    }
+   },
+   {
+    "id": "F0184",
+    "subj": "8613525897325",
+    "rel": "USES_APP",
+    "obj": "kuaishou_svod",
+    "text": "用户 8613525897325 常用子应用 kuaishou_svod，占其会话 20.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2
+    }
+   },
+   {
+    "id": "F0185",
+    "subj": "8613525897325",
+    "rel": "USES_APP",
+    "obj": "douyin_svod",
+    "text": "用户 8613525897325 常用子应用 douyin_svod，占其会话 20.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2
+    }
+   },
+   {
+    "id": "F0186",
+    "subj": "8613525897325",
+    "rel": "USES_APP",
+    "obj": "hongguo_svod",
+    "text": "用户 8613525897325 常用子应用 hongguo_svod，占其会话 20.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2
+    }
+   },
+   {
+    "id": "F0187",
+    "subj": "8613525897325",
+    "rel": "RESIDES_AT",
+    "obj": "4600040383A",
+    "text": "用户 8613525897325 常驻小区 4600040383A（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0188",
+    "subj": "8613525897325",
+    "rel": "RESIDES_AT",
+    "obj": "4600040391C",
+    "text": "用户 8613525897325 常驻小区 4600040391C（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0189",
+    "subj": "8613525897325",
+    "rel": "RESIDES_AT",
+    "obj": "4600040380A",
+    "text": "用户 8613525897325 常驻小区 4600040380A（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0190",
+    "subj": "8613525897325",
+    "rel": "ACTIVE_AT",
+    "obj": "8时",
+    "text": "用户 8613525897325 的高峰活跃小时为 8 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0191",
+    "subj": "8613525897325",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613525897325 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0192",
+    "subj": "8613525897325",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613525897325 的时延中位数 124.2 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 124.2
+    }
+   },
+   {
+    "id": "F0193",
+    "subj": "8613526661095",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613526661095 偏好手游业务，时长占比 80.91%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.8091
+    }
+   },
+   {
+    "id": "F0194",
+    "subj": "8613526661095",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "live_streaming",
+    "text": "用户 8613526661095 偏好直播业务，时长占比 10.99%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.1099
+    }
+   },
+   {
+    "id": "F0195",
+    "subj": "8613526661095",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "vod_streaming",
+    "text": "用户 8613526661095 偏好视频点播业务，时长占比 8.11%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0811
+    }
+   },
+   {
+    "id": "F0196",
+    "subj": "8613526661095",
+    "rel": "USES_APP",
+    "obj": "sanjiaozhouxingdong_game",
+    "text": "用户 8613526661095 常用子应用 sanjiaozhouxingdong_game，占其会话 38.46%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3846
+    }
+   },
+   {
+    "id": "F0197",
+    "subj": "8613526661095",
+    "rel": "USES_APP",
+    "obj": "hepingjingying_game",
+    "text": "用户 8613526661095 常用子应用 hepingjingying_game，占其会话 30.77%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3077
+    }
+   },
+   {
+    "id": "F0198",
+    "subj": "8613526661095",
+    "rel": "USES_APP",
+    "obj": "wangzherongyao_game",
+    "text": "用户 8613526661095 常用子应用 wangzherongyao_game，占其会话 15.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1538
+    }
+   },
+   {
+    "id": "F0199",
+    "subj": "8613526661095",
+    "rel": "USES_APP",
+    "obj": "bilibili_vod",
+    "text": "用户 8613526661095 常用子应用 bilibili_vod，占其会话 7.69%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0769
+    }
+   },
+   {
+    "id": "F0200",
+    "subj": "8613526661095",
+    "rel": "USES_APP",
+    "obj": "kuaishou_live",
+    "text": "用户 8613526661095 常用子应用 kuaishou_live，占其会话 7.69%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0769
+    }
+   },
+   {
+    "id": "F0201",
+    "subj": "8613526661095",
+    "rel": "RESIDES_AT",
+    "obj": "4600040394B",
+    "text": "用户 8613526661095 常驻小区 4600040394B（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0202",
+    "subj": "8613526661095",
+    "rel": "RESIDES_AT",
+    "obj": "4600040495D",
+    "text": "用户 8613526661095 常驻小区 4600040495D（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0203",
+    "subj": "8613526661095",
+    "rel": "RESIDES_AT",
+    "obj": "4600040386A",
+    "text": "用户 8613526661095 常驻小区 4600040386A（evening 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "evening",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0204",
+    "subj": "8613526661095",
+    "rel": "ACTIVE_AT",
+    "obj": "20时",
+    "text": "用户 8613526661095 的高峰活跃小时为 20 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0205",
+    "subj": "8613526661095",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613526661095 的 5G 驻留占比为 69.23%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 0.6923
+    }
+   },
+   {
+    "id": "F0206",
+    "subj": "8613526661095",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613526661095 的时延中位数 108.1 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 108.1
+    }
+   },
+   {
+    "id": "F0207",
+    "subj": "8613526735143",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "meeting",
+    "text": "用户 8613526735143 偏好会议业务，时长占比 71.16%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.7116
+    }
+   },
+   {
+    "id": "F0208",
+    "subj": "8613526735143",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "watch_live",
+    "text": "用户 8613526735143 偏好直播观看业务，时长占比 25.15%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.2515
+    }
+   },
+   {
+    "id": "F0209",
+    "subj": "8613526735143",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "mobile_game",
+    "text": "用户 8613526735143 偏好手游业务，时长占比 3.31%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0331
+    }
+   },
+   {
+    "id": "F0210",
+    "subj": "8613526735143",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "voip",
+    "text": "用户 8613526735143 偏好语音通话业务，时长占比 0.38%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.0038
+    }
+   },
+   {
+    "id": "F0211",
+    "subj": "8613526735143",
+    "rel": "USES_APP",
+    "obj": "dingtalk_meeting",
+    "text": "用户 8613526735143 常用子应用 dingtalk_meeting，占其会话 33.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333
+    }
+   },
+   {
+    "id": "F0212",
+    "subj": "8613526735143",
+    "rel": "USES_APP",
+    "obj": "bilibili_watch",
+    "text": "用户 8613526735143 常用子应用 bilibili_watch，占其会话 27.78%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2778
+    }
+   },
+   {
+    "id": "F0213",
+    "subj": "8613526735143",
+    "rel": "USES_APP",
+    "obj": "tencentmeeting",
+    "text": "用户 8613526735143 常用子应用 tencentmeeting，占其会话 27.78%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2778
+    }
+   },
+   {
+    "id": "F0214",
+    "subj": "8613526735143",
+    "rel": "USES_APP",
+    "obj": "hepingjingying_game",
+    "text": "用户 8613526735143 常用子应用 hepingjingying_game，占其会话 5.56%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0556
+    }
+   },
+   {
+    "id": "F0215",
+    "subj": "8613526735143",
+    "rel": "USES_APP",
+    "obj": "qq_voip",
+    "text": "用户 8613526735143 常用子应用 qq_voip，占其会话 5.56%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0556
+    }
+   },
+   {
+    "id": "F0216",
+    "subj": "8613526735143",
+    "rel": "RESIDES_AT",
+    "obj": "4600040493D",
+    "text": "用户 8613526735143 常驻小区 4600040493D（daytime 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0217",
+    "subj": "8613526735143",
+    "rel": "RESIDES_AT",
+    "obj": "4600040380A",
+    "text": "用户 8613526735143 常驻小区 4600040380A（daytime 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0218",
+    "subj": "8613526735143",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613526735143 常驻小区 46000404997（daytime 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0219",
+    "subj": "8613526735143",
+    "rel": "ACTIVE_AT",
+    "obj": "14时",
+    "text": "用户 8613526735143 的高峰活跃小时为 14 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0220",
+    "subj": "8613526735143",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613526735143 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0221",
+    "subj": "8613526735143",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613526735143 的时延中位数 122.5 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 122.5
+    }
+   },
+   {
+    "id": "F0222",
+    "subj": "8613526790293",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "watch_live",
+    "text": "用户 8613526790293 偏好直播观看业务，时长占比 43.58%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.4358
+    }
+   },
+   {
+    "id": "F0223",
+    "subj": "8613526790293",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "instant_message",
+    "text": "用户 8613526790293 偏好即时消息业务，时长占比 30.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3
+    }
+   },
+   {
+    "id": "F0224",
+    "subj": "8613526790293",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "vod_streaming",
+    "text": "用户 8613526790293 偏好视频点播业务，时长占比 26.41%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.2641
+    }
+   },
+   {
+    "id": "F0225",
+    "subj": "8613526790293",
+    "rel": "USES_APP",
+    "obj": "douyin_watch",
+    "text": "用户 8613526790293 常用子应用 douyin_watch，占其会话 28.57%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2857
+    }
+   },
+   {
+    "id": "F0226",
+    "subj": "8613526790293",
+    "rel": "USES_APP",
+    "obj": "kuaishou_watch",
+    "text": "用户 8613526790293 常用子应用 kuaishou_watch，占其会话 21.43%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2143
+    }
+   },
+   {
+    "id": "F0227",
+    "subj": "8613526790293",
+    "rel": "USES_APP",
+    "obj": "bilibili_watch",
+    "text": "用户 8613526790293 常用子应用 bilibili_watch，占其会话 21.43%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.2143
+    }
+   },
+   {
+    "id": "F0228",
+    "subj": "8613526790293",
+    "rel": "USES_APP",
+    "obj": "bilibili_vod",
+    "text": "用户 8613526790293 常用子应用 bilibili_vod，占其会话 7.14%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0714
+    }
+   },
+   {
+    "id": "F0229",
+    "subj": "8613526790293",
+    "rel": "USES_APP",
+    "obj": "youku_vod",
+    "text": "用户 8613526790293 常用子应用 youku_vod，占其会话 7.14%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0714
+    }
+   },
+   {
+    "id": "F0230",
+    "subj": "8613526790293",
+    "rel": "RESIDES_AT",
+    "obj": "4600040495D",
+    "text": "用户 8613526790293 常驻小区 4600040495D（daytime 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0231",
+    "subj": "8613526790293",
+    "rel": "RESIDES_AT",
+    "obj": "4600040386A",
+    "text": "用户 8613526790293 常驻小区 4600040386A（daytime 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0232",
+    "subj": "8613526790293",
+    "rel": "RESIDES_AT",
+    "obj": "46000404997",
+    "text": "用户 8613526790293 常驻小区 46000404997（daytime 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0233",
+    "subj": "8613526790293",
+    "rel": "ACTIVE_AT",
+    "obj": "13时",
+    "text": "用户 8613526790293 的高峰活跃小时为 13 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0234",
+    "subj": "8613526790293",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613526790293 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0235",
+    "subj": "8613526790293",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613526790293 的时延中位数 102.8 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 102.8
+    }
+   },
+   {
+    "id": "F0236",
+    "subj": "8613526867990",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "live_streaming",
+    "text": "用户 8613526867990 偏好直播业务，时长占比 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 1.0
+    }
+   },
+   {
+    "id": "F0237",
+    "subj": "8613526867990",
+    "rel": "USES_APP",
+    "obj": "douyin_live",
+    "text": "用户 8613526867990 常用子应用 douyin_live，占其会话 55.56%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.5556
+    }
+   },
+   {
+    "id": "F0238",
+    "subj": "8613526867990",
+    "rel": "USES_APP",
+    "obj": "kuaishou_live",
+    "text": "用户 8613526867990 常用子应用 kuaishou_live，占其会话 44.44%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.4444
+    }
+   },
+   {
+    "id": "F0239",
+    "subj": "8613526867990",
+    "rel": "RESIDES_AT",
+    "obj": "4600040393B",
+    "text": "用户 8613526867990 常驻小区 4600040393B（daytime 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0240",
+    "subj": "8613526867990",
+    "rel": "RESIDES_AT",
+    "obj": "4600040493D",
+    "text": "用户 8613526867990 常驻小区 4600040493D（daytime 时段出现 1 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 1
+    }
+   },
+   {
+    "id": "F0241",
+    "subj": "8613526867990",
+    "rel": "RESIDES_AT",
+    "obj": "4600040371D",
+    "text": "用户 8613526867990 常驻小区 4600040371D（daytime 时段出现 1 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "daytime",
+     "count": 1
+    }
+   },
+   {
+    "id": "F0242",
+    "subj": "8613526867990",
+    "rel": "ACTIVE_AT",
+    "obj": "14时",
+    "text": "用户 8613526867990 的高峰活跃小时为 14 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0243",
+    "subj": "8613526867990",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613526867990 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0244",
+    "subj": "8613526867990",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613526867990 的时延中位数 61.1 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 61.1
+    }
+   },
+   {
+    "id": "F0245",
+    "subj": "8613569481238",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "live_streaming",
+    "text": "用户 8613569481238 偏好直播业务，时长占比 64.35%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.6435
+    }
+   },
+   {
+    "id": "F0246",
+    "subj": "8613569481238",
+    "rel": "PREFERS_CATEGORY",
+    "obj": "instant_message",
+    "text": "用户 8613569481238 偏好即时消息业务，时长占比 35.65%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "category",
+     "weight": 0.3565
+    }
+   },
+   {
+    "id": "F0247",
+    "subj": "8613569481238",
+    "rel": "USES_APP",
+    "obj": "kuaishou_live",
+    "text": "用户 8613569481238 常用子应用 kuaishou_live，占其会话 41.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.4167
+    }
+   },
+   {
+    "id": "F0248",
+    "subj": "8613569481238",
+    "rel": "USES_APP",
+    "obj": "douyin_live",
+    "text": "用户 8613569481238 常用子应用 douyin_live，占其会话 25.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.25
+    }
+   },
+   {
+    "id": "F0249",
+    "subj": "8613569481238",
+    "rel": "USES_APP",
+    "obj": "weixin_im",
+    "text": "用户 8613569481238 常用子应用 weixin_im，占其会话 16.67%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667
+    }
+   },
+   {
+    "id": "F0250",
+    "subj": "8613569481238",
+    "rel": "USES_APP",
+    "obj": "dingtalk_im",
+    "text": "用户 8613569481238 常用子应用 dingtalk_im，占其会话 8.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0833
+    }
+   },
+   {
+    "id": "F0251",
+    "subj": "8613569481238",
+    "rel": "USES_APP",
+    "obj": "qq_im",
+    "text": "用户 8613569481238 常用子应用 qq_im，占其会话 8.33%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0833
+    }
+   },
+   {
+    "id": "F0252",
+    "subj": "8613569481238",
+    "rel": "RESIDES_AT",
+    "obj": "4600040380A",
+    "text": "用户 8613569481238 常驻小区 4600040380A（morning 时段出现 3 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 3
+    }
+   },
+   {
+    "id": "F0253",
+    "subj": "8613569481238",
+    "rel": "RESIDES_AT",
+    "obj": "4600040493D",
+    "text": "用户 8613569481238 常驻小区 4600040493D（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0254",
+    "subj": "8613569481238",
+    "rel": "RESIDES_AT",
+    "obj": "4600040393B",
+    "text": "用户 8613569481238 常驻小区 4600040393B（morning 时段出现 2 次）",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "cell",
+     "window": "morning",
+     "count": 2
+    }
+   },
+   {
+    "id": "F0255",
+    "subj": "8613569481238",
+    "rel": "ACTIVE_AT",
+    "obj": "9时",
+    "text": "用户 8613569481238 的高峰活跃小时为 9 点",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "hour"
+    }
+   },
+   {
+    "id": "F0256",
+    "subj": "8613569481238",
+    "rel": "PREFERS_RAT",
+    "obj": "5G",
+    "text": "用户 8613569481238 的 5G 驻留占比为 100.00%",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "rat",
+     "share": 1.0
+    }
+   },
+   {
+    "id": "F0257",
+    "subj": "8613569481238",
+    "rel": "EXPERIENCES_DELAY",
+    "obj": "latency",
+    "text": "用户 8613569481238 的时延中位数 56.1 ms",
+    "valid_from": "2026-11-01",
+    "valid_to": null,
+    "meta": {
+     "kind": "latency",
+     "value": 56.1
+    }
+   },
+   {
+    "id": "F0258",
+    "subj": "8613213213689",
+    "rel": "USES_APP",
+    "obj": "iqiyi_vod",
+    "text": "用户 8613213213689 从 2026-11-20 起改用子应用 iqiyi_vod，不再使用 youku_vod",
+    "valid_from": "2026-11-20",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.3333,
+     "migrated_from": "youku_vod"
+    }
+   },
+   {
+    "id": "F0259",
+    "subj": "8613419812206",
+    "rel": "USES_APP",
+    "obj": "youku_vod",
+    "text": "用户 8613419812206 从 2026-11-20 起改用子应用 youku_vod，不再使用 hongguo_svod",
+    "valid_from": "2026-11-20",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.0833,
+     "migrated_from": "hongguo_svod"
+    }
+   },
+   {
+    "id": "F0260",
+    "subj": "8613460256444",
+    "rel": "USES_APP",
+    "obj": "youku_vod",
+    "text": "用户 8613460256444 从 2026-11-20 起改用子应用 youku_vod，不再使用 douyin_svod",
+    "valid_from": "2026-11-20",
+    "valid_to": null,
+    "meta": {
+     "kind": "app",
+     "weight": 0.1667,
+     "migrated_from": "douyin_svod"
+    }
+   }
+  ]
+ }
+}

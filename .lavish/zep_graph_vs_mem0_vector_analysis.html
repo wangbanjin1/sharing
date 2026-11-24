@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="parchment">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep-Graphiti 建图与 Mem0 向量记忆对比实验报告</title>
+<style>
+  :root {
+    --bg: #FBF7F0;
+    --surface: #FFFFFF;
+    --surface-soft: #F2ECE1;
+    --border: #E2D9C8;
+    --text: #1F2328;
+    --muted: #59636E;
+    --accent: #1D4ED8;
+    --accent-soft: #EFF6FF;
+    --green: #15803D;
+    --green-soft: #F0FDF4;
+    --red: #B91C1C;
+    --red-soft: #FEF2F2;
+    --amber: #B45309;
+    --amber-soft: #FFFBEB;
+    --purple: #6D28D9;
+    --purple-soft: #F5F3FF;
+    --shadow: 0 2px 10px rgba(31,35,40,0.06);
+  }
+  [data-theme="github"] {
+    --bg: #F6F8FA;
+    --surface: #FFFFFF;
+    --surface-soft: #F6F8FA;
+    --border: #D0D7DE;
+    --text: #1F2328;
+    --muted: #656D76;
+    --accent: #0969DA;
+    --accent-soft: #DDF4FF;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 24px 20px 64px; }
+  header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  h1 { margin: 0 0 8px; font-size: 24px; line-height: 1.3; }
+  .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
+  .theme-bar { display: flex; gap: 8px; }
+  button {
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: all 0.15s;
+  }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button.active { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .kpi {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .kpi .label { font-size: 12px; color: var(--muted); }
+  .kpi .val { font-size: 22px; font-weight: 700; margin-top: 2px; }
+  .kpi .hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  h2 {
+    margin: 0 0 14px;
+    font-size: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 { margin: 16px 0 8px; font-size: 15px; }
+  p { margin: 8px 0; font-size: 14px; }
+  ul { margin: 6px 0 10px; padding-left: 20px; font-size: 14px; }
+  li { margin: 4px 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0; }
+  th, td { border-bottom: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--surface-soft); font-weight: 600; border-top: 2px solid var(--text); border-bottom: 1.5px solid var(--text); }
+  tr:last-child td { border-bottom: 2px solid var(--text); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .good { color: var(--green); }
+  .bad { color: var(--red); }
+  .warn { color: var(--amber); }
+
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .callout.green { border-left-color: var(--green); background: var(--green-soft); }
+  .callout.red { border-left-color: var(--red); background: var(--red-soft); }
+  .callout.amber { border-left-color: var(--amber); background: var(--amber-soft); }
+
+  .split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .split-2 { grid-template-columns: 1fr; } }
+
+  .graph-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+  .graph-stage {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 960px) { .graph-stage { grid-template-columns: 1fr; } }
+  .svg-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #FFFFFF;
+    overflow: hidden;
+    position: relative;
+  }
+  svg { width: 100%; height: 470px; display: block; }
+  .legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    background: var(--surface-soft);
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+  .inspector {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-soft);
+    padding: 14px;
+    max-height: 515px;
+    overflow-y: auto;
+    font-size: 13px;
+  }
+  .inspector h4 { margin: 0 0 8px; font-size: 14px; }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .pill.active { background: var(--green-soft); color: var(--green); border: 1px solid #BBF7D0; }
+  .pill.invalid { background: var(--red-soft); color: var(--red); border: 1px solid #FECACA; }
+  .pill.tag { background: var(--accent-soft); color: var(--accent); border: 1px solid #BFDBFE; }
+
+  .mem0-list { display: flex; flex-direction: column; gap: 8px; max-height: 460px; overflow-y: auto; }
+  .mem0-item {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+  .mem0-item.deleted {
+    background: var(--red-soft);
+    border-color: #FECACA;
+    text-decoration: line-through;
+    color: var(--red);
+  }
+  .code-inline {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+    font-size: 12.5px;
+  }
+  @media print {
+    html, body { background: #FFFFFF !important; }
+    .theme-bar, .graph-toolbar { display: none !important; }
+    .card, header { box-shadow: none !important; break-inside: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="header-top">
+      <div>
+        <h1>Zep-Graphiti 建图与 Mem0 向量记忆对比及实测报告</h1>
+        <p class="subtitle">基于联接 Agent 真实混合轨迹数据（20 个用户、495 条网元单据与对话记录）的拓扑体检与 6 类题型对照实验</p>
+      </div>
+      <div class="theme-bar" data-lavish-ui="true">
+        <button id="btn-parchment" class="active" onclick="setTheme('parchment')">暖阳米纸</button>
+        <button id="btn-github" onclick="setTheme('github')">GitHub 简洁</button>
+      </div>
+    </div>
+    <div class="kpi-grid" id="kpi-grid"></div>
+  </header>
+
+  <section class="card">
+    <h2>一、核心区别：不是“图数据库对比向量数据库”，而是三种数据结构取舍</h2>
+    <p>对照 <span class="code-inline">long_term_memory_and_paper_matrix_v6.xlsx</span> 中两篇论文的机制拆解，Zep-Graphiti 与 Mem0（基础版）都在做语义记忆检索（两边都用向量相似度），真正的分水岭在于写入与更新阶段如何处理<strong>历史演进、证据溯源与实体关系</strong>。</p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:15%">对比维度</th>
+          <th style="width:28%">Mem0（基础扁平向量版）</th>
+          <th style="width:31%">Zep / Graphiti（双时态三层图谱）</th>
+          <th style="width:26%">对联接 Agent 的实际影响</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>情景层与溯源</strong></td>
+          <td>无情景记忆层，只保留抽取后的自包含短句（15~80 词）。</td>
+          <td>底层只读保存原始情节节点（<span class="code-inline">Episode</span>），上层每条关系边挂接 <span class="code-inline">episodes[]</span> 来源编号列表。</td>
+          <td>决定能否区分“单次偶发提及”与“单据+对话多次累积的长期习惯”。</td>
+        </tr>
+        <tr>
+          <td><strong>冲突与更新机制</strong></td>
+          <td>阶段二调用大模型执行 <span class="code-inline">ADD / UPDATE / DELETE</span>，旧事实直接覆写或物理删除。</td>
+          <td>保留旧边不删，仅把旧边的业务失效时间 <span class="code-inline">t_invalid</span> 截断为新边的 <span class="code-inline">t_valid</span>（双时间轴）。</td>
+          <td>Mem0 撤销后干净但彻底失忆；Zep 能回溯历史，但<strong>默认同屏展示失效边会干扰小模型</strong>。</td>
+        </tr>
+        <tr>
+          <td><strong>数据组织形态</strong></td>
+          <td>按 <span class="code-inline">user_id</span> 隔离的扁平自然语言短句集合，彼此无结构连接。</td>
+          <td>实体节点 + 有向双时态关系边 + 动态社区话题摘要（支持 1~2 跳图遍历）。</td>
+          <td>单用户下多为 1 跳星型结构；只有跨实体对齐或跨用户共享小区时多跳才显威。</td>
+        </tr>
+        <tr>
+          <td><strong>写入成本与保真</strong></td>
+          <td>每轮约 1~2 次大模型调用，写入轻快，短句可读性好。</td>
+          <td>需做实体抽取、消歧合并、关系抽取、时间换算、冲突检测与摘要刷新，成本高且三元组易压扁过程细节。</td>
+          <td>单用户高频写入场景下，全量 Graphiti 管线的延迟与 Token 开销偏重。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>二、在我们的真实数据上，图到底长什么样？</h2>
+    <div class="callout amber">
+      <strong>拓扑体检核心发现：</strong>在 20 个用户的真实混合轨迹（过滤 165 条噪声后 330 条有效单据与对话）上，<strong>单用户视角的图平均只有 13.95 个节点、14.85 条边，其中 66.2% 的边直接连在 User 中心节点上</strong>——本质上是一个“以 User 为中心的浅星型图”。只有当 20 个用户通过 <strong>10 个共享基站小区（Cell）</strong> 与 <strong>19 个共享应用（App）</strong> 连成全局图时，图才真正长出多跳网状骨架。
+    </div>
+
+    <div class="graph-toolbar" data-lavish-ui="true">
+      <button id="view-single" class="active" onclick="switchView('single')">视图 1：单用户星型图（persona_8613522947905）</button>
+      <button id="view-cross" onclick="switchView('cross')">视图 2：跨用户同小区关联图（Cell 4600040386A）</button>
+      <span style="font-size:12.5px;color:var(--muted);margin-left:6px;">提示：点击图中任意节点或关系边，右侧实时查看双时态区间与原始情节证据</span>
+    </div>
+
+    <div class="graph-stage">
+      <div class="svg-box">
+        <svg id="graph-svg" viewBox="0 0 760 470"></svg>
+        <div class="legend">
+          <span class="legend-item"><span class="dot" style="background:#1D4ED8"></span>User 用户</span>
+          <span class="legend-item"><span class="dot" style="background:#15803D"></span>App 标准应用</span>
+          <span class="legend-item"><span class="dot" style="background:#0EA5E9"></span>Cell 基站小区</span>
+          <span class="legend-item"><span class="dot" style="background:#D97706"></span>Venue 场所</span>
+          <span class="legend-item"><span class="dot" style="background:#7C3AED"></span>Alias 个性别名 / Category</span>
+          <span class="legend-item"><span class="dot" style="background:#DC2626"></span>BranchRule 临时规则（虚线=已失效）</span>
+        </div>
+      </div>
+      <div class="inspector" id="inspector"></div>
+    </div>
+
+    <h3>对照：同一用户（persona_8613522947905）在 Mem0 向量库里长什么样？</h3>
+    <p>下面右侧为同一批 17 条有效记录写入 Mem0 后留存的 12 条扁平文本与 1 条被 <span class="code-inline">DELETE</span> 物理删除的临时规则记录。可以看到：没有 <span class="code-inline">episodes[]</span> 证据计数，且被撤销的“突发恶劣天气”规则彻底消失。</p>
+    <div class="split-2">
+      <div>
+        <div class="callout green" style="margin-top:0">
+          <strong>Zep 图谱侧留存特征（14 节点 · 16 边 · 17 情节）：</strong><br/>
+          1. 单据的 <span class="code-inline">bilibili_vod</span> 与对话的「B站」「小破站」自然汇聚到同一 App 节点，边上挂载 <strong>14 条情节编号</strong>；<br/>
+          2. 红色虚线边 <span class="code-inline">HAS_BRANCH_RULE → 突发恶劣天气</span> 保留完整区间 <span class="code-inline">[2026-01-13 13:28, 2026-01-14 14:35)</span>。
+        </div>
+        <div id="zep-edge-summary" class="mem0-list"></div>
+      </div>
+      <div>
+        <div class="callout red" style="margin-top:0">
+          <strong>Mem0 向量侧留存特征（12 条扁平短句 · 1 条已删）：</strong><br/>
+          1. 每条事实互相孤立，单据、场所、别名分散在不同短句里，无法直接聚合证据频次；<br/>
+          2. <span class="code-inline">n06</span> 撤销后，<span class="code-inline">branch_rule</span> 被阶段二直接 <span class="code-inline">DELETE</span>，历史记录无从回溯。
+        </div>
+        <div id="mem0-list" class="mem0-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>三、6 类真实业务题型对照实验结果（62 题，公平检索口径）</h2>
+    <p>为了不给图谱开“上帝视角”，Zep 检索统一采用<strong>文本相似度召回 + 实体锚定 1~2 跳扩展 + 频次重排</strong>，并专门拆出 <strong>Zep-Default（默认返回全部命中边，含已失效旧边）</strong> 与 <strong>Zep-Strict（按查询时刻严格过滤双时态区间）</strong>，与 Mem0 扁平向量检索同台对比。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>评测题型</th>
+          <th class="num">题数</th>
+          <th class="num">Mem0（扁平向量）</th>
+          <th class="num">Zep-Default（含失效边）</th>
+          <th class="num">Zep-Strict（时间窗过滤）</th>
+          <th>差距归因分析</th>
+        </tr>
+      </thead>
+      <tbody id="bench-tbody"></tbody>
+    </table>
+
+    <div class="callout red">
+      <strong>复现了 Zep 原论文的真实局限（Q2-撤销后问当前态）：</strong>在 4 道“规则撤销/主线晋升后再问当前状态”的题目上，<strong>Mem0 拿了 100%（因为旧规则删干净了），而 Zep-Default 掉到 0%</strong>——把带失效时间戳的旧边原样塞进上下文后，直接造成陈旧事实泄露（与 <span class="code-inline">v6.xlsx</span> 中记录的 LongMemEval 小模型下跌 3.33% 完全一致）。必须像 Zep-Strict 一样在检索层强制按查询时刻过滤 <span class="code-inline">t_invalid</span> 才能避免误导。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>四、结论与联接 Agent 的务实选型建议</h2>
+    <div class="split-2">
+      <div class="callout green" style="margin:0">
+        <strong>建图真正有优势的 3 个场景</strong>
+        <ul>
+          <li><strong>需要历史状态演进与时间点回溯</strong>：如临时保障规则撤销、主力应用迁移，靠双时态边 <span class="code-inline">[t_valid, t_invalid)</span> 留痕而不覆盖。</li>
+          <li><strong>多源异构证据聚合与溯源</strong>：网元单据（<span class="code-inline">sub_app_id / cell_id</span>）与用户对话（口语别名 / 场所）指向同一实体，沿 <span class="code-inline">Episode ↔ Edge</span> 直接统计频次与回查原话。</li>
+          <li><strong>跨用户 / 基站小区级群体关联</strong>：多用户共享 <span class="code-inline">Cell</span> 与 <span class="code-inline">App</span> 节点，实现同小区拥塞/卡顿联动排障。</li>
+        </ul>
+      </div>
+      <div class="callout amber" style="margin:0">
+        <strong>建图没有优势（甚至划不来）的 3 个场景</strong>
+        <ul>
+          <li><strong>单用户单跳当前偏好补全</strong>：单用户图 66.2% 是星型 1 跳边，Mem0 准确率已达 95%~100%，重型图谱纯属杀鸡用牛刀。</li>
+          <li><strong>高频写入与低延迟约束</strong>：Graphiti 每条消息都触发实体抽取、消歧、冲突检测与摘要刷新，写入延迟和 Token 成本显著高于 Mem0。</li>
+          <li><strong>需要保留完整过程细节</strong>：三元组压缩天然丢弃多轮澄清话术与长段推理过程（仍需情景原文或程序记忆补充）。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px">
+      <strong>对联接 Agent 的落地架构建议（轻量关系表吸收 Zep 基因 + 向量检索）：</strong><br/>
+      1. <strong>现阶段（单用户意图理解与偏好补全为主）</strong>：不直接上重型图数据库，采用<strong>结构化双时态槽位表 + 向量检索</strong>——把 Zep 最有价值的 2 个设计直接吸收到表字段里：① 每条偏好记录维护 <span class="code-inline">[t_valid, t_invalid)</span> 软失效区间（查询当前态默认过滤失效记录，历史回溯时再放开）；② 每条偏好维护 <span class="code-inline">source_episodes[]</span> 指针列表连回情景记录表，区分单次偶发与多次累积。<br/>
+      2. <strong>演进阶段（扩展到基站小区级群体排障 / 多用户共性体验挖掘）</strong>：再以 <span class="code-inline">Cell</span> 和 <span class="code-inline">App</span> 为共享枢纽节点，构建轻量邻接图索引（无需把所有对话细节都塞进三元组）。
+    </div>
+  </section>
+</div>
+
+<script>
+const DATA = {"dataset": "D:\\coding\\hybrid_memory_data\\data\\processed\\hybrid_dataset.json", "user_count": 20, "ingest_stats": {"total_records": 495, "noise_ignored": 165, "episodes_written": 330, "mem0_ops": {"ADD": 221, "UPDATE": 413, "DELETE": 4}, "zep_invalidations": 4}, "topology": {"single_user_avg": {"avg_nodes": 13.95, "avg_edges": 14.85, "avg_star_centrality": 0.662, "total_invalid_edges": 4}, "global_graph": {"total_nodes": 96, "total_edges": 297, "total_episodes": 330, "shared_cell_bridges": 10, "shared_app_bridges": 19}, "per_user": [{"user_id": "persona_8613213213689", "nodes": 11, "edges": 11, "invalid_edges": 0, "episodes": 7, "star_centrality": 0.636}, {"user_id": "persona_8613409272151", "nodes": 11, "edges": 11, "invalid_edges": 0, "episodes": 26, "star_centrality": 0.636}, {"user_id": "persona_8613409383368", "nodes": 20, "edges": 23, "invalid_edges": 0, "episodes": 32, "star_centrality": 0.652}, {"user_id": "persona_8613419793054", "nodes": 15, "edges": 15, "invalid_edges": 0, "episodes": 14, "star_centrality": 0.667}, {"user_id": "persona_8613419812206", "nodes": 13, "edges": 13, "invalid_edges": 0, "episodes": 9, "star_centrality": 0.615}, {"user_id": "persona_8613460256444", "nodes": 15, "edges": 17, "invalid_edges": 0, "episodes": 14, "star_centrality": 0.588}, {"user_id": "persona_8613460580808", "nodes": 10, "edges": 11, "invalid_edges": 0, "episodes": 8, "star_centrality": 0.727}, {"user_id": "persona_8613462113785", "nodes": 21, "edges": 23, "invalid_edges": 0, "episodes": 16, "star_centrality": 0.565}, {"user_id": "persona_8613522947905", "nodes": 14, "edges": 15, "invalid_edges": 1, "episodes": 17, "star_centrality": 0.667}, {"user_id": "persona_8613523296217", "nodes": 13, "edges": 14, "invalid_edges": 1, "episodes": 15, "star_centrality": 0.786}, {"user_id": "persona_8613523308471", "nodes": 12, "edges": 12, "invalid_edges": 0, "episodes": 14, "star_centrality": 0.75}, {"user_id": "persona_8613525218516", "nodes": 11, "edges": 10, "invalid_edges": 1, "episodes": 31, "star_centrality": 0.7}, {"user_id": "persona_8613525576968", "nodes": 16, "edges": 18, "invalid_edges": 0, "episodes": 29, "star_centrality": 0.667}, {"user_id": "persona_8613525860212", "nodes": 15, "edges": 16, "invalid_edges": 0, "episodes": 12, "star_centrality": 0.688}, {"user_id": "persona_8613525897325", "nodes": 9, "edges": 10, "invalid_edges": 0, "episodes": 4, "star_centrality": 0.7}, {"user_id": "persona_8613526661095", "nodes": 18, "edges": 19, "invalid_edges": 0, "episodes": 17, "star_centrality": 0.632}, {"user_id": "persona_8613526735143", "nodes": 19, "edges": 21, "invalid_edges": 1, "episodes": 28, "star_centrality": 0.571}, {"user_id": "persona_8613526790293", "nodes": 11, "edges": 13, "invalid_edges": 0, "episodes": 12, "star_centrality": 0.692}, {"user_id": "persona_8613526867990", "nodes": 15, "edges": 15, "invalid_edges": 0, "episodes": 17, "star_centrality": 0.6}, {"user_id": "persona_8613569481238", "nodes": 10, "edges": 10, "invalid_edges": 0, "episodes": 8, "star_centrality": 0.7}]}, "benchmark": {"query_count": 62, "mem0": {"summary": {"Q1_single_hop": {"passed": 19, "total": 20, "acc": 0.95}, "Q3_evidence_provenance": {"passed": 0, "total": 10, "acc": 0.0}, "Q4_alias_bridge": {"passed": 16, "total": 16, "acc": 1.0}, "Q5_cross_user_cell": {"passed": 0, "total": 8, "acc": 0.0}, "Q2_temporal_history": {"passed": 0, "total": 4, "acc": 0.0}, "Q2_post_supersede_current": {"passed": 4, "total": 4, "acc": 1.0}, "overall": {"passed": 39, "total": 62, "acc": 0.629}}, "details": {"Q1_single_hop": [{"qid": "Q1_3689", "passed": true, "reason": "hit"}, {"qid": "Q1_2151", "passed": true, "reason": "hit"}, {"qid": "Q1_3368", "passed": false, "reason": "miss_main_app"}, {"qid": "Q1_3054", "passed": true, "reason": "hit"}, {"qid": "Q1_2206", "passed": true, "reason": "hit"}, {"qid": "Q1_6444", "passed": true, "reason": "hit"}, {"qid": "Q1_0808", "passed": true, "reason": "hit"}, {"qid": "Q1_3785", "passed": true, "reason": "hit"}, {"qid": "Q1_7905", "passed": true, "reason": "hit"}, {"qid": "Q1_6217", "passed": true, "reason": "hit"}, {"qid": "Q1_8471", "passed": true, "reason": "hit"}, {"qid": "Q1_8516", "passed": true, "reason": "hit"}, {"qid": "Q1_6968", "passed": true, "reason": "hit"}, {"qid": "Q1_0212", "passed": true, "reason": "hit"}, {"qid": "Q1_7325", "passed": true, "reason": "hit"}, {"qid": "Q1_1095", "passed": true, "reason": "hit"}, {"qid": "Q1_5143", "passed": true, "reason": "hit"}, {"qid": "Q1_0293", "passed": true, "reason": "hit"}, {"qid": "Q1_7990", "passed": true, "reason": "hit"}, {"qid": "Q1_1238", "passed": true, "reason": "hit"}], "Q3_evidence_provenance": [{"qid": "Q3_3689", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_2151", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_3368", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_3054", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_2206", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_6444", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_0808", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_3785", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_7905", "passed": false, "reason": "no_episode_provenance"}, {"qid": "Q3_8471", "passed": false, "reason": "no_episode_provenance"}], "Q4_alias_bridge": [{"qid": "Q4_3689", "passed": true, "reason": "hit"}, {"qid": "Q4_2151", "passed": true, "reason": "hit"}, {"qid": "Q4_3368", "passed": true, "reason": "hit"}, {"qid": "Q4_3054", "passed": true, "reason": "hit"}, {"qid": "Q4_2206", "passed": true, "reason": "hit"}, {"qid": "Q4_6444", "passed": true, "reason": "hit"}, {"qid": "Q4_3785", "passed": true, "reason": "hit"}, {"qid": "Q4_7905", "passed": true, "reason": "hit"}, {"qid": "Q4_8471", "passed": true, "reason": "hit"}, {"qid": "Q4_8516", "passed": true, "reason": "hit"}, {"qid": "Q4_6968", "passed": true, "reason": "hit"}, {"qid": "Q4_0212", "passed": true, "reason": "hit"}, {"qid": "Q4_1095", "passed": true, "reason": "hit"}, {"qid": "Q4_5143", "passed": true, "reason": "hit"}, {"qid": "Q4_7990", "passed": true, "reason": "hit"}, {"qid": "Q4_1238", "passed": true, "reason": "hit"}], "Q5_cross_user_cell": [{"qid": "Q5_3689", "passed": false, "reason": "isolated_by_user_id"}, {"qid": "Q5_2151", "passed": false, "reason": "isolated_by_user_id"}, {"qid": "Q5_3368", "passed": false, "reason": "isolated_by_user_id"}, {"qid": "Q5_3054", "passed": false, "reason": "isolated_by_user_id"}, {"qid": "Q5_2206", "passed": false, "reason": "isolated_by_user_id"}, {"qid": "Q5_6444", "passed": false, "reason": "isolated_by_user_id"}, {"qid": "Q5_0808", "passed": false, "reason": "isolated_by_user_id"}, {"qid": "Q5_3785", "passed": false, "reason": "isolated_by_user_id"}], "Q2_temporal_history": [{"qid": "Q2_hist_7905", "passed": false, "reason": "deleted_by_overwrite"}, {"qid": "Q2_hist_6217", "passed": false, "reason": "deleted_by_overwrite"}, {"qid": "Q2_hist_8516", "passed": false, "reason": "deleted_by_overwrite"}, {"qid": "Q2_hist_5143", "passed": false, "reason": "deleted_by_overwrite"}], "Q2_post_supersede_current": [{"qid": "Q2_now_7905", "passed": true, "reason": "clean_current"}, {"qid": "Q2_now_6217", "passed": true, "reason": "clean_current"}, {"qid": "Q2_now_8516", "passed": true, "reason": "clean_current"}, {"qid": "Q2_now_5143", "passed": true, "reason": "clean_current"}]}}, "zep_default": {"summary": {"Q1_single_hop": {"passed": 20, "total": 20, "acc": 1.0}, "Q3_evidence_provenance": {"passed": 10, "total": 10, "acc": 1.0}, "Q4_alias_bridge": {"passed": 16, "total": 16, "acc": 1.0}, "Q5_cross_user_cell": {"passed": 8, "total": 8, "acc": 1.0}, "Q2_temporal_history": {"passed": 4, "total": 4, "acc": 1.0}, "Q2_post_supersede_current": {"passed": 0, "total": 4, "acc": 0.0}, "overall": {"passed": 58, "total": 62, "acc": 0.935}}, "details": {"Q1_single_hop": [{"qid": "Q1_3689", "passed": true, "reason": "hit"}, {"qid": "Q1_2151", "passed": true, "reason": "hit"}, {"qid": "Q1_3368", "passed": true, "reason": "hit"}, {"qid": "Q1_3054", "passed": true, "reason": "hit"}, {"qid": "Q1_2206", "passed": true, "reason": "hit"}, {"qid": "Q1_6444", "passed": true, "reason": "hit"}, {"qid": "Q1_0808", "passed": true, "reason": "hit"}, {"qid": "Q1_3785", "passed": true, "reason": "hit"}, {"qid": "Q1_7905", "passed": true, "reason": "hit"}, {"qid": "Q1_6217", "passed": true, "reason": "hit"}, {"qid": "Q1_8471", "passed": true, "reason": "hit"}, {"qid": "Q1_8516", "passed": true, "reason": "hit"}, {"qid": "Q1_6968", "passed": true, "reason": "hit"}, {"qid": "Q1_0212", "passed": true, "reason": "hit"}, {"qid": "Q1_7325", "passed": true, "reason": "hit"}, {"qid": "Q1_1095", "passed": true, "reason": "hit"}, {"qid": "Q1_5143", "passed": true, "reason": "hit"}, {"qid": "Q1_0293", "passed": true, "reason": "hit"}, {"qid": "Q1_7990", "passed": true, "reason": "hit"}, {"qid": "Q1_1238", "passed": true, "reason": "hit"}], "Q3_evidence_provenance": [{"qid": "Q3_3689", "passed": true, "reason": "episodes=5"}, {"qid": "Q3_2151", "passed": true, "reason": "episodes=20"}, {"qid": "Q3_3368", "passed": true, "reason": "episodes=13"}, {"qid": "Q3_3054", "passed": true, "reason": "episodes=5"}, {"qid": "Q3_2206", "passed": true, "reason": "episodes=6"}, {"qid": "Q3_6444", "passed": true, "reason": "episodes=4"}, {"qid": "Q3_0808", "passed": true, "reason": "episodes=3"}, {"qid": "Q3_3785", "passed": true, "reason": "episodes=5"}, {"qid": "Q3_7905", "passed": true, "reason": "episodes=12"}, {"qid": "Q3_8471", "passed": true, "reason": "episodes=12"}], "Q4_alias_bridge": [{"qid": "Q4_3689", "passed": true, "reason": "hit"}, {"qid": "Q4_2151", "passed": true, "reason": "hit"}, {"qid": "Q4_3368", "passed": true, "reason": "hit"}, {"qid": "Q4_3054", "passed": true, "reason": "hit"}, {"qid": "Q4_2206", "passed": true, "reason": "hit"}, {"qid": "Q4_6444", "passed": true, "reason": "hit"}, {"qid": "Q4_3785", "passed": true, "reason": "hit"}, {"qid": "Q4_7905", "passed": true, "reason": "hit"}, {"qid": "Q4_8471", "passed": true, "reason": "hit"}, {"qid": "Q4_8516", "passed": true, "reason": "hit"}, {"qid": "Q4_6968", "passed": true, "reason": "hit"}, {"qid": "Q4_0212", "passed": true, "reason": "hit"}, {"qid": "Q4_1095", "passed": true, "reason": "hit"}, {"qid": "Q4_5143", "passed": true, "reason": "hit"}, {"qid": "Q4_7990", "passed": true, "reason": "hit"}, {"qid": "Q4_1238", "passed": true, "reason": "hit"}], "Q5_cross_user_cell": [{"qid": "Q5_3689", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_2151", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_3368", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_3054", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_2206", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_6444", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_0808", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_3785", "passed": true, "reason": "cross_user_hit"}], "Q2_temporal_history": [{"qid": "Q2_hist_7905", "passed": true, "reason": "hit_with_bitemporal"}, {"qid": "Q2_hist_6217", "passed": true, "reason": "hit_with_bitemporal"}, {"qid": "Q2_hist_8516", "passed": true, "reason": "hit_with_bitemporal"}, {"qid": "Q2_hist_5143", "passed": true, "reason": "hit_with_bitemporal"}], "Q2_post_supersede_current": [{"qid": "Q2_now_7905", "passed": false, "reason": "stale_edge_leakage"}, {"qid": "Q2_now_6217", "passed": false, "reason": "stale_edge_leakage"}, {"qid": "Q2_now_8516", "passed": false, "reason": "stale_edge_leakage"}, {"qid": "Q2_now_5143", "passed": false, "reason": "stale_edge_leakage"}]}}, "zep_strict": {"summary": {"Q1_single_hop": {"passed": 19, "total": 20, "acc": 0.95}, "Q3_evidence_provenance": {"passed": 10, "total": 10, "acc": 1.0}, "Q4_alias_bridge": {"passed": 16, "total": 16, "acc": 1.0}, "Q5_cross_user_cell": {"passed": 8, "total": 8, "acc": 1.0}, "Q2_temporal_history": {"passed": 4, "total": 4, "acc": 1.0}, "Q2_post_supersede_current": {"passed": 3, "total": 4, "acc": 0.75}, "overall": {"passed": 60, "total": 62, "acc": 0.968}}, "details": {"Q1_single_hop": [{"qid": "Q1_3689", "passed": true, "reason": "hit"}, {"qid": "Q1_2151", "passed": true, "reason": "hit"}, {"qid": "Q1_3368", "passed": true, "reason": "hit"}, {"qid": "Q1_3054", "passed": true, "reason": "hit"}, {"qid": "Q1_2206", "passed": true, "reason": "hit"}, {"qid": "Q1_6444", "passed": true, "reason": "hit"}, {"qid": "Q1_0808", "passed": true, "reason": "hit"}, {"qid": "Q1_3785", "passed": true, "reason": "hit"}, {"qid": "Q1_7905", "passed": true, "reason": "hit"}, {"qid": "Q1_6217", "passed": false, "reason": "miss_main_app"}, {"qid": "Q1_8471", "passed": true, "reason": "hit"}, {"qid": "Q1_8516", "passed": true, "reason": "hit"}, {"qid": "Q1_6968", "passed": true, "reason": "hit"}, {"qid": "Q1_0212", "passed": true, "reason": "hit"}, {"qid": "Q1_7325", "passed": true, "reason": "hit"}, {"qid": "Q1_1095", "passed": true, "reason": "hit"}, {"qid": "Q1_5143", "passed": true, "reason": "hit"}, {"qid": "Q1_0293", "passed": true, "reason": "hit"}, {"qid": "Q1_7990", "passed": true, "reason": "hit"}, {"qid": "Q1_1238", "passed": true, "reason": "hit"}], "Q3_evidence_provenance": [{"qid": "Q3_3689", "passed": true, "reason": "episodes=5"}, {"qid": "Q3_2151", "passed": true, "reason": "episodes=20"}, {"qid": "Q3_3368", "passed": true, "reason": "episodes=13"}, {"qid": "Q3_3054", "passed": true, "reason": "episodes=5"}, {"qid": "Q3_2206", "passed": true, "reason": "episodes=6"}, {"qid": "Q3_6444", "passed": true, "reason": "episodes=4"}, {"qid": "Q3_0808", "passed": true, "reason": "episodes=3"}, {"qid": "Q3_3785", "passed": true, "reason": "episodes=5"}, {"qid": "Q3_7905", "passed": true, "reason": "episodes=12"}, {"qid": "Q3_8471", "passed": true, "reason": "episodes=12"}], "Q4_alias_bridge": [{"qid": "Q4_3689", "passed": true, "reason": "hit"}, {"qid": "Q4_2151", "passed": true, "reason": "hit"}, {"qid": "Q4_3368", "passed": true, "reason": "hit"}, {"qid": "Q4_3054", "passed": true, "reason": "hit"}, {"qid": "Q4_2206", "passed": true, "reason": "hit"}, {"qid": "Q4_6444", "passed": true, "reason": "hit"}, {"qid": "Q4_3785", "passed": true, "reason": "hit"}, {"qid": "Q4_7905", "passed": true, "reason": "hit"}, {"qid": "Q4_8471", "passed": true, "reason": "hit"}, {"qid": "Q4_8516", "passed": true, "reason": "hit"}, {"qid": "Q4_6968", "passed": true, "reason": "hit"}, {"qid": "Q4_0212", "passed": true, "reason": "hit"}, {"qid": "Q4_1095", "passed": true, "reason": "hit"}, {"qid": "Q4_5143", "passed": true, "reason": "hit"}, {"qid": "Q4_7990", "passed": true, "reason": "hit"}, {"qid": "Q4_1238", "passed": true, "reason": "hit"}], "Q5_cross_user_cell": [{"qid": "Q5_3689", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_2151", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_3368", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_3054", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_2206", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_6444", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_0808", "passed": true, "reason": "cross_user_hit"}, {"qid": "Q5_3785", "passed": true, "reason": "cross_user_hit"}], "Q2_temporal_history": [{"qid": "Q2_hist_7905", "passed": true, "reason": "hit_with_bitemporal"}, {"qid": "Q2_hist_6217", "passed": true, "reason": "hit_with_bitemporal"}, {"qid": "Q2_hist_8516", "passed": true, "reason": "hit_with_bitemporal"}, {"qid": "Q2_hist_5143", "passed": true, "reason": "hit_with_bitemporal"}], "Q2_post_supersede_current": [{"qid": "Q2_now_7905", "passed": true, "reason": "clean_current"}, {"qid": "Q2_now_6217", "passed": false, "reason": "stale_edge_leakage"}, {"qid": "Q2_now_8516", "passed": true, "reason": "clean_current"}, {"qid": "Q2_now_5143", "passed": true, "reason": "clean_current"}]}}}, "case_study": {"user_id": "persona_8613522947905", "zep_nodes": [{"id": "4600040386A", "type": "Cell", "label": "4600040386A", "community": "空间与网络", "mention_count": 27}, {"id": "4600040391C", "type": "Cell", "label": "4600040391C", "community": "空间与网络", "mention_count": 9}, {"id": "4600040393B", "type": "Cell", "label": "4600040393B", "community": "空间与网络", "mention_count": 13}, {"id": "4600040394B", "type": "Cell", "label": "4600040394B", "community": "空间与网络", "mention_count": 27}, {"id": "B站", "type": "Alias", "label": "别名:B站", "community": "个性表达", "mention_count": 1}, {"id": "RULE:突发恶劣天气", "type": "BranchRule", "label": "临时规则:突发恶劣天气", "community": "规则与约束", "mention_count": 4}, {"id": "bilibili_vod", "type": "App", "label": "bilibili_vod", "community": "应用与业务", "mention_count": 13}, {"id": "iqiyi_vod", "type": "App", "label": "iqiyi_vod", "community": "应用与业务", "mention_count": 1}, {"id": "persona_8613522947905", "type": "User", "label": "U_8613522947905", "community": "用户核心", "mention_count": 1}, {"id": "vod_streaming", "type": "Category", "label": "vod_streaming", "community": "应用与业务", "mention_count": 22}, {"id": "youku_vod", "type": "App", "label": "youku_vod", "community": "应用与业务", "mention_count": 8}, {"id": "临街咖啡厅办公区", "type": "Venue", "label": "临街咖啡厅办公区", "community": "空间与网络", "mention_count": 13}, {"id": "公司独立会议室", "type": "Venue", "label": "公司独立会议室", "community": "空间与网络", "mention_count": 13}, {"id": "小破站", "type": "Alias", "label": "别名:小破站", "community": "个性表达", "mention_count": 1}], "zep_edges": [{"id": "E0125", "src": "persona_8613522947905", "rel": "USES_APP", "dst": "bilibili_vod", "fact_text": "用户 persona_8613522947905 常用子应用 bilibili_vod（类别 vod_streaming），网元单据与对话累计观测", "t_valid": "2026-01-05 12:00:00", "t_invalid": null, "episodes": ["persona_8613522947905_n01", "persona_8613522947905_n03", "persona_8613522947905_n05", "persona_8613522947905_n06", "persona_8613522947905_n07", "persona_8613522947905_n09", "persona_8613522947905_n10", "persona_8613522947905_n11", "persona_8613522947905_n12", "persona_8613522947905_n15", "persona_8613522947905_n16", "persona_8613522947905_n19"], "count": 12}, {"id": "E0126", "src": "bilibili_vod", "rel": "BELONGS_TO", "dst": "vod_streaming", "fact_text": "子应用 bilibili_vod 属于业务类别 vod_streaming", "t_valid": "2026-01-05 12:00:00", "t_invalid": null, "episodes": ["persona_8613522947905_n01", "persona_8613522947905_n03", "persona_8613522947905_n05", "persona_8613522947905_n07", "persona_8613522947905_n09", "persona_8613522947905_n11", "persona_8613522947905_n12", "persona_8613522947905_n15", "persona_8613522947905_n16", "persona_8613522947905_n19"], "count": 10}, {"id": "E0127", "src": "persona_8613522947905", "rel": "RESIDES_CELL", "dst": "4600040391C", "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040391C", "t_valid": "2026-01-05 12:00:00", "t_invalid": null, "episodes": ["persona_8613522947905_n01", "persona_8613522947905_n05", "persona_8613522947905_n09", "persona_8613522947905_n13"], "count": 4}, {"id": "E0128", "src": "persona_8613522947905", "rel": "RESIDES_CELL", "dst": "4600040386A", "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040386A", "t_valid": "2026-01-07 14:14:00", "t_invalid": null, "episodes": ["persona_8613522947905_n03", "persona_8613522947905_n07", "persona_8613522947905_n11", "persona_8613522947905_n15", "persona_8613522947905_n19"], "count": 5}, {"id": "E0129", "src": "persona_8613522947905", "rel": "FREQUENTS_VENUE", "dst": "临街咖啡厅办公区", "fact_text": "用户 persona_8613522947905 常在场景场所「临街咖啡厅办公区」发起网络保障", "t_valid": "2026-01-11 12:21:00", "t_invalid": null, "episodes": ["persona_8613522947905_n04", "persona_8613522947905_n08"], "count": 2}, {"id": "E0130", "src": "persona_8613522947905", "rel": "HAS_BRANCH_RULE", "dst": "RULE:突发恶劣天气", "fact_text": "用户 persona_8613522947905 于 2026-01-13 13:28:00 启用临时分支规则：突发恶劣天气 期间优先保障", "t_valid": "2026-01-13 13:28:00", "t_invalid": "2026-01-14 14:35:00", "episodes": ["persona_8613522947905_n05", "persona_8613522947905_n06"], "count": 2}, {"id": "E0131", "src": "persona_8613522947905", "rel": "FREQUENTS_VENUE", "dst": "公司独立会议室", "fact_text": "用户 persona_8613522947905 常在场景场所「公司独立会议室」发起网络保障", "t_valid": "2026-01-14 14:35:00", "t_invalid": null, "episodes": ["persona_8613522947905_n06", "persona_8613522947905_n10"], "count": 2}, {"id": "E0132", "src": "B站", "rel": "ALIAS_OF", "dst": "bilibili_vod", "fact_text": "用户 persona_8613522947905 习惯用个性化简称「B站」指代标准应用 bilibili_vod", "t_valid": "2026-01-14 14:35:00", "t_invalid": null, "episodes": ["persona_8613522947905_n06"], "count": 1}, {"id": "E0133", "src": "小破站", "rel": "ALIAS_OF", "dst": "bilibili_vod", "fact_text": "用户 persona_8613522947905 习惯用个性化简称「小破站」指代标准应用 bilibili_vod", "t_valid": "2026-01-17 12:08:00", "t_invalid": null, "episodes": ["persona_8613522947905_n10"], "count": 1}, {"id": "E0134", "src": "persona_8613522947905", "rel": "RESIDES_CELL", "dst": "4600040394B", "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040394B", "t_valid": "2026-01-23 14:22:00", "t_invalid": null, "episodes": ["persona_8613522947905_n12", "persona_8613522947905_n16", "persona_8613522947905_n20"], "count": 3}, {"id": "E0135", "src": "persona_8613522947905", "rel": "USES_APP", "dst": "youku_vod", "fact_text": "用户 persona_8613522947905 常用子应用 youku_vod（类别 vod_streaming），网元单据与对话累计观测", "t_valid": "2026-01-26 12:29:00", "t_invalid": null, "episodes": ["persona_8613522947905_n13", "persona_8613522947905_n18"], "count": 2}, {"id": "E0136", "src": "youku_vod", "rel": "BELONGS_TO", "dst": "vod_streaming", "fact_text": "子应用 youku_vod 属于业务类别 vod_streaming", "t_valid": "2026-01-26 12:29:00", "t_invalid": null, "episodes": ["persona_8613522947905_n13", "persona_8613522947905_n18"], "count": 2}, {"id": "E0137", "src": "persona_8613522947905", "rel": "RESIDES_CELL", "dst": "4600040393B", "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040393B", "t_valid": "2026-01-30 14:09:00", "t_invalid": null, "episodes": ["persona_8613522947905_n18"], "count": 1}, {"id": "E0138", "src": "persona_8613522947905", "rel": "USES_APP", "dst": "iqiyi_vod", "fact_text": "用户 persona_8613522947905 常用子应用 iqiyi_vod（类别 vod_streaming），网元单据与对话累计观测", "t_valid": "2026-02-04 13:23:00", "t_invalid": null, "episodes": ["persona_8613522947905_n20"], "count": 1}, {"id": "E0139", "src": "iqiyi_vod", "rel": "BELONGS_TO", "dst": "vod_streaming", "fact_text": "子应用 iqiyi_vod 属于业务类别 vod_streaming", "t_valid": "2026-02-04 13:23:00", "t_invalid": null, "episodes": ["persona_8613522947905_n20"], "count": 1}], "zep_episodes": [{"ep_id": "persona_8613522947905_n01", "ts": "2026-01-05 12:00:00", "carrier": "ticket", "role": "evidence", "raw_text": "[网元单据 EXP20260105120079050001] 应用=bilibili_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n03", "ts": "2026-01-07 14:14:00", "carrier": "ticket", "role": "evidence", "raw_text": "[网元单据 EXP20260107141479050003] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n04", "ts": "2026-01-11 12:21:00", "carrier": "dialogue", "role": "evidence", "raw_text": "[对话 persona_8613522947905_n04] 用户：我在临街咖啡厅办公区用iqiyi_vod的时候老是别卡，帮我优先保障一下。"}, {"ep_id": "persona_8613522947905_n05", "ts": "2026-01-13 13:28:00", "carrier": "ticket", "role": "branch_start", "raw_text": "[网元单据 EXP20260113132879050005] 应用=bilibili_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n06", "ts": "2026-01-14 14:35:00", "carrier": "dialogue", "role": "correction", "raw_text": "[对话 persona_8613522947905_n06] 用户：之前那个突发恶劣天气的临时规则不用了，帮我恢复成平时在公司独立会议室的习惯吧。"}, {"ep_id": "persona_8613522947905_n07", "ts": "2026-01-15 12:42:00", "carrier": "ticket", "role": "branch_step", "raw_text": "[网元单据 EXP20260115124279050007] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n08", "ts": "2026-01-15 13:49:00", "carrier": "dialogue", "role": "reinforce", "raw_text": "[对话 persona_8613522947905_n08] 用户：我还是在临街咖啡厅办公区这边用iqiyi_vod，有点别卡。"}, {"ep_id": "persona_8613522947905_n09", "ts": "2026-01-15 14:01:00", "carrier": "ticket", "role": "branch_step", "raw_text": "[网元单据 EXP20260115140179050009] 应用=bilibili_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n10", "ts": "2026-01-17 12:08:00", "carrier": "dialogue", "role": "reinforce", "raw_text": "[对话 persona_8613522947905_n10] 用户：我还是在公司独立会议室这边用小破站，有点别卡。"}, {"ep_id": "persona_8613522947905_n11", "ts": "2026-01-20 13:15:00", "carrier": "ticket", "role": "branch_step", "raw_text": "[网元单据 EXP20260120131579050011] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n12", "ts": "2026-01-23 14:22:00", "carrier": "ticket", "role": "reinforce", "raw_text": "[网元单据 EXP20260123142279050012] 应用=bilibili_vod(vod_streaming) 小区=4600040394B 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n13", "ts": "2026-01-26 12:29:00", "carrier": "ticket", "role": "branch_step", "raw_text": "[网元单据 EXP20260126122979050013] 应用=youku_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n15", "ts": "2026-01-28 14:43:00", "carrier": "ticket", "role": "reinforce", "raw_text": "[网元单据 EXP20260128144379050015] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n16", "ts": "2026-01-28 15:23:00", "carrier": "ticket", "role": "branch_step", "raw_text": "[网元单据 EXP20260128152379050016] 应用=bilibili_vod(vod_streaming) 小区=4600040394B 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n18", "ts": "2026-01-30 14:09:00", "carrier": "ticket", "role": "reinforce", "raw_text": "[网元单据 EXP20260130140979050018] 应用=youku_vod(vod_streaming) 小区=4600040393B 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n19", "ts": "2026-02-01 12:16:00", "carrier": "ticket", "role": "branch_step", "raw_text": "[网元单据 EXP20260201121679050019] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"}, {"ep_id": "persona_8613522947905_n20", "ts": "2026-02-04 13:23:00", "carrier": "ticket", "role": "reinforce", "raw_text": "[网元单据 EXP20260204132379050020] 应用=iqiyi_vod(vod_streaming) 小区=4600040394B 制式=5G(10)"}], "mem0_items": [{"id": "M0091", "slot": "app:bilibili_vod", "text": "用户 persona_8613522947905 常用vod_streaming类应用 bilibili_vod，最近一次使用于 2026-02-01 12:16:00", "created_at": "2026-01-05 12:00:00", "updated_at": "2026-02-01 12:16:00"}, {"id": "M0092", "slot": "cell:4600040391C", "text": "用户 persona_8613522947905 常在基站小区 4600040391C 活动", "created_at": "2026-01-05 12:00:00", "updated_at": "2026-01-26 12:29:00"}, {"id": "M0093", "slot": "cell:4600040386A", "text": "用户 persona_8613522947905 常在基站小区 4600040386A 活动", "created_at": "2026-01-07 14:14:00", "updated_at": "2026-02-01 12:16:00"}, {"id": "M0094", "slot": "venue:临街咖啡厅办公区", "text": "用户 persona_8613522947905 常在「临街咖啡厅办公区」使用移动网络并关注流畅不卡顿", "created_at": "2026-01-11 12:21:00", "updated_at": "2026-01-15 13:49:00"}, {"id": "M0096", "slot": "venue:公司独立会议室", "text": "用户 persona_8613522947905 常在「公司独立会议室」使用移动网络并关注流畅不卡顿", "created_at": "2026-01-14 14:35:00", "updated_at": "2026-01-17 12:08:00"}, {"id": "M0097", "slot": "alias:B站", "text": "用户 persona_8613522947905 将标准应用 bilibili_vod 简称为「B站」", "created_at": "2026-01-14 14:35:00", "updated_at": "2026-01-14 14:35:00"}, {"id": "M0098", "slot": "alias:小破站", "text": "用户 persona_8613522947905 将标准应用 bilibili_vod 简称为「小破站」", "created_at": "2026-01-17 12:08:00", "updated_at": "2026-01-17 12:08:00"}, {"id": "M0099", "slot": "cell:4600040394B", "text": "用户 persona_8613522947905 常在基站小区 4600040394B 活动", "created_at": "2026-01-23 14:22:00", "updated_at": "2026-02-04 13:23:00"}, {"id": "M0100", "slot": "app:youku_vod", "text": "用户 persona_8613522947905 常用vod_streaming类应用 youku_vod，最近一次使用于 2026-01-30 14:09:00", "created_at": "2026-01-26 12:29:00", "updated_at": "2026-01-30 14:09:00"}, {"id": "M0101", "slot": "cell:4600040393B", "text": "用户 persona_8613522947905 常在基站小区 4600040393B 活动", "created_at": "2026-01-30 14:09:00", "updated_at": "2026-01-30 14:09:00"}, {"id": "M0102", "slot": "app:iqiyi_vod", "text": "用户 persona_8613522947905 常用vod_streaming类应用 iqiyi_vod，最近一次使用于 2026-02-04 13:23:00", "created_at": "2026-02-04 13:23:00", "updated_at": "2026-02-04 13:23:00"}], "mem0_deleted": [{"user_id": "persona_8613522947905", "slot_key": "branch_rule", "old_text": "用户 persona_8613522947905 当前启用了「突发恶劣天气」临时优先保障规则（设立于 2026-01-13 13:28:00）", "deleted_at": "2026-01-14 14:35:00", "reason": "用户显式撤销临时规则，恢复主线习惯"}]}, "cross_user_case": {"bridge_cell": "4600040386A", "users": ["persona_8613409272151", "persona_8613460256444", "persona_8613462113785", "persona_8613522947905"], "nodes": [{"id": "4600040386A", "type": "Cell", "label": "4600040386A", "community": "空间与网络", "mention_count": 27}, {"id": "RULE:异地出差或旅行", "type": "BranchRule", "label": "临时规则:异地出差或旅行", "community": "规则与约束", "mention_count": 2}, {"id": "RULE:突发恶劣天气", "type": "BranchRule", "label": "临时规则:突发恶劣天气", "community": "规则与约束", "mention_count": 4}, {"id": "bilibili_vod", "type": "App", "label": "bilibili_vod", "community": "应用与业务", "mention_count": 13}, {"id": "bilibili_watch", "type": "App", "label": "bilibili_watch", "community": "应用与业务", "mention_count": 7}, {"id": "dingtalk_meeting", "type": "App", "label": "dingtalk_meeting", "community": "应用与业务", "mention_count": 23}, {"id": "douyin_svod", "type": "App", "label": "douyin_svod", "community": "应用与业务", "mention_count": 9}, {"id": "douyin_watch", "type": "App", "label": "douyin_watch", "community": "应用与业务", "mention_count": 39}, {"id": "hepingjingying", "type": "App", "label": "hepingjingying", "community": "应用与业务", "mention_count": 11}, {"id": "hepingjingying_game", "type": "App", "label": "hepingjingying_game", "community": "应用与业务", "mention_count": 18}, {"id": "iqiyi_vod", "type": "App", "label": "iqiyi_vod", "community": "应用与业务", "mention_count": 1}, {"id": "kuaishou_svod", "type": "App", "label": "kuaishou_svod", "community": "应用与业务", "mention_count": 4}, {"id": "kuaishou_watch", "type": "App", "label": "kuaishou_watch", "community": "应用与业务", "mention_count": 7}, {"id": "persona_8613409272151", "type": "User", "label": "U_8613409272151", "community": "用户核心", "mention_count": 1}, {"id": "persona_8613460256444", "type": "User", "label": "U_8613460256444", "community": "用户核心", "mention_count": 1}, {"id": "persona_8613462113785", "type": "User", "label": "U_8613462113785", "community": "用户核心", "mention_count": 1}, {"id": "persona_8613522947905", "type": "User", "label": "U_8613522947905", "community": "用户核心", "mention_count": 1}, {"id": "sanjiaozhou", "type": "App", "label": "sanjiaozhou", "community": "应用与业务", "mention_count": 20}, {"id": "sanjiaozhouxingdong_game", "type": "App", "label": "sanjiaozhouxingdong_game", "community": "应用与业务", "mention_count": 29}, {"id": "tencentmeeting", "type": "App", "label": "tencentmeeting", "community": "应用与业务", "mention_count": 30}, {"id": "wangzherongyao", "type": "App", "label": "wangzherongyao", "community": "应用与业务", "mention_count": 5}, {"id": "wangzherongyao_game", "type": "App", "label": "wangzherongyao_game", "community": "应用与业务", "mention_count": 9}, {"id": "youku_vod", "type": "App", "label": "youku_vod", "community": "应用与业务", "mention_count": 8}], "edges": [{"id": "E0012", "src": "persona_8613409272151", "rel": "USES_APP", "dst": "tencentmeeting", "t_valid": "2026-01-05 08:00:00", "t_invalid": null, "count": 20}, {"id": "E0014", "src": "persona_8613409272151", "rel": "RESIDES_CELL", "dst": "4600040386A", "t_valid": "2026-01-05 08:00:00", "t_invalid": null, "count": 6}, {"id": "E0019", "src": "persona_8613409272151", "rel": "USES_APP", "dst": "dingtalk_meeting", "t_valid": "2026-01-08 12:16:00", "t_invalid": null, "count": 6}, {"id": "E0020", "src": "persona_8613409272151", "rel": "HAS_BRANCH_RULE", "dst": "RULE:异地出差或旅行", "t_valid": "2026-01-08 12:16:00", "t_invalid": null, "count": 1}, {"id": "E0074", "src": "persona_8613460256444", "rel": "USES_APP", "dst": "kuaishou_watch", "t_valid": "2026-01-05 08:00:00", "t_invalid": null, "count": 4}, {"id": "E0076", "src": "persona_8613460256444", "rel": "RESIDES_CELL", "dst": "4600040386A", "t_valid": "2026-01-05 08:00:00", "t_invalid": null, "count": 4}, {"id": "E0078", "src": "persona_8613460256444", "rel": "USES_APP", "dst": "kuaishou_svod", "t_valid": "2026-01-07 10:14:00", "t_invalid": null, "count": 3}, {"id": "E0084", "src": "persona_8613460256444", "rel": "USES_APP", "dst": "douyin_svod", "t_valid": "2026-03-12 08:28:00", "t_invalid": null, "count": 3}, {"id": "E0088", "src": "persona_8613460256444", "rel": "USES_APP", "dst": "tencentmeeting", "t_valid": "2026-05-14 09:08:00", "t_invalid": null, "count": 1}, {"id": "E0089", "src": "persona_8613460256444", "rel": "USES_APP", "dst": "douyin_watch", "t_valid": "2026-06-26 10:43:00", "t_invalid": null, "count": 1}, {"id": "E0102", "src": "persona_8613462113785", "rel": "USES_APP", "dst": "wangzherongyao_game", "t_valid": "2026-01-05 19:00:00", "t_invalid": null, "count": 5}, {"id": "E0104", "src": "persona_8613462113785", "rel": "RESIDES_CELL", "dst": "4600040386A", "t_valid": "2026-01-05 19:00:00", "t_invalid": null, "count": 4}, {"id": "E0107", "src": "persona_8613462113785", "rel": "USES_APP", "dst": "wangzherongyao", "t_valid": "2026-01-06 20:07:00", "t_invalid": null, "count": 2}, {"id": "E0110", "src": "persona_8613462113785", "rel": "USES_APP", "dst": "sanjiaozhou", "t_valid": "2026-01-13 22:21:00", "t_invalid": null, "count": 3}, {"id": "E0111", "src": "persona_8613462113785", "rel": "USES_APP", "dst": "sanjiaozhouxingdong_game", "t_valid": "2026-01-18 23:28:00", "t_invalid": null, "count": 2}, {"id": "E0113", "src": "persona_8613462113785", "rel": "USES_APP", "dst": "hepingjingying_game", "t_valid": "2026-01-29 22:01:00", "t_invalid": null, "count": 1}, {"id": "E0115", "src": "persona_8613462113785", "rel": "USES_APP", "dst": "bilibili_watch", "t_valid": "2026-01-31 00:48:00", "t_invalid": null, "count": 1}, {"id": "E0121", "src": "persona_8613462113785", "rel": "USES_APP", "dst": "hepingjingying", "t_valid": "2026-02-26 23:23:00", "t_invalid": null, "count": 1}, {"id": "E0125", "src": "persona_8613522947905", "rel": "USES_APP", "dst": "bilibili_vod", "t_valid": "2026-01-05 12:00:00", "t_invalid": null, "count": 12}, {"id": "E0128", "src": "persona_8613522947905", "rel": "RESIDES_CELL", "dst": "4600040386A", "t_valid": "2026-01-07 14:14:00", "t_invalid": null, "count": 5}, {"id": "E0130", "src": "persona_8613522947905", "rel": "HAS_BRANCH_RULE", "dst": "RULE:突发恶劣天气", "t_valid": "2026-01-13 13:28:00", "t_invalid": "2026-01-14 14:35:00", "count": 2}, {"id": "E0135", "src": "persona_8613522947905", "rel": "USES_APP", "dst": "youku_vod", "t_valid": "2026-01-26 12:29:00", "t_invalid": null, "count": 2}, {"id": "E0138", "src": "persona_8613522947905", "rel": "USES_APP", "dst": "iqiyi_vod", "t_valid": "2026-02-04 13:23:00", "t_invalid": null, "count": 1}]}};
+
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('btn-parchment').classList.toggle('active', t === 'parchment');
+  document.getElementById('btn-github').classList.toggle('active', t === 'github');
+}
+
+function renderKPIs() {
+  const t = DATA.topology;
+  const b = DATA.benchmark;
+  const items = [
+    { label: '实验真实数据规模', val: `${DATA.user_count} 用户 / ${DATA.ingest_stats.total_records} 条`, hint: `过滤噪声 ${DATA.ingest_stats.noise_ignored} 条，有效情节 ${DATA.ingest_stats.episodes_written} 条` },
+    { label: '单用户图平均规模', val: `${t.single_user_avg.avg_nodes} 节点 / ${t.single_user_avg.avg_edges} 边`, hint: `User 星型中心度 ${(t.single_user_avg.avg_star_centrality*100).toFixed(1)}%（浅星型结构）` },
+    { label: '跨用户全局图枢纽', val: `${t.global_graph.shared_cell_bridges} 小区 / ${t.global_graph.shared_app_bridges} 应用`, hint: `全局共 ${t.global_graph.total_nodes} 节点、${t.global_graph.total_edges} 条边` },
+    { label: '62 题综合准确率', val: `Zep-Strict ${(b.zep_strict.summary.overall.acc*100).toFixed(1)}%`, hint: `Zep-Default ${(b.zep_default.summary.overall.acc*100).toFixed(1)}% · Mem0 ${(b.mem0.summary.overall.acc*100).toFixed(1)}%` }
+  ];
+  document.getElementById('kpi-grid').innerHTML = items.map(x => `
+    <div class="kpi">
+      <div class="label">${x.label}</div>
+      <div class="val">${x.val}</div>
+      <div class="hint">${x.hint}</div>
+    </div>
+  `).join('');
+}
+
+const TYPE_COLOR = {
+  User: '#1D4ED8',
+  App: '#15803D',
+  Cell: '#0EA5E9',
+  Venue: '#D97706',
+  Alias: '#7C3AED',
+  Category: '#64748B',
+  BranchRule: '#DC2626',
+  KPI: '#BE123C'
+};
+
+function showInspector(title, html) {
+  document.getElementById('inspector').innerHTML = `<h4>${title}</h4>${html}`;
+}
+
+function renderSingleGraph() {
+  const cs = DATA.case_study;
+  const svg = document.getElementById('graph-svg');
+  const cx = 370, cy = 235;
+  const pos = {};
+  const uid = cs.user_id;
+  pos[uid] = { x: cx, y: cy };
+
+  // 按类型分区摆放，避免重叠
+  const groups = { App: [], Cell: [], Venue: [], BranchRule: [], Alias: [], Category: [] };
+  cs.zep_nodes.forEach(n => { if (n.id !== uid && groups[n.type]) groups[n.type].push(n); });
+
+  const placeArc = (arr, r, startDeg, endDeg) => {
+    arr.forEach((n, i) => {
+      const deg = arr.length === 1 ? (startDeg + endDeg)/2 : startDeg + (endDeg - startDeg) * (i / (arr.length - 1));
+      const rad = deg * Math.PI / 180;
+      pos[n.id] = { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+    });
+  };
+  placeArc(groups.App, 155, -145, -75);
+  placeArc(groups.Cell, 165, -35, 40);
+  placeArc(groups.Venue, 155, 85, 135);
+  placeArc(groups.BranchRule, 165, 175, 195);
+  placeArc(groups.Alias, 265, -155, -110);
+  placeArc(groups.Category, 265, -70, -55);
+
+  let html = `<defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#94A3B8" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#DC2626" />
+    </marker>
+  </defs>`;
+
+  cs.zep_edges.forEach((e, idx) => {
+    const p1 = pos[e.src], p2 = pos[e.dst];
+    if (!p1 || !p2) return;
+    const isInv = Boolean(e.t_invalid);
+    const stroke = isInv ? '#DC2626' : (e.count >= 5 ? '#1D4ED8' : '#94A3B8');
+    const sw = isInv ? 2.4 : Math.min(1.4 + Math.log2(e.count + 1) * 0.8, 3.6);
+    const dash = isInv ? '6,4' : '';
+    const mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
+    html += `<g style="cursor:pointer" onclick="inspectSingleEdge(${idx})">
+      <line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" stroke="${stroke}" stroke-width="${sw}" stroke-dasharray="${dash}" marker-end="url(#${isInv?'arr-red':'arr'})" />
+      <rect x="${mx-34}" y="${my-9}" width="68" height="16" rx="4" fill="#FFFFFF" fill-opacity="0.92" stroke="${isInv?'#FECACA':'#E2E8F0'}" />
+      <text x="${mx}" y="${my+2}" text-anchor="middle" font-size="9.5" fill="${isInv?'#B91C1C':'#475569'}">${e.rel} (${e.count})</text>
+    </g>`;
+  });
+
+  cs.zep_nodes.forEach((n, idx) => {
+    const p = pos[n.id];
+    if (!p) return;
+    const col = TYPE_COLOR[n.type] || '#475569';
+    const r = n.type === 'User' ? 24 : 16;
+    const label = n.label.length > 11 ? n.label.slice(0, 10) + '…' : n.label;
+    html += `<g style="cursor:pointer" onclick="inspectSingleNode('${n.id}')">
+      <circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${col}" stroke="#FFFFFF" stroke-width="2.5" />
+      <text x="${p.x}" y="${p.y + r + 13}" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2328">${label}</text>
+    </g>`;
+  });
+
+  svg.innerHTML = html;
+  // 默认展示那条最有代表性的已失效双时态边
+  const invIdx = cs.zep_edges.findIndex(e => e.t_invalid);
+  inspectSingleEdge(invIdx >= 0 ? invIdx : 0);
+}
+
+function inspectSingleEdge(idx) {
+  const cs = DATA.case_study;
+  const e = cs.zep_edges[idx];
+  const epMap = Object.fromEntries(cs.zep_episodes.map(x => [x.ep_id, x]));
+  const epsHtml = e.episodes.map(id => {
+    const ep = epMap[id];
+    return ep ? `<div style="padding:6px 8px;background:#FFF;border:1px solid var(--border);border-radius:6px;margin-top:6px;">
+      <div><strong>${ep.ep_id}</strong> · ${ep.ts} · <span class="pill tag">${ep.carrier}/${ep.role}</span></div>
+      <div style="color:var(--muted);margin-top:2px;">${ep.raw_text}</div>
+    </div>` : '';
+  }).join('');
+  showInspector(`关系边详情：${e.rel}`, `
+    <div><span class="pill ${e.t_invalid ? 'invalid' : 'active'}">${e.t_invalid ? '已失效 (SOFT-INVALID)' : '当前生效 (ACTIVE)'}</span>
+    <span class="pill tag">证据数: ${e.count}</span></div>
+    <p style="margin-top:8px"><strong>三元组：</strong><span class="code-inline">${e.src}</span> → <strong>${e.rel}</strong> → <span class="code-inline">${e.dst}</span></p>
+    <p><strong>事实陈述：</strong>${e.fact_text}</p>
+    <p><strong>双时态区间：</strong><br/>生效 <span class="code-inline">${e.t_valid}</span><br/>失效 <span class="code-inline">${e.t_invalid || 'NULL (仍有效)'}</span></p>
+    <p><strong>底层情节溯源（episodes[]）：</strong></p>
+    ${epsHtml}
+  `);
+}
+
+function inspectSingleNode(nid) {
+  const cs = DATA.case_study;
+  const n = cs.zep_nodes.find(x => x.id === nid);
+  const relEdges = cs.zep_edges.filter(e => e.src === nid || e.dst === nid);
+  showInspector(`实体节点：${n.label}`, `
+    <div><span class="pill tag">${n.type}</span><span class="pill tag">社区: ${n.community}</span></div>
+    <p style="margin-top:8px"><strong>节点 ID：</strong><span class="code-inline">${n.id}</span></p>
+    <p><strong>关联边（${relEdges.length} 条）：</strong></p>
+    ${relEdges.map(e => `<div style="padding:5px 8px;background:#FFF;border:1px solid var(--border);border-radius:6px;margin-top:5px;">
+      ${e.src} <strong>-[${e.rel}]-></strong> ${e.dst}
+      <span class="pill ${e.t_invalid?'invalid':'active'}">${e.t_invalid?'已失效':'生效'}</span>
+      (eps=${e.count})
+    </div>`).join('')}
+  `);
+}
+
+function renderCrossGraph() {
+  const cc = DATA.cross_user_case;
+  const svg = document.getElementById('graph-svg');
+  const pos = {};
+  pos[cc.bridge_cell] = { x: 380, y: 235 };
+
+  const users = cc.nodes.filter(n => n.type === 'User');
+  const others = cc.nodes.filter(n => n.type !== 'User' && n.id !== cc.bridge_cell);
+  users.forEach((u, i) => {
+    const angle = (-135 + i * (360 / users.length)) * Math.PI / 180;
+    pos[u.id] = { x: 380 + 150 * Math.cos(angle), y: 235 + 125 * Math.sin(angle) };
+  });
+  others.forEach((o, i) => {
+    const angle = (-165 + i * (360 / Math.max(others.length, 1))) * Math.PI / 180;
+    pos[o.id] = { x: 380 + 280 * Math.cos(angle), y: 235 + 190 * Math.sin(angle) };
+  });
+
+  let html = '';
+  cc.edges.forEach(e => {
+    const p1 = pos[e.src], p2 = pos[e.dst];
+    if (!p1 || !p2) return;
+    const isBridge = e.dst === cc.bridge_cell;
+    const isInv = Boolean(e.t_invalid);
+    html += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}"
+      stroke="${isInv ? '#DC2626' : (isBridge ? '#0EA5E9' : '#CBD5E1')}"
+      stroke-width="${isBridge ? 2.6 : 1.5}" stroke-dasharray="${isInv ? '5,4' : ''}" />`;
+  });
+  cc.nodes.forEach(n => {
+    const p = pos[n.id];
+    if (!p) return;
+    const col = TYPE_COLOR[n.type] || '#475569';
+    const r = n.id === cc.bridge_cell ? 25 : (n.type === 'User' ? 18 : 13);
+    const label = n.label.length > 12 ? n.label.slice(0, 11) + '…' : n.label;
+    html += `<g>
+      <circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${col}" stroke="#FFFFFF" stroke-width="2" />
+      <text x="${p.x}" y="${p.y + r + 12}" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1F2328">${label}</text>
+    </g>`;
+  });
+  svg.innerHTML = html;
+  showInspector(`跨用户枢纽：基站小区 ${cc.bridge_cell}`, `
+    <p>当多个用户的图合并时，共享基站小区 <span class="code-inline">${cc.bridge_cell}</span> 成为天然桥接枢纽，把 <strong>${cc.users.length} 个独立用户</strong> 及其各自使用的应用、临时规则连成多跳网络。</p>
+    <p><strong>可支持的群体推理路径：</strong><br/><span class="code-inline">User_A → Cell(4600040386A) ← User_B → App / Stall</span></p>
+    <p><strong>为什么 Mem0 做不到：</strong>Mem0 按 <span class="code-inline">user_id</span> 物理隔离扁平向量库，且小区编号仅作为纯文本片段埋在单句里，无法沿共享实体做 2 跳反向扩散。</p>
+  `);
+}
+
+function switchView(v) {
+  document.getElementById('view-single').classList.toggle('active', v === 'single');
+  document.getElementById('view-cross').classList.toggle('active', v === 'cross');
+  if (v === 'single') renderSingleGraph(); else renderCrossGraph();
+}
+
+function renderSideBySide() {
+  const cs = DATA.case_study;
+  document.getElementById('zep-edge-summary').innerHTML = cs.zep_edges.map(e => `
+    <div class="mem0-item" style="${e.t_invalid ? 'border-color:#FECACA;background:#FEF2F2;' : ''}">
+      <span class="pill ${e.t_invalid ? 'invalid' : 'active'}">${e.t_invalid ? '失效' : '生效'}</span>
+      <strong>${e.src.replace('persona_','U_')}</strong> -[${e.rel}]-> <strong>${e.dst}</strong>
+      <span style="color:var(--muted);font-size:12px;">(eps=${e.count}, valid=${e.t_valid.slice(5,16)}${e.t_invalid ? ', invalid='+e.t_invalid.slice(5,16) : ''})</span>
+    </div>
+  `).join('');
+
+  const mHtml = cs.mem0_items.map(m => `
+    <div class="mem0-item">
+      <span class="pill tag">${m.slot}</span> ${m.text}
+    </div>
+  `).join('');
+  const dHtml = cs.mem0_deleted.map(d => `
+    <div class="mem0-item deleted">
+      [已物理 DELETE · ${d.deleted_at}] ${d.old_text}
+    </div>
+  `).join('');
+  document.getElementById('mem0-list').innerHTML = dHtml + mHtml;
+}
+
+function renderBenchTable() {
+  const rows = [
+    ['Q1_single_hop', 'Q1 单跳当前主力应用', '单用户 1 跳查表，扁平向量与图谱几乎无差异。'],
+    ['Q4_alias_bridge', 'Q4 个性化别名映射', '单条别名事实（如小破站→B站）双方均能稳定召回。'],
+    ['Q2_temporal_history', 'Q2-历史回溯（已撤销/迁移项）', 'Mem0 因 DELETE 覆写彻底失忆（0%）；Zep 靠双时态边 100% 回溯。'],
+    ['Q2_post_supersede_current', 'Q2-撤销后问当前态', 'Zep 默认返回失效旧边导致陈旧泄露（0%），必须加严格时间窗过滤。'],
+    ['Q3_evidence_provenance', 'Q3 多源证据溯源与频次聚合', 'Mem0 无情节层（0%）；Zep 语义边自带 episodes[] 列表直接溯源。'],
+    ['Q5_cross_user_cell', 'Q5 跨用户同小区关联', 'Mem0 按 user_id 隔离（0%）；Zep 沿共享 Cell 枢纽 2 跳打通。'],
+    ['overall', '全部 62 题综合汇总', 'Zep-Strict 最高（96.8%），领先主要来自双时态、情节溯源与跨用户桥接。']
+  ];
+  const bm = DATA.benchmark;
+  const fmt = (obj) => {
+    const pct = (obj.acc * 100).toFixed(1) + '%';
+    const cls = obj.acc >= 0.9 ? 'good' : (obj.acc <= 0.4 ? 'bad' : 'warn');
+    return `<span class="${cls}">${pct}</span> <span style="color:var(--muted);font-weight:400;font-size:12px;">(${obj.passed}/${obj.total})</span>`;
+  };
+  document.getElementById('bench-tbody').innerHTML = rows.map(([key, name, note]) => `
+    <tr style="${key==='overall'?'background:var(--surface-soft);font-weight:600;':''}">
+      <td>${name}</td>
+      <td class="num">${bm.mem0.summary[key].total}</td>
+      <td class="num">${fmt(bm.mem0.summary[key])}</td>
+      <td class="num">${fmt(bm.zep_default.summary[key])}</td>
+      <td class="num">${fmt(bm.zep_strict.summary[key])}</td>
+      <td>${note}</td>
+    </tr>
+  `).join('');
+}
+
+renderKPIs();
+renderSingleGraph();
+renderSideBySide();
+renderBenchTable();
+</script>
+</body>
+</html>

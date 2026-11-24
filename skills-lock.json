@@ -1,11 +1,41 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
+    "arxiv-doc-builder": {
+      "source": "ultimatile/arxiv-skills",
+      "sourceType": "github",
+      "skillPath": "skills/arxiv-doc-builder/SKILL.md",
+      "computedHash": "28f64e68bac8ffebffaafbb01d5b2a86716be2d23c2edc7bedf35687e2898e06"
+    },
+    "arxiv-lookup": {
+      "source": "ultimatile/arxiv-skills",
+      "sourceType": "github",
+      "skillPath": "skills/arxiv-lookup/SKILL.md",
+      "computedHash": "3f13976abfacd1882c3edc679625e8bee011d87e5c7385892e1fbf8c996fa98d"
+    },
+    "benchmark-research-skill": {
+      "source": "EternalWavee/benchmark-research-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "1cee1520d93812e935fad0157804b3e6a70fb90447c273c10c0a4a3b371e8ecd"
+    },
+    "humanizer-zh": {
+      "source": "op7418/Humanizer-zh",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "19fe06f48c6c540268b33c3f88b26439506fa4186d1c0b27fda57acb3876dd66"
+    },
     "no-mistakes": {
       "source": "kunchenguid/no-mistakes",
       "sourceType": "github",
       "skillPath": "skills/no-mistakes/SKILL.md",
-      "computedHash": "53ee9cba5aacbaff84b81a6a0c9e52176f2274e5b55c80fd30864eabe884871b"
+      "computedHash": "f6ef7827100efcc4c324a33378bbc0f3e6e205289b61ecf6dd2a3ee97c6b2eef"
+    },
+    "paper-explainer": {
+      "source": "OvOhao/paper-explainer",
+      "sourceType": "github",
+      "skillPath": "skills/paper-explainer/SKILL.md",
+      "computedHash": "00ef99a47f8a35d01ffed8807e2dc536bd9efddfd6740b5c69d74f209c09d0bf"
     }
   }
 }

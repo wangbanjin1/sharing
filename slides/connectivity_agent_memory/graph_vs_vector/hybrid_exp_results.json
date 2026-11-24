@@ -1,0 +1,2208 @@
+{
+  "dataset": "D:\\coding\\hybrid_memory_data\\data\\processed\\hybrid_dataset.json",
+  "user_count": 20,
+  "ingest_stats": {
+    "total_records": 495,
+    "noise_ignored": 165,
+    "episodes_written": 330,
+    "mem0_ops": {
+      "ADD": 221,
+      "UPDATE": 413,
+      "DELETE": 4
+    },
+    "zep_invalidations": 4
+  },
+  "topology": {
+    "single_user_avg": {
+      "avg_nodes": 13.95,
+      "avg_edges": 14.85,
+      "avg_star_centrality": 0.662,
+      "total_invalid_edges": 4
+    },
+    "global_graph": {
+      "total_nodes": 96,
+      "total_edges": 297,
+      "total_episodes": 330,
+      "shared_cell_bridges": 10,
+      "shared_app_bridges": 19
+    },
+    "per_user": [
+      {
+        "user_id": "persona_8613213213689",
+        "nodes": 11,
+        "edges": 11,
+        "invalid_edges": 0,
+        "episodes": 7,
+        "star_centrality": 0.636
+      },
+      {
+        "user_id": "persona_8613409272151",
+        "nodes": 11,
+        "edges": 11,
+        "invalid_edges": 0,
+        "episodes": 26,
+        "star_centrality": 0.636
+      },
+      {
+        "user_id": "persona_8613409383368",
+        "nodes": 20,
+        "edges": 23,
+        "invalid_edges": 0,
+        "episodes": 32,
+        "star_centrality": 0.652
+      },
+      {
+        "user_id": "persona_8613419793054",
+        "nodes": 15,
+        "edges": 15,
+        "invalid_edges": 0,
+        "episodes": 14,
+        "star_centrality": 0.667
+      },
+      {
+        "user_id": "persona_8613419812206",
+        "nodes": 13,
+        "edges": 13,
+        "invalid_edges": 0,
+        "episodes": 9,
+        "star_centrality": 0.615
+      },
+      {
+        "user_id": "persona_8613460256444",
+        "nodes": 15,
+        "edges": 17,
+        "invalid_edges": 0,
+        "episodes": 14,
+        "star_centrality": 0.588
+      },
+      {
+        "user_id": "persona_8613460580808",
+        "nodes": 10,
+        "edges": 11,
+        "invalid_edges": 0,
+        "episodes": 8,
+        "star_centrality": 0.727
+      },
+      {
+        "user_id": "persona_8613462113785",
+        "nodes": 21,
+        "edges": 23,
+        "invalid_edges": 0,
+        "episodes": 16,
+        "star_centrality": 0.565
+      },
+      {
+        "user_id": "persona_8613522947905",
+        "nodes": 14,
+        "edges": 15,
+        "invalid_edges": 1,
+        "episodes": 17,
+        "star_centrality": 0.667
+      },
+      {
+        "user_id": "persona_8613523296217",
+        "nodes": 13,
+        "edges": 14,
+        "invalid_edges": 1,
+        "episodes": 15,
+        "star_centrality": 0.786
+      },
+      {
+        "user_id": "persona_8613523308471",
+        "nodes": 12,
+        "edges": 12,
+        "invalid_edges": 0,
+        "episodes": 14,
+        "star_centrality": 0.75
+      },
+      {
+        "user_id": "persona_8613525218516",
+        "nodes": 11,
+        "edges": 10,
+        "invalid_edges": 1,
+        "episodes": 31,
+        "star_centrality": 0.7
+      },
+      {
+        "user_id": "persona_8613525576968",
+        "nodes": 16,
+        "edges": 18,
+        "invalid_edges": 0,
+        "episodes": 29,
+        "star_centrality": 0.667
+      },
+      {
+        "user_id": "persona_8613525860212",
+        "nodes": 15,
+        "edges": 16,
+        "invalid_edges": 0,
+        "episodes": 12,
+        "star_centrality": 0.688
+      },
+      {
+        "user_id": "persona_8613525897325",
+        "nodes": 9,
+        "edges": 10,
+        "invalid_edges": 0,
+        "episodes": 4,
+        "star_centrality": 0.7
+      },
+      {
+        "user_id": "persona_8613526661095",
+        "nodes": 18,
+        "edges": 19,
+        "invalid_edges": 0,
+        "episodes": 17,
+        "star_centrality": 0.632
+      },
+      {
+        "user_id": "persona_8613526735143",
+        "nodes": 19,
+        "edges": 21,
+        "invalid_edges": 1,
+        "episodes": 28,
+        "star_centrality": 0.571
+      },
+      {
+        "user_id": "persona_8613526790293",
+        "nodes": 11,
+        "edges": 13,
+        "invalid_edges": 0,
+        "episodes": 12,
+        "star_centrality": 0.692
+      },
+      {
+        "user_id": "persona_8613526867990",
+        "nodes": 15,
+        "edges": 15,
+        "invalid_edges": 0,
+        "episodes": 17,
+        "star_centrality": 0.6
+      },
+      {
+        "user_id": "persona_8613569481238",
+        "nodes": 10,
+        "edges": 10,
+        "invalid_edges": 0,
+        "episodes": 8,
+        "star_centrality": 0.7
+      }
+    ]
+  },
+  "benchmark": {
+    "query_count": 62,
+    "mem0": {
+      "summary": {
+        "Q1_single_hop": {
+          "passed": 19,
+          "total": 20,
+          "acc": 0.95
+        },
+        "Q3_evidence_provenance": {
+          "passed": 0,
+          "total": 10,
+          "acc": 0.0
+        },
+        "Q4_alias_bridge": {
+          "passed": 16,
+          "total": 16,
+          "acc": 1.0
+        },
+        "Q5_cross_user_cell": {
+          "passed": 0,
+          "total": 8,
+          "acc": 0.0
+        },
+        "Q2_temporal_history": {
+          "passed": 0,
+          "total": 4,
+          "acc": 0.0
+        },
+        "Q2_post_supersede_current": {
+          "passed": 4,
+          "total": 4,
+          "acc": 1.0
+        },
+        "overall": {
+          "passed": 39,
+          "total": 62,
+          "acc": 0.629
+        }
+      },
+      "details": {
+        "Q1_single_hop": [
+          {
+            "qid": "Q1_3689",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_2151",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3368",
+            "passed": false,
+            "reason": "miss_main_app"
+          },
+          {
+            "qid": "Q1_3054",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_2206",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6444",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0808",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3785",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7905",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6217",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_8471",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_8516",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6968",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0212",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7325",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_1095",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_5143",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0293",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7990",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_1238",
+            "passed": true,
+            "reason": "hit"
+          }
+        ],
+        "Q3_evidence_provenance": [
+          {
+            "qid": "Q3_3689",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_2151",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_3368",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_3054",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_2206",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_6444",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_0808",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_3785",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_7905",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          },
+          {
+            "qid": "Q3_8471",
+            "passed": false,
+            "reason": "no_episode_provenance"
+          }
+        ],
+        "Q4_alias_bridge": [
+          {
+            "qid": "Q4_3689",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_2151",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3368",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3054",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_2206",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_6444",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3785",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_7905",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_8471",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_8516",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_6968",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_0212",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_1095",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_5143",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_7990",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_1238",
+            "passed": true,
+            "reason": "hit"
+          }
+        ],
+        "Q5_cross_user_cell": [
+          {
+            "qid": "Q5_3689",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          },
+          {
+            "qid": "Q5_2151",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          },
+          {
+            "qid": "Q5_3368",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          },
+          {
+            "qid": "Q5_3054",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          },
+          {
+            "qid": "Q5_2206",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          },
+          {
+            "qid": "Q5_6444",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          },
+          {
+            "qid": "Q5_0808",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          },
+          {
+            "qid": "Q5_3785",
+            "passed": false,
+            "reason": "isolated_by_user_id"
+          }
+        ],
+        "Q2_temporal_history": [
+          {
+            "qid": "Q2_hist_7905",
+            "passed": false,
+            "reason": "deleted_by_overwrite"
+          },
+          {
+            "qid": "Q2_hist_6217",
+            "passed": false,
+            "reason": "deleted_by_overwrite"
+          },
+          {
+            "qid": "Q2_hist_8516",
+            "passed": false,
+            "reason": "deleted_by_overwrite"
+          },
+          {
+            "qid": "Q2_hist_5143",
+            "passed": false,
+            "reason": "deleted_by_overwrite"
+          }
+        ],
+        "Q2_post_supersede_current": [
+          {
+            "qid": "Q2_now_7905",
+            "passed": true,
+            "reason": "clean_current"
+          },
+          {
+            "qid": "Q2_now_6217",
+            "passed": true,
+            "reason": "clean_current"
+          },
+          {
+            "qid": "Q2_now_8516",
+            "passed": true,
+            "reason": "clean_current"
+          },
+          {
+            "qid": "Q2_now_5143",
+            "passed": true,
+            "reason": "clean_current"
+          }
+        ]
+      }
+    },
+    "zep_default": {
+      "summary": {
+        "Q1_single_hop": {
+          "passed": 20,
+          "total": 20,
+          "acc": 1.0
+        },
+        "Q3_evidence_provenance": {
+          "passed": 10,
+          "total": 10,
+          "acc": 1.0
+        },
+        "Q4_alias_bridge": {
+          "passed": 16,
+          "total": 16,
+          "acc": 1.0
+        },
+        "Q5_cross_user_cell": {
+          "passed": 8,
+          "total": 8,
+          "acc": 1.0
+        },
+        "Q2_temporal_history": {
+          "passed": 4,
+          "total": 4,
+          "acc": 1.0
+        },
+        "Q2_post_supersede_current": {
+          "passed": 0,
+          "total": 4,
+          "acc": 0.0
+        },
+        "overall": {
+          "passed": 58,
+          "total": 62,
+          "acc": 0.935
+        }
+      },
+      "details": {
+        "Q1_single_hop": [
+          {
+            "qid": "Q1_3689",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_2151",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3368",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3054",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_2206",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6444",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0808",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3785",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7905",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6217",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_8471",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_8516",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6968",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0212",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7325",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_1095",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_5143",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0293",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7990",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_1238",
+            "passed": true,
+            "reason": "hit"
+          }
+        ],
+        "Q3_evidence_provenance": [
+          {
+            "qid": "Q3_3689",
+            "passed": true,
+            "reason": "episodes=5"
+          },
+          {
+            "qid": "Q3_2151",
+            "passed": true,
+            "reason": "episodes=20"
+          },
+          {
+            "qid": "Q3_3368",
+            "passed": true,
+            "reason": "episodes=13"
+          },
+          {
+            "qid": "Q3_3054",
+            "passed": true,
+            "reason": "episodes=5"
+          },
+          {
+            "qid": "Q3_2206",
+            "passed": true,
+            "reason": "episodes=6"
+          },
+          {
+            "qid": "Q3_6444",
+            "passed": true,
+            "reason": "episodes=4"
+          },
+          {
+            "qid": "Q3_0808",
+            "passed": true,
+            "reason": "episodes=3"
+          },
+          {
+            "qid": "Q3_3785",
+            "passed": true,
+            "reason": "episodes=5"
+          },
+          {
+            "qid": "Q3_7905",
+            "passed": true,
+            "reason": "episodes=12"
+          },
+          {
+            "qid": "Q3_8471",
+            "passed": true,
+            "reason": "episodes=12"
+          }
+        ],
+        "Q4_alias_bridge": [
+          {
+            "qid": "Q4_3689",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_2151",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3368",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3054",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_2206",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_6444",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3785",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_7905",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_8471",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_8516",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_6968",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_0212",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_1095",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_5143",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_7990",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_1238",
+            "passed": true,
+            "reason": "hit"
+          }
+        ],
+        "Q5_cross_user_cell": [
+          {
+            "qid": "Q5_3689",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_2151",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_3368",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_3054",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_2206",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_6444",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_0808",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_3785",
+            "passed": true,
+            "reason": "cross_user_hit"
+          }
+        ],
+        "Q2_temporal_history": [
+          {
+            "qid": "Q2_hist_7905",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          },
+          {
+            "qid": "Q2_hist_6217",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          },
+          {
+            "qid": "Q2_hist_8516",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          },
+          {
+            "qid": "Q2_hist_5143",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          }
+        ],
+        "Q2_post_supersede_current": [
+          {
+            "qid": "Q2_now_7905",
+            "passed": false,
+            "reason": "stale_edge_leakage"
+          },
+          {
+            "qid": "Q2_now_6217",
+            "passed": false,
+            "reason": "stale_edge_leakage"
+          },
+          {
+            "qid": "Q2_now_8516",
+            "passed": false,
+            "reason": "stale_edge_leakage"
+          },
+          {
+            "qid": "Q2_now_5143",
+            "passed": false,
+            "reason": "stale_edge_leakage"
+          }
+        ]
+      }
+    },
+    "zep_strict": {
+      "summary": {
+        "Q1_single_hop": {
+          "passed": 19,
+          "total": 20,
+          "acc": 0.95
+        },
+        "Q3_evidence_provenance": {
+          "passed": 10,
+          "total": 10,
+          "acc": 1.0
+        },
+        "Q4_alias_bridge": {
+          "passed": 16,
+          "total": 16,
+          "acc": 1.0
+        },
+        "Q5_cross_user_cell": {
+          "passed": 8,
+          "total": 8,
+          "acc": 1.0
+        },
+        "Q2_temporal_history": {
+          "passed": 4,
+          "total": 4,
+          "acc": 1.0
+        },
+        "Q2_post_supersede_current": {
+          "passed": 3,
+          "total": 4,
+          "acc": 0.75
+        },
+        "overall": {
+          "passed": 60,
+          "total": 62,
+          "acc": 0.968
+        }
+      },
+      "details": {
+        "Q1_single_hop": [
+          {
+            "qid": "Q1_3689",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_2151",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3368",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3054",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_2206",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6444",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0808",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_3785",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7905",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6217",
+            "passed": false,
+            "reason": "miss_main_app"
+          },
+          {
+            "qid": "Q1_8471",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_8516",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_6968",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0212",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7325",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_1095",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_5143",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_0293",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_7990",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q1_1238",
+            "passed": true,
+            "reason": "hit"
+          }
+        ],
+        "Q3_evidence_provenance": [
+          {
+            "qid": "Q3_3689",
+            "passed": true,
+            "reason": "episodes=5"
+          },
+          {
+            "qid": "Q3_2151",
+            "passed": true,
+            "reason": "episodes=20"
+          },
+          {
+            "qid": "Q3_3368",
+            "passed": true,
+            "reason": "episodes=13"
+          },
+          {
+            "qid": "Q3_3054",
+            "passed": true,
+            "reason": "episodes=5"
+          },
+          {
+            "qid": "Q3_2206",
+            "passed": true,
+            "reason": "episodes=6"
+          },
+          {
+            "qid": "Q3_6444",
+            "passed": true,
+            "reason": "episodes=4"
+          },
+          {
+            "qid": "Q3_0808",
+            "passed": true,
+            "reason": "episodes=3"
+          },
+          {
+            "qid": "Q3_3785",
+            "passed": true,
+            "reason": "episodes=5"
+          },
+          {
+            "qid": "Q3_7905",
+            "passed": true,
+            "reason": "episodes=12"
+          },
+          {
+            "qid": "Q3_8471",
+            "passed": true,
+            "reason": "episodes=12"
+          }
+        ],
+        "Q4_alias_bridge": [
+          {
+            "qid": "Q4_3689",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_2151",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3368",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3054",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_2206",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_6444",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_3785",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_7905",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_8471",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_8516",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_6968",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_0212",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_1095",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_5143",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_7990",
+            "passed": true,
+            "reason": "hit"
+          },
+          {
+            "qid": "Q4_1238",
+            "passed": true,
+            "reason": "hit"
+          }
+        ],
+        "Q5_cross_user_cell": [
+          {
+            "qid": "Q5_3689",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_2151",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_3368",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_3054",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_2206",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_6444",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_0808",
+            "passed": true,
+            "reason": "cross_user_hit"
+          },
+          {
+            "qid": "Q5_3785",
+            "passed": true,
+            "reason": "cross_user_hit"
+          }
+        ],
+        "Q2_temporal_history": [
+          {
+            "qid": "Q2_hist_7905",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          },
+          {
+            "qid": "Q2_hist_6217",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          },
+          {
+            "qid": "Q2_hist_8516",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          },
+          {
+            "qid": "Q2_hist_5143",
+            "passed": true,
+            "reason": "hit_with_bitemporal"
+          }
+        ],
+        "Q2_post_supersede_current": [
+          {
+            "qid": "Q2_now_7905",
+            "passed": true,
+            "reason": "clean_current"
+          },
+          {
+            "qid": "Q2_now_6217",
+            "passed": false,
+            "reason": "stale_edge_leakage"
+          },
+          {
+            "qid": "Q2_now_8516",
+            "passed": true,
+            "reason": "clean_current"
+          },
+          {
+            "qid": "Q2_now_5143",
+            "passed": true,
+            "reason": "clean_current"
+          }
+        ]
+      }
+    }
+  },
+  "case_study": {
+    "user_id": "persona_8613522947905",
+    "zep_nodes": [
+      {
+        "id": "4600040386A",
+        "type": "Cell",
+        "label": "4600040386A",
+        "community": "空间与网络",
+        "mention_count": 27
+      },
+      {
+        "id": "4600040391C",
+        "type": "Cell",
+        "label": "4600040391C",
+        "community": "空间与网络",
+        "mention_count": 9
+      },
+      {
+        "id": "4600040393B",
+        "type": "Cell",
+        "label": "4600040393B",
+        "community": "空间与网络",
+        "mention_count": 13
+      },
+      {
+        "id": "4600040394B",
+        "type": "Cell",
+        "label": "4600040394B",
+        "community": "空间与网络",
+        "mention_count": 27
+      },
+      {
+        "id": "B站",
+        "type": "Alias",
+        "label": "别名:B站",
+        "community": "个性表达",
+        "mention_count": 1
+      },
+      {
+        "id": "RULE:突发恶劣天气",
+        "type": "BranchRule",
+        "label": "临时规则:突发恶劣天气",
+        "community": "规则与约束",
+        "mention_count": 4
+      },
+      {
+        "id": "bilibili_vod",
+        "type": "App",
+        "label": "bilibili_vod",
+        "community": "应用与业务",
+        "mention_count": 13
+      },
+      {
+        "id": "iqiyi_vod",
+        "type": "App",
+        "label": "iqiyi_vod",
+        "community": "应用与业务",
+        "mention_count": 1
+      },
+      {
+        "id": "persona_8613522947905",
+        "type": "User",
+        "label": "U_8613522947905",
+        "community": "用户核心",
+        "mention_count": 1
+      },
+      {
+        "id": "vod_streaming",
+        "type": "Category",
+        "label": "vod_streaming",
+        "community": "应用与业务",
+        "mention_count": 22
+      },
+      {
+        "id": "youku_vod",
+        "type": "App",
+        "label": "youku_vod",
+        "community": "应用与业务",
+        "mention_count": 8
+      },
+      {
+        "id": "临街咖啡厅办公区",
+        "type": "Venue",
+        "label": "临街咖啡厅办公区",
+        "community": "空间与网络",
+        "mention_count": 13
+      },
+      {
+        "id": "公司独立会议室",
+        "type": "Venue",
+        "label": "公司独立会议室",
+        "community": "空间与网络",
+        "mention_count": 13
+      },
+      {
+        "id": "小破站",
+        "type": "Alias",
+        "label": "别名:小破站",
+        "community": "个性表达",
+        "mention_count": 1
+      }
+    ],
+    "zep_edges": [
+      {
+        "id": "E0125",
+        "src": "persona_8613522947905",
+        "rel": "USES_APP",
+        "dst": "bilibili_vod",
+        "fact_text": "用户 persona_8613522947905 常用子应用 bilibili_vod（类别 vod_streaming），网元单据与对话累计观测",
+        "t_valid": "2026-01-05 12:00:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n01",
+          "persona_8613522947905_n03",
+          "persona_8613522947905_n05",
+          "persona_8613522947905_n06",
+          "persona_8613522947905_n07",
+          "persona_8613522947905_n09",
+          "persona_8613522947905_n10",
+          "persona_8613522947905_n11",
+          "persona_8613522947905_n12",
+          "persona_8613522947905_n15",
+          "persona_8613522947905_n16",
+          "persona_8613522947905_n19"
+        ],
+        "count": 12
+      },
+      {
+        "id": "E0126",
+        "src": "bilibili_vod",
+        "rel": "BELONGS_TO",
+        "dst": "vod_streaming",
+        "fact_text": "子应用 bilibili_vod 属于业务类别 vod_streaming",
+        "t_valid": "2026-01-05 12:00:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n01",
+          "persona_8613522947905_n03",
+          "persona_8613522947905_n05",
+          "persona_8613522947905_n07",
+          "persona_8613522947905_n09",
+          "persona_8613522947905_n11",
+          "persona_8613522947905_n12",
+          "persona_8613522947905_n15",
+          "persona_8613522947905_n16",
+          "persona_8613522947905_n19"
+        ],
+        "count": 10
+      },
+      {
+        "id": "E0127",
+        "src": "persona_8613522947905",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040391C",
+        "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040391C",
+        "t_valid": "2026-01-05 12:00:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n01",
+          "persona_8613522947905_n05",
+          "persona_8613522947905_n09",
+          "persona_8613522947905_n13"
+        ],
+        "count": 4
+      },
+      {
+        "id": "E0128",
+        "src": "persona_8613522947905",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040386A",
+        "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040386A",
+        "t_valid": "2026-01-07 14:14:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n03",
+          "persona_8613522947905_n07",
+          "persona_8613522947905_n11",
+          "persona_8613522947905_n15",
+          "persona_8613522947905_n19"
+        ],
+        "count": 5
+      },
+      {
+        "id": "E0129",
+        "src": "persona_8613522947905",
+        "rel": "FREQUENTS_VENUE",
+        "dst": "临街咖啡厅办公区",
+        "fact_text": "用户 persona_8613522947905 常在场景场所「临街咖啡厅办公区」发起网络保障",
+        "t_valid": "2026-01-11 12:21:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n04",
+          "persona_8613522947905_n08"
+        ],
+        "count": 2
+      },
+      {
+        "id": "E0130",
+        "src": "persona_8613522947905",
+        "rel": "HAS_BRANCH_RULE",
+        "dst": "RULE:突发恶劣天气",
+        "fact_text": "用户 persona_8613522947905 于 2026-01-13 13:28:00 启用临时分支规则：突发恶劣天气 期间优先保障",
+        "t_valid": "2026-01-13 13:28:00",
+        "t_invalid": "2026-01-14 14:35:00",
+        "episodes": [
+          "persona_8613522947905_n05",
+          "persona_8613522947905_n06"
+        ],
+        "count": 2
+      },
+      {
+        "id": "E0131",
+        "src": "persona_8613522947905",
+        "rel": "FREQUENTS_VENUE",
+        "dst": "公司独立会议室",
+        "fact_text": "用户 persona_8613522947905 常在场景场所「公司独立会议室」发起网络保障",
+        "t_valid": "2026-01-14 14:35:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n06",
+          "persona_8613522947905_n10"
+        ],
+        "count": 2
+      },
+      {
+        "id": "E0132",
+        "src": "B站",
+        "rel": "ALIAS_OF",
+        "dst": "bilibili_vod",
+        "fact_text": "用户 persona_8613522947905 习惯用个性化简称「B站」指代标准应用 bilibili_vod",
+        "t_valid": "2026-01-14 14:35:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n06"
+        ],
+        "count": 1
+      },
+      {
+        "id": "E0133",
+        "src": "小破站",
+        "rel": "ALIAS_OF",
+        "dst": "bilibili_vod",
+        "fact_text": "用户 persona_8613522947905 习惯用个性化简称「小破站」指代标准应用 bilibili_vod",
+        "t_valid": "2026-01-17 12:08:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n10"
+        ],
+        "count": 1
+      },
+      {
+        "id": "E0134",
+        "src": "persona_8613522947905",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040394B",
+        "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040394B",
+        "t_valid": "2026-01-23 14:22:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n12",
+          "persona_8613522947905_n16",
+          "persona_8613522947905_n20"
+        ],
+        "count": 3
+      },
+      {
+        "id": "E0135",
+        "src": "persona_8613522947905",
+        "rel": "USES_APP",
+        "dst": "youku_vod",
+        "fact_text": "用户 persona_8613522947905 常用子应用 youku_vod（类别 vod_streaming），网元单据与对话累计观测",
+        "t_valid": "2026-01-26 12:29:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n13",
+          "persona_8613522947905_n18"
+        ],
+        "count": 2
+      },
+      {
+        "id": "E0136",
+        "src": "youku_vod",
+        "rel": "BELONGS_TO",
+        "dst": "vod_streaming",
+        "fact_text": "子应用 youku_vod 属于业务类别 vod_streaming",
+        "t_valid": "2026-01-26 12:29:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n13",
+          "persona_8613522947905_n18"
+        ],
+        "count": 2
+      },
+      {
+        "id": "E0137",
+        "src": "persona_8613522947905",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040393B",
+        "fact_text": "用户 persona_8613522947905 常驻基站小区 4600040393B",
+        "t_valid": "2026-01-30 14:09:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n18"
+        ],
+        "count": 1
+      },
+      {
+        "id": "E0138",
+        "src": "persona_8613522947905",
+        "rel": "USES_APP",
+        "dst": "iqiyi_vod",
+        "fact_text": "用户 persona_8613522947905 常用子应用 iqiyi_vod（类别 vod_streaming），网元单据与对话累计观测",
+        "t_valid": "2026-02-04 13:23:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n20"
+        ],
+        "count": 1
+      },
+      {
+        "id": "E0139",
+        "src": "iqiyi_vod",
+        "rel": "BELONGS_TO",
+        "dst": "vod_streaming",
+        "fact_text": "子应用 iqiyi_vod 属于业务类别 vod_streaming",
+        "t_valid": "2026-02-04 13:23:00",
+        "t_invalid": null,
+        "episodes": [
+          "persona_8613522947905_n20"
+        ],
+        "count": 1
+      }
+    ],
+    "zep_episodes": [
+      {
+        "ep_id": "persona_8613522947905_n01",
+        "ts": "2026-01-05 12:00:00",
+        "carrier": "ticket",
+        "role": "evidence",
+        "raw_text": "[网元单据 EXP20260105120079050001] 应用=bilibili_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n03",
+        "ts": "2026-01-07 14:14:00",
+        "carrier": "ticket",
+        "role": "evidence",
+        "raw_text": "[网元单据 EXP20260107141479050003] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n04",
+        "ts": "2026-01-11 12:21:00",
+        "carrier": "dialogue",
+        "role": "evidence",
+        "raw_text": "[对话 persona_8613522947905_n04] 用户：我在临街咖啡厅办公区用iqiyi_vod的时候老是别卡，帮我优先保障一下。"
+      },
+      {
+        "ep_id": "persona_8613522947905_n05",
+        "ts": "2026-01-13 13:28:00",
+        "carrier": "ticket",
+        "role": "branch_start",
+        "raw_text": "[网元单据 EXP20260113132879050005] 应用=bilibili_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n06",
+        "ts": "2026-01-14 14:35:00",
+        "carrier": "dialogue",
+        "role": "correction",
+        "raw_text": "[对话 persona_8613522947905_n06] 用户：之前那个突发恶劣天气的临时规则不用了，帮我恢复成平时在公司独立会议室的习惯吧。"
+      },
+      {
+        "ep_id": "persona_8613522947905_n07",
+        "ts": "2026-01-15 12:42:00",
+        "carrier": "ticket",
+        "role": "branch_step",
+        "raw_text": "[网元单据 EXP20260115124279050007] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n08",
+        "ts": "2026-01-15 13:49:00",
+        "carrier": "dialogue",
+        "role": "reinforce",
+        "raw_text": "[对话 persona_8613522947905_n08] 用户：我还是在临街咖啡厅办公区这边用iqiyi_vod，有点别卡。"
+      },
+      {
+        "ep_id": "persona_8613522947905_n09",
+        "ts": "2026-01-15 14:01:00",
+        "carrier": "ticket",
+        "role": "branch_step",
+        "raw_text": "[网元单据 EXP20260115140179050009] 应用=bilibili_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n10",
+        "ts": "2026-01-17 12:08:00",
+        "carrier": "dialogue",
+        "role": "reinforce",
+        "raw_text": "[对话 persona_8613522947905_n10] 用户：我还是在公司独立会议室这边用小破站，有点别卡。"
+      },
+      {
+        "ep_id": "persona_8613522947905_n11",
+        "ts": "2026-01-20 13:15:00",
+        "carrier": "ticket",
+        "role": "branch_step",
+        "raw_text": "[网元单据 EXP20260120131579050011] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n12",
+        "ts": "2026-01-23 14:22:00",
+        "carrier": "ticket",
+        "role": "reinforce",
+        "raw_text": "[网元单据 EXP20260123142279050012] 应用=bilibili_vod(vod_streaming) 小区=4600040394B 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n13",
+        "ts": "2026-01-26 12:29:00",
+        "carrier": "ticket",
+        "role": "branch_step",
+        "raw_text": "[网元单据 EXP20260126122979050013] 应用=youku_vod(vod_streaming) 小区=4600040391C 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n15",
+        "ts": "2026-01-28 14:43:00",
+        "carrier": "ticket",
+        "role": "reinforce",
+        "raw_text": "[网元单据 EXP20260128144379050015] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n16",
+        "ts": "2026-01-28 15:23:00",
+        "carrier": "ticket",
+        "role": "branch_step",
+        "raw_text": "[网元单据 EXP20260128152379050016] 应用=bilibili_vod(vod_streaming) 小区=4600040394B 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n18",
+        "ts": "2026-01-30 14:09:00",
+        "carrier": "ticket",
+        "role": "reinforce",
+        "raw_text": "[网元单据 EXP20260130140979050018] 应用=youku_vod(vod_streaming) 小区=4600040393B 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n19",
+        "ts": "2026-02-01 12:16:00",
+        "carrier": "ticket",
+        "role": "branch_step",
+        "raw_text": "[网元单据 EXP20260201121679050019] 应用=bilibili_vod(vod_streaming) 小区=4600040386A 制式=5G(10)"
+      },
+      {
+        "ep_id": "persona_8613522947905_n20",
+        "ts": "2026-02-04 13:23:00",
+        "carrier": "ticket",
+        "role": "reinforce",
+        "raw_text": "[网元单据 EXP20260204132379050020] 应用=iqiyi_vod(vod_streaming) 小区=4600040394B 制式=5G(10)"
+      }
+    ],
+    "mem0_items": [
+      {
+        "id": "M0091",
+        "slot": "app:bilibili_vod",
+        "text": "用户 persona_8613522947905 常用vod_streaming类应用 bilibili_vod，最近一次使用于 2026-02-01 12:16:00",
+        "created_at": "2026-01-05 12:00:00",
+        "updated_at": "2026-02-01 12:16:00"
+      },
+      {
+        "id": "M0092",
+        "slot": "cell:4600040391C",
+        "text": "用户 persona_8613522947905 常在基站小区 4600040391C 活动",
+        "created_at": "2026-01-05 12:00:00",
+        "updated_at": "2026-01-26 12:29:00"
+      },
+      {
+        "id": "M0093",
+        "slot": "cell:4600040386A",
+        "text": "用户 persona_8613522947905 常在基站小区 4600040386A 活动",
+        "created_at": "2026-01-07 14:14:00",
+        "updated_at": "2026-02-01 12:16:00"
+      },
+      {
+        "id": "M0094",
+        "slot": "venue:临街咖啡厅办公区",
+        "text": "用户 persona_8613522947905 常在「临街咖啡厅办公区」使用移动网络并关注流畅不卡顿",
+        "created_at": "2026-01-11 12:21:00",
+        "updated_at": "2026-01-15 13:49:00"
+      },
+      {
+        "id": "M0096",
+        "slot": "venue:公司独立会议室",
+        "text": "用户 persona_8613522947905 常在「公司独立会议室」使用移动网络并关注流畅不卡顿",
+        "created_at": "2026-01-14 14:35:00",
+        "updated_at": "2026-01-17 12:08:00"
+      },
+      {
+        "id": "M0097",
+        "slot": "alias:B站",
+        "text": "用户 persona_8613522947905 将标准应用 bilibili_vod 简称为「B站」",
+        "created_at": "2026-01-14 14:35:00",
+        "updated_at": "2026-01-14 14:35:00"
+      },
+      {
+        "id": "M0098",
+        "slot": "alias:小破站",
+        "text": "用户 persona_8613522947905 将标准应用 bilibili_vod 简称为「小破站」",
+        "created_at": "2026-01-17 12:08:00",
+        "updated_at": "2026-01-17 12:08:00"
+      },
+      {
+        "id": "M0099",
+        "slot": "cell:4600040394B",
+        "text": "用户 persona_8613522947905 常在基站小区 4600040394B 活动",
+        "created_at": "2026-01-23 14:22:00",
+        "updated_at": "2026-02-04 13:23:00"
+      },
+      {
+        "id": "M0100",
+        "slot": "app:youku_vod",
+        "text": "用户 persona_8613522947905 常用vod_streaming类应用 youku_vod，最近一次使用于 2026-01-30 14:09:00",
+        "created_at": "2026-01-26 12:29:00",
+        "updated_at": "2026-01-30 14:09:00"
+      },
+      {
+        "id": "M0101",
+        "slot": "cell:4600040393B",
+        "text": "用户 persona_8613522947905 常在基站小区 4600040393B 活动",
+        "created_at": "2026-01-30 14:09:00",
+        "updated_at": "2026-01-30 14:09:00"
+      },
+      {
+        "id": "M0102",
+        "slot": "app:iqiyi_vod",
+        "text": "用户 persona_8613522947905 常用vod_streaming类应用 iqiyi_vod，最近一次使用于 2026-02-04 13:23:00",
+        "created_at": "2026-02-04 13:23:00",
+        "updated_at": "2026-02-04 13:23:00"
+      }
+    ],
+    "mem0_deleted": [
+      {
+        "user_id": "persona_8613522947905",
+        "slot_key": "branch_rule",
+        "old_text": "用户 persona_8613522947905 当前启用了「突发恶劣天气」临时优先保障规则（设立于 2026-01-13 13:28:00）",
+        "deleted_at": "2026-01-14 14:35:00",
+        "reason": "用户显式撤销临时规则，恢复主线习惯"
+      }
+    ]
+  },
+  "cross_user_case": {
+    "bridge_cell": "4600040386A",
+    "users": [
+      "persona_8613409272151",
+      "persona_8613460256444",
+      "persona_8613462113785",
+      "persona_8613522947905"
+    ],
+    "nodes": [
+      {
+        "id": "4600040386A",
+        "type": "Cell",
+        "label": "4600040386A",
+        "community": "空间与网络",
+        "mention_count": 27
+      },
+      {
+        "id": "RULE:异地出差或旅行",
+        "type": "BranchRule",
+        "label": "临时规则:异地出差或旅行",
+        "community": "规则与约束",
+        "mention_count": 2
+      },
+      {
+        "id": "RULE:突发恶劣天气",
+        "type": "BranchRule",
+        "label": "临时规则:突发恶劣天气",
+        "community": "规则与约束",
+        "mention_count": 4
+      },
+      {
+        "id": "bilibili_vod",
+        "type": "App",
+        "label": "bilibili_vod",
+        "community": "应用与业务",
+        "mention_count": 13
+      },
+      {
+        "id": "bilibili_watch",
+        "type": "App",
+        "label": "bilibili_watch",
+        "community": "应用与业务",
+        "mention_count": 7
+      },
+      {
+        "id": "dingtalk_meeting",
+        "type": "App",
+        "label": "dingtalk_meeting",
+        "community": "应用与业务",
+        "mention_count": 23
+      },
+      {
+        "id": "douyin_svod",
+        "type": "App",
+        "label": "douyin_svod",
+        "community": "应用与业务",
+        "mention_count": 9
+      },
+      {
+        "id": "douyin_watch",
+        "type": "App",
+        "label": "douyin_watch",
+        "community": "应用与业务",
+        "mention_count": 39
+      },
+      {
+        "id": "hepingjingying",
+        "type": "App",
+        "label": "hepingjingying",
+        "community": "应用与业务",
+        "mention_count": 11
+      },
+      {
+        "id": "hepingjingying_game",
+        "type": "App",
+        "label": "hepingjingying_game",
+        "community": "应用与业务",
+        "mention_count": 18
+      },
+      {
+        "id": "iqiyi_vod",
+        "type": "App",
+        "label": "iqiyi_vod",
+        "community": "应用与业务",
+        "mention_count": 1
+      },
+      {
+        "id": "kuaishou_svod",
+        "type": "App",
+        "label": "kuaishou_svod",
+        "community": "应用与业务",
+        "mention_count": 4
+      },
+      {
+        "id": "kuaishou_watch",
+        "type": "App",
+        "label": "kuaishou_watch",
+        "community": "应用与业务",
+        "mention_count": 7
+      },
+      {
+        "id": "persona_8613409272151",
+        "type": "User",
+        "label": "U_8613409272151",
+        "community": "用户核心",
+        "mention_count": 1
+      },
+      {
+        "id": "persona_8613460256444",
+        "type": "User",
+        "label": "U_8613460256444",
+        "community": "用户核心",
+        "mention_count": 1
+      },
+      {
+        "id": "persona_8613462113785",
+        "type": "User",
+        "label": "U_8613462113785",
+        "community": "用户核心",
+        "mention_count": 1
+      },
+      {
+        "id": "persona_8613522947905",
+        "type": "User",
+        "label": "U_8613522947905",
+        "community": "用户核心",
+        "mention_count": 1
+      },
+      {
+        "id": "sanjiaozhou",
+        "type": "App",
+        "label": "sanjiaozhou",
+        "community": "应用与业务",
+        "mention_count": 20
+      },
+      {
+        "id": "sanjiaozhouxingdong_game",
+        "type": "App",
+        "label": "sanjiaozhouxingdong_game",
+        "community": "应用与业务",
+        "mention_count": 29
+      },
+      {
+        "id": "tencentmeeting",
+        "type": "App",
+        "label": "tencentmeeting",
+        "community": "应用与业务",
+        "mention_count": 30
+      },
+      {
+        "id": "wangzherongyao",
+        "type": "App",
+        "label": "wangzherongyao",
+        "community": "应用与业务",
+        "mention_count": 5
+      },
+      {
+        "id": "wangzherongyao_game",
+        "type": "App",
+        "label": "wangzherongyao_game",
+        "community": "应用与业务",
+        "mention_count": 9
+      },
+      {
+        "id": "youku_vod",
+        "type": "App",
+        "label": "youku_vod",
+        "community": "应用与业务",
+        "mention_count": 8
+      }
+    ],
+    "edges": [
+      {
+        "id": "E0012",
+        "src": "persona_8613409272151",
+        "rel": "USES_APP",
+        "dst": "tencentmeeting",
+        "t_valid": "2026-01-05 08:00:00",
+        "t_invalid": null,
+        "count": 20
+      },
+      {
+        "id": "E0014",
+        "src": "persona_8613409272151",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040386A",
+        "t_valid": "2026-01-05 08:00:00",
+        "t_invalid": null,
+        "count": 6
+      },
+      {
+        "id": "E0019",
+        "src": "persona_8613409272151",
+        "rel": "USES_APP",
+        "dst": "dingtalk_meeting",
+        "t_valid": "2026-01-08 12:16:00",
+        "t_invalid": null,
+        "count": 6
+      },
+      {
+        "id": "E0020",
+        "src": "persona_8613409272151",
+        "rel": "HAS_BRANCH_RULE",
+        "dst": "RULE:异地出差或旅行",
+        "t_valid": "2026-01-08 12:16:00",
+        "t_invalid": null,
+        "count": 1
+      },
+      {
+        "id": "E0074",
+        "src": "persona_8613460256444",
+        "rel": "USES_APP",
+        "dst": "kuaishou_watch",
+        "t_valid": "2026-01-05 08:00:00",
+        "t_invalid": null,
+        "count": 4
+      },
+      {
+        "id": "E0076",
+        "src": "persona_8613460256444",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040386A",
+        "t_valid": "2026-01-05 08:00:00",
+        "t_invalid": null,
+        "count": 4
+      },
+      {
+        "id": "E0078",
+        "src": "persona_8613460256444",
+        "rel": "USES_APP",
+        "dst": "kuaishou_svod",
+        "t_valid": "2026-01-07 10:14:00",
+        "t_invalid": null,
+        "count": 3
+      },
+      {
+        "id": "E0084",
+        "src": "persona_8613460256444",
+        "rel": "USES_APP",
+        "dst": "douyin_svod",
+        "t_valid": "2026-03-12 08:28:00",
+        "t_invalid": null,
+        "count": 3
+      },
+      {
+        "id": "E0088",
+        "src": "persona_8613460256444",
+        "rel": "USES_APP",
+        "dst": "tencentmeeting",
+        "t_valid": "2026-05-14 09:08:00",
+        "t_invalid": null,
+        "count": 1
+      },
+      {
+        "id": "E0089",
+        "src": "persona_8613460256444",
+        "rel": "USES_APP",
+        "dst": "douyin_watch",
+        "t_valid": "2026-06-26 10:43:00",
+        "t_invalid": null,
+        "count": 1
+      },
+      {
+        "id": "E0102",
+        "src": "persona_8613462113785",
+        "rel": "USES_APP",
+        "dst": "wangzherongyao_game",
+        "t_valid": "2026-01-05 19:00:00",
+        "t_invalid": null,
+        "count": 5
+      },
+      {
+        "id": "E0104",
+        "src": "persona_8613462113785",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040386A",
+        "t_valid": "2026-01-05 19:00:00",
+        "t_invalid": null,
+        "count": 4
+      },
+      {
+        "id": "E0107",
+        "src": "persona_8613462113785",
+        "rel": "USES_APP",
+        "dst": "wangzherongyao",
+        "t_valid": "2026-01-06 20:07:00",
+        "t_invalid": null,
+        "count": 2
+      },
+      {
+        "id": "E0110",
+        "src": "persona_8613462113785",
+        "rel": "USES_APP",
+        "dst": "sanjiaozhou",
+        "t_valid": "2026-01-13 22:21:00",
+        "t_invalid": null,
+        "count": 3
+      },
+      {
+        "id": "E0111",
+        "src": "persona_8613462113785",
+        "rel": "USES_APP",
+        "dst": "sanjiaozhouxingdong_game",
+        "t_valid": "2026-01-18 23:28:00",
+        "t_invalid": null,
+        "count": 2
+      },
+      {
+        "id": "E0113",
+        "src": "persona_8613462113785",
+        "rel": "USES_APP",
+        "dst": "hepingjingying_game",
+        "t_valid": "2026-01-29 22:01:00",
+        "t_invalid": null,
+        "count": 1
+      },
+      {
+        "id": "E0115",
+        "src": "persona_8613462113785",
+        "rel": "USES_APP",
+        "dst": "bilibili_watch",
+        "t_valid": "2026-01-31 00:48:00",
+        "t_invalid": null,
+        "count": 1
+      },
+      {
+        "id": "E0121",
+        "src": "persona_8613462113785",
+        "rel": "USES_APP",
+        "dst": "hepingjingying",
+        "t_valid": "2026-02-26 23:23:00",
+        "t_invalid": null,
+        "count": 1
+      },
+      {
+        "id": "E0125",
+        "src": "persona_8613522947905",
+        "rel": "USES_APP",
+        "dst": "bilibili_vod",
+        "t_valid": "2026-01-05 12:00:00",
+        "t_invalid": null,
+        "count": 12
+      },
+      {
+        "id": "E0128",
+        "src": "persona_8613522947905",
+        "rel": "RESIDES_CELL",
+        "dst": "4600040386A",
+        "t_valid": "2026-01-07 14:14:00",
+        "t_invalid": null,
+        "count": 5
+      },
+      {
+        "id": "E0130",
+        "src": "persona_8613522947905",
+        "rel": "HAS_BRANCH_RULE",
+        "dst": "RULE:突发恶劣天气",
+        "t_valid": "2026-01-13 13:28:00",
+        "t_invalid": "2026-01-14 14:35:00",
+        "count": 2
+      },
+      {
+        "id": "E0135",
+        "src": "persona_8613522947905",
+        "rel": "USES_APP",
+        "dst": "youku_vod",
+        "t_valid": "2026-01-26 12:29:00",
+        "t_invalid": null,
+        "count": 2
+      },
+      {
+        "id": "E0138",
+        "src": "persona_8613522947905",
+        "rel": "USES_APP",
+        "dst": "iqiyi_vod",
+        "t_valid": "2026-02-04 13:23:00",
+        "t_invalid": null,
+        "count": 1
+      }
+    ]
+  }
+}

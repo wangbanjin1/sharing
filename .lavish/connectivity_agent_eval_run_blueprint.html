@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="parchment">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联接 Agent 四子表体系与 Agent Eval Run 五大核心要素对齐看板</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #FBF7F0;
+      --surface: #FFFFFF;
+      --surface-soft: #F5EFE4;
+      --border: #E2D9C8;
+      --border-strong: #CBBFA8;
+      --text: #1F2328;
+      --text-muted: #57606A;
+      --accent: #1F4E78;
+      --t1-fg: #0969DA; --t1-bg: #EDF5FF; --t1-bd: #BFD7F7;
+      --t2-fg: #0F766E; --t2-bg: #EAF8F6; --t2-bd: #B6E4DF;
+      --t3-fg: #6D28D9; --t3-bg: #F4F0FF; --t3-bd: #D8C7FC;
+      --t4-fg: #9A5B13; --t4-bg: #FFF7E6; --t4-bd: #F3D5A5;
+      --ok-fg: #15803D; --ok-bg: #ECFDF3; --ok-bd: #B7E4C7;
+      --shadow: 0 2px 10px rgba(31, 35, 40, 0.05);
+    }
+    html[data-theme="github"] {
+      --bg: #F6F8FA;
+      --surface: #FFFFFF;
+      --surface-soft: #F0F3F6;
+      --border: #D0D7DE;
+      --border-strong: #AFB8C1;
+      --accent: #0969DA;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .page {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 18px 22px 36px 22px;
+    }
+
+    /* Header */
+    .header-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .header-top h1 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--accent);
+    }
+    .header-sub {
+      margin: 4px 0 0 0;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+    .theme-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .ctrl-btn {
+      border: 1px solid var(--border-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .ctrl-btn.active {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+    }
+
+    /* Legend Strip */
+    .legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12.5px;
+    }
+    .legend-title {
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.12s ease;
+    }
+    .tag-t1 { background: var(--t1-bg); color: var(--t1-fg); border: 1px solid var(--t1-bd); }
+    .tag-t2 { background: var(--t2-bg); color: var(--t2-fg); border: 1px solid var(--t2-bd); }
+    .tag-t3 { background: var(--t3-bg); color: var(--t3-fg); border: 1px solid var(--t3-bd); }
+    .tag-t4 { background: var(--t4-bg); color: var(--t4-fg); border: 1px solid var(--t4-bd); }
+    .tag-all { background: var(--surface-soft); color: var(--text); border: 1px solid var(--border-strong); }
+    .tag.active-filter { box-shadow: 0 0 0 2px var(--accent); }
+
+    /* 5-Column Pillar Board */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 1220px) {
+      .pillars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+    }
+    .pillar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .pillar-head {
+      background: var(--accent);
+      color: #FFFFFF;
+      padding: 11px 13px;
+    }
+    .pillar-head .p-kicker {
+      font-size: 11px;
+      opacity: 0.88;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+    .pillar-head h2 {
+      margin: 2px 0 3px 0;
+      font-size: 15px;
+      color: #FFFFFF;
+    }
+    .pillar-head .p-q {
+      font-size: 12px;
+      opacity: 0.92;
+      margin: 0;
+    }
+    .pillar-body {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .sub-item {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 8px 10px;
+      transition: opacity 0.15s ease, border-color 0.15s ease;
+    }
+    .sub-item.dimmed {
+      opacity: 0.25;
+    }
+    .sub-item.highlighted {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    .sub-name {
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--text);
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
+    }
+    .sub-en {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .sub-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .mini-tag {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .sub-map {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Bottom Dual Panel: Diagram + Reverse Matrix */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 1080px) {
+      .bottom-grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px 18px;
+      box-shadow: var(--shadow);
+    }
+    .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 15px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .mermaid {
+      width: 100%;
+      text-align: center;
+      overflow-x: auto;
+    }
+    .mermaid svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .figure-caption {
+      margin: 8px 0 0 0;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.2px;
+    }
+    thead th {
+      background: var(--accent);
+      color: #FFFFFF;
+      padding: 7px 8px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    tbody td {
+      padding: 7px 8px;
+      border: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tbody tr:nth-child(even) {
+      background: var(--surface-soft);
+    }
+    .c-center { text-align: center; }
+    .c-bold { font-weight: 700; }
+    .dot-ok {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--ok-bg);
+      color: var(--ok-fg);
+      border: 1px solid var(--ok-bd);
+    }
+
+    @media print {
+      @page { size: A4 landscape; margin: 8mm; }
+      html, body { background: #FFFFFF !important; font-size: 11px; }
+      .theme-btns { display: none !important; }
+      .header-card, .pillar, .card { box-shadow: none; }
+      .pillars-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+      .bottom-grid { grid-template-columns: 1.15fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header-card">
+      <div class="header-top">
+        <div>
+          <h1>联接 Agent 四子表设计 × Agent Eval Run 五大核心要素对齐看板</h1>
+          <p class="header-sub">将现有四张子表（<code>storyline_and_intent_unified_table_v2.xlsx</code>）与 Agent Eval Run 24 项子能力逐一映射，直观呈现框架完整性与对应关系（点击下方子表徽章可高亮对应模块）</p>
+        </div>
+        <div class="theme-btns">
+          <button class="ctrl-btn active" id="btn-parchment" data-lavish-ui="true" onclick="setTheme('parchment')">暖阳米纸</button>
+          <button class="ctrl-btn" id="btn-github" data-lavish-ui="true" onclick="setTheme('github')">GitHub 简洁</button>
+        </div>
+      </div>
+      <div class="legend-bar">
+        <span class="legend-title">按子表高亮追踪：</span>
+        <span class="tag tag-all active-filter" data-filter="all" data-lavish-ui="true" onclick="filterSheet('all', this)">显示全部映射</span>
+        <span class="tag tag-t1" data-filter="t1" data-lavish-ui="true" onclick="filterSheet('t1', this)">表 1 · 故事线维度与因子（29 项）</span>
+        <span class="tag tag-t2" data-filter="t2" data-lavish-ui="true" onclick="filterSheet('t2', this)">表 2 · 意图表达维度与因子（30 类）</span>
+        <span class="tag tag-t4" data-filter="t4" data-lavish-ui="true" onclick="filterSheet('t4', this)">表 4 · User ↔ Agent 交互模式（22 种）</span>
+        <span class="tag tag-t3" data-filter="t3" data-lavish-ui="true" onclick="filterSheet('t3', this)">表 3 · 评测问题与核心指标（20 项 + 9 域）</span>
+      </div>
+    </header>
+
+    <!-- 5 CORE ELEMENTS BOARD -->
+    <section class="pillars-grid">
+      <!-- 1. EvalCase -->
+      <div class="pillar">
+        <div class="pillar-head">
+          <div class="p-kicker">Element 1 · What Cases to Run</div>
+          <h2>EvalCase 评测用例</h2>
+          <p class="p-q">用什么评测用例来测？</p>
+        </div>
+        <div class="pillar-body">
+          <div class="sub-item" data-sheets="t1 t2">
+            <div class="sub-name">用例定义 <span class="sub-en">Definition</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t2">表 2 · S1~S3</span>
+              <span class="mini-tag tag-t1">表 1 · G1~U9</span>
+            </div>
+            <p class="sub-map">明确输出目标（业务对象、保障时间、体验参数三要素模板）与输入条件。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t2">
+            <div class="sub-name">用例来源 <span class="sub-en">Sourcing</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · G4.1~G4.2, U5.1</span>
+              <span class="mini-tag tag-t2">表 2 · 原有+新增变体</span>
+            </div>
+            <p class="sub-map">结合真实网元单据（EXP*.csv）画像反推与业务表达变体参数化合成。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t2">
+            <div class="sub-name">用例集设计 <span class="sub-en">Set Design</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · 29 个故事线因子</span>
+              <span class="mini-tag tag-t2">表 2 · 30 类表达变体</span>
+            </div>
+            <p class="sub-map">纵向故事线因子 × 横向意图表达层级正交组合，覆盖各难度档位与场景。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t2">
+            <div class="sub-name">校验与治理 <span class="sub-en">Validation &amp; Governance</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t2">表 2 · 是否需专门构造</span>
+              <span class="mini-tag tag-t1">表 1 · U8.4, U8.5</span>
+            </div>
+            <p class="sub-map">区分需专门构造项与免构造评测必测基线（L1.1/L2.1/L3.1/L6.1~L6.2），界定空值与噪声边界。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Evaluation Environment -->
+      <div class="pillar">
+        <div class="pillar-head">
+          <div class="p-kicker">Element 2 · Where the Agent Acts</div>
+          <h2>Evaluation Environment</h2>
+          <p class="p-q">在什么环境和状态中执行？</p>
+        </div>
+        <div class="pillar-body">
+          <div class="sub-item" data-sheets="t1">
+            <div class="sub-name">环境定义 <span class="sub-en">Environment Definition</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · G4.1, U5.3, U7.2</span>
+            </div>
+            <p class="sub-map">界定持续存在的网元单据底流、用户对话流与静态套餐/白名单规则库边界。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t3">
+            <div class="sub-name">状态管理 <span class="sub-en">State Management</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · G2.1, G3.1, U8.2~U8.3</span>
+              <span class="mini-tag tag-t3">表 3 · M2</span>
+            </div>
+            <p class="sub-map">定义冷/热启动初始记忆、候选态激活、冲突冻结、临时回退与衰减遗忘状态。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t4">
+            <div class="sub-name">交互接口 <span class="sub-en">Interaction Interface</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · G4.2, U6.2</span>
+              <span class="mini-tag tag-t4">表 4 · I1~I4</span>
+            </div>
+            <p class="sub-map">规定单据与对话 4 种配合关系、位置粒度隔离（cell_id 与场所名）及可执行的交互动作。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1">
+            <div class="sub-name">环境生命周期 <span class="sub-en">Lifecycle</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · G1.1~G1.3, G2.4</span>
+            </div>
+            <p class="sub-map">控制跨周/跨月时间轴推进、支线触发与到期恢复，支撑单步快照隔离与长程回放。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1">
+            <div class="sub-name">环境治理 <span class="sub-en">Governance</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · U7.3, U8.4, U8.5</span>
+            </div>
+            <p class="sub-map">保留 EXP 单据原生 null 真实分布，可控注入短时废单、卡顿单据与同期无关并行单据。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Evaluation Harness -->
+      <div class="pillar">
+        <div class="pillar-head">
+          <div class="p-kicker">Element 3 · How the Run Executes</div>
+          <h2>Evaluation Harness</h2>
+          <p class="p-q">如何把评测稳定跑起来？</p>
+        </div>
+        <div class="pillar-body">
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">Agent 接入 <span class="sub-en">Agent Integration</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 7.1~7.3 对照基线</span>
+            </div>
+            <p class="sub-map">统一接入有记忆、无记忆与拼接全量历史三类被测对象，在同一套用例上横向比较。</p>
+          </div>
+          <div class="sub-item" data-sheets="t4">
+            <div class="sub-name">试验编排 <span class="sub-en">Trial Orchestration</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t4">表 4 · I1~I4（22 种模式）</span>
+            </div>
+            <p class="sub-map">按单轮直通（I1）、两轮澄清（I2）、三轮动态收敛（I3）与执行恢复（I4）编排客显等效交互。</p>
+          </div>
+          <div class="sub-item" data-sheets="t4">
+            <div class="sub-name">执行控制 <span class="sub-en">Execution Control</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t4">表 4 · 1~3 轮闭环约束</span>
+            </div>
+            <p class="sub-map">限定多轮澄清轮次上限，定义权限协商（I2.6）、撤销（I2.8）与失败恢复（I4.2）终止出口。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t4">
+            <div class="sub-name">运行观测 <span class="sub-en">Run Observability</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · G3.2</span>
+              <span class="mini-tag tag-t4">表 4 · I3.1~I3.5</span>
+            </div>
+            <p class="sub-map">跟踪跨会话因果链路及多轮交互中的反问、改口与冲突核实过程。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t3">
+            <div class="sub-name">实验管理 <span class="sub-en">Experiment Management</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t1">表 1 · G4.3~G4.4</span>
+              <span class="mini-tag tag-t3">表 3 · 7.1 分类对照</span>
+            </div>
+            <p class="sub-map">按间隔跨度、噪声比例及“无需记忆 / 需用记忆”分组管理实验批次与对比结果。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Evaluation Evidence -->
+      <div class="pillar">
+        <div class="pillar-head">
+          <div class="p-kicker">Element 4 · What Evidence is Retained</div>
+          <h2>Evaluation Evidence</h2>
+          <p class="p-q">留下哪些可用于判断的证据？</p>
+        </div>
+        <div class="pillar-body">
+          <div class="sub-item" data-sheets="t3 t4">
+            <div class="sub-name">交互轨迹 <span class="sub-en">Interaction Trace</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · M3, 1.1~3.3</span>
+              <span class="mini-tag tag-t4">表 4 · I2~I3</span>
+            </div>
+            <p class="sub-map">留存库路由、检索 Top-K 排序列表及主动消歧反问序列，用于判断查准、查全与排序。</p>
+          </div>
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">状态证据 <span class="sub-en">State Evidence</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · M1, M2</span>
+            </div>
+            <p class="sub-map">留存写入前后记忆库状态快照，核验提取条目、候选激活、冲突冻结与遗忘淘汰结果。</p>
+          </div>
+          <div class="sub-item" data-sheets="t2 t3">
+            <div class="sub-name">结果产物 <span class="sub-en">Output Artifact</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t2">表 2 · S1~S3 模板</span>
+              <span class="mini-tag tag-t3">表 3 · 1.1~6.2</span>
+            </div>
+            <p class="sub-map">留存最终输出的完整意图模板（三要素及时间算术校验）或拒识/驳回结果。</p>
+          </div>
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">运行度量 <span class="sub-en">Runtime Telemetry</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 3.2, 7.2, 7.3</span>
+            </div>
+            <p class="sub-map">留存单次任务闭环对话轮数与累计输入/输出 Token 消耗，支撑效率收益计算。</p>
+          </div>
+          <div class="sub-item" data-sheets="t1 t3">
+            <div class="sub-name">证据完整性 <span class="sub-en">Evidence Integrity</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 关联编号列</span>
+              <span class="mini-tag tag-t1">表 1 · G4.2</span>
+            </div>
+            <p class="sub-map">通过表 3 关联编号列打通表 1 因子、表 2 表达与表 4 交互轨迹，保证结果可回溯复盘。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Evaluation Judging -->
+      <div class="pillar">
+        <div class="pillar-head">
+          <div class="p-kicker">Element 5 · How Performance is Judged</div>
+          <h2>Evaluation Judging</h2>
+          <p class="p-q">根据什么标准和方法判断质量？</p>
+        </div>
+        <div class="pillar-body">
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">评测粒度 <span class="sub-en">Granularity</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 四大分类（20 项）</span>
+            </div>
+            <p class="sub-map">覆盖记忆过程（M1~M3）、长期记忆功能（1.1~3.3）、意图与拒识（4.1~6.2）及整体对比（7.1~7.3）。</p>
+          </div>
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">评价标准 <span class="sub-en">Criteria</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 关键评测点 + 9 类域外</span>
+            </div>
+            <p class="sub-map">逐项定义成功判据、典型正反示例及 6.1 域外拒识 9 类业务边界。</p>
+          </div>
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">判定方法 <span class="sub-en">Grading Method</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 核心评测指标列</span>
+            </div>
+            <p class="sub-map">收敛为全量匹配率、检索查准/查全/排序（MRR）、主动消歧/拒识准确率及提取/状态更新准确率。</p>
+          </div>
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">评分聚合 <span class="sub-en">Scoring &amp; Aggregation</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 7.1~7.3</span>
+            </div>
+            <p class="sub-map">无需记忆与需用记忆两类场景分开聚合，汇总全量匹配率提升、多轮澄清减少率与 Token 节省率。</p>
+          </div>
+          <div class="sub-item" data-sheets="t3">
+            <div class="sub-name">评估器校验 <span class="sub-en">Evaluator Validation</span></div>
+            <div class="sub-tags">
+              <span class="mini-tag tag-t3">表 3 · 全量严格判据 + 抗盲猜</span>
+            </div>
+            <p class="sub-map">以全字段精确匹配防局部凑分、以查准查全排序防碰巧蒙对、以主动消歧防过度追问或盲猜。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM: ARCHITECTURE FLOW + 4-SHEET REVERSE INDEX -->
+    <section class="bottom-grid">
+      <div class="card">
+        <h3>四张子表向 Eval Run 五大核心要素的流向关系</h3>
+        <div class="mermaid">
+flowchart LR
+  T1["表 1 · 故事线因子<br/>29 项（G1~G4, U5~U9）"]
+  T2["表 2 · 意图表达变体<br/>30 类（S1~S3, L1~L6）"]
+  T4["表 4 · User↔Agent 交互<br/>22 种（I1~I4）"]
+  T3["表 3 · 评测项与指标<br/>20 项 + 9 类域外"]
+
+  E1["1. EvalCase<br/>评测用例"]
+  E2["2. Environment<br/>环境与状态"]
+  E3["3. Harness<br/>编排与控制"]
+  E4["4. Evidence<br/>四类证据"]
+  E5["5. Judging<br/>标准与指标"]
+
+  T1 --> E1
+  T1 --> E2
+  T2 --> E1
+  T2 --> E4
+  T4 --> E3
+  T4 --> E4
+  T3 --> E4
+  T3 --> E5
+        </div>
+        <p class="figure-caption"><strong>图 1：现有四张子表与 Agent Eval Run 五大核心要素的对应流向</strong><br/>&emsp;&emsp;表 1 与表 2 共同定义用例空间与双源环境状态，表 4 承接多轮运行编排与客显等效交互，表 3 统一规定证据核验维度与核心评测指标，四张表在结构上完整覆盖 Eval Run 五要素闭环。</p>
+      </div>
+
+      <div class="card">
+        <h3>反向索引：四张子表在五要素中的职责定位</h3>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:24%">现有子表</th>
+              <th style="width:26%">主要落位要素</th>
+              <th style="width:36%">核心支撑内容（对应表内编号）</th>
+              <th style="width:14%">覆盖状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="c-bold"><span class="mini-tag tag-t1">表 1</span><br/>故事线维度与因子表</td>
+              <td class="c-center">EvalCase<br/>Environment</td>
+              <td>29 项因子：时间跨度与规模（G1）、冷热启动与演进（G2~G3）、双源配比与 4 种配合关系（G4.1~G4.2）、位置隔离/空值/噪声边界（U6~U8）</td>
+              <td class="c-center"><span class="dot-ok">已对齐</span></td>
+            </tr>
+            <tr>
+              <td class="c-bold"><span class="mini-tag tag-t2">表 2</span><br/>意图表达维度与因子表</td>
+              <td class="c-center">EvalCase<br/>Evidence</td>
+              <td>30 类变体：三要素目标模板（S1~S3）、5 个核心表达层级（L1~L5）、免专门构造评测必测项（L1.1/L2.1/L3.1/L6.1~L6.2）</td>
+              <td class="c-center"><span class="dot-ok">已对齐</span></td>
+            </tr>
+            <tr>
+              <td class="c-bold"><span class="mini-tag tag-t4">表 4</span><br/>User 与 Agent 交互模式表</td>
+              <td class="c-center">Harness<br/>Evidence</td>
+              <td>22 种模式：单轮直通与咨询边界（I1）、两轮澄清与冲突确认（I2）、三轮反问与中途改口（I3）、执行授权与恢复（I4）</td>
+              <td class="c-center"><span class="dot-ok">已对齐</span></td>
+            </tr>
+            <tr>
+              <td class="c-bold"><span class="mini-tag tag-t3">表 3</span><br/>评测问题与评测指标表</td>
+              <td class="c-center">Evidence<br/>Judging</td>
+              <td>20 项评测 + 9 类域外：记忆提取/更新/检索（M1~M3）、长期记忆与意图拒识（1.1~6.2）、全量匹配/查准查全排序/消歧/轮数与 Token 对比（7.1~7.3）</td>
+              <td class="c-center"><span class="dot-ok">已对齐</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose',
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('btn-parchment').classList.toggle('active', theme === 'parchment');
+      document.getElementById('btn-github').classList.toggle('active', theme === 'github');
+    }
+
+    function filterSheet(sheetKey, el) {
+      document.querySelectorAll('.legend-bar .tag').forEach(t => t.classList.remove('active-filter'));
+      if (el) el.classList.add('active-filter');
+      document.querySelectorAll('.sub-item').forEach(item => {
+        const sheets = (item.getAttribute('data-sheets') || '').split(' ');
+        if (sheetKey === 'all') {
+          item.classList.remove('dimmed', 'highlighted');
+        } else if (sheets.includes(sheetKey)) {
+          item.classList.remove('dimmed');
+          item.classList.add('highlighted');
+        } else {
+          item.classList.remove('highlighted');
+          item.classList.add('dimmed');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

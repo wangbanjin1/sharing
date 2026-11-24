@@ -1,0 +1,2988 @@
+{
+  "schema_version": "1.0",
+  "description": "从实际网元单据提取的用户画像集合（4 维 29 字段），按维度嵌套组织。",
+  "user_count": 20,
+  "dimensions": {
+    "dim_a_identity": "身份标识：用户与终端唯一标识",
+    "dim_b_app_behavior": "应用行为：应用类别构成、常用应用、会话强度",
+    "dim_c_spatio_temporal": "时空行为：活跃时段、小区驻留、流量与依赖度",
+    "dim_d_network_exp": "网络体验：制式、信号、时延、码率、卡顿、带宽"
+  },
+  "normalization": [
+    "扁平点号键（如 dim_c_spatio_temporal.mobility）拆为维度嵌套结构，字段顺序按语义重排。",
+    "原 {value:{...}, _source} 包装的 4 个派生指标已拍平为 {...字段, _source}，其余 9 个原为平铺结构。",
+    "stall_proxy 的 stall_ratio / stall_total_s / qoe_median 三键对全部用户补齐，缺失置 null。",
+    "顶层 user_id 是 dim_a_identity.user_id 的便捷副本，二者一致。",
+    "_meta.user_id 已去掉（与 user_id 重复），仅保留 n_sessions。"
+  ],
+  "users": [
+    {
+      "user_id": "8613213213689",
+      "dim_a_identity": {
+        "user_id": "8613213213689",
+        "device_fingerprint": "86761295675584808"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "vod_streaming": 0.6006,
+          "short_video": 0.3994
+        },
+        "frequent_apps": {
+          "youku_vod": 0.3333,
+          "douyin_svod": 0.1667,
+          "douyin_watch": 0.1667,
+          "bilibili_vod": 0.1667,
+          "kuaishou_svod": 0.0833
+        },
+        "app_session_stats": {
+          "sessions": 12,
+          "avg_dur_s": 130.7,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 127.7
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.25,
+          "20": 0.25,
+          "21": 0.25,
+          "23": 0.25
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.25
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.0,
+          "daily_online_s": 522.8,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.2675
+        },
+        "mobility": {
+          "n_cells": 6,
+          "n_tais": 6,
+          "top1_cell_share": 0.3333
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040371D|evening": 3,
+            "46000404997|evening": 2,
+            "4600040380A|evening": 2,
+            "4600040391C|evening": 1,
+            "4600040386A|evening": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0096,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0095,
+          "dl_share": 0.9905
+        },
+        "volume_total": {
+          "ul_total": 325.8,
+          "dl_total": 33884.1
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.9167,
+          "rat_share": {
+            "10": 0.9167,
+            "6": 0.0833
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0137,
+          "loss_ul_ratio": 0.0459,
+          "edge_level": "medium",
+          "sessions_with_loss": 5
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0137,
+          "loss_ul_ratio": 0.0459
+        },
+        "latency_profile": {
+          "median_ms": 61.7,
+          "p75_ms": 61.7,
+          "max_ms": 489.2
+        },
+        "bitrate_median": {
+          "median_value": 35591.25
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 1046.8
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 38.6,
+          "qoe_median": null
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1196147.9,
+          "max_dl_bps": 30762019.2
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 9.6939,
+          "p75_ratio": 22.1039,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 18249876.8,
+          "max_diff": 29451280.8,
+          "peak_to_avg_ratio": 17.7245,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 0.9,
+          "p75_diff": 0.9,
+          "max_diff": 0.9,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.9483,
+          "p75_ratio": 0.9483,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 12
+      }
+    },
+    {
+      "user_id": "8613409272151",
+      "dim_a_identity": {
+        "user_id": "8613409272151",
+        "device_fingerprint": "86756336471041746"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "meeting": 1.0
+        },
+        "frequent_apps": {
+          "tencentmeeting": 0.5833,
+          "dingtalk_meeting": 0.4167
+        },
+        "app_session_stats": {
+          "sessions": 12,
+          "avg_dur_s": 145.9,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 122.8
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "8": 0.1667,
+          "9": 0.1667,
+          "10": 0.4167,
+          "11": 0.25
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.0,
+          "daily_online_s": 583.6,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.2408
+        },
+        "mobility": {
+          "n_cells": 8,
+          "n_tais": 5,
+          "top1_cell_share": 0.1818
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040386A|morning": 3,
+            "4600040391C|morning": 2,
+            "4600040393B|morning": 2,
+            "4600040394B|morning": 1,
+            "4600040380A|morning": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0382,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0368,
+          "dl_share": 0.9632
+        },
+        "volume_total": {
+          "ul_total": 1042.5,
+          "dl_total": 27323.4
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0274,
+          "loss_ul_ratio": 0.1029,
+          "edge_level": "medium",
+          "sessions_with_loss": 9
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0274,
+          "loss_ul_ratio": 0.1029
+        },
+        "latency_profile": {
+          "median_ms": 87.15,
+          "p75_ms": 87.7,
+          "max_ms": 478.8
+        },
+        "bitrate_median": {
+          "median_value": 13057.3
+        },
+        "resolution_mode": {
+          "mode_value": 720.0
+        },
+        "service_delay": {
+          "median_value": null
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 1.0,
+          "qoe_median": null
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1213003.1,
+          "max_dl_bps": 38879835.2
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 12.3387,
+          "p75_ratio": 44.3327,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 21048051.2,
+          "max_diff": 37322641.3,
+          "peak_to_avg_ratio": 20.6491,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 44.8,
+          "p75_diff": 84.6,
+          "max_diff": 84.6,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.3535,
+          "p75_ratio": 1.3323,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 12
+      }
+    },
+    {
+      "user_id": "8613409383368",
+      "dim_a_identity": {
+        "user_id": "8613409383368",
+        "device_fingerprint": "86126211894984183"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "mobile_game": 0.3504,
+          "voip": 0.3471,
+          "meeting": 0.3025
+        },
+        "frequent_apps": {
+          "sanjiaozhouxingdong_game": 0.3333,
+          "hepingjingying_game": 0.3333,
+          "wangzherongyao_game": 0.1111,
+          "weixin_voip": 0.1111,
+          "tencentmeeting": 0.1111
+        },
+        "app_session_stats": {
+          "sessions": 9,
+          "avg_dur_s": 147.8,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 179.7
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.1111,
+          "20": 0.2222,
+          "21": 0.1111,
+          "22": 0.2222,
+          "23": 0.3333
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.5556
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 3.0,
+          "daily_online_s": 443.4,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.3649
+        },
+        "mobility": {
+          "n_cells": 4,
+          "n_tais": 5,
+          "top1_cell_share": 0.4286
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "46000404997|evening": 3,
+            "4600040391C|evening": 2,
+            "4600040495D|evening": 1,
+            "4600040380A|evening": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0279,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0271,
+          "dl_share": 0.9729
+        },
+        "volume_total": {
+          "ul_total": 697.8,
+          "dl_total": 25014.7
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0202,
+          "loss_ul_ratio": 0.0085,
+          "edge_level": "medium",
+          "sessions_with_loss": 4
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0202,
+          "loss_ul_ratio": 0.0085
+        },
+        "latency_profile": {
+          "median_ms": 58.3,
+          "p75_ms": 58.3,
+          "max_ms": 442.6
+        },
+        "bitrate_median": {
+          "median_value": 19154.0
+        },
+        "resolution_mode": {
+          "mode_value": 2160.0
+        },
+        "service_delay": {
+          "median_value": 449.5
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 1.5,
+          "qoe_median": 69.4
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 647389.8,
+          "max_dl_bps": 35083487.4
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 10.8764,
+          "p75_ratio": 16.7458,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 8694041.8,
+          "max_diff": 34296306.6,
+          "peak_to_avg_ratio": 13.2221,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": null,
+          "p75_diff": null,
+          "max_diff": null,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": null,
+          "p75_ratio": null,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 9
+      }
+    },
+    {
+      "user_id": "8613419793054",
+      "dim_a_identity": {
+        "user_id": "8613419793054",
+        "device_fingerprint": "86344679136248717"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "mobile_game": 1.0
+        },
+        "frequent_apps": {
+          "sanjiaozhouxingdong_game": 0.4,
+          "hepingjingying_game": 0.3333,
+          "wangzherongyao_game": 0.2667
+        },
+        "app_session_stats": {
+          "sessions": 15,
+          "avg_dur_s": 111.4,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 110.3
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.3333,
+          "20": 0.1333,
+          "21": 0.1333,
+          "22": 0.2667,
+          "23": 0.1333
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.4
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 5.0,
+          "daily_online_s": 557.0,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1406
+        },
+        "mobility": {
+          "n_cells": 8,
+          "n_tais": 5,
+          "top1_cell_share": 0.1538
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040394B|evening": 4,
+            "4600040493D|evening": 2,
+            "4600040383A|evening": 2,
+            "4600040380A|evening": 2,
+            "4600040391C|evening": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0366,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0353,
+          "dl_share": 0.9647
+        },
+        "volume_total": {
+          "ul_total": 714.0,
+          "dl_total": 19525.2
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0163,
+          "loss_ul_ratio": 0.0192,
+          "edge_level": "medium",
+          "sessions_with_loss": 8
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0163,
+          "loss_ul_ratio": 0.0192
+        },
+        "latency_profile": {
+          "median_ms": 98.55,
+          "p75_ms": 99.6,
+          "max_ms": 484.7
+        },
+        "bitrate_median": {
+          "median_value": null
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 806.4
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 48.6,
+          "qoe_median": 56.5
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1323751.7,
+          "max_dl_bps": 39350564.5
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 10.5703,
+          "p75_ratio": 16.2458,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 26145180.9,
+          "max_diff": 38777847.8,
+          "peak_to_avg_ratio": 20.6101,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 39.1,
+          "p75_diff": 56.8,
+          "max_diff": 56.8,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.6356,
+          "p75_ratio": 0.9513,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 15
+      }
+    },
+    {
+      "user_id": "8613419812206",
+      "dim_a_identity": {
+        "user_id": "8613419812206",
+        "device_fingerprint": "86987439810993727"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "meeting": 0.5952,
+          "live_streaming": 0.3905,
+          "short_video": 0.0143
+        },
+        "frequent_apps": {
+          "douyin_live": 0.3333,
+          "kuaishou_live": 0.25,
+          "tencentmeeting": 0.1667,
+          "dingtalk_meeting": 0.1667,
+          "hongguo_svod": 0.0833
+        },
+        "app_session_stats": {
+          "sessions": 12,
+          "avg_dur_s": 161.7,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 206.6
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "8": 0.0833,
+          "9": 0.25,
+          "10": 0.3333,
+          "11": 0.3333
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.0,
+          "daily_online_s": 646.7,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.0
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.0762
+        },
+        "mobility": {
+          "n_cells": 7,
+          "n_tais": 6,
+          "top1_cell_share": 0.2727
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040380A|morning": 3,
+            "4600040393B|morning": 3,
+            "46000404997|morning": 2,
+            "4600040386A|morning": 1,
+            "4600040495D|morning": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0803,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0744,
+          "dl_share": 0.9256
+        },
+        "volume_total": {
+          "ul_total": 934.8,
+          "dl_total": 11635.5
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.9167,
+          "rat_share": {
+            "10": 0.9167,
+            "6": 0.0833
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.013,
+          "loss_ul_ratio": 0.1649,
+          "edge_level": "medium",
+          "sessions_with_loss": 10
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.013,
+          "loss_ul_ratio": 0.1649
+        },
+        "latency_profile": {
+          "median_ms": 125.55,
+          "p75_ms": 131.2,
+          "max_ms": 424.0
+        },
+        "bitrate_median": {
+          "median_value": 33620.6
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": null
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 0.7,
+          "qoe_median": 40.4
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 680825.4,
+          "max_dl_bps": 37339068.2
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 6.1769,
+          "p75_ratio": 12.0802,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 24343584.0,
+          "max_diff": 36026029.1,
+          "peak_to_avg_ratio": 28.9655,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 65.15,
+          "p75_diff": 78.3,
+          "max_diff": 78.3,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 1.5111,
+          "p75_ratio": 2.4185,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 12
+      }
+    },
+    {
+      "user_id": "8613460256444",
+      "dim_a_identity": {
+        "user_id": "8613460256444",
+        "device_fingerprint": "86057187986893934"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "short_video": 0.6668,
+          "watch_live": 0.2237,
+          "meeting": 0.0841,
+          "mobile_game": 0.0254
+        },
+        "frequent_apps": {
+          "kuaishou_watch": 0.1667,
+          "douyin_svod": 0.1667,
+          "kuaishou_svod": 0.1667,
+          "douyin_watch": 0.1667,
+          "tencentmeeting": 0.0833
+        },
+        "app_session_stats": {
+          "sessions": 12,
+          "avg_dur_s": 146.5,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 134.0
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "8": 0.0833,
+          "9": 0.3333,
+          "10": 0.25,
+          "11": 0.3333
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.0,
+          "daily_online_s": 586.0,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.2562
+        },
+        "mobility": {
+          "n_cells": 6,
+          "n_tais": 5,
+          "top1_cell_share": 0.3333
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040386A|morning": 3,
+            "4600040371D|morning": 2,
+            "4600040394B|morning": 2,
+            "4600040383A|morning": 2,
+            "4600040391C|morning": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0488,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0465,
+          "dl_share": 0.9535
+        },
+        "volume_total": {
+          "ul_total": 1566.3,
+          "dl_total": 32101.5
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.8333,
+          "rat_share": {
+            "10": 0.8333,
+            "6": 0.1667
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.049,
+          "loss_ul_ratio": 0.01,
+          "edge_level": "medium",
+          "sessions_with_loss": 7
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.049,
+          "loss_ul_ratio": 0.01
+        },
+        "latency_profile": {
+          "median_ms": 77.2,
+          "p75_ms": 90.0,
+          "max_ms": 335.9
+        },
+        "bitrate_median": {
+          "median_value": 12158.7
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 1129.5
+        },
+        "stall_proxy": {
+          "stall_ratio": 0.6667,
+          "stall_total_s": 1.7,
+          "qoe_median": 74.7
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1160888.4,
+          "max_dl_bps": 39924085.3
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 9.7118,
+          "p75_ratio": 105.871,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 14832597.5,
+          "max_diff": 38688187.7,
+          "peak_to_avg_ratio": 22.051,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": null,
+          "p75_diff": null,
+          "max_diff": null,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": null,
+          "p75_ratio": null,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 12
+      }
+    },
+    {
+      "user_id": "8613460580808",
+      "dim_a_identity": {
+        "user_id": "8613460580808",
+        "device_fingerprint": "86117373836951227"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "vod_streaming": 0.5233,
+          "voip": 0.4767
+        },
+        "frequent_apps": {
+          "weixin_voip": 0.3333,
+          "iqiyi_vod": 0.2222,
+          "qq_voip": 0.2222,
+          "bilibili_vod": 0.1111,
+          "youku_vod": 0.1111
+        },
+        "app_session_stats": {
+          "sessions": 9,
+          "avg_dur_s": 162.6,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 179.4
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.2222,
+          "20": 0.3333,
+          "21": 0.2222,
+          "22": 0.1111,
+          "23": 0.1111
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.2222
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 3.0,
+          "daily_online_s": 487.8,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.3414
+        },
+        "mobility": {
+          "n_cells": 5,
+          "n_tais": 6,
+          "top1_cell_share": 0.375
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040380A|evening": 2,
+            "4600040393B|evening": 2,
+            "46000404997|evening": 1,
+            "4600040371D|evening": 1,
+            "4600040493D|evening": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0137,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0135,
+          "dl_share": 0.9865
+        },
+        "volume_total": {
+          "ul_total": 465.0,
+          "dl_total": 34012.7
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.7778,
+          "rat_share": {
+            "10": 0.7778,
+            "6": 0.2222
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0077,
+          "loss_ul_ratio": 0.0333,
+          "edge_level": "stable",
+          "sessions_with_loss": 7
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0077,
+          "loss_ul_ratio": 0.0333
+        },
+        "latency_profile": {
+          "median_ms": 130.3,
+          "p75_ms": 130.3,
+          "max_ms": 340.7
+        },
+        "bitrate_median": {
+          "median_value": 29495.0
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 546.3
+        },
+        "stall_proxy": {
+          "qoe_median": 69.4,
+          "stall_ratio": null,
+          "stall_total_s": null
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1068315.8,
+          "max_dl_bps": 36259367.4
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 12.3331,
+          "p75_ratio": 41.3201,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 28362996.4,
+          "max_diff": 35223172.5,
+          "peak_to_avg_ratio": 17.5697,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 32.5,
+          "p75_diff": 32.5,
+          "max_diff": 32.5,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.7269,
+          "p75_ratio": 0.7269,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 9
+      }
+    },
+    {
+      "user_id": "8613462113785",
+      "dim_a_identity": {
+        "user_id": "8613462113785",
+        "device_fingerprint": "86747130551858651"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "mobile_game": 0.6902,
+          "watch_live": 0.3098
+        },
+        "frequent_apps": {
+          "wangzherongyao_game": 0.375,
+          "sanjiaozhouxingdong_game": 0.25,
+          "hepingjingying_game": 0.125,
+          "bilibili_watch": 0.125,
+          "douyin_watch": 0.0625
+        },
+        "app_session_stats": {
+          "sessions": 16,
+          "avg_dur_s": 175.6,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 148.1
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.25,
+          "20": 0.0625,
+          "21": 0.3125,
+          "22": 0.25,
+          "23": 0.125
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.375
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 5.33,
+          "daily_online_s": 936.4,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.2414
+        },
+        "mobility": {
+          "n_cells": 7,
+          "n_tais": 5,
+          "top1_cell_share": 0.2667
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040386A|evening": 3,
+            "4600040495D|evening": 2,
+            "4600040383A|evening": 2,
+            "4600040380A|evening": 2,
+            "4600040391C|evening": 2
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0245,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0239,
+          "dl_share": 0.9761
+        },
+        "volume_total": {
+          "ul_total": 939.1,
+          "dl_total": 38323.4
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.9375,
+          "rat_share": {
+            "10": 0.9375,
+            "6": 0.0625
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0148,
+          "loss_ul_ratio": 0.0118,
+          "edge_level": "medium",
+          "sessions_with_loss": 11
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0148,
+          "loss_ul_ratio": 0.0118
+        },
+        "latency_profile": {
+          "median_ms": 107.25,
+          "p75_ms": 135.8,
+          "max_ms": 497.2
+        },
+        "bitrate_median": {
+          "median_value": 26184.3
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 1005.25
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 0.1,
+          "qoe_median": 63.2
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1090131.6,
+          "max_dl_bps": 37527775.3
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 9.9614,
+          "p75_ratio": 17.6691,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 13066312.8,
+          "max_diff": 36127552.2,
+          "peak_to_avg_ratio": 16.389,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 124.0,
+          "p75_diff": 124.0,
+          "max_diff": 124.0,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 7.4921,
+          "p75_ratio": 7.4921,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 16
+      }
+    },
+    {
+      "user_id": "8613522947905",
+      "dim_a_identity": {
+        "user_id": "8613522947905",
+        "device_fingerprint": "86869956721375793"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "vod_streaming": 0.6545,
+          "watch_live": 0.3455
+        },
+        "frequent_apps": {
+          "bilibili_vod": 0.5385,
+          "iqiyi_vod": 0.3077,
+          "youku_vod": 0.0769,
+          "douyin_watch": 0.0769
+        },
+        "app_session_stats": {
+          "sessions": 13,
+          "avg_dur_s": 159.8,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 181.9
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "12": 0.3077,
+          "13": 0.1538,
+          "14": 0.5385
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.33,
+          "daily_online_s": 692.5,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1226
+        },
+        "mobility": {
+          "n_cells": 8,
+          "n_tais": 6,
+          "top1_cell_share": 0.2727
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040391C|daytime": 2,
+            "4600040393B|daytime": 2,
+            "4600040386A|daytime": 2,
+            "4600040394B|daytime": 2,
+            "46000404997|daytime": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0549,
+          "direction": "downlink_dominant",
+          "ul_share": 0.052,
+          "dl_share": 0.948
+        },
+        "volume_total": {
+          "ul_total": 840.0,
+          "dl_total": 15314.4
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.8462,
+          "rat_share": {
+            "10": 0.8462,
+            "6": 0.1538
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0144,
+          "loss_ul_ratio": 0.0111,
+          "edge_level": "medium",
+          "sessions_with_loss": 5
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0144,
+          "loss_ul_ratio": 0.0111
+        },
+        "latency_profile": {
+          "median_ms": 112.8,
+          "p75_ms": 125.5,
+          "max_ms": 483.3
+        },
+        "bitrate_median": {
+          "median_value": 15117.5
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 816.65
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 3.3,
+          "qoe_median": 57.6
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 639050.0,
+          "max_dl_bps": 34669361.6
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 6.2352,
+          "p75_ratio": 8.1645,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 23843547.6,
+          "max_diff": 33772098.9,
+          "peak_to_avg_ratio": 38.639,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 30.1,
+          "p75_diff": 67.2,
+          "max_diff": 67.2,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 2.1949,
+          "p75_ratio": 3.0426,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 13
+      }
+    },
+    {
+      "user_id": "8613523296217",
+      "dim_a_identity": {
+        "user_id": "8613523296217",
+        "device_fingerprint": "86462232576231662"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "watch_live": 0.5498,
+          "voip": 0.4502
+        },
+        "frequent_apps": {
+          "kuaishou_watch": 0.4286,
+          "qq_voip": 0.2857,
+          "douyin_watch": 0.1429,
+          "weixin_voip": 0.1429
+        },
+        "app_session_stats": {
+          "sessions": 14,
+          "avg_dur_s": 128.8,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 101.4
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.2857,
+          "20": 0.2143,
+          "21": 0.2143,
+          "22": 0.1429,
+          "23": 0.1429
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.2857
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.67,
+          "daily_online_s": 601.2,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1744
+        },
+        "mobility": {
+          "n_cells": 7,
+          "n_tais": 5,
+          "top1_cell_share": 0.3846
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040371D|evening": 3,
+            "4600040391C|evening": 2,
+            "46000404997|evening": 2,
+            "4600040383A|evening": 1,
+            "4600040495D|evening": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0195,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0191,
+          "dl_share": 0.9809
+        },
+        "volume_total": {
+          "ul_total": 589.6,
+          "dl_total": 30233.8
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0244,
+          "loss_ul_ratio": 0.0171,
+          "edge_level": "medium",
+          "sessions_with_loss": 11
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0244,
+          "loss_ul_ratio": 0.0171
+        },
+        "latency_profile": {
+          "median_ms": 79.65,
+          "p75_ms": 101.3,
+          "max_ms": 489.2
+        },
+        "bitrate_median": {
+          "median_value": 34097.5
+        },
+        "resolution_mode": {
+          "mode_value": 360.0
+        },
+        "service_delay": {
+          "median_value": 464.1
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 0.7,
+          "qoe_median": 46.1
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 870063.6,
+          "max_dl_bps": 39149459.7
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 7.4918,
+          "p75_ratio": 17.4171,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 23174705.2,
+          "max_diff": 37890264.8,
+          "peak_to_avg_ratio": 19.594,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 138.2,
+          "p75_diff": 138.2,
+          "max_diff": 138.2,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.0737,
+          "p75_ratio": 0.0737,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 14
+      }
+    },
+    {
+      "user_id": "8613523308471",
+      "dim_a_identity": {
+        "user_id": "8613523308471",
+        "device_fingerprint": "86241241916778787"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "short_video": 0.5968,
+          "instant_message": 0.4032
+        },
+        "frequent_apps": {
+          "douyin_watch": 0.3077,
+          "hongguo_svod": 0.1538,
+          "kuaishou_svod": 0.1538,
+          "dingtalk_im": 0.1538,
+          "qq_im": 0.0769
+        },
+        "app_session_stats": {
+          "sessions": 13,
+          "avg_dur_s": 142.3,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 122.9
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "8": 0.2308,
+          "9": 0.0769,
+          "10": 0.3077,
+          "11": 0.3846
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.33,
+          "daily_online_s": 616.7,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.3062
+        },
+        "mobility": {
+          "n_cells": 6,
+          "n_tais": 5,
+          "top1_cell_share": 0.2308
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040495D|morning": 3,
+            "4600040394B|morning": 3,
+            "4600040493D|morning": 3,
+            "4600040386A|morning": 2,
+            "4600040391C|morning": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.028,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0272,
+          "dl_share": 0.9728
+        },
+        "volume_total": {
+          "ul_total": 1016.7,
+          "dl_total": 36360.3
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.019,
+          "loss_ul_ratio": 0.0215,
+          "edge_level": "medium",
+          "sessions_with_loss": 10
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.019,
+          "loss_ul_ratio": 0.0215
+        },
+        "latency_profile": {
+          "median_ms": 125.1,
+          "p75_ms": 134.6,
+          "max_ms": 433.3
+        },
+        "bitrate_median": {
+          "median_value": 35026.15
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 405.0
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 58.7,
+          "qoe_median": 75.0
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1133396.5,
+          "max_dl_bps": 39290053.1
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 9.3974,
+          "p75_ratio": 21.949,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 24195944.6,
+          "max_diff": 37985543.3,
+          "peak_to_avg_ratio": 22.5562,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 35.5,
+          "p75_diff": 59.7,
+          "max_diff": 59.7,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.9311,
+          "p75_ratio": 1.3582,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 13
+      }
+    },
+    {
+      "user_id": "8613525218516",
+      "dim_a_identity": {
+        "user_id": "8613525218516",
+        "device_fingerprint": "86600060864617114"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "short_video": 0.9928,
+          "voip": 0.0072
+        },
+        "frequent_apps": {
+          "douyin_watch": 0.4615,
+          "hongguo_svod": 0.3077,
+          "douyin_svod": 0.1538,
+          "weixin_voip": 0.0769
+        },
+        "app_session_stats": {
+          "sessions": 13,
+          "avg_dur_s": 161.6,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 176.8
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.2308,
+          "20": 0.2308,
+          "21": 0.1538,
+          "22": 0.2308,
+          "23": 0.1538
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.3846
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.33,
+          "daily_online_s": 700.5,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1592
+        },
+        "mobility": {
+          "n_cells": 8,
+          "n_tais": 6,
+          "top1_cell_share": 0.25
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "46000404997|evening": 3,
+            "4600040493D|evening": 3,
+            "4600040383A|evening": 2,
+            "4600040391C|evening": 1,
+            "4600040394B|evening": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0275,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0267,
+          "dl_share": 0.9733
+        },
+        "volume_total": {
+          "ul_total": 668.7,
+          "dl_total": 24336.9
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.9231,
+          "rat_share": {
+            "10": 0.9231,
+            "6": 0.0769
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0102,
+          "loss_ul_ratio": 0.0384,
+          "edge_level": "medium",
+          "sessions_with_loss": 11
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0102,
+          "loss_ul_ratio": 0.0384
+        },
+        "latency_profile": {
+          "median_ms": 89.85,
+          "p75_ms": 108.2,
+          "max_ms": 342.6
+        },
+        "bitrate_median": {
+          "median_value": 18865.05
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": null
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 22.3,
+          "qoe_median": 35.8
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1189938.0,
+          "max_dl_bps": 37522814.5
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 10.1995,
+          "p75_ratio": 27.6966,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 19348277.9,
+          "max_diff": 36023243.8,
+          "peak_to_avg_ratio": 17.4034,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": null,
+          "p75_diff": null,
+          "max_diff": null,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": null,
+          "p75_ratio": null,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 13
+      }
+    },
+    {
+      "user_id": "8613525576968",
+      "dim_a_identity": {
+        "user_id": "8613525576968",
+        "device_fingerprint": "86287425559319590"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "mobile_game": 0.4606,
+          "voip": 0.3835,
+          "live_streaming": 0.1193,
+          "instant_message": 0.0367
+        },
+        "frequent_apps": {
+          "sanjiaozhouxingdong_game": 0.2308,
+          "qq_voip": 0.1538,
+          "weixin_voip": 0.1538,
+          "hepingjingying_game": 0.1538,
+          "weixin_im": 0.0769
+        },
+        "app_session_stats": {
+          "sessions": 13,
+          "avg_dur_s": 161.7,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 160.3
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "8": 0.3846,
+          "9": 0.1538,
+          "10": 0.3846,
+          "11": 0.0769
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.33,
+          "daily_online_s": 700.6,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.16
+        },
+        "mobility": {
+          "n_cells": 7,
+          "n_tais": 5,
+          "top1_cell_share": 0.2308
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040383A|morning": 3,
+            "4600040391C|morning": 3,
+            "4600040394B|morning": 2,
+            "4600040495D|morning": 1,
+            "46000404997|morning": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0456,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0436,
+          "dl_share": 0.9564
+        },
+        "volume_total": {
+          "ul_total": 949.6,
+          "dl_total": 20823.3
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.7692,
+          "rat_share": {
+            "10": 0.7692,
+            "6": 0.2308
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0638,
+          "loss_ul_ratio": 0.0506,
+          "edge_level": "weak_coverage",
+          "sessions_with_loss": 7
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0638,
+          "loss_ul_ratio": 0.0506
+        },
+        "latency_profile": {
+          "median_ms": 114.4,
+          "p75_ms": 121.1,
+          "max_ms": 279.4
+        },
+        "bitrate_median": {
+          "median_value": 24876.6
+        },
+        "resolution_mode": {
+          "mode_value": 360.0
+        },
+        "service_delay": {
+          "median_value": 743.1
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 37.9,
+          "qoe_median": 29.9
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1050090.4,
+          "max_dl_bps": 35476716.9
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 9.3933,
+          "p75_ratio": 15.9497,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 15112211.4,
+          "max_diff": 35287138.5,
+          "peak_to_avg_ratio": 12.1244,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 17.7,
+          "p75_diff": 33.2,
+          "max_diff": 33.2,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 1.1453,
+          "p75_ratio": 1.373,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 13
+      }
+    },
+    {
+      "user_id": "8613525860212",
+      "dim_a_identity": {
+        "user_id": "8613525860212",
+        "device_fingerprint": "86719564518636285"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "meeting": 0.4551,
+          "mobile_game": 0.4304,
+          "watch_live": 0.1145
+        },
+        "frequent_apps": {
+          "dingtalk_meeting": 0.3333,
+          "hepingjingying_game": 0.3333,
+          "bilibili_watch": 0.1111,
+          "kuaishou_watch": 0.1111,
+          "wangzherongyao_game": 0.1111
+        },
+        "app_session_stats": {
+          "sessions": 9,
+          "avg_dur_s": 126.3,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 170.9
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.1111,
+          "20": 0.1111,
+          "21": 0.3333,
+          "22": 0.3333,
+          "23": 0.1111
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.4444
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 3.0,
+          "daily_online_s": 378.9,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.2439
+        },
+        "mobility": {
+          "n_cells": 6,
+          "n_tais": 4,
+          "top1_cell_share": 0.2857
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040495D|evening": 2,
+            "4600040383A|evening": 2,
+            "4600040394B|evening": 1,
+            "4600040393B|evening": 1,
+            "4600040371D|evening": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0268,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0261,
+          "dl_share": 0.9739
+        },
+        "volume_total": {
+          "ul_total": 480.0,
+          "dl_total": 17918.1
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.7778,
+          "rat_share": {
+            "10": 0.7778,
+            "6": 0.2222
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0354,
+          "loss_ul_ratio": 0.0252,
+          "edge_level": "medium",
+          "sessions_with_loss": 8
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0354,
+          "loss_ul_ratio": 0.0252
+        },
+        "latency_profile": {
+          "median_ms": 51.4,
+          "p75_ms": 51.4,
+          "max_ms": 351.4
+        },
+        "bitrate_median": {
+          "median_value": 15515.6
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 1027.7
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 22.5,
+          "qoe_median": null
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 529269.2,
+          "max_dl_bps": 38790323.6
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 7.3135,
+          "p75_ratio": 10.7692,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 28501555.7,
+          "max_diff": 37831200.2,
+          "peak_to_avg_ratio": 40.4435,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": null,
+          "p75_diff": null,
+          "max_diff": null,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": null,
+          "p75_ratio": null,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 9
+      }
+    },
+    {
+      "user_id": "8613525897325",
+      "dim_a_identity": {
+        "user_id": "8613525897325",
+        "device_fingerprint": "86911650841004924"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "short_video": 0.9137,
+          "live_streaming": 0.0863
+        },
+        "frequent_apps": {
+          "douyin_watch": 0.2,
+          "kuaishou_live": 0.2,
+          "kuaishou_svod": 0.2,
+          "douyin_svod": 0.2,
+          "hongguo_svod": 0.2
+        },
+        "app_session_stats": {
+          "sessions": 10,
+          "avg_dur_s": 116.8,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 91.2
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "8": 0.4,
+          "9": 0.3,
+          "10": 0.2,
+          "11": 0.1
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 3.33,
+          "daily_online_s": 389.3,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.0
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.0753
+        },
+        "mobility": {
+          "n_cells": 6,
+          "n_tais": 6,
+          "top1_cell_share": 0.2222
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040383A|morning": 2,
+            "4600040391C|morning": 2,
+            "4600040380A|morning": 2,
+            "4600040386A|morning": 1,
+            "4600040394B|morning": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0718,
+          "direction": "downlink_dominant",
+          "ul_share": 0.067,
+          "dl_share": 0.933
+        },
+        "volume_total": {
+          "ul_total": 566.5,
+          "dl_total": 7885.2
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.007,
+          "loss_ul_ratio": 0.0146,
+          "edge_level": "stable",
+          "sessions_with_loss": 8
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.007,
+          "loss_ul_ratio": 0.0146
+        },
+        "latency_profile": {
+          "median_ms": 124.2,
+          "p75_ms": 108.1,
+          "max_ms": 474.3
+        },
+        "bitrate_median": {
+          "median_value": 10578.6
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": null
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 44.8,
+          "qoe_median": 71.7
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1140833.8,
+          "max_dl_bps": 39520348.9
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 12.0564,
+          "p75_ratio": 25.1026,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 25418297.8,
+          "max_diff": 37972654.1,
+          "peak_to_avg_ratio": 22.2224,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 33.2,
+          "p75_diff": 43.8,
+          "max_diff": 43.8,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 1.3591,
+          "p75_ratio": 1.4539,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 10
+      }
+    },
+    {
+      "user_id": "8613526661095",
+      "dim_a_identity": {
+        "user_id": "8613526661095",
+        "device_fingerprint": "86832327354391227"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "mobile_game": 0.8091,
+          "live_streaming": 0.1099,
+          "vod_streaming": 0.0811
+        },
+        "frequent_apps": {
+          "sanjiaozhouxingdong_game": 0.3846,
+          "hepingjingying_game": 0.3077,
+          "wangzherongyao_game": 0.1538,
+          "bilibili_vod": 0.0769,
+          "kuaishou_live": 0.0769
+        },
+        "app_session_stats": {
+          "sessions": 13,
+          "avg_dur_s": 120.0,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 110.1
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "19": 0.0769,
+          "20": 0.2308,
+          "21": 0.2308,
+          "22": 0.2308,
+          "23": 0.2308
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.4615
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.33,
+          "daily_online_s": 519.8,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.3067
+        },
+        "mobility": {
+          "n_cells": 9,
+          "n_tais": 6,
+          "top1_cell_share": 0.1538
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040394B|evening": 2,
+            "4600040495D|evening": 2,
+            "4600040386A|evening": 2,
+            "4600040380A|evening": 2,
+            "4600040391C|evening": 2
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0418,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0401,
+          "dl_share": 0.9599
+        },
+        "volume_total": {
+          "ul_total": 1369.1,
+          "dl_total": 32750.5
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 0.6923,
+          "rat_share": {
+            "10": 0.6923,
+            "6": 0.3077
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.034,
+          "loss_ul_ratio": 0.0121,
+          "edge_level": "medium",
+          "sessions_with_loss": 11
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.034,
+          "loss_ul_ratio": 0.0121
+        },
+        "latency_profile": {
+          "median_ms": 108.1,
+          "p75_ms": 113.9,
+          "max_ms": 334.6
+        },
+        "bitrate_median": {
+          "median_value": 20788.4
+        },
+        "resolution_mode": {
+          "mode_value": 1080.0
+        },
+        "service_delay": {
+          "median_value": 852.25
+        },
+        "stall_proxy": {
+          "qoe_median": 78.7,
+          "stall_ratio": null,
+          "stall_total_s": null
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 845681.2,
+          "max_dl_bps": 38176609.1
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 4.7944,
+          "p75_ratio": 12.8601,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 23810722.2,
+          "max_diff": 36504590.8,
+          "peak_to_avg_ratio": 22.8327,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 12.0,
+          "p75_diff": 12.0,
+          "max_diff": 12.0,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 1.1173,
+          "p75_ratio": 1.1173,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 13
+      }
+    },
+    {
+      "user_id": "8613526735143",
+      "dim_a_identity": {
+        "user_id": "8613526735143",
+        "device_fingerprint": "86866162957468144"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "meeting": 0.7116,
+          "watch_live": 0.2515,
+          "mobile_game": 0.0331,
+          "voip": 0.0038
+        },
+        "frequent_apps": {
+          "dingtalk_meeting": 0.3333,
+          "bilibili_watch": 0.2778,
+          "tencentmeeting": 0.2778,
+          "hepingjingying_game": 0.0556,
+          "qq_voip": 0.0556
+        },
+        "app_session_stats": {
+          "sessions": 18,
+          "avg_dur_s": 122.9,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 87.8
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "12": 0.3333,
+          "13": 0.2778,
+          "14": 0.3889
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 6.0,
+          "daily_online_s": 737.2,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1401
+        },
+        "mobility": {
+          "n_cells": 10,
+          "n_tais": 6,
+          "top1_cell_share": 0.1667
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040493D|daytime": 3,
+            "4600040380A|daytime": 3,
+            "46000404997|daytime": 3,
+            "4600040386A|daytime": 2,
+            "4600040393B|daytime": 2
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0745,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0694,
+          "dl_share": 0.9306
+        },
+        "volume_total": {
+          "ul_total": 1684.7,
+          "dl_total": 22601.5
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.1683,
+          "loss_ul_ratio": 0.0123,
+          "edge_level": "weak_coverage",
+          "sessions_with_loss": 12
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.1683,
+          "loss_ul_ratio": 0.0123
+        },
+        "latency_profile": {
+          "median_ms": 122.5,
+          "p75_ms": 133.3,
+          "max_ms": 486.2
+        },
+        "bitrate_median": {
+          "median_value": 21336.0
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 784.45
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 0.4,
+          "qoe_median": 60.9
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 994074.4,
+          "max_dl_bps": 35666364.2
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 9.835,
+          "p75_ratio": 11.8505,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 15277561.4,
+          "max_diff": 35519640.3,
+          "peak_to_avg_ratio": 13.4033,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 19.8,
+          "p75_diff": 100.7,
+          "max_diff": 100.7,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.9909,
+          "p75_ratio": 3.0849,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 18
+      }
+    },
+    {
+      "user_id": "8613526790293",
+      "dim_a_identity": {
+        "user_id": "8613526790293",
+        "device_fingerprint": "86605044995056201"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "watch_live": 0.4358,
+          "instant_message": 0.3,
+          "vod_streaming": 0.2641
+        },
+        "frequent_apps": {
+          "douyin_watch": 0.2857,
+          "kuaishou_watch": 0.2143,
+          "bilibili_watch": 0.2143,
+          "bilibili_vod": 0.0714,
+          "youku_vod": 0.0714
+        },
+        "app_session_stats": {
+          "sessions": 14,
+          "avg_dur_s": 119.6,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 116.9
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "12": 0.2857,
+          "13": 0.5714,
+          "14": 0.1429
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.67,
+          "daily_online_s": 557.9,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1534
+        },
+        "mobility": {
+          "n_cells": 7,
+          "n_tais": 6,
+          "top1_cell_share": 0.3333
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040495D|daytime": 2,
+            "4600040386A|daytime": 2,
+            "46000404997|daytime": 2,
+            "4600040394B|daytime": 2,
+            "4600040493D|daytime": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.025,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0244,
+          "dl_share": 0.9756
+        },
+        "volume_total": {
+          "ul_total": 463.9,
+          "dl_total": 18530.0
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0111,
+          "loss_ul_ratio": 0.0074,
+          "edge_level": "medium",
+          "sessions_with_loss": 7
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0111,
+          "loss_ul_ratio": 0.0074
+        },
+        "latency_profile": {
+          "median_ms": 102.8,
+          "p75_ms": 111.4,
+          "max_ms": 434.5
+        },
+        "bitrate_median": {
+          "median_value": 36560.05
+        },
+        "resolution_mode": {
+          "mode_value": 360.0
+        },
+        "service_delay": {
+          "median_value": 758.0
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 28.8,
+          "qoe_median": 91.8
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1011029.2,
+          "max_dl_bps": 38638367.8
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 10.1291,
+          "p75_ratio": 14.2941,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 11497530.7,
+          "max_diff": 37838124.7,
+          "peak_to_avg_ratio": 10.6344,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 36.2,
+          "p75_diff": 36.2,
+          "max_diff": 36.2,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 1.4582,
+          "p75_ratio": 1.4582,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 14
+      }
+    },
+    {
+      "user_id": "8613526867990",
+      "dim_a_identity": {
+        "user_id": "8613526867990",
+        "device_fingerprint": "86666629075587708"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "live_streaming": 1.0
+        },
+        "frequent_apps": {
+          "douyin_live": 0.5556,
+          "kuaishou_live": 0.4444
+        },
+        "app_session_stats": {
+          "sessions": 9,
+          "avg_dur_s": 163.0,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 219.3
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "13": 0.3333,
+          "14": 0.6667
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 3.0,
+          "daily_online_s": 489.0,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1167
+        },
+        "mobility": {
+          "n_cells": 6,
+          "n_tais": 4,
+          "top1_cell_share": 0.25
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040393B|daytime": 2,
+            "4600040493D|daytime": 1,
+            "4600040371D|daytime": 1,
+            "4600040495D|daytime": 1,
+            "4600040394B|daytime": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.037,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0357,
+          "dl_share": 0.9643
+        },
+        "volume_total": {
+          "ul_total": 625.7,
+          "dl_total": 16892.3
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0064,
+          "loss_ul_ratio": 0.0097,
+          "edge_level": "stable",
+          "sessions_with_loss": 5
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0064,
+          "loss_ul_ratio": 0.0097
+        },
+        "latency_profile": {
+          "median_ms": 61.1,
+          "p75_ms": 113.4,
+          "max_ms": 392.3
+        },
+        "bitrate_median": {
+          "median_value": 26878.4
+        },
+        "resolution_mode": {
+          "mode_value": 2160.0
+        },
+        "service_delay": {
+          "median_value": 680.0
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 0.3,
+          "qoe_median": 41.1
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 1311455.1,
+          "max_dl_bps": 39504572.9
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 10.1632,
+          "p75_ratio": 11.9535,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 18688721.4,
+          "max_diff": 37926696.9,
+          "peak_to_avg_ratio": 21.0667,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": 80.4,
+          "p75_diff": 80.4,
+          "max_diff": 80.4,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": 0.291,
+          "p75_ratio": 0.291,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 9
+      }
+    },
+    {
+      "user_id": "8613569481238",
+      "dim_a_identity": {
+        "user_id": "8613569481238",
+        "device_fingerprint": "86875971243630866"
+      },
+      "dim_b_app_behavior": {
+        "app_usage_profile": {
+          "live_streaming": 0.6435,
+          "instant_message": 0.3565
+        },
+        "frequent_apps": {
+          "kuaishou_live": 0.4167,
+          "douyin_live": 0.25,
+          "weixin_im": 0.1667,
+          "dingtalk_im": 0.0833,
+          "qq_im": 0.0833
+        },
+        "app_session_stats": {
+          "sessions": 12,
+          "avg_dur_s": 134.7,
+          "long_session_ratio": 0.0
+        },
+        "weighted_duration": {
+          "weighted_avg_s": 176.3
+        }
+      },
+      "dim_c_spatio_temporal": {
+        "active_hours": {
+          "9": 0.4167,
+          "10": 0.3333,
+          "11": 0.25
+        },
+        "busy_hour": {
+          "busy_hour_share": 0.0
+        },
+        "dependency": {
+          "active_days": 3,
+          "daily_sessions": 4.0,
+          "daily_online_s": 538.8,
+          "dependency_level": "medium"
+        },
+        "data_consumption": {
+          "daily_gb": 0.01
+        },
+        "pkg_size": {
+          "avg_pkg_size_kb": 0.1917
+        },
+        "mobility": {
+          "n_cells": 6,
+          "n_tais": 6,
+          "top1_cell_share": 0.2727
+        },
+        "recurrent_cells": {
+          "pairs": {
+            "4600040380A|morning": 3,
+            "4600040493D|morning": 2,
+            "4600040393B|morning": 2,
+            "4600040386A|morning": 2,
+            "4600040383A|morning": 1
+          },
+          "window": "night|morning|daytime|evening"
+        },
+        "up_down_ratio": {
+          "ul_dl_ratio": 0.0379,
+          "direction": "downlink_dominant",
+          "ul_share": 0.0365,
+          "dl_share": 0.9635
+        },
+        "volume_total": {
+          "ul_total": 837.0,
+          "dl_total": 22108.1
+        },
+        "workday_vs_weekend": {
+          "workday_share": 1.0,
+          "weekend_share": 0.0,
+          "active_days": 3,
+          "pattern": "workday_dominant"
+        }
+      },
+      "dim_d_network_exp": {
+        "rat_preference": {
+          "5g_share": 1.0,
+          "rat_share": {
+            "10": 1.0
+          }
+        },
+        "signal_edge": {
+          "loss_dl_ratio": 0.0125,
+          "loss_ul_ratio": 0.0182,
+          "edge_level": "medium",
+          "sessions_with_loss": 8
+        },
+        "loss_profile": {
+          "loss_dl_ratio": 0.0125,
+          "loss_ul_ratio": 0.0182
+        },
+        "latency_profile": {
+          "median_ms": 56.1,
+          "p75_ms": 56.1,
+          "max_ms": 430.0
+        },
+        "bitrate_median": {
+          "median_value": null
+        },
+        "resolution_mode": {
+          "mode_value": null
+        },
+        "service_delay": {
+          "median_value": 665.6
+        },
+        "stall_proxy": {
+          "stall_ratio": 1.0,
+          "stall_total_s": 18.4,
+          "qoe_median": 37.9
+        },
+        "bandwidth_env": {
+          "avg_dl_median_bps": 810043.6,
+          "max_dl_bps": 37141116.2
+        },
+        "bandwidth_ul_dl_ratio": {
+          "median_ratio": 10.8107,
+          "p75_ratio": 14.0439,
+          "_source": "pending"
+        },
+        "bandwidth_peak_avg_diff": {
+          "median_diff": 23330944.9,
+          "max_diff": 35867878.5,
+          "peak_to_avg_ratio": 22.2542,
+          "_source": "pending"
+        },
+        "delay_ul_dl_diff": {
+          "median_diff": null,
+          "p75_diff": null,
+          "max_diff": null,
+          "_source": "pending"
+        },
+        "delay_ul_dl_ratio": {
+          "median_ratio": null,
+          "p75_ratio": null,
+          "_source": "pending"
+        }
+      },
+      "meta": {
+        "n_sessions": 12
+      }
+    }
+  ]
+}
