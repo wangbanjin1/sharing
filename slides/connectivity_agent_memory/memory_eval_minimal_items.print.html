@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>记忆评测最小项</title>
+<style>
+@page { size: A4 landscape; margin: 10mm 10mm 12mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  color: #1f2328; font-size: 8pt; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+h1 { font-size: 13pt; font-weight: 600; margin: 0 0 2mm; letter-spacing: .2px; }
+.meta { font-size: 7.5pt; color: #5f6368; margin: 0 0 3mm; }
+.meta span { margin-right: 6mm; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+col.c1 { width: 9.2%; } col.c2 { width: 4%; } col.c3 { width: 12.4%; }
+col.c4 { width: 15.4%; } col.c5 { width: 33%; } col.c6 { width: 26%; }
+th, td { border: .5px solid #b8bcc2; padding: 1.6mm 1.8mm; vertical-align: top; }
+th {
+  background: #eef0f2; font-weight: 600; font-size: 8pt; text-align: left;
+  vertical-align: middle; padding: 2mm 1.8mm;
+}
+th.c { text-align: center; }
+td.module { background: #f6f7f8; text-align: center; vertical-align: middle; padding: 2mm .6mm; line-height: 1.35; }
+td.module .mt { display: block; font-weight: 600; font-size: 8pt; }
+td.module .ms { display: block; color: #5f6368; font-size: 7pt; margin-top: 1mm; }
+td.module code { font-size: 6.8pt; }
+td.no { text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.item .head { font-weight: 600; }
+td.item .head + .head { font-weight: 400; font-size: 7.2pt; color: #5f6368; }
+p { margin: 0 0 1.1mm; }
+p:last-child { margin-bottom: 0; }
+.li { padding-left: 3.2mm; text-indent: -3.2mm; }
+.li::before { content: "•"; display: inline-block; width: 3.2mm; text-indent: 0; }
+.sub { padding-left: 7.4mm; text-indent: -3.2mm; color: #3d4148; }
+.sub::before { content: "◦"; display: inline-block; width: 3.2mm; text-indent: 0; }
+.num { padding-left: 7.4mm; text-indent: -4.6mm; }
+code {
+  font-family: "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
+  font-size: 6.9pt; background: #f1f2f4; border-radius: 2px; padding: 0 .6mm;
+  white-space: nowrap;
+}
+tr { page-break-inside: avoid; break-inside: avoid; }
+thead { display: table-header-group; }
+.foot { margin-top: 3mm; font-size: 7pt; color: #6b7075; display: flex; justify-content: space-between; }
+@media screen {
+  body { background: #f2f3f5; padding: 18px; }
+  .sheet { background: #fff; max-width: 1180px; margin: 0 auto; padding: 22px 24px 16px; border: 1px solid #dcdfe3; }
+}
+@media print { .sheet { border: 0; padding: 0; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>记忆评测最小项</h1>
+  <p class="meta">
+    <span>四组 11 项：记忆生命周期 3 · 长期记忆功能 2 · 意图闭环 3 · 端到端效能 3</span>
+    <span>编号锚点对应原表 3</span>
+    <span>A4 横向 · 可直接打印</span>
+  </p>
+  <table>
+    <colgroup>
+      <col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>模块</th>
+        <th class="c">编号</th>
+        <th>最小评测项<br>（原表 3 对应）</th>
+        <th>和 AISF 工作交集</th>
+        <th>最小评测场景</th>
+        <th>最小评测指标</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="module g0" rowspan="3"><span class="mt">一、记忆生命周期</span><span class="ms">（过程白盒）</span></td><td class="no">M1</td><td class="item"><p class="head">记忆形成（提取）</p><p class="head">原表 3 <code>M1</code></p></td><td><p class="head">记忆提取（20 条）：核查事实、偏好与时间关系提取，区分正确、幻觉与遗漏</p></td><td><p class="li">正向：从单据与对话准确抽取事件、稳定偏好（<code>≥ N_min</code>）与个性化表达</p><p class="li">负向：由于将假设咨询、闲聊、偶发或被动降质单据写入记忆库，导致混入伪偏好或幻觉条目</p></td><td><p class="li">提取查准率 / 查全率 / F1</p><p class="sub">幻觉误写入率</p><p class="sub">有效信息遗漏率</p></td></tr>
+      <tr><td class="no">M2</td><td class="item"><p class="head">记忆演进（更新）</p><p class="head">原表 3 <code>M2</code></p></td><td><p class="head">记忆更新（9 条）与多轮状态维护：核查新事实生效、防旧事实污染，Hook 观测更新接口</p></td><td><p class="li">正向：显式变更即时生效、临时配置到期回退、按场景分域更新</p><p class="li">负向：由于未停用旧值或误改长期基线/未变场景，导致旧偏好残留或原有习惯被破坏</p></td><td><p class="li">记忆状态更新准确率</p><p class="sub">旧偏好残留率</p><p class="sub">临时偏移误覆盖率</p><p class="li">未改场景偏好保持率</p></td></tr>
+      <tr><td class="no">M3</td><td class="item"><p class="head">记忆检索与负干扰防护</p><p class="head">原表 3 <code>M3</code></p></td><td><p class="head">记忆检索（5 条）与跨会话接续：Hook 计算 Recall@K、Precision@K、nDCG@K 与 MRR</p></td><td><p class="li">正向：需用记忆时目标有效记忆查全并排前</p><p class="li">负向：由于召回停用/未执行记录，或在无关场景（Ground Truth 召回为空）注入无关记忆，导致原本能对的请求被带偏</p></td><td><p class="li">检索排序指标（无 Ground Truth 证据记 <code>N/A</code>）</p><p class="sub">端到端 <code>Recall@K / Precision@K / MRR</code></p><p class="sub">已入库条件 <code>Recall@K</code> 与入库覆盖率</p><p class="li">无关记忆误引入率（<code>FRR</code>）</p><p class="li">负干扰致错率（<code>NIR</code>）</p></td></tr>
+      <tr><td class="module g1" rowspan="2"><span class="mt">二、长期记忆功能</span><span class="ms">（内容落地）</span></td><td class="no">F1</td><td class="item"><p class="head">情景记忆</p><p class="head">原表 3 <code>1.1</code></p></td><td><p class="head">跨会话接续与历史事件状态传递（LongMemEval / BEAM / Trial by Trace）</p></td><td><p class="li">正向（4 类指代）：① 时间指代与平移；② 业务与子应用指代；③ 历史场所指代；④ 运行质量（顺畅/卡顿）与状态指代</p><p class="li">负向：由于误召咨询/撤销记录、误关联并行无关单据，或同日多场指代不清直接猜测，导致复现未生效方案或混淆场次参数</p></td><td><p class="li">意图全量匹配率（<code>EM</code>）</p><p class="li">检索排序指标（<code>Recall@K / MRR</code>）</p><p class="sub">无效事件与无关单据误召率</p><p class="li">未澄清直接执行率（<code>PER</code>）</p></td></tr>
+      <tr><td class="no">F2</td><td class="item"><p class="head">语义记忆</p><p class="head">原表 3 <code>2.1~2.4</code></p></td><td><p class="head">长期用户偏好与个性化信息记忆（LongMemEval / LoCoMo）</p></td><td><p class="li">正向：个性化表达理解与映射；按场景隔离存储与应用偏好（如白天外出 <code>720P</code>、晚间居家 <code>1080P</code>），临时到期回退，已知免重问</p><p class="li">负向：由于跨场景误套用偏好、无记录/未定义表达时直接猜测，或用旧偏好覆盖本次明确参数，导致输出错误配置</p></td><td><p class="li">意图全量匹配率（<code>EM</code>）</p><p class="li">未改场景偏好保持率</p><p class="li">澄清决策 F1</p><p class="sub">未澄清直接执行率（<code>PER</code>，蒙对判 <code>EM=0</code>）</p><p class="sub">冗余追问率（<code>OCR</code>）</p><p class="li">负干扰致错率（<code>NIR</code>）</p></td></tr>
+      <tr><td class="module g2" rowspan="3"><span class="mt">三、意图闭环</span><span class="ms">（对齐原表 3 <code>4~6</code>）</span></td><td class="no">I1</td><td class="item"><p class="head">要素抽取与复杂句法</p><p class="head">原表 3 <code>4.1~4.2</code></p></td><td><p class="head">Outcome 任务成功 + SysAgent 意图改写（1074 条）与 Skill 选择（800 条）</p></td><td><p class="li">清晰、口语及复杂句法转为标准三要素模板（起止时长算术一致、参数归一化）</p><p class="li">多业务并发防混淆、多指标权衡提取，以及跨意图否定保护（开启 A 不误抽既有单据 B）</p></td><td><p class="li">意图全量匹配率（<code>EM</code>，全字段全对计 1）</p><p class="sub">跨意图否定保护误抽率</p></td></tr>
+      <tr><td class="no">I2</td><td class="item"><p class="head">语用边界与快慢路由</p><p class="head">原表 3 <code>5.1~5.2</code></p></td><td><p class="head">Process 过程评估（鲁棒性与决策调用）</p></td><td><p class="li">间接语用理解与假设性咨询防误执行（“先问问暂不开”严禁出模板）</p><p class="li">模糊与隐式诉求快慢分流：信息齐或唯一稳定记忆单轮直通；缺参、歧义或仅单次临时证据发起澄清/带候选确认；外部客观事实优先查只读源核验</p></td><td><p class="li">咨询与执行区分准确率</p><p class="sub">仅咨询误触发执行率</p><p class="li">澄清决策 F1</p><p class="sub">未澄清直接执行率（<code>PER</code>，蒙对判 <code>EM=0</code>）</p><p class="sub">冗余追问率（<code>OCR</code>）</p><p class="li">意图全量匹配率（<code>EM</code>）</p></td></tr>
+      <tr><td class="no">I3</td><td class="item"><p class="head">违规驳回、域外与多轮收敛</p><p class="head">原表 3 <code>6.1~6.2</code></p></td><td><p class="head">Security Gate + Voice Agent 实时闲聊（本业务要求快速收口）+ 长程关键信息保留（12 条，压缩后核查字段原值）</p></td><td><p class="li">域内规则驳回（白名单/时间/参数/套餐 MOS）与情绪反语拦截</p><p class="li">9 类域外与 5 类闲聊收口：问候自然、越界零代答、无开放反问、<code>K_ood=2</code> 熔断、跑题不丢槽位且闲聊不入库</p><p class="li">缺失槽位定位与多轮动态收敛（反问规则、中途改口清旧约束、长会话防丢关键参数）</p></td><td><p class="li">违规驳回与 9 类域外拒识准确率</p><p class="sub">误放行率与越界代答漏放率</p><p class="li">域外/闲聊平均收口轮数（目标 1~2 轮）</p><p class="li">追问槽位 F1</p><p class="li">意图全量匹配率（<code>EM</code>）</p><p class="sub">改口旧约束残留率</p><p class="sub">长会话关键字段原值保留率</p></td></tr>
+      <tr><td class="module g3" rowspan="3"><span class="mt">四、端到端整体效能</span><span class="ms">（对齐原表 3 <code>7.1~7.3</code>）</span></td><td class="no">E1</td><td class="item"><p class="head">受控对照与分层归因</p><p class="head">原表 3 <code>7.1</code></p></td><td><p class="head">Model × Harness × Task 交叉评测 + 6 步打点留痕与 Trace 失败归因</p></td><td><p class="li">同集并行跑 <code>No-Mem / Full-Mem / Oracle-Mem</code>，分「无需记忆」与「需用记忆」汇总</p><p class="li">按「未入库 / 已入库未召回 / 已召回未正确应用」三层归因</p></td><td><p class="li">意图全量匹配率（<code>EM</code>）与净提升 <code>ΔEM</code>（允许为负）</p><p class="li">上游记忆损耗（<code>Oracle − Full</code>）</p><p class="li">三层失败归因分布</p></td></tr>
+      <tr><td class="no">E2</td><td class="item"><p class="head">多采样运行稳定性</p><p class="head">原表 3 <code>7.1</code></p></td><td><p class="head">Process — Consistency 一致性与重复运行校准</p></td><td><p class="li">对多轮澄清、冲突更新与边界拒识题独立重复跑 <code>k</code> 次（如 <code>k=3</code>）</p></td><td><p class="li">连续多次稳定通过率（<code>pass^k</code>）</p><p class="li">多次采样上限（<code>pass@k</code>）与基线波动区间</p></td></tr>
+      <tr><td class="no">E3</td><td class="item"><p class="head">交互效率与系统开销</p><p class="head">原表 3 <code>7.2~7.3</code></p></td><td><p class="head">Efficiency — Tokens、Turns、Latency、Cost 评估</p></td><td><p class="li">配对样本上统一由 Telemetry 记录轮数、累计 Token（含记忆读写开销）与时延</p></td><td><p class="li">澄清轮数减少率（<code>ΔTurns</code>，仅配对均成功样本）</p><p class="sub">全量失败率 / 超轮次率 / 中途退出率</p><p class="sub">用户需主动补充字段数</p><p class="li">累计 Token 节省率（<code>ΔTokens</code>）</p><p class="li">平均首轮响应时延与端到端总时延</p></td></tr>
+    </tbody>
+  </table>
+  <div class="foot">
+    <span>• 为一级条目，◦ 为该条目下的细分指标</span>
+    <span>记忆评测最小项</span>
+  </div>
+</div>
+</body>
+</html>
